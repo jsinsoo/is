@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파이썬 완전 문법 251~300예제</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f8fafc;color:#1f2937;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;line-height:1.75}
+header{padding:45px 20px;text-align:center;background:linear-gradient(135deg,#7c2d12,#ea580c);color:#fff}
+header h1{margin:0 0 10px;font-size:2.1rem}
+header p{margin:0;opacity:.94}
+main{max-width:1120px;margin:auto;padding:25px 18px 60px}
+section,.notice{background:#fff;border-radius:14px;padding:24px;margin:22px 0;box-shadow:0 4px 14px rgba(31,41,55,.08)}
+h2{color:#c2410c;border-bottom:3px solid #fdba74;padding-bottom:9px}
+h3{color:#9a3412;margin-top:34px}
+.tag{display:inline-block;padding:3px 10px;margin-right:7px;border-radius:20px;background:#ffedd5;color:#9a3412;font-size:.85rem;font-weight:bold}
+pre{background:#111827;color:#f9fafb;padding:17px;border-radius:10px;overflow-x:auto;line-height:1.55}
+code{font-family:Consolas,"Courier New",monospace}
+.output{background:#ecfdf5;border-left:5px solid #10b981;padding:12px 15px;border-radius:6px;margin:12px 0}
+.explain{background:#eff6ff;border-left:5px solid #3b82f6;padding:12px 15px;border-radius:6px;margin:12px 0}
+.warning{background:#fff7ed;border-left:5px solid #f97316;padding:12px 15px;border-radius:6px;margin:12px 0}
+.summary{background:#fff7ed;border-left:5px solid #ea580c;padding:15px;border-radius:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0}
+th,td{border:1px solid #cbd5e1;padding:10px;text-align:left}
+th{background:#ffedd5}
+footer{text-align:center;padding:25px;color:#64748b}
+</style>
+</head>
+<body>
+<header>
+<h1>파이썬 완전 문법 300예제</h1>
+<p>6편 · 모듈·패키지·날짜와 시간·정규표현식·이터레이터와 제너레이터 251~300예제</p>
+</header>
+
+<main>
+<div class="notice">
+<h2>6편 학습 범위</h2>
+<table>
+<tr><th>예제 범위</th><th>학습 주제</th></tr>
+<tr><td>251~260</td><td>모듈과 패키지</td></tr>
+<tr><td>261~270</td><td>날짜와 시간</td></tr>
+<tr><td>271~285</td><td>정규표현식</td></tr>
+<tr><td>286~300</td><td>이터레이터와 제너레이터</td></tr>
+</table>
+</div>
+
+<section>
+<h2>1. 모듈과 패키지 — 예제 251~260</h2>
+
+<h3>예제 251. math 모듈 가져오기</h3>
+<span class="tag">import</span><span class="tag">module</span>
+<pre><code>import math
+
+print(math.sqrt(25))
+print(math.pi)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>5.0<br>3.141592653589793</div>
+<div class="explain"><strong>설명</strong><br><code>import math</code>로 수학 관련 기능이 들어 있는 math 모듈을 사용할 수 있습니다.</div>
+
+<h3>예제 252. math.ceil과 math.floor</h3>
+<pre><code>import math
+
+print(math.ceil(3.2))
+print(math.floor(3.8))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>4<br>3</div>
+<div class="explain"><strong>설명</strong><br><code>ceil()</code>은 올림, <code>floor()</code>는 내림을 수행합니다.</div>
+
+<h3>예제 253. math.pow 사용</h3>
+<pre><code>import math
+
+print(math.pow(2, 5))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>32.0</div>
+<div class="explain"><strong>설명</strong><br><code>math.pow(a, b)</code>는 a의 b제곱을 실수 형태로 반환합니다.</div>
+
+<h3>예제 254. random 모듈</h3>
+<pre><code>import random
+
+print(random.randint(1, 10))</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>7</div>
+<div class="explain"><strong>설명</strong><br><code>randint(1, 10)</code>은 1부터 10까지의 정수 중 하나를 무작위로 선택합니다.</div>
+
+<h3>예제 255. 리스트에서 무작위 선택</h3>
+<pre><code>import random
+
+foods = ["김밥", "라면", "비빔밥", "떡볶이"]
+
+print(random.choice(foods))</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>비빔밥</div>
+<div class="explain"><strong>설명</strong><br><code>choice()</code>는 리스트에서 요소 하나를 무작위로 선택합니다.</div>
+
+<h3>예제 256. 리스트 섞기</h3>
+<pre><code>import random
+
+numbers = [1, 2, 3, 4, 5]
+
+random.shuffle(numbers)
+
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>[3, 1, 5, 2, 4]</div>
+<div class="explain"><strong>설명</strong><br><code>shuffle()</code>은 원본 리스트의 순서를 무작위로 섞습니다.</div>
+
+<h3>예제 257. 별칭으로 모듈 가져오기</h3>
+<pre><code>import math as m
+
+print(m.sqrt(81))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>9.0</div>
+<div class="explain"><strong>설명</strong><br><code>as</code>를 사용하면 모듈 이름을 짧은 별칭으로 사용할 수 있습니다.</div>
+
+<h3>예제 258. 필요한 기능만 가져오기</h3>
+<pre><code>from math import sqrt, pi
+
+print(sqrt(16))
+print(pi)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>4.0<br>3.141592653589793</div>
+<div class="explain"><strong>설명</strong><br><code>from 모듈 import 이름</code>을 사용하면 필요한 기능만 직접 가져올 수 있습니다.</div>
+
+<h3>예제 259. 사용자 모듈 만들기</h3>
+<pre><code># my_module.py 파일
+
+def add(a, b):
+return a + b
+
+# main.py 파일
+
+import my_module
+
+print(my_module.add(10, 20))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>30</div>
+<div class="explain"><strong>설명</strong><br>직접 만든 파이썬 파일도 모듈로 불러와 사용할 수 있습니다.</div>
+
+<h3>예제 260. 패키지 구조 예시</h3>
+<pre><code>my_package/
+    __init__.py
+    calculator.py
+
+# calculator.py
+
+def multiply(a, b):
+return a * b
+
+# main.py
+
+from my_package.calculator import multiply
+
+print(multiply(3, 4))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>12</div>
+<div class="explain"><strong>설명</strong><br>패키지는 여러 모듈을 폴더 단위로 정리한 구조입니다.</div>
+</section>
+
+<section>
+<h2>2. 날짜와 시간 — 예제 261~270</h2>
+
+<h3>예제 261. 현재 날짜와 시간</h3>
+<span class="tag">datetime</span><span class="tag">time</span>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+
+print(now)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>2026-07-04 12:30:45.123456</div>
+<div class="explain"><strong>설명</strong><br><code>datetime.now()</code>는 현재 날짜와 시간을 가져옵니다.</div>
+
+<h3>예제 262. 현재 연도, 월, 일</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+
+print(now.year)
+print(now.month)
+print(now.day)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>2026<br>7<br>4</div>
+<div class="explain"><strong>설명</strong><br>datetime 객체의 <code>year</code>, <code>month</code>, <code>day</code> 속성으로 날짜 정보를 얻습니다.</div>
+
+<h3>예제 263. 현재 시각</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+
+print(now.hour)
+print(now.minute)
+print(now.second)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>12<br>30<br>45</div>
+<div class="explain"><strong>설명</strong><br><code>hour</code>, <code>minute</code>, <code>second</code> 속성으로 시각 정보를 확인합니다.</div>
+
+<h3>예제 264. 날짜 직접 만들기</h3>
+<pre><code>from datetime import datetime
+
+birthday = datetime(2010, 5, 10)
+
+print(birthday)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>2010-05-10 00:00:00</div>
+<div class="explain"><strong>설명</strong><br><code>datetime(연도, 월, 일)</code>로 원하는 날짜를 직접 만들 수 있습니다.</div>
+
+<h3>예제 265. 날짜 형식 바꾸기</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+
+print(now.strftime("%Y년 %m월 %d일"))</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>2026년 07월 04일</div>
+<div class="explain"><strong>설명</strong><br><code>strftime()</code>는 날짜와 시간을 원하는 문자열 형식으로 바꿉니다.</div>
+
+<h3>예제 266. 시간 형식 바꾸기</h3>
+<pre><code>from datetime import datetime
+
+now = datetime.now()
+
+print(now.strftime("%H:%M:%S"))</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>12:30:45</div>
+<div class="explain"><strong>설명</strong><br><code>%H</code>는 시, <code>%M</code>은 분, <code>%S</code>는 초를 뜻합니다.</div>
+
+<h3>예제 267. 문자열을 날짜로 변환</h3>
+<pre><code>from datetime import datetime
+
+text = "2026-07-04"
+
+date = datetime.strptime(text, "%Y-%m-%d")
+
+print(date)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>2026-07-04 00:00:00</div>
+<div class="explain"><strong>설명</strong><br><code>strptime()</code>는 문자열을 날짜와 시간 객체로 변환합니다.</div>
+
+<h3>예제 268. 날짜 더하기</h3>
+<pre><code>from datetime import datetime, timedelta
+
+today = datetime.now()
+after_7_days = today + timedelta(days=7)
+
+print(after_7_days.strftime("%Y-%m-%d"))</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>timedelta</code>를 사용하면 날짜에 일, 시간, 분 등을 더하거나 뺄 수 있습니다.</div>
+
+<h3>예제 269. 날짜 차이 계산</h3>
+<pre><code>from datetime import datetime
+
+start = datetime(2026, 7, 1)
+end = datetime(2026, 7, 10)
+
+difference = end - start
+
+print(difference.days)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>9</div>
+<div class="explain"><strong>설명</strong><br>두 날짜를 빼면 날짜 차이를 나타내는 timedelta 객체가 만들어집니다.</div>
+
+<h3>예제 270. time 모듈로 잠시 멈추기</h3>
+<pre><code>import time
+
+print("시작")
+time.sleep(2)
+print("2초 후 실행")</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>sleep(2)</code>는 프로그램 실행을 2초 동안 멈춥니다.</div>
+</section>
+
+<section>
+<h2>3. 정규표현식 — 예제 271~285</h2>
+
+<h3>예제 271. re 모듈 가져오기</h3>
+<span class="tag">re</span><span class="tag">regex</span>
+<pre><code>import re
+
+text = "Python is fun"
+
+result = re.search("Python", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>&lt;re.Match object; span=(0, 6), match='Python'&gt;</div>
+<div class="explain"><strong>설명</strong><br><code>re.search()</code>는 문자열 안에서 패턴을 찾습니다.</div>
+
+<h3>예제 272. 검색 결과 확인</h3>
+<pre><code>import re
+
+text = "Python is fun"
+
+if re.search("Python", text):
+print("찾았습니다.")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>찾았습니다.</div>
+<div class="explain"><strong>설명</strong><br>패턴을 찾으면 Match 객체가 반환되므로 조건문에서 True처럼 사용할 수 있습니다.</div>
+
+<h3>예제 273. 숫자 찾기</h3>
+<pre><code>import re
+
+text = "학생 번호는 2026입니다."
+
+result = re.findall(r"\d+", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['2026']</div>
+<div class="explain"><strong>설명</strong><br><code>\d</code>는 숫자 한 자리, <code>+</code>는 하나 이상 반복을 뜻합니다.</div>
+
+<h3>예제 274. 영문자 찾기</h3>
+<pre><code>import re
+
+text = "Python 3.14"
+
+result = re.findall(r"[A-Za-z]+", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['Python']</div>
+<div class="explain"><strong>설명</strong><br><code>[A-Za-z]</code>는 영어 대문자와 소문자를 의미합니다.</div>
+
+<h3>예제 275. 한글 찾기</h3>
+<pre><code>import re
+
+text = "Python 파이썬 123"
+
+result = re.findall(r"[가-힣]+", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['파이썬']</div>
+<div class="explain"><strong>설명</strong><br><code>[가-힣]</code> 범위를 사용하면 한글 문자열을 찾을 수 있습니다.</div>
+
+<h3>예제 276. 공백 기준 분리</h3>
+<pre><code>import re
+
+text = "사과   바나나 포도"
+
+result = re.split(r"\s+", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['사과', '바나나', '포도']</div>
+<div class="explain"><strong>설명</strong><br><code>\s+</code>는 하나 이상의 공백 문자를 의미합니다.</div>
+
+<h3>예제 277. 숫자를 별표로 바꾸기</h3>
+<pre><code>import re
+
+text = "비밀번호는 1234입니다."
+
+result = re.sub(r"\d", "*", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>비밀번호는 ****입니다.</div>
+<div class="explain"><strong>설명</strong><br><code>re.sub()</code>는 정규표현식 패턴에 맞는 부분을 다른 문자열로 바꿉니다.</div>
+
+<h3>예제 278. 이메일 형식 간단 검사</h3>
+<pre><code>import re
+
+email = "[student@example.com](mailto:student@example.com)"
+
+pattern = r"^[\w.-]+@[\w.-]+.[A-Za-z]{2,}$"
+
+print(bool(re.match(pattern, email)))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br><code>^</code>는 시작, <code>$</code>는 끝을 뜻합니다. 이 예제는 간단한 이메일 형식만 검사합니다.</div>
+
+<h3>예제 279. 전화번호 형식 검사</h3>
+<pre><code>import re
+
+phone = "010-1234-5678"
+
+pattern = r"^010-\d{4}-\d{4}$"
+
+print(bool(re.match(pattern, phone)))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br><code>{4}</code>는 앞의 패턴이 정확히 4번 반복됨을 뜻합니다.</div>
+
+<h3>예제 280. 단어 시작 검사</h3>
+<pre><code>import re
+
+text = "Python programming"
+
+print(bool(re.match(r"Python", text)))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br><code>re.match()</code>는 문자열의 처음부터 패턴이 맞는지 확인합니다.</div>
+
+<h3>예제 281. 단어 전체 검사</h3>
+<pre><code>import re
+
+word = "Python"
+
+print(bool(re.fullmatch(r"[A-Za-z]+", word)))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br><code>fullmatch()</code>는 문자열 전체가 패턴과 일치해야 True를 반환합니다.</div>
+
+<h3>예제 282. 여러 단어 찾기</h3>
+<pre><code>import re
+
+text = "cat dog cat bird cat"
+
+result = re.findall(r"cat|dog", text)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['cat', 'dog', 'cat', 'cat']</div>
+<div class="explain"><strong>설명</strong><br><code>|</code>는 또는(or)를 의미합니다.</div>
+
+<h3>예제 283. 대소문자 구분 없이 찾기</h3>
+<pre><code>import re
+
+text = "Python python PYTHON"
+
+result = re.findall("python", text, re.IGNORECASE)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['Python', 'python', 'PYTHON']</div>
+<div class="explain"><strong>설명</strong><br><code>re.IGNORECASE</code>를 사용하면 대소문자를 구분하지 않고 검색합니다.</div>
+
+<h3>예제 284. 패턴 미리 컴파일하기</h3>
+<pre><code>import re
+
+pattern = re.compile(r"\d+")
+
+print(pattern.findall("점수: 80, 나이: 16"))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['80', '16']</div>
+<div class="explain"><strong>설명</strong><br>같은 패턴을 여러 번 사용할 때는 <code>compile()</code>로 미리 준비할 수 있습니다.</div>
+
+<h3>예제 285. 정규표현식 종합</h3>
+<pre><code>import re
+
+text = "홍길동: 90점, 김민수: 85점, 이서연: 100점"
+
+scores = re.findall(r"\d+", text)
+
+scores = list(map(int, scores))
+
+print(scores)
+print("평균:", sum(scores) / len(scores))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[90, 85, 100]<br>평균: 91.66666666666667</div>
+<div class="explain"><strong>설명</strong><br>정규표현식으로 숫자를 추출한 뒤 정수로 변환하여 계산할 수 있습니다.</div>
+</section>
+
+<section>
+<h2>4. 이터레이터와 제너레이터 — 예제 286~300</h2>
+
+<h3>예제 286. 반복 가능한 객체</h3>
+<span class="tag">iterator</span><span class="tag">generator</span>
+<pre><code>numbers = [10, 20, 30]
+
+for number in numbers:
+print(number)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>10<br>20<br>30</div>
+<div class="explain"><strong>설명</strong><br>리스트처럼 반복문에서 하나씩 꺼낼 수 있는 객체를 반복 가능한 객체라고 합니다.</div>
+
+<h3>예제 287. iter 함수</h3>
+<pre><code>numbers = [10, 20, 30]
+
+iterator = iter(numbers)
+
+print(iterator)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>&lt;list_iterator object at ...&gt;</div>
+<div class="explain"><strong>설명</strong><br><code>iter()</code>는 반복 가능한 객체를 이터레이터로 변환합니다.</div>
+
+<h3>예제 288. next 함수</h3>
+<pre><code>numbers = [10, 20, 30]
+
+iterator = iter(numbers)
+
+print(next(iterator))
+print(next(iterator))
+print(next(iterator))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>10<br>20<br>30</div>
+<div class="explain"><strong>설명</strong><br><code>next()</code>는 이터레이터에서 다음 값을 하나씩 꺼냅니다.</div>
+
+<h3>예제 289. StopIteration</h3>
+<pre><code>numbers = [1, 2]
+
+iterator = iter(numbers)
+
+print(next(iterator))
+print(next(iterator))
+
+# print(next(iterator))</code></pre>
+
+<div class="warning"><strong>주의</strong><br>더 이상 꺼낼 값이 없는데 <code>next()</code>를 호출하면 StopIteration 오류가 발생합니다.</div>
+
+<h3>예제 290. 직접 이터레이터 만들기</h3>
+<pre><code>class CountUp:
+    def __init__(self, limit):
+        self.current = 1
+        self.limit = limit
+
+```
+def __iter__(self):
+    return self
+
+def __next__(self):
+    if self.current > self.limit:
+        raise StopIteration
+
+    value = self.current
+    self.current += 1
+
+    return value
+```
+
+for number in CountUp(3):
+print(number)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>1<br>2<br>3</div>
+<div class="explain"><strong>설명</strong><br><code>__iter__()</code>와 <code>__next__()</code>를 정의하면 직접 이터레이터를 만들 수 있습니다.</div>
+
+<h3>예제 291. 가장 기본적인 제너레이터</h3>
+<pre><code>def generator():
+    yield 1
+    yield 2
+    yield 3
+
+for number in generator():
+print(number)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>1<br>2<br>3</div>
+<div class="explain"><strong>설명</strong><br><code>yield</code>를 사용한 함수는 값을 한 번에 모두 만들지 않고 필요할 때 하나씩 생성합니다.</div>
+
+<h3>예제 292. 제너레이터와 next</h3>
+<pre><code>def generator():
+    yield "첫 번째"
+    yield "두 번째"
+
+g = generator()
+
+print(next(g))
+print(next(g))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>첫 번째<br>두 번째</div>
+<div class="explain"><strong>설명</strong><br>제너레이터도 이터레이터이므로 <code>next()</code>로 값을 하나씩 가져올 수 있습니다.</div>
+
+<h3>예제 293. 숫자 제너레이터</h3>
+<pre><code>def count_up(limit):
+    for number in range(1, limit + 1):
+        yield number
+
+for number in count_up(5):
+print(number)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>1<br>2<br>3<br>4<br>5</div>
+<div class="explain"><strong>설명</strong><br>반복문 안에서 yield를 사용하면 순서대로 값을 생성할 수 있습니다.</div>
+
+<h3>예제 294. 짝수 제너레이터</h3>
+<pre><code>def even_numbers(limit):
+    for number in range(limit + 1):
+        if number % 2 == 0:
+            yield number
+
+print(list(even_numbers(10)))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[0, 2, 4, 6, 8, 10]</div>
+<div class="explain"><strong>설명</strong><br>제너레이터는 조건에 맞는 값만 순서대로 만들어 낼 수 있습니다.</div>
+
+<h3>예제 295. 무한 제너레이터</h3>
+<pre><code>def infinite_numbers():
+    number = 1
+
+```
+while True:
+    yield number
+    number += 1
+```
+
+g = infinite_numbers()
+
+print(next(g))
+print(next(g))
+print(next(g))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>1<br>2<br>3</div>
+<div class="warning"><strong>주의</strong><br>무한 제너레이터는 끝나지 않으므로 반복문에서 사용할 때 종료 조건을 반드시 고려해야 합니다.</div>
+
+<h3>예제 296. 제너레이터 표현식</h3>
+<pre><code>numbers = (number ** 2 for number in range(1, 6))
+
+print(list(numbers))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 4, 9, 16, 25]</div>
+<div class="explain"><strong>설명</strong><br>리스트 컴프리헨션의 대괄호를 소괄호로 바꾸면 제너레이터 표현식이 됩니다.</div>
+
+<h3>예제 297. 리스트와 제너레이터 차이</h3>
+<pre><code>list_data = [number ** 2 for number in range(5)]
+generator_data = (number ** 2 for number in range(5))
+
+print(list_data)
+print(generator_data)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>[0, 1, 4, 9, 16]<br>&lt;generator object ...&gt;</div>
+<div class="explain"><strong>설명</strong><br>리스트는 모든 값을 즉시 저장하지만, 제너레이터는 필요할 때 값을 생성하므로 메모리를 절약할 수 있습니다.</div>
+
+<h3>예제 298. yield from</h3>
+<pre><code>def numbers():
+    yield from [1, 2, 3]
+    yield from [4, 5]
+
+print(list(numbers()))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 2, 3, 4, 5]</div>
+<div class="explain"><strong>설명</strong><br><code>yield from</code>은 다른 반복 가능한 객체의 값을 차례대로 전달합니다.</div>
+
+<h3>예제 299. 파일 한 줄씩 읽는 제너레이터</h3>
+<pre><code>def read_lines(filename):
+    with open(filename, "r", encoding="utf-8") as file:
+        for line in file:
+            yield line.strip()
+
+for line in read_lines("memo.txt"):
+print(line)</code></pre>
+
+<div class="explain"><strong>설명</strong><br>큰 파일을 한 번에 모두 읽지 않고 한 줄씩 처리할 때 제너레이터가 유용합니다.</div>
+
+<h3>예제 300. 제너레이터 종합: 피보나치 수열</h3>
+<pre><code>def fibonacci(limit):
+    a, b = 0, 1
+
+```
+for _ in range(limit):
+    yield a
+    a, b = b, a + b
+```
+
+print(list(fibonacci(10)))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]</div>
+<div class="explain"><strong>설명</strong><br>제너레이터를 사용하면 피보나치 수열처럼 순서대로 계산되는 값을 효율적으로 생성할 수 있습니다.</div>
+
+<div class="summary">
+<h3>6편 핵심 요약</h3>
+<ul>
+<li>모듈은 기능을 담은 파이썬 파일이고, 패키지는 여러 모듈을 정리한 폴더 구조입니다.</li>
+<li><code>datetime</code>과 <code>timedelta</code>를 사용하면 날짜와 시간을 다룰 수 있습니다.</li>
+<li>정규표현식은 문자열에서 특정 형식의 데이터를 검색·검사·변환하는 데 사용합니다.</li>
+<li>이터레이터는 값을 하나씩 꺼내는 객체이며, <code>next()</code>로 다음 값을 가져옵니다.</li>
+<li>제너레이터는 <code>yield</code>를 사용하여 필요한 순간에 값을 생성하므로 메모리 효율이 좋습니다.</li>
+</ul>
+</div>
+</section>
+</main>
+
+<footer>파이썬 완전 문법 300예제 · 6편 모듈·패키지·날짜와 시간·정규표현식·이터레이터와 제너레이터 251~300</footer>
+</body>
+</html>

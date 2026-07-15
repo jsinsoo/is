@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파이썬 완전 문법 201~250예제</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f8fafc;color:#1f2937;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;line-height:1.75}
+header{padding:45px 20px;text-align:center;background:linear-gradient(135deg,#164e63,#0e7490);color:#fff}
+header h1{margin:0 0 10px;font-size:2.1rem}
+header p{margin:0;opacity:.92}
+main{max-width:1120px;margin:0 auto;padding:25px 18px 60px}
+.notice,section{background:#fff;border-radius:14px;padding:24px;margin:22px 0;box-shadow:0 4px 14px rgba(31,41,55,.08)}
+h2{color:#0e7490;border-bottom:3px solid #a5f3fc;padding-bottom:9px}
+h3{color:#155e75;margin-top:34px}
+.tag{display:inline-block;padding:3px 10px;margin-right:7px;border-radius:20px;background:#cffafe;color:#155e75;font-size:.85rem;font-weight:bold}
+pre{background:#111827;color:#f9fafb;padding:17px;border-radius:10px;overflow-x:auto;line-height:1.55}
+code{font-family:Consolas,"Courier New",monospace}
+.output{background:#ecfdf5;border-left:5px solid #10b981;padding:12px 15px;border-radius:6px;margin:12px 0}
+.explain{background:#eff6ff;border-left:5px solid #3b82f6;padding:12px 15px;border-radius:6px;margin:12px 0}
+.warning{background:#fff7ed;border-left:5px solid #f97316;padding:12px 15px;border-radius:6px;margin:12px 0}
+.summary{background:#ecfeff;border-left:5px solid #0891b2;padding:15px;border-radius:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0}
+th,td{border:1px solid #cbd5e1;padding:10px;text-align:left}
+th{background:#cffafe}
+footer{text-align:center;padding:25px;color:#64748b}
+</style>
+</head>
+<body>
+<header>
+<h1>파이썬 완전 문법 300예제</h1>
+<p>5편 · 객체지향 프로그래밍·예외 처리·파일 입출력 201~250예제</p>
+</header>
+
+<main>
+<div class="notice">
+<h2>5편 학습 범위</h2>
+<table>
+<tr><th>예제 범위</th><th>학습 주제</th></tr>
+<tr><td>201~220</td><td>클래스, 객체, 생성자, 인스턴스 변수와 메서드</td></tr>
+<tr><td>221~230</td><td>상속, 오버라이딩, 클래스 변수, 특수 메서드</td></tr>
+<tr><td>231~240</td><td>try, except, else, finally, raise</td></tr>
+<tr><td>241~250</td><td>텍스트 파일 읽기·쓰기, with문, CSV 기초</td></tr>
+</table>
+</div>
+
+<section>
+<h2>1. 객체지향 프로그래밍 기초 — 예제 201~220</h2>
+
+<h3>예제 201. 가장 기본적인 클래스</h3>
+<span class="tag">class</span><span class="tag">OOP</span>
+<pre><code>class Student:
+    pass
+
+student = Student()
+
+print(type(student))</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>&lt;class '__main__.Student'&gt;</div>
+<div class="explain"><strong>설명</strong><br><code>class</code>는 객체를 만들기 위한 설계도입니다. <code>Student()</code>로 만든 실제 객체를 인스턴스라고 합니다.</div>
+
+<h3>예제 202. 인스턴스 변수 만들기</h3>
+<pre><code>class Student:
+    pass
+
+student = Student()
+student.name = "민수"
+student.score = 90
+
+print(student.name)
+print(student.score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민수<br>90</div>
+<div class="explain"><strong>설명</strong><br>객체에 점 표기법을 사용하여 속성(인스턴스 변수)을 추가할 수 있습니다.</div>
+
+<h3>예제 203. 생성자 __init__</h3>
+<pre><code>class Student:
+    def __init__(self, name):
+        self.name = name
+
+student = Student("지민")
+
+print(student.name)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민</div>
+<div class="explain"><strong>설명</strong><br><code>__init__</code>은 객체가 생성될 때 자동으로 실행되는 생성자입니다.</div>
+
+<h3>예제 204. 생성자로 여러 속성 저장</h3>
+<pre><code>class Student:
+    def __init__(self, name, age, score):
+        self.name = name
+        self.age = age
+        self.score = score
+
+student = Student("서연", 16, 95)
+
+print(student.name)
+print(student.age)
+print(student.score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>서연<br>16<br>95</div>
+<div class="explain"><strong>설명</strong><br><code>self.변수</code>는 각 객체가 독립적으로 가지는 속성입니다.</div>
+
+<h3>예제 205. 인스턴스 메서드</h3>
+<pre><code>class Student:
+    def __init__(self, name):
+        self.name = name
+
+```
+def introduce(self):
+    print(f"안녕하세요. 저는 {self.name}입니다.")
+```
+
+student = Student("민수")
+student.introduce()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>안녕하세요. 저는 민수입니다.</div>
+<div class="explain"><strong>설명</strong><br>클래스 안에 정의한 함수를 메서드라고 합니다. 인스턴스 메서드의 첫 번째 매개변수는 보통 <code>self</code>입니다.</div>
+
+<h3>예제 206. 점수 출력 메서드</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+```
+def show_score(self):
+    print(f"{self.name}의 점수는 {self.score}점입니다.")
+```
+
+student = Student("지민", 98)
+student.show_score()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민의 점수는 98점입니다.</div>
+<div class="explain"><strong>설명</strong><br>메서드는 객체의 속성을 이용해 동작을 수행합니다.</div>
+
+<h3>예제 207. 객체마다 다른 값 저장</h3>
+<pre><code>class Student:
+    def __init__(self, name):
+        self.name = name
+
+student1 = Student("민수")
+student2 = Student("지민")
+
+print(student1.name)
+print(student2.name)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민수<br>지민</div>
+<div class="explain"><strong>설명</strong><br>같은 클래스로 만든 객체라도 각자 다른 속성값을 가질 수 있습니다.</div>
+
+<h3>예제 208. 객체의 상태 변경</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+```
+def add_score(self, point):
+    self.score += point
+```
+
+student = Student("서연", 80)
+student.add_score(10)
+
+print(student.score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>90</div>
+<div class="explain"><strong>설명</strong><br>메서드를 통해 객체 내부의 상태를 변경할 수 있습니다.</div>
+
+<h3>예제 209. 잔액 관리 클래스</h3>
+<pre><code>class Account:
+    def __init__(self, owner, balance):
+        self.owner = owner
+        self.balance = balance
+
+```
+def deposit(self, money):
+    self.balance += money
+```
+
+account = Account("민수", 10000)
+account.deposit(5000)
+
+print(account.balance)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>15000</div>
+<div class="explain"><strong>설명</strong><br>객체는 현실의 대상이나 데이터를 관리하는 구조로 표현할 수 있습니다.</div>
+
+<h3>예제 210. 출금 메서드</h3>
+<pre><code>class Account:
+    def __init__(self, balance):
+        self.balance = balance
+
+```
+def withdraw(self, money):
+    if money <= self.balance:
+        self.balance -= money
+        print("출금 완료")
+    else:
+        print("잔액이 부족합니다.")
+```
+
+account = Account(10000)
+account.withdraw(3000)
+
+print(account.balance)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>출금 완료<br>7000</div>
+<div class="explain"><strong>설명</strong><br>메서드 안에서 조건문을 사용하면 객체의 상태를 안전하게 관리할 수 있습니다.</div>
+
+<h3>예제 211. 클래스 안의 함수 호출</h3>
+<pre><code>class Calculator:
+    def add(self, a, b):
+        return a + b
+
+```
+def multiply(self, a, b):
+    return a * b
+```
+
+calculator = Calculator()
+
+print(calculator.add(3, 4))
+print(calculator.multiply(3, 4))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>7<br>12</div>
+<div class="explain"><strong>설명</strong><br>하나의 클래스에 관련된 기능을 여러 메서드로 묶을 수 있습니다.</div>
+
+<h3>예제 212. 인스턴스 변수와 지역 변수</h3>
+<pre><code>class Example:
+    def __init__(self):
+        self.value = 10
+
+```
+def show(self):
+    local_value = 20
+    print(self.value)
+    print(local_value)
+```
+
+example = Example()
+example.show()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>10<br>20</div>
+<div class="explain"><strong>설명</strong><br><code>self.value</code>는 객체가 유지하는 인스턴스 변수이고, <code>local_value</code>는 메서드 안에서만 사용하는 지역 변수입니다.</div>
+
+<h3>예제 213. 학생 합격 여부 메서드</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+```
+def is_pass(self):
+    return self.score >= 80
+```
+
+student = Student("지민", 85)
+
+print(student.is_pass())</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br>메서드는 True 또는 False를 반환하여 조건문에 활용할 수 있습니다.</div>
+
+<h3>예제 214. 객체 리스트 만들기</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+students = [
+Student("민수", 80),
+Student("지민", 95),
+Student("서연", 88)
+]
+
+for student in students:
+print(student.name, student.score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민수 80<br>지민 95<br>서연 88</div>
+<div class="explain"><strong>설명</strong><br>객체를 리스트에 저장하면 여러 개의 데이터를 구조적으로 관리할 수 있습니다.</div>
+
+<h3>예제 215. 객체 리스트 평균</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+students = [
+Student("민수", 80),
+Student("지민", 95),
+Student("서연", 85)
+]
+
+total = sum(student.score for student in students)
+average = total / len(students)
+
+print(average)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>86.66666666666667</div>
+<div class="explain"><strong>설명</strong><br>객체의 속성값을 반복하여 합계와 평균을 계산할 수 있습니다.</div>
+
+<h3>예제 216. 객체를 반환하는 함수</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+def create_student(name, score):
+return Student(name, score)
+
+student = create_student("하늘", 92)
+
+print(student.name, student.score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>하늘 92</div>
+<div class="explain"><strong>설명</strong><br>함수에서 객체를 만들어 반환할 수도 있습니다.</div>
+
+<h3>예제 217. 메서드 체인 기초</h3>
+<pre><code>class Counter:
+    def __init__(self):
+        self.value = 0
+
+```
+def increase(self):
+    self.value += 1
+    return self
+```
+
+counter = Counter()
+counter.increase().increase().increase()
+
+print(counter.value)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>3</div>
+<div class="explain"><strong>설명</strong><br>메서드에서 <code>self</code>를 반환하면 메서드를 이어서 호출할 수 있습니다.</div>
+
+<h3>예제 218. 클래스 내부에 리스트 저장</h3>
+<pre><code>class TodoList:
+    def __init__(self):
+        self.todos = []
+
+```
+def add(self, todo):
+    self.todos.append(todo)
+```
+
+todo_list = TodoList()
+todo_list.add("파이썬 공부")
+todo_list.add("운동")
+
+print(todo_list.todos)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['파이썬 공부', '운동']</div>
+<div class="explain"><strong>설명</strong><br>객체의 속성으로 리스트를 두면 여러 데이터를 함께 관리할 수 있습니다.</div>
+
+<h3>예제 219. 객체 속성 삭제</h3>
+<pre><code>class Student:
+    def __init__(self, name):
+        self.name = name
+        self.temp = "임시 데이터"
+
+student = Student("민수")
+
+del student.temp
+
+print(student.name)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민수</div>
+<div class="explain"><strong>설명</strong><br><code>del 객체.속성</code>으로 필요 없는 속성을 삭제할 수 있습니다.</div>
+
+<h3>예제 220. isinstance 확인</h3>
+<pre><code>class Student:
+    pass
+
+student = Student()
+
+print(isinstance(student, Student))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True</div>
+<div class="explain"><strong>설명</strong><br><code>isinstance()</code>는 객체가 특정 클래스의 인스턴스인지 확인합니다.</div>
+</section>
+
+<section>
+<h2>2. 상속과 특수 메서드 — 예제 221~230</h2>
+
+<h3>예제 221. 기본 상속</h3>
+<pre><code>class Animal:
+    def eat(self):
+        print("먹습니다.")
+
+class Dog(Animal):
+pass
+
+dog = Dog()
+dog.eat()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>먹습니다.</div>
+<div class="explain"><strong>설명</strong><br>상속을 사용하면 자식 클래스가 부모 클래스의 속성과 메서드를 물려받습니다.</div>
+
+<h3>예제 222. 자식 클래스 메서드 추가</h3>
+<pre><code>class Animal:
+    def eat(self):
+        print("먹습니다.")
+
+class Dog(Animal):
+def bark(self):
+print("멍멍!")
+
+dog = Dog()
+dog.eat()
+dog.bark()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>먹습니다.<br>멍멍!</div>
+<div class="explain"><strong>설명</strong><br>자식 클래스는 부모 기능을 물려받으면서 새로운 기능을 추가할 수 있습니다.</div>
+
+<h3>예제 223. 메서드 오버라이딩</h3>
+<pre><code>class Animal:
+    def sound(self):
+        print("동물 소리")
+
+class Cat(Animal):
+def sound(self):
+print("야옹")
+
+cat = Cat()
+cat.sound()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>야옹</div>
+<div class="explain"><strong>설명</strong><br>자식 클래스에서 부모와 같은 이름의 메서드를 다시 정의하는 것을 오버라이딩이라고 합니다.</div>
+
+<h3>예제 224. super로 부모 생성자 호출</h3>
+<pre><code>class Animal:
+    def __init__(self, name):
+        self.name = name
+
+class Dog(Animal):
+def **init**(self, name, breed):
+super().**init**(name)
+self.breed = breed
+
+dog = Dog("초코", "푸들")
+
+print(dog.name)
+print(dog.breed)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>초코<br>푸들</div>
+<div class="explain"><strong>설명</strong><br><code>super()</code>는 부모 클래스의 메서드나 생성자를 호출할 때 사용합니다.</div>
+
+<h3>예제 225. 클래스 변수</h3>
+<pre><code>class Student:
+    school = "파이썬 중학교"
+
+```
+def __init__(self, name):
+    self.name = name
+```
+
+student1 = Student("민수")
+student2 = Student("지민")
+
+print(student1.school)
+print(student2.school)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>파이썬 중학교<br>파이썬 중학교</div>
+<div class="explain"><strong>설명</strong><br>클래스 변수는 모든 객체가 함께 사용하는 값입니다.</div>
+
+<h3>예제 226. 클래스 변수 변경</h3>
+<pre><code>class Counter:
+    count = 0
+
+```
+def __init__(self):
+    Counter.count += 1
+```
+
+a = Counter()
+b = Counter()
+c = Counter()
+
+print(Counter.count)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>3</div>
+<div class="explain"><strong>설명</strong><br>클래스 이름으로 접근하면 모든 객체가 공유하는 값을 관리할 수 있습니다.</div>
+
+<h3>예제 227. __str__ 특수 메서드</h3>
+<pre><code>class Student:
+    def __init__(self, name, score):
+        self.name = name
+        self.score = score
+
+```
+def __str__(self):
+    return f"{self.name}: {self.score}점"
+```
+
+student = Student("지민", 95)
+
+print(student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민: 95점</div>
+<div class="explain"><strong>설명</strong><br><code>__str__</code>을 정의하면 객체를 print할 때 보기 좋은 문자열을 출력할 수 있습니다.</div>
+
+<h3>예제 228. __len__ 특수 메서드</h3>
+<pre><code>class Word:
+    def __init__(self, text):
+        self.text = text
+
+```
+def __len__(self):
+    return len(self.text)
+```
+
+word = Word("Python")
+
+print(len(word))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>6</div>
+<div class="explain"><strong>설명</strong><br><code>__len__</code>을 정의하면 사용자 클래스 객체에도 <code>len()</code>을 사용할 수 있습니다.</div>
+
+<h3>예제 229. 다형성 기초</h3>
+<pre><code>class Dog:
+    def sound(self):
+        return "멍멍"
+
+class Cat:
+def sound(self):
+return "야옹"
+
+animals = [Dog(), Cat()]
+
+for animal in animals:
+print(animal.sound())</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>멍멍<br>야옹</div>
+<div class="explain"><strong>설명</strong><br>서로 다른 클래스라도 같은 이름의 메서드를 사용하면 비슷한 방식으로 처리할 수 있습니다.</div>
+
+<h3>예제 230. 상속 종합</h3>
+<pre><code>class Person:
+    def __init__(self, name):
+        self.name = name
+
+```
+def introduce(self):
+    print(f"저는 {self.name}입니다.")
+```
+
+class Teacher(Person):
+def teach(self):
+print("수업을 진행합니다.")
+
+teacher = Teacher("김선생님")
+
+teacher.introduce()
+teacher.teach()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>저는 김선생님입니다.<br>수업을 진행합니다.</div>
+<div class="explain"><strong>설명</strong><br>상속을 이용하면 공통 기능은 부모 클래스에 두고, 역할별 기능은 자식 클래스에 추가할 수 있습니다.</div>
+</section>
+
+<section>
+<h2>3. 예외 처리 — 예제 231~240</h2>
+
+<h3>예제 231. 예외가 발생하는 코드</h3>
+<span class="tag">try</span><span class="tag">except</span>
+<pre><code>number = 10
+# print(number / 0)</code></pre>
+<div class="warning"><strong>주의</strong><br>0으로 나누면 <code>ZeroDivisionError</code>가 발생합니다. 예외 처리를 사용하면 프로그램이 갑자기 종료되는 것을 줄일 수 있습니다.</div>
+
+<h3>예제 232. ZeroDivisionError 처리</h3>
+<pre><code>try:
+    result = 10 / 0
+    print(result)
+except ZeroDivisionError:
+    print("0으로 나눌 수 없습니다.")</code></pre>
+<div class="output"><strong>실행 결과</strong><br>0으로 나눌 수 없습니다.</div>
+<div class="explain"><strong>설명</strong><br><code>try</code>에서 오류가 발생하면 해당 예외를 처리하는 <code>except</code>가 실행됩니다.</div>
+
+<h3>예제 233. ValueError 처리</h3>
+<pre><code>try:
+    age = int("열여섯")
+    print(age)
+except ValueError:
+    print("숫자로 변환할 수 없습니다.")</code></pre>
+<div class="output"><strong>실행 결과</strong><br>숫자로 변환할 수 없습니다.</div>
+<div class="explain"><strong>설명</strong><br>숫자가 아닌 문자열을 <code>int()</code>로 변환하면 ValueError가 발생합니다.</div>
+
+<h3>예제 234. 사용자 입력 예외 처리</h3>
+<pre><code>try:
+    number = int(input("숫자를 입력하세요: "))
+    print(number * 2)
+except ValueError:
+    print("숫자만 입력하세요.")</code></pre>
+<div class="explain"><strong>설명</strong><br>입력값이 잘못되었을 때 프로그램이 멈추지 않도록 예외 처리를 할 수 있습니다.</div>
+
+<h3>예제 235. 여러 예외 처리</h3>
+<pre><code>try:
+    number = int(input("숫자 입력: "))
+    print(100 / number)
+except ValueError:
+    print("숫자를 입력해야 합니다.")
+except ZeroDivisionError:
+    print("0으로 나눌 수 없습니다.")</code></pre>
+<div class="explain"><strong>설명</strong><br>발생할 수 있는 오류 종류에 따라 여러 개의 except를 작성할 수 있습니다.</div>
+
+<h3>예제 236. Exception으로 모든 예외 처리</h3>
+<pre><code>try:
+    numbers = [1, 2, 3]
+    print(numbers[10])
+except Exception as error:
+    print("오류 발생:", error)</code></pre>
+<div class="output"><strong>실행 결과 예시</strong><br>오류 발생: list index out of range</div>
+<div class="warning"><strong>주의</strong><br><code>Exception</code>은 많은 오류를 한 번에 처리하지만, 가능하면 구체적인 예외 종류를 처리하는 것이 좋습니다.</div>
+
+<h3>예제 237. else 사용</h3>
+<pre><code>try:
+    number = int("10")
+except ValueError:
+    print("변환 실패")
+else:
+    print("변환 성공:", number)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>변환 성공: 10</div>
+<div class="explain"><strong>설명</strong><br><code>else</code>는 try 블록에서 예외가 발생하지 않았을 때 실행됩니다.</div>
+
+<h3>예제 238. finally 사용</h3>
+<pre><code>try:
+    print(10 / 2)
+except ZeroDivisionError:
+    print("오류 발생")
+finally:
+    print("항상 실행됩니다.")</code></pre>
+<div class="output"><strong>실행 결과</strong><br>5.0<br>항상 실행됩니다.</div>
+<div class="explain"><strong>설명</strong><br><code>finally</code>는 오류 발생 여부와 관계없이 마지막에 항상 실행됩니다.</div>
+
+<h3>예제 239. raise로 예외 발생시키기</h3>
+<pre><code>age = -1
+
+if age < 0:
+raise ValueError("나이는 0 이상이어야 합니다.")</code></pre>
+
+<div class="warning"><strong>설명</strong><br><code>raise</code>는 프로그램에서 직접 예외를 발생시킬 때 사용합니다.</div>
+
+<h3>예제 240. 예외 처리 종합</h3>
+<pre><code>try:
+    score = int(input("점수 입력: "))
+
+```
+if not 0 <= score <= 100:
+    raise ValueError("점수는 0~100 사이여야 합니다.")
+
+print("입력한 점수:", score)
+```
+
+except ValueError as error:
+print("입력 오류:", error)
+
+finally:
+print("점수 입력을 종료합니다.")</code></pre>
+
+<div class="explain"><strong>설명</strong><br>입력 변환, 범위 검사, 오류 메시지, 마무리 작업을 함께 구성한 예제입니다.</div>
+</section>
+
+<section>
+<h2>4. 파일 입출력 — 예제 241~250</h2>
+
+<h3>예제 241. 파일 쓰기 w 모드</h3>
+<span class="tag">open</span><span class="tag">file</span>
+<pre><code>file = open("hello.txt", "w", encoding="utf-8")
+
+file.write("안녕하세요.\n")
+file.write("파이썬 파일 입출력입니다.")
+
+file.close()</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>"w"</code> 모드는 새 파일을 만들거나 기존 파일 내용을 새로 씁니다. 한글 처리를 위해 <code>encoding="utf-8"</code>을 지정합니다.</div>
+
+<h3>예제 242. 파일 읽기 r 모드</h3>
+<pre><code>file = open("hello.txt", "r", encoding="utf-8")
+
+content = file.read()
+
+file.close()
+
+print(content)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>안녕하세요.<br>파이썬 파일 입출력입니다.</div>
+<div class="explain"><strong>설명</strong><br><code>read()</code>는 파일 전체 내용을 문자열로 읽습니다.</div>
+
+<h3>예제 243. with문으로 파일 쓰기</h3>
+<pre><code>with open("memo.txt", "w", encoding="utf-8") as file:
+    file.write("첫 번째 메모\n")
+    file.write("두 번째 메모")</code></pre>
+<div class="explain"><strong>설명</strong><br><code>with</code>문을 사용하면 작업이 끝난 뒤 파일이 자동으로 닫히므로 <code>close()</code>를 직접 호출하지 않아도 됩니다.</div>
+
+<h3>예제 244. with문으로 파일 읽기</h3>
+<pre><code>with open("memo.txt", "r", encoding="utf-8") as file:
+    content = file.read()
+
+print(content)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>첫 번째 메모<br>두 번째 메모</div>
+<div class="explain"><strong>설명</strong><br>파일 읽기에도 with문을 사용하는 것이 일반적으로 권장됩니다.</div>
+
+<h3>예제 245. 파일에 내용 추가 a 모드</h3>
+<pre><code>with open("memo.txt", "a", encoding="utf-8") as file:
+    file.write("\n세 번째 메모")</code></pre>
+<div class="explain"><strong>설명</strong><br><code>"a"</code> 모드는 기존 내용을 지우지 않고 파일 끝에 새 내용을 추가합니다.</div>
+
+<h3>예제 246. readline으로 한 줄 읽기</h3>
+<pre><code>with open("memo.txt", "r", encoding="utf-8") as file:
+    line = file.readline()
+
+print(line)</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>readline()</code>은 파일에서 한 줄만 읽습니다.</div>
+
+<h3>예제 247. 파일을 한 줄씩 반복</h3>
+<pre><code>with open("memo.txt", "r", encoding="utf-8") as file:
+    for line in file:
+        print(line.strip())</code></pre>
+<div class="explain"><strong>설명</strong><br>파일 객체를 반복하면 한 줄씩 읽을 수 있습니다. <code>strip()</code>은 줄바꿈 문자를 제거합니다.</div>
+
+<h3>예제 248. writelines로 여러 줄 저장</h3>
+<pre><code>lines = [
+    "사과\n",
+    "바나나\n",
+    "포도\n"
+]
+
+with open("fruits.txt", "w", encoding="utf-8") as file:
+file.writelines(lines)</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>writelines()</code>는 문자열이 들어 있는 리스트를 파일에 여러 줄로 저장할 때 사용합니다.</div>
+
+<h3>예제 249. CSV 파일 쓰기</h3>
+<pre><code>import csv
+
+rows = [
+["이름", "점수"],
+["민수", 80],
+["지민", 95]
+]
+
+with open("scores.csv", "w", newline="", encoding="utf-8-sig") as file:
+writer = csv.writer(file)
+writer.writerows(rows)</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>csv</code> 모듈을 사용하면 표 형태의 데이터를 CSV 파일로 저장할 수 있습니다. <code>utf-8-sig</code>은 스프레드시트 프로그램에서 한글이 깨지는 문제를 줄이는 데 도움이 됩니다.</div>
+
+<h3>예제 250. CSV 파일 읽기</h3>
+<pre><code>import csv
+
+with open("scores.csv", "r", encoding="utf-8-sig") as file:
+reader = csv.reader(file)
+
+```
+for row in reader:
+    print(row)</code></pre>
+```
+
+<div class="output"><strong>실행 결과 예시</strong><br>['이름', '점수']<br>['민수', '80']<br>['지민', '95']</div>
+<div class="explain"><strong>설명</strong><br><code>csv.reader()</code>는 CSV 파일의 각 행을 리스트 형태로 읽어 옵니다.</div>
+
+<div class="summary">
+<h3>5편 핵심 요약</h3>
+<ul>
+<li>클래스는 객체를 만들기 위한 설계도이고, 객체는 클래스에서 만든 실제 데이터입니다.</li>
+<li><code>__init__</code>은 객체 생성 시 실행되는 생성자이며, <code>self</code>는 현재 객체를 의미합니다.</li>
+<li>상속을 사용하면 부모 클래스의 기능을 재사용하고 확장할 수 있습니다.</li>
+<li><code>try-except</code>를 사용하면 오류가 발생해도 프로그램이 안전하게 처리되도록 만들 수 있습니다.</li>
+<li><code>with open()</code>을 사용하면 텍스트 파일과 CSV 파일을 편리하고 안전하게 읽고 쓸 수 있습니다.</li>
+</ul>
+</div>
+</section>
+</main>
+
+<footer>파이썬 완전 문법 300예제 · 5편 객체지향 프로그래밍·예외 처리·파일 입출력 201~250</footer>
+</body>
+</html>

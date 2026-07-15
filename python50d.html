@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파이썬 완전 문법 151~200예제</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f8fafc;color:#1f2937;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;line-height:1.75}
+header{padding:45px 20px;text-align:center;background:linear-gradient(135deg,#312e81,#6d28d9);color:#fff}
+header h1{margin:0 0 10px;font-size:2.1rem}
+header p{margin:0;opacity:.92}
+main{max-width:1120px;margin:0 auto;padding:25px 18px 60px}
+.notice,section{background:#fff;border-radius:14px;padding:24px;margin:22px 0;box-shadow:0 4px 14px rgba(31,41,55,.08)}
+h2{color:#4338ca;border-bottom:3px solid #c4b5fd;padding-bottom:9px}
+h3{color:#6d28d9;margin-top:34px}
+.tag{display:inline-block;padding:3px 10px;margin-right:7px;border-radius:20px;background:#ede9fe;color:#5b21b6;font-size:.85rem;font-weight:bold}
+pre{background:#111827;color:#f9fafb;padding:17px;border-radius:10px;overflow-x:auto;line-height:1.55}
+code{font-family:Consolas,"Courier New",monospace}
+.output{background:#ecfdf5;border-left:5px solid #10b981;padding:12px 15px;border-radius:6px;margin:12px 0}
+.explain{background:#eff6ff;border-left:5px solid #3b82f6;padding:12px 15px;border-radius:6px;margin:12px 0}
+.warning{background:#fff7ed;border-left:5px solid #f97316;padding:12px 15px;border-radius:6px;margin:12px 0}
+.summary{background:#f5f3ff;border-left:5px solid #7c3aed;padding:15px;border-radius:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0}
+th,td{border:1px solid #cbd5e1;padding:10px;text-align:left}
+th{background:#ede9fe}
+footer{text-align:center;padding:25px;color:#64748b}
+</style>
+</head>
+<body>
+<header>
+<h1>파이썬 완전 문법 300예제</h1>
+<p>4편 · 함수·람다·내장 함수 151~200예제</p>
+</header>
+
+<main>
+<div class="notice">
+<h2>4편 학습 범위</h2>
+<table>
+<tr><th>예제 범위</th><th>학습 주제</th></tr>
+<tr><td>151~165</td><td>함수 정의, 매개변수, 반환값</td></tr>
+<tr><td>166~175</td><td>기본값, 키워드 인자, 가변 인자, 재귀 함수</td></tr>
+<tr><td>176~185</td><td>람다 함수, map, filter, sorted의 key</td></tr>
+<tr><td>186~200</td><td>주요 내장 함수와 활용</td></tr>
+</table>
+</div>
+
+<section>
+<h2>1. 함수 기초 — 예제 151~165</h2>
+
+<h3>예제 151. 가장 기본적인 함수</h3>
+<span class="tag">def</span><span class="tag">함수</span>
+<pre><code>def hello():
+    print("안녕하세요!")
+
+hello()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>안녕하세요!</div>
+<div class="explain"><strong>설명</strong><br><code>def</code>로 함수를 정의하고, 함수 이름 뒤에 괄호를 붙여 호출합니다.</div>
+
+<h3>예제 152. 여러 번 호출하는 함수</h3>
+<pre><code>def greet():
+    print("파이썬을 공부합니다.")
+
+greet()
+greet()
+greet()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>파이썬을 공부합니다.<br>파이썬을 공부합니다.<br>파이썬을 공부합니다.</div>
+<div class="explain"><strong>설명</strong><br>한 번 정의한 함수는 필요한 만큼 반복해서 사용할 수 있습니다.</div>
+
+<h3>예제 153. 매개변수 하나</h3>
+<pre><code>def hello(name):
+    print(name, "님, 안녕하세요!")
+
+hello("민지")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민지 님, 안녕하세요!</div>
+<div class="explain"><strong>설명</strong><br>매개변수는 함수를 호출할 때 전달받는 값을 저장하는 변수입니다.</div>
+
+<h3>예제 154. 매개변수 두 개</h3>
+<pre><code>def add(a, b):
+    print(a + b)
+
+add(10, 20)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>30</div>
+<div class="explain"><strong>설명</strong><br>함수는 여러 개의 매개변수를 받을 수 있습니다.</div>
+
+<h3>예제 155. return으로 값 반환</h3>
+<pre><code>def add(a, b):
+    return a + b
+
+result = add(10, 20)
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>30</div>
+<div class="explain"><strong>설명</strong><br><code>return</code>은 함수의 계산 결과를 함수 밖으로 돌려줍니다.</div>
+
+<h3>예제 156. 두 수의 곱</h3>
+<pre><code>def multiply(a, b):
+    return a * b
+
+print(multiply(4, 5))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>20</div>
+<div class="explain"><strong>설명</strong><br>반환값이 있는 함수는 다른 계산식 안에서도 사용할 수 있습니다.</div>
+
+<h3>예제 157. 짝수 판별 함수</h3>
+<pre><code>def is_even(number):
+    return number % 2 == 0
+
+print(is_even(10))
+print(is_even(7))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True<br>False</div>
+<div class="explain"><strong>설명</strong><br>비교식의 결과는 True 또는 False이므로 조건 판별 함수에 적합합니다.</div>
+
+<h3>예제 158. 절댓값 함수 만들기</h3>
+<pre><code>def my_abs(number):
+    if number < 0:
+        return -number
+    return number
+
+print(my_abs(-15))
+print(my_abs(8))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>15<br>8</div>
+<div class="explain"><strong>설명</strong><br>함수 내부에서 조건문을 사용하여 입력값에 따라 다른 결과를 반환할 수 있습니다.</div>
+
+<h3>예제 159. 성적 등급 함수</h3>
+<pre><code>def get_grade(score):
+    if score >= 90:
+        return "A"
+    elif score >= 80:
+        return "B"
+    elif score >= 70:
+        return "C"
+    else:
+        return "D"
+
+print(get_grade(87))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>B</div>
+<div class="explain"><strong>설명</strong><br>복잡한 조건 판단을 함수로 만들면 프로그램의 구조가 더 깔끔해집니다.</div>
+
+<h3>예제 160. 여러 값 반환</h3>
+<pre><code>def calculate(a, b):
+    return a + b, a - b, a * b
+
+add_result, sub_result, mul_result = calculate(10, 3)
+
+print(add_result)
+print(sub_result)
+print(mul_result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>13<br>7<br>30</div>
+<div class="explain"><strong>설명</strong><br>쉼표로 여러 값을 반환하면 실제로는 튜플 형태로 반환됩니다.</div>
+
+<h3>예제 161. 함수에서 문자열 반환</h3>
+<pre><code>def make_message(name):
+    return f"{name}님, 오늘도 좋은 하루입니다."
+
+message = make_message("지민")
+print(message)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민님, 오늘도 좋은 하루입니다.</div>
+<div class="explain"><strong>설명</strong><br>함수는 숫자뿐 아니라 문자열, 리스트, 딕셔너리 등 다양한 값을 반환할 수 있습니다.</div>
+
+<h3>예제 162. 리스트의 합계 함수</h3>
+<pre><code>def get_total(numbers):
+    total = 0
+
+```
+for number in numbers:
+    total += number
+
+return total
+```
+
+print(get_total([10, 20, 30]))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>60</div>
+<div class="explain"><strong>설명</strong><br>리스트를 함수의 인자로 전달하여 여러 데이터를 한 번에 처리할 수 있습니다.</div>
+
+<h3>예제 163. 리스트 평균 함수</h3>
+<pre><code>def get_average(numbers):
+    return sum(numbers) / len(numbers)
+
+scores = [80, 90, 100]
+print(get_average(scores))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>90.0</div>
+<div class="explain"><strong>설명</strong><br>함수 내부에서 기존 내장 함수도 자유롭게 사용할 수 있습니다.</div>
+
+<h3>예제 164. 함수 호출 순서</h3>
+<pre><code>def first():
+    print("첫 번째 함수")
+
+def second():
+print("두 번째 함수")
+
+first()
+second()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>첫 번째 함수<br>두 번째 함수</div>
+<div class="explain"><strong>설명</strong><br>함수는 호출된 순서대로 실행됩니다.</div>
+
+<h3>예제 165. return 뒤의 코드는 실행되지 않음</h3>
+<pre><code>def test():
+    print("함수 시작")
+    return "완료"
+    print("이 문장은 실행되지 않습니다.")
+
+print(test())</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>함수 시작<br>완료</div>
+<div class="explain"><strong>설명</strong><br><code>return</code>이 실행되면 함수는 즉시 종료됩니다.</div>
+</section>
+
+<section>
+<h2>2. 함수 활용 — 예제 166~175</h2>
+
+<h3>예제 166. 기본값 매개변수</h3>
+<pre><code>def hello(name="학생"):
+    print(name, "님, 안녕하세요!")
+
+hello()
+hello("민수")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>학생 님, 안녕하세요!<br>민수 님, 안녕하세요!</div>
+<div class="explain"><strong>설명</strong><br>매개변수에 기본값을 지정하면 인자를 전달하지 않아도 함수를 호출할 수 있습니다.</div>
+
+<h3>예제 167. 기본값을 이용한 인사</h3>
+<pre><code>def introduce(name, city="광주"):
+    print(f"{name}님은 {city}에 살고 있습니다.")
+
+introduce("지민")
+introduce("민수", "서울")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민님은 광주에 살고 있습니다.<br>민수님은 서울에 살고 있습니다.</div>
+<div class="explain"><strong>설명</strong><br>기본값 매개변수는 일반 매개변수 뒤에 작성합니다.</div>
+
+<h3>예제 168. 키워드 인자</h3>
+<pre><code>def student_info(name, age, city):
+    print(name, age, city)
+
+student_info(city="광주", name="서연", age=16)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>서연 16 광주</div>
+<div class="explain"><strong>설명</strong><br>키워드 인자를 사용하면 매개변수 이름을 지정하여 순서와 관계없이 값을 전달할 수 있습니다.</div>
+
+<h3>예제 169. 위치 인자와 키워드 인자</h3>
+<pre><code>def order_menu(menu, count, size="보통"):
+    print(f"{menu} {count}잔, 크기: {size}")
+
+order_menu("아메리카노", 2, size="큰")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>아메리카노 2잔, 크기: 큰</div>
+<div class="explain"><strong>설명</strong><br>위치 인자는 앞에, 키워드 인자는 뒤에 작성하는 것이 원칙입니다.</div>
+
+<h3>예제 170. 가변 위치 인자 *args</h3>
+<pre><code>def add_all(*numbers):
+    return sum(numbers)
+
+print(add_all(1, 2, 3))
+print(add_all(10, 20, 30, 40))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>6<br>100</div>
+<div class="explain"><strong>설명</strong><br><code>*args</code>는 개수가 정해지지 않은 여러 위치 인자를 튜플로 받습니다.</div>
+
+<h3>예제 171. 가변 인자 출력</h3>
+<pre><code>def print_names(*names):
+    for name in names:
+        print(name)
+
+print_names("민수", "지민", "서연")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민수<br>지민<br>서연</div>
+<div class="explain"><strong>설명</strong><br>가변 인자는 여러 개의 값을 받아 반복 처리할 때 유용합니다.</div>
+
+<h3>예제 172. 가변 키워드 인자 **kwargs</h3>
+<pre><code>def print_profile(**profile):
+    for key, value in profile.items():
+        print(key, ":", value)
+
+print_profile(name="지민", age=16, city="광주")</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>name : 지민<br>age : 16<br>city : 광주</div>
+<div class="explain"><strong>설명</strong><br><code>**kwargs</code>는 개수가 정해지지 않은 키워드 인자를 딕셔너리로 받습니다.</div>
+
+<h3>예제 173. 지역 변수</h3>
+<pre><code>def test():
+    message = "함수 안의 변수"
+    print(message)
+
+test()
+
+# print(message)</code></pre>
+
+<div class="explain"><strong>설명</strong><br>함수 안에서 만든 변수는 일반적으로 함수 밖에서 사용할 수 없습니다. 이를 지역 변수라고 합니다.</div>
+
+<h3>예제 174. 전역 변수 읽기</h3>
+<pre><code>message = "전역 변수"
+
+def show_message():
+print(message)
+
+show_message()</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>전역 변수</div>
+<div class="explain"><strong>설명</strong><br>함수 안에서는 함수 밖의 전역 변수를 읽을 수 있습니다.</div>
+
+<h3>예제 175. 재귀 함수: 팩토리얼</h3>
+<pre><code>def factorial(number):
+    if number == 1:
+        return 1
+    return number * factorial(number - 1)
+
+print(factorial(5))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>120</div>
+<div class="explain"><strong>설명</strong><br>재귀 함수는 함수가 자기 자신을 다시 호출하는 방식입니다. 반드시 종료 조건이 필요합니다.</div>
+</section>
+
+<section>
+<h2>3. 람다 함수와 함수형 도구 — 예제 176~185</h2>
+
+<h3>예제 176. 람다 함수 기본</h3>
+<span class="tag">lambda</span><span class="tag">익명 함수</span>
+<pre><code>add = lambda a, b: a + b
+
+print(add(10, 20))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>30</div>
+<div class="explain"><strong>설명</strong><br>람다 함수는 이름 없이 짧은 함수를 만들 때 사용합니다.</div>
+
+<h3>예제 177. 제곱 람다 함수</h3>
+<pre><code>square = lambda number: number ** 2
+
+print(square(5))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>25</div>
+<div class="explain"><strong>설명</strong><br>람다 함수는 보통 한 줄로 표현할 수 있는 간단한 계산에 사용합니다.</div>
+
+<h3>예제 178. 조건이 있는 람다 함수</h3>
+<pre><code>check_even = lambda number: "짝수" if number % 2 == 0 else "홀수"
+
+print(check_even(7))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>홀수</div>
+<div class="explain"><strong>설명</strong><br>람다 함수 안에서도 삼항 연산자를 이용해 간단한 조건 처리를 할 수 있습니다.</div>
+
+<h3>예제 179. map으로 제곱 리스트 만들기</h3>
+<pre><code>numbers = [1, 2, 3, 4, 5]
+
+result = list(map(lambda number: number ** 2, numbers))
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 4, 9, 16, 25]</div>
+<div class="explain"><strong>설명</strong><br><code>map()</code>은 모든 요소에 같은 함수를 적용합니다. 결과를 리스트로 보려면 <code>list()</code>로 변환합니다.</div>
+
+<h3>예제 180. map으로 문자열 숫자 변환</h3>
+<pre><code>text_numbers = ["10", "20", "30"]
+
+numbers = list(map(int, text_numbers))
+
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[10, 20, 30]</div>
+<div class="explain"><strong>설명</strong><br><code>map(int, 리스트)</code>는 문자열 숫자를 정수로 한꺼번에 변환할 때 자주 사용합니다.</div>
+
+<h3>예제 181. filter로 짝수만 추출</h3>
+<pre><code>numbers = [1, 2, 3, 4, 5, 6]
+
+even_numbers = list(filter(lambda number: number % 2 == 0, numbers))
+
+print(even_numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[2, 4, 6]</div>
+<div class="explain"><strong>설명</strong><br><code>filter()</code>는 조건이 True인 요소만 남깁니다.</div>
+
+<h3>예제 182. filter로 긴 단어 찾기</h3>
+<pre><code>words = ["봄", "파이썬", "프로그래밍", "코드"]
+
+long_words = list(filter(lambda word: len(word) >= 3, words))
+
+print(long_words)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['파이썬', '프로그래밍']</div>
+<div class="explain"><strong>설명</strong><br>filter와 lambda를 사용하면 조건에 맞는 데이터만 간단히 추출할 수 있습니다.</div>
+
+<h3>예제 183. sorted와 lambda</h3>
+<pre><code>students = [
+    {"name": "민수", "score": 80},
+    {"name": "지민", "score": 95},
+    {"name": "서연", "score": 88}
+]
+
+result = sorted(students, key=lambda student: student["score"])
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[{'name': '민수', 'score': 80}, {'name': '서연', 'score': 88}, {'name': '지민', 'score': 95}]</div>
+<div class="explain"><strong>설명</strong><br><code>key</code>에 람다 함수를 넣으면 원하는 기준으로 정렬할 수 있습니다.</div>
+
+<h3>예제 184. 문자열 길이 기준 정렬</h3>
+<pre><code>words = ["봄", "파이썬", "코딩", "프로그래밍"]
+
+result = sorted(words, key=lambda word: len(word))
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['봄', '코딩', '파이썬', '프로그래밍']</div>
+<div class="explain"><strong>설명</strong><br>단어 길이를 반환하는 람다 함수를 정렬 기준으로 사용했습니다.</div>
+
+<h3>예제 185. reduce로 누적 곱</h3>
+<pre><code>from functools import reduce
+
+numbers = [1, 2, 3, 4]
+
+result = reduce(lambda a, b: a * b, numbers)
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>24</div>
+<div class="explain"><strong>설명</strong><br><code>reduce()</code>는 리스트의 요소를 앞에서부터 누적 계산합니다. 사용 전 <code>functools</code>에서 가져와야 합니다.</div>
+</section>
+
+<section>
+<h2>4. 주요 내장 함수 — 예제 186~200</h2>
+
+<h3>예제 186. len 함수</h3>
+<pre><code>text = "Python"
+numbers = [10, 20, 30]
+
+print(len(text))
+print(len(numbers))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>6<br>3</div>
+<div class="explain"><strong>설명</strong><br><code>len()</code>은 문자열, 리스트, 튜플, 딕셔너리 등의 길이를 구합니다.</div>
+
+<h3>예제 187. sum 함수</h3>
+<pre><code>scores = [80, 90, 100]
+
+print(sum(scores))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>270</div>
+<div class="explain"><strong>설명</strong><br><code>sum()</code>은 숫자 자료의 합계를 구합니다.</div>
+
+<h3>예제 188. max와 min 함수</h3>
+<pre><code>numbers = [12, 5, 30, 8]
+
+print(max(numbers))
+print(min(numbers))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>30<br>5</div>
+<div class="explain"><strong>설명</strong><br><code>max()</code>는 최댓값, <code>min()</code>은 최솟값을 반환합니다.</div>
+
+<h3>예제 189. abs 함수</h3>
+<pre><code>print(abs(-10))
+print(abs(7))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>10<br>7</div>
+<div class="explain"><strong>설명</strong><br><code>abs()</code>는 절댓값을 구합니다.</div>
+
+<h3>예제 190. round 함수</h3>
+<pre><code>number = 3.141592
+
+print(round(number))
+print(round(number, 2))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>3<br>3.14</div>
+<div class="explain"><strong>설명</strong><br><code>round(값, 자릿수)</code>는 원하는 소수점 자리까지 반올림합니다.</div>
+
+<h3>예제 191. pow 함수</h3>
+<pre><code>print(pow(2, 3))
+print(pow(3, 2))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>8<br>9</div>
+<div class="explain"><strong>설명</strong><br><code>pow(a, b)</code>는 a의 b제곱을 계산합니다.</div>
+
+<h3>예제 192. divmod 함수</h3>
+<pre><code>quotient, remainder = divmod(17, 5)
+
+print(quotient)
+print(remainder)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>3<br>2</div>
+<div class="explain"><strong>설명</strong><br><code>divmod(a, b)</code>는 몫과 나머지를 튜플로 반환합니다.</div>
+
+<h3>예제 193. enumerate 함수</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+
+for index, fruit in enumerate(fruits):
+print(index, fruit)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>0 사과<br>1 바나나<br>2 포도</div>
+<div class="explain"><strong>설명</strong><br><code>enumerate()</code>는 반복할 때 순서 번호와 값을 함께 제공합니다.</div>
+
+<h3>예제 194. zip 함수</h3>
+<pre><code>names = ["민수", "지민", "서연"]
+scores = [80, 95, 88]
+
+for name, score in zip(names, scores):
+print(name, score)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민수 80<br>지민 95<br>서연 88</div>
+<div class="explain"><strong>설명</strong><br><code>zip()</code>은 여러 리스트의 같은 위치 요소를 묶어 반복합니다.</div>
+
+<h3>예제 195. all 함수</h3>
+<pre><code>checks1 = [True, True, True]
+checks2 = [True, False, True]
+
+print(all(checks1))
+print(all(checks2))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True<br>False</div>
+<div class="explain"><strong>설명</strong><br><code>all()</code>은 모든 값이 True일 때만 True를 반환합니다.</div>
+
+<h3>예제 196. any 함수</h3>
+<pre><code>checks1 = [False, False, True]
+checks2 = [False, False, False]
+
+print(any(checks1))
+print(any(checks2))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True<br>False</div>
+<div class="explain"><strong>설명</strong><br><code>any()</code>는 하나라도 True가 있으면 True를 반환합니다.</div>
+
+<h3>예제 197. list, tuple, set 변환</h3>
+<pre><code>text = "hello"
+
+print(list(text))
+print(tuple(text))
+print(set(text))</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>['h', 'e', 'l', 'l', 'o']<br>('h', 'e', 'l', 'l', 'o')<br>{'h', 'e', 'l', 'o'}</div>
+<div class="explain"><strong>설명</strong><br>자료형 생성 함수로 데이터를 다른 자료형으로 변환할 수 있습니다.</div>
+
+<h3>예제 198. sorted 함수</h3>
+<pre><code>numbers = [5, 1, 4, 2, 3]
+
+print(sorted(numbers))
+print(sorted(numbers, reverse=True))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 2, 3, 4, 5]<br>[5, 4, 3, 2, 1]</div>
+<div class="explain"><strong>설명</strong><br><code>sorted()</code>는 원본을 바꾸지 않고 정렬된 새 리스트를 만듭니다.</div>
+
+<h3>예제 199. reversed 함수</h3>
+<pre><code>numbers = [1, 2, 3, 4, 5]
+
+result = list(reversed(numbers))
+
+print(result)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[5, 4, 3, 2, 1]</div>
+<div class="explain"><strong>설명</strong><br><code>reversed()</code>는 순서를 반대로 하는 반복 객체를 반환합니다.</div>
+
+<h3>예제 200. 함수와 내장 함수 종합</h3>
+<pre><code>def analyze_scores(scores):
+    return {
+        "합계": sum(scores),
+        "평균": sum(scores) / len(scores),
+        "최고점": max(scores),
+        "최저점": min(scores)
+    }
+
+scores = [85, 92, 78, 100]
+result = analyze_scores(scores)
+
+for key, value in result.items():
+print(key, ":", value)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>합계 : 355<br>평균 : 88.75<br>최고점 : 100<br>최저점 : 78</div>
+<div class="explain"><strong>설명</strong><br>함수, 리스트, 딕셔너리, 반복문, 내장 함수를 결합하면 실제 데이터 처리 프로그램을 만들 수 있습니다.</div>
+
+<div class="summary">
+<h3>4편 핵심 요약</h3>
+<ul>
+<li><code>def</code>로 함수를 정의하고, 필요한 기능을 재사용할 수 있습니다.</li>
+<li><code>return</code>은 함수의 결과를 호출한 위치로 돌려줍니다.</li>
+<li>기본값, 키워드 인자, <code>*args</code>, <code>**kwargs</code>를 사용하면 유연한 함수를 만들 수 있습니다.</li>
+<li><code>lambda</code>, <code>map()</code>, <code>filter()</code>, <code>sorted()</code>는 데이터를 간결하게 처리할 때 유용합니다.</li>
+<li><code>len()</code>, <code>sum()</code>, <code>max()</code>, <code>zip()</code>, <code>enumerate()</code> 등 내장 함수는 자주 활용됩니다.</li>
+</ul>
+</div>
+</section>
+</main>
+
+<footer>파이썬 완전 문법 300예제 · 4편 함수·람다·내장 함수 151~200</footer>
+</body>
+</html>
