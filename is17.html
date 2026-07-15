@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>정보과학 17차시 목표지향 개념기반 수업지도안</title>
+<style>
+:root{--n:#17324d;--b:#2f6fa3;--g:#f2b84b;--l:#d7e3ec;--bg:#f3f7fa;--ok:#eaf8ef;--no:#fff0f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:"Malgun Gothic",sans-serif;color:#26333f;line-height:1.7}
+header{background:linear-gradient(135deg,var(--n),var(--b));color:#fff;padding:36px 20px}
+header div,main,nav div{max-width:1150px;margin:auto}h1{margin:0 0 8px}nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--l);z-index:5}
+nav div{display:flex;gap:8px;overflow:auto;padding:9px}nav a{white-space:nowrap;color:var(--n);font-weight:700;text-decoration:none;padding:7px 10px}
+main{padding:18px 15px 70px}section{background:#fff;border:1px solid var(--l);border-radius:16px;padding:24px;margin:16px 0}
+h2{color:var(--n);border-left:7px solid var(--g);padding-left:11px}h3{color:var(--b)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.card{border:1px solid var(--l);background:#f9fcfe;border-radius:12px;padding:15px}
+.tag{display:inline-block;background:#eaf4fb;color:var(--b);font-weight:700;border-radius:15px;padding:3px 9px;margin:2px}
+.quote{background:#fff8e8;border-left:6px solid var(--g);padding:18px;border-radius:12px}
+table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--l);padding:9px;vertical-align:top}th{background:var(--n);color:#fff}
+pre{background:#17212b;color:#edf5fa;padding:18px;border-radius:12px;overflow:auto;line-height:1.55}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:10px}input[type=text]{width:100%;padding:10px;border:1px solid #aebdca;border-radius:8px}
+.q{border:1px solid var(--l);border-radius:12px;padding:14px;margin:11px 0}.q.good{background:var(--ok);border-color:#58a675}.q.bad{background:var(--no);border-color:#d86b6b}
+.opts label{display:block;padding:6px}.exp{display:none;background:#fff;padding:8px;margin-top:7px;border-left:4px solid var(--g)}
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:800;cursor:pointer}.primary{background:var(--b);color:#fff}.secondary{background:#e7eef4}.danger{background:#c94d4d;color:#fff}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}#result{display:none;background:#eef8ff;border:2px solid var(--b);border-radius:12px;padding:16px;margin-top:15px}
+.progress{height:11px;background:#e5edf3;border-radius:8px;overflow:hidden;margin:12px 0}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--b),var(--g))}
+@media(max-width:650px){.student{grid-template-columns:1fr}}@media print{nav,.actions{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header><div><h1>정보과학 17차시 목표지향 개념기반 수업지도안</h1><p>프로젝트 결과를 청중에 맞게 구조화하고 근거 중심으로 발표·공유하기</p></div></header>
+<nav><div><a href="#s1">성취기준</a><a href="#s2">개념</a><a href="#s3">학습내용</a><a href="#s4">소논문</a><a href="#s5">코드</a><a href="#s6">평가</a></div></nav>
+<main>
+<section id="s1">
+<h2>1. 성취기준과 학습 목표</h2>
+<div class="card"><b>[12정과04-05]</b> 프로젝트의 산출물을 기능적, 윤리적 관점에서 평가하고 결과를 공유한다.</div>
+<div class="grid">
+<div class="card"><b>지식·이해</b><br>청중 분석, 핵심 메시지, 근거 자료, 시각화, 한계 공개, 질의응답의 의미를 설명한다.</div>
+<div class="card"><b>과정·기능</b><br>프로젝트의 문제·방법·결과·한계·개선 방향을 구조화하여 발표 자료와 요약 보고서로 표현한다.</div>
+<div class="card"><b>가치·태도</b><br>과장 없이 사실과 근거를 제시하고 출처·개인정보·저작권을 지키며 질문에 책임 있게 답변한다.</div>
+</div>
+<p><b>성공 기준:</b> 청중에 맞는 핵심 메시지를 정하고, 결과를 근거 자료로 설명하며, 한계와 윤리적 고려를 포함한 발표를 완성한다.</p>
+</section>
+
+<section id="s2">
+<h2>2. 학습할 개념</h2>
+<p><span class="tag">청중 분석</span><span class="tag">핵심 메시지</span><span class="tag">근거 중심 설명</span><span class="tag">시각화</span><span class="tag">한계 공개</span><span class="tag">출처 표시</span><span class="tag">질의응답</span><span class="tag">요약</span><span class="tag">책임 있는 공유</span></p>
+<table>
+<tr><th>개념</th><th>핵심 의미</th></tr>
+<tr><td>청중 분석</td><td>발표를 듣는 사람의 배경지식, 관심, 필요에 맞게 내용과 표현 방식을 조정하는 과정</td></tr>
+<tr><td>핵심 메시지</td><td>발표가 끝난 뒤 청중이 반드시 기억해야 할 가장 중요한 한 문장</td></tr>
+<tr><td>근거 중심 설명</td><td>주장에 데이터, 실행 결과, 테스트 기록, 비교 자료를 연결해 설명하는 방식</td></tr>
+<tr><td>한계 공개</td><td>데이터 부족, 오류 가능성, 적용 범위, 윤리적 제약을 숨기지 않고 밝히는 태도</td></tr>
+<tr><td>질의응답</td><td>질문의 의도를 파악하고 근거와 한계를 바탕으로 책임 있게 답변하는 과정</td></tr>
+</table>
+</section>
+
+<section>
+<h2>3. 수업 시작 멘트</h2>
+<div class="quote">“아리스토텔레스는 설득에는 논리와 신뢰, 청중에 대한 이해가 함께 필요하다고 보았고, 소크라테스는 질문을 통해 생각을 더 분명하게 만들었습니다. 과학자는 실험 결과를 다른 사람이 검증할 수 있도록 설명하고, 수학자는 답보다 증명의 흐름을 보여 줍니다. 오늘 우리는 프로젝트를 자랑하는 발표가 아니라, 문제와 근거와 한계를 공유하는 발표를 만듭니다. 슬라이드에 글자를 작게 넣는다고 지식이 압축되는 것은 아닙니다. 그것은 청중의 시력만 압축합니다.”</div>
+</section>
+
+<section id="s3">
+<h2>4. 학습 내용</h2>
+<table>
+<tr><th>단계</th><th>활동</th></tr>
+<tr><td>도입 5분</td><td>좋은 발표와 정보가 과도한 발표를 비교하여 차이를 찾는다.</td></tr>
+<tr><td>개념 10분</td><td>청중 분석, 핵심 메시지, 근거 자료, 한계 공개, 출처 표시를 학습한다.</td></tr>
+<tr><td>탐구 10분</td><td>프로젝트 내용을 문제–방법–결과–한계–개선 방향의 다섯 부분으로 요약한다.</td></tr>
+<tr><td>코딩 15분</td><td>프로젝트 정보를 바탕으로 발표용 요약문과 시간 배분표를 자동 생성하는 프로그램을 작성한다.</td></tr>
+<tr><td>발표 5분</td><td>1분 발표와 1문 1답을 실시하고 동료 피드백을 기록한다.</td></tr>
+<tr><td>평가 5분</td><td>OX, 복수 정답, 단답형 평가를 실시한다.</td></tr>
+</table>
+</section>
+
+<section id="s4">
+<h2>5. 학습 관련 소논문 주제 예시 5개</h2>
+<ol>
+<li>발표 자료의 정보량이 청중의 이해도에 미치는 영향</li>
+<li>데이터 시각화 방식에 따른 프로젝트 결과 전달 효과 비교</li>
+<li>한계 공개 여부가 정보과학 프로젝트의 신뢰도에 미치는 영향</li>
+<li>질의응답 활동이 학생의 알고리즘 설명 능력에 미치는 효과</li>
+<li>청중 수준에 따른 전문 용어 사용과 이해도 변화 분석</li>
+</ol>
+</section>
+
+<section id="s5">
+<h2>6. 학습할 코드 1개</h2>
+<pre><code>project = {
+    "title": "교실 공기질 알림 시스템",
+    "problem": "수업 중 이산화탄소 농도 상승을 즉시 알기 어렵다.",
+    "method": "센서 자료를 수집하고 기준값에 따라 상태를 분류했다.",
+    "result": "환기 필요 구간을 자동으로 표시할 수 있었다.",
+    "limitation": "한 교실의 짧은 기간 자료만 사용했다.",
+    "improvement": "여러 교실과 계절 자료를 추가할 계획이다."
+}
+
+presentation_order = [
+    ("문제", "problem", 20),
+    ("방법", "method", 25),
+    ("결과", "result", 25),
+    ("한계", "limitation", 15),
+    ("개선", "improvement", 15)
+]
+
+
+def create_summary(project, order):
+    lines = [f'주제: {project["title"]}']
+    total_seconds = 0
+
+    for label, key, seconds in order:
+        lines.append(f'{label}: {project[key]}')
+        total_seconds += seconds
+
+    lines.append(f'예상 발표 시간: {total_seconds}초')
+    return "\n".join(lines)
+
+
+summary = create_summary(project, presentation_order)
+print(summary)</code></pre>
+<table>
+<tr><th>코드 요소</th><th>상세 설명</th></tr>
+<tr><td><code>project</code></td><td>프로젝트의 제목, 문제, 방법, 결과, 한계, 개선 방향을 딕셔너리로 구조화한다.</td></tr>
+<tr><td><code>presentation_order</code></td><td>발표 순서, 딕셔너리 키, 예상 시간을 튜플로 저장한 리스트이다.</td></tr>
+<tr><td><code>create_summary</code></td><td>프로젝트 정보와 발표 순서를 입력받아 발표용 요약문을 만든다.</td></tr>
+<tr><td><code>lines</code></td><td>발표에 사용할 문장을 순서대로 저장한다.</td></tr>
+<tr><td><code>total_seconds</code></td><td>각 부분의 시간을 누적해 전체 발표 시간을 계산한다.</td></tr>
+<tr><td><code>for label, key, seconds</code></td><td>튜플의 세 값을 각각 발표 항목명, 딕셔너리 키, 시간으로 분리한다.</td></tr>
+<tr><td><code>"\n".join(lines)</code></td><td>여러 문장을 줄바꿈으로 연결해 하나의 발표문으로 만든다.</td></tr>
+</table>
+<p><b>확장 활동:</b> 청중 유형, 데이터 출처, 윤리적 고려, 핵심 메시지 항목을 추가하여 과학 발표용·학부모 설명용·교내 전시용 요약문을 각각 만들어 본다.</p>
+</section>
+
+<section>
+<h2>7. 수업 끝 멘트</h2>
+<div class="quote">“시는 짧은 말로 긴 마음을 전하고, 소설은 수많은 장면을 한 줄의 주제로 묶습니다. 희곡은 배우의 목소리와 몸짓으로 글을 살아 있게 만들고, 연극은 관객과 만날 때 비로소 완성됩니다. 음악도 악보에 머물지 않고 연주될 때 사람의 마음에 도착합니다. 여러분의 프로젝트도 공유될 때 새로운 질문과 가능성을 만납니다. 다만 발표 시간이 1분인데 서론만 59초를 쓰면, 결론은 청중의 상상력에 외주를 준 셈입니다!”</div>
+</section>
+
+<section id="s6">
+<h2>8. 형성·진단·코드 평가</h2>
+<div class="card"><b>배점:</b> OX 20점 · 진단평가 60점 · 단답형 20점</div>
+<div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="name" type="text" placeholder="예: 홍길동"></label></div>
+<div class="progress"><span id="bar"></span></div>
+<form id="quiz">
+<h3>Ⅰ. 형성평가 OX 10개</h3><div id="ox"></div>
+<h3>Ⅱ. 옳은 것 3개 고르기 10개</h3><div id="multi"></div>
+<h3>Ⅲ. 코드 평가 단답형 5개</h3><div id="short"></div>
+</form>
+<div class="actions"><button type="button" class="primary" onclick="grade()">채점하고 TXT 저장</button><button type="button" class="secondary" onclick="print()">인쇄·PDF</button><button type="button" class="danger" onclick="resetAll()">다시 풀기</button></div>
+<div id="result"></div>
+</section>
+</main>
+
+<script>
+const O=[
+["좋은 발표는 청중의 배경지식을 고려한다.","O"],
+["핵심 메시지는 발표에서 가장 기억해야 할 중심 내용이다.","O"],
+["프로젝트의 한계는 신뢰도를 떨어뜨리므로 숨기는 것이 좋다.","X"],
+["근거 중심 설명은 주장과 데이터나 실행 결과를 연결한다.","O"],
+["출처 표시는 결과 공유에서 중요하지 않다.","X"],
+["질의응답에서는 모르는 내용을 아는 척하는 것이 좋다.","X"],
+["발표 시간 배분은 핵심 내용을 빠짐없이 전달하는 데 도움이 된다.","O"],
+["시각화는 복잡한 결과를 이해하기 쉽게 표현할 수 있다.","O"],
+["청중이 다르면 같은 내용을 다른 표현으로 설명할 수 있다.","O"],
+["결과 공유는 성공한 내용만 보여 주는 과정이다.","X"]
+];
+const M=[
+["좋은 발표의 구성",["문제","방법","결과","발표자 취미","교실 좌석"],[0,1,2]],
+["책임 있는 공유",["출처 표시","한계 설명","윤리 고려 공개","실패 삭제","과장된 결론"],[0,1,2]],
+["청중 분석 요소",["배경지식","관심과 필요","이해 가능한 용어","발표자의 키","교실 벽 색"],[0,1,2]],
+["근거 자료",["실행 결과","테스트 기록","비교 데이터","근거 없는 감상","출처 없는 이미지"],[0,1,2]],
+["project 딕셔너리 설명",["제목 저장","문제와 방법 저장","한계와 개선 저장","모든 값은 숫자","발표 시간을 자동 삭제"],[0,1,2]],
+["presentation_order 설명",["발표 순서 저장","딕셔너리 키 저장","시간 저장","무작위 값만 저장","결과를 삭제"],[0,1,2]],
+["create_summary 함수",["요약문 생성","전체 시간 계산","줄바꿈 연결","프로젝트 삭제","항상 같은 문장만 출력"],[0,1,2]],
+["질의응답 태도",["질문 의도 확인","근거로 답변","모르는 내용은 한계 인정","질문자 비난","근거 없이 단정"],[0,1,2]],
+["효과적인 시각화",["핵심 수치 강조","축과 단위 표시","출처 표시","장식만 강조","왜곡된 축 사용"],[0,1,2]],
+["성취기준 활동",["기능·윤리 관점 결과 설명","한계와 개선 방향 공유","청중 질문에 책임 있게 답변","오류 은폐","출처 제거"],[0,1,2]]
+];
+const S=[
+["프로젝트 정보를 저장하는 변수",["project"]],
+["발표 순서와 시간을 저장하는 변수",["presentation_order"]],
+["요약문 생성 함수",["create_summary","create_summary()"]],
+["전체 발표 시간을 누적하는 변수",["total_seconds"]],
+["여러 문장을 줄바꿈으로 연결하는 메서드",["join","join()"]]
+];
+function norm(v){return (v||"").toLowerCase().replace(/\s/g,"")}
+function render(){
+ox.innerHTML=O.map((x,i)=>`<div class=q id=o${i}><b>${i+1}. ${x[0]}</b><div class=opts><label><input type=radio name=o${i} value=O> O</label><label><input type=radio name=o${i} value=X> X</label></div><div class=exp id=oe${i}></div></div>`).join("");
+multi.innerHTML=M.map((x,i)=>`<div class=q id=m${i}><b>${i+1}. ${x[0]}에서 옳은 것 3개를 고르시오.</b><div class=opts>${x[1].map((v,j)=>`<label><input type=checkbox name=m${i} value=${j}> ${j+1}) ${v}</label>`).join("")}</div><div class=exp id=me${i}></div></div>`).join("");
+short.innerHTML=S.map((x,i)=>`<div class=q id=s${i}><b>${i+1}. ${x[0]}</b><input type=text name=s${i}><div class=exp id=se${i}></div></div>`).join("");
+document.querySelectorAll("input").forEach(x=>x.addEventListener("input",progress))
+}
+function progress(){let a=0;for(let i=0;i<10;i++)if(document.querySelector(`input[name=o${i}]:checked`))a++;for(let i=0;i<10;i++)if(document.querySelectorAll(`input[name=m${i}]:checked`).length)a++;for(let i=0;i<5;i++)if(document.querySelector(`input[name=s${i}]`).value.trim())a++;bar.style.width=(a/25*100)+"%"}
+function mark(id,eid,ok,text){let q=document.getElementById(id);q.className="q "+(ok?"good":"bad");let e=document.getElementById(eid);e.style.display="block";e.textContent=text}
+function grade(){
+let id=sid.value.trim(),nm=name.value.trim();if(!id||!nm){alert("학번과 이름을 입력하세요.");return}
+let score=0,lines=[];
+O.forEach((x,i)=>{let e=document.querySelector(`input[name=o${i}]:checked`),v=e?e.value:"미응답",ok=v===x[1];if(ok)score+=2;mark("o"+i,"oe"+i,ok,"정답: "+x[1]);lines.push(`[OX ${i+1}] ${v} / ${x[1]} / ${ok?"정답":"오답"}`)});
+M.forEach((x,i)=>{let v=[...document.querySelectorAll(`input[name=m${i}]:checked`)].map(z=>+z.value).sort(),ok=JSON.stringify(v)===JSON.stringify(x[2]);if(ok)score+=6;mark("m"+i,"me"+i,ok,"정답: "+x[2].map(z=>z+1).join(",")+"번");lines.push(`[진단 ${i+1}] ${v.map(z=>z+1).join(",")||"미응답"} / ${x[2].map(z=>z+1).join(",")} / ${ok?"정답":"오답"}`)});
+S.forEach((x,i)=>{let v=document.querySelector(`input[name=s${i}]`).value,ok=x[1].some(a=>norm(a)===norm(v));if(ok)score+=4;mark("s"+i,"se"+i,ok,"정답: "+x[1][0]);lines.push(`[단답 ${i+1}] ${v||"미응답"} / ${x[1][0]} / ${ok?"정답":"오답"}`)});
+let d=new Date(),p=n=>String(n).padStart(2,"0"),t=`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`,ft=`${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+result.style.display="block";result.innerHTML=`<h3>${score}점 / 100점</h3><p>${id} ${nm} · ${t}</p>`;
+let txt=["정보과학 17차시 평가 결과",`학번: ${id}`,`이름: ${nm}`,`점수: ${score}/100`,`응시시각: ${t}`,"",...lines].join("\r\n");
+let u=URL.createObjectURL(new Blob(["\ufeff"+txt],{type:"text/plain;charset=utf-8"})),a=document.createElement("a");a.href=u;a.download=`${id}_${nm}_${score}점_17차시_${ft}.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(u),500)
+}
+function resetAll(){if(confirm("모든 답을 지울까요?"))location.reload()}
+render();
+</script>
+</body>
+</html>
