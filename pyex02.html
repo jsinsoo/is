@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>파이썬 코드 8개 상세 설명 2</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--line:#d7e3ec;--paper:#fff;--bg:#f3f7fa;
+ --ink:#26333f;--red:#c94d4d
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:42px 20px}
+.wrap,main{max-width:1200px;margin:auto}
+header h1{margin:0 0 8px;font-size:clamp(30px,4vw,46px)}
+header p{margin:0;opacity:.95}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(0,0,0,.06)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:8px 11px;border-radius:17px}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 22px rgba(30,70,100,.06)}
+h2{margin:4px 0 8px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue)}
+.section-head{border-left:7px solid var(--gold);padding-left:12px}
+.file-label{display:inline-block;background:var(--navy);color:#fff;padding:3px 9px;border-radius:14px;font-weight:800;font-family:Consolas,monospace}
+.summary{font-size:1.05rem;background:#f9fcfe;border:1px solid var(--line);padding:15px;border-radius:12px}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:16px}
+pre{background:#17212b;color:#edf5fa;padding:18px;border-radius:13px;overflow:auto;line-height:1.57}
+pre.example{background:#f6f9fb;color:#26333f;border:1px solid var(--line);white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:36%;background:#f8fbfd}
+.note{margin-top:15px;background:#fff8e7;border-left:6px solid var(--gold);padding:15px;border-radius:10px}
+.warning{margin-top:15px;background:#fff0f0;border-left:6px solid var(--red);padding:15px;border-radius:10px}
+.intro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.intro-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px}
+footer{text-align:center;padding:25px;color:#67737c}
+@media(max-width:760px){.two{grid-template-columns:1fr}td:first-child{width:auto}}
+@media print{nav{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1>파이썬 코드 상세 설명 자료 ②</h1>
+<p>223.py · 227.py · 232.py · 235.py · 239.py · 244.py · 249.py · 254.py</p>
+</div></header>
+<nav><div class="wrap"><a href="#p223">223.py</a><a href="#p227">227.py</a><a href="#p232">232.py</a><a href="#p235">235.py</a><a href="#p239">239.py</a><a href="#p244">244.py</a><a href="#p249">249.py</a><a href="#p254">254.py</a></div></nav>
+<main>
+<section>
+<h2>자료 구성</h2>
+<div class="intro-grid">
+<div class="intro-card"><strong>원본 코드</strong><br>업로드된 코드를 그대로 제시합니다.</div>
+<div class="intro-card"><strong>실행 흐름</strong><br>입력부터 결과까지 단계별로 정리합니다.</div>
+<div class="intro-card"><strong>구문별 해설</strong><br>문법과 알고리즘 원리를 자세히 설명합니다.</div>
+<div class="intro-card"><strong>오류·개선점</strong><br>경계 조건과 더 좋은 코드 작성법을 안내합니다.</div>
+</div>
+</section>
+
+<section id="p223">
+<div class="section-head">
+  <div><span class="file-label">223.py</span><h2>터틀 몬테카를로 원주율 시각화의 후반부</h2></div>
+</div>
+<p class="summary">무작위 좌표가 반지름 r인 사분원 안에 들어가는지 판정하고, 원 안의 점은 파란색, 밖의 점은 빨간색으로 표시합니다. 원 안의 점 비율로 원주율을 추정하고 일정 횟수마다 화면에 현재 값을 출력하려는 코드입니다.</p>
+<div><span class="badge">원의 방정식</span><span class="badge">조건문</span><span class="badge">누적 변수</span><span class="badge">터틀 점 찍기</span><span class="badge">실시간 문자 출력</span></div>
+
+<div class="two">
+  <div class="card"><h3>실행 흐름</h3><ol><li>현재 난수 좌표 (x, y)가 원 안에 있는지 검사합니다.</li><li>원 안이면 내부 점 개수 inp를 1 증가시키고 파란 점을 찍습니다.</li><li>원 밖이면 빨간 점을 찍습니다.</li><li>π ≈ 4×(원 안 점 수)/(전체 점 수)로 추정값을 갱신합니다.</li><li>반복 횟수가 50의 배수일 때 화면의 기존 글자를 흰색 사각형으로 덮습니다.</li><li>현재 n과 π 값을 화면에 다시 출력합니다.</li></ol></div>
+  <div class="card"><h3>입출력·동작 예시</h3><pre class="example">n이 커질수록 파란 점의 비율이 사분원의 넓이 비율에 가까워지고, π 근삿값도 3.14 부근으로 수렴합니다.</pre></div>
+</div>
+
+<h3>원본 코드</h3>
+<pre><code>  if x**2+y**2 &lt;= r**2:
+    inp += 1           # 원 안에 들어간 점의 개수 1 증가
+    t.dot(4,&quot;blue&quot;)    # 파란 점 찍기
+  else:
+    t.dot(4,&quot;red&quot;)     # 빨간 점 찍기
+
+  pi = (4*inp)/n       # pi값 계산
+
+# n=50, 100, 150, ..., 10000일 때마다 pi값 출력
+if n%50==0:
+  # pi값 출력할 위치로 이동
+  t.up( )
+  t.goto(0, -100)
+
+  # 텍스트를 출력할 흰색 사각형 그리기
+  t.begin_fill( )
+  t.color(&quot;white&quot;)
+  t.goto(300, -100)
+  t.goto(300, -10)
+  t.goto(0, -10)
+  t.goto(0,-100)
+  t.end_fill()
+
+  # pi값 출력
+  t.color(&quot;black&quot;)
+  t.write(&quot;n=&quot;+str(n)+&quot;\npi=&quot;+str(pi), font=(&quot;Arial&quot;, 16, &quot;normal&quot;))
+
+</code></pre>
+
+<h3>구문별 상세 설명</h3>
+<div class="table-wrap">
+<table><thead><tr><th>구문</th><th>상세 설명</th></tr></thead><tbody><tr><td><code>if x**2+y**2 &lt;= r**2</code></td><td>점 (x, y)가 중심이 원점이고 반지름이 r인 원의 내부 또는 경계에 있는지 확인합니다.</td></tr><tr><td><code>inp += 1</code></td><td>원 안에 들어간 점의 누적 개수를 1 증가시킵니다.</td></tr><tr><td><code>t.dot(4, &quot;blue&quot;)</code></td><td>현재 위치에 지름 4픽셀의 파란 점을 찍습니다.</td></tr><tr><td><code>t.dot(4, &quot;red&quot;)</code></td><td>원 밖에 있는 점은 빨간색으로 표시합니다.</td></tr><tr><td><code>pi = (4*inp)/n</code></td><td>사분원의 넓이 비율 π/4를 이용해 현재 원주율 근삿값을 계산합니다.</td></tr><tr><td><code>if n%50==0</code></td><td>반복 횟수가 50의 배수일 때만 화면의 수치를 갱신하도록 합니다.</td></tr><tr><td><code>t.begin_fill() ~ t.end_fill()</code></td><td>흰색 사각형을 그려 이전에 출력된 문자를 덮습니다.</td></tr><tr><td><code>t.write(&quot;n=&quot;+str(n)+&quot;\npi=&quot;+str(pi), ...)</code></td><td>현재 시행 횟수와 원주율 근삿값을 두 줄로 표시합니다.</td></tr></tbody></table>
+</div>
+<div class="warning"><strong>파일 상태 안내</strong><br>이 파일은 독립 실행 코드가 아니라 앞부분에 이어지는 후반부 조각입니다. 현재 들여쓰기상 if n%50==0 블록이 반복문 밖에 있으므로, 의도대로 50회마다 갱신하려면 반복문 안쪽으로 들여써야 합니다.</div>
+</section>
+
+<section id="p227">
+<div class="section-head">
+  <div><span class="file-label">227.py</span><h2>문자 테두리 사각형 그리기</h2></div>
+</div>
+<p class="summary">가로 n, 세로 m 크기의 문자 사각형을 만듭니다. 네 모서리는 +, 위·아래 변은 -, 왼쪽·오른쪽 변은 |, 내부는 공백으로 표현합니다.</p>
+<div><span class="badge">중첩 반복문</span><span class="badge">행과 열</span><span class="badge">문자열 누적</span><span class="badge">모서리·변 판정</span></div>
+
+<div class="two">
+  <div class="card"><h3>실행 흐름</h3><ol><li>가로 길이 n과 세로 길이 m을 입력받습니다.</li><li>바깥 반복문으로 각 행을 만듭니다.</li><li>안쪽 반복문으로 각 열의 문자를 결정합니다.</li><li>첫 행과 마지막 행에서는 모서리와 가로선을 구분합니다.</li><li>중간 행에서는 양 끝 열만 세로선으로 표시합니다.</li><li>완성된 한 줄을 paper 리스트에 저장한 뒤 전체를 출력합니다.</li></ol></div>
+  <div class="card"><h3>입출력·동작 예시</h3><pre class="example">입력: 6 4
+출력:
++----+
+|    |
+|    |
++----+</pre></div>
+</div>
+
+<h3>원본 코드</h3>
+<pre><code># 입력 처리
+paper = []
+n,m = input().split()
+n = int(n)
+m = int(m)
+
+# 중첩 반복문
+for row in range(1, m+1):
+  line = &quot;&quot;
+  for col in range(1, n+1):
+    if row==1 or row==m:      # (1,1),(1,n),(m,1),(m,n)인 경우
+      if col==1 or col==n:
+        line += &#x27;+&#x27;
+      else:
+        line += &#x27;-&#x27;
+    elif col==1 or col==n:    # 1열, n열인 경우
+      line += &#x27;|&#x27;
+    else:                     # 그 외 칸은 공백
+      line += &#x27; &#x27;
+  paper.append(line)          # paper에 한 줄 추가
+
+# 출력 처리
+for row in paper:
+  print(row)
+
+</code></pre>
+
+<h3>구문별 상세 설명</h3>
+<div class="table-wrap">
+<table><thead><tr><th>구문</th><th>상세 설명</th></tr></thead><tbody><tr><td><code>paper = []</code></td><td>완성된 각 행의 문자열을 저장할 리스트입니다.</td></tr><tr><td><code>for row in range(1, m+1)</code></td><td>1행부터 m행까지 순회합니다.</td></tr><tr><td><code>for col in range(1, n+1)</code></td><td>각 행에서 1열부터 n열까지 순회합니다.</td></tr><tr><td><code>if row==1 or row==m</code></td><td>첫 번째 또는 마지막 행인지 검사합니다.</td></tr><tr><td><code>if col==1 or col==n</code></td><td>현재 위치가 네 모서리 중 하나인지 검사합니다.</td></tr><tr><td><code>line += &#x27;+&#x27; / &#x27;-&#x27; / &#x27;|&#x27; / &#x27; &#x27;</code></td><td>위치에 따라 알맞은 문자를 현재 행 문자열에 이어 붙입니다.</td></tr><tr><td><code>paper.append(line)</code></td><td>한 행이 완성되면 리스트에 저장합니다.</td></tr><tr><td><code>for row in paper: print(row)</code></td><td>저장된 행을 위에서 아래 순서로 출력합니다.</td></tr></tbody></table>
+</div>
+<div class="note"><strong>주의·개선 포인트</strong><br>n 또는 m이 1인 경우 모서리와 변의 판정이 일반적인 사각형과 다르게 보일 수 있습니다. 최소 크기를 2 이상으로 제한하면 더 명확합니다.</div>
+</section>
+
+<section id="p232">
+<div class="section-head">
+  <div><span class="file-label">232.py</span><h2>복면산 완전 탐색</h2></div>
+</div>
+<p class="summary">S, O, T에 0부터 9까지의 서로 다른 숫자를 모두 대입해 SOT - SO = TT 식을 만족하는 경우를 찾습니다.</p>
+<div><span class="badge">3중 반복문</span><span class="badge">완전 탐색</span><span class="badge">continue</span><span class="badge">서로 다른 숫자</span><span class="badge">자리값</span></div>
+
+<div class="two">
+  <div class="card"><h3>실행 흐름</h3><ol><li>S에 0부터 9까지 차례로 대입합니다.</li><li>O에 0부터 9까지 대입하되 S와 같으면 건너뜁니다.</li><li>T에 0부터 9까지 대입하되 S 또는 O와 같으면 건너뜁니다.</li><li>SOT, SO, TT를 자리값 계산으로 수치화합니다.</li><li>식이 성립하는 경우만 결과를 출력합니다.</li></ol></div>
+  <div class="card"><h3>입출력·동작 예시</h3><pre class="example">모든 가능한 서로 다른 S, O, T 조합을 검사하므로 최대 10×9×8=720개 후보를 확인합니다.</pre></div>
+</div>
+
+<h3>원본 코드</h3>
+<pre><code># 3중 반복문(S,O,T의 값을 순서대로 대입해서 계산)
+for S in range(0,10):
+  for O in range(0,10):
+    if O==S:            # S와 O가 같은 숫자인 경우 다음 반복으로
+      continue
+    for T in range(0,10):
+      if T==S or T==O:  # T와 S, O가 같은 숫자인 경우 다음 반복으로
+        continue
+      if (S*100+O*10+T)-(S*10+O)==T*10+T:     # 식이 맞으면 출력
+        print(&quot;{}{}{}-{}{}={}{}&quot;.format(S,O,T,S,O,T,T))
+
+</code></pre>
+
+<h3>구문별 상세 설명</h3>
+<div class="table-wrap">
+<table><thead><tr><th>구문</th><th>상세 설명</th></tr></thead><tbody><tr><td><code>for S in range(0,10)</code></td><td>S가 될 수 있는 모든 숫자를 탐색합니다.</td></tr><tr><td><code>if O==S: continue</code></td><td>O와 S가 같으면 조건에 맞지 않으므로 현재 반복을 즉시 건너뜁니다.</td></tr><tr><td><code>if T==S or T==O: continue</code></td><td>T가 앞에서 선택한 숫자와 중복되는 경우를 제외합니다.</td></tr><tr><td><code>S*100+O*10+T</code></td><td>세 자리 수 SOT를 자리값 원리로 만듭니다.</td></tr><tr><td><code>S*10+O</code></td><td>두 자리 수 SO를 계산합니다.</td></tr><tr><td><code>T*10+T</code></td><td>같은 숫자 두 개로 이루어진 TT를 계산합니다.</td></tr><tr><td><code>&quot;{}{}{}-{}{}={}{}&quot;.format(...)</code></td><td>숫자를 식의 모양으로 보기 좋게 출력합니다.</td></tr></tbody></table>
+</div>
+<div class="note"><strong>주의·개선 포인트</strong><br>S가 0이면 SOT와 SO가 실제로는 세 자리·두 자리 수가 아닐 수 있습니다. 복면산에서 맨 앞자리를 0으로 허용하지 않는다면 if S==0: continue 조건을 추가해야 합니다.</div>
+</section>
+
+<section id="p235">
+<div class="section-head">
+  <div><span class="file-label">235.py</span><h2>두 원의 교점 개수 판정</h2></div>
+</div>
+<p class="summary">두 원의 중심 좌표와 반지름을 입력받아 중심 사이 거리와 반지름의 합·차를 비교하고, 두 원이 만나지 않는지, 한 점에서 접하는지, 두 점에서 만나는지를 판정합니다.</p>
+<div><span class="badge">함수</span><span class="badge">두 점 사이 거리</span><span class="badge">원의 위치 관계</span><span class="badge">절댓값</span><span class="badge">반환값</span></div>
+
+<div class="two">
+  <div class="card"><h3>실행 흐름</h3><ol><li>각 원의 중심 좌표와 반지름을 리스트로 입력받습니다.</li><li>두 중심 사이 거리를 계산합니다.</li><li>거리와 두 반지름의 합을 비교해 외부에서 떨어짐·외접 여부를 판정합니다.</li><li>거리와 반지름 차의 절댓값을 비교해 내부 포함·내접 여부를 판정합니다.</li><li>그 밖의 경우 두 점에서 만나므로 overlapped를 출력합니다.</li></ol></div>
+  <div class="card"><h3>입출력·동작 예시</h3><pre class="example">입력:
+0 0 5
+8 0 5
+중심 거리 8, 반지름 합 10, 차 0이므로 두 점에서 만나며 overlapped 출력</pre></div>
+</div>
+
+<h3>원본 코드</h3>
+<pre><code># 입력 처리
+a = list(map(int, input().split()))
+b = list(map(int, input().split()))
+
+# 원의 겹침 여부 판별하는 함수(겹치는 점의 개수를 리턴)
+def f(a,b):
+  dist = ((a[0]-b[0])**2 + (a[1]-b[1])**2)**0.5
+  if dist &gt; a[2]+b[2]:
+    return 0
+  elif dist == a[2]+b[2]:
+    return 1
+  elif dist == abs(a[2]-b[2]):
+    return 1
+  elif dist &lt; abs(a[2]-b[2]):
+    return 0
+  else:
+    return 2
+
+# 출력 처리(겹치는 경우, 접하는 경우, 겹치지 않는 경우)
+if f(a,b)==2:             # 겹치는 점이 2개인 경우
+  print(&quot;overlapped&quot;)
+elif f(a,b)==1:           # 겹치는 점이 1개인 경우
+  print(&quot;tangent&quot;)
+else:                     # 겹치지 않는 경우
+  print(&quot;not overlapped&quot;)
+
+</code></pre>
+
+<h3>구문별 상세 설명</h3>
+<div class="table-wrap">
+<table><thead><tr><th>구문</th><th>상세 설명</th></tr></thead><tbody><tr><td><code>dist = ((a[0]-b[0])**2 + ...)**0.5</code></td><td>피타고라스 정리로 두 원 중심 사이의 유클리드 거리를 구합니다.</td></tr><tr><td><code>dist &gt; a[2]+b[2]</code></td><td>중심 거리가 반지름 합보다 크면 두 원이 멀리 떨어져 교점이 없습니다.</td></tr><tr><td><code>dist == a[2]+b[2]</code></td><td>중심 거리가 반지름 합과 같으면 외접하여 한 점에서 만납니다.</td></tr><tr><td><code>dist == abs(a[2]-b[2])</code></td><td>중심 거리가 반지름 차와 같으면 내접하여 한 점에서 만납니다.</td></tr><tr><td><code>dist &lt; abs(a[2]-b[2])</code></td><td>작은 원이 큰 원 안에 완전히 들어가며 교점이 없습니다.</td></tr><tr><td><code>return 0, 1, 2</code></td><td>교점의 개수를 함수의 결과로 반환합니다.</td></tr><tr><td><code>if f(a,b)==2 ...</code></td><td>반환값에 따라 세 가지 메시지 중 하나를 출력합니다.</td></tr></tbody></table>
+</div>
+<div class="note"><strong>주의·개선 포인트</strong><br>실수 계산 결과를 ==로 직접 비교하면 오차가 생길 수 있습니다. math.isclose()를 사용하거나 허용 오차를 두는 방식이 더 안전합니다. 또한 두 원이 완전히 일치하는 경우는 교점이 무한개이므로 별도 처리할 수 있습니다.</div>
+</section>
+
+<section id="p239">
+<div class="section-head">
+  <div><span class="file-label">239.py</span><h2>5×5 격자에서 3×3 최대 가치 찾기</h2></div>
+</div>
+<p class="summary">5×5 격자에서 중심이 될 수 있는 9개 위치를 순회하며, 각 중심을 둘러싼 3×3 영역의 합을 계산하고 가장 큰 값을 출력합니다.</p>
+<div><span class="badge">2차원 리스트</span><span class="badge">중첩 반복문</span><span class="badge">함수</span><span class="badge">부분 영역 합</span><span class="badge">최댓값 탐색</span></div>
+
+<div class="two">
+  <div class="card"><h3>실행 흐름</h3><ol><li>5줄의 정수를 입력받아 2차원 리스트 mines를 만듭니다.</li><li>함수 f(row, col)이 중심 주변 3×3 영역의 합을 계산합니다.</li><li>중심이 될 수 있는 행과 열 1~3만 순회합니다.</li><li>각 위치의 3×3 합을 구합니다.</li><li>현재 최댓값보다 크면 maxval을 갱신합니다.</li><li>모든 후보를 조사한 뒤 최대 합을 출력합니다.</li></ol></div>
+  <div class="card"><h3>입출력·동작 예시</h3><pre class="example">5×5 입력에는 3×3 영역이 가로 3개×세로 3개, 총 9개 존재합니다. 이 9개 합 중 가장 큰 값을 출력합니다.</pre></div>
+</div>
+
+<h3>원본 코드</h3>
+<pre><code># 입력 처리(2차원 리스트)
+mines = []
+for row in range(5):
+  x = list(map(int, input().split()))
+  mines.append(x)
+
+# (row, col) 주변의 가치 합을 구하는 함수
+def f(row, col):
+  res = 0
+  for i in range(row-1, row+2):
+    for j in range(col-1, col+2):
+      res += mines[i][j]
+  return res
+
+# ① → ② → … → ⑨를 탐색하며 최대 가치 구함.
+maxval = 0
+for row in range(1, 4):
+  for col in range(1, 4):
+    sum = f(row,col)
+    if sum&gt;maxval:
+      maxval = sum
+
+# 출력 처리(최대 가치 출력)
+print(maxval)
+
+</code></pre>
+
+<h3>구문별 상세 설명</h3>
+<div class="table-wrap">
+<table><thead><tr><th>구문</th><th>상세 설명</th></tr></thead><tbody><tr><td><code>for row in range(5)</code></td><td>5개의 행을 입력받습니다.</td></tr><tr><td><code>mines.append(x)</code></td><td>각 행의 리스트를 2차원 리스트에 추가합니다.</td></tr><tr><td><code>for i in range(row-1, row+2)</code></td><td>중심 행의 바로 위부터 바로 아래까지 세 행을 순회합니다.</td></tr><tr><td><code>for j in range(col-1, col+2)</code></td><td>중심 열의 왼쪽부터 오른쪽까지 세 열을 순회합니다.</td></tr><tr><td><code>res += mines[i][j]</code></td><td>3×3 영역의 각 값을 누적합니다.</td></tr><tr><td><code>for row in range(1,4)</code></td><td>배열 경계를 벗어나지 않는 중심 행 1,2,3만 검사합니다.</td></tr><tr><td><code>sum = f(row,col)</code></td><td>현재 3×3 영역의 합을 계산합니다.</td></tr><tr><td><code>if sum &gt; maxval</code></td><td>더 큰 합을 찾으면 최댓값을 갱신합니다.</td></tr></tbody></table>
+</div>
+<div class="note"><strong>주의·개선 포인트</strong><br>변수 이름 sum은 내장 함수 sum()과 겹치므로 area_sum이 더 좋습니다. 모든 값이 음수일 수 있다면 maxval=0은 잘못된 결과를 만들 수 있으므로 첫 영역의 합 또는 float('-inf')로 초기화해야 합니다.</div>
+</section>
+
+<section id="p244">
+<div class="section-head">
+  <div><span class="file-label">244.py</span><h2>점수 내림차순 정렬 후 3등 찾기</h2></div>
+</div>
+<p class="summary">이름과 정보 점수를 입력받아 점수의 내림차순으로 정렬하고, 정렬된 목록에서 세 번째 학생의 이름을 출력합니다.</p>
+<div><span class="badge">리스트</span><span class="badge">lambda</span><span class="badge">정렬 기준</span><span class="badge">내림차순</span><span class="badge">인덱스</span></div>
+
+<div class="two">
+  <div class="card"><h3>실행 흐름</h3><ol><li>학생 수 n을 입력받습니다.</li><li>각 학생의 이름과 점수를 리스트에 저장합니다.</li><li>lambda 함수로 점수를 정렬 기준으로 지정합니다.</li><li>점수에 음수를 붙여 큰 점수가 앞에 오도록 정렬합니다.</li><li>인덱스 2에 있는 3등 학생의 이름을 출력합니다.</li></ol></div>
+  <div class="card"><h3>입출력·동작 예시</h3><pre class="example">입력:
+4
+민수 80
+지수 95
+서준 88
+하늘 90
+정렬: 지수, 하늘, 서준, 민수
+출력: 서준</pre></div>
+</div>
+
+<h3>원본 코드</h3>
+<pre><code># 입력 처리
+n = int(input())
+data = []
+
+for x in range(n):
+  a,b = input().split()
+  data.append([a, int(b)])
+
+# 데이터 정렬
+data.sort(key = lambda x: -x[1])  # 정보 점수의 내림차순으로 정렬
+
+# 출력 처리(3등이므로 인덱스는 2)
+print(data[2][0])                 # [2][0]: 이름, [2][1]: 점수
+
+</code></pre>
+
+<h3>구문별 상세 설명</h3>
+<div class="table-wrap">
+<table><thead><tr><th>구문</th><th>상세 설명</th></tr></thead><tbody><tr><td><code>data.append([a, int(b)])</code></td><td>학생 이름과 정수 점수를 하나의 2원소 리스트로 저장합니다.</td></tr><tr><td><code>data.sort(...)</code></td><td>원본 리스트 자체의 순서를 정렬된 상태로 변경합니다.</td></tr><tr><td><code>key=lambda x: -x[1]</code></td><td>각 학생 자료의 점수에 음수를 취한 값을 정렬 기준으로 사용해 내림차순 효과를 냅니다.</td></tr><tr><td><code>data[2]</code></td><td>인덱스는 0부터 시작하므로 2번 인덱스가 세 번째 학생입니다.</td></tr><tr><td><code>data[2][0]</code></td><td>세 번째 학생 자료에서 0번 요소인 이름을 꺼냅니다.</td></tr></tbody></table>
+</div>
+<div class="note"><strong>주의·개선 포인트</strong><br>학생 수가 3명보다 적으면 IndexError가 발생합니다. 동점 처리 기준도 문제 조건에 따라 달라질 수 있으므로 이름순, 입력순, 공동 순위 여부를 명확히 해야 합니다.</div>
+</section>
+
+<section id="p249">
+<div class="section-head">
+  <div><span class="file-label">249.py</span><h2>도서 대출 목록 딕셔너리 관리</h2></div>
+</div>
+<p class="summary">도서 이름별 대출 권수를 딕셔너리로 관리합니다. 명령어에 따라 도서를 추가하거나 제거하고, 현재 목록을 출력합니다.</p>
+<div><span class="badge">딕셔너리</span><span class="badge">함수</span><span class="badge">추가·삭제</span><span class="badge">명령어 처리</span><span class="badge">문자열 슬라이싱</span></div>
+
+<div class="two">
+  <div class="card"><h3>실행 흐름</h3><ol><li>처리할 명령어 수 n을 입력받습니다.</li><li>books 딕셔너리에 도서 이름과 대출 권수를 저장합니다.</li><li>1 도서명 명령은 도서를 추가합니다.</li><li>2 도서명 명령은 도서를 한 권 제거합니다.</li><li>권수가 0이 되면 해당 키를 딕셔너리에서 삭제합니다.</li><li>0 명령은 현재 도서별 권수를 출력합니다.</li><li>정의되지 않은 명령은 오류 메시지를 출력합니다.</li></ol></div>
+  <div class="card"><h3>입출력·동작 예시</h3><pre class="example">명령:
+1 파이썬
+1 파이썬
+1 알고리즘
+2 파이썬
+0
+출력:
+파이썬 1
+알고리즘 1</pre></div>
+</div>
+
+<h3>원본 코드</h3>
+<pre><code># 입력 처리
+n = int(input())
+books = {}                  # 대출 리스트 딕셔너리 생성
+
+# 대출 리스트에 book을 추가
+def addBook(book):
+  if book in books:         # 대출 리스트에 도서가 있는 경우
+    books[book] += 1
+  else:                     # 대출 리스트에 도서가 없는 경우
+    books[book] = 1
+
+# 대출 리스트에서 book을 제거
+def delBook(book):
+  if book in books:         # 대출 리스트에 도서가 있는 경우
+    books[book] -= 1
+    if books[book]==0:      # 도서 대여 개수가 0인 경우
+      del books[book]       # 대출 리스트에서 삭제
+  else:
+    print(&quot;no book!&quot;)       # 대출 리스트에 도서가 없는 경우 에러 출력
+
+# 대출 리스트 출력
+def printBooks(books):
+  for k,v in books.items(): # 딕셔너리의 키와 값을 순서대로 k,v에 저장
+    print(k, v)             # 키와 값 출력
+
+# 명령어 처리
+for x in range(n):
+  cmd = input()
+  if cmd[0]==&#x27;1&#x27;:           # 명령어가 1인 경우
+    addBook(cmd[2:])
+  elif cmd[0]==&#x27;2&#x27;:         # 명령어가 2인 경우
+    delBook(cmd[2:])
+  elif cmd[0]==&#x27;0&#x27;:         # 명령어가 0인 경우
+    printBooks(books)
+  else:                     # 명령어가 잘못된 경우
+    print(&quot;wrong command!&quot;)
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+
+<h3>구문별 상세 설명</h3>
+<div class="table-wrap">
+<table><thead><tr><th>구문</th><th>상세 설명</th></tr></thead><tbody><tr><td><code>books = {}</code></td><td>도서명을 키, 대출 권수를 값으로 저장하는 빈 딕셔너리입니다.</td></tr><tr><td><code>if book in books</code></td><td>이미 등록된 도서인지 키 존재 여부를 확인합니다.</td></tr><tr><td><code>books[book] += 1</code></td><td>기존 도서의 권수를 1 증가시킵니다.</td></tr><tr><td><code>del books[book]</code></td><td>권수가 0이 된 도서 항목을 딕셔너리에서 완전히 제거합니다.</td></tr><tr><td><code>for k,v in books.items()</code></td><td>딕셔너리의 키와 값을 한 쌍씩 꺼내 순회합니다.</td></tr><tr><td><code>cmd[0]</code></td><td>명령 문자열의 첫 글자로 명령 종류를 구분합니다.</td></tr><tr><td><code>cmd[2:]</code></td><td>명령 번호와 공백을 제외한 나머지 문자열을 도서명으로 사용합니다.</td></tr></tbody></table>
+</div>
+<div class="note"><strong>주의·개선 포인트</strong><br>빈 문자열 명령이 입력되면 cmd[0]에서 오류가 납니다. printBooks의 매개변수 이름 books는 전역 변수와 같아 혼동될 수 있으며, 출력 순서가 필요하다면 sorted(books.items())를 사용할 수 있습니다.</div>
+</section>
+
+<section id="p254">
+<div class="section-head">
+  <div><span class="file-label">254.py</span><h2>집합의 교집합과 합집합 출력</h2></div>
+</div>
+<p class="summary">두 정수 집합을 입력받아 교집합과 합집합을 계산합니다. 집합은 중복을 자동 제거하며, 결과는 오름차순으로 출력합니다.</p>
+<div><span class="badge">집합</span><span class="badge">교집합</span><span class="badge">합집합</span><span class="badge">정렬</span><span class="badge">공집합</span></div>
+
+<div class="two">
+  <div class="card"><h3>실행 흐름</h3><ol><li>첫 번째 집합의 원소 수와 원소를 입력받습니다.</li><li>두 번째 집합의 원소 수와 원소를 입력받습니다.</li><li>& 연산자로 교집합을 계산합니다.</li><li>| 연산자로 합집합을 계산합니다.</li><li>교집합이 비어 있으면 0을 출력합니다.</li><li>그렇지 않으면 교집합을 정렬하여 출력합니다.</li><li>다음 줄에 합집합을 정렬하여 출력합니다.</li></ol></div>
+  <div class="card"><h3>입출력·동작 예시</h3><pre class="example">A={1,2,3,4}, B={3,4,5}
+교집합: 3 4
+합집합: 1 2 3 4 5</pre></div>
+</div>
+
+<h3>원본 코드</h3>
+<pre><code># 입력 처리
+n = int(input())
+A = set(map(int, input().split())) # 집합 자료 구조
+m = int(input())
+B = set(map(int, input().split())) # 집합 자료 구조
+
+s1 = A &amp; B   # 교집합 연산
+s2 = A | B   # 합집합 연산
+
+if len(s1)==0:                     # 공집합이면 0 출력
+  print(0, end=&#x27;&#x27;)
+else:                              # 공집합이 아니면
+  for x in sorted(s1):             # 교집합의 원소를 오름차순으로 출력
+    print(x, end=&#x27; &#x27;)
+print()                            # 한 줄 띄우고
+for x in sorted(s2):               # 합집합의 원소를 오름차순으로 출력
+  print(x, end=&#x27; &#x27;)
+
+</code></pre>
+
+<h3>구문별 상세 설명</h3>
+<div class="table-wrap">
+<table><thead><tr><th>구문</th><th>상세 설명</th></tr></thead><tbody><tr><td><code>set(map(int, input().split()))</code></td><td>입력 정수를 집합으로 변환하여 중복값을 제거합니다.</td></tr><tr><td><code>s1 = A &amp; B</code></td><td>두 집합에 공통으로 포함된 원소의 집합을 계산합니다.</td></tr><tr><td><code>s2 = A | B</code></td><td>두 집합 중 하나 이상에 포함된 모든 원소의 집합을 계산합니다.</td></tr><tr><td><code>len(s1)==0</code></td><td>교집합이 공집합인지 원소 개수로 확인합니다.</td></tr><tr><td><code>sorted(s1)</code></td><td>순서가 없는 집합을 오름차순 리스트로 바꾸어 출력 순서를 일정하게 만듭니다.</td></tr><tr><td><code>print(x, end=&#x27; &#x27;)</code></td><td>각 원소를 같은 줄에 공백으로 구분하여 출력합니다.</td></tr><tr><td><code>print()</code></td><td>교집합 출력이 끝난 뒤 줄을 바꿉니다.</td></tr></tbody></table>
+</div>
+<div class="note"><strong>주의·개선 포인트</strong><br>입력된 n과 m은 실제 원소 개수 검증에 사용되지 않습니다. 문제 조건을 엄격히 확인하려면 len(A) 또는 원본 입력 길이와 비교할 수 있습니다.</div>
+</section>
+
+</main>
+<footer>파이썬 문제 해결 코드 상세 설명 HTML</footer>
+</body>
+</html>
