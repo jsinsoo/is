@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2022 개정 교육과정 고등학교 정보과학 34차시 연간수업계획서</title>
+<style>
+:root{
+  --navy:#102a43; --blue:#2563eb; --sky:#eaf4ff; --mint:#eafaf4;
+  --gold:#f59e0b; --rose:#e11d48; --ink:#172033; --muted:#65758b;
+  --line:#d8e1ec; --paper:#ffffff; --bg:#f3f7fb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+.hero{background:linear-gradient(135deg,#0f2742 0%,#173d68 55%,#2563eb 100%);color:white;padding:58px 24px 46px;position:relative;overflow:hidden}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.07)}
+.hero:before{width:320px;height:320px;right:-80px;top:-120px}.hero:after{width:170px;height:170px;left:-40px;bottom:-80px}
+.hero-inner{max-width:1280px;margin:auto;position:relative;z-index:1}
+.kicker{display:inline-flex;gap:8px;align-items:center;padding:7px 13px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(255,255,255,.1);font-size:14px;font-weight:700}
+h1{font-size:clamp(30px,5vw,52px);line-height:1.2;margin:18px 0 10px;letter-spacing:-1.5px}
+.subtitle{max-width:850px;font-size:18px;color:#dbeafe;margin:0}
+.quick{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}.pill{padding:9px 13px;border-radius:12px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);font-size:14px}
+.sticky{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.toolbar{max-width:1280px;margin:auto;padding:10px 20px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+button,.btn{border:0;border-radius:10px;padding:9px 13px;font-weight:700;cursor:pointer;background:#e8eef7;color:#26384f;text-decoration:none;font-size:14px}
+button:hover,.btn:hover{filter:brightness(.97);transform:translateY(-1px)}.primary{background:var(--blue);color:white}.print{background:#102a43;color:white}
+select,input{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:white;color:var(--ink)}
+.spacer{flex:1}.count{font-size:13px;color:var(--muted);font-weight:700}
+main{max-width:1280px;margin:26px auto 70px;padding:0 20px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 8px 24px rgba(31,55,82,.06)}
+.card .num{font-size:30px;font-weight:900;color:var(--navy)}.card .label{font-size:14px;color:var(--muted)}
+.section{background:white;border:1px solid var(--line);border-radius:20px;padding:24px;margin-top:20px;box-shadow:0 8px 28px rgba(31,55,82,.055)}
+.section h2{margin:0 0 14px;font-size:25px;color:var(--navy);letter-spacing:-.6px}.section h3{color:#173d68;margin-top:22px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.info-box{border-radius:14px;padding:17px;background:#f8fbff;border:1px solid #dbeafe}
+.info-box strong{display:block;margin-bottom:5px;color:#174ea6}
+.domain-bars{display:grid;gap:10px}.bar-row{display:grid;grid-template-columns:150px 1fr 55px;align-items:center;gap:10px}.bar{height:12px;background:#e7edf5;border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:linear-gradient(90deg,#2563eb,#22c55e);border-radius:99px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:15px}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:1200px;font-size:14px}
+th{position:sticky;top:0;background:#153b65;color:white;padding:13px 10px;text-align:center;white-space:nowrap;z-index:2}
+td{padding:12px 10px;border-bottom:1px solid #e5ebf2;border-right:1px solid #edf1f6;vertical-align:top;background:white}
+tr:nth-child(even) td{background:#f9fbfd}tr:hover td{background:#eef6ff}
+td.c{text-align:center;vertical-align:middle;font-weight:700}.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.d1{background:#eaf2ff;color:#174ea6}.d2{background:#eafaf4;color:#087a55}.d3{background:#fff5db;color:#9a5b00}.d4{background:#fdecef;color:#a5163b}
+.code{font-family:Consolas,monospace;font-size:12px;background:#edf2f7;padding:3px 6px;border-radius:6px;color:#22344b;white-space:nowrap}
+.eval{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.eval .item{border:1px solid var(--line);border-radius:14px;padding:17px;position:relative;overflow:hidden}.eval .item:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--blue)}.eval .item.perform:before{background:#16a34a}.eval .pct{font-size:28px;font-weight:900;color:var(--blue)}.eval .perform .pct{color:#15803d}.assess-total{display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:16px}.assess-total .total-box{border-radius:16px;padding:20px;color:white}.assess-total .performance{background:linear-gradient(135deg,#15803d,#22c55e)}.assess-total .written{background:linear-gradient(135deg,#173d68,#2563eb)}.assess-total .big{font-size:38px;font-weight:900;line-height:1}.assess-table{min-width:900px}.assess-table th{background:#173d68}.score-chip{display:inline-flex;min-width:38px;height:38px;align-items:center;justify-content:center;border-radius:50%;background:#eaf2ff;color:#174ea6;font-weight:900}.score-chip.green{background:#eafaf4;color:#087a55}.sum-row td{background:#eef6ff!important;font-weight:900}.rubric{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.rubric .r{border:1px solid var(--line);border-radius:14px;padding:15px;background:#fbfdff}.rubric .r b{color:#173d68}
+.note{border-left:5px solid var(--gold);background:#fff9e9;padding:15px 17px;border-radius:10px;margin-top:14px}
+.footer{max-width:1280px;margin:0 auto 50px;padding:0 20px;color:var(--muted);font-size:13px;text-align:center}
+.hidden{display:none!important}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.info-grid,.eval,.assess-total,.rubric{grid-template-columns:1fr}.bar-row{grid-template-columns:110px 1fr 42px}.spacer{display:none}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.hero{padding-top:42px}.toolbar{align-items:stretch}.toolbar input,.toolbar select{width:100%}}
+@media print{
+ body{background:white;font-size:10pt}.hero{padding:22px;background:#fff!important;color:#111;border-bottom:2px solid #111}.hero:before,.hero:after,.sticky,.quick{display:none!important}.subtitle{color:#333}main{max-width:none;margin:0;padding:12px}.grid{grid-template-columns:repeat(4,1fr);gap:6px}.card,.section{box-shadow:none;border-color:#aaa;break-inside:avoid;padding:12px}.section{margin-top:10px}.table-wrap{overflow:visible;border:0}table{min-width:0;font-size:7.8pt}th{position:static;background:#ddd!important;color:#111;padding:6px 4px}td{padding:5px 4px}.footer{display:none}.badge{border:1px solid #777;background:white!important;color:#111!important}h1{font-size:24pt}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="kicker">2022 개정 교육과정 · 과학 계열 진로 선택</div>
+    <h1>고등학교 「정보과학」<br>34차시 연간수업계획서</h1>
+    <p class="subtitle">프로그래밍에서 시작하여 데이터 구조, 알고리즘, 정보과학 프로젝트로 확장하는 문제 해결 중심 수업 설계안</p>
+    <div class="quick">
+      <span class="pill">총 34차시</span><span class="pill">4개 교육과정 영역</span><span class="pill">수행평가 60%</span><span class="pill">지필평가 40%</span>
+    </div>
+  </div>
+</header>
+<nav class="sticky">
+  <div class="toolbar">
+    <button class="primary" onclick="scrollToId('plan')">34차시 보기</button>
+    <button onclick="scrollToId('overview')">운영 개요</button>
+    <button onclick="scrollToId('assessment')">평가 계획</button>
+    <select id="domainFilter" onchange="applyFilter()" aria-label="영역 필터">
+      <option value="all">전체 영역</option><option value="프로그래밍">프로그래밍</option><option value="데이터 구조">데이터 구조</option><option value="알고리즘">알고리즘</option><option value="정보과학 프로젝트">정보과학 프로젝트</option>
+    </select>
+    <input id="search" oninput="applyFilter()" placeholder="주제·성취기준 검색">
+    <span class="spacer"></span><span id="count" class="count">34개 차시 표시</span>
+    <button class="print" onclick="window.print()">인쇄 / PDF 저장</button>
+    <button onclick="downloadCSV()">CSV 내려받기</button>
+  </div>
+</nav>
+<main>
+<section class="grid" aria-label="요약 통계">
+  <div class="card"><div class="num">34</div><div class="label">총 수업 차시</div></div>
+  <div class="card"><div class="num">18</div><div class="label">반영 성취기준</div></div>
+  <div class="card"><div class="num">4</div><div class="label">교육과정 영역</div></div>
+  <div class="card"><div class="num">4+1</div><div class="label">수행평가 4영역 + 지필평가</div></div>
+</section>
+
+<section class="section" id="overview">
+  <h2>Ⅰ. 연간 운영 개요</h2>
+  <div class="info-grid">
+    <div class="info-box"><strong>수업 목표</strong>컴퓨터과학의 개념과 원리를 바탕으로 문제를 구조화하고, 적절한 데이터 구조와 알고리즘을 선택하여 효율적인 프로그램을 구현한다.</div>
+    <div class="info-box"><strong>수업 운영</strong>개념 이해 → 코드 추적 → 구현 실습 → 성능 비교 → 프로젝트 적용의 순환 구조로 진행하며 짝 프로그래밍과 코드 검토를 병행한다.</div>
+    <div class="info-box"><strong>핵심 역량</strong>컴퓨팅 사고력, 협력적 문제 해결력, 정보문화 소양, 창의·융합적 설계 역량을 균형 있게 기른다.</div>
+    <div class="info-box"><strong>권장 환경</strong>Python 3.x, IDLE 또는 VS Code, 온라인 판정 시스템, Git 기반 공유 저장소, 표준 라이브러리와 공개 라이브러리</div>
+  </div>
+  <h3>영역별 차시 배분</h3>
+  <div class="domain-bars">
+    <div class="bar-row"><b>프로그래밍</b><div class="bar"><span style="width:20.6%"></span></div><span>7차시</span></div>
+    <div class="bar-row"><b>데이터 구조</b><div class="bar"><span style="width:23.5%"></span></div><span>8차시</span></div>
+    <div class="bar-row"><b>알고리즘</b><div class="bar"><span style="width:35.3%"></span></div><span>12차시</span></div>
+    <div class="bar-row"><b>프로젝트</b><div class="bar"><span style="width:20.6%"></span></div><span>7차시</span></div>
+  </div>
+  <div class="note">학교 일정, 학생의 선행 학습 수준, 대회 및 연구 활동과의 연계를 고려하여 차시를 통합하거나 심화 실습으로 확장할 수 있다.</div>
+</section>
+
+<section class="section" id="plan">
+  <h2>Ⅱ. 34차시 연간수업계획</h2>
+  <div class="table-wrap">
+  <table id="planTable">
+    <thead><tr><th>차시</th><th>영역</th><th>성취기준</th><th>학습 주제</th><th>핵심 교수·학습 활동</th><th>수업 형태</th><th>평가·산출물</th></tr></thead>
+    <tbody>
+<tr data-domain="프로그래밍"><td class="c">1</td><td class="c"><span class="badge d1">프로그래밍</span></td><td><span class="code">12정과01-01</span></td><td><b>정보과학 오리엔테이션과 함수 복습</b></td><td>교과의 네 영역과 문제 해결 절차를 이해하고 함수 정의·호출·반환값을 진단 실습으로 점검한다.</td><td class="c">진단·실습</td><td>기초 진단지, 함수 미니 과제</td></tr>
+<tr data-domain="프로그래밍"><td class="c">2</td><td class="c"><span class="badge d1">프로그래밍</span></td><td><span class="code">12정과01-01</span></td><td><b>매개변수와 함수 설계</b></td><td>입력·처리·출력을 함수로 분리하고 위치·기본 매개변수를 활용하여 재사용 가능한 프로그램을 작성한다.</td><td class="c">개념·실습</td><td>함수 설계 코드</td></tr>
+<tr data-domain="프로그래밍"><td class="c">3</td><td class="c"><span class="badge d1">프로그래밍</span></td><td><span class="code">12정과01-02</span></td><td><b>재귀관계와 재귀함수</b></td><td>종료 조건과 재귀 호출의 관계를 추적하고 팩토리얼·최대공약수 문제를 재귀함수로 구현한다.</td><td class="c">탐구·실습</td><td>호출 스택 추적표</td></tr>
+<tr data-domain="프로그래밍"><td class="c">4</td><td class="c"><span class="badge d1">프로그래밍</span></td><td><span class="code">12정과01-02</span></td><td><b>재귀 심화: 피보나치와 메모이제이션</b></td><td>중복 호출을 분석하고 메모이제이션을 적용하여 실행 횟수와 시간을 개선한다.</td><td class="c">문제 해결</td><td>성능 비교 보고서</td></tr>
+<tr data-domain="프로그래밍"><td class="c">5</td><td class="c"><span class="badge d1">프로그래밍</span></td><td><span class="code">12정과01-03</span></td><td><b>반복구조와 재귀구조 비교</b></td><td>동일 문제를 반복문과 재귀함수로 구현하고 가독성·메모리·실행 시간을 비교한다.</td><td class="c">비교 실험</td><td>비교 분석표</td></tr>
+<tr data-domain="프로그래밍"><td class="c">6</td><td class="c"><span class="badge d1">프로그래밍</span></td><td><span class="code">12정과01-03</span></td><td><b>재귀 기반 탐색 문제</b></td><td>미로, 하노이 탑 또는 조합 생성 문제를 선택하여 재귀적 문제 분해 과정을 설계한다.</td><td class="c">협력 실습</td><td>알고리즘 설명서</td></tr>
+<tr data-domain="프로그래밍"><td class="c">7</td><td class="c"><span class="badge d1">프로그래밍</span></td><td><span class="code">12정과01-01~03</span></td><td><b>프로그래밍 영역 수행평가</b></td><td>주어진 문제의 재귀관계를 파악하고 반복·재귀 두 방식으로 해결한 뒤 차이를 논리적으로 설명한다.</td><td class="c">서·논술/실습</td><td>영역 수행평가 ①</td></tr>
+
+<tr data-domain="데이터 구조"><td class="c">8</td><td class="c"><span class="badge d2">데이터 구조</span></td><td><span class="code">12정과02-01</span></td><td><b>자료구조와 추상화</b></td><td>자료구조의 필요성을 사례로 탐색하고 선형 구조의 삽입·삭제·탐색 연산을 비교한다.</td><td class="c">개념 탐구</td><td>개념 지도</td></tr>
+<tr data-domain="데이터 구조"><td class="c">9</td><td class="c"><span class="badge d2">데이터 구조</span></td><td><span class="code">12정과02-01</span></td><td><b>스택의 원리와 구현</b></td><td>LIFO 원리를 이해하고 리스트로 push, pop, peek 연산을 직접 구현한다.</td><td class="c">구현 실습</td><td>Stack 클래스</td></tr>
+<tr data-domain="데이터 구조"><td class="c">10</td><td class="c"><span class="badge d2">데이터 구조</span></td><td><span class="code">12정과02-02</span></td><td><b>스택 활용 문제</b></td><td>괄호 검사, 후위 표기식, 실행 취소 중 하나를 선택하여 스택 기반 프로그램을 작성한다.</td><td class="c">문제 해결</td><td>스택 응용 코드</td></tr>
+<tr data-domain="데이터 구조"><td class="c">11</td><td class="c"><span class="badge d2">데이터 구조</span></td><td><span class="code">12정과02-01</span></td><td><b>큐의 원리와 구현</b></td><td>FIFO 원리와 원형 큐의 필요성을 이해하고 deque 또는 직접 구현 방식으로 연산을 작성한다.</td><td class="c">구현 실습</td><td>Queue 구현 코드</td></tr>
+<tr data-domain="데이터 구조"><td class="c">12</td><td class="c"><span class="badge d2">데이터 구조</span></td><td><span class="code">12정과02-02</span></td><td><b>큐 활용 시뮬레이션</b></td><td>급식 대기열, 프린터 작업 또는 상담 예약 상황을 큐로 모델링하고 평균 대기시간을 분석한다.</td><td class="c">모델링 실습</td><td>시뮬레이션 결과</td></tr>
+<tr data-domain="데이터 구조"><td class="c">13</td><td class="c"><span class="badge d2">데이터 구조</span></td><td><span class="code">12정과02-03</span></td><td><b>트리와 그래프 표현</b></td><td>노드·간선·차수 개념을 익히고 인접행렬과 인접리스트의 구조 및 공간 효율을 비교한다.</td><td class="c">개념·실습</td><td>그래프 표현 코드</td></tr>
+<tr data-domain="데이터 구조"><td class="c">14</td><td class="c"><span class="badge d2">데이터 구조</span></td><td><span class="code">12정과02-04</span></td><td><b>트리·그래프 순회</b></td><td>깊이 우선 탐색과 너비 우선 탐색을 구현하고 스택·큐와의 관계를 설명한다.</td><td class="c">구현·비교</td><td>DFS/BFS 실행 기록</td></tr>
+<tr data-domain="데이터 구조"><td class="c">15</td><td class="c"><span class="badge d2">데이터 구조</span></td><td><span class="code">12정과02-01~04</span></td><td><b>데이터 구조 영역 수행평가</b></td><td>문제 상황에 적절한 자료구조를 선택하고 선택 근거, 구현 결과, 효율성을 설명한다.</td><td class="c">서·논술/실습</td><td>영역 수행평가 ②</td></tr>
+
+<tr data-domain="알고리즘"><td class="c">16</td><td class="c"><span class="badge d3">알고리즘</span></td><td><span class="code">12정과03-01</span></td><td><b>상태 공간과 완전 탐색</b></td><td>문제를 상태·연산·목표 상태로 구조화하고 모든 후보를 탐색하는 알고리즘을 설계한다.</td><td class="c">모델링</td><td>상태 공간 도식</td></tr>
+<tr data-domain="알고리즘"><td class="c">17</td><td class="c"><span class="badge d3">알고리즘</span></td><td><span class="code">12정과03-01</span></td><td><b>백트래킹 기초</b></td><td>순열·조합·N-Queen 사례에서 선택, 재귀, 되돌리기 과정을 코드로 구현한다.</td><td class="c">실습</td><td>백트래킹 코드</td></tr>
+<tr data-domain="알고리즘"><td class="c">18</td><td class="c"><span class="badge d3">알고리즘</span></td><td><span class="code">12정과03-02</span></td><td><b>분기한정법과 가지치기</b></td><td>유망하지 않은 상태를 배제하는 조건을 설계하고 완전 탐색과 탐색 횟수를 비교한다.</td><td class="c">비교 실험</td><td>탐색 노드 비교표</td></tr>
+<tr data-domain="알고리즘"><td class="c">19</td><td class="c"><span class="badge d3">알고리즘</span></td><td><span class="code">12정과03-02</span></td><td><b>탐욕법의 원리</b></td><td>동전 교환, 회의실 배정 등에서 지역 최적 선택이 전체 해로 이어지는 조건을 탐구한다.</td><td class="c">탐구·토론</td><td>반례 분석지</td></tr>
+<tr data-domain="알고리즘"><td class="c">20</td><td class="c"><span class="badge d3">알고리즘</span></td><td><span class="code">12정과03-03</span></td><td><b>문제 분해와 관계 발견</b></td><td>큰 문제를 부분 문제로 분해하고 입력 크기 변화에 따른 관계를 점화식 또는 도식으로 표현한다.</td><td class="c">개념 탐구</td><td>부분 문제 관계도</td></tr>
+<tr data-domain="알고리즘"><td class="c">21</td><td class="c"><span class="badge d3">알고리즘</span></td><td><span class="code">12정과03-04</span></td><td><b>분할정복법</b></td><td>병합 정렬 또는 이진 탐색을 통해 분할·해결·결합의 구조를 구현한다.</td><td class="c">구현 실습</td><td>분할정복 코드</td></tr>
+<tr data-domain="알고리즘"><td class="c">22</td><td class="c"><span class="badge d3">알고리즘</span></td><td><span class="code">12정과03-04</span></td><td><b>분할정복 심화</b></td><td>퀵 정렬, 거듭제곱, 가장 가까운 두 점 중 수준에 맞는 문제를 선택하여 해결한다.</td><td class="c">선택형 실습</td><td>심화 문제 풀이</td></tr>
+<tr data-domain="알고리즘"><td class="c">23</td><td class="c"><span class="badge d3">알고리즘</span></td><td><span class="code">12정과03-05</span></td><td><b>동적계획법의 원리</b></td><td>중복 부분 문제와 최적 부분 구조를 확인하고 메모이제이션·테이블 방식을 비교한다.</td><td class="c">개념·실습</td><td>DP 테이블</td></tr>
+<tr data-domain="알고리즘"><td class="c">24</td><td class="c"><span class="badge d3">알고리즘</span></td><td><span class="code">12정과03-05</span></td><td><b>동적계획법 응용</b></td><td>배낭, 최장 공통 부분 수열, 계단 오르기 중 하나를 선택해 상태와 점화식을 설계한다.</td><td class="c">문제 해결</td><td>상태 정의서·코드</td></tr>
+<tr data-domain="알고리즘"><td class="c">25</td><td class="c"><span class="badge d3">알고리즘</span></td><td><span class="code">12정과03-06</span></td><td><b>알고리즘 복잡도와 빅오</b></td><td>입력 크기에 따른 연산 횟수를 분석하고 O(1), O(log n), O(n), O(n²)을 그래프로 비교한다.</td><td class="c">분석 실습</td><td>복잡도 분석표</td></tr>
+<tr data-domain="알고리즘"><td class="c">26</td><td class="c"><span class="badge d3">알고리즘</span></td><td><span class="code">12정과03-06</span></td><td><b>실행 시간 측정과 성능 비교</b></td><td>동일 문제의 여러 알고리즘을 구현하고 이론적 복잡도와 실제 실행 시간의 차이를 해석한다.</td><td class="c">실험·분석</td><td>성능 실험 보고서</td></tr>
+<tr data-domain="알고리즘"><td class="c">27</td><td class="c"><span class="badge d3">알고리즘</span></td><td><span class="code">12정과03-01~06</span></td><td><b>알고리즘 영역 수행평가</b></td><td>주어진 문제를 분석하여 둘 이상의 알고리즘을 설계하고 정확성·시간 복잡도·적용 조건을 비교한다.</td><td class="c">서·논술/실습</td><td>영역 수행평가 ③</td></tr>
+
+<tr data-domain="정보과학 프로젝트"><td class="c">28</td><td class="c"><span class="badge d4">정보과학 프로젝트</span></td><td><span class="code">12정과04-01</span></td><td><b>실생활 문제 발견과 주제 선정</b></td><td>과학·수학·환경·학교생활에서 컴퓨터과학으로 해결 가능한 문제를 관찰하고 프로젝트 주제를 선정한다.</td><td class="c">문제 발견</td><td>주제 제안서</td></tr>
+<tr data-domain="정보과학 프로젝트"><td class="c">29</td><td class="c"><span class="badge d4">정보과학 프로젝트</span></td><td><span class="code">12정과04-02</span></td><td><b>요구 분석과 프로젝트 설계</b></td><td>사용자, 입력, 출력, 제한 조건을 정의하고 기능 분해·일정·역할을 포함한 수행 계획을 작성한다.</td><td class="c">설계 워크숍</td><td>프로젝트 계획서</td></tr>
+<tr data-domain="정보과학 프로젝트"><td class="c">30</td><td class="c"><span class="badge d4">정보과학 프로젝트</span></td><td><span class="code">12정과04-03</span></td><td><b>오픈소스·라이브러리 활용</b></td><td>라이선스와 출처 표시를 확인하고 필요한 표준·외부 라이브러리를 조사하여 핵심 기능을 구현한다.</td><td class="c">협력 개발</td><td>기능 시제품</td></tr>
+<tr data-domain="정보과학 프로젝트"><td class="c">31</td><td class="c"><span class="badge d4">정보과학 프로젝트</span></td><td><span class="code">12정과04-03</span></td><td><b>협업 구현과 코드 통합</b></td><td>역할별 모듈을 작성하고 인터페이스를 맞추며 코드 검토와 버전 관리를 통해 통합한다.</td><td class="c">프로젝트</td><td>중간 산출물·개발 일지</td></tr>
+<tr data-domain="정보과학 프로젝트"><td class="c">32</td><td class="c"><span class="badge d4">정보과학 프로젝트</span></td><td><span class="code">12정과04-04</span></td><td><b>테스트와 디버깅</b></td><td>정상·경계·예외 입력을 포함한 테스트 사례를 설계하고 오류를 재현·수정·기록한다.</td><td class="c">검증 실습</td><td>테스트 보고서</td></tr>
+<tr data-domain="정보과학 프로젝트"><td class="c">33</td><td class="c"><span class="badge d4">정보과학 프로젝트</span></td><td><span class="code">12정과04-05</span></td><td><b>기능적·윤리적 평가와 개선</b></td><td>정확성, 효율성, 사용성, 개인정보, 편향, 저작권 관점에서 산출물을 상호 평가하고 개선한다.</td><td class="c">상호 평가</td><td>평가표·개선본</td></tr>
+<tr data-domain="정보과학 프로젝트"><td class="c">34</td><td class="c"><span class="badge d4">정보과학 프로젝트</span></td><td><span class="code">12정과04-01~05</span></td><td><b>최종 발표와 성찰</b></td><td>문제 정의, 설계, 알고리즘, 구현, 검증, 윤리적 고려를 발표하고 개인별 학습 성찰을 작성한다.</td><td class="c">발표·평가</td><td>최종 산출물·발표·성찰지</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="section" id="assessment">
+  <h2>Ⅲ. 평가 계획</h2>
+
+  <div class="assess-total">
+    <div class="total-box performance"><div class="big">60%</div><b>수행평가</b><br>A·B·C·D의 4개 영역으로 운영하며 수업 과정, 프로그래밍 분석, 도전 과제, 소논문을 종합 평가한다.</div>
+    <div class="total-box written"><div class="big">40%</div><b>지필평가</b><br>핵심 개념, 코드 해석, 데이터 구조, 알고리즘 설계 및 복잡도 분석을 평가한다.</div>
+  </div>
+
+  <h3>평가 반영 비율</h3>
+  <div class="table-wrap">
+    <table class="assess-table">
+      <thead><tr><th>구분</th><th>영역</th><th>평가명</th><th>반영 비율</th><th>평가 시기</th><th>주요 평가 내용</th><th>주요 산출물</th></tr></thead>
+      <tbody>
+        <tr><td class="c" rowspan="4"><b>수행평가</b><br>60%</td><td class="c"><span class="badge d1">A 영역</span></td><td><b>수업시간 형성·진단 평가</b></td><td class="c"><span class="score-chip green">20</span></td><td class="c">전 차시 수시</td><td>선수 학습 진단, 개념 확인, 코드 추적, 미니 퀴즈, 실습 참여와 오류 수정 과정</td><td>진단지, 형성평가지, 실습 기록, 학습 성찰</td></tr>
+        <tr><td class="c"><span class="badge d2">B 영역</span></td><td><b>프로그래밍 분석 평가</b></td><td class="c"><span class="score-chip green">20</span></td><td class="c">프로그래밍·자료구조·알고리즘 학습 후</td><td>코드의 실행 과정 분석, 오류 탐색과 수정, 함수·재귀·자료구조·알고리즘의 적용 및 효율성 설명</td><td>코드 분석지, 수정 프로그램, 분석 보고서</td></tr>
+        <tr><td class="c"><span class="badge d3">C 영역</span></td><td><b>Coding Challenge</b></td><td class="c"><span class="score-chip green">10</span></td><td class="c">알고리즘 영역</td><td>제한 시간 내 문제 이해, 알고리즘 설계, 정확한 구현, 테스트, 실행 시간과 메모리 효율 개선</td><td>온라인 판정 결과, 소스 코드, 풀이 설명서</td></tr>
+        <tr><td class="c"><span class="badge d4">D 영역</span></td><td><b>정보과학 소논문</b></td><td class="c"><span class="score-chip green">10</span></td><td class="c">프로젝트 영역</td><td>문제 정의, 관련 자료 조사, 데이터·알고리즘 설계, 구현 또는 실험, 결과 해석, 정보 윤리와 한계 성찰</td><td>소논문, 발표 자료, 연구 코드·데이터, 성찰 기록</td></tr>
+        <tr><td class="c"><b>지필평가</b></td><td class="c">지필</td><td><b>정기 지필평가</b></td><td class="c"><span class="score-chip">40</span></td><td class="c">학기 말 또는 학교 평가계획에 따름</td><td>정보과학 핵심 개념, 프로그램 실행 결과, 코드 분석, 자료구조 선택, 알고리즘 설계, 시간 복잡도 비교</td><td>선택형·단답형·서술형 답안</td></tr>
+        <tr class="sum-row"><td class="c" colspan="3">합계</td><td class="c">100%</td><td colspan="3">수행평가 60% + 지필평가 40%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>수행평가 영역별 운영 기준</h3>
+  <div class="eval">
+    <div class="item perform"><div class="pct">A · 20%</div><b>수업시간 형성·진단 평가</b><p>매 차시의 짧은 진단과 형성평가를 누적한다. 정답만이 아니라 풀이 과정, 오류 수정, 질문과 피드백 반영, 실습 참여도를 함께 평가한다.</p></div>
+    <div class="item perform"><div class="pct">B · 20%</div><b>프로그래밍 분석 평가</b><p>주어진 프로그램을 추적하여 결과를 예측하고, 오류 원인을 설명하며, 더 읽기 쉽고 효율적인 코드로 개선하는 능력을 평가한다.</p></div>
+    <div class="item perform"><div class="pct">C · 10%</div><b>Coding Challenge</b><p>문제 해결 전략의 타당성, 코드 정확성, 예외 처리, 시간·공간 효율, 테스트 결과를 종합 평가한다.</p></div>
+    <div class="item perform"><div class="pct">D · 10%</div><b>정보과학 소논문</b><p>연구 문제의 구체성, 이론적 근거, 알고리즘·실험 설계, 결과 해석, 인용과 출처 표시, 정보 윤리 및 한계 성찰을 평가한다.</p></div>
+  </div>
+
+  <h3>공통 평가 준거</h3>
+  <div class="rubric">
+    <div class="r"><b>지식·이해</b><br>핵심 개념과 원리를 정확히 설명하고 새로운 문제 상황에 연결하는 정도</div>
+    <div class="r"><b>과정·기능</b><br>문제 구조화, 알고리즘 설계, 구현, 테스트, 디버깅과 개선의 완성도</div>
+    <div class="r"><b>분석·효율성</b><br>실행 과정을 논리적으로 분석하고 적절한 자료구조와 알고리즘을 선택하는 정도</div>
+    <div class="r"><b>가치·태도</b><br>협력, 연구 윤리, 출처 표시, 개인정보 보호, 책임 있는 기술 활용을 실천하는 정도</div>
+  </div>
+  <div class="note"><b>평가 운영 원칙:</b> 수행평가는 결과물만 평가하지 않고 계획–시도–오류–수정–완성의 과정을 함께 반영한다. 성취수준 A~E의 차이가 드러나도록 개념 이해의 깊이, 적용 범위, 분석의 논리성, 구현의 정확성과 효율성, 가치·태도의 실천 정도를 종합적으로 판단한다.</div>
+</section>
+
+<section class="section">
+  <h2>Ⅳ. 최소 성취수준 보장 및 심화 운영</h2>
+  <div class="info-grid">
+    <div class="info-box"><strong>기초 지원</strong>핵심 개념 카드, 코드 빈칸 채우기, 실행 과정 추적표, 짧은 자동 채점 문제를 제공하고 교사 예시와 학생 코드를 단계적으로 비교한다.</div>
+    <div class="info-box"><strong>심화 확장</strong>온라인 판정 문제, 그래프 최단 경로, 고급 동적계획법, 과학 데이터 분석, 오픈소스 기여와 같은 선택 과제를 제공한다.</div>
+    <div class="info-box"><strong>피드백</strong>오류 유형을 개념 오류·설계 오류·구현 오류·검증 오류로 구분하여 다음 학습 행동을 구체적으로 안내한다.</div>
+    <div class="info-box"><strong>과정 기록</strong>개발 일지와 버전 기록을 통해 시도, 실패, 수정, 협력 과정을 평가에 반영하고 결과물만으로 판단하지 않는다.</div>
+  </div>
+</section>
+</main>
+<div class="footer">2022 개정 교육과정 고등학교 정보과학 성취기준을 바탕으로 재구성한 학교 자율 활용용 연간수업계획서</div>
+<script>
+function scrollToId(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});}
+function applyFilter(){
+ const domain=document.getElementById('domainFilter').value;
+ const q=document.getElementById('search').value.trim().toLowerCase();
+ const rows=[...document.querySelectorAll('#planTable tbody tr')]; let visible=0;
+ rows.forEach(row=>{const okDomain=domain==='all'||row.dataset.domain===domain;const okText=!q||row.innerText.toLowerCase().includes(q);row.classList.toggle('hidden',!(okDomain&&okText));if(okDomain&&okText)visible++;});
+ document.getElementById('count').textContent=visible+'개 차시 표시';
+}
+function downloadCSV(){
+ const rows=[...document.querySelectorAll('#planTable tr')].filter(r=>!r.classList.contains('hidden'));
+ const csv=rows.map(r=>[...r.children].map(c=>'"'+c.innerText.replace(/"/g,'""').replace(/\n/g,' ')+'"').join(',')).join('\n');
+ const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='정보과학_34차시_연간수업계획.csv';a.click();URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>
