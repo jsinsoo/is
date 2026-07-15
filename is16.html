@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>정보과학 16차시 목표지향 개념기반 수업지도안</title>
+<style>
+:root{--n:#17324d;--b:#2f6fa3;--g:#f2b84b;--l:#d7e3ec;--bg:#f3f7fa;--ok:#eaf8ef;--no:#fff0f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:"Malgun Gothic",sans-serif;color:#26333f;line-height:1.7}
+header{background:linear-gradient(135deg,var(--n),var(--b));color:#fff;padding:36px 20px}
+header div,main,nav div{max-width:1150px;margin:auto}h1{margin:0 0 8px}nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--l);z-index:5}
+nav div{display:flex;gap:8px;overflow:auto;padding:9px}nav a{white-space:nowrap;color:var(--n);font-weight:700;text-decoration:none;padding:7px 10px}
+main{padding:18px 15px 70px}section{background:#fff;border:1px solid var(--l);border-radius:16px;padding:24px;margin:16px 0}
+h2{color:var(--n);border-left:7px solid var(--g);padding-left:11px}h3{color:var(--b)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.card{border:1px solid var(--l);background:#f9fcfe;border-radius:12px;padding:15px}
+.tag{display:inline-block;background:#eaf4fb;color:var(--b);font-weight:700;border-radius:15px;padding:3px 9px;margin:2px}
+.quote{background:#fff8e8;border-left:6px solid var(--g);padding:18px;border-radius:12px}
+table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--l);padding:9px;vertical-align:top}th{background:var(--n);color:#fff}
+pre{background:#17212b;color:#edf5fa;padding:18px;border-radius:12px;overflow:auto;line-height:1.55}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:10px}input[type=text]{width:100%;padding:10px;border:1px solid #aebdca;border-radius:8px}
+.q{border:1px solid var(--l);border-radius:12px;padding:14px;margin:11px 0}.q.good{background:var(--ok);border-color:#58a675}.q.bad{background:var(--no);border-color:#d86b6b}
+.opts label{display:block;padding:6px}.exp{display:none;background:#fff;padding:8px;margin-top:7px;border-left:4px solid var(--g)}
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:800;cursor:pointer}.primary{background:var(--b);color:#fff}.secondary{background:#e7eef4}.danger{background:#c94d4d;color:#fff}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}#result{display:none;background:#eef8ff;border:2px solid var(--b);border-radius:12px;padding:16px;margin-top:15px}
+.progress{height:11px;background:#e5edf3;border-radius:8px;overflow:hidden;margin:12px 0}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--b),var(--g))}
+@media(max-width:650px){.student{grid-template-columns:1fr}}@media print{nav,.actions{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header><div><h1>정보과학 16차시 목표지향 개념기반 수업지도안</h1><p>사용자 피드백을 분석하여 프로젝트 산출물을 개선하고 책임 있게 재공유하기</p></div></header>
+<nav><div><a href="#s1">성취기준</a><a href="#s2">개념</a><a href="#s3">학습내용</a><a href="#s4">소논문</a><a href="#s5">코드</a><a href="#s6">평가</a></div></nav>
+<main>
+<section id="s1">
+<h2>1. 성취기준과 학습 목표</h2>
+<div class="card"><b>[12정과04-05]</b> 프로젝트의 산출물을 기능적, 윤리적 관점에서 평가하고 결과를 공유한다.</div>
+<div class="grid">
+<div class="card"><b>지식·이해</b><br>사용자 피드백, 개선 우선순위, 반복 개발, 버전, 재평가의 의미를 설명한다.</div>
+<div class="card"><b>과정·기능</b><br>사용자 의견을 유형별로 분류하고 기능성·윤리성·실현 가능성을 고려해 개선 순서를 결정한다.</div>
+<div class="card"><b>가치·태도</b><br>비판을 성장의 자료로 받아들이고, 변경 내용과 한계를 투명하게 기록하여 책임 있게 재공유한다.</div>
+</div>
+<p><b>성공 기준:</b> 피드백을 근거에 따라 분류·점수화하고, 개선 전후를 비교한 뒤 변경 이력과 남은 한계를 포함한 결과를 공유한다.</p>
+</section>
+
+<section id="s2">
+<h2>2. 학습할 개념</h2>
+<p><span class="tag">사용자 피드백</span><span class="tag">반복 개발</span><span class="tag">개선 우선순위</span><span class="tag">영향도</span><span class="tag">시급성</span><span class="tag">실현 가능성</span><span class="tag">버전 관리</span><span class="tag">변경 이력</span><span class="tag">재평가</span></p>
+<table>
+<tr><th>개념</th><th>핵심 의미</th></tr>
+<tr><td>사용자 피드백</td><td>실제 사용자가 경험한 장점, 불편, 오류, 요구를 수집한 자료</td></tr>
+<tr><td>반복 개발</td><td>설계·구현·평가·개선을 여러 차례 반복하여 산출물의 완성도를 높이는 과정</td></tr>
+<tr><td>개선 우선순위</td><td>영향도, 시급성, 실현 가능성, 윤리적 위험을 고려하여 먼저 개선할 항목을 정하는 것</td></tr>
+<tr><td>변경 이력</td><td>어떤 기능을 왜, 언제, 어떻게 수정했는지 기록한 자료</td></tr>
+<tr><td>재평가</td><td>개선 후 기능적·윤리적 기준을 다시 적용하여 변화와 한계를 확인하는 과정</td></tr>
+</table>
+</section>
+
+<section>
+<h2>3. 수업 시작 멘트</h2>
+<div class="quote">“헤겔은 생각이 대립과 조정을 거치며 발전한다고 보았고, 존 듀이는 경험을 성찰할 때 배움이 완성된다고 말했습니다. 과학자는 실험 결과를 보고 가설을 수정하고, 수학자는 반례를 만나면 정의와 증명을 더 정교하게 다듬습니다. 오늘 우리는 피드백을 평가가 끝났다는 신호가 아니라 다음 발전이 시작된다는 신호로 보겠습니다. 비판은 프로그램을 공격하는 바이러스가 아니라 잘 사용하면 성능을 높이는 업데이트 파일입니다. 단, ‘버튼이 안 눌린다’는 의견에 버튼 색만 바꾸는 것은 개선이 아니라 화장입니다.”</div>
+</section>
+
+<section id="s3">
+<h2>4. 학습 내용</h2>
+<table>
+<tr><th>단계</th><th>활동</th></tr>
+<tr><td>도입 5분</td><td>동일한 산출물에 대한 서로 다른 사용자 의견을 비교하고 사실·의견·요구를 구분한다.</td></tr>
+<tr><td>개념 10분</td><td>피드백 분류, 개선 우선순위, 반복 개발, 버전과 변경 이력의 의미를 학습한다.</td></tr>
+<tr><td>탐구 10분</td><td>기능 오류·사용성·윤리·새 기능 요구로 피드백을 분류하고 근거를 설명한다.</td></tr>
+<tr><td>코딩 15분</td><td>영향도·시급성·실현 가능성 점수를 이용해 개선 우선순위를 자동 계산한다.</td></tr>
+<tr><td>공유 5분</td><td>개선 전후 변화, 반영하지 못한 의견, 다음 버전 계획을 발표한다.</td></tr>
+<tr><td>평가 5분</td><td>OX, 복수 정답, 단답형 평가를 실시한다.</td></tr>
+</table>
+</section>
+
+<section id="s4">
+<h2>5. 학습 관련 소논문 주제 예시 5개</h2>
+<ol>
+<li>사용자 피드백 반영 전후 프로그램 사용성 변화 분석</li>
+<li>개선 우선순위 산정 방식이 프로젝트 의사결정에 미치는 영향</li>
+<li>변경 이력 기록이 협력 프로젝트의 오류 재발 방지에 미치는 효과</li>
+<li>기능 피드백과 윤리 피드백의 유형 및 반영률 비교</li>
+<li>반복 개발 횟수와 프로그램 완성도 사이의 관계 연구</li>
+</ol>
+</section>
+
+<section id="s5">
+<h2>6. 학습할 코드 1개</h2>
+<pre><code>feedback = [
+    {
+        "content": "환기 알림 기준을 설명해 주세요.",
+        "category": "투명성",
+        "impact": 5,
+        "urgency": 4,
+        "feasibility": 5
+    },
+    {
+        "content": "글자가 작아서 읽기 어렵습니다.",
+        "category": "사용성",
+        "impact": 4,
+        "urgency": 3,
+        "feasibility": 5
+    },
+    {
+        "content": "측정 기록에서 개인정보가 보입니다.",
+        "category": "개인정보 보호",
+        "impact": 5,
+        "urgency": 5,
+        "feasibility": 4
+    }
+]
+
+
+def priority_score(item):
+    return (
+        item["impact"] * 0.4
+        + item["urgency"] * 0.35
+        + item["feasibility"] * 0.25
+    )
+
+
+for item in feedback:
+    item["priority"] = priority_score(item)
+
+ranked_feedback = sorted(
+    feedback,
+    key=lambda item: item["priority"],
+    reverse=True
+)
+
+print("개선 우선순위")
+for rank, item in enumerate(ranked_feedback, start=1):
+    print(
+        rank,
+        item["category"],
+        round(item["priority"], 2),
+        item["content"]
+    )</code></pre>
+<table>
+<tr><th>코드 요소</th><th>상세 설명</th></tr>
+<tr><td><code>feedback</code></td><td>사용자 의견과 분류, 영향도, 시급성, 실현 가능성을 저장한 리스트이다.</td></tr>
+<tr><td><code>category</code></td><td>의견을 사용성, 기능 오류, 투명성, 개인정보 보호 등으로 분류한 값이다.</td></tr>
+<tr><td><code>priority_score</code></td><td>세 평가 기준에 가중치를 적용해 개선 우선순위 점수를 계산한다.</td></tr>
+<tr><td><code>impact * 0.4</code></td><td>사용자와 프로젝트에 미치는 영향을 가장 큰 비중으로 반영한다.</td></tr>
+<tr><td><code>urgency * 0.35</code></td><td>즉시 해결해야 할 필요성을 반영한다.</td></tr>
+<tr><td><code>feasibility * 0.25</code></td><td>현재 시간과 기술로 실제 수정할 수 있는 정도를 반영한다.</td></tr>
+<tr><td><code>reverse=True</code></td><td>우선순위 점수가 높은 의견부터 정렬한다.</td></tr>
+<tr><td><code>enumerate(..., start=1)</code></td><td>개선 항목에 1위부터 순위를 부여한다.</td></tr>
+</table>
+<p><b>해석:</b> 개인정보 보호와 같은 윤리적 위험은 영향도와 시급성이 높아 우선 개선 대상이 된다. 점수만으로 결정하지 말고 법적·윤리적 의무와 사용자 의견도 함께 검토해야 한다.</p>
+</section>
+
+<section>
+<h2>7. 수업 끝 멘트</h2>
+<div class="quote">“시는 독자의 마음을 만나 새로운 의미를 얻고, 소설은 퇴고를 거치며 처음보다 더 깊은 세계가 됩니다. 희곡은 리허설에서 받은 의견으로 장면을 다듬고, 연극은 관객과 호흡하며 매 공연 새로워집니다. 음악도 첫 녹음보다 수많은 수정과 연습 뒤에 오래 남는 곡이 됩니다. 여러분의 꿈도 피드백을 받을 때 작아지는 것이 아니라 다음 버전으로 성장하는 것입니다. 단, 선생님의 ‘조금 더 공부하자’는 피드백을 다음 버전으로 무한 연기하면 업데이트 지원이 종료될 수 있습니다!”</div>
+</section>
+
+<section id="s6">
+<h2>8. 형성·진단·코드 평가</h2>
+<div class="card"><b>배점:</b> OX 20점 · 진단평가 60점 · 단답형 20점</div>
+<div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="name" type="text" placeholder="예: 홍길동"></label></div>
+<div class="progress"><span id="bar"></span></div>
+<form id="quiz">
+<h3>Ⅰ. 형성평가 OX 10개</h3><div id="ox"></div>
+<h3>Ⅱ. 옳은 것 3개 고르기 10개</h3><div id="multi"></div>
+<h3>Ⅲ. 코드 평가 단답형 5개</h3><div id="short"></div>
+</form>
+<div class="actions"><button type="button" class="primary" onclick="grade()">채점하고 TXT 저장</button><button type="button" class="secondary" onclick="print()">인쇄·PDF</button><button type="button" class="danger" onclick="resetAll()">다시 풀기</button></div>
+<div id="result"></div>
+</section>
+</main>
+
+<script>
+const O=[
+["사용자 피드백은 산출물 개선을 위한 자료가 될 수 있다.","O"],
+["모든 사용자 의견은 검토 없이 즉시 반영해야 한다.","X"],
+["반복 개발은 평가와 개선을 여러 차례 반복하는 과정이다.","O"],
+["개선 우선순위는 영향도와 시급성을 고려할 수 있다.","O"],
+["윤리적 위험이 있는 의견은 기능 개선보다 항상 나중에 처리한다.","X"],
+["변경 이력은 수정 이유와 내용을 기록하는 데 도움이 된다.","O"],
+["재평가는 개선 후 기능과 윤리를 다시 확인하는 과정이다.","O"],
+["reverse=True는 점수가 낮은 의견부터 정렬한다.","X"],
+["피드백을 반영하지 못한 경우 그 이유를 설명할 수 있다.","O"],
+["점수가 높으면 법적·윤리적 검토 없이 바로 반영해도 된다.","X"]
+];
+const M=[
+["좋은 피드백 분석",["사실과 의견 구분","유형별 분류","근거와 영향 확인","작성자 이름만 평가","불편한 의견 삭제"],[0,1,2]],
+["개선 우선순위 기준",["영향도","시급성","실현 가능성","글자 수","발표 순서"],[0,1,2]],
+["반복 개발 과정",["평가","개선","재검증","한 번 제출 후 종료","오류 기록 삭제"],[0,1,2]],
+["변경 이력 내용",["수정한 기능","수정 이유","수정 날짜나 버전","학생 키","교실 온도만"],[0,1,2]],
+["feedback 리스트 설명",["각 항목은 딕셔너리","사용자 의견 저장","평가 점수 저장","모든 값은 숫자","의견을 자동 삭제"],[0,1,2]],
+["priority_score 함수",["영향도 반영","시급성 반영","실현 가능성 반영","항상 5 반환","분류 이름 삭제"],[0,1,2]],
+["ranked_feedback 설명",["점수순 정렬 결과","높은 점수부터 배치","개선 순서 판단 자료","무작위 목록","원본 의견 삭제"],[0,1,2]],
+["윤리적 피드백 처리",["개인정보 위험 우선 검토","공정성 문제 확인","투명성 보완","출처 삭제","민감정보 공개"],[0,1,2]],
+["책임 있는 재공유",["개선 전후 비교","남은 한계 공개","변경 내용 기록","실패 사례 은폐","사용자 의견 왜곡"],[0,1,2]],
+["성취기준에 맞는 활동",["기능·윤리 관점 재평가","피드백 기반 개선","개선 결과 공유","점수만 자랑","한계 숨김"],[0,1,2]]
+];
+const S=[
+["사용자 의견 목록 변수",["feedback"]],
+["우선순위 계산 함수",["priority_score","priority_score()"]],
+["계산된 우선순위 점수 키",["priority"]],
+["정렬된 피드백 변수",["ranked_feedback"]],
+["큰 점수부터 정렬하게 하는 인수",["reverse=True","reverse = True"]]
+];
+function norm(v){return (v||"").toLowerCase().replace(/\s/g,"")}
+function render(){
+ox.innerHTML=O.map((x,i)=>`<div class=q id=o${i}><b>${i+1}. ${x[0]}</b><div class=opts><label><input type=radio name=o${i} value=O> O</label><label><input type=radio name=o${i} value=X> X</label></div><div class=exp id=oe${i}></div></div>`).join("");
+multi.innerHTML=M.map((x,i)=>`<div class=q id=m${i}><b>${i+1}. ${x[0]}에서 옳은 것 3개를 고르시오.</b><div class=opts>${x[1].map((v,j)=>`<label><input type=checkbox name=m${i} value=${j}> ${j+1}) ${v}</label>`).join("")}</div><div class=exp id=me${i}></div></div>`).join("");
+short.innerHTML=S.map((x,i)=>`<div class=q id=s${i}><b>${i+1}. ${x[0]}</b><input type=text name=s${i}><div class=exp id=se${i}></div></div>`).join("");
+document.querySelectorAll("input").forEach(x=>x.addEventListener("input",progress))
+}
+function progress(){let a=0;for(let i=0;i<10;i++)if(document.querySelector(`input[name=o${i}]:checked`))a++;for(let i=0;i<10;i++)if(document.querySelectorAll(`input[name=m${i}]:checked`).length)a++;for(let i=0;i<5;i++)if(document.querySelector(`input[name=s${i}]`).value.trim())a++;bar.style.width=(a/25*100)+"%"}
+function mark(id,eid,ok,text){let q=document.getElementById(id);q.className="q "+(ok?"good":"bad");let e=document.getElementById(eid);e.style.display="block";e.textContent=text}
+function grade(){
+let id=sid.value.trim(),nm=name.value.trim();if(!id||!nm){alert("학번과 이름을 입력하세요.");return}
+let score=0,lines=[];
+O.forEach((x,i)=>{let e=document.querySelector(`input[name=o${i}]:checked`),v=e?e.value:"미응답",ok=v===x[1];if(ok)score+=2;mark("o"+i,"oe"+i,ok,"정답: "+x[1]);lines.push(`[OX ${i+1}] ${v} / ${x[1]} / ${ok?"정답":"오답"}`)});
+M.forEach((x,i)=>{let v=[...document.querySelectorAll(`input[name=m${i}]:checked`)].map(z=>+z.value).sort(),ok=JSON.stringify(v)===JSON.stringify(x[2]);if(ok)score+=6;mark("m"+i,"me"+i,ok,"정답: "+x[2].map(z=>z+1).join(",")+"번");lines.push(`[진단 ${i+1}] ${v.map(z=>z+1).join(",")||"미응답"} / ${x[2].map(z=>z+1).join(",")} / ${ok?"정답":"오답"}`)});
+S.forEach((x,i)=>{let v=document.querySelector(`input[name=s${i}]`).value,ok=x[1].some(a=>norm(a)===norm(v));if(ok)score+=4;mark("s"+i,"se"+i,ok,"정답: "+x[1][0]);lines.push(`[단답 ${i+1}] ${v||"미응답"} / ${x[1][0]} / ${ok?"정답":"오답"}`)});
+let d=new Date(),p=n=>String(n).padStart(2,"0"),t=`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`,ft=`${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+result.style.display="block";result.innerHTML=`<h3>${score}점 / 100점</h3><p>${id} ${nm} · ${t}</p>`;
+let txt=["정보과학 16차시 평가 결과",`학번: ${id}`,`이름: ${nm}`,`점수: ${score}/100`,`응시시각: ${t}`,"",...lines].join("\r\n");
+let u=URL.createObjectURL(new Blob(["\ufeff"+txt],{type:"text/plain;charset=utf-8"})),a=document.createElement("a");a.href=u;a.download=`${id}_${nm}_${score}점_16차시_${ft}.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(u),500)
+}
+function resetAll(){if(confirm("모든 답을 지울까요?"))location.reload()}
+render();
+</script>
+</body>
+</html>
