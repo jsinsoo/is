@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>스택 기반 프로그램 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1180px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:930px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--gold)}
+.flow-card:nth-child(3){border-top:5px solid var(--green)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:26%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow,.two{grid-template-columns:1fr}}
+@media(max-width:560px){section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>괄호 검사·후위 표기식·실행 취소<br>스택 기반 프로그램 예제 10선</h1>
+<p>스택의 후입선출 원리를 실제 문제에 적용하여 괄호의 짝을 검사하고, 후위 표기식을 계산하며, 최근 작업부터 되돌리는 실행 취소 프로그램을 구현합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">핵심 원리</a><a href="#ex1">1. 소괄호 검사</a><a href="#ex2">2. 여러 괄호</a>
+<a href="#ex3">3. 위치 진단</a><a href="#ex4">4. 후위식 기초</a><a href="#ex5">5. 후위식 계산</a>
+<a href="#ex6">6. 계산 추적</a><a href="#ex7">7. 중위→후위</a><a href="#ex8">8. 실행 취소</a>
+<a href="#ex9">9. 다시 실행</a><a href="#ex10">10. 종합 편집기</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 세 가지 문제와 스택의 역할</h2>
+<div class="flow">
+<div class="flow-card"><strong>괄호 검사</strong>최근에 열린 괄호가 현재 닫는 괄호와 짝을 이루는지 확인합니다.</div>
+<div class="flow-card"><strong>후위 표기식</strong>피연산자를 저장하고 연산자를 만나면 최근 두 값을 꺼내 계산합니다.</div>
+<div class="flow-card"><strong>실행 취소</strong>작업 전 상태를 저장하고 가장 최근 상태부터 복원합니다.</div>
+</div>
+<table>
+<tr><th>문제</th><th>push하는 자료</th><th>pop하는 시점</th></tr>
+<tr><td>괄호 검사</td><td>여는 괄호</td><td>닫는 괄호를 만날 때</td></tr>
+<tr><td>후위 표기식</td><td>숫자 또는 중간 계산값</td><td>연산자를 만날 때 두 값</td></tr>
+<tr><td>실행 취소</td><td>변경 전 상태</td><td>사용자가 실행 취소할 때</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>소괄호 짝 검사</h2></div>
+<div><span class="badge">괄호 검사</span><span class="badge">LIFO</span></div>
+<div class="two">
+<div><pre><code>def check_parentheses(expression):
+    stack = []
+
+    for character in expression:
+        if character == "(":
+            stack.append(character)
+
+        elif character == ")":
+            if not stack:
+                return False
+            stack.pop()
+
+    return len(stack) == 0
+
+print(check_parentheses("(a+b)*(c-d)"))
+print(check_parentheses("((a+b)"))
+print(check_parentheses("a+b)"))</code></pre></div>
+<div class="card">
+<h3>판정 원리</h3>
+<p>여는 괄호는 스택에 넣고 닫는 괄호를 만나면 하나를 꺼냅니다.</p>
+<p>닫는 괄호가 남거나 마지막에 여는 괄호가 남으면 잘못된 식입니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>소·중·대괄호 검사</h2></div>
+<div><span class="badge">괄호 종류</span><span class="badge">딕셔너리</span></div>
+<pre><code>def check_brackets(expression):
+    stack = []
+    pairs = {
+        ")": "(",
+        "]": "[",
+        "}": "{"
+    }
+
+    for character in expression:
+        if character in "([{":
+            stack.append(character)
+
+        elif character in ")]}":
+            if not stack:
+                return False
+
+            top = stack.pop()
+
+            if top != pairs[character]:
+                return False
+
+    return not stack
+
+tests = [
+    "{[()]}",
+    "{[(])}",
+    "(([]))",
+    "([)"
+]
+
+for test in tests:
+    print(test, "→", check_brackets(test))</code></pre>
+<div class="check"><strong>LIFO 필요성</strong><br>가장 나중에 열린 괄호가 가장 먼저 닫혀야 하므로 스택이 적합합니다.</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>괄호 오류 위치 알려 주기</h2></div>
+<div><span class="badge">오류 진단</span><span class="badge">인덱스 저장</span></div>
+<pre><code>def diagnose_brackets(expression):
+    stack = []
+    pairs = {")": "(", "]": "[", "}": "{"}
+
+    for index, character in enumerate(expression):
+        if character in "([{":
+            stack.append((character, index))
+
+        elif character in ")]}":
+            if not stack:
+                return f"{index}번 위치: 여는 괄호가 없습니다."
+
+            opening, opening_index = stack.pop()
+
+            if opening != pairs[character]:
+                return (
+                    f"{index}번 위치: {opening}와 "
+                    f"{character}의 종류가 다릅니다."
+                )
+
+    if stack:
+        opening, index = stack[-1]
+        return f"{index}번 위치의 {opening}가 닫히지 않았습니다."
+
+    return "올바른 괄호 구조입니다."
+
+print(diagnose_brackets("{[(])}"))</code></pre>
+<div class="note"><strong>확장</strong><br>괄호 문자와 위치를 튜플로 저장하면 단순한 참·거짓 판정을 넘어 오류 위치까지 안내할 수 있습니다.</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>후위 표기식의 스택 변화</h2></div>
+<div><span class="badge">후위 표기식</span><span class="badge">피연산자</span></div>
+<div class="two">
+<div><pre><code>tokens = "2 3 + 4 *".split()
+stack = []
+
+for token in tokens:
+    if token.isdigit():
+        stack.append(int(token))
+        print("숫자 push:", stack)
+
+    else:
+        right = stack.pop()
+        left = stack.pop()
+        result = left + right if token == "+" else left * right
+        stack.append(result)
+        print("연산 후:", stack)
+
+print("최종 결과:", stack.pop())</code></pre></div>
+<div class="card">
+<h3>계산 순서</h3>
+<pre class="output">2 push
+3 push
++ → 2+3 = 5
+4 push
+* → 5×4 = 20</pre>
+<p>후위식에는 괄호와 연산자 우선순위 처리가 필요하지 않습니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>사칙연산 후위 표기식 계산기</h2></div>
+<div><span class="badge">사칙연산</span><span class="badge">함수</span></div>
+<pre><code>def evaluate_postfix(expression):
+    stack = []
+
+    for token in expression.split():
+        if token.lstrip("-").isdigit():
+            stack.append(int(token))
+            continue
+
+        right = stack.pop()
+        left = stack.pop()
+
+        if token == "+":
+            result = left + right
+        elif token == "-":
+            result = left - right
+        elif token == "*":
+            result = left * right
+        elif token == "/":
+            result = left / right
+        else:
+            raise ValueError("지원하지 않는 연산자입니다.")
+
+        stack.append(result)
+
+    if len(stack) != 1:
+        raise ValueError("올바르지 않은 후위 표기식입니다.")
+
+    return stack[0]
+
+print(evaluate_postfix("8 2 / 3 +"))
+print(evaluate_postfix("5 2 3 * +"))</code></pre>
+<div class="warn"><strong>피연산자 순서</strong><br>뺄셈과 나눗셈에서는 먼저 꺼낸 값이 오른쪽 피연산자입니다. 반드시 <code>left 연산 right</code> 순서로 계산해야 합니다.</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>후위 표기식 계산 과정 추적</h2></div>
+<div><span class="badge">추적표</span><span class="badge">디버깅</span></div>
+<pre><code>def evaluate_with_trace(expression):
+    stack = []
+
+    for token in expression.split():
+        before = stack.copy()
+
+        if token.isdigit():
+            stack.append(int(token))
+            action = f"{token} push"
+
+        else:
+            right = stack.pop()
+            left = stack.pop()
+
+            operations = {
+                "+": left + right,
+                "-": left - right,
+                "*": left * right,
+                "/": left / right
+            }
+
+            stack.append(operations[token])
+            action = f"{left} {token} {right}"
+
+        print(
+            f"토큰={token:>2} | 이전={before} "
+            f"| 처리={action} | 이후={stack}"
+        )
+
+    return stack.pop()
+
+print("결과:", evaluate_with_trace("7 2 3 * -"))</code></pre>
+<div class="check"><strong>학습 효과</strong><br>각 토큰 처리 전후의 스택을 출력하면 잘못된 피연산자 순서와 스택 부족 오류를 쉽게 찾을 수 있습니다.</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>중위 표기식을 후위 표기식으로 변환</h2></div>
+<div><span class="badge">연산자 스택</span><span class="badge">우선순위</span></div>
+<pre><code>def infix_to_postfix(expression):
+    output = []
+    operators = []
+    priority = {"+": 1, "-": 1, "*": 2, "/": 2}
+
+    for token in expression.split():
+        if token.isdigit():
+            output.append(token)
+
+        elif token == "(":
+            operators.append(token)
+
+        elif token == ")":
+            while operators and operators[-1] != "(":
+                output.append(operators.pop())
+            operators.pop()
+
+        else:
+            while (
+                operators
+                and operators[-1] != "("
+                and priority[operators[-1]] >= priority[token]
+            ):
+                output.append(operators.pop())
+
+            operators.append(token)
+
+    while operators:
+        output.append(operators.pop())
+
+    return " ".join(output)
+
+print(infix_to_postfix("2 + 3 * 4"))
+print(infix_to_postfix("( 2 + 3 ) * 4"))</code></pre>
+<div class="note"><strong>스택 역할</strong><br>연산자는 바로 출력하지 않고 스택에 저장하며, 우선순위가 높은 연산자부터 꺼내 후위식에 추가합니다.</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>문서 편집 실행 취소</h2></div>
+<div><span class="badge">Undo</span><span class="badge">상태 저장</span></div>
+<pre><code>document = ""
+undo_stack = []
+
+def write(text):
+    global document
+
+    undo_stack.append(document)
+    document += text
+    print("문서:", document)
+
+def undo():
+    global document
+
+    if not undo_stack:
+        print("취소할 작업이 없습니다.")
+        return
+
+    document = undo_stack.pop()
+    print("취소 후:", document)
+
+write("정보")
+write(" 수업")
+write(" 자료")
+undo()
+undo()</code></pre>
+<div class="check"><strong>핵심</strong><br>문서를 변경하기 전에 현재 상태를 push하고, 실행 취소할 때 가장 최근 상태를 pop하여 복원합니다.</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>실행 취소와 다시 실행</h2></div>
+<div><span class="badge">Undo</span><span class="badge">Redo</span><span class="badge">두 스택</span></div>
+<pre><code>document = ""
+undo_stack = []
+redo_stack = []
+
+def write(text):
+    global document
+
+    undo_stack.append(document)
+    document += text
+    redo_stack.clear()
+
+def undo():
+    global document
+
+    if undo_stack:
+        redo_stack.append(document)
+        document = undo_stack.pop()
+
+def redo():
+    global document
+
+    if redo_stack:
+        undo_stack.append(document)
+        document = redo_stack.pop()
+
+write("파이썬")
+write(" 스택")
+write(" 실습")
+
+print(document)
+undo()
+print("undo:", document)
+undo()
+print("undo:", document)
+redo()
+print("redo:", document)</code></pre>
+<div class="note"><strong>두 스택의 역할</strong><br>Undo 스택은 이전 상태를, Redo 스택은 취소된 이후 상태를 저장합니다. 새 작업을 수행하면 Redo 기록을 비웁니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>명령어 기반 간단한 문서 편집기</h2></div>
+<div><span class="badge">종합 프로그램</span><span class="badge">상태 관리</span></div>
+<pre><code>document = ""
+undo_stack = []
+redo_stack = []
+
+def show():
+    print(f"현재 문서: [{document}]")
+
+while True:
+    command = input("명령: ").split(maxsplit=1)
+    action = command[0]
+
+    if action == "write":
+        if len(command) == 1:
+            print("추가할 내용을 입력하세요.")
+            continue
+
+        undo_stack.append(document)
+        document += command[1]
+        redo_stack.clear()
+        show()
+
+    elif action == "undo":
+        if undo_stack:
+            redo_stack.append(document)
+            document = undo_stack.pop()
+        else:
+            print("취소할 작업이 없습니다.")
+        show()
+
+    elif action == "redo":
+        if redo_stack:
+            undo_stack.append(document)
+            document = redo_stack.pop()
+        else:
+            print("다시 실행할 작업이 없습니다.")
+        show()
+
+    elif action == "show":
+        show()
+
+    elif action == "quit":
+        break
+
+    else:
+        print("알 수 없는 명령입니다.")</code></pre>
+<table>
+<tr><th>명령</th><th>기능</th><th>예시</th></tr>
+<tr><td>write 내용</td><td>문서 뒤에 내용 추가</td><td><code>write 안녕하세요</code></td></tr>
+<tr><td>undo</td><td>최근 작업 취소</td><td><code>undo</code></td></tr>
+<tr><td>redo</td><td>취소한 작업 다시 실행</td><td><code>redo</code></td></tr>
+<tr><td>show</td><td>현재 문서 출력</td><td><code>show</code></td></tr>
+<tr><td>quit</td><td>프로그램 종료</td><td><code>quit</code></td></tr>
+</table>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 괄호 검사에서 여는 괄호를 스택에 넣는 이유는 무엇인가?
+<details><summary>정답 보기</summary>가장 최근에 열린 괄호와 다음 닫는 괄호의 짝을 확인하기 위해서입니다.</details></div>
+<div class="quiz"><strong>2.</strong> 후위 표기식에서 연산자를 만났을 때 몇 개의 피연산자를 꺼내는가?
+<details><summary>정답 보기</summary>이항 연산자는 두 개의 피연산자를 꺼냅니다.</details></div>
+<div class="quiz"><strong>3.</strong> 뺄셈 계산에서 스택에서 먼저 꺼낸 값은 왼쪽인가 오른쪽 피연산자인가?
+<details><summary>정답 보기</summary>오른쪽 피연산자입니다.</details></div>
+<div class="quiz"><strong>4.</strong> 실행 취소에서 문서를 변경하기 전에 저장해야 하는 것은 무엇인가?
+<details><summary>정답 보기</summary>변경 전의 문서 상태입니다.</details></div>
+<div class="quiz"><strong>5.</strong> 새로운 작업을 수행했을 때 Redo 스택을 비우는 이유는 무엇인가?
+<details><summary>정답 보기</summary>새 작업으로 작업 이력이 갈라지므로 이전에 취소했던 미래 상태를 더 이상 그대로 다시 실행할 수 없기 때문입니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>괄호 검사·후위 표기식·실행 취소 스택 기반 프로그램 예제 10선</footer>
+</body>
+</html>

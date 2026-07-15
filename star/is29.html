@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>프로젝트 수행 계획 작성 예시 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1220px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:980px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--green)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--purple)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:22%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>사용자·입력·출력·제한 조건 정의<br>기능 분해·일정·역할 포함 수행 계획 예시 10선</h1>
+<p>컴퓨터과학 프로젝트를 시작하기 전에 사용자 요구를 분석하고, 입력과 출력, 제한 조건, 핵심 기능, 일정, 역할, 검증 기준을 체계적으로 문서화합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">계획 작성법</a><a href="#ex1">1. 환기 알림</a><a href="#ex2">2. 급식 대기</a>
+<a href="#ex3">3. 도서 추천</a><a href="#ex4">4. 교내 길찾기</a><a href="#ex5">5. 전력 분석</a>
+<a href="#ex6">6. 학습 플래너</a><a href="#ex7">7. 프린터 큐</a><a href="#ex8">8. 미세먼지</a>
+<a href="#ex9">9. 좌석 배치</a><a href="#ex10">10. 종합 템플릿</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 수행 계획의 필수 구성</h2>
+<div class="flow">
+<div class="flow-card"><strong>사용자</strong>누가 프로그램을 사용하며 어떤 불편을 해결하려는지 정의합니다.</div>
+<div class="flow-card"><strong>입력·출력</strong>어떤 자료를 받아 어떤 형태의 결과를 제공할지 정합니다.</div>
+<div class="flow-card"><strong>기능·제한</strong>핵심 기능과 구현 범위, 데이터·시간·장비의 제약을 명시합니다.</div>
+<div class="flow-card"><strong>일정·역할</strong>단계별 마감일과 팀원별 책임을 나누고 검증 방법을 정합니다.</div>
+</div>
+<div class="lead" style="margin-top:16px">
+좋은 수행 계획은 “무엇을 만들 것인가”뿐 아니라 “누구를 위해, 어떤 자료로, 어디까지 만들고, 누가 언제 검증할 것인가”를 분명히 합니다.
+</div>
+<table>
+<tr><th>항목</th><th>작성 질문</th></tr>
+<tr><td>사용자</td><td>주 사용자는 누구이며 어떤 상황에서 사용하는가?</td></tr>
+<tr><td>입력</td><td>센서값, 파일, 키보드 입력, 공공데이터 중 무엇을 받는가?</td></tr>
+<tr><td>출력</td><td>문장, 표, 그래프, 추천, 경고 중 어떤 결과를 제공하는가?</td></tr>
+<tr><td>제한 조건</td><td>개인정보, 장비 수, 개발 기간, 데이터 크기, 인터넷 연결 제한은 무엇인가?</td></tr>
+<tr><td>기능 분해</td><td>수집·검증·처리·저장·출력·평가로 나눌 수 있는가?</td></tr>
+<tr><td>일정</td><td>문제 정의부터 발표까지 단계별 완료 시점은 언제인가?</td></tr>
+<tr><td>역할</td><td>기획·데이터·개발·테스트·문서화를 누가 맡는가?</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>교실 환기 알림 프로그램 수행 계획</h2></div>
+<div><span class="badge">센서</span><span class="badge">환경</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>교실 수업을 운영하는 교사와 학생</td></tr>
+<tr><td>입력</td><td>시간대별 이산화탄소 농도, 온도, 습도</td></tr>
+<tr><td>출력</td><td>정상·주의·환기 필요 상태와 권장 환기 시점</td></tr>
+<tr><td>제한 조건</td><td>센서 오차 ±50ppm, 측정 간격 1분, 개인정보 수집 금지</td></tr>
+<tr><td>핵심 기능</td><td>센서값 검증, 임계값 판정, 이동평균, 경고 출력</td></tr>
+</table>
+<pre><code>def ventilation_status(co2):
+    if co2 >= 1500:
+        return "즉시 환기"
+    if co2 >= 1000:
+        return "환기 권장"
+    return "정상"
+
+values = [720, 890, 1040, 1320, 1560]
+
+for value in values:
+    print(value, ventilation_status(value))</code></pre>
+<div class="two">
+<div class="card"><h3>일정</h3><p>1주차 문제 정의·자료 조사<br>2주차 센서 수집<br>3주차 알고리즘 구현<br>4주차 검증·발표</p></div>
+<div class="card"><h3>역할</h3><p>기획: 요구 분석<br>데이터: 센서 기록<br>개발: 판정 함수<br>검증: 실제 환기 전후 비교</p></div>
+</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>급식 대기시간 예측 프로젝트</h2></div>
+<div><span class="badge">큐</span><span class="badge">학교생활</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>급식실을 이용하는 학생과 운영 담당자</td></tr>
+<tr><td>입력</td><td>시간대별 도착 인원, 배식 시간, 배식대 수</td></tr>
+<tr><td>출력</td><td>개인별 예상 대기시간, 평균 대기시간, 혼잡 시간대</td></tr>
+<tr><td>제한 조건</td><td>학생 이름 대신 익명 번호 사용, 관찰 시간 5일</td></tr>
+<tr><td>기능 분해</td><td>도착 데이터 입력 → 큐 시뮬레이션 → 평균 계산 → 혼잡도 출력</td></tr>
+</table>
+<pre><code>def average_waiting(service_times):
+    current = 0
+    waits = []
+
+    for service in service_times:
+        waits.append(current)
+        current += service
+
+    return sum(waits) / len(waits)
+
+times = [2, 3, 2, 4, 1]
+print("평균 대기시간:", average_waiting(times))</code></pre>
+<div class="note"><strong>검증 기준</strong><br>프로그램의 예상 대기시간과 실제 관찰값의 평균 오차가 2분 이내인지 확인합니다.</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>학교 도서 추천 프로그램</h2></div>
+<div><span class="badge">추천</span><span class="badge">딕셔너리</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>관심 분야의 책을 찾고 싶은 학생</td></tr>
+<tr><td>입력</td><td>선호 장르, 최근 읽은 도서, 평점</td></tr>
+<tr><td>출력</td><td>추천 도서 3권과 추천 이유</td></tr>
+<tr><td>제한 조건</td><td>대출 기록은 익명화, 추천 가능한 도서 100권 이내</td></tr>
+<tr><td>기능 분해</td><td>도서 데이터 불러오기 → 장르 점수 계산 → 정렬 → 상위 도서 출력</td></tr>
+</table>
+<pre><code>books = [
+    {"title": "파이썬 기초", "genre": "정보", "score": 4.7},
+    {"title": "우주의 구조", "genre": "과학", "score": 4.8},
+    {"title": "알고리즘 여행", "genre": "정보", "score": 4.6},
+]
+
+preferred = "정보"
+
+result = sorted(
+    [book for book in books if book["genre"] == preferred],
+    key=lambda book: book["score"],
+    reverse=True
+)
+
+for book in result[:3]:
+    print(book["title"], book["score"])</code></pre>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>교내 최단 경로 안내 시스템</h2></div>
+<div><span class="badge">그래프</span><span class="badge">BFS</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>신입생, 학부모, 외부 방문자</td></tr>
+<tr><td>입력</td><td>출발 장소와 도착 장소</td></tr>
+<tr><td>출력</td><td>이동 경로, 이동 단계 수, 예상 시간</td></tr>
+<tr><td>제한 조건</td><td>엘리베이터·계단 접근 조건 반영, 교내 지도만 사용</td></tr>
+<tr><td>기능 분해</td><td>장소 그래프 생성 → 경로 탐색 → 경로 복원 → 안내 문장 출력</td></tr>
+</table>
+<pre><code>from collections import deque
+
+def shortest_path(graph, start, target):
+    queue = deque([(start, [start])])
+    visited = {start}
+
+    while queue:
+        node, path = queue.popleft()
+
+        if node == target:
+            return path
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append((neighbor, path + [neighbor]))
+
+    return None</code></pre>
+<div class="two">
+<div class="card"><h3>일정</h3><p>지도 조사 2일 → 그래프 설계 2일 → BFS 구현 2일 → 사용자 테스트 2일</p></div>
+<div class="card"><h3>역할</h3><p>공간 조사, 그래프 입력, 알고리즘 개발, 사용자 안내 화면 제작</p></div>
+</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>학교 전력 사용 분석 프로젝트</h2></div>
+<div><span class="badge">에너지</span><span class="badge">시각화</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>학교 시설 담당자와 학생 환경 동아리</td></tr>
+<tr><td>입력</td><td>시간대별 전력 사용량, 기온, 수업 여부</td></tr>
+<tr><td>출력</td><td>평균 초과 시간대, 절감 가능 시간, 예상 절감량</td></tr>
+<tr><td>제한 조건</td><td>개별 교실 식별 정보 비공개, 한 달 자료만 분석</td></tr>
+<tr><td>기능 분해</td><td>CSV 불러오기 → 결측값 처리 → 평균 계산 → 이상 시간 탐지 → 그래프</td></tr>
+</table>
+<pre><code>power = [42, 55, 61, 64, 58, 51, 63, 60, 44]
+average = sum(power) / len(power)
+
+high_usage = [
+    (hour + 8, value)
+    for hour, value in enumerate(power)
+    if value > average
+]
+
+print("평균:", average)
+print("평균 초과:", high_usage)</code></pre>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>개인 학습 플래너 프로젝트</h2></div>
+<div><span class="badge">일정 관리</span><span class="badge">우선순위</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>과제와 시험 일정을 관리하려는 학생</td></tr>
+<tr><td>입력</td><td>과제명, 마감일, 예상 시간, 중요도</td></tr>
+<tr><td>출력</td><td>우선순위가 반영된 오늘의 학습 목록</td></tr>
+<tr><td>제한 조건</td><td>하루 학습 가능 시간 180분, 과제당 최소 20분</td></tr>
+<tr><td>기능 분해</td><td>과제 등록 → 우선순위 계산 → 시간 배분 → 일정 출력</td></tr>
+</table>
+<pre><code>tasks = [
+    ("수학 과제", 2, 90),
+    ("정보 보고서", 1, 60),
+    ("과학 복습", 3, 40),
+]
+
+ordered = sorted(
+    tasks,
+    key=lambda task: (task[1], task[2])
+)
+
+available = 180
+
+for name, priority, minutes in ordered:
+    if minutes <= available:
+        print("수행:", name, minutes, "분")
+        available -= minutes</code></pre>
+<div class="warn"><strong>윤리</strong><br>개인 학습 기록은 사용자 본인만 확인할 수 있도록 저장 범위와 공개 범위를 제한합니다.</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>학교 프린터 작업 관리 시스템</h2></div>
+<div><span class="badge">큐</span><span class="badge">작업 관리</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>공용 프린터를 사용하는 학생과 교사</td></tr>
+<tr><td>입력</td><td>문서명, 페이지 수, 제출 시각</td></tr>
+<tr><td>출력</td><td>대기 순서와 예상 완료 시간</td></tr>
+<tr><td>제한 조건</td><td>한 작업 최대 50쪽, 동일 사용자 연속 3건 제한</td></tr>
+<tr><td>기능 분해</td><td>작업 등록 → 큐 삽입 → 예상 시간 계산 → 처리 완료 제거</td></tr>
+</table>
+<pre><code>from collections import deque
+
+jobs = deque([
+    ("보고서.pdf", 10),
+    ("발표자료.pptx", 6),
+    ("과제.hwp", 4),
+])
+
+current = 0
+
+while jobs:
+    name, pages = jobs.popleft()
+    start = current
+    current += pages
+
+    print(
+        name,
+        "시작:", start,
+        "완료:", current
+    )</code></pre>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>실외 활동 가능 시간 추천</h2></div>
+<div><span class="badge">공공데이터</span><span class="badge">조건 판단</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>체육 수업 담당 교사와 학생</td></tr>
+<tr><td>입력</td><td>미세먼지, 기온, 강수 여부</td></tr>
+<tr><td>출력</td><td>실외 활동 가능·주의·실내 권장 상태</td></tr>
+<tr><td>제한 조건</td><td>공식 기준 사용, 건강 관련 최종 판단은 교사가 결정</td></tr>
+<tr><td>기능 분해</td><td>데이터 수집 → 단위 확인 → 기준 적용 → 추천 출력</td></tr>
+</table>
+<pre><code>def outdoor_status(pm25, rain, temperature):
+    if rain:
+        return "실내 활동 권장"
+
+    if pm25 > 35:
+        return "미세먼지 주의"
+
+    if temperature >= 33:
+        return "폭염 주의"
+
+    return "실외 활동 가능"
+
+print(outdoor_status(28, False, 29))</code></pre>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>교실 좌석 배치 도우미</h2></div>
+<div><span class="badge">제약 조건</span><span class="badge">백트래킹</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>학급 담임교사와 학생</td></tr>
+<tr><td>입력</td><td>학생 목록, 시력·키·협업 관계 등의 제한 조건</td></tr>
+<tr><td>출력</td><td>제약 조건을 만족하는 좌석 배치 후보</td></tr>
+<tr><td>제한 조건</td><td>민감한 개인 정보는 최소화하고 교사 확인 후 사용</td></tr>
+<tr><td>기능 분해</td><td>조건 입력 → 후보 생성 → 충돌 검사 → 배치 출력</td></tr>
+</table>
+<pre><code>students = ["민준", "서연", "지우"]
+selected = []
+
+def arrange():
+    if len(selected) == len(students):
+        print(selected)
+        return
+
+    for student in students:
+        if student in selected:
+            continue
+
+        selected.append(student)
+        arrange()
+        selected.pop()
+
+arrange()</code></pre>
+<div class="note"><strong>확장 조건</strong><br>특정 학생끼리 인접 금지, 앞자리 우선, 모둠별 균형 등의 조건을 추가할 수 있습니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>종합 수행 계획 자동 점검표</h2></div>
+<div><span class="badge">종합 템플릿</span><span class="badge">계획 검증</span></div>
+<pre><code>project_plan = {
+    "사용자": "학생과 교사",
+    "입력": ["센서값", "시간"],
+    "출력": ["상태", "추천"],
+    "제한 조건": ["개인정보 미수집", "4주 이내"],
+    "기능": [
+        "입력",
+        "검증",
+        "처리",
+        "출력",
+        "평가"
+    ],
+    "일정": {
+        "1주차": "문제 정의",
+        "2주차": "데이터 수집",
+        "3주차": "구현",
+        "4주차": "검증과 발표"
+    },
+    "역할": {
+        "기획": "사용자 요구 분석",
+        "개발": "알고리즘 구현",
+        "데이터": "수집과 전처리",
+        "검증": "테스트와 결과 분석"
+    }
+}
+
+required = [
+    "사용자",
+    "입력",
+    "출력",
+    "제한 조건",
+    "기능",
+    "일정",
+    "역할"
+]
+
+for item in required:
+    if item in project_plan and project_plan[item]:
+        print(item, "작성 완료")
+    else:
+        print(item, "보완 필요")</code></pre>
+
+<table>
+<tr><th>단계</th><th>산출물</th><th>담당 역할</th><th>완료 기준</th></tr>
+<tr><td>문제 정의</td><td>사용자·문제·목표 문서</td><td>기획 담당</td><td>사용자 요구 3개 이상 정리</td></tr>
+<tr><td>데이터 설계</td><td>입력 항목·자료형·출처</td><td>데이터 담당</td><td>샘플 데이터 20건 확보</td></tr>
+<tr><td>기능 구현</td><td>핵심 함수와 테스트 코드</td><td>개발 담당</td><td>정상 입력 테스트 통과</td></tr>
+<tr><td>제한 검증</td><td>예외·오류·윤리 점검표</td><td>검증 담당</td><td>경계값·잘못된 입력 점검</td></tr>
+<tr><td>결과 발표</td><td>시연·분석·개선안</td><td>전체 팀</td><td>목표 달성 여부를 근거로 설명</td></tr>
+</table>
+
+<div class="lead" style="margin-top:14px">
+<strong>수행 계획 서술 예시</strong><br>
+“본 프로젝트의 사용자는 교실 수업을 운영하는 교사와 학생이다. 입력은 시간대별 이산화탄소 농도이며, 출력은 환기 필요 상태와 권장 시점이다. 센서 오차와 개인정보 미수집을 제한 조건으로 정하였다. 기능은 데이터 입력, 유효성 검사, 이동평균 계산, 임계값 판정, 결과 출력으로 분해하였다. 1주차에는 요구 분석, 2주차에는 데이터 수집, 3주차에는 구현, 4주차에는 실제 교실에서 검증과 발표를 진행한다.”
+</div>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 프로젝트의 사용자를 먼저 정의해야 하는 이유는 무엇인가?
+<details><summary>정답 보기</summary>사용자의 불편과 사용 상황을 기준으로 필요한 기능과 출력 형태를 정하기 위해서입니다.</details></div>
+<div class="quiz"><strong>2.</strong> 입력과 출력 정의에 포함해야 할 내용은 무엇인가?
+<details><summary>정답 보기</summary>입력 자료의 종류·형식·범위와 출력 결과의 내용·형식·제공 방법을 포함해야 합니다.</details></div>
+<div class="quiz"><strong>3.</strong> 기능 분해의 장점은 무엇인가?
+<details><summary>정답 보기</summary>복잡한 프로젝트를 작은 작업으로 나누어 구현·분담·테스트하기 쉬워집니다.</details></div>
+<div class="quiz"><strong>4.</strong> 팀 역할을 나눌 때 중요한 기준은 무엇인가?
+<details><summary>정답 보기</summary>각 역할의 책임과 산출물, 완료 기준이 겹치거나 빠지지 않도록 구체적으로 정해야 합니다.</details></div>
+<div class="quiz"><strong>5.</strong> 수행 계획의 완료 기준이 필요한 이유는 무엇인가?
+<details><summary>정답 보기</summary>단순히 작업을 했다는 사실이 아니라 목표 수준에 도달했는지 객관적으로 판단하기 위해서입니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>사용자·입력·출력·제한 조건 정의와 기능 분해·일정·역할 포함 수행 계획 예시 10선</footer>
+</body>
+</html>

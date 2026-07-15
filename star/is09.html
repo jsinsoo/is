@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LIFO 원리와 리스트 기반 스택 구현 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1180px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:930px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--green)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--purple)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:26%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>LIFO 원리와 리스트 기반 스택<br>push·pop·peek 직접 구현 예제 10선</h1>
+<p>마지막에 들어온 자료가 가장 먼저 나오는 후입선출 원리를 이해하고, 파이썬 리스트를 이용해 스택의 핵심 연산을 직접 구현한 뒤 다양한 문제에 적용합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">핵심 개념</a><a href="#ex1">1. LIFO 체험</a><a href="#ex2">2. push</a>
+<a href="#ex3">3. pop</a><a href="#ex4">4. peek</a><a href="#ex5">5. 클래스 구현</a>
+<a href="#ex6">6. 빈 스택 처리</a><a href="#ex7">7. 실행 취소</a><a href="#ex8">8. 문자열 뒤집기</a>
+<a href="#ex9">9. 괄호 검사</a><a href="#ex10">10. 명령 처리</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 스택과 LIFO 원리</h2>
+<div class="flow">
+<div class="flow-card"><strong>LIFO</strong>나중에 들어온 자료가 먼저 나오는 후입선출 방식입니다.</div>
+<div class="flow-card"><strong>push</strong>스택의 맨 위에 새로운 자료를 추가합니다.</div>
+<div class="flow-card"><strong>pop</strong>스택의 맨 위 자료를 제거하고 반환합니다.</div>
+<div class="flow-card"><strong>peek</strong>맨 위 자료를 삭제하지 않고 확인합니다.</div>
+</div>
+<div class="lead" style="margin-top:16px">
+접시 쌓기, 브라우저 뒤로 가기, 문서 실행 취소, 함수 호출 기록은 스택의 대표 사례입니다.
+파이썬 리스트에서는 맨 뒤를 스택의 꼭대기로 사용하면 <code>append()</code>와 <code>pop()</code>으로 효율적으로 구현할 수 있습니다.
+</div>
+<table>
+<tr><th>연산</th><th>리스트 구현</th><th>자료 변화</th></tr>
+<tr><td>push(x)</td><td><code>stack.append(x)</code></td><td>맨 뒤에 x 추가</td></tr>
+<tr><td>pop()</td><td><code>stack.pop()</code></td><td>맨 뒤 자료 삭제·반환</td></tr>
+<tr><td>peek()</td><td><code>stack[-1]</code></td><td>맨 뒤 자료 확인</td></tr>
+<tr><td>is_empty()</td><td><code>len(stack) == 0</code></td><td>비어 있는지 확인</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>접시 쌓기로 LIFO 확인</h2></div>
+<div><span class="badge">후입선출</span><span class="badge">리스트</span></div>
+<div class="two">
+<div><pre><code>plates = []
+
+plates.append("파란 접시")
+plates.append("노란 접시")
+plates.append("빨간 접시")
+
+print("현재 접시:", plates)
+
+print("꺼낸 접시:", plates.pop())
+print("꺼낸 접시:", plates.pop())
+print("남은 접시:", plates)</code></pre></div>
+<div class="card">
+<h3>실행 결과</h3>
+<pre class="output">현재 접시: ['파란 접시', '노란 접시', '빨간 접시']
+꺼낸 접시: 빨간 접시
+꺼낸 접시: 노란 접시
+남은 접시: ['파란 접시']</pre>
+</div>
+</div>
+<div class="check"><strong>관찰</strong><br>가장 마지막에 넣은 빨간 접시가 가장 먼저 나옵니다.</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>push 함수 직접 구현</h2></div>
+<div><span class="badge">추가 연산</span><span class="badge">append</span></div>
+<div class="two">
+<div><pre><code>stack = []
+
+def push(value):
+    stack.append(value)
+    print(f"push({value}) → {stack}")
+
+push(10)
+push(20)
+push(30)</code></pre></div>
+<div class="card">
+<h3>동작</h3>
+<p>전달받은 값을 리스트의 맨 뒤에 추가합니다.</p>
+<pre class="output">push(10) → [10]
+push(20) → [10, 20]
+push(30) → [10, 20, 30]</pre>
+</div>
+</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>pop 함수 직접 구현</h2></div>
+<div><span class="badge">삭제 연산</span><span class="badge">반환값</span></div>
+<pre><code>stack = [10, 20, 30]
+
+def pop():
+    if len(stack) == 0:
+        return None
+
+    value = stack[-1]
+    del stack[-1]
+    return value
+
+print("삭제값:", pop())
+print("삭제값:", pop())
+print("현재 스택:", stack)</code></pre>
+<div class="note"><strong>직접 구현</strong><br>맨 위 값을 먼저 저장하고 <code>del stack[-1]</code>로 삭제한 뒤 저장값을 반환합니다. 실제로는 리스트의 <code>pop()</code>을 바로 사용할 수 있습니다.</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>peek 함수 직접 구현</h2></div>
+<div><span class="badge">맨 위 확인</span><span class="badge">삭제 없음</span></div>
+<div class="two">
+<div><pre><code>stack = ["A", "B", "C"]
+
+def peek():
+    if len(stack) == 0:
+        return None
+
+    return stack[-1]
+
+print("맨 위:", peek())
+print("확인 후:", stack)</code></pre></div>
+<div class="card">
+<h3>실행 결과</h3>
+<pre class="output">맨 위: C
+확인 후: ['A', 'B', 'C']</pre>
+<p><code>peek()</code>은 자료를 확인하지만 삭제하지 않습니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>Stack 클래스로 연산 통합</h2></div>
+<div><span class="badge">클래스</span><span class="badge">캡슐화</span></div>
+<pre><code>class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, value):
+        self.items.append(value)
+
+    def pop(self):
+        if self.is_empty():
+            return None
+        return self.items.pop()
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self.items[-1]
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def size(self):
+        return len(self.items)
+
+stack = Stack()
+stack.push(100)
+stack.push(200)
+
+print("peek:", stack.peek())
+print("pop:", stack.pop())
+print("크기:", stack.size())</code></pre>
+<div class="check"><strong>장점</strong><br>스택 자료와 연산을 하나의 클래스로 묶어 여러 스택 객체를 독립적으로 만들 수 있습니다.</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>빈 스택 예외 처리</h2></div>
+<div><span class="badge">언더플로</span><span class="badge">예외</span></div>
+<div class="two">
+<div><pre><code>class Stack:
+    def __init__(self):
+        self.items = []
+
+    def pop(self):
+        if not self.items:
+            raise IndexError(
+                "빈 스택에서는 pop할 수 없습니다."
+            )
+        return self.items.pop()
+
+stack = Stack()
+
+try:
+    print(stack.pop())
+except IndexError as error:
+    print("오류:", error)</code></pre></div>
+<div class="card">
+<h3>스택 언더플로</h3>
+<p>비어 있는 스택에서 자료를 꺼내려는 상황을 스택 언더플로라고 합니다.</p>
+<p>반환값 <code>None</code>을 사용할 수도 있고, 명확한 예외를 발생시킬 수도 있습니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>문서 편집 실행 취소</h2></div>
+<div><span class="badge">실행 취소</span><span class="badge">상태 저장</span></div>
+<pre><code>text = ""
+history = []
+
+def write(new_text):
+    global text
+
+    history.append(text)
+    text += new_text
+    print("현재 문서:", text)
+
+def undo():
+    global text
+
+    if not history:
+        print("취소할 작업이 없습니다.")
+        return
+
+    text = history.pop()
+    print("실행 취소:", text)
+
+write("안녕")
+write("하세요")
+write("!")
+undo()
+undo()</code></pre>
+<div class="note"><strong>LIFO 적용</strong><br>최근 상태를 스택의 맨 위에 저장하므로 가장 최근 작업부터 역순으로 취소할 수 있습니다.</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>스택으로 문자열 뒤집기</h2></div>
+<div><span class="badge">문자열</span><span class="badge">역순 출력</span></div>
+<div class="two">
+<div><pre><code>def reverse_text(text):
+    stack = []
+
+    for character in text:
+        stack.append(character)
+
+    result = ""
+
+    while stack:
+        result += stack.pop()
+
+    return result
+
+print(reverse_text("PYTHON"))</code></pre></div>
+<div class="card">
+<h3>처리 과정</h3>
+<p>문자를 왼쪽부터 스택에 넣습니다.</p>
+<p>마지막 문자부터 꺼내어 결과에 연결합니다.</p>
+<pre class="output">NOHTYP</pre>
+</div>
+</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>괄호 짝 검사</h2></div>
+<div><span class="badge">괄호 검사</span><span class="badge">응용</span></div>
+<pre><code>def check_parentheses(expression):
+    stack = []
+
+    for character in expression:
+        if character == "(":
+            stack.append(character)
+
+        elif character == ")":
+            if not stack:
+                return False
+            stack.pop()
+
+    return len(stack) == 0
+
+tests = [
+    "(a+b)*(c-d)",
+    "((a+b)",
+    "a+b)",
+    "(a+(b*c))"
+]
+
+for test in tests:
+    print(test, "→", check_parentheses(test))</code></pre>
+<div class="check"><strong>원리</strong><br>여는 괄호를 스택에 넣고 닫는 괄호를 만날 때 하나를 꺼냅니다. 마지막에 스택이 비어 있어야 모든 괄호의 짝이 맞습니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>명령어 기반 스택 프로그램</h2></div>
+<div><span class="badge">종합 실습</span><span class="badge">push·pop·peek</span></div>
+<pre><code>stack = []
+
+def push(value):
+    stack.append(value)
+
+def pop():
+    if not stack:
+        return "EMPTY"
+    return stack.pop()
+
+def peek():
+    if not stack:
+        return "EMPTY"
+    return stack[-1]
+
+while True:
+    command = input("명령: ").split()
+
+    if command[0] == "push":
+        push(command[1])
+        print("스택:", stack)
+
+    elif command[0] == "pop":
+        print("삭제:", pop())
+
+    elif command[0] == "peek":
+        print("맨 위:", peek())
+
+    elif command[0] == "size":
+        print("크기:", len(stack))
+
+    elif command[0] == "quit":
+        break
+
+    else:
+        print("알 수 없는 명령입니다.")</code></pre>
+<table>
+<tr><th>명령</th><th>기능</th><th>예시</th></tr>
+<tr><td>push 값</td><td>값을 맨 위에 추가</td><td><code>push 10</code></td></tr>
+<tr><td>pop</td><td>맨 위 값을 삭제·출력</td><td><code>pop</code></td></tr>
+<tr><td>peek</td><td>맨 위 값을 확인</td><td><code>peek</code></td></tr>
+<tr><td>size</td><td>저장된 자료 수 출력</td><td><code>size</code></td></tr>
+<tr><td>quit</td><td>프로그램 종료</td><td><code>quit</code></td></tr>
+</table>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> LIFO는 어떤 순서로 자료를 처리하는가?
+<details><summary>정답 보기</summary>마지막에 들어온 자료를 가장 먼저 처리하는 후입선출 순서입니다.</details></div>
+<div class="quiz"><strong>2.</strong> 리스트에서 push 연산에 대응하는 메서드는 무엇인가?
+<details><summary>정답 보기</summary><code>append()</code>입니다.</details></div>
+<div class="quiz"><strong>3.</strong> peek와 pop의 차이는 무엇인가?
+<details><summary>정답 보기</summary>peek는 맨 위 자료를 삭제하지 않고 확인하며, pop은 삭제하면서 반환합니다.</details></div>
+<div class="quiz"><strong>4.</strong> 빈 스택에서 pop을 시도하는 상황을 무엇이라 하는가?
+<details><summary>정답 보기</summary>스택 언더플로입니다.</details></div>
+<div class="quiz"><strong>5.</strong> 실행 취소 기능에 스택이 적합한 이유는 무엇인가?
+<details><summary>정답 보기</summary>가장 최근에 수행한 작업을 가장 먼저 취소해야 하기 때문입니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>LIFO 원리와 리스트 기반 push·pop·peek 직접 구현 예제 10선</footer>
+</body>
+</html>

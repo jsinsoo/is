@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>정보과학 예제</title>
 
+<style>
+html, body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial, sans-serif;
+}
+
+/* 상단 메뉴 */
+#top{
+    height:32px;
+    padding:2px 5px;
+    border-bottom:1px solid #ccc;
+    background:#f5f5f5;
+}
+
+/* 아주 작은 드롭다운 */
+#fileSelect{
+    width:220px;
+    height:24px;
+    font-size:12px;
+}
+
+/* 본문 */
+#main{
+    width:100%;
+    height:calc(100vh - 32px);
+    border:none;
+}
+</style>
+</head>
+
+<body>
+
+<div id="top">
+    <select id="fileSelect"
+            onchange="loadPage(this.value)">
+
+<option value="is01.html">01. 교과 네 영역·문제 해결 절차·함수 진단</option>
+<option value="is02.html">02. 입력·처리·출력 함수 분리와 매개변수</option>
+<option value="is03.html">03. 종료 조건·재귀 호출·팩토리얼·최대공약수</option>
+<option value="is04.html">04. 중복 호출·메모이제이션·실행 횟수 개선</option>
+<option value="is05.html">05. 반복문과 재귀함수 비교</option>
+<option value="is06.html">06. 미로·하노이 탑·조합 생성</option>
+<option value="is07.html">07. 재귀 관계와 반복·재귀 비교</option>
+<option value="is08.html">08. 자료구조 필요성과 선형 구조</option>
+<option value="is09.html">09. LIFO·push·pop·peek</option>
+<option value="is10.html">10. 괄호 검사·후위 표기식·실행 취소</option>
+<option value="is11.html">11. FIFO·원형 큐·deque</option>
+<option value="is12.html">12. 급식·프린터·상담 예약 큐 모델링</option>
+<option value="is13.html">13. 노드·간선·차수·인접행렬·인접리스트</option>
+<option value="is14.html">14. DFS·BFS와 스택·큐</option>
+<option value="is15.html">15. 문제 상황별 자료구조 선택</option>
+<option value="is16.html">16. 상태·연산·목표 상태·완전 탐색</option>
+<option value="is17.html">17. 순열·조합·N-Queen 백트래킹</option>
+<option value="is18.html">18. 가지치기와 완전 탐색 비교</option>
+<option value="is19.html">19. 동전 교환·회의실 배정·탐욕 알고리즘</option>
+<option value="is20.html">20. 부분 문제 분해·점화식·도식</option>
+<option value="is21.html">21. 병합 정렬·이진 탐색·분할 정복</option>
+<option value="is22.html">22. 퀵 정렬·거듭제곱·가장 가까운 두 점</option>
+<option value="is23.html">23. 중복 부분 문제·최적 부분 구조·동적 계획법</option>
+<option value="is24.html">24. 계단 오르기 상태·점화식 설계</option>
+<option value="is25.html">25. 시간 복잡도·연산 횟수·그래프</option>
+<option value="is26.html">26. 동일 문제의 여러 알고리즘 비교</option>
+<option value="is27.html">27. 문제 분석·복수 알고리즘 비교</option>
+<option value="is28.html">28. 컴퓨터과학 프로젝트 주제 선정</option>
+<option value="is29.html">29. 프로젝트 수행 계획</option>
+<option value="is30.html">30. 라이선스·출처 표시·라이브러리 활용</option>
+<option value="is31.html">31. 모듈 협업·인터페이스·버전 관리</option>
+<option value="is32.html">32. 테스트 설계·오류 재현·수정 기록</option>
+<option value="is33.html">33. 산출물 상호 평가와 개선</option>
+<option value="is34.html">34. 프로젝트 발표와 학습 성찰</option>
+
+    </select>
+</div>
+
+<iframe
+    id="main"
+    src="is01.html">
+</iframe>
+
+<script>
+function loadPage(file){
+    document.getElementById("main").src = file;
+}
+</script>
+
+</body>
+</html>

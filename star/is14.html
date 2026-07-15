@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DFS·BFS 구현과 스택·큐 관계 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1200px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:950px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--purple)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--green)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+pre.trace{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:24%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>깊이 우선 탐색·너비 우선 탐색<br>스택·큐 관계 예제 10선</h1>
+<p>그래프 탐색에서 깊이 우선 탐색은 한 경로를 끝까지 따라가고, 너비 우선 탐색은 가까운 노드부터 층별로 방문합니다. 재귀 호출과 스택, deque 큐를 활용해 두 탐색을 구현하고 차이를 비교합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">핵심 개념</a><a href="#ex1">1. 그래프 준비</a><a href="#ex2">2. 재귀 DFS</a>
+<a href="#ex3">3. 스택 DFS</a><a href="#ex4">4. DFS 추적</a><a href="#ex5">5. BFS 구현</a>
+<a href="#ex6">6. BFS 추적</a><a href="#ex7">7. 순서 비교</a><a href="#ex8">8. 경로 탐색</a>
+<a href="#ex9">9. 최단 거리</a><a href="#ex10">10. 미로 탐색</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. DFS·BFS와 자료구조의 관계</h2>
+<div class="flow">
+<div class="flow-card"><strong>DFS</strong>한 방향을 가능한 깊이까지 탐색한 뒤 되돌아옵니다.</div>
+<div class="flow-card"><strong>스택</strong>가장 최근에 발견한 노드를 먼저 처리하여 DFS를 만듭니다.</div>
+<div class="flow-card"><strong>BFS</strong>시작 노드에서 가까운 노드부터 층별로 탐색합니다.</div>
+<div class="flow-card"><strong>큐</strong>먼저 발견한 노드를 먼저 처리하여 BFS를 만듭니다.</div>
+</div>
+<table>
+<tr><th>비교 항목</th><th>DFS</th><th>BFS</th></tr>
+<tr><td>핵심 자료구조</td><td>스택 또는 재귀 호출 스택</td><td>큐</td></tr>
+<tr><td>방문 방식</td><td>깊은 경로를 먼저 탐색</td><td>가까운 노드를 먼저 탐색</td></tr>
+<tr><td>대표 활용</td><td>모든 경로, 백트래킹, 연결 요소</td><td>최단 간선 수, 단계별 확산</td></tr>
+<tr><td>메모리 특징</td><td>깊이에 비례한 저장</td><td>한 층의 노드 수가 많으면 저장 증가</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>인접리스트 그래프 준비</h2></div>
+<div><span class="badge">그래프</span><span class="badge">인접리스트</span></div>
+<div class="two">
+<div><pre><code>graph = {
+    "A": ["B", "C"],
+    "B": ["A", "D", "E"],
+    "C": ["A", "F"],
+    "D": ["B"],
+    "E": ["B", "F"],
+    "F": ["C", "E"]
+}
+
+for node, neighbors in graph.items():
+    print(node, "→", neighbors)</code></pre></div>
+<div class="card">
+<h3>그래프 구조</h3>
+<pre class="trace">A ─ B ─ D
+│   │
+C   E
+│   │
+F ──┘</pre>
+<p>이후 모든 예제는 같은 그래프를 사용해 방문 순서를 비교합니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>재귀함수로 DFS 구현</h2></div>
+<div><span class="badge">재귀 DFS</span><span class="badge">호출 스택</span></div>
+<pre><code>graph = {
+    "A": ["B", "C"],
+    "B": ["A", "D", "E"],
+    "C": ["A", "F"],
+    "D": ["B"],
+    "E": ["B", "F"],
+    "F": ["C", "E"]
+}
+
+visited = set()
+
+def dfs(node):
+    visited.add(node)
+    print(node, end=" ")
+
+    for neighbor in graph[node]:
+        if neighbor not in visited:
+            dfs(neighbor)
+
+dfs("A")</code></pre>
+<div class="check"><strong>스택 관계</strong><br>재귀 호출마다 함수 정보가 호출 스택에 쌓이고, 더 이상 방문할 이웃이 없으면 최근 호출부터 복귀합니다.</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>리스트 스택으로 반복 DFS 구현</h2></div>
+<div><span class="badge">명시적 스택</span><span class="badge">반복문</span></div>
+<div class="two">
+<div><pre><code>def dfs_stack(graph, start):
+    stack = [start]
+    visited = set()
+    order = []
+
+    while stack:
+        node = stack.pop()
+
+        if node in visited:
+            continue
+
+        visited.add(node)
+        order.append(node)
+
+        for neighbor in reversed(graph[node]):
+            if neighbor not in visited:
+                stack.append(neighbor)
+
+    return order
+
+print(dfs_stack(graph, "A"))</code></pre></div>
+<div class="card">
+<h3>왜 reversed를 사용할까?</h3>
+<p>스택은 마지막에 넣은 값을 먼저 꺼냅니다.</p>
+<p>인접리스트의 왼쪽 이웃부터 방문하려면 이웃을 역순으로 넣어야 합니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>DFS 스택 상태 추적</h2></div>
+<div><span class="badge">상태 추적</span><span class="badge">디버깅</span></div>
+<pre><code>def dfs_trace(graph, start):
+    stack = [start]
+    visited = set()
+
+    while stack:
+        print("꺼내기 전 스택:", stack)
+
+        node = stack.pop()
+
+        if node in visited:
+            continue
+
+        visited.add(node)
+        print("방문:", node)
+
+        for neighbor in reversed(graph[node]):
+            if neighbor not in visited:
+                stack.append(neighbor)
+
+        print("이웃 추가 후:", stack)
+        print()
+
+dfs_trace(graph, "A")</code></pre>
+<div class="note"><strong>관찰</strong><br>가장 최근에 추가된 이웃이 다음 방문 노드가 되어 한 경로를 깊게 따라갑니다.</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>deque 큐로 BFS 구현</h2></div>
+<div><span class="badge">BFS</span><span class="badge">deque</span></div>
+<pre><code>from collections import deque
+
+def bfs(graph, start):
+    queue = deque([start])
+    visited = {start}
+    order = []
+
+    while queue:
+        node = queue.popleft()
+        order.append(node)
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+
+    return order
+
+print(bfs(graph, "A"))</code></pre>
+<div class="check"><strong>큐 관계</strong><br>먼저 발견한 노드를 먼저 꺼내므로 시작점에서 같은 거리의 노드들이 차례로 방문됩니다.</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>BFS 큐 상태 추적</h2></div>
+<div><span class="badge">큐 추적</span><span class="badge">층별 탐색</span></div>
+<pre><code>from collections import deque
+
+def bfs_trace(graph, start):
+    queue = deque([start])
+    visited = {start}
+
+    while queue:
+        print("꺼내기 전 큐:", list(queue))
+
+        node = queue.popleft()
+        print("방문:", node)
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+
+        print("이웃 추가 후:", list(queue))
+        print()
+
+bfs_trace(graph, "A")</code></pre>
+<div class="note"><strong>관찰</strong><br>A의 이웃 B와 C가 먼저 큐에 들어가고, 두 노드를 모두 처리한 뒤 더 먼 D·E·F를 방문합니다.</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>같은 그래프의 DFS·BFS 방문 순서 비교</h2></div>
+<div><span class="badge">순서 비교</span><span class="badge">알고리즘 선택</span></div>
+<div class="two">
+<div><pre><code>dfs_order = dfs_stack(graph, "A")
+bfs_order = bfs(graph, "A")
+
+print("DFS:", dfs_order)
+print("BFS:", bfs_order)</code></pre></div>
+<div class="card">
+<h3>예상 순서</h3>
+<pre class="output">DFS: ['A', 'B', 'D', 'E', 'F', 'C']
+BFS: ['A', 'B', 'C', 'D', 'E', 'F']</pre>
+<p>이웃 저장 순서에 따라 실제 방문 순서는 달라질 수 있지만 탐색 원리는 유지됩니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>DFS로 시작점에서 목표까지 경로 찾기</h2></div>
+<div><span class="badge">경로 탐색</span><span class="badge">백트래킹</span></div>
+<pre><code>def find_path_dfs(graph, start, target):
+    stack = [(start, [start])]
+    visited = set()
+
+    while stack:
+        node, path = stack.pop()
+
+        if node == target:
+            return path
+
+        if node in visited:
+            continue
+
+        visited.add(node)
+
+        for neighbor in reversed(graph[node]):
+            if neighbor not in visited:
+                stack.append(
+                    (neighbor, path + [neighbor])
+                )
+
+    return None
+
+print(find_path_dfs(graph, "A", "F"))</code></pre>
+<div class="warn"><strong>주의</strong><br>DFS가 찾은 경로는 목표에 도달하는 경로이지만, 간선 수가 가장 적은 최단 경로라고 보장할 수는 없습니다.</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>BFS로 최단 거리와 경로 구하기</h2></div>
+<div><span class="badge">최단 경로</span><span class="badge">부모 노드</span></div>
+<pre><code>from collections import deque
+
+def shortest_path_bfs(graph, start, target):
+    queue = deque([start])
+    parent = {start: None}
+
+    while queue:
+        node = queue.popleft()
+
+        if node == target:
+            break
+
+        for neighbor in graph[node]:
+            if neighbor not in parent:
+                parent[neighbor] = node
+                queue.append(neighbor)
+
+    if target not in parent:
+        return None
+
+    path = []
+    current = target
+
+    while current is not None:
+        path.append(current)
+        current = parent[current]
+
+    path.reverse()
+    return path
+
+path = shortest_path_bfs(graph, "A", "F")
+
+print("최단 경로:", path)
+print("거리:", len(path) - 1)</code></pre>
+<div class="check"><strong>최단 경로 조건</strong><br>모든 간선의 비용이 같을 때 BFS는 시작점에서 간선 수가 가장 적은 경로를 찾습니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>미로에서 DFS·BFS 비교</h2></div>
+<div><span class="badge">미로</span><span class="badge">종합 실습</span></div>
+<pre><code>from collections import deque
+
+maze = [
+    [0, 1, 0, 0, 0],
+    [0, 0, 0, 1, 0],
+    [1, 0, 0, 1, 0],
+    [0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0]
+]
+
+rows = len(maze)
+cols = len(maze[0])
+directions = [(1,0), (-1,0), (0,1), (0,-1)]
+
+def bfs_maze(start, target):
+    queue = deque([start])
+    parent = {start: None}
+
+    while queue:
+        row, col = queue.popleft()
+
+        if (row, col) == target:
+            break
+
+        for dr, dc in directions:
+            nr, nc = row + dr, col + dc
+
+            if (
+                0 <= nr < rows
+                and 0 <= nc < cols
+                and maze[nr][nc] == 0
+                and (nr, nc) not in parent
+            ):
+                parent[(nr, nc)] = (row, col)
+                queue.append((nr, nc))
+
+    if target not in parent:
+        return None
+
+    path = []
+    current = target
+
+    while current is not None:
+        path.append(current)
+        current = parent[current]
+
+    return path[::-1]
+
+path = bfs_maze((0, 0), (4, 4))
+
+print("최단 경로:", path)
+print("이동 횟수:", len(path) - 1)</code></pre>
+
+<table>
+<tr><th>상황</th><th>권장 탐색</th><th>이유</th></tr>
+<tr><td>출구 존재 여부만 확인</td><td>DFS 또는 BFS</td><td>두 방식 모두 연결 여부 확인 가능</td></tr>
+<tr><td>이동 횟수가 가장 적은 길</td><td>BFS</td><td>가까운 칸부터 층별 탐색</td></tr>
+<tr><td>모든 가능한 경로 탐색</td><td>DFS</td><td>한 경로를 깊게 탐색하고 되돌아오기 편함</td></tr>
+<tr><td>재귀적 구조 연습</td><td>재귀 DFS</td><td>호출 스택과 탐색 복귀 관계가 명확함</td></tr>
+</table>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> DFS와 직접적으로 연결되는 자료구조는 무엇인가?
+<details><summary>정답 보기</summary>스택이며, 재귀 DFS에서는 함수 호출 스택이 같은 역할을 합니다.</details></div>
+<div class="quiz"><strong>2.</strong> BFS에서 사용하는 대표 자료구조는 무엇인가?
+<details><summary>정답 보기</summary>먼저 들어온 노드를 먼저 처리하는 큐입니다.</details></div>
+<div class="quiz"><strong>3.</strong> 반복 DFS에서 이웃을 역순으로 스택에 넣는 이유는 무엇인가?
+<details><summary>정답 보기</summary>인접리스트의 앞쪽 이웃을 먼저 방문하도록 스택의 후입선출 순서를 조정하기 위해서입니다.</details></div>
+<div class="quiz"><strong>4.</strong> 모든 간선의 비용이 같을 때 최단 경로 탐색에 적합한 방식은 무엇인가?
+<details><summary>정답 보기</summary>너비 우선 탐색입니다.</details></div>
+<div class="quiz"><strong>5.</strong> 그래프 탐색에서 방문 집합이 필요한 이유는 무엇인가?
+<details><summary>정답 보기</summary>같은 노드를 반복 방문하거나 순환 구조에서 무한 탐색하는 것을 막기 위해서입니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>깊이 우선 탐색·너비 우선 탐색 구현과 스택·큐 관계 예제 10선</footer>
+</body>
+</html>

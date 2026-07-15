@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>산출물 상호 평가와 개선 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1220px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:990px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--green)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--purple)}
+.flow-card:nth-child(5){border-top:5px solid var(--red)}
+.flow-card:nth-child(6){border-top:5px solid var(--navy)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:23%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>정확성·효율성·사용성·개인정보·편향·저작권<br>산출물 상호 평가와 개선 예제 10선</h1>
+<p>프로그램과 데이터 기반 산출물을 여섯 관점에서 동료 평가하고, 평가 점수와 근거를 바탕으로 코드·화면·데이터 처리·출처 표시를 개선합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">평가 원리</a><a href="#ex1">1. 평가표</a><a href="#ex2">2. 정확성</a>
+<a href="#ex3">3. 효율성</a><a href="#ex4">4. 사용성</a><a href="#ex5">5. 개인정보</a>
+<a href="#ex6">6. 편향</a><a href="#ex7">7. 저작권</a><a href="#ex8">8. 동료 피드백</a>
+<a href="#ex9">9. 개선 우선순위</a><a href="#ex10">10. 종합 평가</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 산출물 평가의 여섯 관점</h2>
+<div class="flow">
+<div class="flow-card"><strong>정확성</strong>요구 사항과 테스트 결과가 일치하고 오류 처리가 적절한가?</div>
+<div class="flow-card"><strong>효율성</strong>입력 크기에 비해 시간·메모리 사용이 적절한가?</div>
+<div class="flow-card"><strong>사용성</strong>사용자가 쉽게 이해하고 실수 없이 사용할 수 있는가?</div>
+<div class="flow-card"><strong>개인정보</strong>불필요한 개인 정보를 수집·보관·공개하지 않는가?</div>
+<div class="flow-card"><strong>편향</strong>특정 집단이나 조건에 불리한 결과를 만들지 않는가?</div>
+<div class="flow-card"><strong>저작권</strong>코드·데이터·이미지·글꼴의 출처와 라이선스를 지켰는가?</div>
+</div>
+<div class="lead" style="margin-top:16px">
+상호 평가는 단순한 점수 부여가 아니라 “근거 있는 장점 1개, 개선점 1개, 실행 가능한 제안 1개”를 남기는 과정입니다.
+</div>
+<table>
+<tr><th>평가 수준</th><th>판단 기준</th></tr>
+<tr><td>5점</td><td>기준을 충분히 만족하며 근거와 검증 자료가 명확함</td></tr>
+<tr><td>4점</td><td>대부분 만족하지만 일부 보완이 필요함</td></tr>
+<tr><td>3점</td><td>기본 기능은 있으나 근거·예외 처리·문서화가 부족함</td></tr>
+<tr><td>2점</td><td>중요한 오류나 위험이 있어 사용 전에 수정이 필요함</td></tr>
+<tr><td>1점</td><td>기준을 거의 만족하지 못하며 전면 재설계가 필요함</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>여섯 관점 상호 평가표 자동 계산</h2></div>
+<div><span class="badge">평가 점수</span><span class="badge">평균</span></div>
+<pre><code>scores = {
+    "정확성": 4,
+    "효율성": 3,
+    "사용성": 4,
+    "개인정보": 5,
+    "편향": 3,
+    "저작권": 4
+}
+
+average = sum(scores.values()) / len(scores)
+
+for category, score in scores.items():
+    print(category, ":", score, "점")
+
+print("평균:", round(average, 2))
+
+lowest = min(
+    scores,
+    key=scores.get
+)
+
+print("우선 개선 영역:", lowest)</code></pre>
+<div class="check"><strong>활용</strong><br>가장 낮은 영역을 우선 개선 대상으로 정하고, 점수만이 아니라 근거 문장을 함께 기록합니다.</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>정확성 평가: 테스트 통과율 확인</h2></div>
+<div><span class="badge">테스트</span><span class="badge">정확성</span></div>
+<div class="two">
+<div><pre><code>def classify_score(score):
+    if not 0 <= score <= 100:
+        raise ValueError(
+            "점수 범위 오류"
+        )
+
+    return "합격" if score >= 60 else "불합격"
+
+tests = [
+    (75, "합격"),
+    (60, "합격"),
+    (59, "불합격"),
+    (0, "불합격"),
+    (100, "합격")
+]
+
+passed = 0
+
+for value, expected in tests:
+    actual = classify_score(value)
+
+    if actual == expected:
+        passed += 1
+        print("PASS", value)
+    else:
+        print("FAIL", value, actual, expected)
+
+print("통과율:", passed / len(tests) * 100)</code></pre></div>
+<div class="card">
+<h3>평가 질문</h3>
+<p>정상·경계값을 모두 통과했는가?</p>
+<p>잘못된 입력에서 의미 있는 오류를 제공하는가?</p>
+<p>요구 사항과 코드 결과가 일치하는가?</p>
+</div>
+</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>효율성 평가: 이중 반복문을 집합으로 개선</h2></div>
+<div><span class="badge">O(n²)</span><span class="badge">평균 O(n)</span></div>
+<div class="two">
+<div><h3>개선 전</h3><pre><code>def has_duplicate_slow(data):
+    for i in range(len(data)):
+        for j in range(i + 1, len(data)):
+            if data[i] == data[j]:
+                return True
+
+    return False</code></pre></div>
+<div><h3>개선 후</h3><pre><code>def has_duplicate_fast(data):
+    seen = set()
+
+    for value in data:
+        if value in seen:
+            return True
+
+        seen.add(value)
+
+    return False</code></pre></div>
+</div>
+<div class="note"><strong>평가</strong><br>개선 후 시간 복잡도는 평균 O(n)으로 줄지만, 최대 n개의 값을 저장하는 추가 메모리가 필요합니다. 시간과 공간을 함께 평가합니다.</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>사용성 평가: 모호한 출력 개선</h2></div>
+<div><span class="badge">사용자 메시지</span><span class="badge">가독성</span></div>
+<div class="two">
+<div><h3>개선 전</h3><pre><code>score = 58
+print(False)</code></pre></div>
+<div><h3>개선 후</h3><pre><code>score = 58
+minimum = 60
+
+if score >= minimum:
+    print(
+        f"합격입니다. 점수: {score}"
+    )
+else:
+    shortage = minimum - score
+
+    print(
+        f"불합격입니다. "
+        f"합격까지 {shortage}점 부족합니다."
+    )</code></pre></div>
+</div>
+<div class="check"><strong>사용성 개선</strong><br>단순한 참·거짓 대신 현재 상태와 다음 행동에 필요한 정보를 제공합니다.</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>개인정보 평가: 이름을 익명 식별자로 변환</h2></div>
+<div><span class="badge">비식별화</span><span class="badge">최소 수집</span></div>
+<div class="two">
+<div><h3>개선 전</h3><pre><code>records = [
+    {
+        "name": "김민준",
+        "phone": "010-1234-5678",
+        "score": 85
+    }
+]
+
+print(records)</code></pre></div>
+<div><h3>개선 후</h3><pre><code>import hashlib
+
+def anonymize(name):
+    return hashlib.sha256(
+        name.encode("utf-8")
+    ).hexdigest()[:10]
+
+records = [
+    {
+        "student_id": anonymize("김민준"),
+        "score": 85
+    }
+]
+
+print(records)</code></pre></div>
+</div>
+<div class="warn"><strong>주의</strong><br>해시값도 다른 정보와 결합하면 개인을 추정할 수 있습니다. 분석 목적에 불필요한 전화번호와 이름은 수집하지 않는 것이 가장 안전합니다.</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>편향 평가: 집단별 정확도 비교</h2></div>
+<div><span class="badge">편향</span><span class="badge">집단별 성능</span></div>
+<pre><code>results = [
+    {"group": "A", "correct": True},
+    {"group": "A", "correct": True},
+    {"group": "A", "correct": False},
+    {"group": "B", "correct": True},
+    {"group": "B", "correct": False},
+    {"group": "B", "correct": False}
+]
+
+stats = {}
+
+for item in results:
+    group = item["group"]
+
+    if group not in stats:
+        stats[group] = {
+            "total": 0,
+            "correct": 0
+        }
+
+    stats[group]["total"] += 1
+
+    if item["correct"]:
+        stats[group]["correct"] += 1
+
+for group, value in stats.items():
+    accuracy = (
+        value["correct"]
+        / value["total"]
+    )
+
+    print(
+        group,
+        "정확도:",
+        round(accuracy, 3)
+    )</code></pre>
+<div class="note"><strong>평가 해석</strong><br>전체 정확도만 보면 특정 집단에서 성능이 낮은 문제를 놓칠 수 있습니다. 표본 수와 데이터 대표성도 함께 확인합니다.</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>저작권 평가: 출처·라이선스 누락 점검</h2></div>
+<div><span class="badge">출처 표시</span><span class="badge">라이선스</span></div>
+<pre><code>assets = [
+    {
+        "name": "배경 이미지",
+        "source": "직접 제작",
+        "license": "자체 제작"
+    },
+    {
+        "name": "기후 데이터",
+        "source": "공공데이터 포털",
+        "license": "공공누리 조건 확인"
+    },
+    {
+        "name": "아이콘",
+        "source": "",
+        "license": ""
+    }
+]
+
+for asset in assets:
+    missing = []
+
+    if not asset["source"]:
+        missing.append("출처")
+
+    if not asset["license"]:
+        missing.append("라이선스")
+
+    if missing:
+        print(
+            asset["name"],
+            "보완 필요:",
+            ", ".join(missing)
+        )
+    else:
+        print(
+            asset["name"],
+            "표시 완료"
+        )</code></pre>
+<div class="check"><strong>개선</strong><br>출처가 불분명한 아이콘은 삭제하거나 사용 조건이 명확한 자료로 교체합니다.</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>동료 피드백을 구체적인 개선 과제로 변환</h2></div>
+<div><span class="badge">피드백</span><span class="badge">실행 계획</span></div>
+<pre><code>feedback = [
+    {
+        "category": "사용성",
+        "comment": "오류 메시지가 어렵다.",
+        "action": "사용자용 쉬운 문장으로 변경",
+        "priority": 1
+    },
+    {
+        "category": "개인정보",
+        "comment": "이름을 저장할 필요가 없다.",
+        "action": "익명 번호만 저장",
+        "priority": 1
+    },
+    {
+        "category": "효율성",
+        "comment": "중복 탐색이 많다.",
+        "action": "집합 기반 탐색 적용",
+        "priority": 2
+    }
+]
+
+ordered = sorted(
+    feedback,
+    key=lambda item: item["priority"]
+)
+
+for item in ordered:
+    print(
+        item["priority"],
+        item["category"],
+        "→",
+        item["action"]
+    )</code></pre>
+<div class="note"><strong>좋은 피드백</strong><br>“별로다”가 아니라 문제 상황, 근거, 수정 방법, 우선순위를 포함합니다.</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>위험도와 비용을 반영한 개선 우선순위</h2></div>
+<div><span class="badge">우선순위</span><span class="badge">위험도</span></div>
+<pre><code>issues = [
+    {
+        "name": "개인정보 노출",
+        "impact": 5,
+        "urgency": 5,
+        "effort": 2
+    },
+    {
+        "name": "느린 중복 탐색",
+        "impact": 3,
+        "urgency": 3,
+        "effort": 2
+    },
+    {
+        "name": "출력 문장 불명확",
+        "impact": 3,
+        "urgency": 4,
+        "effort": 1
+    }
+]
+
+for issue in issues:
+    issue["score"] = (
+        issue["impact"]
+        * issue["urgency"]
+        / issue["effort"]
+    )
+
+issues.sort(
+    key=lambda item: item["score"],
+    reverse=True
+)
+
+for issue in issues:
+    print(
+        issue["name"],
+        round(issue["score"], 2)
+    )</code></pre>
+<div class="warn"><strong>우선 개선 원칙</strong><br>개인정보 노출·차별·저작권 침해처럼 피해가 큰 문제는 기능 개선보다 먼저 수정합니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>종합: 상호 평가 결과와 개선 전후 비교</h2></div>
+<div><span class="badge">종합 평가</span><span class="badge">개선 기록</span></div>
+<pre><code>before = {
+    "정확성": 3,
+    "효율성": 2,
+    "사용성": 3,
+    "개인정보": 2,
+    "편향": 2,
+    "저작권": 3
+}
+
+after = {
+    "정확성": 5,
+    "효율성": 4,
+    "사용성": 4,
+    "개인정보": 5,
+    "편향": 4,
+    "저작권": 5
+}
+
+for category in before:
+    change = after[category] - before[category]
+
+    print(
+        category,
+        before[category],
+        "→",
+        after[category],
+        f"(+{change})"
+    )
+
+before_average = (
+    sum(before.values())
+    / len(before)
+)
+
+after_average = (
+    sum(after.values())
+    / len(after)
+)
+
+print("개선 전 평균:", round(before_average, 2))
+print("개선 후 평균:", round(after_average, 2))</code></pre>
+
+<table>
+<tr><th>관점</th><th>발견 문제</th><th>개선 내용</th><th>검증 방법</th></tr>
+<tr><td>정확성</td><td>경계값 60 처리 오류</td><td><code>&gt;</code>를 <code>&gt;=</code>로 수정</td><td>경계 테스트 통과 확인</td></tr>
+<tr><td>효율성</td><td>중복 검사 O(n²)</td><td>집합 기반 평균 O(n) 방식 적용</td><td>입력 크기별 실행 시간 비교</td></tr>
+<tr><td>사용성</td><td>참·거짓만 출력</td><td>상태와 다음 행동 안내</td><td>사용자 설문과 과제 성공률</td></tr>
+<tr><td>개인정보</td><td>이름·전화번호 저장</td><td>불필요 항목 삭제·익명화</td><td>저장 파일 항목 점검</td></tr>
+<tr><td>편향</td><td>집단별 성능 차이</td><td>균형 데이터 추가·집단별 평가</td><td>집단별 정확도 격차 확인</td></tr>
+<tr><td>저작권</td><td>아이콘 출처 누락</td><td>출처·라이선스 표시 또는 교체</td><td>자산 목록 점검</td></tr>
+</table>
+
+<div class="lead" style="margin-top:14px">
+<strong>상호 평가 서술 예시</strong><br>
+“산출물을 정확성, 효율성, 사용성, 개인정보, 편향, 저작권 관점에서 평가하였다. 정확성에서는 경계값 처리 오류를 발견해 테스트를 추가하였고, 효율성에서는 이중 반복문을 집합 기반 탐색으로 개선하였다. 개인정보 측면에서는 불필요한 이름과 전화번호를 삭제하였으며, 편향 여부를 확인하기 위해 집단별 정확도를 비교하였다. 출처가 누락된 아이콘은 삭제하고 사용 조건이 명확한 자료로 교체하였다. 개선 후 동일한 평가표로 다시 점검하여 모든 영역의 점수가 향상되었음을 확인하였다.”
+</div>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 상호 평가에서 점수와 함께 반드시 기록해야 할 것은 무엇인가?
+<details><summary>정답 보기</summary>점수의 근거, 구체적인 문제점, 실행 가능한 개선 제안입니다.</details></div>
+<div class="quiz"><strong>2.</strong> 정확성 평가에 적합한 자료는 무엇인가?
+<details><summary>정답 보기</summary>정상·경계·예외 입력 테스트 결과와 요구 사항 일치 여부입니다.</details></div>
+<div class="quiz"><strong>3.</strong> 개인정보 보호에서 가장 우선하는 원칙은 무엇인가?
+<details><summary>정답 보기</summary>목적에 불필요한 개인정보를 처음부터 수집하지 않는 최소 수집 원칙입니다.</details></div>
+<div class="quiz"><strong>4.</strong> 편향을 확인할 때 전체 정확도만 보면 안 되는 이유는 무엇인가?
+<details><summary>정답 보기</summary>특정 집단에서만 성능이 낮은 문제를 전체 평균이 가릴 수 있기 때문입니다.</details></div>
+<div class="quiz"><strong>5.</strong> 저작권 문제가 발견되었을 때 가능한 개선 방법은 무엇인가?
+<details><summary>정답 보기</summary>출처와 라이선스를 올바르게 표시하거나, 사용 허가가 명확한 자료 또는 직접 제작한 자료로 교체합니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>정확성·효율성·사용성·개인정보·편향·저작권 관점의 산출물 상호 평가와 개선 예제 10선</footer>
+</body>
+</html>

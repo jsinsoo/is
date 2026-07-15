@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>재귀적 문제 분해 설계 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1200px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:940px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--red)}
+.flow-card:nth-child(2){border-top:5px solid var(--blue)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--green)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+pre.trace{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:28%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>미로·하노이 탑·조합 생성<br>재귀적 문제 분해 설계 예제 10선</h1>
+<p>복잡한 문제를 더 작은 같은 형태의 문제로 나누고, 종료 조건과 재귀 호출을 설계하여 미로 탐색, 하노이 탑 이동, 순열·조합 생성 문제를 해결합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">설계 원리</a><a href="#ex1">1. 하노이 기본</a><a href="#ex2">2. 하노이 추적</a>
+<a href="#ex3">3. 이동 횟수</a><a href="#ex4">4. 미로 탐색</a><a href="#ex5">5. 경로 복원</a>
+<a href="#ex6">6. 모든 경로</a><a href="#ex7">7. 순열 생성</a><a href="#ex8">8. 조합 생성</a>
+<a href="#ex9">9. 부분집합</a><a href="#ex10">10. 종합 비교</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 재귀적 문제 분해 설계 절차</h2>
+<div class="flow">
+<div class="flow-card"><strong>① 상태 정의</strong>현재 문제를 나타내는 위치, 원판 수, 선택 목록 등을 정합니다.</div>
+<div class="flow-card"><strong>② 종료 조건</strong>목표 도달, 원판 1개, 선택 개수 충족 등 멈출 조건을 정합니다.</div>
+<div class="flow-card"><strong>③ 작은 문제</strong>현재 문제보다 크기가 작은 같은 형태의 문제로 바꿉니다.</div>
+<div class="flow-card"><strong>④ 복귀와 복원</strong>호출이 끝난 뒤 선택을 취소하거나 경로를 원상 복구합니다.</div>
+</div>
+<table>
+<tr><th>문제</th><th>상태</th><th>종료 조건</th><th>작은 문제</th></tr>
+<tr><td>하노이 탑</td><td>원판 수와 세 기둥</td><td>원판이 1개</td><td>n-1개 원판 이동</td></tr>
+<tr><td>미로 탐색</td><td>현재 행과 열</td><td>출구 도착</td><td>인접한 다음 칸 탐색</td></tr>
+<tr><td>조합 생성</td><td>시작 위치와 선택 목록</td><td>r개 선택 완료</td><td>다음 원소를 포함한 선택</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>하노이 탑 기본 재귀함수</h2></div>
+<div><span class="badge">분할 정복</span><span class="badge">원판 이동</span></div>
+<div class="two">
+<div><pre><code>def hanoi(n, start, target, helper):
+    if n == 1:
+        print(f"{start} → {target}")
+        return
+
+    hanoi(n - 1, start, helper, target)
+    print(f"{start} → {target}")
+    hanoi(n - 1, helper, target, start)
+
+hanoi(3, "A", "C", "B")</code></pre></div>
+<div class="card">
+<h3>문제 분해</h3>
+<ol>
+<li>위쪽 n-1개 원판을 보조 기둥으로 옮깁니다.</li>
+<li>가장 큰 원판을 목표 기둥으로 옮깁니다.</li>
+<li>보조 기둥의 n-1개를 목표 기둥으로 옮깁니다.</li>
+</ol>
+</div>
+</div>
+<div class="check"><strong>종료 조건</strong><br>원판이 1개이면 더 나눌 필요 없이 시작 기둥에서 목표 기둥으로 바로 옮깁니다.</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>하노이 탑 재귀 호출 추적</h2></div>
+<div><span class="badge">호출 깊이</span><span class="badge">과정 추적</span></div>
+<pre><code>def hanoi_trace(n, start, target, helper, depth=0):
+    indent = "  " * depth
+    print(f"{indent}hanoi({n}, {start}, {target}, {helper})")
+
+    if n == 1:
+        print(f"{indent}이동: {start} → {target}")
+        return
+
+    hanoi_trace(n - 1, start, helper, target, depth + 1)
+    print(f"{indent}이동: {start} → {target}")
+    hanoi_trace(n - 1, helper, target, start, depth + 1)
+
+hanoi_trace(3, "A", "C", "B")</code></pre>
+<div class="note"><strong>관찰</strong><br>들여쓰기가 깊어질수록 더 작은 원판 문제를 해결하고 있음을 확인할 수 있습니다.</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>하노이 탑 최소 이동 횟수</h2></div>
+<div><span class="badge">점화식</span><span class="badge">이동 횟수</span></div>
+<div class="two">
+<div><pre><code>def hanoi_count(n):
+    if n == 1:
+        return 1
+
+    return 2 * hanoi_count(n - 1) + 1
+
+for n in range(1, 6):
+    print(n, "개:", hanoi_count(n), "회")</code></pre></div>
+<div class="card">
+<h3>계산 관계</h3>
+<pre class="trace">T(1) = 1
+T(2) = 2×T(1)+1 = 3
+T(3) = 2×T(2)+1 = 7
+T(4) = 15
+T(5) = 31</pre>
+</div>
+</div>
+<div class="check"><strong>핵심</strong><br>n개 원판을 옮기려면 n-1개를 두 번 옮기고 가장 큰 원판을 한 번 옮깁니다.</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>깊이 우선 방식의 미로 탐색</h2></div>
+<div><span class="badge">DFS</span><span class="badge">방문 표시</span><span class="badge">미로</span></div>
+<pre><code>maze = [
+    [0, 1, 0, 0],
+    [0, 0, 0, 1],
+    [1, 0, 1, 0],
+    [0, 0, 0, 0]
+]
+
+rows = len(maze)
+cols = len(maze[0])
+visited = [[False] * cols for _ in range(rows)]
+
+def solve(row, col):
+    if row < 0 or row >= rows:
+        return False
+    if col < 0 or col >= cols:
+        return False
+    if maze[row][col] == 1 or visited[row][col]:
+        return False
+
+    if row == rows - 1 and col == cols - 1:
+        return True
+
+    visited[row][col] = True
+
+    return (
+        solve(row + 1, col)
+        or solve(row - 1, col)
+        or solve(row, col + 1)
+        or solve(row, col - 1)
+    )
+
+print("탈출 가능:", solve(0, 0))</code></pre>
+<div class="warn"><strong>종료 조건</strong><br>배열 밖, 벽, 방문한 칸이면 실패하고, 출구에 도착하면 성공을 반환합니다.</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>미로 경로 저장과 복원</h2></div>
+<div><span class="badge">백트래킹</span><span class="badge">경로 복원</span></div>
+<pre><code>maze = [
+    [0, 1, 0, 0],
+    [0, 0, 0, 1],
+    [1, 0, 1, 0],
+    [0, 0, 0, 0]
+]
+
+rows = len(maze)
+cols = len(maze[0])
+visited = set()
+path = []
+
+def find_path(row, col):
+    if not (0 <= row < rows and 0 <= col < cols):
+        return False
+    if maze[row][col] == 1 or (row, col) in visited:
+        return False
+
+    visited.add((row, col))
+    path.append((row, col))
+
+    if (row, col) == (rows - 1, cols - 1):
+        return True
+
+    directions = [(1,0), (-1,0), (0,1), (0,-1)]
+
+    for dr, dc in directions:
+        if find_path(row + dr, col + dc):
+            return True
+
+    path.pop()
+    return False
+
+if find_path(0, 0):
+    print("경로:", path)
+else:
+    print("경로 없음")</code></pre>
+<div class="check"><strong>백트래킹</strong><br>현재 선택이 출구로 이어지지 않으면 <code>path.pop()</code>으로 마지막 위치를 제거하고 이전 상태로 돌아갑니다.</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>미로의 모든 경로 찾기</h2></div>
+<div><span class="badge">모든 해</span><span class="badge">방문 해제</span></div>
+<pre><code>maze = [
+    [0, 0, 0],
+    [0, 1, 0],
+    [0, 0, 0]
+]
+
+rows = len(maze)
+cols = len(maze[0])
+visited = set()
+all_paths = []
+
+def find_all_paths(row, col, path):
+    if not (0 <= row < rows and 0 <= col < cols):
+        return
+    if maze[row][col] == 1 or (row, col) in visited:
+        return
+
+    visited.add((row, col))
+    path.append((row, col))
+
+    if (row, col) == (rows - 1, cols - 1):
+        all_paths.append(path.copy())
+    else:
+        for dr, dc in [(1,0), (-1,0), (0,1), (0,-1)]:
+            find_all_paths(row + dr, col + dc, path)
+
+    path.pop()
+    visited.remove((row, col))
+
+find_all_paths(0, 0, [])
+
+print("경로 수:", len(all_paths))
+for path in all_paths:
+    print(path)</code></pre>
+<div class="note"><strong>복원 이유</strong><br>한 경로 탐색이 끝난 뒤 방문 표시를 해제해야 다른 경로에서도 같은 칸을 사용할 수 있습니다.</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>재귀함수로 순열 생성</h2></div>
+<div><span class="badge">순열</span><span class="badge">선택·취소</span></div>
+<div class="two">
+<div><pre><code>def permutations(items, selected):
+    if len(selected) == len(items):
+        print(selected)
+        return
+
+    for item in items:
+        if item not in selected:
+            selected.append(item)
+            permutations(items, selected)
+            selected.pop()
+
+permutations(["A", "B", "C"], [])</code></pre></div>
+<div class="card">
+<h3>재귀적 분해</h3>
+<p>현재 위치에 올 원소를 하나 선택한 뒤, 남은 위치의 순열을 같은 방식으로 생성합니다.</p>
+<pre class="output">['A', 'B', 'C']
+['A', 'C', 'B']
+['B', 'A', 'C']
+...</pre>
+</div>
+</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>n개 중 r개 조합 생성</h2></div>
+<div><span class="badge">조합</span><span class="badge">시작 인덱스</span></div>
+<pre><code>def combinations(items, r, start=0, selected=None):
+    if selected is None:
+        selected = []
+
+    if len(selected) == r:
+        print(selected)
+        return
+
+    for index in range(start, len(items)):
+        selected.append(items[index])
+        combinations(items, r, index + 1, selected)
+        selected.pop()
+
+combinations(["A", "B", "C", "D"], 2)</code></pre>
+<div class="check"><strong>순열과 차이</strong><br>조합은 순서를 구분하지 않으므로 이전에 선택한 위치보다 뒤쪽 원소만 탐색합니다.</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>포함·제외 방식의 부분집합 생성</h2></div>
+<div><span class="badge">부분집합</span><span class="badge">이진 선택</span></div>
+<div class="two">
+<div><pre><code>def subsets(items, index=0, selected=None):
+    if selected is None:
+        selected = []
+
+    if index == len(items):
+        print(selected)
+        return
+
+    # 현재 원소를 포함
+    selected.append(items[index])
+    subsets(items, index + 1, selected)
+
+    # 현재 원소를 제외
+    selected.pop()
+    subsets(items, index + 1, selected)
+
+subsets([1, 2, 3])</code></pre></div>
+<div class="card">
+<h3>문제 분해</h3>
+<p>각 원소마다 두 가지 선택을 합니다.</p>
+<ol>
+<li>현재 원소를 부분집합에 포함한다.</li>
+<li>현재 원소를 부분집합에서 제외한다.</li>
+</ol>
+<p>원소가 n개이면 부분집합은 2ⁿ개입니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>세 문제의 재귀 설계 종합 비교</h2></div>
+<div><span class="badge">종합 설계</span><span class="badge">문제 선택</span></div>
+<table>
+<tr><th>비교 항목</th><th>하노이 탑</th><th>미로 탐색</th><th>조합 생성</th></tr>
+<tr><td>상태</td><td>원판 수와 기둥</td><td>현재 좌표와 방문 정보</td><td>시작 인덱스와 선택 목록</td></tr>
+<tr><td>종료 조건</td><td>원판이 1개</td><td>출구 도착 또는 이동 불가</td><td>선택 개수 충족</td></tr>
+<tr><td>재귀 호출</td><td>n-1개 원판 이동</td><td>상하좌우 인접 칸 탐색</td><td>다음 원소 선택</td></tr>
+<tr><td>상태 복원</td><td>별도 복원 없음</td><td>경로·방문 표시 제거</td><td>선택 목록에서 마지막 원소 제거</td></tr>
+<tr><td>대표 개념</td><td>분할 정복</td><td>깊이 우선 탐색·백트래킹</td><td>완전 탐색·백트래킹</td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>설계 문장 예시</strong><br>
+“현재 상태에서 가능한 선택을 하나 수행하고, 남은 문제를 같은 형태의 더 작은 문제로 바꾸어 재귀 호출한다.
+목표 상태에 도달하면 결과를 기록하고, 다른 선택을 탐색하기 위해 현재 선택을 취소한다.”
+</div>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 하노이 탑에서 원판 n개 문제는 어떤 작은 문제로 분해되는가?
+<details><summary>정답 보기</summary>n-1개 원판을 옮기는 문제 두 번과 가장 큰 원판을 옮기는 문제 한 번으로 분해됩니다.</details></div>
+<div class="quiz"><strong>2.</strong> 미로 탐색에서 방문 표시가 필요한 이유는 무엇인가?
+<details><summary>정답 보기</summary>같은 칸을 반복 방문하여 무한 재귀에 빠지는 것을 막기 위해서입니다.</details></div>
+<div class="quiz"><strong>3.</strong> 백트래킹에서 <code>pop()</code>의 역할은 무엇인가?
+<details><summary>정답 보기</summary>현재 선택을 취소하여 이전 상태로 복원하고 다른 선택을 탐색하도록 합니다.</details></div>
+<div class="quiz"><strong>4.</strong> 조합 생성에서 시작 인덱스를 증가시키는 이유는 무엇인가?
+<details><summary>정답 보기</summary>이미 선택한 원소보다 뒤쪽만 탐색하여 같은 조합의 순서만 다른 중복을 막기 위해서입니다.</details></div>
+<div class="quiz"><strong>5.</strong> 부분집합 생성에서 각 원소마다 고려하는 두 선택은 무엇인가?
+<details><summary>정답 보기</summary>현재 원소를 포함하는 선택과 제외하는 선택입니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>미로·하노이 탑·조합 생성 재귀적 문제 분해 설계 예제 10선</footer>
+</body>
+</html>

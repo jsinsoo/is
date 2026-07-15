@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>문제 분석과 복수 알고리즘 비교 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1200px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:980px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--green)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--purple)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:24%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>주어진 문제 분석과 복수 알고리즘 설계<br>정확성·시간 복잡도·적용 조건 비교 예제 10선</h1>
+<p>하나의 문제를 여러 관점으로 분석하고 둘 이상의 알고리즘을 설계한 뒤, 정답의 정확성, 시간 복잡도, 메모리 사용, 입력 조건과 적용 상황을 비교합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">비교 절차</a><a href="#ex1">1. 최댓값</a><a href="#ex2">2. 탐색</a>
+<a href="#ex3">3. 두 수 합</a><a href="#ex4">4. 중복 검사</a><a href="#ex5">5. 정렬</a>
+<a href="#ex6">6. 피보나치</a><a href="#ex7">7. 최단 경로</a><a href="#ex8">8. 부분합</a>
+<a href="#ex9">9. 동전 교환</a><a href="#ex10">10. 종합 판단</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 복수 알고리즘 비교 절차</h2>
+<div class="flow">
+<div class="flow-card"><strong>문제 분석</strong>입력·출력·제약 조건·필수 연산을 분명히 합니다.</div>
+<div class="flow-card"><strong>알고리즘 설계</strong>완전 탐색, 정렬, 해시, 분할 정복 등 둘 이상의 방법을 만듭니다.</div>
+<div class="flow-card"><strong>정확성 검증</strong>같은 입력에서 결과가 일치하는지와 예외 상황을 확인합니다.</div>
+<div class="flow-card"><strong>적용 조건 비교</strong>정렬 여부, 메모리, 입력 크기, 최악 사례를 함께 설명합니다.</div>
+</div>
+<div class="lead" style="margin-top:16px">
+좋은 알고리즘 비교는 단순히 “A가 더 빠르다”로 끝나지 않습니다.
+왜 정확한지, 어떤 입력에서 유리한지, 추가 공간이 필요한지, 사전 조건이 있는지를 함께 설명해야 합니다.
+</div>
+<table>
+<tr><th>비교 기준</th><th>확인 내용</th></tr>
+<tr><td>정확성</td><td>모든 허용 입력에서 올바른 결과를 반환하는가?</td></tr>
+<tr><td>시간 복잡도</td><td>입력 크기 n에 따라 연산량이 어떻게 증가하는가?</td></tr>
+<tr><td>공간 복잡도</td><td>집합·딕셔너리·테이블 등 추가 저장 공간이 필요한가?</td></tr>
+<tr><td>적용 조건</td><td>정렬된 자료, 양수 입력, 가중치 동일 등 전제 조건이 있는가?</td></tr>
+<tr><td>구현 난이도</td><td>코드가 단순한가, 오류 가능성이 높은가?</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>최댓값 찾기: 선형 탐색과 정렬</h2></div>
+<div><span class="badge">O(n)</span><span class="badge">O(n log n)</span></div>
+<div class="two">
+<div><pre><code>def max_scan(data):
+    maximum = data[0]
+
+    for value in data[1:]:
+        if value > maximum:
+            maximum = value
+
+    return maximum</code></pre></div>
+<div><pre><code>def max_sort(data):
+    ordered = sorted(data)
+    return ordered[-1]</code></pre></div>
+</div>
+<pre><code>numbers = [12, 7, 31, 4, 18]
+
+a = max_scan(numbers)
+b = max_sort(numbers)
+
+print("결과 일치:", a == b)
+print("최댓값:", a)</code></pre>
+<div class="check"><strong>비교</strong><br>최댓값 하나만 필요하면 선형 탐색이 적합합니다. 정렬 방식은 전체 순서를 만드는 불필요한 작업이 추가됩니다.</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>값 탐색: 선형 탐색과 이진 탐색</h2></div>
+<div><span class="badge">O(n)</span><span class="badge">O(log n)</span></div>
+<pre><code>def linear_search(data, target):
+    for index, value in enumerate(data):
+        if value == target:
+            return index
+    return -1
+
+def binary_search(data, target):
+    left = 0
+    right = len(data) - 1
+
+    while left <= right:
+        middle = (left + right) // 2
+
+        if data[middle] == target:
+            return middle
+
+        if data[middle] < target:
+            left = middle + 1
+        else:
+            right = middle - 1
+
+    return -1
+
+data = [2, 5, 8, 12, 16, 23, 38]
+
+print(linear_search(data, 16))
+print(binary_search(data, 16))</code></pre>
+<div class="warn"><strong>적용 조건</strong><br>이진 탐색은 자료가 정렬되어 있어야 합니다. 정렬되지 않은 일회성 자료라면 선형 탐색이 더 단순하고 적절할 수 있습니다.</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>두 수의 합: 모든 쌍과 딕셔너리</h2></div>
+<div><span class="badge">O(n²)</span><span class="badge">평균 O(n)</span></div>
+<div class="two">
+<div><pre><code>def two_sum_nested(data, target):
+    for i in range(len(data)):
+        for j in range(i + 1, len(data)):
+            if data[i] + data[j] == target:
+                return i, j
+
+    return None</code></pre></div>
+<div><pre><code>def two_sum_hash(data, target):
+    positions = {}
+
+    for index, value in enumerate(data):
+        needed = target - value
+
+        if needed in positions:
+            return positions[needed], index
+
+        positions[value] = index
+
+    return None</code></pre></div>
+</div>
+<pre><code>numbers = [2, 7, 11, 15]
+target = 9
+
+print(two_sum_nested(numbers, target))
+print(two_sum_hash(numbers, target))</code></pre>
+<div class="note"><strong>비교</strong><br>딕셔너리 방식은 추가 메모리를 사용하지만 평균적으로 한 번의 순회로 해결합니다. 모든 쌍 방식은 메모리는 적게 쓰지만 비교 횟수가 많습니다.</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>중복 존재 확인: 정렬과 집합</h2></div>
+<div><span class="badge">O(n log n)</span><span class="badge">평균 O(n)</span></div>
+<pre><code>def duplicate_by_sort(data):
+    ordered = sorted(data)
+
+    for index in range(len(ordered) - 1):
+        if ordered[index] == ordered[index + 1]:
+            return True
+
+    return False
+
+def duplicate_by_set(data):
+    seen = set()
+
+    for value in data:
+        if value in seen:
+            return True
+
+        seen.add(value)
+
+    return False
+
+numbers = [4, 1, 7, 3, 7]
+
+print(duplicate_by_sort(numbers))
+print(duplicate_by_set(numbers))</code></pre>
+<div class="check"><strong>적용 조건</strong><br>집합 방식은 빠르지만 해시 가능한 자료만 저장할 수 있습니다. 정렬 방식은 결과 순서도 함께 필요할 때 활용할 수 있습니다.</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>정렬: 선택 정렬과 병합 정렬</h2></div>
+<div><span class="badge">O(n²)</span><span class="badge">O(n log n)</span></div>
+<div class="two">
+<div><pre><code>def selection_sort(data):
+    result = data.copy()
+
+    for start in range(len(result) - 1):
+        minimum = start
+
+        for index in range(start + 1, len(result)):
+            if result[index] < result[minimum]:
+                minimum = index
+
+        result[start], result[minimum] = (
+            result[minimum], result[start]
+        )
+
+    return result</code></pre></div>
+<div><pre><code>def merge_sort(data):
+    if len(data) <= 1:
+        return data
+
+    middle = len(data) // 2
+    left = merge_sort(data[:middle])
+    right = merge_sort(data[middle:])
+
+    result = []
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    return result + left[i:] + right[j:]</code></pre></div>
+</div>
+<div class="note"><strong>비교</strong><br>선택 정렬은 구현이 단순하고 교환 횟수가 적지만 큰 입력에는 느립니다. 병합 정렬은 추가 배열이 필요하지만 큰 입력에서 안정적인 성능을 보입니다.</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>피보나치: 단순 재귀와 동적 계획법</h2></div>
+<div><span class="badge">지수 시간</span><span class="badge">O(n)</span></div>
+<pre><code>def fib_recursive(n):
+    if n < 2:
+        return n
+
+    return (
+        fib_recursive(n - 1)
+        + fib_recursive(n - 2)
+    )
+
+def fib_table(n):
+    if n < 2:
+        return n
+
+    dp = [0] * (n + 1)
+    dp[1] = 1
+
+    for index in range(2, n + 1):
+        dp[index] = (
+            dp[index - 1]
+            + dp[index - 2]
+        )
+
+    return dp[n]
+
+for n in range(11):
+    print(
+        n,
+        fib_recursive(n),
+        fib_table(n)
+    )</code></pre>
+<div class="check"><strong>정확성</strong><br>두 알고리즘 모두 같은 점화식을 따르므로 같은 값을 반환합니다. 동적 계획법은 중복 부분 문제를 저장하여 반복 계산을 제거합니다.</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>최단 경로: BFS와 다익스트라</h2></div>
+<div><span class="badge">무가중치</span><span class="badge">가중치</span></div>
+<div class="two">
+<div><pre><code>from collections import deque
+
+def bfs_distance(graph, start):
+    queue = deque([start])
+    distance = {start: 0}
+
+    while queue:
+        node = queue.popleft()
+
+        for neighbor in graph[node]:
+            if neighbor not in distance:
+                distance[neighbor] = (
+                    distance[node] + 1
+                )
+                queue.append(neighbor)
+
+    return distance</code></pre></div>
+<div><pre><code>import heapq
+
+def dijkstra(graph, start):
+    distance = {
+        node: float("inf")
+        for node in graph
+    }
+    distance[start] = 0
+
+    heap = [(0, start)]
+
+    while heap:
+        current, node = heapq.heappop(heap)
+
+        if current > distance[node]:
+            continue
+
+        for neighbor, weight in graph[node]:
+            new_distance = current + weight
+
+            if new_distance < distance[neighbor]:
+                distance[neighbor] = new_distance
+                heapq.heappush(
+                    heap,
+                    (new_distance, neighbor)
+                )
+
+    return distance</code></pre></div>
+</div>
+<div class="warn"><strong>적용 조건</strong><br>BFS는 모든 간선 비용이 같을 때 최단 간선 수를 구합니다. 다익스트라는 음수가 아닌 서로 다른 가중치를 처리할 수 있습니다.</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>부분합: 완전 탐색과 백트래킹</h2></div>
+<div><span class="badge">2ⁿ</span><span class="badge">가지치기</span></div>
+<pre><code>numbers = [2, 3, 5, 7, 8]
+target = 10
+
+def subset_full(index, total):
+    if index == len(numbers):
+        return total == target
+
+    return (
+        subset_full(
+            index + 1,
+            total + numbers[index]
+        )
+        or subset_full(
+            index + 1,
+            total
+        )
+    )
+
+def subset_pruned(index, total):
+    if total == target:
+        return True
+
+    if total > target:
+        return False
+
+    if index == len(numbers):
+        return False
+
+    return (
+        subset_pruned(
+            index + 1,
+            total + numbers[index]
+        )
+        or subset_pruned(
+            index + 1,
+            total
+        )
+    )
+
+print(subset_full(0, 0))
+print(subset_pruned(0, 0))</code></pre>
+<div class="note"><strong>정확성 조건</strong><br><code>total &gt; target</code> 가지치기는 모든 숫자가 양수일 때만 안전합니다. 음수가 포함되면 이후 합이 다시 줄어들 수 있습니다.</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>동전 교환: 탐욕법과 동적 계획법</h2></div>
+<div><span class="badge">빠른 탐욕</span><span class="badge">최적 보장 DP</span></div>
+<div class="two">
+<div><pre><code>def greedy_coin(coins, amount):
+    count = 0
+
+    for coin in sorted(
+        coins,
+        reverse=True
+    ):
+        count += amount // coin
+        amount %= coin
+
+    return count</code></pre></div>
+<div><pre><code>def dp_coin(coins, amount):
+    dp = [float("inf")] * (amount + 1)
+    dp[0] = 0
+
+    for value in range(1, amount + 1):
+        for coin in coins:
+            if coin <= value:
+                dp[value] = min(
+                    dp[value],
+                    dp[value - coin] + 1
+                )
+
+    return dp[amount]</code></pre></div>
+</div>
+<pre><code>coins = [1, 3, 4]
+amount = 6
+
+print("탐욕:", greedy_coin(coins, amount))
+print("DP:", dp_coin(coins, amount))</code></pre>
+<div class="warn"><strong>비교</strong><br>탐욕법은 빠르지만 동전 체계에 따라 최적해를 보장하지 않습니다. 동적 계획법은 더 많은 계산과 공간을 사용하지만 일반적인 양의 동전 체계에서 최소 동전 수를 구합니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>문제 조건에 따른 알고리즘 선택 도우미</h2></div>
+<div><span class="badge">종합 판단</span><span class="badge">적용 조건</span></div>
+<pre><code>def choose_algorithm(problem, condition):
+    if problem == "탐색":
+        if condition == "정렬됨":
+            return "이진 탐색", "O(log n)"
+        return "선형 탐색", "O(n)"
+
+    if problem == "최단 경로":
+        if condition == "모든 간선 비용 동일":
+            return "BFS", "O(V+E)"
+        if condition == "음수 없는 가중치":
+            return "다익스트라", "O((V+E)log V)"
+
+    if problem == "중복 검사":
+        if condition == "추가 메모리 가능":
+            return "집합", "평균 O(n)"
+        return "정렬 후 인접 비교", "O(n log n)"
+
+    if problem == "부분합":
+        if condition == "양수만":
+            return "백트래킹+가지치기", "최악 O(2^n)"
+        return "완전 탐색 또는 DP", "조건에 따라 다름"
+
+    return "추가 분석 필요", "-"
+
+cases = [
+    ("탐색", "정렬됨"),
+    ("탐색", "정렬 안 됨"),
+    ("최단 경로", "모든 간선 비용 동일"),
+    ("최단 경로", "음수 없는 가중치"),
+    ("중복 검사", "추가 메모리 가능"),
+    ("부분합", "양수만")
+]
+
+for problem, condition in cases:
+    algorithm, complexity = choose_algorithm(
+        problem,
+        condition
+    )
+
+    print(
+        problem,
+        condition,
+        "→",
+        algorithm,
+        complexity
+    )</code></pre>
+
+<table>
+<tr><th>문제</th><th>알고리즘 A</th><th>알고리즘 B</th><th>선택 기준</th></tr>
+<tr><td>탐색</td><td>선형 탐색</td><td>이진 탐색</td><td>자료 정렬 여부와 탐색 횟수</td></tr>
+<tr><td>중복 검사</td><td>정렬 후 비교</td><td>집합</td><td>추가 메모리와 해시 가능 여부</td></tr>
+<tr><td>최단 경로</td><td>BFS</td><td>다익스트라</td><td>간선 가중치의 동일성</td></tr>
+<tr><td>부분합</td><td>완전 탐색</td><td>가지치기</td><td>입력값의 부호와 가지치기 안전성</td></tr>
+<tr><td>동전 교환</td><td>탐욕법</td><td>동적 계획법</td><td>동전 체계의 최적 보장 여부</td></tr>
+</table>
+
+<div class="lead" style="margin-top:14px">
+<strong>비교 설명 예시</strong><br>
+“정렬된 자료에서 값을 한 번만 찾는다면 선형 탐색도 사용할 수 있지만, 같은 자료에서 여러 번 탐색한다면 이진 탐색이 유리하다. 선형 탐색은 O(n)이며 정렬 조건이 없고, 이진 탐색은 O(log n)이지만 정렬된 자료가 필요하다. 따라서 사전 정렬 비용과 탐색 반복 횟수를 함께 고려해 선택해야 한다.”
+</div>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 여러 알고리즘을 비교할 때 정확성 확인이 먼저인 이유는 무엇인가?
+<details><summary>정답 보기</summary>빠르더라도 잘못된 결과를 반환하는 알고리즘은 문제 해결 방법으로 사용할 수 없기 때문입니다.</details></div>
+<div class="quiz"><strong>2.</strong> 이진 탐색의 적용 조건은 무엇인가?
+<details><summary>정답 보기</summary>탐색할 자료가 정렬되어 있어야 합니다.</details></div>
+<div class="quiz"><strong>3.</strong> 집합 기반 중복 검사의 대표적인 장점과 단점은 무엇인가?
+<details><summary>정답 보기</summary>평균적으로 O(n)에 중복을 찾을 수 있지만 추가 메모리가 필요하고 자료가 해시 가능해야 합니다.</details></div>
+<div class="quiz"><strong>4.</strong> BFS와 다익스트라의 선택 기준은 무엇인가?
+<details><summary>정답 보기</summary>모든 간선 비용이 같으면 BFS, 음수가 없는 서로 다른 가중치가 있으면 다익스트라를 사용합니다.</details></div>
+<div class="quiz"><strong>5.</strong> 가지치기 조건을 설계할 때 가장 중요한 점은 무엇인가?
+<details><summary>정답 보기</summary>정답이 될 가능성이 없는 상태만 제거해야 하며, 정답 상태를 잘못 배제하지 않아야 합니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>주어진 문제 분석과 복수 알고리즘 설계·정확성·시간 복잡도·적용 조건 비교 예제 10선</footer>
+</body>
+</html>
