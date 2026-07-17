@@ -1,0 +1,675 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 18차시 목표지향 개념기반 수업지도안</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:50px 20px 44px}.wrap,main{max-width:1200px;margin:auto}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}pre.trace{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top">
+<header><div class="wrap"><h1>정보과학 18차시<br>유망하지 않은 상태 배제와 가지치기</h1><p>완전 탐색과 가지치기 탐색의 해·호출 횟수·후보 검사 수를 비교하고, 목표 초과·도달 불가능·충돌·중복·현재 최적값 조건을 활용해 안전하고 효율적인 탐색을 설계합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>18차시</td><th>주제</th><td>유망하지 않은 상태 배제와 탐색 횟수 비교</td></tr><tr><th>핵심 질문</th><td colspan="3">정답 가능성이 없는 상태를 어떻게 논리적으로 판정하고, 해의 정확성을 유지하면서 탐색 횟수를 줄일 수 있는가?</td></tr><tr><th>전이 목표</th><td colspan="3">학생은 새로운 탐색·최적화 문제에서 안전한 가지치기 조건을 설계하고 완전 탐색과 결과를 비교하여 정확성·호출 수·실행 시간·감소율을 근거로 효율을 설명할 수 있다.</td></tr><tr><th>성취기준</th><td colspan="3">목표 초과, 남은 후보 한계, 현재 최적값, 충돌, 중복 상태를 이용해 가지치기 조건을 설계한다. 같은 문제를 완전 탐색과 가지치기 방식으로 구현하고 해의 일치 여부와 호출 횟수·후보 검사 수·실행 시간을 비교한다.</td></tr><tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr><tr><td>도입</td><td>탐색 트리에서 정답이 될 수 없는 가지를 찾아 조기 중단의 근거를 토의한다.</td><td>유망성, 근거</td></tr><tr><td>개념 형성</td><td>상한 초과·도달 불가능·충돌·중복·최적값 조건을 분류한다.</td><td>조건, 안전성</td></tr><tr><td>진단 실습</td><td>완전 탐색과 가지치기를 구현하고 호출 수와 해를 비교한다.</td><td>구현, 측정</td></tr><tr><td>정리·전이</td><td>새로운 문제에 안전한 가지치기를 설계하고 한계와 전제 조건을 설명한다.</td><td>검증, 일반화</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>유망한 상태와 유망하지 않은 상태를 구분한다.</li><li>문제 조건에 근거한 가지치기를 설계한다.</li><li>완전 탐색과 가지치기의 해를 비교한다.</li><li>호출 횟수·검사 수·실행 시간을 측정한다.</li><li>가지치기 효과와 한계를 논리적으로 설명한다.</li></ol></div><div class="card"><h3>학습할 개념</h3><ul><li><b>유망성:</b> 현재 상태에서 정답 또는 더 좋은 해에 도달할 가능성</li><li><b>상한·하한:</b> 현재 상태가 만들 수 있는 최선·최악의 범위</li><li><b>분기 한정:</b> 현재 최적값보다 나아질 수 없는 분기를 중단하는 전략</li><li><b>중복 상태:</b> 이미 탐색한 것과 같은 결과로 이어지는 상태</li><li><b>정확성 검증:</b> 가지치기 전후 해의 개수와 내용을 비교하는 과정</li></ul></div></div><div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>가지치기는 불가능하거나 현재 최적해보다 나아질 수 없는 상태를 근거 있게 제거하여 탐색량을 줄이며, 올바른 알고리즘은 완전 탐색과 같은 해를 유지해야 한다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">“베이컨은 지식은 힘이라고 했고, 데카르트는 복잡한 문제에서 불필요한 것을 덜어 내는 사고를 강조했습니다. 다윈은 생존 가능성이 낮은 변이가 자연 선택에서 사라지는 과정을 관찰했고, 가우스는 규칙을 찾아 수많은 계산을 한 번에 줄였습니다. 오늘 우리는 모든 길을 걷기보다 ‘이 길은 정답에 닿지 못한다’는 근거를 세워 탐색을 멈춥니다. 다만 공부할 단원을 가지치기할 때 ‘어려워 보인다’는 이유만 사용하면 시험이 반례를 제시할 수 있습니다. 이제 안전한 조건과 정확한 측정으로 똑똑하게 탐색해 봅시다.”</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow"><div class="flow-card"><strong>완전 탐색</strong>모든 후보를 끝까지 확인하여 기준 결과를 만듭니다.</div><div class="flow-card"><strong>조건 설계</strong>유망하지 않은 상태의 논리적 근거를 찾습니다.</div><div class="flow-card"><strong>가지치기</strong>불가능·중복·비최적 상태를 조기 종료합니다.</div><div class="flow-card"><strong>비교 평가</strong>해의 일치와 호출 수·시간 감소를 확인합니다.</div></div>
+<ul><li>세 수 합의 목표 초과 가지치기</li><li>부분집합 합의 누적 합 초과 배제</li><li>suffix sum을 활용한 도달 불가능 상태 배제</li><li>현재 최소 동전 수를 이용한 분기 한정</li><li>좌석 금지 인접 조건의 조기 검사</li><li>같은 깊이의 중복 순열 배제</li><li>N-Queen 열·대각선 충돌 즉시 배제</li><li>미로의 경계·벽·방문·거리 한계</li><li>최소 비용 문제의 현재 최적값 가지치기</li><li>해 일치·호출 횟수·감소율 종합 비교</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol><li><b>가지치기 조건 수에 따른 재귀 호출 횟수 감소율 분석</b></li><li><b>부분집합 합 문제에서 suffix sum 가지치기의 효과 비교</b></li><li><b>N-Queen 크기에 따른 완전 탐색과 충돌 가지치기 성능 비교</b></li><li><b>최적값 초기화 방법이 분기 한정 탐색에 미치는 영향</b></li><li><b>잘못된 가지치기 조건이 정답 누락에 미치는 영향과 검증 방법</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 코드에서 완전 탐색과 가지치기의 조건·근거·해·호출 횟수를 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>세 수의 합: 목표 초과 가지치기</h2></div>
+<div><span class="badge">누적 합</span><span class="badge">호출 횟수</span></div>
+<div class="two">
+<div><h3>완전 탐색</h3><pre><code>target = 10
+full_count = 0
+full_solutions = []
+
+for a in range(1, 11):
+    for b in range(1, 11):
+        for c in range(1, 11):
+            full_count += 1
+
+            if a + b + c == target:
+                full_solutions.append((a, b, c))
+
+print("검사 횟수:", full_count)</code></pre></div>
+<div><h3>가지치기</h3><pre><code>target = 10
+pruned_count = 0
+pruned_solutions = []
+
+for a in range(1, target + 1):
+    if a &gt;= target:
+        break
+
+    for b in range(1, target + 1):
+        if a + b &gt;= target:
+            break
+
+        for c in range(1, target + 1):
+            pruned_count += 1
+
+            total = a + b + c
+
+            if total == target:
+                pruned_solutions.append((a, b, c))
+                break
+
+            if total &gt; target:
+                break
+
+print("검사 횟수:", pruned_count)</code></pre></div>
+</div>
+<div class="check"><strong>가지치기 근거</strong><br/>모든 수가 양수이므로 현재 합이 목표 이상이면 이후 더 큰 수를 더해도 목표와 같아질 수 없습니다.</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 세 수 합 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 세 수가 모두 양수이므로 현재 합이 목표 이상이면 더 탐색할 필요가 없다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 가지치기 방식은 완전 탐색보다 후보 검사 횟수를 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 두 방식이 찾은 해가 같은지 확인해야 한다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 현재 합이 목표를 넘더라도 이후 양수를 더하면 다시 목표에 도달할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> break는 언제나 모든 중첩 반복문을 한 번에 종료한다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>부분집합 합: 목표 초과 배제</h2></div>
+<div><span class="badge">부분집합</span><span class="badge">재귀 호출 수</span></div>
+<pre><code>numbers = [2, 3, 5, 7, 8]
+target = 10
+
+full_calls = 0
+pruned_calls = 0
+
+def full_search(index, total):
+    global full_calls
+    full_calls += 1
+
+    if index == len(numbers):
+        return 1 if total == target else 0
+
+    return (
+        full_search(index + 1, total + numbers[index])
+        + full_search(index + 1, total)
+    )
+
+def pruned_search(index, total):
+    global pruned_calls
+    pruned_calls += 1
+
+    if total &gt; target:
+        return 0
+
+    if index == len(numbers):
+        return 1 if total == target else 0
+
+    return (
+        pruned_search(index + 1, total + numbers[index])
+        + pruned_search(index + 1, total)
+    )
+
+print("완전 탐색 해:", full_search(0, 0))
+print("가지치기 해:", pruned_search(0, 0))
+print("완전 호출:", full_calls)
+print("가지치기 호출:", pruned_calls)</code></pre>
+<div class="note"><strong>안전 조건</strong><br/>모든 숫자가 양수이므로 누적 합이 목표를 초과한 상태는 이후 어떤 선택을 해도 다시 줄어들지 않습니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 부분집합 합 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 각 원소를 선택하거나 선택하지 않는 두 분기가 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 누적 합이 목표를 넘으면 0을 반환한다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 완전 탐색과 가지치기 탐색의 해 개수를 비교할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 모든 수가 음수여도 같은 초과 가지치기가 항상 안전하다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 가지치기는 재귀 호출 수를 반드시 늘린다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>남은 수를 모두 더해도 목표 미달인 상태 배제</h2></div>
+<div><span class="badge">도달 가능성</span><span class="badge">남은 합</span></div>
+<div class="two">
+<div><pre><code>numbers = [9, 7, 5, 3, 1]
+target = 15
+suffix_sum = [0] * (len(numbers) + 1)
+
+for i in range(len(numbers) - 1, -1, -1):
+    suffix_sum[i] = suffix_sum[i + 1] + numbers[i]
+
+calls = 0
+solutions = []
+
+def search(index, total, selected):
+    global calls
+    calls += 1
+
+    if total == target:
+        solutions.append(selected.copy())
+        return
+
+    if total &gt; target:
+        return
+
+    if index == len(numbers):
+        return
+
+    # 남은 값을 모두 더해도 목표 미달
+    if total + suffix_sum[index] &lt; target:
+        return
+
+    selected.append(numbers[index])
+    search(
+        index + 1,
+        total + numbers[index],
+        selected
+    )
+    selected.pop()
+
+    search(index + 1, total, selected)
+
+search(0, 0, [])
+
+print("호출 횟수:", calls)
+print("해:", solutions)</code></pre></div>
+<div class="card">
+<h3>가지치기 근거</h3>
+<p><code>suffix_sum[index]</code>는 현재 위치부터 남은 수의 총합입니다.</p>
+<p>현재 합과 남은 모든 수의 합을 더해도 목표보다 작으면 목표 도달이 불가능합니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 남은 합 한계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> suffix_sum[index]는 현재 위치부터 남은 수의 합이다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> 현재 합과 남은 전체 합이 목표보다 작으면 목표 도달이 불가능하다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 상한 초과뿐 아니라 도달 불가능 상태도 가지치기할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 남은 합 정보는 탐색과 무관하다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 현재 합이 목표보다 작으면 반드시 해가 된다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>동전 조합: 최소 동전 수보다 길면 중단</h2></div>
+<div><span class="badge">최적해</span><span class="badge">현재 최적값</span></div>
+<pre><code>coins = [1, 3, 4]
+target = 10
+
+best = float("inf")
+full_calls = 0
+pruned_calls = 0
+
+def full_search(total, count):
+    global best, full_calls
+    full_calls += 1
+
+    if total == target:
+        best = min(best, count)
+        return
+
+    if total &gt; target:
+        return
+
+    for coin in coins:
+        full_search(total + coin, count + 1)
+
+full_search(0, 0)
+full_best = best
+
+best = float("inf")
+
+def pruned_search(total, count):
+    global best, pruned_calls
+    pruned_calls += 1
+
+    if count &gt;= best:
+        return
+
+    if total == target:
+        best = count
+        return
+
+    if total &gt; target:
+        return
+
+    for coin in coins:
+        pruned_search(total + coin, count + 1)
+
+pruned_search(0, 0)
+
+print("완전 탐색 최소:", full_best)
+print("가지치기 최소:", best)
+print("완전 호출:", full_calls)
+print("가지치기 호출:", pruned_calls)</code></pre>
+<div class="check"><strong>가지치기 근거</strong><br/>이미 선택한 동전 수가 현재까지 찾은 최적 동전 수 이상이면 더 선택해도 더 좋은 해가 될 수 없습니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 최소 동전 수 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> best는 현재까지 찾은 최소 동전 수를 저장한다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> count가 best 이상이면 더 좋은 해가 될 수 없어 중단한다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 분기 한정 방식으로 현재 최적값을 활용한다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> best는 항상 무한대로 유지되어야 한다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 동전 수가 늘수록 더 좋은 해가 될 가능성이 커진다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>좌석 배치: 금지 인접 조건을 즉시 검사</h2></div>
+<div><span class="badge">순열</span><span class="badge">충돌 조기 검사</span></div>
+<div class="two">
+<div><pre><code>students = ["민준", "서연", "지우", "하준"]
+full_calls = 0
+pruned_calls = 0
+
+def full_arrange(selected):
+    global full_calls
+    full_calls += 1
+
+    if len(selected) == len(students):
+        for i in range(len(selected) - 1):
+            if {
+                selected[i],
+                selected[i + 1]
+            } == {"민준", "서연"}:
+                return 0
+        return 1
+
+    count = 0
+
+    for student in students:
+        if student not in selected:
+            selected.append(student)
+            count += full_arrange(selected)
+            selected.pop()
+
+    return count
+
+def pruned_arrange(selected):
+    global pruned_calls
+    pruned_calls += 1
+
+    if len(selected) &gt;= 2:
+        if {
+            selected[-2],
+            selected[-1]
+        } == {"민준", "서연"}:
+            return 0
+
+    if len(selected) == len(students):
+        return 1
+
+    count = 0
+
+    for student in students:
+        if student not in selected:
+            selected.append(student)
+            count += pruned_arrange(selected)
+            selected.pop()
+
+    return count
+
+print("완전 해:", full_arrange([]))
+print("가지치기 해:", pruned_arrange([]))
+print("완전 호출:", full_calls)
+print("가지치기 호출:", pruned_calls)</code></pre></div>
+<div class="card">
+<h3>차이</h3>
+<p>완전 탐색은 좌석을 모두 배치한 뒤 조건을 검사합니다.</p>
+<p>가지치기는 민준과 서연이 붙는 순간 바로 해당 가지를 중단합니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 좌석 배치 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> 완전 탐색은 배치를 모두 만든 뒤 금지 조건을 검사한다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> 가지치기는 민준과 서연이 붙는 순간 해당 분기를 중단한다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 조건 위반을 조기에 검사하면 호출 수를 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 모든 배치를 완성하기 전에는 어떤 조건도 검사할 수 없다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> 가지치기 결과는 완전 탐색과 다른 유효 배치 수를 가져야 한다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>중복 순열: 같은 깊이의 같은 값 배제</h2></div>
+<div><span class="badge">중복 상태</span><span class="badge">탐색 수 감소</span></div>
+<pre><code>items = ["A", "A", "B", "B"]
+
+full_calls = 0
+unique_calls = 0
+full_results = set()
+unique_results = []
+
+used = [False] * len(items)
+selected = []
+
+def full_permutation():
+    global full_calls
+    full_calls += 1
+
+    if len(selected) == len(items):
+        full_results.add(tuple(selected))
+        return
+
+    for i in range(len(items)):
+        if used[i]:
+            continue
+
+        used[i] = True
+        selected.append(items[i])
+
+        full_permutation()
+
+        selected.pop()
+        used[i] = False
+
+def unique_permutation():
+    global unique_calls
+    unique_calls += 1
+
+    if len(selected) == len(items):
+        unique_results.append(tuple(selected))
+        return
+
+    used_this_depth = set()
+
+    for i, item in enumerate(items):
+        if used[i]:
+            continue
+
+        if item in used_this_depth:
+            continue
+
+        used_this_depth.add(item)
+        used[i] = True
+        selected.append(item)
+
+        unique_permutation()
+
+        selected.pop()
+        used[i] = False
+
+full_permutation()
+unique_permutation()
+
+print("고유 결과 수:", len(full_results))
+print("완전 호출:", full_calls)
+print("중복 배제 호출:", unique_calls)</code></pre>
+<div class="note"><strong>가지치기 근거</strong><br/>같은 깊이에서 값이 같은 원소를 선택하면 이후 생성되는 결과가 동일하므로 한 번만 탐색합니다.</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 중복 순열 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 같은 깊이에서 같은 값을 한 번만 선택한다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 중복 원소가 있어도 고유 결과 수는 유지된다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> used_this_depth 집합은 중복 분기를 줄인다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 동일한 값은 모든 깊이에서 한 번만 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 중복 배제는 결과의 고유 해를 줄여야 한다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>N-Queen: 충돌 상태 즉시 배제</h2></div>
+<div><span class="badge">열·대각선</span><span class="badge">호출 비교</span></div>
+<pre><code>def compare_n_queen(n):
+    full_calls = 0
+    pruned_calls = 0
+
+    board = [-1] * n
+
+    def is_valid_complete():
+        for r1 in range(n):
+            for r2 in range(r1 + 1, n):
+                c1 = board[r1]
+                c2 = board[r2]
+
+                if c1 == c2:
+                    return False
+
+                if abs(r1 - r2) == abs(c1 - c2):
+                    return False
+
+        return True
+
+    def full(row):
+        nonlocal full_calls
+        full_calls += 1
+
+        if row == n:
+            return 1 if is_valid_complete() else 0
+
+        count = 0
+
+        for col in range(n):
+            board[row] = col
+            count += full(row + 1)
+
+        return count
+
+    columns = set()
+    diag1 = set()
+    diag2 = set()
+
+    def pruned(row):
+        nonlocal pruned_calls
+        pruned_calls += 1
+
+        if row == n:
+            return 1
+
+        count = 0
+
+        for col in range(n):
+            d1 = row - col
+            d2 = row + col
+
+            if (
+                col in columns
+                or d1 in diag1
+                or d2 in diag2
+            ):
+                continue
+
+            columns.add(col)
+            diag1.add(d1)
+            diag2.add(d2)
+
+            count += pruned(row + 1)
+
+            columns.remove(col)
+            diag1.remove(d1)
+            diag2.remove(d2)
+
+        return count
+
+    full_solutions = full(0)
+    pruned_solutions = pruned(0)
+
+    return (
+        full_solutions,
+        pruned_solutions,
+        full_calls,
+        pruned_calls
+    )
+
+result = compare_n_queen(6)
+
+print("완전 해:", result[0])
+print("가지치기 해:", result[1])
+print("완전 호출:", result[2])
+print("가지치기 호출:", result[3])</code></pre>
+<div class="check"><strong>핵심</strong><br/>완전 탐색은 모든 열 배치를 만든 뒤 충돌을 검사하지만, 가지치기는 퀸을 놓는 순간 열과 대각선 충돌을 확인합니다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 N-Queen 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 완전 탐색은 모든 열 배치를 만든 뒤 충돌을 검사한다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> 가지치기는 열·대각선 충돌을 배치 즉시 검사한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 두 방식의 해 개수는 같아야 한다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 충돌한 상태도 끝까지 탐색해야 정확하다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 집합은 충돌 검사와 무관하다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>미로 탐색: 벽·방문·거리 한계 배제</h2></div>
+<div><span class="badge">미로</span><span class="badge">방문 상태</span></div>
+<pre><code>maze = [
+    [0, 0, 1, 0],
+    [1, 0, 0, 0],
+    [0, 0, 1, 0],
+    [0, 0, 0, 0]
+]
+
+rows = len(maze)
+cols = len(maze[0])
+target = (3, 3)
+
+calls = 0
+best = float("inf")
+visited = set()
+
+def search(row, col, distance):
+    global calls, best
+    calls += 1
+
+    if not (0 &lt;= row &lt; rows and 0 &lt;= col &lt; cols):
+        return
+
+    if maze[row][col] == 1:
+        return
+
+    if (row, col) in visited:
+        return
+
+    if distance &gt;= best:
+        return
+
+    if (row, col) == target:
+        best = distance
+        return
+
+    visited.add((row, col))
+
+    for dr, dc in [
+        (1, 0), (-1, 0),
+        (0, 1), (0, -1)
+    ]:
+        search(
+            row + dr,
+            col + dc,
+            distance + 1
+        )
+
+    visited.remove((row, col))
+
+search(0, 0, 0)
+
+print("최단 거리:", best)
+print("호출 횟수:", calls)</code></pre>
+<div class="note"><strong>가지치기 조건</strong><br/>경계 밖, 벽, 이미 방문한 칸, 현재 최단 거리 이상인 경로를 모두 배제합니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 미로 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 경계 밖과 벽을 배제한다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 현재 경로에서 이미 방문한 칸을 배제한다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 현재 거리가 best 이상이면 중단한다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 벽을 통과해야 최단 경로를 찾을 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> visited는 탐색 종료 후 복원할 필요가 없다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>최소 비용 선택: 현재 비용이 최적값 이상이면 중단</h2></div>
+<div><span class="badge">분기 한정</span><span class="badge">최소 비용</span></div>
+<div class="two">
+<div><pre><code>costs = [
+    [4, 7, 3],
+    [2, 6, 5],
+    [8, 1, 9]
+]
+
+best_cost = float("inf")
+best_choice = None
+calls = 0
+
+def assign(row, used_cols, total, choice):
+    global best_cost, best_choice, calls
+    calls += 1
+
+    if total &gt;= best_cost:
+        return
+
+    if row == len(costs):
+        best_cost = total
+        best_choice = choice.copy()
+        return
+
+    for col in range(len(costs[row])):
+        if col in used_cols:
+            continue
+
+        used_cols.add(col)
+        choice.append(col)
+
+        assign(
+            row + 1,
+            used_cols,
+            total + costs[row][col],
+            choice
+        )
+
+        choice.pop()
+        used_cols.remove(col)
+
+assign(0, set(), 0, [])
+
+print("최소 비용:", best_cost)
+print("선택 열:", best_choice)
+print("호출 횟수:", calls)</code></pre></div>
+<div class="card">
+<h3>유망성 판단</h3>
+<p>모든 비용이 음수가 아니므로 현재 누적 비용이 이미 최적값 이상이면 이후 비용을 더해도 개선될 수 없습니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 최소 비용 선택에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> total이 best_cost 이상이면 중단한다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 모든 비용이 음수가 아니므로 현재 비용은 이후 감소하지 않는다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> used_cols는 같은 열 중복 선택을 막는다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 음수 비용이 있어도 같은 가지치기가 항상 안전하다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 선택 후 상태 복원은 필요 없다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>종합: 완전 탐색과 가지치기 횟수 비교표</h2></div>
+<div><span class="badge">종합 실험</span><span class="badge">비율 계산</span></div>
+<pre><code>def subset_sum_counts(numbers, target):
+    full_calls = 0
+    pruned_calls = 0
+
+    suffix = [0] * (len(numbers) + 1)
+
+    for i in range(len(numbers) - 1, -1, -1):
+        suffix[i] = suffix[i + 1] + numbers[i]
+
+    def full(index, total):
+        nonlocal full_calls
+        full_calls += 1
+
+        if index == len(numbers):
+            return 1 if total == target else 0
+
+        return (
+            full(index + 1, total + numbers[index])
+            + full(index + 1, total)
+        )
+
+    def pruned(index, total):
+        nonlocal pruned_calls
+        pruned_calls += 1
+
+        if total &gt; target:
+            return 0
+
+        if index == len(numbers):
+            return 1 if total == target else 0
+
+        if total + suffix[index] &lt; target:
+            return 0
+
+        return (
+            pruned(index + 1, total + numbers[index])
+            + pruned(index + 1, total)
+        )
+
+    full_solutions = full(0, 0)
+    pruned_solutions = pruned(0, 0)
+
+    reduction = (
+        1 - pruned_calls / full_calls
+    ) * 100
+
+    return {
+        "완전 해": full_solutions,
+        "가지치기 해": pruned_solutions,
+        "완전 호출": full_calls,
+        "가지치기 호출": pruned_calls,
+        "감소율": reduction
+    }
+
+result = subset_sum_counts(
+    [15, 12, 10, 8, 6, 5, 3, 2, 1],
+    24
+)
+
+for key, value in result.items():
+    if key == "감소율":
+        print(f"{key}: {value:.2f}%")
+    else:
+        print(key, ":", value)</code></pre>
+<table>
+<tr><th>설계 요소</th><th>설명</th></tr>
+<tr><td>목표 초과</td><td>양수 문제에서 합이 목표를 넘으면 즉시 중단</td></tr>
+<tr><td>도달 불가능</td><td>남은 값을 모두 사용해도 목표에 못 미치면 중단</td></tr>
+<tr><td>현재 최적값</td><td>누적 비용·선택 수가 최적값 이상이면 중단</td></tr>
+<tr><td>충돌 상태</td><td>중복 선택·열·대각선·방문 충돌이면 중단</td></tr>
+<tr><td>중복 후보</td><td>같은 깊이의 같은 값은 한 번만 탐색</td></tr>
+<tr><td>평가</td><td>해의 수가 같은지 확인한 뒤 호출 수 감소율 비교</td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>결과 설명 예시</strong><br/>
+“완전 탐색은 선택과 미선택의 모든 조합을 검사하였다. 가지치기 탐색은 누적 합이 목표를 초과하거나 남은 수를 모두 더해도 목표에 도달할 수 없는 상태를 즉시 배제하였다. 두 방식의 해 개수는 같았으며, 가지치기 방식은 호출 횟수를 줄여 같은 결과를 더 효율적으로 얻었다.”
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 종합 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 완전 탐색과 가지치기의 해 개수가 같은지 확인한다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 호출 횟수 감소율을 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> 목표 초과와 남은 합 부족을 함께 가지치기할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 호출 수만 적으면 해가 달라도 올바른 알고리즘이다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 감소율은 pruned_calls/full_calls만으로 계산하고 1을 빼지 않는다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">“시는 수많은 단어 중 불필요한 말을 덜어 내며 가장 선명한 한 줄을 남기고, 소설은 인물의 가능성을 펼치면서도 의미 없는 장면은 과감히 지웁니다. 희곡은 대사의 군더더기를 줄일수록 갈등이 또렷해지고, 연극은 반복 연습 속에서 어색한 동작을 하나씩 가지치기합니다. 음악도 쉼표와 생략이 있어야 핵심 선율이 빛납니다. 여러분의 꿈에서도 모든 길을 다 갈 필요는 없습니다. 가능성 없는 길은 근거 있게 멈추고, 유망한 길에는 더 깊이 도전하세요. 단, 아침 기상 알람을 ‘유망하지 않은 상태’로 판정해 가지치기하면 지각이라는 최악의 해가 나올 수 있습니다. 오늘의 현명한 선택이 내일의 탐색을 더 빠르고 정확하게 만들길 바랍니다.”</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 가지치기는 정답이 될 수 없는 상태를 조기에 제거하는 방법이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 가지치기 조건이 너무 강해도 정확성에는 영향이 없다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 양수 부분합 문제에서 누적 합이 목표를 넘으면 중단할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 남은 값을 모두 더해도 목표에 못 미치면 탐색을 중단할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 현재 비용이 최적 비용 이상이면 항상 더 좋은 해가 된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 중복 순열에서는 같은 깊이의 동일 값을 한 번만 탐색할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. N-Queen은 충돌한 배치도 끝까지 탐색해야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 가지치기 전후 해의 개수가 같아야 정확성이 유지된 것이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 호출 횟수 감소율은 탐색 효율 비교 지표가 될 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 가지치기는 언제나 완전 탐색보다 구현이 단순하다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 가지치기 설계 원칙에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 유망하지 않은 상태만 제거한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 제거 근거를 논리적으로 설명한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 해의 정확성이 유지되는지 검증한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 가능한 상태도 많이 제거할수록 좋다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 조건 검증은 필요 없다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 상한 초과 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 누적 합이 목표를 넘으면 중단할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 현재 비용이 최적값 이상이면 중단할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 비음수·양수 같은 문제 조건이 근거가 된다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 값이 이후 줄어들 수 있어도 무조건 중단한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 상한 초과는 해와 무관하다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 도달 불가능 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 남은 값을 모두 사용해도 목표에 못 미치면 중단한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> suffix sum을 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 남은 후보의 최대 가능 기여를 계산한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 현재 합이 작으면 무조건 해이다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 남은 후보 정보는 필요 없다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 현재 최적값 기반 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 현재 최적 해를 저장한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 부분 해가 이미 최적값 이상이면 중단한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 분기 한정 원리와 관련 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 최적값은 찾을 때마다 더 나쁘게 갱신한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 비용이 음수여도 조건 검토가 필요 없다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 충돌 상태 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> N-Queen 열 충돌을 검사한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 대각선 충돌을 검사한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 좌석 금지 인접 조건을 즉시 검사한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 충돌이 있어도 목표까지 탐색한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 충돌 정보는 상태와 무관하다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 중복 상태 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 같은 깊이의 같은 값을 한 번만 선택할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 이미 확인한 동일 상태를 다시 탐색하지 않을 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 고유 해는 유지하면서 중복 호출을 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 동일 값은 전체 탐색에서 한 번만 사용해야 한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 중복 제거는 항상 정답을 줄인다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 가지치기 성능 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 호출 횟수를 비교한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 후보 검사 수를 비교한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 실행 시간을 비교한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 해가 달라도 호출 수만 적으면 성공이다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 측정 환경은 기록할 필요가 없다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 미로 탐색 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 벽을 배제한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 이미 방문한 칸을 배제한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 현재 거리가 최적 거리 이상이면 중단한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 경계 밖도 자유롭게 탐색한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> visited는 항상 영구 유지한다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 좋은 실험 설계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 같은 입력으로 두 알고리즘을 비교한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 해의 개수와 내용을 확인한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 호출 수와 실행 시간을 여러 번 측정한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 서로 다른 입력을 사용하고 결과만 비교한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 한 번의 결과를 모든 경우에 일반화한다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 가지치기 한계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 조건 설계가 문제 특성에 의존한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 잘못된 조건은 정답을 누락시킬 수 있다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 모든 문제에서 큰 효과를 보장하지 않는다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 조건이 많을수록 무조건 정확하다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 가지치기는 완전 탐색과 관계없는 알고리즘이다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 10문항 × 5점 = 50점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 3점 = 30점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 18차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "양수 조건에서는 합이 줄어들지 않으므로 목표 초과 상태를 안전하게 배제할 수 있습니다."}, "2": {"ans": [0, 1, 2], "exp": "모든 수가 양수일 때 누적 합 초과 가지치기가 안전합니다."}, "3": {"ans": [0, 1, 2], "exp": "남은 후보를 모두 사용해도 목표에 못 미치는 상태는 더 탐색할 필요가 없습니다."}, "4": {"ans": [0, 1, 2], "exp": "현재 선택 수가 이미 최적값 이상이면 더 진행해도 개선할 수 없습니다."}, "5": {"ans": [0, 1, 2], "exp": "부분 배치만으로 위반이 확정되면 조기에 중단할 수 있습니다."}, "6": {"ans": [0, 1, 2], "exp": "같은 깊이의 동일 값 선택만 막아 중복 결과를 줄이되 고유 결과는 유지합니다."}, "7": {"ans": [0, 1, 2], "exp": "충돌이 확정된 부분 배치는 더 깊이 탐색할 필요가 없습니다."}, "8": {"ans": [0, 1, 2], "exp": "경계·벽·방문·현재 최적 거리 조건을 이용해 불필요한 경로를 줄입니다."}, "9": {"ans": [0, 1, 2], "exp": "비음수 비용 조건에서 현재 비용이 최적값 이상이면 더 좋은 해가 될 수 없습니다."}, "10": {"ans": [0, 1, 2], "exp": "정확성을 먼저 확인한 뒤 호출 수·실행 시간·감소율로 효율을 비교해야 합니다."}}, "ox": {"1": {"ans": true, "exp": "불필요한 탐색을 줄입니다."}, "2": {"ans": false, "exp": "정답 상태까지 제거할 수 있습니다."}, "3": {"ans": true, "exp": "이후 합이 줄어들지 않습니다."}, "4": {"ans": true, "exp": "목표 도달이 불가능합니다."}, "5": {"ans": false, "exp": "비음수 비용에서는 더 나빠지기만 합니다."}, "6": {"ans": true, "exp": "중복 결과 생성을 줄입니다."}, "7": {"ans": false, "exp": "충돌 즉시 가지치기할 수 있습니다."}, "8": {"ans": true, "exp": "결과 일치 검증이 필요합니다."}, "9": {"ans": true, "exp": "탐색량 감소를 수치화할 수 있습니다."}, "10": {"ans": false, "exp": "안전한 조건 설계가 필요합니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "가지치기는 안전성과 근거, 결과 검증이 중요합니다."}, "2": {"ans": [0, 1, 2], "exp": "값이 더 이상 개선되지 않는 조건에서만 안전합니다."}, "3": {"ans": [0, 1, 2], "exp": "남은 가능성의 상한을 이용해 목표 도달 가능성을 판단합니다."}, "4": {"ans": [0, 1, 2], "exp": "최적값과 비용의 단조성 조건을 함께 고려합니다."}, "5": {"ans": [0, 1, 2], "exp": "부분 상태에서 위반이 확정되면 중단합니다."}, "6": {"ans": [0, 1, 2], "exp": "동일한 결과로 이어지는 중복 분기만 제거합니다."}, "7": {"ans": [0, 1, 2], "exp": "정확성을 확인한 뒤 여러 효율 지표를 비교합니다."}, "8": {"ans": [0, 1, 2], "exp": "현재 경로의 방문 상태는 탐색 후 복원할 수 있습니다."}, "9": {"ans": [0, 1, 2], "exp": "동일 조건과 반복 측정, 결과 검증이 중요합니다."}, "10": {"ans": [0, 1, 2], "exp": "가지치기 효과와 안전성은 문제 구조에 따라 달라집니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();
+if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;
+const now=new Date(),lines=["정보과학 18차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);
+document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"});
+const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_18차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();
+document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

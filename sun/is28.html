@@ -1,0 +1,218 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 28차시 | 컴퓨터과학 프로젝트 주제 선정</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:52px 20px 46px;position:relative;overflow:hidden}.wrap,main{max-width:1200px;margin:auto}header:after{content:"";position:absolute;right:-80px;bottom:-100px;width:290px;height:290px;border-radius:50%;background:rgba(255,255,255,.08)}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}.hero-sub{max-width:960px;font-size:1.06rem;opacity:.96}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px;position:relative}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}section>h2:after{content:"";display:block;width:56px;height:4px;margin-top:8px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--purple))}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card{transition:transform .2s ease,box-shadow .2s ease}.flow-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(31,69,99,.10)}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}.quote strong{font-size:1.08rem;color:var(--navy)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold);color:var(--navy)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}
+.mini-menu{position:fixed;left:8px;top:8px;z-index:80}.mini-menu summary{list-style:none;width:28px;height:28px;border-radius:7px;background:rgba(23,50,77,.92);color:#fff;display:grid;place-items:center;cursor:pointer;font-size:12px;box-shadow:0 4px 12px rgba(0,0,0,.22)}.mini-menu summary::-webkit-details-marker{display:none}.mini-panel{margin-top:5px;min-width:145px;padding:7px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,.16)}.mini-panel a{display:block;padding:6px 8px;border-radius:7px;text-decoration:none;color:var(--navy);font-size:.82rem;font-weight:800}.mini-panel a:hover{background:var(--sky)}
+footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar,.mini-menu{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top"><details class="mini-menu"><summary>☰</summary><div class="mini-panel">
+<a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 10선</a><a href="#closing">끝 멘트</a><a href="#ox">형성평가</a><a href="#diag">진단평가</a><a href="#submit">제출</a>
+</div></details>
+<header><div class="wrap"><h1>정보과학 28차시<br>문제 관찰과 컴퓨터과학 프로젝트 주제 선정</h1><p class="hero-sub">과학·수학·환경·학교생활에서 발견한 실제 문제를 데이터·알고리즘·센서·시뮬레이션·인공지능과 연결하고, 측정·구현·검증·윤리가 가능한 프로젝트 주제로 구체화합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>28차시</td><th>주제</th><td>문제 관찰·컴퓨터과학 연결·프로젝트 주제 구체화</td></tr>
+<tr><th>핵심 질문</th><td colspan="3">생활과 교과에서 발견한 문제를 어떻게 측정 가능한 질문과 구현 가능한 컴퓨터과학 프로젝트로 바꿀 수 있는가?</td></tr>
+<tr><th>전이 목표</th><td colspan="3">학생은 실제 문제를 관찰하고 데이터·알고리즘·센서·시뮬레이션·인공지능과 연결하여 입력·처리·출력·성공 기준·윤리적 고려가 포함된 프로젝트 주제를 설계할 수 있다.</td></tr>
+<tr><th>성취기준</th><td colspan="3">과학·수학·환경·학교생활의 문제를 구체적으로 관찰하고 측정 가능한 탐구 질문으로 전환한다. 데이터 수집, 알고리즘, 시뮬레이션, 시각화, 인공지능을 활용한 프로젝트의 입력·처리·출력과 검증 기준을 설계하고 개인정보·저작권·편향을 고려한다.</td></tr>
+<tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr>
+<tr><td>도입</td><td>학교생활에서 반복되는 불편·변화·낭비·위험을 관찰하고 기록한다.</td><td>관찰, 실제성</td></tr>
+<tr><td>개념 형성</td><td>문제를 데이터·알고리즘·센서·시뮬레이션과 연결한다.</td><td>연결, 질문</td></tr>
+<tr><td>진단 실습</td><td>10개 예제의 입력·처리·출력·검증·윤리를 분석한다.</td><td>구체화, 구현</td></tr>
+<tr><td>정리·전이</td><td>개인 또는 모둠 프로젝트 주제를 선정하고 성공 기준을 발표한다.</td><td>선정, 논증</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>실제 문제를 구체적으로 관찰한다.</li><li>측정 가능한 탐구 질문을 만든다.</li><li>컴퓨터과학 해결 수단을 선택한다.</li><li>입력·처리·출력과 성공 기준을 정의한다.</li><li>개인정보·저작권·편향을 점검한다.</li></ol></div>
+<div class="card"><h3>학습할 개념</h3><ul><li><b>실제성:</b> 생활과 교과에서 실제로 관찰되는 문제와 필요</li><li><b>측정 가능성:</b> 현상을 수치·범주·시간·위치 데이터로 표현하는 성질</li><li><b>구현 가능성:</b> 사용 가능한 시간·자료·도구로 해결할 수 있는 범위</li><li><b>검증 가능성:</b> 개선 전후·예측과 실제·오차와 정확도를 비교할 수 있는 성질</li><li><b>정보 윤리:</b> 개인정보·저작권·데이터 편향·안전한 활용을 고려하는 태도</li></ul></div></div>
+<div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>좋은 프로젝트 주제는 흥미로운 제목이 아니라 실제 문제, 측정 가능한 데이터, 구현 가능한 알고리즘, 검증 가능한 결과와 윤리적 책임이 연결된 설계이다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">
+<strong>“위대한 탐구는 거대한 답에서 시작되지 않고, 평범한 장면을 새롭게 바라보는 질문에서 시작됩니다.”</strong><br><br>
+소크라테스는 익숙한 생각에 질문을 던졌고, 아리스토텔레스는 세계를 자세히 관찰하며 분류했습니다. 뉴턴은 떨어지는 사과에서 운동 법칙을 생각했고, 가우스는 반복되는 수의 배열 속에서 새로운 규칙을 발견했습니다. 같은 교실과 같은 운동장을 보더라도 질문하는 사람에게는 데이터와 알고리즘의 가능성이 보입니다.<br><br>
+오늘 우리는 교실의 답답함, 급식 잔반, 학교 전력, 길찾기, 학습 집중도처럼 가까운 문제를 컴퓨터과학 프로젝트로 바꿉니다. 문제를 수치화하고, 입력과 출력을 정하며, 성공 여부를 검증할 기준을 세웁니다. 좋은 프로젝트는 기술을 먼저 자랑하는 것이 아니라 해결할 문제를 정확히 이해하는 데서 시작합니다.<br><br>
+다만 “학교생활의 가장 큰 문제는 아침 등교”라는 주제를 선정하고 해결책을 전교 휴교로 출력하면 구현 가능성과 적용 조건을 통과하기 어렵습니다. 오늘은 재미있되 책임 있고, 창의적이되 검증 가능한 주제를 찾아봅시다.
+</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow">
+<div class="flow-card"><strong>문제 관찰</strong>불편·변화·낭비·위험을 구체적으로 기록합니다.</div>
+<div class="flow-card"><strong>컴퓨터과학 연결</strong>데이터·알고리즘·센서·시뮬레이션을 선택합니다.</div>
+<div class="flow-card"><strong>프로젝트 설계</strong>입력·처리·출력과 구현 범위를 정합니다.</div>
+<div class="flow-card"><strong>검증과 윤리</strong>성공 지표·출처·개인정보·편향을 점검합니다.</div></div>
+<ul><li>교실 이산화탄소 농도와 환기 시점 추천</li><li>낙하 운동 이론값과 실험값 비교</li><li>소수 판별 알고리즘 성능 비교</li><li>함수 그래프 증가·감소 구간 자동 판정</li><li>급식 메뉴 유형과 잔반량 분석</li><li>학교 전력 사용량과 절감 시간대 탐색</li><li>장르 선호도 기반 도서 추천</li><li>그래프와 BFS를 이용한 교내 길찾기</li><li>미세먼지 공공데이터 기반 활동 추천</li><li>학습 시간·휴식·집중도의 관계 분석</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol>
+<li><b>교실 이산화탄소 농도 변화와 환기 효과 분석</b></li>
+<li><b>낙하 운동 영상 측정값과 이론값의 오차 원인 연구</b></li>
+<li><b>학교 급식 메뉴 유형과 잔반량의 관계 분석</b></li>
+<li><b>시간대별 학교 전력 사용량과 절감 가능 구간 탐색</b></li>
+<li><b>학습 시간·휴식 주기·집중도 간 관계와 개인화 학습 주기 제안</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 프로젝트 예제의 문제 관찰·입력 데이터·처리 알고리즘·출력·검증 기준·윤리적 고려를 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1"><div class="ex-head"><span class="num">예제 1</span><h2>교실 이산화탄소 농도와 환기 시점 추천</h2></div><span class="badge">환경</span><span class="badge">센서</span><span class="badge">임계값</span><div class="two"><div class="card"><h3>관찰과 주제</h3><p>수업 후반에 교실이 답답해지는 현상을 관찰합니다.</p><p><strong>주제:</strong> 시간대별 이산화탄소 농도를 분석하여 환기 시점을 추천하는 프로그램</p></div><pre><code>co2_values = [620, 710, 860, 1030, 1280, 940]
+threshold = 1000
+
+for minute, value in enumerate(co2_values, start=1):
+    if value &gt;= threshold:
+        print(minute, "분: 환기 필요", value, "ppm")
+    else:
+        print(minute, "분: 정상", value, "ppm")</code></pre></div><div class="note"><strong>확장:</strong> 이동평균, 학생 수, 온도·습도와의 관계를 함께 분석할 수 있습니다.</div><div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 교실 이산화탄소 프로젝트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 시간대별 센서 값을 입력 데이터로 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 임계값 이상일 때 환기 필요를 판단할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 환기 전후 농도 변화로 효과를 검증할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 학생 개인의 이름을 반드시 함께 수집해야 한다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 센서 오차와 측정 주기는 고려하지 않아도 된다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2"><div class="ex-head"><span class="num">예제 2</span><h2>낙하 운동 시뮬레이션과 실험값 비교</h2></div><span class="badge">과학</span><span class="badge">시뮬레이션</span><div class="two"><div class="card"><h3>관찰과 주제</h3><p>낙하 거리가 시간에 따라 어떻게 변하는지 이론과 실험을 비교합니다.</p><p><strong>주제:</strong> 자유 낙하 운동의 이론값과 영상 측정값 오차 분석</p></div><pre><code>g = 9.8
+times = [0, 0.2, 0.4, 0.6, 0.8, 1.0]
+
+for t in times:
+    distance = 0.5 * g * t ** 2
+    print(f"{t:.1f}초 → {distance:.3f}m")</code></pre></div><div class="check"><strong>컴퓨터과학 요소:</strong> 수치 계산, 데이터 저장, 그래프 시각화, 오차율 계산</div><div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 낙하 운동 시뮬레이션에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 이론식으로 시간별 낙하 거리를 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 영상 측정값과 이론값의 오차를 비교할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 그래프 시각화로 변화 추세를 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 중력가속도는 항상 0으로 두어야 한다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 실험값과 이론값은 비교할 필요가 없다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3"><div class="ex-head"><span class="num">예제 3</span><h2>소수 판별 알고리즘 성능 비교</h2></div><span class="badge">수학</span><span class="badge">알고리즘</span><div class="two"><div class="card"><h3>관찰과 주제</h3><p>같은 소수 판별도 검사 범위에 따라 연산량이 달라집니다.</p><p><strong>주제:</strong> 기본 판별과 제곱근 범위 판별의 연산 횟수 비교</p></div><pre><code>def is_prime(n):
+    if n &lt; 2:
+        return False
+
+    divisor = 2
+    while divisor * divisor &lt;= n:
+        if n % divisor == 0:
+            return False
+        divisor += 1
+
+    return True
+
+for number in range(2, 30):
+    if is_prime(number):
+        print(number, end=" ")</code></pre></div><div class="note"><strong>확장:</strong> 에라토스테네스의 체와 입력 크기별 실행 시간을 비교합니다.</div><div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 소수 판별 성능 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> 검사 범위를 제곱근까지 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> 알고리즘별 연산 횟수를 비교할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 에라토스테네스의 체로 확장할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 소수 판별은 알고리즘과 무관하다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 입력 크기가 커져도 연산량은 항상 같다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4"><div class="ex-head"><span class="num">예제 4</span><h2>함수 그래프의 증가·감소 구간 자동 판정</h2></div><span class="badge">수학</span><span class="badge">수치 분석</span><div class="two"><div class="card"><h3>관찰과 주제</h3><p>함수값의 변화를 이용해 그래프의 증가·감소 구간을 자동으로 찾습니다.</p><p><strong>주제:</strong> 이산적인 함수값 변화로 증가·감소 구간을 분석하는 프로그램</p></div><pre><code>def f(x):
+    return x ** 2 - 4 * x + 3
+
+x_values = list(range(-2, 7))
+y_values = [f(x) for x in x_values]
+
+for i in range(len(x_values) - 1):
+    change = y_values[i + 1] - y_values[i]
+    state = "증가" if change &gt; 0 else "감소" if change &lt; 0 else "일정"
+    print(x_values[i], "→", x_values[i + 1], state)</code></pre></div><div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 함수 변화 분석에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> 연속된 함수값의 차이를 이용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> 차이가 양수이면 증가 상태로 볼 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 이산 표본 간 변화로 증가·감소 구간을 근사할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 함수값을 계산하지 않고도 항상 정확히 판정한다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 차이가 0이면 반드시 감소이다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5"><div class="ex-head"><span class="num">예제 5</span><h2>학교 급식 잔반량과 메뉴 유형 분석</h2></div><span class="badge">학교생활</span><span class="badge">데이터 분석</span><div class="two"><div class="card"><h3>관찰과 주제</h3><p>메뉴 유형에 따라 잔반량이 크게 달라지는 현상을 관찰합니다.</p><p><strong>주제:</strong> 메뉴 유형별 평균 잔반량을 분석하여 잔반 감소 방안 제안</p></div><pre><code>records = [
+    ("한식", 18), ("면류", 9), ("튀김", 7),
+    ("한식", 15), ("면류", 11), ("튀김", 8)
+]
+
+totals, counts = {}, {}
+
+for menu, waste in records:
+    totals[menu] = totals.get(menu, 0) + waste
+    counts[menu] = counts.get(menu, 0) + 1
+
+for menu in totals:
+    print(menu, "평균 잔반:", totals[menu] / counts[menu])</code></pre></div><div class="warn"><strong>윤리:</strong> 개인 식사량이 아니라 메뉴별 전체 잔반량처럼 비식별 집계 데이터를 사용합니다.</div><div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 급식 잔반 프로젝트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> 메뉴 유형별 평균 잔반량을 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> 개인 식사량 대신 집계 데이터를 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 메뉴별 차이를 바탕으로 개선안을 제안할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 학생 개인의 식사 기록을 공개해야 한다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> 개인정보 보호는 고려할 필요가 없다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6"><div class="ex-head"><span class="num">예제 6</span><h2>학교 전력 사용량과 절감 시간대 탐색</h2></div><span class="badge">환경</span><span class="badge">에너지</span><div class="two"><div class="card"><h3>관찰과 주제</h3><p>수업이 적은 시간에도 전력 사용량이 높은 구간을 찾습니다.</p><p><strong>주제:</strong> 시간대별 전력 사용량 분석을 통한 학교 에너지 절감 방안</p></div><pre><code>hours = [8, 9, 10, 11, 12, 13, 14, 15, 16]
+power = [42, 55, 61, 64, 58, 51, 63, 60, 44]
+
+average = sum(power) / len(power)
+
+for hour, value in zip(hours, power):
+    if value &gt; average:
+        print(hour, "시: 평균 초과", value, "kWh")</code></pre></div><div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 학교 전력 사용량 프로젝트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 시간대별 전력량을 비교할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 평균 초과 시간대를 찾을 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 절감 전후 사용량으로 효과를 검증할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 전력량의 단위는 중요하지 않다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 수업 시간표와 사용량은 비교할 수 없다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7"><div class="ex-head"><span class="num">예제 7</span><h2>도서관 장르 기반 책 추천</h2></div><span class="badge">학교생활</span><span class="badge">추천</span><div class="two"><div class="card"><h3>관찰과 주제</h3><p>학생이 관심 분야의 책을 빠르게 찾기 어렵다는 문제를 관찰합니다.</p><p><strong>주제:</strong> 장르 선호도를 이용한 도서 추천 프로그램</p></div><pre><code>books = [
+    ("우주의 구조", "과학"),
+    ("수학의 언어", "수학"),
+    ("파이썬 입문", "정보"),
+    ("기후의 미래", "환경"),
+    ("알고리즘 여행", "정보")
+]
+
+preferred_genre = "정보"
+
+for title, genre in books:
+    if genre == preferred_genre:
+        print("추천:", title)</code></pre></div><div class="note"><strong>확장:</strong> 대출 횟수, 평점, 유사 사용자 추천과 추천 편향 분석을 추가합니다.</div><div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 장르 기반 도서 추천에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 사용자의 선호 장르를 입력으로 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> 도서의 제목과 장르를 비교해 추천할 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 평점·대출 횟수·추천 편향 분석으로 확장할 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 모든 학생에게 같은 책만 추천해야 한다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 추천 결과의 편향은 고려할 필요가 없다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8"><div class="ex-head"><span class="num">예제 8</span><h2>교내 장소 최소 이동 경로 안내</h2></div><span class="badge">그래프</span><span class="badge">BFS</span><div class="two"><div class="card"><h3>관찰과 주제</h3><p>신입생과 방문자가 특별실을 찾기 어려운 문제를 관찰합니다.</p><p><strong>주제:</strong> 교내 장소를 그래프로 모델링한 최소 이동 경로 안내</p></div><pre><code>from collections import deque
+
+graph = {
+    "교실": ["복도"],
+    "복도": ["교실", "계단", "도서관"],
+    "계단": ["복도", "과학실"],
+    "도서관": ["복도", "과학실"],
+    "과학실": ["계단", "도서관"]
+}
+
+def shortest_path(start, target):
+    queue = deque([(start, [start])])
+    visited = {start}
+
+    while queue:
+        place, path = queue.popleft()
+        if place == target:
+            return path
+
+        for next_place in graph[place]:
+            if next_place not in visited:
+                visited.add(next_place)
+                queue.append((next_place, path + [next_place]))
+
+print(shortest_path("교실", "과학실"))</code></pre></div><div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 교내 길찾기 프로젝트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 장소를 노드, 통로를 간선으로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> BFS로 최소 간선 수 경로를 찾을 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 방문 집합으로 중복 탐색을 막을 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 그래프 자료구조는 사용할 수 없다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> BFS는 반드시 가중치가 다른 최단 비용까지 구한다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9"><div class="ex-head"><span class="num">예제 9</span><h2>미세먼지와 실외 활동 시간 추천</h2></div><span class="badge">환경</span><span class="badge">공공데이터</span><div class="two"><div class="card"><h3>관찰과 주제</h3><p>운동장 수업 전에 미세먼지 상태를 빠르게 판단할 필요가 있습니다.</p><p><strong>주제:</strong> 시간대별 미세먼지 농도를 분석한 실외 활동 추천 시스템</p></div><pre><code>pm25 = {
+    "09시": 18, "10시": 26,
+    "11시": 41, "12시": 37,
+    "13시": 22
+}
+
+for time_value, concentration in pm25.items():
+    if concentration &lt;= 15:
+        state = "매우 좋음"
+    elif concentration &lt;= 35:
+        state = "활동 가능"
+    else:
+        state = "실내 활동 권장"
+
+    print(time_value, concentration, state)</code></pre></div><div class="warn"><strong>주의:</strong> 실제 프로젝트에서는 최신 공식 기준과 공공데이터를 확인하고 건강 판단은 보조 정보로만 활용합니다.</div><div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 미세먼지 활동 추천에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> 시간대별 미세먼지 값을 분석할 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 공식 기준을 확인해 상태를 분류해야 한다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 건강 판단은 보조 정보로 제시해야 한다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 오래된 기준을 그대로 사용해도 된다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 공공데이터의 출처와 시각은 기록할 필요가 없다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10"><div class="ex-head"><span class="num">예제 10</span><h2>학습 시간과 집중도 변화 분석</h2></div><span class="badge">학교생활</span><span class="badge">자기 데이터</span><div class="two"><div class="card"><h3>관찰과 주제</h3><p>공부 시간이 길수록 집중도가 항상 높아지는지 자기 기록으로 탐구합니다.</p><p><strong>주제:</strong> 학습 시간·휴식 간격·집중도의 관계 분석</p></div><pre><code>records = [
+    (30, 8), (45, 9), (60, 7),
+    (90, 5), (40, 8)
+]
+
+best = max(records, key=lambda item: item[1])
+average_focus = sum(focus for _, focus in records) / len(records)
+
+print("집중도가 가장 높은 시간:", best[0], "분")
+print("평균 집중도:", average_focus)</code></pre></div><table><tr><th>프로젝트 구성</th><th>내용</th></tr><tr><td>문제 정의</td><td>학습 시간이 늘어날수록 집중도가 계속 높아지는가?</td></tr><tr><td>입력 데이터</td><td>학습 시간, 휴식 시간, 자기평가 집중도</td></tr><tr><td>처리</td><td>평균, 최댓값, 구간별 비교, 상관관계</td></tr><tr><td>출력</td><td>집중도가 높은 학습 시간과 권장 학습 주기</td></tr><tr><td>윤리</td><td>개인 기록은 본인 동의 없이 공유하지 않음</td></tr></table><div class="lead" style="margin-top:14px"><strong>주제 선정 설명 예시</strong><br/>“교실에서 수업 시간이 길어질수록 공기가 답답해지는 현상을 관찰하였다. 시간대별 이산화탄소 농도와 학생 수를 수집하고, 임계값과 변화율을 이용해 환기 시점을 추천하는 프로젝트를 선정하였다. 센서 데이터 처리, 조건 판단, 시각화를 적용하고 환기 전후 농도 변화로 효과를 검증할 수 있다.”</div><div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 학습 시간과 집중도 프로젝트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 학습 시간과 집중도 기록을 비교할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 평균·최댓값·상관관계를 분석할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> 개인 기록은 동의 없이 공유하지 않아야 한다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 집중도는 반드시 공부 시간에 비례한다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 자기 기록은 개인정보가 아니다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">
+시는 길가의 작은 꽃 한 송이에서 우주를 발견하고, 소설은 평범한 하루 속에서 한 사람의 깊은 이야기를 찾아냅니다. 희곡은 사소한 대화에서 갈등의 씨앗을 발견하고, 연극은 빈 무대 위에 새로운 세계를 세웁니다. 음악도 일상의 작은 소리를 리듬과 선율로 바꾸어 희망을 들려줍니다.<br><br>
+여러분의 프로젝트도 거대한 기술에서 시작할 필요는 없습니다. 교실의 온도, 복도의 이동, 도서관의 선택, 자신의 공부 기록처럼 가까운 곳에서 충분히 의미 있는 문제를 찾을 수 있습니다. 중요한 것은 문제를 진심으로 바라보고, 데이터를 정직하게 다루며, 결과가 누구에게 어떤 도움을 줄 수 있는지 생각하는 일입니다.<br><br>
+그리고 프로젝트 주제를 “모든 학교 문제를 인공지능으로 해결하기”로 정하면 범위가 우주보다 넓어져 제출 시각까지 함수가 반환되지 않을 수 있습니다. 오늘 발견한 작은 질문 하나가 여러분만의 특별한 연구와 큰 꿈으로 성장하기를 바랍니다.
+</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 좋은 프로젝트 주제는 실제 문제와 연결되어야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 프로젝트는 데이터를 구할 수 없어도 주제만 흥미로우면 충분하다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 입력·처리·출력 구조를 정하면 프로젝트 범위를 구체화할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 성공 기준은 프로젝트가 끝난 뒤에만 정하면 된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 센서 데이터는 오차와 측정 주기를 확인해야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 개인정보는 프로젝트 결과가 좋으면 자유롭게 공개해도 된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 그래프 자료구조는 교내 길찾기 문제에 활용할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 공공데이터를 사용할 때 출처와 기준 시점을 기록해야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 프로젝트 주제는 범위가 넓을수록 항상 좋다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 개선 전후를 비교하면 프로젝트 효과를 검증할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 프로젝트 문제 관찰에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 반복되는 불편을 기록한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 변화·낭비·위험을 찾는다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 구체적인 상황과 대상을 정한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 인터넷에서 인기 있는 제목만 복사한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 관찰 없이 기술부터 선택한다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 좋은 탐구 질문에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 측정 가능해야 한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 비교 가능한 변수가 있어야 한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 결과를 검증할 수 있어야 한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 정답을 미리 단정해야 한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 범위가 무한히 넓어야 한다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 프로젝트 입력에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 센서값을 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 공공데이터를 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 설문·실험·자기 기록을 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 출처와 단위는 필요 없다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 개인정보는 제한 없이 수집한다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 프로젝트 처리 과정에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 조건 판단을 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 통계 분석을 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 알고리즘·시뮬레이션·인공지능을 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 모든 프로젝트는 같은 알고리즘을 사용한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 처리 과정은 출력과 무관하다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 프로젝트 출력에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 추천 결과를 제시할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 그래프와 표로 시각화할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 예측값·경로·경고를 제공할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 결과는 검증할 필요가 없다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 출력은 입력과 무관해도 된다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 구현 가능성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 사용 가능한 시간과 도구를 확인한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 데이터 확보 가능성을 확인한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 기능을 핵심과 확장으로 나눈다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 처음부터 모든 기능을 완성해야 한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 난이도는 고려하지 않는다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 검증 가능성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 개선 전후를 비교한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 예측값과 실제값을 비교한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 정확도·오차·절감률 같은 지표를 사용한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 성공 여부는 느낌으로만 판단한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 기준은 프로젝트 후에 임의로 바꾼다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 프로젝트 윤리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 개인정보를 최소 수집한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 저작권과 데이터 출처를 표시한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 편향과 오용 가능성을 검토한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 동의 없는 개인 기록을 공개한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 공공데이터는 출처 표시가 필요 없다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 프로젝트 주제 구체화에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 대상과 범위를 정한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 입력·처리·출력을 정의한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 성공 기준을 정한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 주제를 가능한 한 추상적으로 둔다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 결과 사용자를 고려하지 않는다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 프로젝트 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 문제 선정 근거를 설명한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 데이터와 알고리즘을 설명한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 결과·한계·윤리적 고려를 제시한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 성공한 결과만 보여 준다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 출처와 실패 과정은 숨긴다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 10문항 × 5점 = 50점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 3점 = 30점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 28차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "센서 데이터와 임계값을 활용하되 개인정보 없이 측정 조건과 변화 효과를 검증해야 합니다."}, "2": {"ans": [0, 1, 2], "exp": "수치 계산·실험 측정·오차 분석을 연결하는 융합 프로젝트입니다."}, "3": {"ans": [0, 1, 2], "exp": "같은 수학 문제도 알고리즘에 따라 검사 범위와 실행 시간이 달라집니다."}, "4": {"ans": [0, 1, 2], "exp": "이산적인 함수값 차이를 이용해 변화 방향을 분석할 수 있습니다."}, "5": {"ans": [0, 1, 2], "exp": "비식별 집계 데이터로 메뉴 유형과 잔반량의 관계를 분석하는 것이 적절합니다."}, "6": {"ans": [0, 1, 2], "exp": "시간대·단위·수업 운영 조건을 함께 분석하면 절감 방안을 구체화할 수 있습니다."}, "7": {"ans": [0, 1, 2], "exp": "기초 규칙 기반 추천에서 데이터 기반 추천과 공정성 분석으로 확장할 수 있습니다."}, "8": {"ans": [0, 1, 2], "exp": "무가중치 교내 이동망은 그래프와 BFS로 모델링할 수 있습니다."}, "9": {"ans": [0, 1, 2], "exp": "최신 공식 기준·출처·측정 시각을 확인하고 보조 정보로 활용해야 합니다."}, "10": {"ans": [0, 1, 2], "exp": "자기 데이터를 분석할 수 있지만 기록의 한계와 개인정보 보호를 함께 고려해야 합니다."}}, "ox": {"1": {"ans": true, "exp": "실제성과 필요성이 중요합니다."}, "2": {"ans": false, "exp": "측정 가능성과 자료 확보 가능성이 필요합니다."}, "3": {"ans": true, "exp": "구현 구조를 명확히 합니다."}, "4": {"ans": false, "exp": "시작 전에 검증 기준을 정해야 합니다."}, "5": {"ans": true, "exp": "데이터 신뢰성과 관련됩니다."}, "6": {"ans": false, "exp": "동의와 비식별 처리가 필요합니다."}, "7": {"ans": true, "exp": "장소와 통로를 모델링합니다."}, "8": {"ans": true, "exp": "재현성과 신뢰성을 높입니다."}, "9": {"ans": false, "exp": "구현 가능한 구체적 범위가 중요합니다."}, "10": {"ans": true, "exp": "사전에 정한 지표로 평가합니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "실제 현상을 구체적으로 관찰하는 것이 출발점입니다."}, "2": {"ans": [0, 1, 2], "exp": "측정·비교·검증이 가능한 질문이 적절합니다."}, "3": {"ans": [0, 1, 2], "exp": "입력 데이터의 출처·단위·윤리 조건을 함께 확인해야 합니다."}, "4": {"ans": [0, 1, 2], "exp": "문제 특성에 맞는 다양한 컴퓨터과학 방법을 선택합니다."}, "5": {"ans": [0, 1, 2], "exp": "출력은 문제 해결 목적과 검증 기준에 연결되어야 합니다."}, "6": {"ans": [0, 1, 2], "exp": "현실적인 범위와 단계적 구현이 중요합니다."}, "7": {"ans": [0, 1, 2], "exp": "사전에 정한 객관적 지표로 검증해야 합니다."}, "8": {"ans": [0, 1, 2], "exp": "개인정보·저작권·편향을 함께 고려해야 합니다."}, "9": {"ans": [0, 1, 2], "exp": "구체적인 구조와 성공 기준이 실행 가능한 주제를 만듭니다."}, "10": {"ans": [0, 1, 2], "exp": "과정·근거·한계·윤리를 함께 제시해야 합니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();
+if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;
+const now=new Date(),lines=["정보과학 28차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);
+document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"});
+const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_28차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();
+document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

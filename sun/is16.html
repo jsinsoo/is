@@ -1,0 +1,393 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 16차시 목표지향 개념기반 수업지도안</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:50px 20px 44px}.wrap,main{max-width:1200px;margin:auto}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top">
+<header><div class="wrap"><h1>정보과학 16차시<br>상태·연산·목표 상태와 완전 탐색</h1><p>문제를 상태·가능한 연산·목표 상태로 구조화하고 완전 탐색·가지치기·백트래킹을 활용하여 모든 후보를 체계적으로 생성하고 검사합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>16차시</td><th>주제</th><td>상태 공간 구조화와 완전 탐색·백트래킹</td></tr><tr><th>핵심 질문</th><td colspan="3">가능한 모든 후보를 빠짐없이 탐색하면서도 불가능한 선택을 일찍 제거하려면 문제의 상태와 연산을 어떻게 설계해야 하는가?</td></tr><tr><th>전이 목표</th><td colspan="3">학생은 새로운 탐색 문제에서 상태·가능한 연산·목표 상태·실패 상태를 정의하고 완전 탐색 또는 백트래킹을 구현하여 해의 완전성·중복·효율성을 검증할 수 있다.</td></tr><tr><th>성취기준</th><td colspan="3">문제 상황을 현재 상태, 가능한 연산, 목표 상태로 구조화한다. 중첩 반복문과 재귀함수를 활용해 모든 후보를 생성·검사하고, 가지치기와 상태 복원을 적용하여 완전 탐색의 효율을 개선한다.</td></tr><tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr><tr><td>도입</td><td>비밀번호·좌석 배치·미로 문제에서 가능한 선택과 정답 조건을 구분한다.</td><td>상태, 후보</td></tr><tr><td>개념 형성</td><td>상태·연산·목표 상태·실패 상태·가지치기·복원을 구조화한다.</td><td>모델링, 경계</td></tr><tr><td>진단 실습</td><td>반복문과 재귀로 순열·조합·부분집합·목표 합·경로 문제를 구현한다.</td><td>생성, 검사</td></tr><tr><td>정리·전이</td><td>후보 수와 가지치기 효과를 분석하고 새로운 문제의 탐색 전략을 설계한다.</td><td>효율, 일반화</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>문제의 상태·연산·목표 상태를 정의한다.</li><li>중첩 반복문으로 모든 후보를 생성한다.</li><li>순열·조합·부분집합을 백트래킹으로 구현한다.</li><li>가지치기와 상태 복원의 역할을 설명한다.</li><li>후보 수와 시간·메모리 효율을 분석한다.</li></ol></div><div class="card"><h3>학습할 개념</h3><ul><li><b>상태 공간:</b> 문제 해결 과정에서 가능한 모든 상태의 집합</li><li><b>완전 탐색:</b> 가능한 후보를 모두 생성하고 검사하는 방법</li><li><b>백트래킹:</b> 선택 후 탐색하고 상태를 복원하는 방법</li><li><b>가지치기:</b> 해가 될 수 없는 후보를 조기에 중단하는 전략</li><li><b>복원:</b> 선택 목록·방문 정보·누적값을 이전 상태로 되돌리는 과정</li></ul></div></div><div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>완전 탐색은 후보를 빠짐없이 확인하여 정답을 보장하고, 백트래킹은 상태를 선택·탐색·복원하며 가지치기를 통해 불가능한 후보를 줄인다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">“소크라테스는 가능한 질문을 하나씩 따라가며 생각의 빈틈을 줄였고, 데카르트는 복잡한 문제를 작은 상태로 나누었습니다. 다윈은 수많은 변이 가운데 살아남는 선택을 관찰했고, 파스칼은 선택의 경우가 어떻게 조합의 삼각형을 만드는지 보여 주었습니다. 오늘 우리는 모든 가능성을 탐색하지만 아무 생각 없이 헤매지는 않습니다. 목표가 아닌 길은 가지치기하고, 잘못 선택한 길은 백트래킹으로 돌아옵니다. 단, 시험에서 모든 답을 완전 탐색하면 감독 선생님이 가지치기를 실행할 수 있으니 오늘 코드에서 충분히 연습해 봅시다.”</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow"><div class="flow-card"><strong>상태 정의</strong>현재 위치·선택 목록·누적 합을 표현합니다.</div><div class="flow-card"><strong>후보 생성</strong>반복문과 재귀로 가능한 모든 선택을 만듭니다.</div><div class="flow-card"><strong>목표 검사</strong>정답·실패·종료 조건을 판정합니다.</div><div class="flow-card"><strong>복원과 가지치기</strong>다른 후보를 위해 상태를 되돌리고 불필요한 탐색을 줄입니다.</div></div>
+<ul><li>세 자리 비밀번호 모든 후보 탐색</li><li>목표 합을 만드는 두 수와 세 수 찾기</li><li>순열의 선택·호출·복원</li><li>조합의 시작 인덱스와 중복 방지</li><li>부분집합의 포함·제외 분기</li><li>동전 조합의 누적 합과 가지치기</li><li>조건을 만족하는 좌석 배치</li><li>미로의 모든 가능한 경로와 방문 복원</li><li>목표 합 부분집합 백트래킹</li><li>후보 수·시간 복잡도·해의 완전성 분석</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol><li><b>가지치기 조건이 완전 탐색 실행 시간에 미치는 영향</b></li><li><b>순열·조합·부분집합의 후보 수 증가 비교</b></li><li><b>반복문 완전 탐색과 재귀 백트래킹의 가독성·성능 비교</b></li><li><b>미로 장애물 비율에 따른 모든 경로 탐색량 분석</b></li><li><b>목표 합 문제에서 정렬과 가지치기 순서가 탐색 효율에 미치는 영향</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 코드의 상태·연산·목표 상태·가지치기·복원 과정을 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>세 자리 비밀번호 모든 후보 탐색</h2></div>
+<div><span class="badge">중첩 반복문</span><span class="badge">완전 탐색</span></div>
+<div class="two">
+<div><pre><code>target = "314"
+count = 0
+
+for a in range(10):
+    for b in range(10):
+        for c in range(10):
+            candidate = f"{a}{b}{c}"
+            count += 1
+
+            if candidate == target:
+                print("찾은 비밀번호:", candidate)
+                print("검사 횟수:", count)
+                break</code></pre></div>
+<div class="card">
+<h3>문제 구조</h3>
+<p><strong>상태:</strong> 현재까지 결정한 세 자리 숫자</p>
+<p><strong>연산:</strong> 각 자리에 0~9 선택</p>
+<p><strong>목표:</strong> 후보가 314와 일치</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 세 자리 비밀번호 완전 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 각 자리에서 0부터 9까지 선택한다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 세 개의 중첩 반복문으로 모든 후보를 생성한다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 후보가 목표와 같은지 검사한다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> break 한 번으로 모든 반복문이 반드시 종료된다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 후보 수는 항상 10개뿐이다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>목표 합을 만드는 두 수 찾기</h2></div>
+<div><span class="badge">두 후보 선택</span><span class="badge">인덱스</span></div>
+<pre><code>numbers = [2, 7, 11, 15, 3, 6]
+target = 9
+solutions = []
+
+for i in range(len(numbers)):
+    for j in range(i + 1, len(numbers)):
+        if numbers[i] + numbers[j] == target:
+            solutions.append(
+                (numbers[i], numbers[j])
+            )
+
+print("해:", solutions)</code></pre>
+<div class="note"><strong>중복 방지</strong><br/><code>j</code>를 <code>i+1</code>부터 시작하여 같은 원소를 두 번 선택하거나 순서만 다른 중복 후보를 만들지 않습니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 두 수 합 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> j를 i+1부터 시작해 같은 원소 중복 선택을 막는다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 순서만 다른 같은 쌍의 중복을 줄인다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 합이 target과 같으면 해에 추가한다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> i와 j는 항상 같은 값이어야 한다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 정렬된 리스트에서만 사용할 수 있다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>세 수의 합이 n이 되는 경우 세기</h2></div>
+<div><span class="badge">세 변수</span><span class="badge">모든 경우</span></div>
+<div class="two">
+<div><pre><code>n = 8
+count = 0
+solutions = []
+
+for a in range(1, n + 1):
+    for b in range(1, n + 1):
+        for c in range(1, n + 1):
+            if a + b + c == n:
+                count += 1
+                solutions.append((a, b, c))
+
+print("경우의 수:", count)
+print("일부 해:", solutions[:10])</code></pre></div>
+<div class="card">
+<h3>상태와 목표</h3>
+<p>상태는 현재 선택한 <code>(a, b, c)</code>입니다.</p>
+<p>가능한 모든 양의 정수 후보를 검사합니다.</p>
+<p>합이 n이면 목표 상태입니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 세 수 합 경우의 수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> a,b,c를 각각 1부터 n까지 탐색한다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> a+b+c==n이면 하나의 해이다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 순서가 다른 (a,b,c)는 서로 다른 경우로 센다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 세 변수 중 하나만 탐색한다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 합이 n보다 커도 반드시 해로 기록한다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>재귀함수로 모든 순열 생성</h2></div>
+<div><span class="badge">순열</span><span class="badge">백트래킹</span></div>
+<pre><code>def generate_permutations(items, selected):
+    if len(selected) == len(items):
+        print(selected)
+        return
+
+    for item in items:
+        if item in selected:
+            continue
+
+        selected.append(item)
+        generate_permutations(items, selected)
+        selected.pop()
+
+generate_permutations(["A", "B", "C"], [])</code></pre>
+<div class="check"><strong>백트래킹</strong><br/>후보를 하나 선택하고 재귀 호출한 뒤 <code>pop()</code>으로 선택을 취소하여 다음 후보를 탐색합니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 순열 백트래킹에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> 선택되지 않은 원소를 selected에 추가한다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> 모든 원소를 선택하면 하나의 순열이 완성된다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 재귀 호출 후 pop()으로 선택을 취소한다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 순열은 원소의 순서를 구분하지 않는다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 같은 원소를 여러 번 사용해도 항상 올바르다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>n개 중 r개 조합 생성</h2></div>
+<div><span class="badge">조합</span><span class="badge">시작 인덱스</span></div>
+<pre><code>def generate_combinations(
+    items, r, start=0, selected=None
+):
+    if selected is None:
+        selected = []
+
+    if len(selected) == r:
+        print(selected)
+        return
+
+    for index in range(start, len(items)):
+        selected.append(items[index])
+
+        generate_combinations(
+            items,
+            r,
+            index + 1,
+            selected
+        )
+
+        selected.pop()
+
+generate_combinations(
+    ["A", "B", "C", "D"],
+    2
+)</code></pre>
+<div class="note"><strong>상태:</strong> 현재 선택 목록과 시작 인덱스<br/><strong>목표:</strong> 선택한 원소 수가 r개</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 조합 생성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> 선택 개수가 r이면 목표 상태이다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> start 인덱스 이후만 탐색해 순서 중복을 막는다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> index+1을 다음 시작 위치로 전달한다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> A,B와 B,A를 서로 다른 조합으로 모두 기록한다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> selected.pop()은 필요 없다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>부분집합 전체 생성</h2></div>
+<div><span class="badge">포함·제외</span><span class="badge">이진 선택</span></div>
+<div class="two">
+<div><pre><code>def generate_subsets(
+    items, index=0, selected=None
+):
+    if selected is None:
+        selected = []
+
+    if index == len(items):
+        print(selected)
+        return
+
+    # 현재 원소 포함
+    selected.append(items[index])
+    generate_subsets(
+        items, index + 1, selected
+    )
+
+    # 현재 원소 제외
+    selected.pop()
+    generate_subsets(
+        items, index + 1, selected
+    )
+
+generate_subsets([1, 2, 3])</code></pre></div>
+<div class="card">
+<h3>후보 공간</h3>
+<p>각 원소마다 포함 또는 제외 두 가지 연산이 있습니다.</p>
+<p>원소가 n개이면 후보 수는 2ⁿ개입니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 부분집합 생성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 각 원소마다 포함과 제외 두 가지 선택이 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> index가 len(items)이면 하나의 부분집합이 완성된다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 원소가 n개면 부분집합 수는 2의 n제곱이다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 공집합은 생성되지 않는다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 모든 원소는 반드시 포함되어야 한다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>목표 금액을 만드는 동전 조합</h2></div>
+<div><span class="badge">누적 합</span><span class="badge">가지치기</span></div>
+<pre><code>coins = [1, 2, 5]
+target = 7
+solutions = []
+
+def search(start, total, selected):
+    if total == target:
+        solutions.append(selected.copy())
+        return
+
+    if total &gt; target:
+        return
+
+    for index in range(start, len(coins)):
+        coin = coins[index]
+        selected.append(coin)
+
+        search(
+            index,
+            total + coin,
+            selected
+        )
+
+        selected.pop()
+
+search(0, 0, [])
+
+print("경우의 수:", len(solutions))
+for solution in solutions:
+    print(solution)</code></pre>
+<div class="check"><strong>가지치기</strong><br/>누적 합이 목표 금액을 초과하면 그 뒤의 후보는 모두 불가능하므로 즉시 탐색을 중단합니다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 동전 조합 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 누적 합이 target이면 해를 기록한다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> 누적 합이 target을 초과하면 가지치기한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 같은 동전을 여러 번 사용할 수 있도록 index를 그대로 전달한다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 동전은 반드시 한 번만 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 가지치기는 후보 수를 늘린다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>학생 좌석 배치 모든 경우 탐색</h2></div>
+<div><span class="badge">배치</span><span class="badge">조건 검사</span></div>
+<pre><code>students = ["민준", "서연", "지우"]
+valid_arrangements = []
+
+def arrange(selected):
+    if len(selected) == len(students):
+        # 민준과 서연이 붙어 앉지 않는 조건
+        for i in range(len(selected) - 1):
+            pair = {selected[i], selected[i + 1]}
+
+            if pair == {"민준", "서연"}:
+                return
+
+        valid_arrangements.append(
+            selected.copy()
+        )
+        return
+
+    for student in students:
+        if student not in selected:
+            selected.append(student)
+            arrange(selected)
+            selected.pop()
+
+arrange([])
+
+for arrangement in valid_arrangements:
+    print(arrangement)</code></pre>
+<div class="note"><strong>목표 상태</strong><br/>모든 학생의 자리가 결정되고 금지 조건을 위반하지 않은 상태입니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 좌석 배치 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 모든 학생을 배치한 뒤 금지 조건을 검사한다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 민준과 서연이 이웃하면 해당 배치를 제외한다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 유효한 배치는 copy()로 저장한다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 조건 위반 배치도 반드시 기록한다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> 학생 선택 후 복원하지 않는다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>미로에서 모든 가능한 경로 탐색</h2></div>
+<div><span class="badge">상태 공간</span><span class="badge">방문 복원</span></div>
+<pre><code>maze = [
+    [0, 0, 0],
+    [0, 1, 0],
+    [0, 0, 0]
+]
+
+rows = len(maze)
+cols = len(maze[0])
+target = (2, 2)
+
+visited = set()
+paths = []
+
+def explore(row, col, path):
+    if not (0 &lt;= row &lt; rows and 0 &lt;= col &lt; cols):
+        return
+
+    if maze[row][col] == 1:
+        return
+
+    if (row, col) in visited:
+        return
+
+    visited.add((row, col))
+    path.append((row, col))
+
+    if (row, col) == target:
+        paths.append(path.copy())
+    else:
+        for dr, dc in [
+            (1, 0), (-1, 0),
+            (0, 1), (0, -1)
+        ]:
+            explore(
+                row + dr,
+                col + dc,
+                path
+            )
+
+    path.pop()
+    visited.remove((row, col))
+
+explore(0, 0, [])
+
+print("경로 수:", len(paths))
+for path in paths:
+    print(path)</code></pre>
+<div class="warn"><strong>상태 복원</strong><br/>다른 경로에서 같은 칸을 다시 사용할 수 있도록 재귀 호출이 끝난 뒤 방문 표시와 경로를 원상 복구합니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 미로 모든 경로 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> 경계 밖과 벽을 검사한다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> visited로 현재 경로의 중복 방문을 막는다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 재귀 종료 후 path와 visited를 복원한다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 한 번 방문한 칸은 다른 경로에서도 영구히 금지한다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 목표에 도달해도 경로를 저장하지 않는다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>종합: 목표 합 부분집합 백트래킹</h2></div>
+<div><span class="badge">종합 설계</span><span class="badge">가지치기</span><span class="badge">해 기록</span></div>
+<pre><code>numbers = [2, 3, 5, 7, 8]
+target = 10
+solutions = []
+
+def subset_sum(
+    index,
+    total,
+    selected
+):
+    # 목표 상태
+    if total == target:
+        solutions.append(selected.copy())
+        return
+
+    # 실패 상태와 가지치기
+    if total &gt; target:
+        return
+
+    if index == len(numbers):
+        return
+
+    # 현재 숫자를 선택
+    selected.append(numbers[index])
+    subset_sum(
+        index + 1,
+        total + numbers[index],
+        selected
+    )
+
+    # 선택 복원
+    selected.pop()
+
+    # 현재 숫자를 선택하지 않음
+    subset_sum(
+        index + 1,
+        total,
+        selected
+    )
+
+subset_sum(0, 0, [])
+
+print("목표 합:", target)
+print("해의 개수:", len(solutions))
+
+for solution in solutions:
+    print(solution)</code></pre>
+<table>
+<tr><th>구조화 요소</th><th>이 문제의 정의</th></tr>
+<tr><td>상태</td><td>현재 인덱스, 누적 합, 선택된 숫자 목록</td></tr>
+<tr><td>연산</td><td>현재 숫자를 선택하거나 선택하지 않음</td></tr>
+<tr><td>목표 상태</td><td>누적 합이 target과 같음</td></tr>
+<tr><td>실패 상태</td><td>합이 목표를 초과하거나 모든 숫자를 검사함</td></tr>
+<tr><td>복원</td><td>선택한 숫자를 pop하여 이전 상태로 돌아감</td></tr>
+<tr><td>효율성</td><td>최악에는 2ⁿ개 후보를 검사하지만 가지치기로 일부 후보 제거</td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>알고리즘 설명 예시</strong><br/>
+“현재 상태를 검사 중인 숫자의 위치, 누적 합, 선택 목록으로 정의하였다.
+각 단계에서 숫자를 선택하는 연산과 선택하지 않는 연산을 모두 수행하였다.
+누적 합이 목표와 같으면 해를 기록하고, 목표를 초과하면 더 탐색하지 않도록 가지치기하였다.
+따라서 가능한 후보를 빠짐없이 확인하면서 불필요한 탐색을 줄였다.”
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 목표 합 부분집합 백트래킹에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 상태는 index,total,selected로 구성된다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 현재 수를 선택하거나 선택하지 않는 두 분기가 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> total이 target을 초과하면 가지치기한다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 모든 후보 수는 항상 n개뿐이다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 선택 후 pop() 없이도 상태가 자동 복원된다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">“시는 수많은 단어 후보 가운데 가장 빛나는 한 단어를 선택하고, 소설은 인물에게 여러 갈림길을 주며 가능한 삶을 탐색합니다. 희곡은 한 대사를 바꾸며 장면의 모든 가능성을 시험하고, 연극은 반복 연습 속에서 불필요한 동작을 가지치기합니다. 음악도 수많은 음 가운데 어울리는 음을 고르고 틀린 음 뒤에는 다시 시작합니다. 여러분의 꿈도 한 번의 선택으로 완성되지 않습니다. 여러 길을 탐색하고, 잘못된 선택은 pop하고, 가능성이 없는 길은 과감히 prune하세요. 다만 친구 관계까지 완전 탐색하면 연락처가 폭발할 수 있으니 진심 있는 후보부터 살펴보세요. 오늘의 탐색이 내일의 정답에 더 가까이 데려가길 바랍니다.”</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 완전 탐색은 가능한 모든 후보를 검사하는 방법이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 상태는 문제 해결 과정의 현재 모습을 나타낸다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 목표 상태는 탐색을 계속해야 하는 조건만 의미한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 백트래킹에서는 선택 후 이전 상태로 복원할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 가지치기는 정답이 될 수 없는 후보를 일찍 중단한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 순열은 원소의 순서를 구분하지 않는다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 조합은 보통 순서만 다른 중복을 하나로 본다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 부분집합 탐색에서는 각 원소를 포함하거나 제외한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 방문 복원은 모든 경로 탐색에서 불필요하다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 완전 탐색은 후보 수가 매우 커도 항상 효율적이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 상태·연산·목표 상태에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 상태는 현재 선택과 위치를 나타낼 수 있다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 연산은 현재 상태에서 가능한 선택이다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 목표 상태는 정답 조건이다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 상태는 항상 정수 하나뿐이다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 목표 상태는 없어도 된다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 완전 탐색의 특징에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 모든 후보를 검사한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 후보 수가 작을 때 확실한 정답을 찾기 좋다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 구현이 비교적 단순할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 항상 최적의 시간 복잡도를 가진다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 후보 수와 무관하게 빠르다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 백트래킹에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 선택한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 재귀 호출한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 선택을 복원한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 첫 선택만 유지한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 모든 선택을 동시에 확정한다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 불가능한 후보를 조기에 중단한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 탐색량을 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 조건이 정확해야 정답을 놓치지 않는다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 후보 수를 늘리기 위해 사용한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 항상 아무 조건에서나 적용해도 된다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 순열과 조합 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 순열은 순서를 구분한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 조합은 순서를 구분하지 않는다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 둘 다 백트래킹으로 생성할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 순열과 조합의 결과 수는 항상 같다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 조합은 모든 원소를 반드시 선택한다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 부분집합 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 각 원소를 포함할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 각 원소를 제외할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> n개 원소의 후보 수는 2ⁿ이다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 공집합은 제외된다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 각 원소는 두 번씩 반드시 선택한다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 미로 모든 경로 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 현재 위치가 상태이다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 방문 집합이 필요할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 탐색 후 방문 상태를 복원할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 벽은 자유롭게 통과한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 경계 검사는 필요 없다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 목표 합 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 누적 합을 상태로 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 목표 초과 시 가지치기할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 해를 찾으면 선택 목록을 복사해 저장할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 모든 수가 양수여도 초과 후 계속 탐색해야 한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 선택 목록은 상태와 무관하다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 좋은 백트래킹 설계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 종료 조건을 명확히 한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 선택과 복원을 짝지어 작성한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 중복 후보를 줄이는 규칙을 고려한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 복원 없이 전역 상태만 계속 변경한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 가지치기 조건은 검증하지 않는다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 알고리즘 효율 설명에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 후보 수의 증가를 분석한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 가지치기 전후 탐색량을 비교한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 시간과 메모리 사용을 함께 본다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 정확성은 고려하지 않는다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 작은 입력 결과만 보고 모든 입력에 일반화한다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 10문항 × 5점 = 50점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 3점 = 30점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 16차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "세 자리 후보는 최대 1000개이며 각 자리를 모두 조합해 검사합니다."}, "2": {"ans": [0, 1, 2], "exp": "인덱스 순서를 제한해 중복 후보를 줄이고 모든 두 원소 조합을 검사합니다."}, "3": {"ans": [0, 1, 2], "exp": "세 중첩 반복문으로 순서 있는 모든 양의 정수 삼중항을 검사합니다."}, "4": {"ans": [0, 1, 2], "exp": "순열은 순서를 구분하며 선택-호출-복원 구조를 사용합니다."}, "5": {"ans": [0, 1, 2], "exp": "조합은 순서를 구분하지 않으므로 뒤쪽 원소만 선택합니다."}, "6": {"ans": [0, 1, 2], "exp": "포함·제외의 이진 선택으로 공집합을 포함한 모든 부분집합을 생성합니다."}, "7": {"ans": [0, 1, 2], "exp": "목표 초과 시 탐색을 중단하고 같은 동전의 반복 사용을 허용합니다."}, "8": {"ans": [0, 1, 2], "exp": "완성된 배치에서 조건을 검사하고 유효한 경우만 복사해 저장합니다."}, "9": {"ans": [0, 1, 2], "exp": "모든 경로를 찾기 위해 현재 경로의 방문 상태를 복원합니다."}, "10": {"ans": [0, 1, 2], "exp": "포함·제외 분기와 가지치기, 상태 복원을 결합한 백트래킹입니다."}}, "ox": {"1": {"ans": true, "exp": "후보 공간 전체를 확인합니다."}, "2": {"ans": true, "exp": "현재 위치·선택·누적값 등이 상태입니다."}, "3": {"ans": false, "exp": "정답 인정 또는 종료 조건을 의미합니다."}, "4": {"ans": true, "exp": "다른 후보를 탐색하기 위해 복원합니다."}, "5": {"ans": true, "exp": "불필요한 탐색을 줄입니다."}, "6": {"ans": false, "exp": "순열은 순서를 구분합니다."}, "7": {"ans": true, "exp": "A,B와 B,A를 같은 조합으로 봅니다."}, "8": {"ans": true, "exp": "두 갈래 선택입니다."}, "9": {"ans": false, "exp": "다른 경로를 탐색하려면 복원이 필요할 수 있습니다."}, "10": {"ans": false, "exp": "후보 폭발이 발생할 수 있습니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "문제 구조화에는 상태, 연산, 목표 상태가 필요합니다."}, "2": {"ans": [0, 1, 2], "exp": "정확성은 높지만 후보 수가 커지면 비효율적입니다."}, "3": {"ans": [0, 1, 2], "exp": "선택-탐색-복원이 핵심 구조입니다."}, "4": {"ans": [0, 1, 2], "exp": "잘못된 가지치기는 정답을 누락시킬 수 있습니다."}, "5": {"ans": [0, 1, 2], "exp": "선택 개수와 순서 구분 여부가 다릅니다."}, "6": {"ans": [0, 1, 2], "exp": "공집합도 부분집합입니다."}, "7": {"ans": [0, 1, 2], "exp": "현재 경로 기준 방문 관리와 복원이 중요합니다."}, "8": {"ans": [0, 1, 2], "exp": "양수 문제에서는 합 초과 가지치기가 유효합니다."}, "9": {"ans": [0, 1, 2], "exp": "종료, 선택, 복원, 중복 방지와 가지치기가 중요합니다."}, "10": {"ans": [0, 1, 2], "exp": "후보 공간, 자원 사용, 정확성을 함께 평가해야 합니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;const now=new Date(),lines=["정보과학 16차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_16차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

@@ -1,0 +1,297 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 7차시 목표지향 개념기반 수업지도안</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:50px 20px 44px}.wrap,main{max-width:1200px;margin:auto}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}pre.relation{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top">
+<header><div class="wrap"><h1>정보과학 7차시<br>재귀관계 파악과 반복·재귀 비교</h1><p>문제의 현재 상태를 이전 상태로 표현하는 재귀관계와 초기값을 찾고, 반복문과 재귀함수의 가독성·메모리·실행 시간을 비교합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>7차시</td><th>주제</th><td>재귀관계와 초기값 파악, 반복문·재귀함수 비교</td></tr><tr><th>핵심 질문</th><td colspan="3">현재 상태와 이전 상태의 관계를 어떻게 발견하고, 그 관계를 반복문과 재귀함수로 어떻게 다르게 표현할 수 있는가?</td></tr><tr><th>전이 목표</th><td colspan="3">학생은 새로운 수열·경우의 수·수치 문제에서 상태와 초기값을 정의하고 재귀관계를 세운 뒤 반복형과 재귀형 구현을 비교하여 적절한 방법을 선택할 수 있다.</td></tr><tr><th>성취기준</th><td colspan="3">문제 상황에서 현재 상태와 이전 상태의 관계를 찾아 재귀관계와 초기값을 표현한다. 동일 문제를 반복문과 재귀함수로 구현하고 가독성, 호출 구조, 메모리 사용과 실행 시간의 차이를 논리적으로 설명한다.</td></tr><tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr><tr><td>도입</td><td>수열과 생활 속 누적 변화를 관찰해 이전 상태와 현재 상태의 관계를 찾는다.</td><td>관계, 변화</td></tr><tr><td>개념 형성</td><td>상태 정의, 재귀관계, 초기값, 반복 갱신과 재귀 호출을 연결한다.</td><td>모형화, 경계</td></tr><tr><td>진단 실습</td><td>합계·팩토리얼·수열·계단·타일·최대공약수 문제를 두 방식으로 구현한다.</td><td>표현, 비교</td></tr><tr><td>정리·전이</td><td>직접 공식의 존재와 성능까지 고려해 구현 방식을 선택하고 설명한다.</td><td>일반화, 판단</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>문제의 상태와 이전 상태의 관계를 찾는다.</li><li>재귀관계와 초기값을 수식과 코드로 표현한다.</li><li>반복문과 재귀함수로 같은 문제를 구현한다.</li><li>가독성·메모리·실행 시간을 비교한다.</li><li>직접 공식, 반복, 재귀 중 적절한 방법을 선택한다.</li></ol></div><div class="card"><h3>학습할 개념</h3><ul><li><b>상태:</b> 문제의 한 단계 또는 n번째 값을 나타내는 정보</li><li><b>재귀관계:</b> 현재 상태를 이전 상태로 나타낸 관계</li><li><b>초기값:</b> 더 이상 이전 상태로 나누지 않는 가장 작은 값</li><li><b>상태 갱신:</b> 반복문에서 이전 값을 다음 값으로 바꾸는 과정</li><li><b>논리적 비교:</b> 표현, 메모리, 시간의 근거로 차이를 설명하는 과정</li></ul></div></div><div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>재귀관계는 문제의 변화 구조를 드러내며, 같은 관계는 재귀 호출이나 반복적 상태 갱신으로 구현할 수 있다. 좋은 선택은 초기값, 입력 크기, 직접 공식, 시간과 메모리를 함께 고려한다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">“헤라클레이토스는 모든 것은 흐른다고 했고, 데카르트는 복잡한 문제를 작은 관계로 나누었습니다. 뉴턴은 순간의 변화에서 운동의 법칙을 찾았으며, 피보나치는 앞선 두 수가 다음 수를 만드는 아름다운 질서를 보여 주었습니다. 오늘 우리는 ‘지금의 값은 어디에서 왔는가?’를 묻습니다. 현재는 이전 상태의 반환값이고, 미래는 현재 상태의 다음 호출일지도 모릅니다. 다만 어제의 숙제를 오늘 그대로 복사하는 것은 재귀관계가 아니라 복사 관계입니다. 오늘은 변화의 규칙을 발견하고, 반복과 재귀라는 두 언어로 같은 생각을 표현해 봅시다.”</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow"><div class="flow-card"><strong>상태 정의</strong>n번째 값 또는 현재 문제를 무엇으로 나타낼지 정합니다.</div><div class="flow-card"><strong>관계 발견</strong>현재 상태를 이전 한두 상태로 표현합니다.</div><div class="flow-card"><strong>초기값 설정</strong>가장 작은 문제의 값을 명확히 정합니다.</div><div class="flow-card"><strong>구현과 비교</strong>반복 갱신과 재귀 호출을 비교합니다.</div></div>
+<ul><li>자연수 합과 팩토리얼의 기본 재귀관계</li><li>등차수열과 직접 일반항</li><li>피보나치·계단·타일 채우기의 두 이전 상태 관계</li><li>유클리드 호제법의 두 변수 상태</li><li>거듭제곱과 빠른 거듭제곱 확장</li><li>자릿수 합의 정수 분해</li><li>호출 횟수와 실행 시간 측정</li><li>가독성·메모리·실행 시간 기반 설명</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol><li><b>수열 유형에 따른 재귀관계 발견 과정과 오류 유형 분석</b></li><li><b>반복문과 재귀함수의 입력 크기별 실행 시간 비교</b></li><li><b>직접 공식·반복·재귀 방식의 계산 효율성 비교</b></li><li><b>초기값 설정 오류가 재귀 결과에 미치는 영향</b></li><li><b>피보나치·계단·타일 문제의 공통 재귀구조 분석</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 예제의 재귀관계와 초기값을 확인하고, 반복문과 재귀함수의 차이를 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>1부터 n까지의 자연수 합</h2></div>
+<div><span class="badge">누적 합</span><span class="badge">기초 재귀관계</span></div>
+<pre class="relation">재귀관계: S(n) = n + S(n-1)
+초기값: S(1) = 1</pre>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def sum_loop(n):
+    total = 0
+    for value in range(1, n + 1):
+        total += value
+    return total</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def sum_recursive(n):
+    if n == 1:
+        return 1
+    return n + sum_recursive(n - 1)</code></pre></div>
+</div>
+<div class="note"><strong>차이 설명</strong><br/>재귀 방식은 수학적 관계를 그대로 표현하지만 n번의 함수 호출이 필요합니다. 반복 방식은 누적 변수 하나를 갱신하여 메모리 사용이 적습니다.</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 자연수 합 재귀관계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> S(n)=n+S(n-1)로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 초기값은 S(1)=1이다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 반복문은 누적 변수 total을 갱신한다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 재귀함수는 n이 커질수록 호출 수가 0이 된다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 반복문은 메모리를 전혀 사용하지 않는다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>팩토리얼</h2></div>
+<div><span class="badge">곱셈 누적</span><span class="badge">초기값</span></div>
+<pre class="relation">재귀관계: F(n) = n × F(n-1)
+초기값: F(0) = 1</pre>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def factorial_loop(n):
+    result = 1
+    for value in range(1, n + 1):
+        result *= value
+    return result</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def factorial_recursive(n):
+    if n == 0:
+        return 1
+    return n * factorial_recursive(n - 1)</code></pre></div>
+</div>
+<div class="check"><strong>논리적 판단</strong><br/>정의 학습에는 재귀 방식이 직관적이고, 큰 n의 실제 계산에는 반복 방식이 안전합니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 팩토리얼 재귀관계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> F(n)=n×F(n-1)이다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> F(0)=1은 초기값이다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 재귀 방식은 수학적 정의를 직접 드러낸다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 반복문은 곱셈을 사용할 수 없다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 재귀함수는 큰 입력에서도 깊이 제한과 무관하다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>등차수열의 n번째 항</h2></div>
+<div><span class="badge">수열</span><span class="badge">이전 항</span></div>
+<pre class="relation">재귀관계: a(n) = a(n-1) + d
+초기값: a(1) = first</pre>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def arithmetic_loop(first, d, n):
+    value = first
+    for _ in range(2, n + 1):
+        value += d
+    return value</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def arithmetic_recursive(first, d, n):
+    if n == 1:
+        return first
+    return arithmetic_recursive(first, d, n - 1) + d</code></pre></div>
+</div>
+<div class="warn"><strong>추가 관점</strong><br/>등차수열은 일반항을 이용하면 반복도 재귀도 없이 한 번에 계산할 수 있습니다. 알고리즘 선택에서는 문제 구조뿐 아니라 더 직접적인 공식의 존재도 확인해야 합니다.</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 등차수열 구현에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> a(n)=a(n-1)+d 관계를 가진다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> a(1)=first가 초기값이다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 일반항을 이용하면 반복과 재귀 없이 계산할 수도 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 공차 d는 항상 0이어야 한다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 재귀 호출에서 n은 증가해야 종료된다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>피보나치 수열</h2></div>
+<div><span class="badge">두 이전 항</span><span class="badge">중복 호출</span></div>
+<pre class="relation">재귀관계: F(n) = F(n-1) + F(n-2)
+초기값: F(0) = 0, F(1) = 1</pre>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def fibonacci_loop(n):
+    if n &lt; 2:
+        return n
+
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def fibonacci_recursive(n):
+    if n &lt; 2:
+        return n
+    return (
+        fibonacci_recursive(n - 1)
+        + fibonacci_recursive(n - 2)
+    )</code></pre></div>
+</div>
+<div class="warn"><strong>차이 설명</strong><br/>재귀 방식은 관계를 명확히 보여 주지만 같은 항을 중복 계산합니다. 반복 방식은 직전 두 항만 저장하므로 시간과 메모리 측면에서 효율적입니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 피보나치 수열에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> F(n)=F(n-1)+F(n-2)이다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> 초기값은 F(0)=0, F(1)=1이다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 일반 재귀는 같은 항을 중복 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 반복문은 이전 두 항을 저장할 수 없다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 재귀와 반복의 결과는 달라야 한다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>1칸 또는 2칸 계단 오르기</h2></div>
+<div><span class="badge">경우의 수</span><span class="badge">동적 계획법</span></div>
+<pre class="relation">재귀관계: W(n) = W(n-1) + W(n-2)
+초기값: W(0) = 1, W(1) = 1</pre>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def stairs_loop(n):
+    if n &lt;= 1:
+        return 1
+
+    prev2, prev1 = 1, 1
+    for _ in range(2, n + 1):
+        current = prev1 + prev2
+        prev2, prev1 = prev1, current
+    return prev1</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def stairs_recursive(n):
+    if n &lt;= 1:
+        return 1
+    return (
+        stairs_recursive(n - 1)
+        + stairs_recursive(n - 2)
+    )</code></pre></div>
+</div>
+<div class="note"><strong>재귀관계 해석</strong><br/>마지막 이동이 1칸인 경우와 2칸인 경우를 나누면 두 개의 더 작은 계단 문제로 분해됩니다.</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 계단 오르기 재귀관계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> 마지막 이동이 1칸인 경우와 2칸인 경우로 나눌 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> W(n)=W(n-1)+W(n-2)이다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> W(0)=1, W(1)=1로 둘 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 재귀함수는 중복 부분 문제가 전혀 없다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> 반복문은 이전 상태를 변수에 저장할 수 없다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>2×n 직사각형을 1×2 타일로 채우기</h2></div>
+<div><span class="badge">타일링</span><span class="badge">분해</span></div>
+<pre class="relation">재귀관계: T(n) = T(n-1) + T(n-2)
+초기값: T(1) = 1, T(2) = 2</pre>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def tiling_loop(n):
+    if n == 1:
+        return 1
+
+    a, b = 1, 2
+    for _ in range(3, n + 1):
+        a, b = b, a + b
+    return b</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def tiling_recursive(n):
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+    return (
+        tiling_recursive(n - 1)
+        + tiling_recursive(n - 2)
+    )</code></pre></div>
+</div>
+<div class="check"><strong>논리적 설명</strong><br/>맨 오른쪽을 세로 타일 하나로 채우면 n-1 문제, 가로 타일 두 개로 채우면 n-2 문제로 줄어듭니다.</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 타일 채우기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> T(n)=T(n-1)+T(n-2)이다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 세로 타일 하나를 두면 n-1 문제로 줄어든다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 가로 타일 두 개를 두면 n-2 문제로 줄어든다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 초기값은 T(1)=0, T(2)=0이다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 재귀와 반복 모두 구현할 수 없다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>유클리드 호제법 최대공약수</h2></div>
+<div><span class="badge">나머지</span><span class="badge">상태 축소</span></div>
+<pre class="relation">재귀관계: G(a, b) = G(b, a mod b)
+초기값: G(a, 0) = a</pre>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def gcd_loop(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def gcd_recursive(a, b):
+    if b == 0:
+        return a
+    return gcd_recursive(b, a % b)</code></pre></div>
+</div>
+<div class="note"><strong>차이 설명</strong><br/>두 방식 모두 같은 재귀관계를 사용합니다. 재귀 코드는 관계를 직접 드러내고, 반복 코드는 함수 호출 없이 상태를 갱신합니다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 유클리드 호제법에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> G(a,b)=G(b,a mod b)이다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> G(a,0)=a이다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 반복문과 재귀함수 모두 같은 상태 변화를 사용한다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 나머지는 항상 이전 b보다 크다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 최대공약수는 덧셈만으로 계산한다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>거듭제곱</h2></div>
+<div><span class="badge">지수 감소</span><span class="badge">분할 가능</span></div>
+<pre class="relation">기본 재귀관계: P(a, n) = a × P(a, n-1)
+초기값: P(a, 0) = 1</pre>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def power_loop(base, exponent):
+    result = 1
+    for _ in range(exponent):
+        result *= base
+    return result</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def power_recursive(base, exponent):
+    if exponent == 0:
+        return 1
+    return base * power_recursive(
+        base, exponent - 1
+    )</code></pre></div>
+</div>
+<div class="check"><strong>확장</strong><br/>지수가 짝수일 때 절반으로 나누는 재귀관계를 사용하면 호출 깊이를 크게 줄이는 빠른 거듭제곱으로 개선할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 거듭제곱에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> P(a,n)=a×P(a,n-1)이다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> P(a,0)=1이다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 지수를 절반으로 줄이는 빠른 거듭제곱으로 개선할 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 0제곱은 항상 0이다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> 음의 지수는 현재 코드에서 반드시 올바르게 처리된다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>정수의 자릿수 합</h2></div>
+<div><span class="badge">정수 분해</span><span class="badge">나머지</span></div>
+<pre class="relation">재귀관계: D(n) = n mod 10 + D(n div 10)
+초기값: n &lt; 10이면 D(n) = n</pre>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def digit_sum_loop(n):
+    total = 0
+    while n &gt; 0:
+        total += n % 10
+        n //= 10
+    return total</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def digit_sum_recursive(n):
+    if n &lt; 10:
+        return n
+    return (
+        n % 10
+        + digit_sum_recursive(n // 10)
+    )</code></pre></div>
+</div>
+<div class="note"><strong>가독성 비교</strong><br/>재귀 코드는 “마지막 자리와 나머지 자리”라는 분해를 명확히 나타냅니다. 반복 코드는 변수 변화가 직접 보여 실행 과정을 추적하기 쉽습니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 자릿수 합에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> n mod 10은 마지막 자릿수이다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> n div 10은 나머지 자릿수이다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> n&lt;10이면 그 수 자체를 반환할 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 문자열 변환만으로만 구현 가능하다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 재귀식은 D(n)=D(n)+1이다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>실행 시간·호출 수 종합 비교</h2></div>
+<div><span class="badge">성능 측정</span><span class="badge">논리적 설명</span></div>
+<pre><code>import time
+
+recursive_calls = 0
+
+def fibonacci_recursive(n):
+    global recursive_calls
+    recursive_calls += 1
+
+    if n &lt; 2:
+        return n
+
+    return (
+        fibonacci_recursive(n - 1)
+        + fibonacci_recursive(n - 2)
+    )
+
+def fibonacci_loop(n):
+    if n &lt; 2:
+        return n
+
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b
+
+n = 30
+
+start = time.perf_counter()
+r1 = fibonacci_recursive(n)
+recursive_time = time.perf_counter() - start
+
+start = time.perf_counter()
+r2 = fibonacci_loop(n)
+loop_time = time.perf_counter() - start
+
+print("결과 일치:", r1 == r2)
+print("재귀 호출 수:", recursive_calls)
+print(f"재귀 시간: {recursive_time:.6f}초")
+print(f"반복 시간: {loop_time:.6f}초")</code></pre>
+<table>
+<tr><th>설명 항목</th><th>재귀 방식</th><th>반복 방식</th></tr>
+<tr><td>재귀관계 표현</td><td>문제 정의를 코드에 직접 표현</td><td>이전 상태를 변수로 저장하여 갱신</td></tr>
+<tr><td>가독성</td><td>수학적·자기 유사 구조에 유리</td><td>순차적인 처리 흐름에 유리</td></tr>
+<tr><td>메모리</td><td>호출 스택 사용</td><td>일정한 수의 변수 사용 가능</td></tr>
+<tr><td>실행 시간</td><td>중복 호출과 함수 호출 비용 발생 가능</td><td>각 상태를 한 번씩 계산하여 빠른 경우가 많음</td></tr>
+<tr><td>선택 기준</td><td>구조 설명과 분할이 중요한 문제</td><td>큰 입력과 효율이 중요한 문제</td></tr>
+</table>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 성능 종합 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 결과 일치 여부를 먼저 확인해야 한다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 재귀 호출 수를 변수로 측정할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> time.perf_counter()로 실행 시간을 측정할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 재귀는 항상 반복보다 빠르다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 측정 환경은 결과에 영향을 주지 않는다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">“시는 앞 구절의 울림이 다음 구절을 만들고, 소설은 지난 장면의 선택이 다음 장면의 운명을 바꿉니다. 희곡은 앞선 대사의 의미를 받아 다음 대사가 완성되고, 연극은 어제의 연습이 오늘의 무대를 조금 더 단단하게 합니다. 음악도 앞 음의 긴장이 다음 화음에서 풀리며 하나의 곡이 됩니다. 여러분의 오늘 역시 어제와 무관한 값이 아닙니다. 작은 노력 하나가 다음 상태를 바꾸고, 그 변화가 쌓여 미래라는 수열을 만듭니다. 단, 성적이 떨어졌다고 ‘초기값이 틀렸다’며 출생부터 다시 시작할 수는 없습니다. 지금의 상태를 정확히 보고 다음 항을 더 좋게 계산해 봅시다.”</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 재귀관계는 현재 상태를 이전 상태로 표현한 관계이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 초기값은 재귀함수의 종료 조건과 관련이 없다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 반복문은 이전 상태를 변수로 저장해 갱신할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 재귀함수는 수학적 정의를 코드에 직접 표현하기 좋을 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 피보나치 일반 재귀는 중복 계산이 없다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 등차수열은 일반항으로 직접 계산할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 유클리드 호제법은 나머지를 이용한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 반복 방식은 호출 스택을 계속 깊게 쌓는다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 두 구현을 비교할 때 결과 정확성도 확인해야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 재귀 방식은 언제나 반복 방식보다 메모리를 적게 사용한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 재귀관계 설계 절차에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 상태를 정의한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 현재 상태를 이전 상태로 표현한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 초기값을 정한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 초기값은 없어도 된다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 구현 방식 비교는 의미가 없다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 초기값과 종료 조건에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 가장 작은 문제의 값을 나타낸다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 재귀 호출을 멈추게 한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 정확한 결과 계산의 기준이 된다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 항상 0이어야 한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 재귀함수 밖에만 작성해야 한다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 반복문 구현에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 이전 상태를 변수에 저장할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 반복마다 상태를 갱신한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 큰 입력에서 재귀 깊이 제한을 피할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 함수 호출 스택을 n개 반드시 만든다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 재귀관계를 표현할 수 없다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 재귀함수 구현에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 종료 조건이 필요하다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 더 작은 문제를 호출한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 문제 정의와 코드가 비슷할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 항상 실행 시간이 가장 짧다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 호출 스택을 사용하지 않는다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 피보나치와 계단 문제의 공통점으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 두 이전 상태의 합으로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 초기값이 필요하다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 반복문과 재귀함수 모두 구현 가능하다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 중복 부분 문제가 절대 없다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 현재 상태는 이전 상태와 무관하다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 성능 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 같은 입력을 사용한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 결과 일치 여부를 확인한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 실행 시간을 여러 번 측정할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 컴퓨터 상태는 무관하다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 서로 다른 문제의 시간을 절대 비교한다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 가독성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 수학적 정의와 비슷하면 재귀가 읽기 쉬울 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 순차 처리에서는 반복문이 명확할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 독자의 경험과 문제 구조에 따라 달라진다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 재귀가 항상 더 읽기 쉽다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 반복문은 언제나 복잡하다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 메모리 사용에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 재귀는 호출 스택을 사용한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 반복문은 일정한 수의 변수만 쓸 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 큰 입력은 재귀 깊이 문제를 만들 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 재귀는 항상 메모리를 0만큼 쓴다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 반복문은 반드시 재귀보다 메모리를 더 쓴다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 알고리즘 선택에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 직접 공식이 있으면 활용을 검토한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 문제 구조와 입력 크기를 고려한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 시간·메모리·가독성을 함께 본다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 항상 재귀만 사용한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 정확성은 고려하지 않는다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 논리적 설명에 포함할 내용으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 재귀관계와 초기값을 제시한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 두 구현의 상태 처리 방식을 비교한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 가독성·메모리·실행 시간을 근거로 든다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 정답만 말하고 근거는 생략한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 측정 결과가 달라도 설명하지 않는다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 10×5점=50점<br>OX 10×2점=20점<br>진단평가 10×3점=30점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 7차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "자연수 합은 현재 값과 이전 합의 관계로 표현하며, 반복문은 누적 변수를 사용합니다."}, "2": {"ans": [0, 1, 2], "exp": "팩토리얼은 곱셈 누적이며 재귀 방식은 정의를 직관적으로 표현합니다."}, "3": {"ans": [0, 1, 2], "exp": "등차수열은 재귀관계뿐 아니라 일반항으로 직접 계산할 수도 있습니다."}, "4": {"ans": [0, 1, 2], "exp": "피보나치는 두 이전 항의 합이며 일반 재귀는 중복 호출이 발생합니다."}, "5": {"ans": [0, 1, 2], "exp": "계단 문제는 두 이전 상태의 합으로 표현되는 대표적인 동적 계획법 문제입니다."}, "6": {"ans": [0, 1, 2], "exp": "타일 배치의 마지막 모양에 따라 n-1과 n-2 문제로 분해됩니다."}, "7": {"ans": [0, 1, 2], "exp": "나머지가 점점 작아져 0이 되는 구조를 반복 또는 재귀로 표현합니다."}, "8": {"ans": [0, 1, 2], "exp": "0제곱은 1이며 지수를 절반으로 줄이는 분할 정복 개선이 가능합니다."}, "9": {"ans": [0, 1, 2], "exp": "나머지와 정수 나눗셈으로 마지막 자리와 나머지 자리를 분해합니다."}, "10": {"ans": [0, 1, 2], "exp": "정확성, 호출 수, 실행 시간을 동일 조건에서 비교해야 합니다."}}, "ox": {"1": {"ans": true, "exp": "재귀관계는 현재 값과 더 작은 상태의 연결을 나타냅니다."}, "2": {"ans": false, "exp": "초기값은 가장 작은 문제이자 종료 조건입니다."}, "3": {"ans": true, "exp": "반복 구현은 상태 변수를 순차적으로 갱신합니다."}, "4": {"ans": true, "exp": "자기 유사한 정의와 잘 맞습니다."}, "5": {"ans": false, "exp": "같은 항을 여러 번 계산합니다."}, "6": {"ans": true, "exp": "반복이나 재귀가 항상 필요한 것은 아닙니다."}, "7": {"ans": true, "exp": "G(a,b)=G(b,a%b)입니다."}, "8": {"ans": false, "exp": "일반적으로 반복문은 호출 스택을 추가로 쌓지 않습니다."}, "9": {"ans": true, "exp": "속도보다 먼저 결과가 일치해야 합니다."}, "10": {"ans": false, "exp": "호출 스택 때문에 더 많이 사용할 수 있습니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "상태, 관계, 초기값이 재귀관계 설계의 핵심입니다."}, "2": {"ans": [0, 1, 2], "exp": "초기값은 문제에 따라 다르며 함수 안의 종료 조건으로 표현됩니다."}, "3": {"ans": [0, 1, 2], "exp": "반복문도 재귀관계를 상태 갱신으로 구현할 수 있습니다."}, "4": {"ans": [0, 1, 2], "exp": "재귀는 표현력이 좋지만 호출 비용과 스택 사용이 있습니다."}, "5": {"ans": [0, 1, 2], "exp": "두 문제 모두 유사한 재귀관계를 가집니다."}, "6": {"ans": [0, 1, 2], "exp": "동일 조건과 반복 측정이 공정한 비교에 필요합니다."}, "7": {"ans": [0, 1, 2], "exp": "가독성은 절대적이지 않고 맥락에 따라 다릅니다."}, "8": {"ans": [0, 1, 2], "exp": "재귀는 호출 깊이에 비례해 스택 메모리를 사용할 수 있습니다."}, "9": {"ans": [0, 1, 2], "exp": "더 직접적인 공식과 자원 조건까지 함께 고려해야 합니다."}, "10": {"ans": [0, 1, 2], "exp": "관계와 근거를 함께 제시해야 설득력 있는 설명이 됩니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;const now=new Date(),lines=["정보과학 7차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_7차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

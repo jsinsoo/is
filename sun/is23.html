@@ -1,0 +1,458 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 23차시 | 동적 계획법</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:52px 20px 46px;position:relative;overflow:hidden}.wrap,main{max-width:1200px;margin:auto}header:after{content:"";position:absolute;right:-80px;bottom:-100px;width:290px;height:290px;border-radius:50%;background:rgba(255,255,255,.08)}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}.hero-sub{max-width:960px;font-size:1.06rem;opacity:.96}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px;position:relative}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}section>h2:after{content:"";display:block;width:56px;height:4px;margin-top:8px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--purple))}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card{transition:transform .2s ease,box-shadow .2s ease}.flow-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(31,69,99,.10)}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}.quote strong{font-size:1.08rem;color:var(--navy)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}pre.diagram{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}
+.mini-menu{position:fixed;left:8px;top:8px;z-index:80}.mini-menu summary{list-style:none;width:28px;height:28px;border-radius:7px;background:rgba(23,50,77,.92);color:#fff;display:grid;place-items:center;cursor:pointer;font-size:12px;box-shadow:0 4px 12px rgba(0,0,0,.22)}.mini-menu summary::-webkit-details-marker{display:none}.mini-panel{margin-top:5px;min-width:145px;padding:7px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,.16)}.mini-panel a{display:block;padding:6px 8px;border-radius:7px;text-decoration:none;color:var(--navy);font-size:.82rem;font-weight:800}.mini-panel a:hover{background:var(--sky)}
+footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar,.mini-menu{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top"><details class="mini-menu"><summary>☰</summary><div class="mini-panel">
+<a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 10선</a><a href="#closing">끝 멘트</a><a href="#ox">형성평가</a><a href="#diag">진단평가</a><a href="#submit">제출</a>
+</div></details>
+<header><div class="wrap"><h1>정보과학 23차시<br>중복 부분 문제·최적 부분 구조와 동적 계획법</h1><p class="hero-sub">같은 계산이 반복되는 구조를 발견하고, 작은 상태의 해를 저장·재사용하여 큰 문제를 해결하는 동적 계획법의 사고를 메모이제이션과 테이블 방식으로 깊이 있게 탐구합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>23차시</td><th>주제</th><td>중복 부분 문제·최적 부분 구조와 동적 계획법</td></tr>
+<tr><th>핵심 질문</th><td colspan="3">같은 계산이 반복되는 문제에서 무엇을 상태로 정의하고, 어떤 순서로 값을 저장·재사용해야 정확성과 효율성을 함께 얻을 수 있는가?</td></tr>
+<tr><th>전이 목표</th><td colspan="3">학생은 새로운 문제에서 상태·기본값·전이식·계산 순서를 설계하고 메모이제이션 또는 테이블 방식을 선택하여 시간·공간 복잡도와 결과의 정확성을 설명할 수 있다.</td></tr>
+<tr><th>성취기준</th><td colspan="3">중복 부분 문제와 최적 부분 구조를 판별하고, 피보나치·계단 오르기·격자 경로·최소 동전·최대 부분합·0/1 배낭 문제를 메모이제이션과 테이블 방식으로 구현한다. 상태 정의·초기값·전이식·계산 순서와 공간 최적화를 설명한다.</td></tr>
+<tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr>
+<tr><td>도입</td><td>피보나치 호출 트리에서 같은 상태가 반복되는 현상을 관찰한다.</td><td>중복, 상태</td></tr>
+<tr><td>개념 형성</td><td>상태 정의·기본값·전이식·계산 순서를 구조화한다.</td><td>전이, 최적 구조</td></tr>
+<tr><td>진단 실습</td><td>메모이제이션과 테이블 방식으로 여러 문제를 구현하고 비교한다.</td><td>저장, 재사용</td></tr>
+<tr><td>정리·전이</td><td>시간·공간 복잡도와 공간 최적화 가능성을 분석한다.</td><td>효율, 일반화</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>중복 부분 문제와 최적 부분 구조를 판별한다.</li><li>상태·기본값·전이식을 정의한다.</li><li>메모이제이션과 테이블 방식을 구현한다.</li><li>1차원·2차원 DP 문제를 해결한다.</li><li>시간·공간 복잡도와 공간 최적화를 설명한다.</li></ol></div>
+<div class="card"><h3>학습할 개념</h3><ul><li><b>중복 부분 문제:</b> 같은 입력 상태가 여러 경로에서 반복되는 성질</li><li><b>최적 부분 구조:</b> 부분 문제의 최적해가 전체 최적해를 구성하는 성질</li><li><b>메모이제이션:</b> 필요한 상태를 재귀적으로 계산하고 저장하는 하향식 방식</li><li><b>테이블 방식:</b> 작은 상태부터 큰 상태로 계산하는 상향식 방식</li><li><b>상태 전이:</b> 이전 상태로부터 현재 상태를 계산하는 규칙</li></ul></div></div>
+<div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>동적 계획법은 반복되는 부분 문제의 결과를 저장하고 최적 부분 구조를 이용해 큰 문제를 해결하며, 올바른 상태 정의와 계산 순서가 알고리즘의 정확성과 효율성을 결정한다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">
+<strong>“배움은 매번 처음부터 시작하는 일이 아니라, 이전의 이해를 다음 생각의 디딤돌로 삼는 일입니다.”</strong><br><br>
+소크라테스는 질문을 반복했지만 같은 자리에서 맴돌지 않았고, 아리스토텔레스는 이전의 경험이 다음 판단의 토대가 된다고 보았습니다. 파블로프는 반복 속에서 학습의 연결을 관찰했고, 파스칼은 작은 수의 관계가 큰 수의 구조를 만든다는 사실을 보여 주었습니다.<br><br>
+오늘 우리는 같은 계산을 다시 하지 않습니다. 한 번 구한 답을 기억하고, 그 답을 더 큰 문제의 재료로 사용합니다. 피보나치 수열은 작은 두 값이 다음 값을 만들고, 계단 오르기는 이전 두 칸의 방법이 새로운 가능성을 만듭니다. 동적 계획법은 ‘기억하는 계산’이자 ‘연결하는 사고’입니다.<br><br>
+다만 시험 공부에서 어제 틀린 문제를 저장만 하고 다시 확인하지 않으면 memo에는 들어 있지만 정답으로 반환되지 않을 수 있습니다. 오늘은 좋은 상태를 정의하고, 필요한 값을 정확히 저장하며, 작은 성공을 큰 해결로 이어 가봅시다.
+</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow">
+<div class="flow-card"><strong>중복 발견</strong>같은 입력 상태가 반복되는지 확인합니다.</div>
+<div class="flow-card"><strong>상태 설계</strong>dp 값이 무엇을 의미하는지 정의합니다.</div>
+<div class="flow-card"><strong>전이 계산</strong>이전 상태로 현재 상태를 계산합니다.</div>
+<div class="flow-card"><strong>저장과 최적화</strong>메모·테이블·공간 축소를 비교합니다.</div></div>
+<ul><li>피보나치 중복 호출 횟수 분석</li><li>딕셔너리 기반 하향식 메모이제이션</li><li>리스트 기반 상향식 테이블 방식</li><li>이전 두 상태만 남기는 공간 최적화</li><li>계단 오르기의 경우의 수 DP</li><li>격자 경로 수의 2차원 상태</li><li>최소 동전 수의 최소화 전이</li><li>카데인 알고리즘과 최대 부분 배열 합</li><li>0/1 배낭의 선택·미선택 2차원 DP</li><li>메모이제이션과 테이블 방식의 호출·시간·공간 비교</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol>
+<li><b>단순 재귀와 메모이제이션의 피보나치 호출 횟수 비교</b></li>
+<li><b>메모이제이션과 테이블 방식의 실행 시간·메모리 사용 비교</b></li>
+<li><b>1차원 DP 공간 최적화가 메모리 사용량에 미치는 영향</b></li>
+<li><b>동전 체계에 따른 탐욕법과 동적 계획법 최소 동전 수 비교</b></li>
+<li><b>0/1 배낭의 용량 증가에 따른 DP 테이블 크기와 실행 시간 분석</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 코드의 상태 정의·기본값·전이식·계산 순서·시간과 공간 복잡도를 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>피보나치에서 중복 부분 문제 확인</h2></div>
+<div><span class="badge">호출 횟수</span><span class="badge">중복 상태</span></div>
+<div class="two">
+<div><pre><code>calls = {}
+
+def fibonacci(n):
+    calls[n] = calls.get(n, 0) + 1
+
+    if n &lt; 2:
+        return n
+
+    return (
+        fibonacci(n - 1)
+        + fibonacci(n - 2)
+    )
+
+print("결과:", fibonacci(6))
+print("입력별 호출 횟수:")
+
+for n in sorted(calls):
+    print(n, ":", calls[n])</code></pre></div>
+<div class="card">
+<h3>중복 구조</h3>
+<pre class="diagram">F(6)
+├─ F(5)
+│  ├─ F(4)
+│  └─ F(3)
+└─ F(4)
+   ├─ F(3)
+   └─ F(2)</pre>
+<p>F(4), F(3), F(2) 등이 여러 경로에서 반복됩니다.</p>
+</div>
+</div>
+<div class="warn"><strong>판단</strong><br/>같은 n에 대한 결과가 항상 같으므로 한 번 계산한 값을 저장해 재사용할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 피보나치 중복 호출에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 같은 n 값이 여러 번 호출될 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> calls 딕셔너리로 입력별 호출 횟수를 셀 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 중복 부분 문제를 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 모든 입력은 정확히 한 번만 호출된다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 호출 횟수는 결과값과 항상 같다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>피보나치 하향식 메모이제이션</h2></div>
+<div><span class="badge">Top-down</span><span class="badge">딕셔너리 캐시</span></div>
+<pre><code>memo = {0: 0, 1: 1}
+calculation_count = 0
+
+def fibonacci_memo(n):
+    global calculation_count
+
+    if n in memo:
+        return memo[n]
+
+    calculation_count += 1
+
+    memo[n] = (
+        fibonacci_memo(n - 1)
+        + fibonacci_memo(n - 2)
+    )
+
+    return memo[n]
+
+print("결과:", fibonacci_memo(30))
+print("새 계산 횟수:", calculation_count)
+print("저장 상태 수:", len(memo))</code></pre>
+<div class="check"><strong>계산 흐름</strong><br/>큰 문제 F(30)에서 시작해 필요한 작은 문제를 재귀적으로 계산하고, 이미 저장된 상태는 즉시 반환합니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 하향식 메모이제이션에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 이미 계산한 값은 memo에서 바로 반환한다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 큰 문제에서 필요한 작은 문제로 내려간다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 계산한 결과를 딕셔너리에 저장한다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 항상 모든 상태를 미리 계산한다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 재귀 호출을 전혀 사용하지 않는다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>피보나치 상향식 테이블 방식</h2></div>
+<div><span class="badge">Bottom-up</span><span class="badge">DP 테이블</span></div>
+<div class="two">
+<div><pre><code>def fibonacci_table(n):
+    if n &lt; 2:
+        return n
+
+    dp = [0] * (n + 1)
+    dp[1] = 1
+
+    for index in range(2, n + 1):
+        dp[index] = (
+            dp[index - 1]
+            + dp[index - 2]
+        )
+
+    print("테이블:", dp)
+    return dp[n]
+
+print("결과:", fibonacci_table(10))</code></pre></div>
+<div class="card">
+<h3>계산 순서</h3>
+<pre class="diagram">dp[0], dp[1]
+→ dp[2]
+→ dp[3]
+→ dp[4]
+→ ...
+→ dp[n]</pre>
+<p>필요한 이전 값이 먼저 계산되도록 인덱스가 작은 순서로 채웁니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 상향식 테이블 방식에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> 작은 인덱스부터 순서대로 값을 채운다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> dp[index-1]과 dp[index-2]를 이용한다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 재귀 호출 스택을 사용하지 않는다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> n부터 0까지 무작위 순서로 계산한다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 이전 값이 없어도 항상 계산 가능하다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>피보나치 테이블 공간 최적화</h2></div>
+<div><span class="badge">O(1) 공간</span><span class="badge">이전 두 상태</span></div>
+<pre><code>def fibonacci_optimized(n):
+    if n &lt; 2:
+        return n
+
+    previous2 = 0
+    previous1 = 1
+
+    for _ in range(2, n + 1):
+        current = previous1 + previous2
+        previous2, previous1 = (
+            previous1,
+            current
+        )
+
+    return previous1
+
+print(fibonacci_optimized(100))</code></pre>
+<div class="note"><strong>공간 분석</strong><br/>F(n)을 구할 때 F(n-1)과 F(n-2)만 필요하므로 전체 테이블 대신 두 개의 이전 값만 저장할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 공간 최적화에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> 현재 값 계산에 이전 두 값만 필요하다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> 전체 테이블 없이 두 변수로 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 공간 복잡도를 O(1)로 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 이전 값은 전혀 저장할 필요가 없다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 시간 복잡도는 반드시 O(n²)이 된다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>계단 오르기: 메모이제이션과 테이블 비교</h2></div>
+<div><span class="badge">경우의 수</span><span class="badge">두 방식</span></div>
+<div class="two">
+<div><h3>메모이제이션</h3><pre><code>memo = {0: 1, 1: 1}
+
+def stairs_memo(n):
+    if n in memo:
+        return memo[n]
+
+    memo[n] = (
+        stairs_memo(n - 1)
+        + stairs_memo(n - 2)
+    )
+
+    return memo[n]
+
+print(stairs_memo(10))</code></pre></div>
+<div><h3>테이블 방식</h3><pre><code>def stairs_table(n):
+    dp = [0] * (n + 1)
+    dp[0] = 1
+
+    if n &gt;= 1:
+        dp[1] = 1
+
+    for step in range(2, n + 1):
+        dp[step] = (
+            dp[step - 1]
+            + dp[step - 2]
+        )
+
+    return dp[n]
+
+print(stairs_table(10))</code></pre></div>
+</div>
+<div class="check"><strong>최적 부분 구조</strong><br/>n칸에 도착하는 방법은 n-1칸까지의 모든 방법 뒤에 1칸 이동을 붙이거나, n-2칸까지의 모든 방법 뒤에 2칸 이동을 붙여 구성됩니다.</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 계단 오르기 DP에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> n칸 도달 방법은 n-1칸과 n-2칸의 방법 수를 이용한다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> 메모이제이션과 테이블 방식으로 모두 구현할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 기본 상태 설정이 결과에 중요하다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> n칸 방법 수는 항상 n과 같다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> 이전 상태와 무관하게 계산한다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>격자 경로 수: 2차원 상태</h2></div>
+<div><span class="badge">2차원 DP</span><span class="badge">행·열 상태</span></div>
+<pre><code>def count_paths(rows, cols):
+    dp = [
+        [0] * cols
+        for _ in range(rows)
+    ]
+
+    for row in range(rows):
+        dp[row][0] = 1
+
+    for col in range(cols):
+        dp[0][col] = 1
+
+    for row in range(1, rows):
+        for col in range(1, cols):
+            dp[row][col] = (
+                dp[row - 1][col]
+                + dp[row][col - 1]
+            )
+
+    for line in dp:
+        print(line)
+
+    return dp[rows - 1][cols - 1]
+
+print("경로 수:", count_paths(4, 5))</code></pre>
+<div class="note"><strong>상태 전이</strong><br/>현재 칸으로 오는 방법은 위쪽 칸에서 내려오는 방법과 왼쪽 칸에서 오른쪽으로 오는 방법의 합입니다.</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 격자 경로 수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 상태는 행과 열의 두 인덱스로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 현재 칸의 값은 위쪽과 왼쪽 칸의 합이다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 첫 행과 첫 열을 1로 초기화할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 현재 칸은 아래쪽과 오른쪽 값으로 계산한다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 2차원 상태는 사용할 수 없다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>최소 동전 수: 최적 부분 구조</h2></div>
+<div><span class="badge">최소화</span><span class="badge">동전 교환</span></div>
+<div class="two">
+<div><pre><code>def min_coin_table(coins, amount):
+    dp = [float("inf")] * (amount + 1)
+    dp[0] = 0
+
+    for value in range(1, amount + 1):
+        for coin in coins:
+            if coin &lt;= value:
+                dp[value] = min(
+                    dp[value],
+                    dp[value - coin] + 1
+                )
+
+    return (
+        dp[amount]
+        if dp[amount] != float("inf")
+        else -1
+    )
+
+print(min_coin_table([1, 3, 4], 6))</code></pre></div>
+<div class="card">
+<h3>점화 관계</h3>
+<pre class="diagram">dp[x] =
+min(
+ dp[x-1] + 1,
+ dp[x-3] + 1,
+ dp[x-4] + 1
+)</pre>
+<p>마지막에 사용한 동전을 제거하면 더 작은 금액의 최적 동전 문제가 됩니다.</p>
+</div>
+</div>
+<div class="warn"><strong>탐욕법과 차이</strong><br/>동전 [1, 3, 4]로 6을 만들 때 큰 동전 우선은 4+1+1이지만, 최적해는 3+3입니다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 최소 동전 수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> dp[value]는 해당 금액의 최소 동전 수를 뜻한다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> dp[0]=0으로 시작한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 각 동전을 마지막에 사용한 경우를 비교한다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 큰 동전부터 고르면 언제나 최적이다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 최적 부분 구조가 존재하지 않는다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>연속 부분 배열의 최대 합</h2></div>
+<div><span class="badge">카데인 알고리즘</span><span class="badge">1차원 테이블</span></div>
+<pre><code>def maximum_subarray(numbers):
+    dp = [0] * len(numbers)
+    dp[0] = numbers[0]
+
+    best = dp[0]
+
+    for index in range(1, len(numbers)):
+        dp[index] = max(
+            numbers[index],
+            dp[index - 1] + numbers[index]
+        )
+
+        best = max(best, dp[index])
+
+    print("상태값:", dp)
+    return best
+
+numbers = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+
+print("최대 합:", maximum_subarray(numbers))</code></pre>
+<div class="check"><strong>상태 정의</strong><br/><code>dp[i]</code>는 반드시 i번째 원소에서 끝나는 연속 부분 배열 중 최대 합입니다. 새로 시작할지 이전 부분 배열에 이어 붙일지 선택합니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 최대 부분 배열 합에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> dp[i]는 i에서 끝나는 최대 연속 부분합이다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 새로 시작할지 이전 부분합에 이어 붙일지 비교한다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> best는 전체 최대값을 저장한다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 모든 원소를 반드시 포함한다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> 현재 원소보다 이전 합이 작아도 무조건 이어 붙인다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>0/1 배낭 문제의 2차원 테이블</h2></div>
+<div><span class="badge">선택·미선택</span><span class="badge">최대 가치</span></div>
+<pre><code>def knapsack(weights, values, capacity):
+    item_count = len(weights)
+
+    dp = [
+        [0] * (capacity + 1)
+        for _ in range(item_count + 1)
+    ]
+
+    for item in range(1, item_count + 1):
+        weight = weights[item - 1]
+        value = values[item - 1]
+
+        for limit in range(capacity + 1):
+            # 현재 물건을 넣지 않음
+            dp[item][limit] = dp[item - 1][limit]
+
+            # 현재 물건을 넣음
+            if weight &lt;= limit:
+                dp[item][limit] = max(
+                    dp[item][limit],
+                    dp[item - 1][limit - weight]
+                    + value
+                )
+
+    for row in dp:
+        print(row)
+
+    return dp[item_count][capacity]
+
+weights = [2, 3, 4, 5]
+values = [3, 4, 5, 8]
+
+print("최대 가치:", knapsack(
+    weights,
+    values,
+    capacity=8
+))</code></pre>
+<div class="note"><strong>최적 부분 구조</strong><br/>현재 물건을 넣지 않은 최적값과, 현재 물건을 넣고 남은 용량에서 이전 물건들로 만든 최적값을 비교합니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 0/1 배낭 DP에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> 현재 물건을 넣지 않는 경우를 고려한다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 현재 물건을 넣는 경우를 고려한다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 두 경우 중 더 큰 가치를 선택한다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 한 물건을 여러 번 넣는 문제이다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 용량과 물건 수는 상태와 무관하다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>메모이제이션·테이블 방식 종합 비교</h2></div>
+<div><span class="badge">호출 수</span><span class="badge">실행 시간</span><span class="badge">종합 실험</span></div>
+<pre><code>import time
+
+def compare_fibonacci(n):
+    memo = {0: 0, 1: 1}
+    memo_calls = 0
+
+    def top_down(value):
+        nonlocal memo_calls
+        memo_calls += 1
+
+        if value in memo:
+            return memo[value]
+
+        memo[value] = (
+            top_down(value - 1)
+            + top_down(value - 2)
+        )
+
+        return memo[value]
+
+    start = time.perf_counter()
+    top_result = top_down(n)
+    top_time = time.perf_counter() - start
+
+    start = time.perf_counter()
+
+    if n &lt; 2:
+        bottom_result = n
+        table = [n]
+    else:
+        table = [0] * (n + 1)
+        table[1] = 1
+
+        for index in range(2, n + 1):
+            table[index] = (
+                table[index - 1]
+                + table[index - 2]
+            )
+
+        bottom_result = table[n]
+
+    bottom_time = time.perf_counter() - start
+
+    return {
+        "결과 일치": top_result == bottom_result,
+        "메모 호출 수": memo_calls,
+        "메모 저장 수": len(memo),
+        "테이블 칸 수": len(table),
+        "메모 시간": top_time,
+        "테이블 시간": bottom_time
+    }
+
+result = compare_fibonacci(500)
+
+for key, value in result.items():
+    if "시간" in key:
+        print(f"{key}: {value:.8f}초")
+    else:
+        print(key, ":", value)</code></pre>
+<table>
+<tr><th>판단 항목</th><th>메모이제이션</th><th>테이블 방식</th></tr>
+<tr><td>점화식 표현</td><td>재귀관계와 유사하여 직관적</td><td>상태 계산 순서를 직접 설계</td></tr>
+<tr><td>필요한 상태만 계산</td><td>가능</td><td>일반적으로 정한 범위를 계산</td></tr>
+<tr><td>재귀 깊이</td><td>큰 입력에서 제한 가능</td><td>재귀 깊이 문제 없음</td></tr>
+<tr><td>상태 추적</td><td>호출 흐름을 따라가야 함</td><td>테이블을 출력해 확인하기 쉬움</td></tr>
+<tr><td>공간 최적화</td><td>캐시 제거가 복잡할 수 있음</td><td>필요한 이전 상태만 남기기 쉬움</td></tr>
+<tr><td>시간 복잡도</td><td>상태 수 × 상태당 전이 비용</td><td>상태 수 × 상태당 전이 비용</td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>논리적 설명 예시</strong><br/>
+“피보나치 문제에서는 F(n-2), F(n-3) 등의 부분 문제가 여러 재귀 경로에서 반복되므로 중복 부분 문제가 존재한다. 또한 F(n)의 해는 F(n-1)과 F(n-2)의 해로 구성되므로 최적 부분 구조와 같은 부분 문제 결합 구조를 가진다. 메모이제이션은 필요한 값을 재귀적으로 계산하여 저장하고, 테이블 방식은 작은 인덱스부터 순서대로 값을 채운다.”
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 메모이제이션·테이블 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 두 방식의 결과가 같은지 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 호출 수와 저장 상태 수를 비교할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> 재귀 깊이와 계산 순서의 차이를 분석할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 메모이제이션은 항상 테이블 방식보다 빠르다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 테이블 방식은 어떤 상태도 저장하지 않는다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">
+시는 한 줄의 기억을 다음 연의 이미지로 이어 가고, 소설은 앞 장면의 선택을 뒤 장면의 운명으로 연결합니다. 희곡은 이전 대사의 여운이 다음 갈등을 만들고, 연극은 반복 연습에서 얻은 감각을 무대 위 새로운 순간에 다시 사용합니다. 음악도 앞선 음의 울림이 사라지기 전에 다음 음이 이어질 때 아름다운 선율이 됩니다.<br><br>
+여러분의 꿈도 매일 처음부터 다시 시작하는 것이 아닙니다. 어제의 작은 이해, 오늘의 한 번 더 도전, 실패에서 얻은 교훈이 모두 마음속 테이블에 저장되어 내일의 더 큰 선택을 돕습니다. 때로는 모든 기록을 다 들고 갈 필요 없이 가장 중요한 이전 두 상태만 기억해도 충분합니다. 그러나 사람의 마음은 공간 최적화한다고 좋은 기억까지 지우면 안 됩니다.<br><br>
+그리고 숙제를 메모이제이션했다고 말하며 머릿속에만 저장하면 선생님은 캐시를 조회할 수 없습니다. 결과는 반드시 제출 파일로 반환하세요. 오늘 저장한 배움이 여러분의 다음 문제를 더 빠르고 정확하게 해결하는 힘이 되기를 바랍니다.
+</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 동적 계획법은 중복 부분 문제와 최적 부분 구조를 확인해야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 메모이제이션은 상향식 반복문 방식이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 테이블 방식은 작은 상태부터 큰 상태로 계산한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 피보나치 단순 재귀는 같은 부분 문제를 반복 계산할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 공간 최적화는 필요한 이전 상태만 남기는 방법이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 격자 경로 수는 1차원 상태만으로만 표현할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 최소 동전 수 문제는 최적 부분 구조를 가진다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 카데인 알고리즘의 dp[i]는 i에서 시작하는 최대 합이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 0/1 배낭에서는 각 물건을 한 번만 선택할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 동적 계획법은 상태 정의와 전이식을 설계하는 방법이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 동적 계획법 적용 조건에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 같은 상태가 반복될 수 있다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 부분 문제의 최적해가 전체 최적해를 구성할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 상태와 전이 관계를 정의할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 모든 문제는 자동으로 DP가 된다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 상태 저장은 필요 없다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 메모이제이션에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 재귀를 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 결과를 캐시에 저장한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 필요한 상태 중심으로 계산한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 항상 모든 상태를 계산한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 호출 스택을 사용하지 않는다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 테이블 방식에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 반복문을 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 계산 순서를 직접 설계한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 재귀 깊이 제한이 없다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 항상 딕셔너리만 사용한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 큰 상태부터 무작위로 계산한다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 공간 최적화에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 필요한 이전 상태만 저장한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 테이블 전체를 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 시간 복잡도는 유지될 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 항상 정확성을 잃는다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 어떤 문제에서도 상태 하나만 저장하면 된다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 2차원 DP에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 격자 위치를 행·열로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 배낭 문제를 물건 수·용량으로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 두 변수로 상태를 정의할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 2차원 DP는 반복문으로 구현할 수 없다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 상태 전이는 필요 없다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 최소화 DP에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 초기값으로 무한대를 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 가능한 이전 상태 중 최소를 선택한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 도달 불가능 상태를 구분할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 항상 최대값을 선택한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 기본 상태는 필요 없다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 최대화 DP에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 카데인 알고리즘은 최대 부분합을 구한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 0/1 배낭은 최대 가치를 구한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 여러 선택 중 최대값을 저장한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 항상 모든 원소를 선택한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 최소값만 저장한다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 상태 정의에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> dp[i]의 의미를 명확히 해야 한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 상태가 무엇을 나타내는지 문장으로 설명한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 전이식은 상태 정의와 연결되어야 한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 상태 이름만 있으면 의미는 필요 없다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 출력값과 상태는 무관하다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 메모이제이션과 테이블 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 계산 방향이 다르다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 호출 스택 사용 여부가 다르다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 필요한 상태만 계산하는 정도가 다를 수 있다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 두 방식은 결과가 항상 달라야 한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 테이블 방식은 저장 공간을 사용하지 않는다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 DP 알고리즘 설명에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 상태를 정의한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 기본값과 전이식을 설명한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 계산 순서와 시간·공간 복잡도를 분석한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 결과만 출력하고 과정은 생략한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 중복 부분 문제 여부는 확인하지 않는다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 10문항 × 5점 = 50점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 3점 = 30점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 23차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "단순 재귀 피보나치는 같은 상태를 반복 계산하므로 중복 부분 문제가 발생합니다."}, "2": {"ans": [0, 1, 2], "exp": "메모이제이션은 재귀와 캐시를 이용해 필요한 상태만 계산하는 하향식 방식입니다."}, "3": {"ans": [0, 1, 2], "exp": "상향식 방식은 필요한 이전 상태가 먼저 계산되도록 순서를 설계합니다."}, "4": {"ans": [0, 1, 2], "exp": "필요한 이전 상태만 남기면 전체 표 없이도 같은 결과를 얻을 수 있습니다."}, "5": {"ans": [0, 1, 2], "exp": "계단 오르기는 이전 두 상태를 결합하는 대표적인 동적 계획법 문제입니다."}, "6": {"ans": [0, 1, 2], "exp": "격자 경로는 위치를 2차원 상태로 두고 위·왼쪽 경로 수를 합산합니다."}, "7": {"ans": [0, 1, 2], "exp": "마지막 동전을 제거하면 더 작은 금액의 최적 문제가 되므로 최적 부분 구조가 성립합니다."}, "8": {"ans": [0, 1, 2], "exp": "카데인 알고리즘은 각 위치에서 새로 시작하거나 이전 최적 부분합을 연장합니다."}, "9": {"ans": [0, 1, 2], "exp": "0/1 배낭은 물건 선택·미선택 두 경우를 비교하는 2차원 DP 문제입니다."}, "10": {"ans": [0, 1, 2], "exp": "두 방식은 같은 점화식을 다르게 계산하므로 결과 일치와 자원 사용을 비교할 수 있습니다."}}, "ox": {"1": {"ans": true, "exp": "대표적인 적용 조건입니다."}, "2": {"ans": false, "exp": "하향식 재귀 방식입니다."}, "3": {"ans": true, "exp": "계산 순서를 직접 설계합니다."}, "4": {"ans": true, "exp": "중복 호출이 발생합니다."}, "5": {"ans": true, "exp": "불필요한 테이블 저장을 줄입니다."}, "6": {"ans": false, "exp": "2차원 상태로 자연스럽게 표현할 수 있습니다."}, "7": {"ans": true, "exp": "작은 금액의 최적해를 사용합니다."}, "8": {"ans": false, "exp": "i에서 끝나는 최대 합입니다."}, "9": {"ans": true, "exp": "선택 또는 미선택입니다."}, "10": {"ans": true, "exp": "단순 저장 기술 이상의 문제 해결 방식입니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "중복 부분 문제·최적 부분 구조·상태 전이가 핵심입니다."}, "2": {"ans": [0, 1, 2], "exp": "하향식 방식은 필요한 상태만 계산할 수 있습니다."}, "3": {"ans": [0, 1, 2], "exp": "상향식 방식은 배열이나 표를 순서대로 채웁니다."}, "4": {"ans": [0, 1, 2], "exp": "전이식이 참조하는 상태 범위를 분석해야 합니다."}, "5": {"ans": [0, 1, 2], "exp": "문제의 두 독립 변수를 상태 축으로 사용합니다."}, "6": {"ans": [0, 1, 2], "exp": "최소화 문제는 큰 초기값과 min 전이를 사용합니다."}, "7": {"ans": [0, 1, 2], "exp": "최대화 문제는 가능한 선택의 최댓값을 상태에 저장합니다."}, "8": {"ans": [0, 1, 2], "exp": "명확한 상태 정의가 올바른 전이식의 출발점입니다."}, "9": {"ans": [0, 1, 2], "exp": "같은 점화식을 다른 순서와 구조로 계산합니다."}, "10": {"ans": [0, 1, 2], "exp": "상태·초기값·전이·순서·복잡도를 함께 설명해야 합니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();
+if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;
+const now=new Date(),lines=["정보과학 23차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);
+document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"});
+const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_23차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();
+document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

@@ -1,0 +1,430 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 14차시 목표지향 개념기반 수업지도안</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:50px 20px 44px}.wrap,main{max-width:1200px;margin:auto}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}pre.trace{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top">
+<header><div class="wrap"><h1>정보과학 14차시<br>DFS·BFS와 그래프 탐색</h1><p>재귀 호출·스택·큐를 활용해 깊이 우선 탐색과 너비 우선 탐색을 구현하고, 경로 탐색·최단 거리·미로·연결 요소 문제에 적용합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~11</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>14차시</td><th>주제</th><td>DFS·BFS 구현과 스택·큐의 관계</td></tr><tr><th>핵심 질문</th><td colspan="3">그래프에서 무엇을 먼저 방문할지 결정하는 자료구조가 탐색 순서와 경로 결과를 어떻게 바꾸는가?</td></tr><tr><th>전이 목표</th><td colspan="3">학생은 새로운 그래프 문제에서 방문 목적과 거리 조건을 분석하고 DFS 또는 BFS를 선택하여 방문 집합, 경로 복원, 종료 조건을 설계할 수 있다.</td></tr><tr><th>성취기준</th><td colspan="3">재귀 호출과 스택을 활용한 DFS, 큐를 활용한 BFS를 구현한다. 방문 순서와 자료구조의 관계를 설명하고 경로 탐색, 동일 가중치 최단 경로, 미로 탐색과 연결 요소 분석에 적용한다.</td></tr><tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 11문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr><tr><td>도입</td><td>미로와 탐험 사례에서 한 길을 깊게 가는 방법과 가까운 곳부터 살피는 방법을 비교한다.</td><td>순서, 전략</td></tr><tr><td>개념 형성</td><td>DFS-스택, BFS-큐, 방문 집합, 경로 복원의 관계를 구조화한다.</td><td>자료구조, 상태</td></tr><tr><td>진단 실습</td><td>재귀 DFS·반복 DFS·BFS를 구현하고 방문 순서와 경로를 추적한다.</td><td>구현, 비교</td></tr><tr><td>정리·전이</td><td>최단 경로·모든 경로·연결 요소 문제에 적합한 탐색을 선택한다.</td><td>판단, 일반화</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>DFS와 BFS의 방문 원리를 설명한다.</li><li>재귀·스택·큐로 탐색을 구현한다.</li><li>방문 집합의 필요성을 설명한다.</li><li>경로와 최단 경로를 복원한다.</li><li>연결 요소와 미로 문제에 탐색을 적용한다.</li></ol></div><div class="card"><h3>학습할 개념</h3><ul><li><b>DFS:</b> 한 경로를 깊게 탐색한 뒤 되돌아오는 방식</li><li><b>BFS:</b> 시작점에서 가까운 노드부터 층별 탐색하는 방식</li><li><b>방문 집합:</b> 중복 방문과 순환 탐색을 막는 상태 정보</li><li><b>부모 노드:</b> 경로 복원을 위해 이전 노드를 저장한 정보</li><li><b>연결 요소:</b> 서로 경로로 도달 가능한 노드들의 묶음</li></ul></div></div><div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>그래프 탐색의 결과는 자료구조와 방문 순서에 따라 달라지며, DFS는 깊은 탐색과 백트래킹에, BFS는 동일 가중치 최단 경로와 단계별 확산에 적합하다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">“소크라테스는 하나의 질문을 깊이 파고들었고, 아리스토텔레스는 가까운 원인부터 차례로 살폈습니다. 뉴턴은 한 법칙을 끝까지 밀고 나가 우주의 질서를 찾았으며, 오일러는 도시의 다리를 그래프로 바꾸어 새로운 길을 열었습니다. 오늘 우리는 한 길을 깊게 가는 DFS와 가까운 곳부터 살피는 BFS를 배웁니다. 탐험도 공부도 전략이 필요합니다. 모든 길을 한 번에 가려 하면 신발보다 메모리가 먼저 닳을 수 있습니다. 이제 스택과 큐를 나침반 삼아 가장 알맞은 탐색을 시작해 봅시다.”</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow"><div class="flow-card"><strong>그래프 준비</strong>인접리스트로 노드와 이웃을 표현합니다.</div><div class="flow-card"><strong>DFS</strong>재귀 호출 또는 스택으로 깊게 탐색합니다.</div><div class="flow-card"><strong>BFS</strong>큐로 가까운 노드부터 층별 탐색합니다.</div><div class="flow-card"><strong>응용</strong>경로·최단 거리·미로·연결 요소를 분석합니다.</div></div>
+<ul><li>인접리스트 그래프 준비</li><li>재귀 호출 스택 기반 DFS</li><li>리스트 스택 기반 반복 DFS</li><li>DFS 스택 상태 추적</li><li>deque 큐 기반 BFS</li><li>BFS 큐 상태 추적</li><li>같은 그래프의 방문 순서 비교</li><li>DFS 경로 찾기와 최단 경로 한계</li><li>BFS 부모 노드와 최단 경로 복원</li><li>미로 최단 이동 경로</li><li>전체 그래프의 연결 요소 분석</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol><li><b>그래프 구조에 따른 DFS·BFS 방문 순서와 저장 공간 비교</b></li><li><b>미로 크기와 장애물 비율이 BFS 최단 경로 탐색에 미치는 영향</b></li><li><b>인접리스트 이웃 순서가 DFS 탐색 결과에 미치는 영향</b></li><li><b>재귀 DFS와 반복 DFS의 실행 시간·호출 깊이 비교</b></li><li><b>학교 협업 네트워크의 연결 요소와 단절 노드 분석</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 11개</h2><p class="lead">각 코드의 스택·큐·방문 집합·부모 노드 변화를 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>인접리스트 그래프 준비</h2></div>
+<div><span class="badge">그래프</span><span class="badge">인접리스트</span></div>
+<div class="two">
+<div><pre><code>graph = {
+    "A": ["B", "C"],
+    "B": ["A", "D", "E"],
+    "C": ["A", "F"],
+    "D": ["B"],
+    "E": ["B", "F"],
+    "F": ["C", "E"]
+}
+
+for node, neighbors in graph.items():
+    print(node, "→", neighbors)</code></pre></div>
+<div class="card">
+<h3>그래프 구조</h3>
+<pre class="trace">A ─ B ─ D
+│   │
+C   E
+│   │
+F ──┘</pre>
+<p>이후 모든 예제는 같은 그래프를 사용해 방문 순서를 비교합니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 인접리스트 그래프에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 딕셔너리 키는 노드를 나타낸다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 값의 리스트는 각 노드의 이웃을 나타낸다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> A는 B와 C에 연결되어 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 그래프에는 간선이 하나도 없다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 모든 노드는 서로 직접 연결되어 있다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>재귀함수로 DFS 구현</h2></div>
+<div><span class="badge">재귀 DFS</span><span class="badge">호출 스택</span></div>
+<pre><code>graph = {
+    "A": ["B", "C"],
+    "B": ["A", "D", "E"],
+    "C": ["A", "F"],
+    "D": ["B"],
+    "E": ["B", "F"],
+    "F": ["C", "E"]
+}
+
+visited = set()
+
+def dfs(node):
+    visited.add(node)
+    print(node, end=" ")
+
+    for neighbor in graph[node]:
+        if neighbor not in visited:
+            dfs(neighbor)
+
+dfs("A")</code></pre>
+<div class="check"><strong>스택 관계</strong><br/>재귀 호출마다 함수 정보가 호출 스택에 쌓이고, 더 이상 방문할 이웃이 없으면 최근 호출부터 복귀합니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 재귀 DFS에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 방문한 노드를 visited에 추가한다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 방문하지 않은 이웃에 대해 dfs를 재귀 호출한다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 호출 스택이 명시적 스택 역할을 한다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> visited가 없어도 순환 그래프에서 항상 안전하다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> DFS는 가까운 노드부터 층별 방문만 한다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>리스트 스택으로 반복 DFS 구현</h2></div>
+<div><span class="badge">명시적 스택</span><span class="badge">반복문</span></div>
+<div class="two">
+<div><pre><code>def dfs_stack(graph, start):
+    stack = [start]
+    visited = set()
+    order = []
+
+    while stack:
+        node = stack.pop()
+
+        if node in visited:
+            continue
+
+        visited.add(node)
+        order.append(node)
+
+        for neighbor in reversed(graph[node]):
+            if neighbor not in visited:
+                stack.append(neighbor)
+
+    return order
+
+print(dfs_stack(graph, "A"))</code></pre></div>
+<div class="card">
+<h3>왜 reversed를 사용할까?</h3>
+<p>스택은 마지막에 넣은 값을 먼저 꺼냅니다.</p>
+<p>인접리스트의 왼쪽 이웃부터 방문하려면 이웃을 역순으로 넣어야 합니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 반복 DFS에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> 리스트를 스택으로 사용한다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> pop()으로 최근에 넣은 노드를 꺼낸다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> reversed()로 인접리스트 앞쪽 이웃을 먼저 방문하게 조정할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 스택은 FIFO 구조이다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> visited 확인은 필요 없다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>DFS 스택 상태 추적</h2></div>
+<div><span class="badge">상태 추적</span><span class="badge">디버깅</span></div>
+<pre><code>def dfs_trace(graph, start):
+    stack = [start]
+    visited = set()
+
+    while stack:
+        print("꺼내기 전 스택:", stack)
+
+        node = stack.pop()
+
+        if node in visited:
+            continue
+
+        visited.add(node)
+        print("방문:", node)
+
+        for neighbor in reversed(graph[node]):
+            if neighbor not in visited:
+                stack.append(neighbor)
+
+        print("이웃 추가 후:", stack)
+        print()
+
+dfs_trace(graph, "A")</code></pre>
+<div class="note"><strong>관찰</strong><br/>가장 최근에 추가된 이웃이 다음 방문 노드가 되어 한 경로를 깊게 따라갑니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 DFS 상태 추적에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> 꺼내기 전 스택 상태를 출력한다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> 방문한 노드와 이웃 추가 후 스택을 확인한다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 최근 추가된 노드가 다음에 처리될 가능성이 크다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 상태 추적은 디버깅과 무관하다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 스택은 탐색 과정에서 항상 비어 있다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>deque 큐로 BFS 구현</h2></div>
+<div><span class="badge">BFS</span><span class="badge">deque</span></div>
+<pre><code>from collections import deque
+
+def bfs(graph, start):
+    queue = deque([start])
+    visited = {start}
+    order = []
+
+    while queue:
+        node = queue.popleft()
+        order.append(node)
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+
+    return order
+
+print(bfs(graph, "A"))</code></pre>
+<div class="check"><strong>큐 관계</strong><br/>먼저 발견한 노드를 먼저 꺼내므로 시작점에서 같은 거리의 노드들이 차례로 방문됩니다.</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 BFS에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> deque를 큐로 사용한다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> popleft()로 먼저 들어온 노드를 꺼낸다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 발견 시점에 visited에 추가한다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 스택의 pop()만 사용해야 한다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> BFS는 가장 깊은 노드만 먼저 방문한다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>BFS 큐 상태 추적</h2></div>
+<div><span class="badge">큐 추적</span><span class="badge">층별 탐색</span></div>
+<pre><code>from collections import deque
+
+def bfs_trace(graph, start):
+    queue = deque([start])
+    visited = {start}
+
+    while queue:
+        print("꺼내기 전 큐:", list(queue))
+
+        node = queue.popleft()
+        print("방문:", node)
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+
+        print("이웃 추가 후:", list(queue))
+        print()
+
+bfs_trace(graph, "A")</code></pre>
+<div class="note"><strong>관찰</strong><br/>A의 이웃 B와 C가 먼저 큐에 들어가고, 두 노드를 모두 처리한 뒤 더 먼 D·E·F를 방문합니다.</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 BFS 상태 추적에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 큐의 처리 전후 상태를 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> A의 이웃 B와 C가 더 먼 노드보다 먼저 처리된다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 층별 탐색 흐름을 관찰할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 가장 최근에 추가된 노드만 먼저 꺼낸다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> queue.popleft()는 큐 뒤를 삭제한다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>같은 그래프의 DFS·BFS 방문 순서 비교</h2></div>
+<div><span class="badge">순서 비교</span><span class="badge">알고리즘 선택</span></div>
+<div class="two">
+<div><pre><code>dfs_order = dfs_stack(graph, "A")
+bfs_order = bfs(graph, "A")
+
+print("DFS:", dfs_order)
+print("BFS:", bfs_order)</code></pre></div>
+<div class="card">
+<h3>예상 순서</h3>
+<pre class="output">DFS: ['A', 'B', 'D', 'E', 'F', 'C']
+BFS: ['A', 'B', 'C', 'D', 'E', 'F']</pre>
+<p>이웃 저장 순서에 따라 실제 방문 순서는 달라질 수 있지만 탐색 원리는 유지됩니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 DFS·BFS 순서 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 같은 그래프에서도 방문 순서가 다를 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> 이웃 저장 순서가 실제 방문 순서에 영향을 줄 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> DFS는 깊은 경로를, BFS는 가까운 노드를 먼저 탐색한다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 두 탐색의 방문 순서는 언제나 완전히 같다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 이웃 순서는 결과에 전혀 영향을 주지 않는다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>DFS로 시작점에서 목표까지 경로 찾기</h2></div>
+<div><span class="badge">경로 탐색</span><span class="badge">백트래킹</span></div>
+<pre><code>def find_path_dfs(graph, start, target):
+    stack = [(start, [start])]
+    visited = set()
+
+    while stack:
+        node, path = stack.pop()
+
+        if node == target:
+            return path
+
+        if node in visited:
+            continue
+
+        visited.add(node)
+
+        for neighbor in reversed(graph[node]):
+            if neighbor not in visited:
+                stack.append(
+                    (neighbor, path + [neighbor])
+                )
+
+    return None
+
+print(find_path_dfs(graph, "A", "F"))</code></pre>
+<div class="warn"><strong>주의</strong><br/>DFS가 찾은 경로는 목표에 도달하는 경로이지만, 간선 수가 가장 적은 최단 경로라고 보장할 수는 없습니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 DFS 경로 찾기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 스택에 현재 노드와 경로를 함께 저장한다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 목표 노드를 만나면 경로를 반환한다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 찾은 경로가 항상 최단 경로인 것은 아니다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> DFS는 어떤 경로도 찾을 수 없다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> path+[neighbor]는 기존 경로를 삭제한다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>BFS로 최단 거리와 경로 구하기</h2></div>
+<div><span class="badge">최단 경로</span><span class="badge">부모 노드</span></div>
+<pre><code>from collections import deque
+
+def shortest_path_bfs(graph, start, target):
+    queue = deque([start])
+    parent = {start: None}
+
+    while queue:
+        node = queue.popleft()
+
+        if node == target:
+            break
+
+        for neighbor in graph[node]:
+            if neighbor not in parent:
+                parent[neighbor] = node
+                queue.append(neighbor)
+
+    if target not in parent:
+        return None
+
+    path = []
+    current = target
+
+    while current is not None:
+        path.append(current)
+        current = parent[current]
+
+    path.reverse()
+    return path
+
+path = shortest_path_bfs(graph, "A", "F")
+
+print("최단 경로:", path)
+print("거리:", len(path) - 1)</code></pre>
+<div class="check"><strong>최단 경로 조건</strong><br/>모든 간선의 비용이 같을 때 BFS는 시작점에서 간선 수가 가장 적은 경로를 찾습니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 BFS 최단 경로에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> parent 딕셔너리로 이전 노드를 저장한다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 목표에서 시작점까지 부모를 따라 경로를 복원한다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 모든 간선 비용이 같을 때 최단 간선 수를 보장한다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 가중치가 서로 달라도 항상 최저 비용을 보장한다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> path.reverse()는 경로를 삭제한다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>미로에서 DFS·BFS 비교</h2></div>
+<div><span class="badge">미로</span><span class="badge">종합 실습</span></div>
+<pre><code>from collections import deque
+
+maze = [
+    [0, 1, 0, 0, 0],
+    [0, 0, 0, 1, 0],
+    [1, 0, 0, 1, 0],
+    [0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0]
+]
+
+rows = len(maze)
+cols = len(maze[0])
+directions = [(1,0), (-1,0), (0,1), (0,-1)]
+
+def bfs_maze(start, target):
+    queue = deque([start])
+    parent = {start: None}
+
+    while queue:
+        row, col = queue.popleft()
+
+        if (row, col) == target:
+            break
+
+        for dr, dc in directions:
+            nr, nc = row + dr, col + dc
+
+            if (
+                0 &lt;= nr &lt; rows
+                and 0 &lt;= nc &lt; cols
+                and maze[nr][nc] == 0
+                and (nr, nc) not in parent
+            ):
+                parent[(nr, nc)] = (row, col)
+                queue.append((nr, nc))
+
+    if target not in parent:
+        return None
+
+    path = []
+    current = target
+
+    while current is not None:
+        path.append(current)
+        current = parent[current]
+
+    return path[::-1]
+
+path = bfs_maze((0, 0), (4, 4))
+
+print("최단 경로:", path)
+print("이동 횟수:", len(path) - 1)</code></pre>
+<table>
+<tr><th>상황</th><th>권장 탐색</th><th>이유</th></tr>
+<tr><td>출구 존재 여부만 확인</td><td>DFS 또는 BFS</td><td>두 방식 모두 연결 여부 확인 가능</td></tr>
+<tr><td>이동 횟수가 가장 적은 길</td><td>BFS</td><td>가까운 칸부터 층별 탐색</td></tr>
+<tr><td>모든 가능한 경로 탐색</td><td>DFS</td><td>한 경로를 깊게 탐색하고 되돌아오기 편함</td></tr>
+<tr><td>재귀적 구조 연습</td><td>재귀 DFS</td><td>호출 스택과 탐색 복귀 관계가 명확함</td></tr>
+</table>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 미로 BFS에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 상하좌우 방향을 탐색한다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 벽과 배열 경계를 검사한다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> parent에 포함되지 않은 칸만 새로 방문한다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 벽인 칸도 자유롭게 이동한다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> BFS는 최단 이동 횟수와 무관하다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+<section id="ex11">
+<div class="ex-head"><span class="num">예제 11</span><h2>연결 요소 개수와 탐색 범위 분석</h2></div>
+<div><span class="badge">연결 요소</span><span class="badge">반복 DFS</span><span class="badge">그래프 분석</span></div>
+<pre><code>graph = {
+    "A": ["B"],
+    "B": ["A", "C"],
+    "C": ["B"],
+    "D": ["E"],
+    "E": ["D"],
+    "F": []
+}
+
+def explore_component(graph, start, visited):
+    stack = [start]
+    component = []
+
+    while stack:
+        node = stack.pop()
+
+        if node in visited:
+            continue
+
+        visited.add(node)
+        component.append(node)
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                stack.append(neighbor)
+
+    return component
+
+visited = set()
+components = []
+
+for node in graph:
+    if node not in visited:
+        component = explore_component(
+            graph,
+            node,
+            visited
+        )
+        components.append(component)
+
+print("연결 요소 수:", len(components))
+
+for i, component in enumerate(components, start=1):
+    print(f"{i}번 연결 요소:", component)</code></pre>
+
+<table>
+<tr><th>개념</th><th>설명</th></tr>
+<tr><td>연결 요소</td><td>서로 경로로 도달할 수 있는 노드들의 집합</td></tr>
+<tr><td>전체 순회</td><td>모든 노드를 확인하며 아직 방문하지 않은 노드에서 새 탐색 시작</td></tr>
+<tr><td>고립 노드</td><td>간선이 없어도 하나의 연결 요소로 계산</td></tr>
+<tr><td>활용</td><td>네트워크 분리, 집단 탐지, 통신 장애 구간 분석</td></tr>
+</table>
+
+<div class="note"><strong>상세 설명</strong><br>
+한 번의 DFS 또는 BFS는 시작 노드와 연결된 범위만 탐색합니다.
+그래프 전체의 연결 요소를 찾으려면 모든 노드를 순회하며 방문하지 않은 노드마다 새로운 탐색을 시작해야 합니다.
+</div>
+<div class="codequiz"><h3>예제 11 확인 문제</h3><div class="qitem"><h4>11. 예제 11의 연결 요소 분석에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code11" value="0"><span><b>1.</b> 방문하지 않은 노드에서 새 탐색을 시작한다.</span></label><label class="option"><input type="checkbox" name="code11" value="1"><span><b>2.</b> 서로 도달 가능한 노드 묶음을 연결 요소라 한다.</span></label><label class="option"><input type="checkbox" name="code11" value="2"><span><b>3.</b> 고립 노드도 하나의 연결 요소가 된다.</span></label><label class="option"><input type="checkbox" name="code11" value="3"><span><b>4.</b> 한 번의 DFS로 항상 모든 분리된 요소를 방문한다.</span></label><label class="option"><input type="checkbox" name="code11" value="4"><span><b>5.</b> 연결 요소 수는 항상 1이다.</span></label></div><div class="feedback" id="fb-code11"></div></div></div></section>
+
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">“시는 한 이미지의 깊이를 끝까지 따라가는 DFS 같고, 소설은 여러 인물의 삶을 차례로 비추는 BFS 같습니다. 희곡은 한 인물의 내면을 깊이 파고들다가도 무대 전체를 바라보며 장면을 넓히고, 연극은 배우 한 사람의 감정과 전체 장면의 호흡을 함께 살핍니다. 음악도 독주와 합주가 번갈아 나타나며 길을 만듭니다. 여러분의 꿈이 깊은 탐색을 요구할 때는 끝까지 파고들고, 길을 잃었을 때는 가까운 가능성부터 차근차근 살펴보세요. 다만 시험 전날 모든 단원을 DFS로 파고들면 첫 장에서 아침을 맞을 수 있으니 BFS식 전체 훑기도 필요합니다. 오늘의 탐색이 여러분의 최단 희망 경로를 찾아 주길 바랍니다.”</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. DFS는 한 경로를 가능한 깊이까지 탐색한 뒤 되돌아온다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. BFS는 스택을 대표 자료구조로 사용한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 재귀 DFS에서는 함수 호출 스택이 사용된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. BFS는 모든 간선 비용이 같을 때 최단 간선 수 경로를 찾을 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. DFS가 찾은 첫 경로는 항상 최단 경로이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 방문 집합은 순환 그래프의 반복 탐색을 막는다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 반복 DFS에서 이웃 순서는 방문 순서에 영향을 줄 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. BFS에서는 발견한 노드를 큐에 넣기 전에 방문 표시할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 고립 노드는 연결 요소가 될 수 없다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 그래프 탐색 결과를 해석할 때 개인정보와 관계 맥락을 고려해야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 2.5점, 총 25점입니다.</p><div class="qitem"><h4>1. DFS의 특징에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 스택 또는 재귀 호출을 사용한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 한 경로를 깊게 탐색한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 백트래킹과 모든 경로 탐색에 활용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 항상 최단 경로를 보장한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 큐의 FIFO만으로 구현한다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. BFS의 특징에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 큐를 사용한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 가까운 노드부터 방문한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 동일 가중치 최단 경로에 활용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 가장 깊은 경로만 먼저 탐색한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 스택의 LIFO가 핵심이다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 방문 집합에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 중복 방문을 막는다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 순환 그래프의 무한 탐색을 막는다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 방문 여부를 빠르게 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 모든 노드를 계속 다시 방문하게 한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 탐색 순서를 무작위로 만든다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 반복 DFS의 스택 처리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> start를 스택에 넣는다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> pop으로 다음 노드를 꺼낸다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 이웃을 스택에 추가한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> popleft만 사용해야 한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 먼저 넣은 노드를 항상 먼저 꺼낸다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. BFS의 큐 처리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> start를 큐에 넣는다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> popleft로 앞 노드를 꺼낸다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 새 이웃을 뒤에 추가한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> pop으로 뒤만 제거해야 한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 방문 표시가 필요 없다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 최단 경로에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 동일 가중치 그래프에서는 BFS가 적합하다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> parent 정보로 경로를 복원할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 거리와 경로를 함께 구할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> DFS는 모든 경우에 최단을 보장한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 가중치가 달라도 BFS가 항상 최저 비용이다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 미로 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 칸을 노드로 볼 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 이동 가능한 인접 칸을 간선으로 볼 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 최단 이동 횟수에는 BFS가 적합하다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 벽도 노드와 간선으로 자유롭게 통과한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 경계 검사는 필요 없다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 연결 요소에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 서로 경로로 도달 가능한 노드 묶음이다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 방문하지 않은 노드마다 새 탐색을 시작할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 고립 노드도 하나의 요소이다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 분리된 그래프에서도 요소 수는 항상 1이다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 한 번의 시작점 탐색이 모든 요소를 자동 방문한다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. DFS와 BFS 선택 기준으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 목표가 최단 거리인지 확인한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 모든 경로나 깊은 탐색이 필요한지 확인한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 메모리 특성과 그래프 구조를 고려한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 항상 DFS만 선택한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 탐색 목적은 고려하지 않는다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 그래프 탐색 실험에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 같은 그래프에서 방문 순서를 비교한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 이웃 저장 순서를 기록한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 탐색 결과와 경로 길이를 검증한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 방문 집합 없이 순환 그래프를 실험한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 결과 차이의 원인을 설명하지 않는다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 11문항 × 5점 = 55점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 2.5점 = 25점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 14차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "인접리스트는 노드별 실제 이웃 목록을 저장합니다."}, "2": {"ans": [0, 1, 2], "exp": "재귀 호출 스택과 방문 집합이 깊이 우선 탐색을 구현합니다."}, "3": {"ans": [0, 1, 2], "exp": "반복 DFS는 명시적 스택과 방문 집합을 사용합니다."}, "4": {"ans": [0, 1, 2], "exp": "스택 변화를 출력하면 DFS의 깊이 우선 흐름을 관찰할 수 있습니다."}, "5": {"ans": [0, 1, 2], "exp": "BFS는 FIFO 큐로 가까운 노드부터 방문합니다."}, "6": {"ans": [0, 1, 2], "exp": "BFS 큐 추적은 거리별 방문 순서를 보여 줍니다."}, "7": {"ans": [0, 1, 2], "exp": "탐색 원리는 유지되지만 인접리스트 순서에 따라 세부 방문 순서는 달라질 수 있습니다."}, "8": {"ans": [0, 1, 2], "exp": "DFS는 도달 경로를 찾을 수 있지만 최단 간선 수는 보장하지 않습니다."}, "9": {"ans": [0, 1, 2], "exp": "동일 가중치 그래프에서 BFS는 최단 간선 수 경로를 찾습니다."}, "10": {"ans": [0, 1, 2], "exp": "벽·경계·방문 여부를 검사하며 가까운 칸부터 탐색합니다."}, "11": {"ans": [0, 1, 2], "exp": "분리된 그래프에서는 각 미방문 노드에서 탐색을 시작해야 합니다."}}, "ox": {"1": {"ans": true, "exp": "깊이 우선 탐색의 기본 원리입니다."}, "2": {"ans": false, "exp": "BFS는 큐를 사용합니다."}, "3": {"ans": true, "exp": "재귀 호출 정보가 스택에 쌓입니다."}, "4": {"ans": true, "exp": "거리별로 층을 확장합니다."}, "5": {"ans": false, "exp": "도달 경로일 뿐 최단은 보장하지 않습니다."}, "6": {"ans": true, "exp": "무한 반복과 중복 방문을 방지합니다."}, "7": {"ans": true, "exp": "스택 삽입 순서가 달라집니다."}, "8": {"ans": true, "exp": "중복 삽입을 방지합니다."}, "9": {"ans": false, "exp": "고립 노드도 하나의 연결 요소입니다."}, "10": {"ans": true, "exp": "관계 데이터는 민감할 수 있습니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "DFS는 깊이 우선 구조에 적합합니다."}, "2": {"ans": [0, 1, 2], "exp": "BFS는 층별 탐색과 최단 간선 수에 적합합니다."}, "3": {"ans": [0, 1, 2], "exp": "visited는 탐색의 정확성과 효율을 높입니다."}, "4": {"ans": [0, 1, 2], "exp": "LIFO 처리가 깊이 우선 순서를 만듭니다."}, "5": {"ans": [0, 1, 2], "exp": "FIFO 처리가 층별 탐색을 만듭니다."}, "6": {"ans": [0, 1, 2], "exp": "가중치가 다르면 다익스트라 같은 다른 알고리즘이 필요할 수 있습니다."}, "7": {"ans": [0, 1, 2], "exp": "미로는 그래프로 모델링할 수 있습니다."}, "8": {"ans": [0, 1, 2], "exp": "전체 그래프 순회가 필요합니다."}, "9": {"ans": [0, 1, 2], "exp": "문제의 목표와 구조에 따라 선택합니다."}, "10": {"ans": [0, 1, 2], "exp": "동일 조건과 과정 기록이 중요합니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;const now=new Date(),lines=["정보과학 14차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=11;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=2.5;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+score=Math.round(score*10)/10;
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 31문항`);document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_14차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

@@ -1,0 +1,340 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 9차시 목표지향 개념기반 수업지도안</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:50px 20px 44px}.wrap,main{max-width:1180px;margin:auto}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top">
+<header><div class="wrap"><h1>정보과학 9차시<br>스택과 LIFO 원리</h1><p>리스트를 이용해 push·pop·peek를 직접 구현하고 실행 취소, 문자열 뒤집기, 괄호 검사 문제에 스택을 적용합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>9차시</td><th>주제</th><td>LIFO 원리와 리스트 기반 스택 구현</td></tr><tr><th>핵심 질문</th><td colspan="3">최근에 들어온 자료를 먼저 처리해야 하는 문제를 어떻게 발견하고, push·pop·peek 연산으로 안전하게 구현할 수 있는가?</td></tr><tr><th>전이 목표</th><td colspan="3">학생은 새로운 문제의 처리 순서를 분석하여 후입선출 구조가 필요한지 판단하고, 스택 연산과 예외 처리를 설계하여 실행 취소·괄호 검사·역순 처리 문제에 적용할 수 있다.</td></tr><tr><th>성취기준</th><td colspan="3">스택의 후입선출 원리를 설명하고 리스트를 활용하여 push·pop·peek·is_empty 연산을 구현한다. 스택 언더플로를 처리하고 실행 취소, 문자열 뒤집기, 괄호 짝 검사 등 실제 문제에 스택을 적용한다.</td></tr><tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr><tr><td>도입</td><td>접시 쌓기와 실행 취소 사례를 비교하여 최근 자료 우선 처리 규칙을 찾는다.</td><td>순서, 꼭대기</td></tr><tr><td>개념 형성</td><td>LIFO와 push·pop·peek·is_empty의 의미를 리스트 연산과 연결한다.</td><td>연산, 불변성</td></tr><tr><td>진단 실습</td><td>직접 함수와 Stack 클래스를 구현하고 실행 취소·뒤집기·괄호 검사에 적용한다.</td><td>구현, 예외</td></tr><tr><td>정리·전이</td><td>새로운 문제의 처리 순서를 분석하여 스택 사용 여부와 근거를 설명한다.</td><td>일반화, 선택</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>스택의 LIFO 원리를 생활 사례로 설명한다.</li><li>push·pop·peek·is_empty 연산을 직접 구현한다.</li><li>Stack 클래스로 자료와 연산을 캡슐화한다.</li><li>빈 스택 언더플로를 안전하게 처리한다.</li><li>실행 취소·문자열 뒤집기·괄호 검사에 스택을 적용한다.</li></ol></div><div class="card"><h3>학습할 개념</h3><ul><li><b>LIFO:</b> 마지막에 들어온 자료를 가장 먼저 처리하는 규칙</li><li><b>top:</b> 스택에서 삽입과 삭제가 일어나는 맨 위 위치</li><li><b>push·pop·peek:</b> 추가·삭제·확인 연산</li><li><b>언더플로:</b> 빈 스택에서 자료를 꺼내려는 오류 상황</li><li><b>캡슐화:</b> 자료와 관련 연산을 하나의 클래스에 묶는 설계</li></ul></div></div><div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>최근 상태나 가장 나중에 들어온 자료를 먼저 처리해야 하는 문제는 스택으로 모델링할 수 있으며, 올바른 구현은 top 연산과 빈 상태 검사를 명확하게 관리한다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">“아리스토텔레스는 경험이 기억 위에 쌓인다고 보았고, 데카르트는 생각을 차례로 정리해 확실한 것부터 다루었습니다. 뉴턴은 이전 연구의 층 위에 새로운 법칙을 올렸고, 수학의 괄호는 가장 안쪽 계산부터 풀어야 전체 식이 정리됩니다. 오늘 배우는 스택도 가장 최근에 쌓인 것을 먼저 꺼냅니다. 공부도 최근에 틀린 문제를 먼저 복습하면 좋지만, 급식 줄을 스택으로 운영하면 마지막에 온 학생이 가장 먼저 먹게 되어 민주주의 토론이 열릴 수 있습니다. 이제 무엇을 쌓고, 언제 꺼내며, 비어 있을 때는 어떻게 해야 하는지 논리적으로 설계해 봅시다.”</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow"><div class="flow-card"><strong>LIFO 이해</strong>최근 자료를 먼저 처리하는 규칙을 사례로 확인합니다.</div><div class="flow-card"><strong>핵심 연산</strong>push·pop·peek·is_empty·size를 구현합니다.</div><div class="flow-card"><strong>안전한 처리</strong>빈 스택 언더플로와 예외를 처리합니다.</div><div class="flow-card"><strong>문제 적용</strong>실행 취소·역순·괄호 검사에 활용합니다.</div></div>
+<ul><li>접시 쌓기를 통한 LIFO 체험</li><li>리스트 append() 기반 push</li><li>직접 구현한 pop과 반환값</li><li>peek와 pop의 차이</li><li>Stack 클래스와 캡슐화</li><li>IndexError와 스택 언더플로</li><li>문서 편집 실행 취소</li><li>문자열 뒤집기와 괄호 짝 검사</li><li>명령어 기반 스택 프로그램</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol><li><b>리스트 기반 스택과 deque 기반 스택의 연산 성능 비교</b></li><li><b>실행 취소 단계 수에 따른 메모리 사용량 분석</b></li><li><b>괄호 종류 확장에 따른 스택 검사 알고리즘 설계</b></li><li><b>스택 언더플로 처리 방식에 따른 프로그램 사용성 비교</b></li><li><b>브라우저 뒤로 가기와 앞으로 가기를 위한 이중 스택 구조 연구</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 코드의 LIFO 처리 순서와 push·pop·peek·예외 처리 방식을 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>접시 쌓기로 LIFO 확인</h2></div>
+<div><span class="badge">후입선출</span><span class="badge">리스트</span></div>
+<div class="two">
+<div><pre><code>plates = []
+
+plates.append("파란 접시")
+plates.append("노란 접시")
+plates.append("빨간 접시")
+
+print("현재 접시:", plates)
+
+print("꺼낸 접시:", plates.pop())
+print("꺼낸 접시:", plates.pop())
+print("남은 접시:", plates)</code></pre></div>
+<div class="card">
+<h3>실행 결과</h3>
+<pre class="output">현재 접시: ['파란 접시', '노란 접시', '빨간 접시']
+꺼낸 접시: 빨간 접시
+꺼낸 접시: 노란 접시
+남은 접시: ['파란 접시']</pre>
+</div>
+</div>
+<div class="check"><strong>관찰</strong><br/>가장 마지막에 넣은 빨간 접시가 가장 먼저 나옵니다.</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 접시 쌓기와 LIFO 원리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 마지막에 넣은 빨간 접시가 가장 먼저 나온다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 리스트의 append()로 맨 위에 자료를 추가할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 리스트의 pop()으로 맨 위 자료를 제거할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 스택은 먼저 들어온 자료가 항상 먼저 나온다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> pop()은 맨 앞 원소만 제거한다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>push 함수 직접 구현</h2></div>
+<div><span class="badge">추가 연산</span><span class="badge">append</span></div>
+<div class="two">
+<div><pre><code>stack = []
+
+def push(value):
+    stack.append(value)
+    print(f"push({value}) → {stack}")
+
+push(10)
+push(20)
+push(30)</code></pre></div>
+<div class="card">
+<h3>동작</h3>
+<p>전달받은 값을 리스트의 맨 뒤에 추가합니다.</p>
+<pre class="output">push(10) → [10]
+push(20) → [10, 20]
+push(30) → [10, 20, 30]</pre>
+</div>
+</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 push 함수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> push는 새로운 값을 스택 맨 위에 추가한다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> stack.append(value)를 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> push를 여러 번 호출하면 입력 순서대로 리스트 뒤에 쌓인다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> push는 스택에서 값을 삭제한다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> push는 빈 스택에서만 사용할 수 있다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>pop 함수 직접 구현</h2></div>
+<div><span class="badge">삭제 연산</span><span class="badge">반환값</span></div>
+<pre><code>stack = [10, 20, 30]
+
+def pop():
+    if len(stack) == 0:
+        return None
+
+    value = stack[-1]
+    del stack[-1]
+    return value
+
+print("삭제값:", pop())
+print("삭제값:", pop())
+print("현재 스택:", stack)</code></pre>
+<div class="note"><strong>직접 구현</strong><br/>맨 위 값을 먼저 저장하고 <code>del stack[-1]</code>로 삭제한 뒤 저장값을 반환합니다. 실제로는 리스트의 <code>pop()</code>을 바로 사용할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 pop 함수 직접 구현에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> 빈 스택이면 None을 반환하도록 작성되어 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> stack[-1]은 맨 위 값을 확인한다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> del stack[-1]은 마지막 원소를 삭제한다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> pop은 맨 위 값을 삭제하지 않는다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 빈 스택에서도 항상 정상적인 숫자를 반환한다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>peek 함수 직접 구현</h2></div>
+<div><span class="badge">맨 위 확인</span><span class="badge">삭제 없음</span></div>
+<div class="two">
+<div><pre><code>stack = ["A", "B", "C"]
+
+def peek():
+    if len(stack) == 0:
+        return None
+
+    return stack[-1]
+
+print("맨 위:", peek())
+print("확인 후:", stack)</code></pre></div>
+<div class="card">
+<h3>실행 결과</h3>
+<pre class="output">맨 위: C
+확인 후: ['A', 'B', 'C']</pre>
+<p><code>peek()</code>은 자료를 확인하지만 삭제하지 않습니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 peek 함수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> peek는 맨 위 자료를 확인한다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> peek는 자료를 삭제하지 않는다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 빈 스택에서는 None을 반환할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> peek를 호출하면 스택 크기가 반드시 1 감소한다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> peek는 맨 아래 자료만 확인한다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>Stack 클래스로 연산 통합</h2></div>
+<div><span class="badge">클래스</span><span class="badge">캡슐화</span></div>
+<pre><code>class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, value):
+        self.items.append(value)
+
+    def pop(self):
+        if self.is_empty():
+            return None
+        return self.items.pop()
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self.items[-1]
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def size(self):
+        return len(self.items)
+
+stack = Stack()
+stack.push(100)
+stack.push(200)
+
+print("peek:", stack.peek())
+print("pop:", stack.pop())
+print("크기:", stack.size())</code></pre>
+<div class="check"><strong>장점</strong><br/>스택 자료와 연산을 하나의 클래스로 묶어 여러 스택 객체를 독립적으로 만들 수 있습니다.</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 Stack 클래스 구현에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> self.items에 스택 자료를 저장한다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> push·pop·peek·is_empty·size 메서드를 하나의 클래스로 묶었다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 여러 Stack 객체를 독립적으로 만들 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 클래스에서는 리스트를 사용할 수 없다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> size는 항상 0만 반환한다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>빈 스택 예외 처리</h2></div>
+<div><span class="badge">언더플로</span><span class="badge">예외</span></div>
+<div class="two">
+<div><pre><code>class Stack:
+    def __init__(self):
+        self.items = []
+
+    def pop(self):
+        if not self.items:
+            raise IndexError(
+                "빈 스택에서는 pop할 수 없습니다."
+            )
+        return self.items.pop()
+
+stack = Stack()
+
+try:
+    print(stack.pop())
+except IndexError as error:
+    print("오류:", error)</code></pre></div>
+<div class="card">
+<h3>스택 언더플로</h3>
+<p>비어 있는 스택에서 자료를 꺼내려는 상황을 스택 언더플로라고 합니다.</p>
+<p>반환값 <code>None</code>을 사용할 수도 있고, 명확한 예외를 발생시킬 수도 있습니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 빈 스택 예외 처리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 빈 스택에서 pop을 시도하면 언더플로 상황이다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> raise IndexError로 명확한 오류를 발생시킬 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> try-except로 오류를 처리할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 빈 스택 pop은 항상 안전하므로 검사가 필요 없다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> IndexError는 문자열을 뒤집는 함수이다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>문서 편집 실행 취소</h2></div>
+<div><span class="badge">실행 취소</span><span class="badge">상태 저장</span></div>
+<pre><code>text = ""
+history = []
+
+def write(new_text):
+    global text
+
+    history.append(text)
+    text += new_text
+    print("현재 문서:", text)
+
+def undo():
+    global text
+
+    if not history:
+        print("취소할 작업이 없습니다.")
+        return
+
+    text = history.pop()
+    print("실행 취소:", text)
+
+write("안녕")
+write("하세요")
+write("!")
+undo()
+undo()</code></pre>
+<div class="note"><strong>LIFO 적용</strong><br/>최근 상태를 스택의 맨 위에 저장하므로 가장 최근 작업부터 역순으로 취소할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 실행 취소 기능에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 작업 전 문서 상태를 history에 저장한다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> 가장 최근 상태부터 복원한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 스택의 LIFO 원리가 실행 취소와 잘 맞는다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 가장 오래된 상태부터 먼저 취소한다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> history가 비어도 무조건 pop한다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>스택으로 문자열 뒤집기</h2></div>
+<div><span class="badge">문자열</span><span class="badge">역순 출력</span></div>
+<div class="two">
+<div><pre><code>def reverse_text(text):
+    stack = []
+
+    for character in text:
+        stack.append(character)
+
+    result = ""
+
+    while stack:
+        result += stack.pop()
+
+    return result
+
+print(reverse_text("PYTHON"))</code></pre></div>
+<div class="card">
+<h3>처리 과정</h3>
+<p>문자를 왼쪽부터 스택에 넣습니다.</p>
+<p>마지막 문자부터 꺼내어 결과에 연결합니다.</p>
+<pre class="output">NOHTYP</pre>
+</div>
+</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 문자열 뒤집기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 문자를 왼쪽부터 스택에 넣는다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> pop으로 마지막 문자부터 꺼낸다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> PYTHON의 결과는 NOHTYP이다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 스택을 사용하면 입력 순서 그대로 출력된다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> while stack은 스택이 비어 있을 때만 실행된다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>괄호 짝 검사</h2></div>
+<div><span class="badge">괄호 검사</span><span class="badge">응용</span></div>
+<pre><code>def check_parentheses(expression):
+    stack = []
+
+    for character in expression:
+        if character == "(":
+            stack.append(character)
+
+        elif character == ")":
+            if not stack:
+                return False
+            stack.pop()
+
+    return len(stack) == 0
+
+tests = [
+    "(a+b)*(c-d)",
+    "((a+b)",
+    "a+b)",
+    "(a+(b*c))"
+]
+
+for test in tests:
+    print(test, "→", check_parentheses(test))</code></pre>
+<div class="check"><strong>원리</strong><br/>여는 괄호를 스택에 넣고 닫는 괄호를 만날 때 하나를 꺼냅니다. 마지막에 스택이 비어 있어야 모든 괄호의 짝이 맞습니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 괄호 짝 검사에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> 여는 괄호를 스택에 넣는다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 닫는 괄호를 만나면 스택에서 하나를 꺼낸다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 마지막에 스택이 비어 있어야 짝이 맞다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 닫는 괄호가 먼저 나와도 항상 True이다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 스택은 괄호 검사에 사용할 수 없다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>명령어 기반 스택 프로그램</h2></div>
+<div><span class="badge">종합 실습</span><span class="badge">push·pop·peek</span></div>
+<pre><code>stack = []
+
+def push(value):
+    stack.append(value)
+
+def pop():
+    if not stack:
+        return "EMPTY"
+    return stack.pop()
+
+def peek():
+    if not stack:
+        return "EMPTY"
+    return stack[-1]
+
+while True:
+    command = input("명령: ").split()
+
+    if command[0] == "push":
+        push(command[1])
+        print("스택:", stack)
+
+    elif command[0] == "pop":
+        print("삭제:", pop())
+
+    elif command[0] == "peek":
+        print("맨 위:", peek())
+
+    elif command[0] == "size":
+        print("크기:", len(stack))
+
+    elif command[0] == "quit":
+        break
+
+    else:
+        print("알 수 없는 명령입니다.")</code></pre>
+<table>
+<tr><th>명령</th><th>기능</th><th>예시</th></tr>
+<tr><td>push 값</td><td>값을 맨 위에 추가</td><td><code>push 10</code></td></tr>
+<tr><td>pop</td><td>맨 위 값을 삭제·출력</td><td><code>pop</code></td></tr>
+<tr><td>peek</td><td>맨 위 값을 확인</td><td><code>peek</code></td></tr>
+<tr><td>size</td><td>저장된 자료 수 출력</td><td><code>size</code></td></tr>
+<tr><td>quit</td><td>프로그램 종료</td><td><code>quit</code></td></tr>
+</table>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 명령어 기반 스택 프로그램에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> push 값 명령은 값을 스택에 추가한다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> pop 명령은 맨 위 값을 삭제하고 출력한다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> peek 명령은 맨 위 값을 삭제하지 않고 확인한다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> quit는 스택의 모든 값을 두 배로 만든다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 알 수 없는 명령은 항상 프로그램을 강제 종료한다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">“시는 마음속에 마지막으로 남은 한 단어를 꺼내 독자에게 건네고, 소설은 최근의 사건이 인물의 다음 선택을 흔듭니다. 희곡은 마지막 대사가 다음 장면의 문을 열고, 연극은 막이 내릴 때까지 배우들의 기억이 차곡차곡 쌓입니다. 음악도 마지막 음이 울린 뒤에야 앞선 모든 음의 의미가 선명해집니다. 여러분의 꿈 스택에도 도전과 실패와 웃음이 쌓이고 있습니다. 넘어졌을 때 가장 최근의 실패부터 하나씩 pop하며 배움을 꺼내세요. 다만 시험 전날 모든 공부를 한꺼번에 push하면 머릿속 스택이 overflow될 수 있습니다. 오늘의 작은 성공을 꼭대기에 올리고 내일 다시 힘차게 꺼내 쓰길 바랍니다.”</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 스택은 후입선출 구조이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. push는 스택에서 자료를 삭제하는 연산이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. pop은 맨 위 자료를 삭제하고 반환할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. peek는 맨 위 자료를 삭제하지 않고 확인한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 빈 스택에서 pop을 시도하는 상황을 언더플로라고 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 실행 취소 기능에는 큐가 스택보다 항상 더 적합하다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 문자열 뒤집기에 스택을 활용할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 괄호 검사에서는 여는 괄호를 스택에 저장할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 스택은 함수 호출 기록과 무관하다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 리스트의 append()와 pop()으로 스택을 구현할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 스택의 기본 원리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 후입선출 구조이다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 맨 위에서 삽입과 삭제가 이루어진다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 최근 자료를 먼저 처리한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 항상 먼저 들어온 자료를 먼저 처리한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 자료는 중간에서만 삽입한다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. push 연산에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 새 자료를 맨 위에 추가한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 리스트 append()로 구현할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 스택 크기를 1 증가시킬 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 맨 위 자료를 삭제한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 빈 스택에서는 사용할 수 없다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. pop 연산에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 맨 위 자료를 제거한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 제거한 값을 반환할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 빈 스택 여부를 확인해야 한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 자료를 삭제하지 않는다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 스택 맨 아래만 제거한다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. peek 연산에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 맨 위 자료를 확인한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 스택 내용은 그대로 유지된다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 빈 스택 처리가 필요할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 항상 맨 아래 자료를 반환한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 호출할 때마다 스택 크기가 줄어든다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 스택 클래스 설계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 자료와 연산을 하나의 객체로 묶을 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> is_empty와 size를 메서드로 만들 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 여러 객체가 서로 독립된 items를 가질 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 클래스에서는 예외 처리를 할 수 없다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 모든 객체는 반드시 같은 리스트를 공유한다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 스택 활용 사례에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 실행 취소에 활용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 브라우저 뒤로 가기에 활용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 함수 호출 기록에 활용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 급식 대기열의 선입선출 처리에 가장 적합하다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 우선순위가 가장 높은 작업만 처리한다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 괄호 검사에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 여는 괄호를 push할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 닫는 괄호에서 pop할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 마지막에 스택이 비어야 짝이 맞다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 닫는 괄호가 먼저 나와도 무조건 정상이다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 스택에 남은 여는 괄호는 무시한다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 스택 언더플로 처리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> None을 반환할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 예외를 발생시킬 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 호출 전에 비어 있는지 검사할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 검사 없이 항상 pop해야 한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 언더플로는 스택이 너무 커진 상황이다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 리스트 기반 스택 성능에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> append는 맨 뒤 삽입에 적합하다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> pop()은 맨 뒤 삭제에 적합하다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 맨 뒤를 top으로 사용하면 효율적이다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> insert(0)만 사용해야 스택이 된다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 모든 중간 탐색이 항상 O(1)이다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 스택 프로그램 설계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 명령과 연산을 분리한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 빈 스택 상황을 처리한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> push·pop·peek의 의미를 명확히 한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 오류 상황은 무시한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 모든 명령에 같은 동작을 수행한다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 10×5점=50점<br>OX 10×2점=20점<br>진단평가 10×3점=30점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 9차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "스택은 후입선출 구조이며 리스트의 맨 뒤를 꼭대기로 사용합니다."}, "2": {"ans": [0, 1, 2], "exp": "push는 자료를 삭제하지 않고 맨 위에 추가하는 연산입니다."}, "3": {"ans": [0, 1, 2], "exp": "pop은 맨 위 값을 저장한 뒤 삭제하고 반환하며 빈 스택 처리가 필요합니다."}, "4": {"ans": [0, 1, 2], "exp": "peek는 삭제 없이 맨 위 자료를 확인하는 연산입니다."}, "5": {"ans": [0, 1, 2], "exp": "클래스로 자료와 연산을 캡슐화하면 여러 독립 스택을 만들 수 있습니다."}, "6": {"ans": [0, 1, 2], "exp": "빈 스택 연산은 언더플로이며 반환값 또는 예외 방식으로 처리할 수 있습니다."}, "7": {"ans": [0, 1, 2], "exp": "실행 취소는 최근 상태를 먼저 복원하므로 스택에 적합합니다."}, "8": {"ans": [0, 1, 2], "exp": "스택에 넣은 문자를 역순으로 꺼내면 문자열이 뒤집힙니다."}, "9": {"ans": [0, 1, 2], "exp": "닫는 괄호가 먼저 나오거나 마지막에 여는 괄호가 남으면 올바르지 않습니다."}, "10": {"ans": [0, 1, 2], "exp": "명령에 따라 push, pop, peek, size, quit 기능을 수행합니다."}}, "ox": {"1": {"ans": true, "exp": "나중에 들어온 자료가 먼저 나옵니다."}, "2": {"ans": false, "exp": "push는 자료를 추가합니다."}, "3": {"ans": true, "exp": "삭제와 반환을 함께 수행합니다."}, "4": {"ans": true, "exp": "스택 크기는 변하지 않습니다."}, "5": {"ans": true, "exp": "스택 언더플로입니다."}, "6": {"ans": false, "exp": "최근 작업부터 취소하므로 스택이 적합합니다."}, "7": {"ans": true, "exp": "역순으로 꺼내면 뒤집힙니다."}, "8": {"ans": true, "exp": "닫는 괄호와 짝을 맞추는 데 사용합니다."}, "9": {"ans": false, "exp": "함수 호출 스택이 대표적 사례입니다."}, "10": {"ans": true, "exp": "맨 뒤를 꼭대기로 사용합니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "스택은 한쪽 끝인 top에서 자료를 처리합니다."}, "2": {"ans": [0, 1, 2], "exp": "push는 스택 크기를 늘리는 추가 연산입니다."}, "3": {"ans": [0, 1, 2], "exp": "pop은 삭제·반환 연산이며 언더플로 검사가 필요합니다."}, "4": {"ans": [0, 1, 2], "exp": "peek는 삭제 없는 조회 연산입니다."}, "5": {"ans": [0, 1, 2], "exp": "클래스는 자료와 연산을 캡슐화합니다."}, "6": {"ans": [0, 1, 2], "exp": "최근 상태나 경로를 되돌리는 문제에 스택이 적합합니다."}, "7": {"ans": [0, 1, 2], "exp": "닫는 괄호 순서와 마지막 잔여 스택을 모두 검사해야 합니다."}, "8": {"ans": [0, 1, 2], "exp": "빈 스택 접근은 반환값이나 예외 방식으로 안전하게 처리합니다."}, "9": {"ans": [0, 1, 2], "exp": "파이썬 리스트의 맨 뒤 연산을 활용하는 것이 일반적입니다."}, "10": {"ans": [0, 1, 2], "exp": "연산 의미와 예외 조건을 명확히 설계해야 합니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;const now=new Date(),lines=["정보과학 9차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_9차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

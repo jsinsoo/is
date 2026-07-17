@@ -1,0 +1,336 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 6차시 목표지향 개념기반 수업지도안</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:50px 20px 44px}.wrap,main{max-width:1200px;margin:auto}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}pre.trace{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top">
+<header><div class="wrap"><h1>정보과학 6차시<br>재귀적 문제 분해와 백트래킹</h1><p>하노이 탑, 미로 탐색, 순열·조합·부분집합 생성 문제를 통해 상태·종료 조건·작은 문제·상태 복원의 관계를 설계하고 점검합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>6차시</td><th>주제</th><td>재귀적 문제 분해, 깊이 우선 탐색과 백트래킹</td></tr><tr><th>핵심 질문</th><td colspan="3">복잡한 탐색 문제를 상태와 선택으로 나누고, 실패한 선택을 되돌리며 모든 가능성을 체계적으로 탐색하려면 어떻게 설계해야 하는가?</td></tr><tr><th>전이 목표</th><td colspan="3">학생은 새로운 탐색·생성 문제에서 상태, 종료 조건, 가능한 선택, 재귀 호출과 상태 복원을 설계하고 결과의 완전성과 중복 여부를 검증할 수 있다.</td></tr><tr><th>성취기준</th><td colspan="3">재귀적 문제 분해를 활용하여 하노이 탑, 미로 탐색, 순열·조합·부분집합 생성 문제를 구현한다. 상태와 종료 조건을 정의하고 방문 표시와 선택 복원을 통해 깊이 우선 탐색과 백트래킹의 원리를 설명한다.</td></tr><tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr><tr><td>도입</td><td>갈림길, 퍼즐, 공연 동선 사례에서 선택과 되돌리기를 탐색한다.</td><td>상태, 선택</td></tr><tr><td>개념 형성</td><td>상태 정의, 종료 조건, 작은 문제, 복귀와 복원을 예제와 연결한다.</td><td>분해, 경계, 복원</td></tr><tr><td>진단 실습</td><td>하노이 탑·미로·순열·조합·부분집합 코드를 실행하고 호출 흐름을 분석한다.</td><td>탐색, 완전성</td></tr><tr><td>정리·전이</td><td>새로운 문제의 상태와 선택 트리를 설계하고 중복·누락 여부를 점검한다.</td><td>일반화, 설계</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>재귀적 문제 분해의 네 단계를 설명한다.</li><li>하노이 탑의 이동 절차와 점화식을 구현한다.</li><li>미로 탐색에서 방문 표시와 종료 조건을 설계한다.</li><li>백트래킹의 선택·호출·복원 과정을 적용한다.</li><li>순열·조합·부분집합 생성의 차이를 설명한다.</li></ol></div><div class="card"><h3>학습할 개념</h3><ul><li><b>상태:</b> 현재 문제를 결정하는 위치, 선택 목록, 방문 정보</li><li><b>종료 조건:</b> 목표 도달 또는 더 이상 탐색할 수 없는 경계</li><li><b>깊이 우선 탐색:</b> 한 방향을 가능한 깊이 탐색한 뒤 돌아오는 방식</li><li><b>백트래킹:</b> 선택을 취소하고 이전 상태로 복원하는 탐색</li><li><b>완전 탐색:</b> 가능한 모든 선택을 빠짐없이 확인하는 과정</li></ul></div></div><div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>재귀적 탐색은 현재 상태에서 가능한 선택을 수행하고 더 작은 상태를 탐색한 뒤, 다른 가능성을 위해 선택과 방문 정보를 복원함으로써 해를 체계적으로 생성한다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">“소크라테스는 답을 바로 주기보다 질문의 갈림길을 따라 스스로 생각하게 했고, 데카르트는 어려운 문제를 작은 단계로 나누었습니다. 뉴턴은 복잡한 천체의 움직임 속에서 반복되는 법칙을 찾았으며, 파스칼은 선택의 수가 어떻게 거대한 삼각형을 만드는지 보여 주었습니다. 오늘 우리는 미로의 갈림길, 하노이 탑의 원판, 조합의 선택 앞에 섭니다. 길을 잘못 들었다고 실패가 아닙니다. 백트래킹은 ‘돌아갈 줄 아는 용기’가 알고리즘이라는 사실을 알려 줍니다. 단, 교실 문을 잘못 나갔다가 돌아오는 것은 탐색이고, 쉬는 시간마다 매점만 탐색하는 것은 편향된 알고리즘입니다. 이제 선택하고, 탐색하고, 필요하면 멋지게 되돌아와 봅시다.”</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow"><div class="flow-card"><strong>상태 정의</strong>좌표, 원판 수, 선택 목록 등 현재 문제를 표현합니다.</div><div class="flow-card"><strong>종료 조건</strong>출구 도착, 원판 1개, 선택 완료 시 멈춥니다.</div><div class="flow-card"><strong>재귀 호출</strong>가능한 선택을 수행하고 다음 상태를 탐색합니다.</div><div class="flow-card"><strong>상태 복원</strong>선택과 방문 정보를 되돌려 다른 가능성을 탐색합니다.</div></div>
+<ul><li>하노이 탑의 분할 정복과 최소 이동 횟수</li><li>DFS 미로 탐색과 방문 표시</li><li>한 경로 찾기와 모든 경로 찾기</li><li>path.pop()과 visited.remove()를 이용한 복원</li><li>순열의 선택과 취소</li><li>조합의 시작 인덱스와 중복 방지</li><li>부분집합의 포함·제외 이진 선택</li><li>상태·종료 조건·복원 여부 비교</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol><li><b>하노이 탑 원판 수에 따른 재귀 호출 횟수와 이동 횟수 분석</b></li><li><b>미로 탐색에서 방문 표시 방식이 탐색 정확성과 실행 시간에 미치는 영향</b></li><li><b>순열·조합·부분집합 생성 알고리즘의 경우의 수 증가 비교</b></li><li><b>백트래킹 상태 복원 오류가 탐색 결과 누락에 미치는 영향</b></li><li><b>깊이 우선 탐색과 너비 우선 탐색의 미로 경로 특성 비교</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 코드를 실행하고 상태·종료 조건·선택·복원 과정을 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>하노이 탑 기본 재귀함수</h2></div>
+<div><span class="badge">분할 정복</span><span class="badge">원판 이동</span></div>
+<div class="two">
+<div><pre><code>def hanoi(n, start, target, helper):
+    if n == 1:
+        print(f"{start} → {target}")
+        return
+
+    hanoi(n - 1, start, helper, target)
+    print(f"{start} → {target}")
+    hanoi(n - 1, helper, target, start)
+
+hanoi(3, "A", "C", "B")</code></pre></div>
+<div class="card">
+<h3>문제 분해</h3>
+<ol>
+<li>위쪽 n-1개 원판을 보조 기둥으로 옮깁니다.</li>
+<li>가장 큰 원판을 목표 기둥으로 옮깁니다.</li>
+<li>보조 기둥의 n-1개를 목표 기둥으로 옮깁니다.</li>
+</ol>
+</div>
+</div>
+<div class="check"><strong>종료 조건</strong><br/>원판이 1개이면 더 나눌 필요 없이 시작 기둥에서 목표 기둥으로 바로 옮깁니다.</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 하노이 탑 기본 재귀함수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 원판이 1개이면 바로 목표 기둥으로 옮긴다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> n-1개 원판을 보조 기둥으로 옮기는 재귀 호출이 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 가장 큰 원판을 목표 기둥으로 옮긴 뒤 다시 n-1개를 옮긴다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 원판 수가 줄어들지 않아도 항상 종료된다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 하노이 탑은 재귀적 문제 분해와 무관하다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>하노이 탑 재귀 호출 추적</h2></div>
+<div><span class="badge">호출 깊이</span><span class="badge">과정 추적</span></div>
+<pre><code>def hanoi_trace(n, start, target, helper, depth=0):
+    indent = "  " * depth
+    print(f"{indent}hanoi({n}, {start}, {target}, {helper})")
+
+    if n == 1:
+        print(f"{indent}이동: {start} → {target}")
+        return
+
+    hanoi_trace(n - 1, start, helper, target, depth + 1)
+    print(f"{indent}이동: {start} → {target}")
+    hanoi_trace(n - 1, helper, target, start, depth + 1)
+
+hanoi_trace(3, "A", "C", "B")</code></pre>
+<div class="note"><strong>관찰</strong><br/>들여쓰기가 깊어질수록 더 작은 원판 문제를 해결하고 있음을 확인할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 하노이 탑 호출 추적에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> depth는 호출 깊이를 나타낸다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 들여쓰기가 깊을수록 더 작은 문제를 해결 중이다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> n이 1이면 이동을 출력하고 반환한다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 재귀 호출은 항상 같은 n으로 이루어진다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 호출 추적은 실행 흐름을 이해하는 데 도움이 되지 않는다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>하노이 탑 최소 이동 횟수</h2></div>
+<div><span class="badge">점화식</span><span class="badge">이동 횟수</span></div>
+<div class="two">
+<div><pre><code>def hanoi_count(n):
+    if n == 1:
+        return 1
+
+    return 2 * hanoi_count(n - 1) + 1
+
+for n in range(1, 6):
+    print(n, "개:", hanoi_count(n), "회")</code></pre></div>
+<div class="card">
+<h3>계산 관계</h3>
+<pre class="trace">T(1) = 1
+T(2) = 2×T(1)+1 = 3
+T(3) = 2×T(2)+1 = 7
+T(4) = 15
+T(5) = 31</pre>
+</div>
+</div>
+<div class="check"><strong>핵심</strong><br/>n개 원판을 옮기려면 n-1개를 두 번 옮기고 가장 큰 원판을 한 번 옮깁니다.</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 하노이 탑 이동 횟수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> T(1)=1이다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> T(n)=2×T(n-1)+1 관계를 사용한다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 원판 3개의 최소 이동 횟수는 7회이다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 원판 수가 증가해도 이동 횟수는 항상 1이다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 원판 5개의 이동 횟수는 10회이다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>깊이 우선 방식의 미로 탐색</h2></div>
+<div><span class="badge">DFS</span><span class="badge">방문 표시</span><span class="badge">미로</span></div>
+<pre><code>maze = [
+    [0, 1, 0, 0],
+    [0, 0, 0, 1],
+    [1, 0, 1, 0],
+    [0, 0, 0, 0]
+]
+
+rows = len(maze)
+cols = len(maze[0])
+visited = [[False] * cols for _ in range(rows)]
+
+def solve(row, col):
+    if row &lt; 0 or row &gt;= rows:
+        return False
+    if col &lt; 0 or col &gt;= cols:
+        return False
+    if maze[row][col] == 1 or visited[row][col]:
+        return False
+
+    if row == rows - 1 and col == cols - 1:
+        return True
+
+    visited[row][col] = True
+
+    return (
+        solve(row + 1, col)
+        or solve(row - 1, col)
+        or solve(row, col + 1)
+        or solve(row, col - 1)
+    )
+
+print("탈출 가능:", solve(0, 0))</code></pre>
+<div class="warn"><strong>종료 조건</strong><br/>배열 밖, 벽, 방문한 칸이면 실패하고, 출구에 도착하면 성공을 반환합니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 깊이 우선 미로 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> 배열 밖으로 나가면 False를 반환한다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> 벽이나 방문한 칸이면 탐색하지 않는다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 출구에 도착하면 True를 반환한다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 방문 표시는 무한 반복과 무관하다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 상하좌우 방향을 전혀 탐색하지 않는다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>미로 경로 저장과 복원</h2></div>
+<div><span class="badge">백트래킹</span><span class="badge">경로 복원</span></div>
+<pre><code>maze = [
+    [0, 1, 0, 0],
+    [0, 0, 0, 1],
+    [1, 0, 1, 0],
+    [0, 0, 0, 0]
+]
+
+rows = len(maze)
+cols = len(maze[0])
+visited = set()
+path = []
+
+def find_path(row, col):
+    if not (0 &lt;= row &lt; rows and 0 &lt;= col &lt; cols):
+        return False
+    if maze[row][col] == 1 or (row, col) in visited:
+        return False
+
+    visited.add((row, col))
+    path.append((row, col))
+
+    if (row, col) == (rows - 1, cols - 1):
+        return True
+
+    directions = [(1,0), (-1,0), (0,1), (0,-1)]
+
+    for dr, dc in directions:
+        if find_path(row + dr, col + dc):
+            return True
+
+    path.pop()
+    return False
+
+if find_path(0, 0):
+    print("경로:", path)
+else:
+    print("경로 없음")</code></pre>
+<div class="check"><strong>백트래킹</strong><br/>현재 선택이 출구로 이어지지 않으면 <code>path.pop()</code>으로 마지막 위치를 제거하고 이전 상태로 돌아갑니다.</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 미로 경로 저장과 복원에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> path는 현재까지의 경로를 저장한다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> path.pop()은 실패한 선택을 취소한다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 백트래킹은 이전 상태로 돌아가 다른 선택을 탐색한다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> visited는 항상 비워 둬야 한다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> 경로를 찾지 못해도 path를 복원할 필요가 없다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>미로의 모든 경로 찾기</h2></div>
+<div><span class="badge">모든 해</span><span class="badge">방문 해제</span></div>
+<pre><code>maze = [
+    [0, 0, 0],
+    [0, 1, 0],
+    [0, 0, 0]
+]
+
+rows = len(maze)
+cols = len(maze[0])
+visited = set()
+all_paths = []
+
+def find_all_paths(row, col, path):
+    if not (0 &lt;= row &lt; rows and 0 &lt;= col &lt; cols):
+        return
+    if maze[row][col] == 1 or (row, col) in visited:
+        return
+
+    visited.add((row, col))
+    path.append((row, col))
+
+    if (row, col) == (rows - 1, cols - 1):
+        all_paths.append(path.copy())
+    else:
+        for dr, dc in [(1,0), (-1,0), (0,1), (0,-1)]:
+            find_all_paths(row + dr, col + dc, path)
+
+    path.pop()
+    visited.remove((row, col))
+
+find_all_paths(0, 0, [])
+
+print("경로 수:", len(all_paths))
+for path in all_paths:
+    print(path)</code></pre>
+<div class="note"><strong>복원 이유</strong><br/>한 경로 탐색이 끝난 뒤 방문 표시를 해제해야 다른 경로에서도 같은 칸을 사용할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 모든 미로 경로 찾기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 출구에 도착하면 path.copy()를 저장한다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 탐색 후 path와 visited를 복원한다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 방문 해제는 다른 경로 탐색에 필요하다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 첫 번째 경로를 찾으면 즉시 모든 탐색을 종료한다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> visited.remove()는 현재 위치를 영구 차단한다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>재귀함수로 순열 생성</h2></div>
+<div><span class="badge">순열</span><span class="badge">선택·취소</span></div>
+<div class="two">
+<div><pre><code>def permutations(items, selected):
+    if len(selected) == len(items):
+        print(selected)
+        return
+
+    for item in items:
+        if item not in selected:
+            selected.append(item)
+            permutations(items, selected)
+            selected.pop()
+
+permutations(["A", "B", "C"], [])</code></pre></div>
+<div class="card">
+<h3>재귀적 분해</h3>
+<p>현재 위치에 올 원소를 하나 선택한 뒤, 남은 위치의 순열을 같은 방식으로 생성합니다.</p>
+<pre class="output">['A', 'B', 'C']
+['A', 'C', 'B']
+['B', 'A', 'C']
+...</pre>
+</div>
+</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 순열 생성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 선택되지 않은 원소를 하나씩 추가한다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> selected.pop()으로 마지막 선택을 취소한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 모든 원소를 선택하면 하나의 순열이 완성된다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 순열은 원소의 순서를 구분하지 않는다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> A,B,C 세 원소의 순열은 하나뿐이다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>n개 중 r개 조합 생성</h2></div>
+<div><span class="badge">조합</span><span class="badge">시작 인덱스</span></div>
+<pre><code>def combinations(items, r, start=0, selected=None):
+    if selected is None:
+        selected = []
+
+    if len(selected) == r:
+        print(selected)
+        return
+
+    for index in range(start, len(items)):
+        selected.append(items[index])
+        combinations(items, r, index + 1, selected)
+        selected.pop()
+
+combinations(["A", "B", "C", "D"], 2)</code></pre>
+<div class="check"><strong>순열과 차이</strong><br/>조합은 순서를 구분하지 않으므로 이전에 선택한 위치보다 뒤쪽 원소만 탐색합니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 조합 생성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 선택한 원소 수가 r이면 조합을 출력한다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> start 인덱스 이후의 원소만 탐색한다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> index+1을 전달해 중복 순서 조합을 막는다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 조합은 순서를 구분하므로 모든 순열을 출력해야 한다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> selected.pop()은 필요하지 않다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>포함·제외 방식의 부분집합 생성</h2></div>
+<div><span class="badge">부분집합</span><span class="badge">이진 선택</span></div>
+<div class="two">
+<div><pre><code>def subsets(items, index=0, selected=None):
+    if selected is None:
+        selected = []
+
+    if index == len(items):
+        print(selected)
+        return
+
+    # 현재 원소를 포함
+    selected.append(items[index])
+    subsets(items, index + 1, selected)
+
+    # 현재 원소를 제외
+    selected.pop()
+    subsets(items, index + 1, selected)
+
+subsets([1, 2, 3])</code></pre></div>
+<div class="card">
+<h3>문제 분해</h3>
+<p>각 원소마다 두 가지 선택을 합니다.</p>
+<ol>
+<li>현재 원소를 부분집합에 포함한다.</li>
+<li>현재 원소를 부분집합에서 제외한다.</li>
+</ol>
+<p>원소가 n개이면 부분집합은 2ⁿ개입니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 부분집합 생성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> 각 원소마다 포함과 제외 두 선택을 한다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> index가 len(items)이면 하나의 부분집합이 완성된다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 원소가 n개이면 부분집합 수는 2의 n제곱이다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 각 원소는 반드시 포함되어야 한다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> selected.pop() 없이도 포함 선택을 정확히 취소한다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>세 문제의 재귀 설계 종합 비교</h2></div>
+<div><span class="badge">종합 설계</span><span class="badge">문제 선택</span></div>
+<table>
+<tr><th>비교 항목</th><th>하노이 탑</th><th>미로 탐색</th><th>조합 생성</th></tr>
+<tr><td>상태</td><td>원판 수와 기둥</td><td>현재 좌표와 방문 정보</td><td>시작 인덱스와 선택 목록</td></tr>
+<tr><td>종료 조건</td><td>원판이 1개</td><td>출구 도착 또는 이동 불가</td><td>선택 개수 충족</td></tr>
+<tr><td>재귀 호출</td><td>n-1개 원판 이동</td><td>상하좌우 인접 칸 탐색</td><td>다음 원소 선택</td></tr>
+<tr><td>상태 복원</td><td>별도 복원 없음</td><td>경로·방문 표시 제거</td><td>선택 목록에서 마지막 원소 제거</td></tr>
+<tr><td>대표 개념</td><td>분할 정복</td><td>깊이 우선 탐색·백트래킹</td><td>완전 탐색·백트래킹</td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>설계 문장 예시</strong><br/>
+“현재 상태에서 가능한 선택을 하나 수행하고, 남은 문제를 같은 형태의 더 작은 문제로 바꾸어 재귀 호출한다.
+목표 상태에 도달하면 결과를 기록하고, 다른 선택을 탐색하기 위해 현재 선택을 취소한다.”
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 재귀 설계 종합 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 하노이 탑은 원판 수와 기둥이 상태이다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 미로 탐색은 현재 좌표와 방문 정보가 상태이다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> 조합 생성은 시작 인덱스와 선택 목록이 상태이다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 모든 재귀 문제는 상태 복원이 절대 필요 없다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 세 문제는 종료 조건이 모두 동일하다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">“시는 한 단어를 선택하고 다른 단어를 지우며 마음의 가장 정확한 길을 찾습니다. 소설은 인물에게 수많은 갈림길을 주고, 희곡은 선택 하나로 장면의 운명을 바꾸며, 연극은 막이 어긋나도 다시 호흡을 맞춰 이야기를 이어 갑니다. 음악도 잘못 누른 한 음에서 멈추지 않고 다음 마디에서 화음을 회복합니다. 여러분의 꿈도 미로와 같습니다. 막힌 길을 만났다고 꿈이 끝난 것이 아니라, 다른 경로를 탐색할 차례입니다. 다만 인생의 모든 선택을 완전 탐색하려다 졸업이 늦어질 수 있으니 가치와 양심이라는 좋은 가지치기도 필요합니다. 오늘의 용기 있는 복귀가 내일의 더 나은 경로를 만들어 주길 바랍니다.”</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 재귀적 문제 분해는 큰 문제를 더 작은 같은 형태의 문제로 바꾸는 방법이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 하노이 탑은 원판이 1개일 때 종료 조건에 도달한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 미로 탐색에서 방문 표시는 필요 없다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 백트래킹은 선택을 취소하고 이전 상태로 돌아가는 과정이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 순열은 원소의 순서를 구분하지 않는다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 조합 생성에서는 이전 선택보다 뒤쪽 원소만 탐색할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 부분집합 생성에서는 각 원소에 대해 포함과 제외를 고려한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 모든 재귀 문제에서 path.pop()이 반드시 필요하다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 미로의 모든 경로를 찾으려면 방문 표시를 복원할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 원소가 3개이면 부분집합은 6개이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 재귀적 문제 분해 절차에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 현재 상태를 정의한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 종료 조건을 정한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 더 작은 같은 형태의 문제를 만든다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 종료 조건은 없어도 된다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 상태 복원은 어떤 문제에서도 고려할 필요가 없다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 하노이 탑에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> n-1개 원판 이동 문제가 반복된다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 가장 큰 원판은 한 번 직접 이동한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 최소 이동 횟수는 2ⁿ-1이다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 원판 수와 무관하게 이동 횟수는 같다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 재귀와 분할 정복으로 표현할 수 없다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 미로 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 현재 좌표가 상태가 될 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 벽과 경계를 검사해야 한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 방문 정보를 관리해야 한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 출구 도착은 실패 조건이다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 같은 칸을 무한히 방문해도 문제가 없다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 백트래킹에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 선택을 수행한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 재귀 호출로 다음 상태를 탐색한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 탐색 후 선택을 취소할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 항상 첫 선택만 유지한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 상태 복원과 무관하다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 순열 생성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 원소의 순서를 구분한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 선택되지 않은 원소를 추가한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 선택 목록 길이가 원소 수와 같으면 완성된다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> A,B,C의 순열 수는 3개이다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 선택 취소는 필요 없다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 조합 생성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 순서를 구분하지 않는다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 시작 인덱스를 증가시켜 중복을 줄인다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> r개 선택하면 하나의 조합이 된다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> A,B와 B,A를 서로 다른 조합으로 센다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 항상 모든 원소를 선택해야 한다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 부분집합 생성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 각 원소를 포함할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 각 원소를 제외할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> n개 원소의 부분집합 수는 2ⁿ이다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 공집합은 부분집합이 아니다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 항상 원소 하나 이상을 포함해야 한다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 상태 복원에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 다른 선택을 탐색하기 위해 필요할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> path.pop()으로 마지막 경로를 제거할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> visited.remove()로 방문 상태를 되돌릴 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 상태 복원은 탐색 결과를 항상 망친다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 하노이 탑에서도 반드시 path가 필요하다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 좋은 재귀 설계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 종료 조건이 분명해야 한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 호출마다 문제 크기가 줄어야 한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 상태와 선택을 명확히 표현해야 한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 가능한 선택을 무한히 늘려야 한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 복귀 과정은 고려하지 않아도 된다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 재귀 문제의 성능과 정확성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 모든 경로 탐색은 경우의 수가 커질 수 있다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 중복 상태가 있으면 메모이제이션을 고려할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 방문 표시 오류는 누락이나 무한 탐색을 만들 수 있다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 재귀 깊이는 입력 크기와 무관하다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 정확성 검증 없이 실행 시간만 보면 된다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 10×5점=50점<br>OX 10×2점=20점<br>진단평가 10×3점=30점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 6차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "하노이 탑은 n-1개 문제 두 번과 가장 큰 원판 이동 한 번으로 분해됩니다."}, "2": {"ans": [0, 1, 2], "exp": "depth와 들여쓰기를 활용하면 재귀 호출의 깊이와 흐름을 관찰할 수 있습니다."}, "3": {"ans": [0, 1, 2], "exp": "하노이 이동 횟수는 1,3,7,15,31처럼 증가합니다."}, "4": {"ans": [0, 1, 2], "exp": "경계·벽·방문 여부를 검사하고 상하좌우를 재귀적으로 탐색합니다."}, "5": {"ans": [0, 1, 2], "exp": "백트래킹에서는 실패한 선택을 취소해 이전 상태로 복원합니다."}, "6": {"ans": [0, 1, 2], "exp": "모든 해를 찾으려면 한 경로 탐색 후 상태를 원상 복구해야 합니다."}, "7": {"ans": [0, 1, 2], "exp": "순열은 순서를 구분하며 선택과 취소를 반복해 모든 배열을 생성합니다."}, "8": {"ans": [0, 1, 2], "exp": "조합은 순서를 구분하지 않으므로 뒤쪽 원소만 탐색하고 선택을 복원합니다."}, "9": {"ans": [0, 1, 2], "exp": "포함과 제외의 이진 선택을 반복하면 2ⁿ개의 부분집합이 생성됩니다."}, "10": {"ans": [0, 1, 2], "exp": "문제마다 상태와 종료 조건, 복원 필요성이 다릅니다."}}, "ox": {"1": {"ans": true, "exp": "재귀의 핵심은 자기 유사한 작은 문제로의 분해입니다."}, "2": {"ans": true, "exp": "원판 하나는 바로 옮길 수 있습니다."}, "3": {"ans": false, "exp": "같은 칸의 반복 방문과 무한 재귀를 막습니다."}, "4": {"ans": true, "exp": "다른 선택을 탐색하기 위해 상태를 복원합니다."}, "5": {"ans": false, "exp": "순열은 순서가 다르면 다른 결과입니다."}, "6": {"ans": true, "exp": "중복 조합을 막는 방법입니다."}, "7": {"ans": true, "exp": "각 원소마다 두 갈래 선택이 있습니다."}, "8": {"ans": false, "exp": "하노이 탑처럼 별도 상태 복원이 필요 없는 문제도 있습니다."}, "9": {"ans": true, "exp": "다른 경로가 같은 칸을 사용하도록 해제합니다."}, "10": {"ans": false, "exp": "부분집합 수는 2³=8개입니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "상태, 종료 조건, 문제 축소가 핵심이며 문제에 따라 복원도 필요합니다."}, "2": {"ans": [0, 1, 2], "exp": "하노이 탑은 대표적인 재귀·분할 정복 문제입니다."}, "3": {"ans": [0, 1, 2], "exp": "경계, 벽, 방문 여부와 출구 조건이 중요합니다."}, "4": {"ans": [0, 1, 2], "exp": "백트래킹은 선택-탐색-복원의 구조입니다."}, "5": {"ans": [0, 1, 2], "exp": "3개 원소의 순열 수는 3!=6개입니다."}, "6": {"ans": [0, 1, 2], "exp": "조합은 순서를 구분하지 않고 r개를 선택합니다."}, "7": {"ans": [0, 1, 2], "exp": "공집합도 부분집합이며 포함·제외 선택으로 생성됩니다."}, "8": {"ans": [0, 1, 2], "exp": "탐색형 재귀에서는 선택과 방문 상태 복원이 중요합니다."}, "9": {"ans": [0, 1, 2], "exp": "종료성, 문제 축소, 상태 표현이 핵심입니다."}, "10": {"ans": [0, 1, 2], "exp": "경우의 수, 중복 상태, 방문 관리와 정확성을 함께 고려해야 합니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;const now=new Date(),lines=["정보과학 6차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_6차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

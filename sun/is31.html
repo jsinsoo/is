@@ -1,0 +1,463 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>정보과학 31차시 | 모듈 협업·인터페이스·코드 리뷰·버전 관리</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:54px 20px 48px;position:relative;overflow:hidden}
+header:after{content:"";position:absolute;right:-80px;bottom:-110px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.08)}
+.wrap,main{max-width:1220px;margin:auto}header h1{margin:0 0 11px;font-size:clamp(28px,4vw,46px);line-height:1.25}.hero-sub{max-width:1000px;font-size:1.06rem;opacity:.96}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px;position:relative}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}section>h2:after{content:"";display:block;width:56px;height:4px;margin-top:8px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--purple))}
+h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card{transition:transform .2s ease,box-shadow .2s ease}.flow-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(31,69,99,.10)}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}.quote strong{font-size:1.08rem;color:var(--navy)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}
+.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}
+.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}
+.ox{display:flex;gap:10px}.ox .option{min-width:100px}.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}
+input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold);color:var(--navy)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}
+.mini-menu{position:fixed;left:8px;top:8px;z-index:80}.mini-menu summary{list-style:none;width:28px;height:28px;border-radius:7px;background:rgba(23,50,77,.92);color:#fff;display:grid;place-items:center;cursor:pointer;font-size:12px;box-shadow:0 4px 12px rgba(0,0,0,.22)}.mini-menu summary::-webkit-details-marker{display:none}
+.mini-panel{margin-top:5px;min-width:150px;padding:7px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,.16)}.mini-panel a{display:block;padding:6px 8px;border-radius:7px;text-decoration:none;color:var(--navy);font-size:.82rem;font-weight:800}.mini-panel a:hover{background:var(--sky)}
+footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top,.scorebar,.mini-menu{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top"><details class="mini-menu"><summary>☰</summary><div class="mini-panel">
+<a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 10선</a><a href="#closing">끝 멘트</a><a href="#ox">형성평가</a><a href="#diag">진단평가</a><a href="#submit">제출</a>
+</div></details>
+<header><div class="wrap"><h1>정보과학 31차시<br>역할별 모듈·인터페이스·코드 리뷰와 버전 관리</h1>
+<p class="hero-sub">팀 프로젝트의 입력·분석·출력·테스트 기능을 독립 모듈로 나누고, 함수 계약과 예외 규칙을 통일하며, 단위 테스트·상호 코드 검토·Git 브랜치와 커밋을 통해 안전하게 통합합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table>
+<tr><th>차시</th><td>31차시</td><th>주제</th><td>역할별 모듈 작성·인터페이스 통일·코드 검토·버전 관리와 통합</td></tr>
+<tr><th>핵심 질문</th><td colspan="3">여러 사람이 독립적으로 만든 코드를 하나의 안정적인 프로그램으로 연결하려면 모듈의 책임과 인터페이스, 검증과 변경 이력을 어떻게 합의해야 하는가?</td></tr>
+<tr><th>전이 목표</th><td colspan="3">학생은 새로운 팀 프로젝트에서 기능을 책임별 모듈로 분리하고 함수명·매개변수·반환형·예외 규칙을 문서화하며, 단위 테스트·코드 리뷰·Git 브랜치 전략을 적용해 안전하게 통합할 수 있다.</td></tr>
+<tr><th>성취기준</th><td colspan="3">입력·분석·출력·통합·테스트 기능을 모듈로 나누고 인터페이스를 정의한다. 정상·경계·예외 입력으로 단위 테스트를 수행하며 코드 리뷰 체크리스트와 기능별 브랜치·커밋·병합 절차를 활용해 전체 프로그램을 통합한다.</td></tr>
+<tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 10문항, 종합 진단평가 10문항, 자동 생성 TXT 결과</td></tr>
+</table>
+<h3>수업 흐름</h3>
+<table>
+<tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr>
+<tr><td>도입</td><td>함수명과 반환형이 다른 팀 코드를 연결할 때 발생하는 오류 사례를 분석한다.</td><td>경계, 계약</td></tr>
+<tr><td>개념 형성</td><td>책임 분리·인터페이스·예외 계약·단위 테스트·버전 관리의 관계를 구조화한다.</td><td>모듈, 협업</td></tr>
+<tr><td>진단 실습</td><td>입력·분석·출력 모듈을 구현하고 테스트·리뷰·Git 흐름으로 통합한다.</td><td>검증, 기록</td></tr>
+<tr><td>정리·전이</td><td>자신의 프로젝트 모듈 명세와 병합 전 점검표를 작성하고 동료 검토한다.</td><td>통합, 성찰</td></tr>
+</table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2>
+<div class="grid"><div class="card"><h3>학습 목표</h3><ol>
+<li>프로그램을 책임별 모듈로 분리한다.</li>
+<li>함수 인터페이스와 오류 계약을 문서화한다.</li>
+<li>순수 함수와 재사용 가능한 출력 함수를 작성한다.</li>
+<li>정상·경계·예외 입력의 단위 테스트를 만든다.</li>
+<li>코드 리뷰와 Git 브랜치·커밋·병합을 적용한다.</li>
+</ol></div>
+<div class="card"><h3>학습할 개념</h3><ul>
+<li><b>모듈화:</b> 프로그램을 독립적인 책임 단위로 나누는 설계</li>
+<li><b>인터페이스:</b> 함수의 이름·입력·출력·예외를 정의한 연결 규칙</li>
+<li><b>순수 함수:</b> 외부 상태를 바꾸지 않고 입력으로 결과를 만드는 함수</li>
+<li><b>코드 리뷰:</b> 다른 개발자가 변경 내용을 검토하고 개선하는 협업 과정</li>
+<li><b>버전 관리:</b> 코드 변경 이력과 병합 과정을 체계적으로 기록하는 방법</li>
+</ul></div></div>
+<div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>
+협업 프로그램의 안정성은 각 모듈의 내부 코드보다 모듈이 만나는 경계의 약속, 자동 검증, 변경 이력과 상호 검토의 품질에 의해 크게 좌우된다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">
+<strong>“함께 만든다는 것은 일을 나누는 데서 끝나지 않고, 서로의 생각이 만나는 경계를 정성껏 설계하는 일입니다.”</strong><br><br>
+아리스토텔레스는 전체가 단순한 부분의 합을 넘어선다고 보았고, 공자는 이름과 역할이 바로 서야 공동체의 질서가 생긴다고 말했습니다. 뉴턴과 라이프니츠는 서로 다른 표현으로 미적분의 길을 열었지만, 수학은 공통된 기호와 정의를 통해 발전했습니다. 과학도 연구자마다 실험은 달라도 측정 단위와 기록 방식이 같을 때 지식을 연결할 수 있습니다.<br><br>
+오늘 우리는 입력·분석·출력 기능을 각자의 모듈로 나눕니다. 그러나 함수 이름, 매개변수, 반환값과 오류 규칙이 맞지 않으면 아무리 훌륭한 코드도 서로 대화할 수 없습니다. 좋은 인터페이스는 코드 사이의 언어이며, 단위 테스트와 코드 리뷰는 서로의 작업을 의심하는 절차가 아니라 함께 실패를 줄이는 안전망입니다.<br><br>
+다만 역할 분담에서 “나는 main.py 담당이니 마지막에 친구 코드를 전부 복사해 붙이겠습니다”라고 하면 통합이 아니라 코드 볶음밥이 될 수 있습니다. 오늘은 각자의 개성을 살리되 공통된 약속으로 아름답게 연결해 봅시다.
+</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow">
+<div class="flow-card"><strong>책임 분리</strong>입력·분석·출력·테스트 기능을 독립 모듈로 나눕니다.</div>
+<div class="flow-card"><strong>인터페이스 합의</strong>함수명·자료형·반환값·예외 규칙을 문서화합니다.</div>
+<div class="flow-card"><strong>독립 검증</strong>단위 테스트와 코드 리뷰로 모듈 품질을 확인합니다.</div>
+<div class="flow-card"><strong>버전 통합</strong>브랜치·커밋·병합·통합 테스트로 릴리스를 준비합니다.</div>
+</div>
+<ul>
+<li>프로젝트 파일 구조와 역할별 모듈 분리</li>
+<li>타입 힌트와 docstring 기반 함수 계약</li>
+<li>문자열 파싱과 입력 데이터 검증</li>
+<li>순수 함수 기반 통계 분석 모듈</li>
+<li>문자열 반환 방식의 출력 모듈</li>
+<li>모듈 간 ValueError 예외 규칙 통일</li>
+<li>unittest 기반 정상·경계·오류 테스트</li>
+<li>정확성·가독성·보안·라이선스 코드 리뷰</li>
+<li>Git 기능 브랜치·커밋·rebase·merge 흐름</li>
+<li>AppConfig·버전 정보·통합 테스트를 포함한 종합 실행</li>
+</ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol>
+<li><b>모듈 책임 분리가 프로그램 수정 오류에 미치는 영향</b></li>
+<li><b>타입 힌트와 인터페이스 문서화가 팀 통합 시간에 미치는 영향</b></li>
+<li><b>단위 테스트 도입 전후의 회귀 오류 발생률 비교</b></li>
+<li><b>코드 리뷰 체크리스트가 코드 품질과 지식 공유에 미치는 영향</b></li>
+<li><b>기능별 Git 브랜치 전략과 직접 main 수정 방식의 충돌 빈도 비교</b></li>
+</ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2>
+<p class="lead">각 코드의 모듈 책임·인터페이스·예외 계약·테스트 범위·리뷰 기준·버전 관리 흐름을 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>하나의 프로그램을 역할별 모듈로 분리</h2></div>
+<div><span class="badge">입력</span><span class="badge">분석</span><span class="badge">출력</span></div>
+<div class="two">
+<div class="card">
+<h3>파일 구조</h3>
+<pre><code>project/
+├─ data_io.py
+├─ analyzer.py
+├─ reporter.py
+├─ main.py
+└─ tests/
+   ├─ test_analyzer.py
+   └─ test_data_io.py</code></pre>
+</div>
+<div class="card">
+<h3>역할</h3>
+<p><code>data_io.py</code>: 데이터 입력·검증</p>
+<p><code>analyzer.py</code>: 계산·판정</p>
+<p><code>reporter.py</code>: 결과 문자열 생성</p>
+<p><code>main.py</code>: 전체 흐름 통합</p>
+</div>
+</div>
+<div class="check"><strong>선택 근거</strong><br/>역할을 분리하면 한 모듈을 수정해도 다른 기능에 미치는 영향을 줄일 수 있습니다.</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 역할별 모듈 분리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> data_io.py는 데이터 입력과 검증을 담당한다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> analyzer.py는 계산과 판정을 담당한다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> main.py는 각 모듈을 연결해 전체 흐름을 실행한다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 모든 기능을 한 파일에만 작성해야 협업이 쉽다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> tests 폴더는 최종 보고서만 저장한다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>함수 인터페이스 명세 작성</h2></div>
+<div><span class="badge">타입 힌트</span><span class="badge">docstring</span></div>
+<pre><code>def classify_co2(value: float) -&gt; str:
+    """
+    이산화탄소 농도를 상태 문자열로 변환한다.
+
+    매개변수:
+        value: 0 이상의 ppm 값
+
+    반환값:
+        "정상", "환기 권장", "즉시 환기"
+
+    예외:
+        value가 음수이면 ValueError
+    """
+    if value &lt; 0:
+        raise ValueError(
+            "농도는 0 이상이어야 합니다."
+        )
+
+    if value &gt;= 1500:
+        return "즉시 환기"
+
+    if value &gt;= 1000:
+        return "환기 권장"
+
+    return "정상"</code></pre>
+<div class="note"><strong>인터페이스 합의</strong><br/>입력 자료형, 반환 자료형, 허용 범위, 예외 규칙을 먼저 정하면 다른 모듈이 같은 기준으로 연결됩니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 함수 인터페이스 명세에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 매개변수의 자료형과 허용 범위를 문서화한다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 반환값의 자료형과 의미를 명확히 한다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 잘못된 입력에서 발생할 예외를 합의한다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 함수 이름은 구현자마다 다르게 정해야 한다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> docstring에는 내부 구현 코드만 기록한다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>데이터 입력 모듈 작성</h2></div>
+<div><span class="badge">data_io.py</span><span class="badge">검증</span></div>
+<pre><code># data_io.py
+
+def parse_values(text: str) -&gt; list[float]:
+    values = []
+
+    for item in text.split(","):
+        item = item.strip()
+
+        if not item:
+            continue
+
+        value = float(item)
+
+        if value &lt; 0:
+            raise ValueError(
+                "음수 데이터는 허용하지 않습니다."
+            )
+
+        values.append(value)
+
+    if not values:
+        raise ValueError(
+            "입력 데이터가 없습니다."
+        )
+
+    return values</code></pre>
+<div class="check"><strong>책임</strong><br/>입력 모듈은 문자열을 숫자 목록으로 변환하고 잘못된 값만 검증합니다. 평균 계산이나 상태 판정은 다른 모듈에 맡깁니다.</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 데이터 입력 모듈에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> 쉼표로 구분된 문자열을 숫자 목록으로 변환한다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> 음수 입력과 빈 입력을 검증한다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 평균 계산은 분석 모듈에 맡긴다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 입력 모듈이 그래프 출력까지 모두 담당한다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 잘못된 값이 있어도 반드시 조용히 무시한다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>분석 모듈 작성</h2></div>
+<div><span class="badge">analyzer.py</span><span class="badge">순수 함수</span></div>
+<pre><code># analyzer.py
+
+from statistics import mean
+
+def summarize(
+    values: list[float]
+) -&gt; dict[str, float]:
+    if not values:
+        raise ValueError(
+            "분석할 값이 없습니다."
+        )
+
+    return {
+        "평균": mean(values),
+        "최댓값": max(values),
+        "최솟값": min(values)
+    }
+
+def count_warning(
+    values: list[float],
+    threshold: float = 1000
+) -&gt; int:
+    return sum(
+        1
+        for value in values
+        if value &gt;= threshold
+    )</code></pre>
+<div class="note"><strong>순수 함수</strong><br/>외부 파일이나 전역 변수에 의존하지 않고 입력만으로 결과를 만들면 테스트와 재사용이 쉬워집니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 분석 모듈에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> 평균·최댓값·최솟값을 딕셔너리로 반환한다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> 경고 기준 이상인 값의 개수를 계산한다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 외부 상태에 의존하지 않는 순수 함수로 설계할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 분석 결과를 함수 안에서 반드시 파일로 저장한다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 빈 목록은 항상 정상 결과로 처리한다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>출력 모듈 인터페이스 작성</h2></div>
+<div><span class="badge">reporter.py</span><span class="badge">문자열 반환</span></div>
+<pre><code># reporter.py
+
+def make_report(
+    summary: dict[str, float],
+    warning_count: int
+) -&gt; str:
+    lines = [
+        "[분석 결과]",
+        f"평균: {summary['평균']:.1f}",
+        f"최댓값: {summary['최댓값']:.1f}",
+        f"최솟값: {summary['최솟값']:.1f}",
+        f"경고 횟수: {warning_count}"
+    ]
+
+    return "\n".join(lines)</code></pre>
+<div class="check"><strong>통합 친화성</strong><br/>출력 모듈이 직접 <code>print()</code>하지 않고 문자열을 반환하면 콘솔·파일·웹 화면 등 여러 환경에서 재사용할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 출력 모듈에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> 분석 결과를 문자열로 조립한다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> 직접 print하지 않고 문자열을 반환할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 콘솔·파일·웹 화면에서 재사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 출력 모듈이 센서값을 다시 수집해야 한다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> 출력 형식은 다른 모듈과 무관하게 임의로 바꿔도 된다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>모듈 간 예외 처리 규칙 통일</h2></div>
+<div><span class="badge">예외</span><span class="badge">오류 계약</span></div>
+<pre><code>def safe_execute(text: str) -&gt; str:
+    try:
+        values = parse_values(text)
+        summary = summarize(values)
+        warnings = count_warning(values)
+
+        return make_report(
+            summary,
+            warnings
+        )
+
+    except ValueError as error:
+        return (
+            "[입력 오류]\n"
+            + str(error)
+        )
+
+print(safe_execute("720, 860, 1040"))
+print()
+print(safe_execute("720, -1, 900"))</code></pre>
+<div class="warn"><strong>규칙</strong><br/>모든 모듈이 제각각 오류 문장을 출력하지 않고, 핵심 모듈은 예외를 발생시키고 통합 모듈에서 사용자용 문장으로 변환합니다.</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 예외 처리 규칙에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 핵심 모듈은 ValueError를 발생시킬 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 통합 모듈은 예외를 사용자용 문장으로 바꿀 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 팀 전체가 오류 처리 방식을 합의해야 한다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 각 모듈이 서로 다른 형식으로 오류를 출력해야 한다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 모든 예외를 숨기면 오류 원인 분석이 쉬워진다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>단위 테스트로 인터페이스 검증</h2></div>
+<div><span class="badge">unittest</span><span class="badge">경계값</span></div>
+<pre><code>import unittest
+
+class TestAnalyzer(unittest.TestCase):
+    def test_summary(self):
+        result = summarize(
+            [10, 20, 30]
+        )
+
+        self.assertEqual(
+            result["평균"],
+            20
+        )
+
+        self.assertEqual(
+            result["최댓값"],
+            30
+        )
+
+    def test_warning_count(self):
+        self.assertEqual(
+            count_warning(
+                [900, 1000, 1200]
+            ),
+            2
+        )
+
+    def test_empty_values(self):
+        with self.assertRaises(ValueError):
+            summarize([])
+
+if __name__ == "__main__":
+    unittest.main()</code></pre>
+<div class="note"><strong>검증 기준</strong><br/>정상 입력뿐 아니라 임계값 1000, 빈 목록, 음수 입력처럼 경계값과 오류 상황도 검사합니다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 단위 테스트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 정상 입력의 평균과 최댓값을 검사한다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> 임계값 1000과 같은 경계값을 검사한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 빈 목록에서 예외가 발생하는지 확인한다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 통과할 입력만 골라 검사한다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 단위 테스트는 여러 모듈의 전체 화면만 확인한다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>코드 리뷰 체크리스트 자동 점검</h2></div>
+<div><span class="badge">리뷰</span><span class="badge">체크리스트</span></div>
+<pre><code>review = {
+    "함수 이름이 역할을 설명하는가": True,
+    "타입 힌트가 있는가": True,
+    "중복 코드가 제거되었는가": False,
+    "예외 처리가 일관적인가": True,
+    "테스트가 포함되었는가": True,
+    "출처와 라이선스가 기록되었는가": True
+}
+
+failed = []
+
+for item, passed in review.items():
+    status = (
+        "통과"
+        if passed
+        else "보완"
+    )
+
+    print(item, ":", status)
+
+    if not passed:
+        failed.append(item)
+
+print("보완 항목 수:", len(failed))</code></pre>
+<div class="check"><strong>리뷰 관점</strong><br/>코드 스타일만 보는 것이 아니라 정확성, 인터페이스, 예외 처리, 테스트, 보안, 출처까지 함께 확인합니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 코드 리뷰 체크리스트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 함수 이름과 타입 힌트를 확인한다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 중복 코드와 예외 처리의 일관성을 점검한다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 테스트·보안·출처와 라이선스도 검토할 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 작성자를 비난하는 것이 코드 리뷰의 목적이다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> 코드가 실행되면 가독성과 유지보수성은 확인하지 않는다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>Git 브랜치·커밋·병합 흐름</h2></div>
+<div><span class="badge">Git</span><span class="badge">버전 관리</span></div>
+<pre><code># 저장소 시작
+git init
+git add .
+git commit -m "chore: 프로젝트 기본 구조 생성"
+
+# 분석 기능 브랜치
+git switch -c feature/analyzer
+git add analyzer.py tests/test_analyzer.py
+git commit -m "feat: 센서 데이터 분석 함수 추가"
+
+# 메인 브랜치 최신 내용 반영
+git switch main
+git pull
+git switch feature/analyzer
+git rebase main
+
+# 기능 통합
+git switch main
+git merge feature/analyzer
+
+# 통합 후 테스트
+python -m unittest discover</code></pre>
+<div class="note"><strong>커밋 메시지</strong><br/><code>feat</code>, <code>fix</code>, <code>test</code>, <code>docs</code>, <code>refactor</code>처럼 변경 목적을 드러내면 이력을 이해하기 쉽습니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 Git 작업 흐름에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> 기능별 브랜치에서 독립적으로 개발할 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 의미 있는 커밋 메시지로 변경 목적을 기록한다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 병합 전에 main의 최신 변경을 반영할 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 모든 팀원이 main에서 동시에 직접 수정해야 한다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 병합 뒤에는 테스트할 필요가 없다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>종합: 모듈 통합 실행 프로그램</h2></div>
+<div><span class="badge">main.py</span><span class="badge">통합</span><span class="badge">버전 정보</span></div>
+<pre><code># main.py
+
+from dataclasses import dataclass
+
+@dataclass
+class AppConfig:
+    warning_threshold: float = 1000
+    version: str = "1.0.0"
+
+def run(
+    text: str,
+    config: AppConfig
+) -&gt; str:
+    values = parse_values(text)
+
+    summary = summarize(values)
+
+    warning_count = count_warning(
+        values,
+        config.warning_threshold
+    )
+
+    report = make_report(
+        summary,
+        warning_count
+    )
+
+    return (
+        f"버전: {config.version}\n"
+        + report
+    )
+
+if __name__ == "__main__":
+    config = AppConfig(
+        warning_threshold=1000,
+        version="1.0.0"
+    )
+
+    sample = "720, 860, 1040, 1280"
+    print(run(sample, config))</code></pre>
+<table>
+<tr><th>통합 단계</th><th>담당</th><th>확인 내용</th><th>완료 기준</th></tr>
+<tr><td>인터페이스 명세</td><td>전체 팀</td><td>함수명·입력·반환·예외 규칙</td><td>공통 문서 승인</td></tr>
+<tr><td>모듈 개발</td><td>역할별 담당자</td><td>한 모듈 한 책임</td><td>단위 테스트 통과</td></tr>
+<tr><td>코드 리뷰</td><td>다른 팀원</td><td>정확성·가독성·중복·보안</td><td>보완 의견 반영</td></tr>
+<tr><td>브랜치 병합</td><td>통합 담당</td><td>충돌 해결·최신 main 반영</td><td>병합 커밋 생성</td></tr>
+<tr><td>통합 테스트</td><td>검증 담당</td><td>모듈 연결·경계값·오류 입력</td><td>전체 테스트 통과</td></tr>
+<tr><td>릴리스</td><td>문서 담당</td><td>버전·변경 이력·사용법</td><td>태그와 배포 문서 작성</td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>협업 과정 설명 예시</strong><br/>
+“팀원별로 데이터 입력, 분석, 결과 출력 모듈을 나누어 개발하였다. 통합 전에 함수 이름, 매개변수, 반환 자료형, 예외 처리 규칙을 공통 인터페이스로 정의하였다. 각 모듈은 단위 테스트와 상호 코드 검토를 거쳤으며, 기능별 브랜치에서 작업한 뒤 메인 브랜치의 최신 변경을 반영하여 병합하였다. 통합 후에는 정상 입력과 경계값, 오류 입력을 대상으로 전체 테스트를 수행하고 버전과 변경 이력을 기록하였다.”
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 종합 통합 프로그램에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> AppConfig로 경고 기준과 버전을 관리한다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> run 함수가 입력·분석·출력 모듈을 연결한다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> 통합 뒤 전체 흐름과 오류 입력을 다시 테스트해야 한다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 버전 정보는 코드와 문서에 기록할 필요가 없다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 단위 테스트가 통과하면 모듈 연결 검사는 불필요하다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">
+시는 서로 다른 단어가 정확한 자리에 놓일 때 한 편의 마음이 되고, 소설은 각 인물의 독립된 삶이 하나의 서사로 연결될 때 깊이를 얻습니다. 희곡은 배우마다 다른 역할을 맡지만 대사와 장면의 약속을 공유하고, 연극은 무대·조명·음향·배우가 서로의 신호를 믿을 때 비로소 살아납니다. 음악도 독주가 아름답지만 합주는 서로의 박자와 쉼을 존중할 때 더 큰 감동을 만듭니다.<br><br>
+여러분의 프로젝트도 모든 사람이 같은 코드를 쓰는 것이 협업은 아닙니다. 각자의 강점을 살려 다른 모듈을 만들고, 공통된 인터페이스와 테스트로 연결하며, 리뷰를 통해 서로의 생각을 더 나은 형태로 다듬는 것이 진짜 협업입니다. 충돌은 실패가 아니라 두 변화가 만났다는 신호이며, 기록과 대화로 해결할 수 있습니다.<br><br>
+그리고 Git 커밋 메시지를 매번 “최종”, “진짜 최종”, “진짜진짜 최종”로 작성하면 버전 관리는 되지만 역사학자가 필요해질 수 있습니다. 오늘 배운 작은 약속과 정직한 기록이 여러분의 코드와 관계, 그리고 큰 꿈을 안전하게 통합해 주기를 바랍니다.
+</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 모듈은 한 가지 책임에 집중하도록 나누는 것이 좋다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 인터페이스는 함수 내부 구현 방법만을 뜻한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 타입 힌트와 docstring은 협업 과정의 이해를 돕는다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 순수 함수는 전역 상태와 파일 입출력에 강하게 의존해야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 출력 함수가 문자열을 반환하면 여러 환경에서 재사용하기 쉽다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 단위 테스트는 정상 입력만 검사하면 충분하다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 코드 리뷰는 정확성·가독성·보안·라이선스를 함께 볼 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 기능별 Git 브랜치는 독립적인 개발과 검토를 돕는다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 병합 충돌은 한쪽 코드를 무조건 삭제하면 해결된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 통합 테스트는 여러 모듈이 연결된 전체 흐름을 확인한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 모듈 책임 분리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 입력·분석·출력 역할을 구분한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 한 모듈이 한 가지 핵심 책임을 갖게 한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 수정 영향 범위를 줄인다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 모든 기능을 하나의 거대한 함수에 넣는다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 파일 수가 적으면 항상 좋은 설계이다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 인터페이스 명세에 포함할 내용으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 함수 이름과 목적</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 매개변수·반환값의 자료형</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 허용 범위와 예외 규칙</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 개발자의 개인 취향</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 코드 줄 수만</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 데이터 검증에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 빈 입력을 확인한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 허용 범위를 벗어난 값을 확인한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 자료형 변환 오류를 처리한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 잘못된 데이터도 그대로 분석한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 검증은 출력 모듈에서만 수행한다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 순수 함수의 장점으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 동일 입력에 동일 결과를 기대할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 단위 테스트가 쉽다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 재사용과 병렬 개발에 유리하다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 항상 전역 변수를 수정한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 파일 시스템 상태가 없으면 실행할 수 없다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 예외 처리 계약에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 어떤 상황에서 예외를 발생시킬지 정한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 예외 종류와 사용자 메시지 변환 위치를 합의한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 모듈마다 동일한 원칙을 적용한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 모든 오류를 무시한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 함수마다 임의의 오류 문자열을 출력한다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 단위 테스트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 개별 함수와 모듈을 검사한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 정상·경계·예외 입력을 포함한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 예상 결과와 실제 결과를 비교한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 수동 실행 한 번으로 대체한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 테스트 실패는 삭제해서 해결한다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 코드 리뷰에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 변경 목적과 인터페이스 영향을 확인한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 중복·보안·테스트·가독성을 검토한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 구체적이고 존중하는 의견을 남긴다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 작성자의 능력을 평가하고 비난한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 실행 여부만 확인한다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. Git 커밋에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 한 커밋에는 관련된 변경을 담는다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 메시지에 변경 목적을 나타낸다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 테스트 가능한 작은 단위로 기록한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 서로 관계없는 모든 변경을 한 번에 넣는다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 메시지는 항상 &#x27;수정&#x27; 한 단어면 충분하다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 브랜치 병합에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 병합 전에 최신 main을 반영할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 충돌 부분의 의도를 비교해 해결한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 병합 후 통합 테스트를 수행한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 충돌 파일을 무조건 삭제한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 테스트가 실패해도 바로 배포한다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 협업 통합 과정에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">보기 5개 중 옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 공통 인터페이스를 먼저 합의한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 모듈별 테스트와 상호 리뷰를 진행한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 버전·변경 이력·사용법을 문서화한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 통합 담당자만 코드를 이해하면 된다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 오류와 실패 기록은 숨긴다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2>
+<div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label>
+<label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div>
+<div class="note"><b>배점</b><br>코드별 평가 10문항 × 5점 = 50점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 3점 = 30점<br>총점 100점</div></section>
+</main>
+<a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div>
+<div><button class="reset" onclick="resetAll()">다시 풀기</button>
+<button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div>
+<footer>정보과학 31차시 목표지향 개념기반 수업지도안</footer>
+
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "입력·분석·출력·통합·테스트의 책임을 분리하면 수정 영향과 역할 충돌을 줄일 수 있습니다."}, "2": {"ans": [0, 1, 2], "exp": "함수명·매개변수·반환형·허용 범위·예외 규칙은 모듈 연결을 위한 계약입니다."}, "3": {"ans": [0, 1, 2], "exp": "입력 모듈은 파싱과 검증이라는 한 가지 책임에 집중합니다."}, "4": {"ans": [0, 1, 2], "exp": "입력값만으로 결과를 만드는 순수 함수는 테스트와 재사용이 쉽습니다."}, "5": {"ans": [0, 1, 2], "exp": "문자열 반환 인터페이스는 여러 출력 환경에서 재사용하기 좋습니다."}, "6": {"ans": [0, 1, 2], "exp": "오류 계약을 통일하면 모듈 간 동작을 예측하고 사용자 메시지를 일관되게 만들 수 있습니다."}, "7": {"ans": [0, 1, 2], "exp": "단위 테스트는 개별 함수의 정상·경계·오류 상황을 검증합니다."}, "8": {"ans": [0, 1, 2], "exp": "코드 리뷰는 사람보다 코드와 설계 근거를 중심으로 개선점을 찾는 과정입니다."}, "9": {"ans": [0, 1, 2], "exp": "기능 브랜치·작은 커밋·최신 main 반영·병합 후 테스트가 안전한 통합을 돕습니다."}, "10": {"ans": [0, 1, 2], "exp": "통합 단계에서는 설정·모듈 연결·버전·통합 테스트를 함께 확인해야 합니다."}}, "ox": {"1": {"ans": true, "exp": "수정·테스트·재사용이 쉬워집니다."}, "2": {"ans": false, "exp": "입력·출력·예외 등 외부 연결 규칙을 뜻합니다."}, "3": {"ans": true, "exp": "자료형과 사용법을 명확히 합니다."}, "4": {"ans": false, "exp": "입력만으로 결과를 만드는 함수입니다."}, "5": {"ans": true, "exp": "콘솔·파일·웹에서 활용할 수 있습니다."}, "6": {"ans": false, "exp": "경계값과 오류 입력도 필요합니다."}, "7": {"ans": true, "exp": "다양한 품질 기준을 점검합니다."}, "8": {"ans": true, "exp": "main을 안정적으로 유지할 수 있습니다."}, "9": {"ans": false, "exp": "두 변경의 의도와 인터페이스를 확인해야 합니다."}, "10": {"ans": true, "exp": "단위 테스트와 목적이 다릅니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "책임 분리는 결합도를 낮추고 유지보수를 쉽게 합니다."}, "2": {"ans": [0, 1, 2], "exp": "다른 모듈이 함수를 안전하게 호출하는 데 필요한 정보를 기록합니다."}, "3": {"ans": [0, 1, 2], "exp": "모듈 경계에서 입력을 검증하면 오류 전파를 줄일 수 있습니다."}, "4": {"ans": [0, 1, 2], "exp": "외부 부작용이 적은 함수는 예측과 검증이 쉽습니다."}, "5": {"ans": [0, 1, 2], "exp": "일관된 예외 규칙은 통합 안정성을 높입니다."}, "6": {"ans": [0, 1, 2], "exp": "작은 단위의 자동 검증이 회귀 오류를 줄입니다."}, "7": {"ans": [0, 1, 2], "exp": "코드 리뷰는 품질 개선과 지식 공유를 위한 협업 과정입니다."}, "8": {"ans": [0, 1, 2], "exp": "작고 의미 있는 커밋은 검토와 되돌리기를 쉽게 합니다."}, "9": {"ans": [0, 1, 2], "exp": "병합은 코드뿐 아니라 인터페이스와 동작을 통합하는 과정입니다."}, "10": {"ans": [0, 1, 2], "exp": "합의·검증·기록이 지속 가능한 협업의 핵심입니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+ const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();
+ if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+ let score=0,answered=0;
+ const now=new Date(), lines=["정보과학 31차시 평가 결과","=".repeat(52),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+ for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")} | ${d.exp}`);}
+ lines.push("","[OX 형성평가]");
+ for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"} | ${d.exp}`);}
+ lines.push("","[종합 진단평가]");
+ for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")} | ${d.exp}`);}
+ lines.push("","=".repeat(52),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);
+ document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+ const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+ const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_31차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();
+ document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

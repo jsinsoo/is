@@ -1,0 +1,369 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 34차시</title><style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1220px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:1000px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--green)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--purple)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:23%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+
+header{position:relative;overflow:hidden}header:after{content:"";position:absolute;right:-80px;bottom:-100px;width:290px;height:290px;border-radius:50%;background:rgba(255,255,255,.08)}
+section>h2:after{content:"";display:block;width:56px;height:4px;margin-top:8px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--purple))}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);padding:17px;border-radius:13px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px}.ox{display:flex;gap:10px}.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.mini-menu{position:fixed;left:8px;top:8px;z-index:80}.mini-menu summary{list-style:none;width:28px;height:28px;border-radius:7px;background:#17324dee;color:#fff;display:grid;place-items:center;cursor:pointer}.mini-menu summary::-webkit-details-marker{display:none}.mini-panel{margin-top:5px;min-width:150px;padding:7px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 26px #0002}.mini-panel a{display:block;padding:6px 8px;text-decoration:none;color:var(--navy);font-size:.82rem;font-weight:800}
+@media(max-width:700px){.grid,.student{grid-template-columns:1fr}}
+</style></head><body id="top"><details class="mini-menu"><summary>☰</summary><div class="mini-panel"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 10선</a><a href="#closing">끝 멘트</a><a href="#ox">형성평가</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></details><header><div class="wrap"><h1>정보과학 34차시<br>프로젝트 발표와 개인 학습 성찰</h1><p>문제 정의·설계·알고리즘·구현·검증·윤리적 고려를 하나의 발표 흐름으로 정리하고, 개인의 배움과 한계를 다음 성장 목표로 연결합니다.</p></div></header><nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단</a><a href="#submit">제출</a></div></nav><main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>34차시</td><th>주제</th><td>문제 정의·설계·알고리즘·구현·검증·윤리 발표와 개인 학습 성찰</td></tr>
+<tr><th>핵심 질문</th><td colspan="3">프로젝트 전 과정을 어떤 이야기 구조와 근거로 발표하고, 개인의 배움과 한계를 다음 성장 목표로 어떻게 연결할 수 있는가?</td></tr>
+<tr><th>전이 목표</th><td colspan="3">학생은 새로운 프로젝트에서 문제 정의부터 설계·알고리즘·구현·검증·윤리까지의 흐름을 근거 중심으로 발표하고, 잘한 점·어려움·해결 과정·배운 점·다음 목표를 구체적으로 성찰할 수 있다.</td></tr>
+<tr><th>성취기준</th><td colspan="3">프로젝트의 사용자와 문제 상황, 입력·출력·제한 조건, 자료구조와 알고리즘 선택 이유, 핵심 구현과 테스트 결과, 개인정보·편향·저작권 고려를 발표한다. 성과와 한계를 분석하고 개인별 학습 성찰과 후속 개선 계획을 작성한다.</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>활동</th><th>개념</th></tr><tr><td>도입</td><td>기능 나열형 발표와 문제 해결 흐름형 발표를 비교한다.</td><td>구조·근거</td></tr><tr><td>개념</td><td>문제 정의부터 윤리와 성찰까지 발표 구조를 설계한다.</td><td>서사·증거</td></tr><tr><td>실습</td><td>10개 프로젝트의 발표 요소와 개인 성찰을 분석한다.</td><td>발표·검증</td></tr><tr><td>전이</td><td>자신의 발표 개요와 개인 학습 성찰문을 완성한다.</td><td>성찰·성장</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>프로젝트 발표의 전체 흐름을 구성한다.</li><li>알고리즘과 구현 선택 근거를 설명한다.</li><li>테스트와 사용자 평가 자료를 제시한다.</li><li>개인정보·편향·저작권을 검토한다.</li><li>구체적인 개인 학습 성찰을 작성한다.</li></ol></div><div class="card"><h3>학습할 개념</h3><ul><li><b>문제 정의:</b> 사용자·문제 상황·목표·필요성</li><li><b>설계와 알고리즘:</b> 입력·출력·자료구조·처리 절차·선택 이유</li><li><b>구현과 검증:</b> 핵심 함수·모듈·테스트·성능 근거</li><li><b>윤리적 고려:</b> 개인정보·편향·출처·결과 사용 책임</li><li><b>학습 성찰:</b> 잘한 점·어려움·해결·배움·다음 목표</li></ul></div></div><div class="lead"><b>개념 일반화</b><br>좋은 프로젝트 발표는 결과를 자랑하는 시간이 아니라 문제 해결의 선택과 근거, 검증과 한계, 윤리적 책임과 다음 성장을 하나의 이야기로 연결하는 과정이다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote"><strong>“배움의 마지막 단계는 답을 보여 주는 일이 아니라, 왜 그렇게 생각했고 무엇이 달라졌는지를 말할 수 있는 것입니다.”</strong><br><br>소크라테스는 질문과 대화를 통해 생각을 드러냈고, 아리스토텔레스는 좋은 설명에는 원인과 목적이 함께 있어야 한다고 보았습니다. 다빈치는 완성 작품뿐 아니라 스케치와 시행착오를 남겼고, 가우스는 정답보다 논리적 증명의 아름다움을 중요하게 여겼습니다.<br><br>오늘 우리는 프로젝트의 마지막 발표를 준비합니다. 코드가 실행된다는 사실만 말하지 않고, 누구의 어떤 문제를 해결했는지, 왜 그 알고리즘을 선택했는지, 어떤 테스트로 확인했는지, 개인정보와 편향과 저작권은 어떻게 살폈는지 설명합니다.<br><br>다만 발표 첫 장부터 “질문은 받지 않겠습니다”라고 쓰면 시간 관리는 편해지지만 학습 성찰은 강제 종료될 수 있습니다. 오늘은 성공뿐 아니라 한계와 다음 목표까지 정직하게 이야기해 봅시다.</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow"><div class="flow-card"><strong>문제와 설계</strong>사용자·목표·입력·출력·제한 조건</div><div class="flow-card"><strong>알고리즘과 구현</strong>처리 절차·선택 근거·핵심 코드</div><div class="flow-card"><strong>검증과 윤리</strong>테스트·성능·개인정보·편향·저작권</div><div class="flow-card"><strong>성찰과 성장</strong>배운 점·한계·다음 개선 목표</div></div></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol><li>발표 구조의 명확성이 프로젝트 이해도에 미치는 영향</li><li>시각화 자료 유형에 따른 알고리즘 설명 효과 비교</li><li>실패 사례 공개가 동료 학습과 문제 해결에 미치는 영향</li><li>개인 학습 성찰문의 구체성이 후속 프로젝트 성과에 미치는 영향</li><li>윤리적 고려 포함 여부가 프로젝트 신뢰도 평가에 미치는 영향</li></ol></section>
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 코드의 문제 정의·설계·알고리즘·구현·검증·윤리·성찰 요소를 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>교실 환기 알림 프로젝트 발표</h2></div>
+<div><span class="badge">환경</span><span class="badge">센서</span></div>
+<table>
+<tr><th>항목</th><th>발표 내용</th></tr>
+<tr><td>문제 정의</td><td>수업 후반 교실 공기 질 저하를 줄이기 위해 환기 시점을 자동 안내함.</td></tr>
+<tr><td>설계</td><td>이산화탄소 농도를 입력받아 정상·주의·즉시 환기로 출력함.</td></tr>
+<tr><td>알고리즘</td><td>임계값 조건문과 최근 3개 측정값의 이동평균을 사용함.</td></tr>
+<tr><td>검증</td><td>999, 1000, 1499, 1500ppm 경계값을 테스트함.</td></tr>
+<tr><td>윤리</td><td>학생 이름과 위치 정보는 수집하지 않고 교실 단위 집계값만 사용함.</td></tr>
+</table>
+<pre><code>def ventilation_status(co2):
+    if co2 &gt;= 1500:
+        return "즉시 환기"
+    if co2 &gt;= 1000:
+        return "환기 권장"
+    return "정상"
+
+tests = [999, 1000, 1499, 1500]
+
+for value in tests:
+    print(value, ventilation_status(value))</code></pre>
+<div class="check"><strong>개인 성찰</strong><br/>처음에는 센서값 한 번만으로 상태를 판정했지만 순간 오차가 크다는 점을 발견하였다. 이동평균을 적용하면서 실제 데이터의 흔들림을 줄이는 방법을 배웠다.</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 교실 환기 알림 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 문제 정의·설계·검증·윤리 요소가 모두 포함되어 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 999·1000·1499·1500ppm은 경계값 검증에 적절하다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 학생 이름과 위치 정보를 수집하지 않는 것은 개인정보 보호에 해당한다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 센서값은 한 번만 측정할수록 항상 정확하다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 경계값 테스트는 발표에서 제외해야 한다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>급식 대기시간 분석 발표</h2></div>
+<div><span class="badge">큐</span><span class="badge">학교생활</span></div>
+<div class="two">
+<div class="card">
+<h3>발표 핵심</h3>
+<p><strong>문제:</strong> 특정 시간대의 긴 대기열</p>
+<p><strong>설계:</strong> 학생 도착 순서를 큐로 저장</p>
+<p><strong>검증:</strong> 실제 관찰값과 예상 대기시간 비교</p>
+<p><strong>윤리:</strong> 익명 번호만 사용</p>
+</div>
+<div><pre><code>def waiting_times(service_times):
+    current = 0
+    result = []
+
+    for service in service_times:
+        result.append(current)
+        current += service
+
+    return result
+
+times = waiting_times([2, 3, 2, 4])
+
+print("개별 대기:", times)
+print("평균:", sum(times) / len(times))</code></pre></div>
+</div>
+<div class="note"><strong>성찰</strong><br/>큐 자료구조가 실제 급식 대기 상황을 자연스럽게 표현한다는 점을 이해하였다. 이후에는 배식대 수가 여러 개인 경우를 모델링하고 싶다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 급식 대기시간 분석 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 큐는 도착 순서와 대기 순서를 표현하기에 적절하다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 개별 대기시간과 평균을 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 익명 번호 사용은 개인정보 보호에 도움이 된다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 대기열은 스택으로만 표현해야 한다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 배식대 수가 여러 개인 경우는 확장할 수 없다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>도서 추천 프로그램 발표</h2></div>
+<div><span class="badge">추천</span><span class="badge">편향</span></div>
+<table>
+<tr><th>항목</th><th>발표 내용</th></tr>
+<tr><td>문제 정의</td><td>학생이 관심 분야의 책을 빠르게 찾기 어려운 문제</td></tr>
+<tr><td>알고리즘</td><td>선호 장르 필터링 후 평점 내림차순 정렬</td></tr>
+<tr><td>검증</td><td>장르별 추천 결과와 사용자 만족도 설문 비교</td></tr>
+<tr><td>윤리</td><td>대출 기록 익명화, 인기 도서만 반복 추천되는 편향 점검</td></tr>
+</table>
+<pre><code>books = [
+    ("파이썬 기초", "정보", 4.8),
+    ("알고리즘 여행", "정보", 4.6),
+    ("우주의 구조", "과학", 4.9)
+]
+
+def recommend(genre):
+    candidates = [
+        book
+        for book in books
+        if book[1] == genre
+    ]
+
+    return sorted(
+        candidates,
+        key=lambda book: book[2],
+        reverse=True
+    )
+
+print(recommend("정보"))</code></pre>
+<div class="warn"><strong>성찰</strong><br/>평점만으로 추천하면 소수 분야의 책이 배제될 수 있음을 알게 되었다. 추천의 정확성뿐 아니라 다양성과 공정성도 중요한 기준이라는 점을 배웠다.</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 도서 추천 프로그램 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> 선호 장르 필터링과 평점 정렬을 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> 대출 기록 익명화와 추천 편향 점검이 필요하다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 추천의 다양성과 공정성도 평가 기준이 될 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 평점만 높으면 모든 사용자에게 공정하다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 소수 분야 도서는 반드시 제외해야 한다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>교내 최단 경로 안내 발표</h2></div>
+<div><span class="badge">그래프</span><span class="badge">BFS</span></div>
+<pre><code>from collections import deque
+
+def shortest_path(graph, start, target):
+    queue = deque([(start, [start])])
+    visited = {start}
+
+    while queue:
+        node, path = queue.popleft()
+
+        if node == target:
+            return path
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(
+                    (neighbor, path + [neighbor])
+                )
+
+    return None</code></pre>
+<table>
+<tr><th>발표 항목</th><th>설명</th></tr>
+<tr><td>설계</td><td>장소를 노드, 통로를 간선으로 표현함.</td></tr>
+<tr><td>알고리즘</td><td>모든 이동 비용이 같아 BFS를 선택함.</td></tr>
+<tr><td>검증</td><td>출발지와 도착지가 같을 때, 경로가 없을 때를 테스트함.</td></tr>
+<tr><td>성찰</td><td>문제를 그래프로 바꾸면 실제 공간 문제를 알고리즘으로 해결할 수 있음을 이해함.</td></tr>
+</table>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 교내 최단 경로 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> 장소를 노드, 통로를 간선으로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> 모든 이동 비용이 같을 때 BFS가 적절하다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 출발지와 도착지가 같거나 경로가 없는 경우를 테스트해야 한다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> BFS는 가중치가 다른 모든 문제에서 항상 최적이다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 그래프 모델링은 실제 공간 문제와 무관하다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>학교 전력 사용 분석 발표</h2></div>
+<div><span class="badge">데이터 분석</span><span class="badge">환경</span></div>
+<pre><code>power = [42, 55, 61, 64, 58, 51, 63, 60, 44]
+
+average = sum(power) / len(power)
+
+high_usage = [
+    value
+    for value in power
+    if value &gt; average
+]
+
+print("평균:", average)
+print("평균 초과 횟수:", len(high_usage))</code></pre>
+<div class="two">
+<div class="card"><h3>검증</h3><p>결측값 처리 전후 평균을 비교하고, 수업이 없는 시간의 이상 사용량을 확인함.</p></div>
+<div class="card"><h3>윤리</h3><p>교실별 사용량은 공개하지 않고 시간대별 집계값으로 발표함.</p></div>
+</div>
+<div class="check"><strong>성찰</strong><br/>데이터를 그래프로 나타내는 것만으로는 충분하지 않고, 원인과 맥락을 함께 해석해야 한다는 점을 배웠다.</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 학교 전력 분석 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> 시간대별 평균과 초과 횟수를 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> 결측값 처리 전후를 비교하는 것은 검증에 도움이 된다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 교실별 값을 공개하지 않고 집계값을 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 그래프만 그리면 원인 해석은 필요 없다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> 개별 교실 사용량은 반드시 공개해야 한다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>개인 학습 플래너 발표</h2></div>
+<div><span class="badge">우선순위</span><span class="badge">사용성</span></div>
+<pre><code>tasks = [
+    ("정보 보고서", 1, 60),
+    ("수학 과제", 2, 90),
+    ("과학 복습", 3, 40)
+]
+
+ordered = sorted(
+    tasks,
+    key=lambda task: (
+        task[1],
+        task[2]
+    )
+)
+
+for task in ordered:
+    print(task)</code></pre>
+<table>
+<tr><th>발표 항목</th><th>설명</th></tr>
+<tr><td>문제 정의</td><td>과제가 많을 때 우선순위를 정하기 어려움.</td></tr>
+<tr><td>알고리즘</td><td>중요도와 예상 시간을 기준으로 정렬함.</td></tr>
+<tr><td>검증</td><td>동일 중요도, 시간이 0인 경우, 하루 가능 시간 초과를 테스트함.</td></tr>
+<tr><td>성찰</td><td>사용자 편의를 위해 단순 정렬 결과보다 남은 시간과 이유를 함께 출력해야 함을 배움.</td></tr>
+</table>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 개인 학습 플래너 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 중요도와 예상 시간을 기준으로 정렬할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 동일 중요도와 시간 0 등의 경계값을 테스트할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 남은 시간과 추천 이유를 함께 보여 주면 사용성이 좋아진다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 사용자에게 정렬 결과만 보여 주면 항상 충분하다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 하루 가능 시간 초과는 고려할 필요가 없다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>미세먼지 실외 활동 추천 발표</h2></div>
+<div><span class="badge">공공데이터</span><span class="badge">윤리적 판단</span></div>
+<pre><code>def activity_status(pm25, rain):
+    if rain:
+        return "실내 활동 권장"
+
+    if pm25 &gt; 35:
+        return "미세먼지 주의"
+
+    return "실외 활동 가능"
+
+print(activity_status(28, False))
+print(activity_status(42, False))</code></pre>
+<div class="warn"><strong>윤리적 고려</strong><br/>건강 관련 최종 결정은 프로그램이 아니라 교사와 공식 기준이 해야 하며, 최신 기준을 확인하지 않은 값을 단정적으로 사용해서는 안 됩니다.</div>
+<div class="note"><strong>성찰</strong><br/>프로그램의 결과가 사람의 행동에 영향을 줄 수 있으므로 정확성 외에 책임 있는 표현이 필요하다는 점을 배웠다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 미세먼지 활동 추천 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 공공데이터와 공식 기준을 확인해야 한다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> 건강 관련 최종 판단은 교사와 공식 지침이 담당해야 한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 결과 표현은 책임 있게 작성해야 한다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 프로그램이 의료적 최종 결정을 내려야 한다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 오래된 기준을 사용해도 문제가 없다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>교실 좌석 배치 프로젝트 발표</h2></div>
+<div><span class="badge">백트래킹</span><span class="badge">개인정보</span></div>
+<pre><code>students = ["A", "B", "C"]
+selected = []
+
+def arrange():
+    if len(selected) == len(students):
+        print(selected)
+        return
+
+    for student in students:
+        if student in selected:
+            continue
+
+        selected.append(student)
+        arrange()
+        selected.pop()
+
+arrange()</code></pre>
+<table>
+<tr><th>항목</th><th>발표 내용</th></tr>
+<tr><td>설계</td><td>학생을 익명 기호로 바꾸고 가능한 배치를 생성함.</td></tr>
+<tr><td>알고리즘</td><td>선택·재귀·되돌리기 방식의 백트래킹 사용</td></tr>
+<tr><td>검증</td><td>중복 배치 여부와 조건 위반 배치가 제거되는지 확인</td></tr>
+<tr><td>윤리</td><td>시력·건강 정보 등 민감 정보는 공개 발표에 포함하지 않음</td></tr>
+</table>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 교실 좌석 배치 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 백트래킹은 선택·재귀·되돌리기 구조를 사용한다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 익명 기호를 사용해 공개 자료의 개인정보를 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 중복 배치와 조건 위반 여부를 검증해야 한다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 민감한 건강 정보를 발표 자료에 모두 공개해야 한다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> 백트래킹은 되돌리기 과정이 없다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>공용 프린터 큐 관리 발표</h2></div>
+<div><span class="badge">큐</span><span class="badge">효율성</span></div>
+<pre><code>from collections import deque
+
+jobs = deque([
+    ("보고서", 10),
+    ("발표자료", 6),
+    ("과제", 4)
+])
+
+time = 0
+
+while jobs:
+    name, pages = jobs.popleft()
+    print(name, "시작:", time)
+    time += pages
+    print(name, "완료:", time)</code></pre>
+<div class="check"><strong>성찰</strong><br/>선입선출 방식은 공정하지만 긴 작업 하나가 전체 대기를 늘릴 수 있음을 알게 되었다. 이후에는 페이지 수가 짧은 작업과 일반 작업을 분리하는 정책을 비교하고 싶다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 공용 프린터 큐 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> deque의 popleft는 선입선출 처리에 적합하다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 선입선출은 공정하지만 긴 작업이 대기를 늘릴 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 짧은 작업과 일반 작업을 분리하는 정책을 비교할 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 큐에서는 먼저 들어온 작업이 마지막에 처리된다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 효율성과 공정성은 동시에 고려할 수 없다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>종합: 발표 평가표와 개인 학습 성찰 작성</h2></div>
+<div><span class="badge">종합 발표</span><span class="badge">성찰</span></div>
+<pre><code>reflection = {
+    "가장 잘한 점": (
+        "문제를 사용자 관점에서 정의하고 "
+        "입력·출력·제한 조건을 구체화함"
+    ),
+    "가장 어려웠던 점": (
+        "경계값 오류를 찾고 "
+        "재현 가능한 테스트로 만드는 과정"
+    ),
+    "해결 과정": (
+        "정상·경계·예외 입력을 구분하고 "
+        "단위 테스트를 추가함"
+    ),
+    "배운 점": (
+        "정확한 코드뿐 아니라 "
+        "개인정보·편향·저작권도 중요함"
+    ),
+    "다음 목표": (
+        "사용자 피드백을 반영해 "
+        "인터페이스와 성능을 개선함"
+    )
+}
+
+for title, content in reflection.items():
+    print(title)
+    print("-", content)</code></pre>
+<table>
+<tr><th>평가 항목</th><th>발표에서 확인할 내용</th></tr>
+<tr><td>문제 정의</td><td>사용자와 문제 상황이 구체적인가?</td></tr>
+<tr><td>설계</td><td>입력·출력·기능·제한 조건이 연결되는가?</td></tr>
+<tr><td>알고리즘</td><td>자료구조와 알고리즘 선택 이유가 타당한가?</td></tr>
+<tr><td>구현</td><td>핵심 코드가 모듈화되고 이해하기 쉬운가?</td></tr>
+<tr><td>검증</td><td>정상·경계·예외 테스트와 결과 근거가 있는가?</td></tr>
+<tr><td>윤리</td><td>개인정보·편향·출처·라이선스를 검토했는가?</td></tr>
+<tr><td>성찰</td><td>배운 점과 개선 방향이 구체적인가?</td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>개인 학습 성찰 예시</strong><br/>
+“이번 프로젝트를 통해 문제를 바로 코딩하기보다 사용자와 입력·출력·제한 조건을 먼저 정의하는 과정이 중요하다는 점을 배웠다. 초기 구현에서는 정상 입력만 확인했으나 경계값과 예외 입력에서 오류가 발생했고, 이를 재현 가능한 테스트로 기록하면서 검증의 필요성을 이해하였다. 또한 데이터 처리 과정에서 개인정보 최소 수집과 알고리즘 편향, 외부 자료의 출처와 라이선스를 함께 고려해야 함을 알게 되었다. 다음 프로젝트에서는 기능 구현과 동시에 테스트와 윤리 점검표를 작성하고, 사용자 피드백을 반영하여 더 신뢰할 수 있는 산출물을 만들고자 한다.”
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 종합 발표와 개인 성찰에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 잘한 점·어려움·해결 과정·배운 점·다음 목표를 포함할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 발표에서는 문제 정의부터 검증과 윤리까지 연결해야 한다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> 성찰은 구체적인 근거와 개선 계획을 포함해야 한다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 성찰은 좋은 점만 작성하면 된다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 다음 목표는 기록할 필요가 없다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">시는 마지막 행에서 처음의 감정을 새롭게 비추고, 소설은 마지막 장에서 인물의 긴 여정을 돌아보게 합니다. 희곡은 막이 내려도 관객의 질문 속에서 계속되고, 연극은 커튼콜에서 모든 역할의 노력을 함께 기억합니다. 음악도 마지막 음이 멈춘 뒤 남는 울림이 작품의 진짜 힘이 됩니다.<br><br>여러분의 34차시 학습도 오늘로 한 막을 내리지만, 배움은 끝나지 않습니다. 문제를 정의하고, 설계하고, 구현하고, 실패를 고치고, 다른 사람의 의견을 받아들이며 여러분은 처음보다 훨씬 단단한 문제 해결자가 되었습니다.<br><br>그리고 발표 파일 이름을 ‘최종_진짜최종_마지막_수정없음_수정본’으로 저장했다면 버전 관리 성찰 한 줄은 이미 완성된 셈입니다. 오늘의 발표와 성찰이 하나의 종착점이 아니라 더 큰 질문과 꿈으로 출발하는 멋진 첫 장이 되기를 바랍니다.</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 프로젝트 발표는 기능 나열보다 문제 해결 흐름이 드러나야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 알고리즘 선택 이유는 설명하지 않아도 된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 검증에는 정상·경계·예외 입력을 포함할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 윤리적 고려에는 개인정보·편향·저작권이 포함된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 발표에서는 한계와 실패를 숨기는 것이 좋다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 개인 성찰에는 어려움과 해결 과정이 포함될 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 사용자 피드백은 다음 개선 목표를 정하는 데 도움이 된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 발표 자료는 코드 화면만 가득 채우면 가장 좋다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 성찰은 배운 점과 다음 행동을 연결해야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 프로젝트의 성과와 한계를 함께 제시하는 것이 바람직하다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 문제 정의 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 사용자와 문제 상황을 설명한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 해결 목표와 필요성을 제시한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 선택한 문제의 범위를 명확히 한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 코드만 보여 주면 충분하다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 사용자는 설명하지 않는다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 설계 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 입력과 출력을 설명한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 제한 조건과 기능 분해를 제시한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 자료구조와 모듈 구성을 설명한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 설계는 구현 후에만 정한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 제한 조건은 숨긴다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 알고리즘 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 처리 절차와 의사코드를 제시한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 선택 이유와 적용 조건을 설명한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 시간 복잡도와 대안을 비교할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 유명한 알고리즘이면 이유는 필요 없다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 결과만 맞으면 과정은 무관하다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 구현 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 핵심 함수와 모듈 구조를 보여 준다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 사용 라이브러리와 버전을 기록할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 전체 코드 중 중요한 부분을 중심으로 설명한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 모든 코드 줄을 그대로 읽는다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 인터페이스는 설명하지 않는다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 검증 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 정상·경계·예외 테스트를 포함한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 예상 결과와 실제 결과를 비교한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 성능과 사용자 평가 자료를 활용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 성공한 테스트만 보여 준다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 테스트 환경은 기록하지 않는다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 윤리적 고려 발표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 개인정보 최소 수집을 검토한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 알고리즘 편향과 결과 책임을 살핀다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 출처와 라이선스를 표시한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 윤리 문제는 기술 발표와 무관하다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 공공데이터는 출처가 필요 없다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 개인 학습 성찰에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 잘한 점과 어려움을 구체적으로 쓴다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 해결 과정과 배운 점을 연결한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 다음 개선 목표를 제시한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 감상 한 문장만 쓰면 충분하다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 실패 과정은 삭제한다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 좋은 발표 자료에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 핵심 메시지를 시각적으로 구조화한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 표·그래프·코드를 근거로 활용한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 글자 크기와 발표 시간을 고려한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 한 슬라이드에 모든 내용을 넣는다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 출처 표시는 생략한다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 질의응답 준비에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 한계와 선택 근거를 설명할 수 있어야 한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 예상 질문과 답변 근거를 준비한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 모르는 내용은 정직하게 인정하고 후속 개선을 제시한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 모든 질문을 피한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 근거 없이 자신 있게 답한다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 종합 발표와 성찰에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 문제 정의부터 윤리까지 하나의 흐름으로 연결한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 성과와 한계를 함께 제시한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 개인별 배움과 다음 목표를 구체화한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 기능 시연만 하면 충분하다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 개인 성찰은 팀 대표 한 명만 작성한다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 50점 + OX 20점 + 진단평가 30점 = 총 100점</div></section>
+</main><a class="top" href="#top">↑</a><div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 34차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const A={"code": {"1": [0, 1, 2], "2": [0, 1, 2], "3": [0, 1, 2], "4": [0, 1, 2], "5": [0, 1, 2], "6": [0, 1, 2], "7": [0, 1, 2], "8": [0, 1, 2], "9": [0, 1, 2], "10": [0, 1, 2]}, "ox": {"1": true, "2": false, "3": true, "4": true, "5": false, "6": true, "7": true, "8": false, "9": true, "10": true}, "diag": {"1": [0, 1, 2], "2": [0, 1, 2], "3": [0, 1, 2], "4": [0, 1, 2], "5": [0, 1, 2], "6": [0, 1, 2], "7": [0, 1, 2], "8": [0, 1, 2], "9": [0, 1, 2], "10": [0, 1, 2]}};
+function same(a,b){return a.length===b.length&&[...a].sort().every((v,i)=>v===[...b].sort()[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>+x.value);}
+function show(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+ const sid=document.getElementById("sid").value.trim(), name=document.getElementById("sname").value.trim();
+ if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+ let score=0, lines=["정보과학 34차시 평가 결과",`학번: ${sid}`,`이름: ${name}`];
+ const now=new Date(); lines.push(`응시시각: ${now.toLocaleString("ko-KR")}`,"");
+ for(let i=1;i<=10;i++){let g=picks("code"+i),ok=same(g,A.code[i]);if(ok)score+=5;show("fb-code"+i,ok,"발표 구조와 성찰 요소를 확인하세요.");lines.push(`코드 ${i}: ${ok?"정답":"오답"}`);}
+ for(let i=1;i<=10;i++){let e=document.querySelector(`input[name="ox${i}"]:checked`),g=e?e.value==="true":null,ok=g===A.ox[i];if(ok)score+=2;show("fb-ox"+i,ok,"발표·검증·윤리·성찰의 관계를 확인하세요.");lines.push(`OX ${i}: ${ok?"정답":"오답"}`);}
+ for(let i=1;i<=10;i++){let g=picks("diag"+i),ok=same(g,A.diag[i]);if(ok)score+=3;show("fb-diag"+i,ok,"문제 정의부터 다음 목표까지의 흐름을 확인하세요.");lines.push(`진단 ${i}: ${ok?"정답":"오답"}`);}
+ lines.push("",`총점: ${score} / 100점`);
+ document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+ const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+ const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_34차시_${stamp}.txt`;a.click();URL.revokeObjectURL(a.href);
+}
+function resetAll(){document.querySelectorAll('input').forEach(x=>{if(x.type!=="text")x.checked=false;});document.querySelectorAll(".feedback").forEach(x=>x.className="feedback");document.getElementById("result").textContent="제출 전 · 100점 만점";}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"&&document.querySelectorAll(`input[name="${e.target.name}"]:checked`).length>3){e.target.checked=false;alert("3개만 선택하세요.");}});
+</script>
+</body></html>
