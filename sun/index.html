@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>정보과학 예제</title>
+<title>정보과학 수업지도안</title>
 
 <style>
 html, body{
@@ -16,23 +16,39 @@ html, body{
 
 /* 상단 메뉴 */
 #top{
-    height:32px;
-    padding:2px 5px;
+    height:36px;
+    padding:4px 8px;
     border-bottom:1px solid #ccc;
     background:#f5f5f5;
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
 /* 아주 작은 드롭다운 */
 #fileSelect{
-    width:220px;
+    width:330px;
     height:24px;
     font-size:12px;
+}
+
+#teacherMail{
+    font-size:12px;
+    font-weight:bold;
+    color:#17324d;
+    text-decoration:none;
+    white-space:nowrap;
+}
+
+#teacherMail:hover{
+    color:#2f6fa3;
+    text-decoration:underline;
 }
 
 /* 본문 */
 #main{
     width:100%;
-    height:calc(100vh - 32px);
+    height:calc(100vh - 36px);
     border:none;
 }
 </style>
@@ -80,6 +96,14 @@ html, body{
 <option value="is34.html">34. 프로젝트 발표와 학습 성찰</option>
 
     </select>
+
+<a id="teacherMail"
+   href="https://mail.google.com/mail/?view=cm&fs=1&to=onstar6395@js.hs.kr"
+   target="_blank"
+   style="font-size:12px;font-weight:bold;text-decoration:none;color:#17324d;">
+    📧 선생님 Gmail: onstar6395@js.hs.kr
+</a>
+
 </div>
 
 <iframe
