@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보융합탐구과제 11차시 | 프로토타입 구현 Ⅰ</title>
+<style>
+:root{
+ --navy:#17365f;--blue:#2c73b5;--sky:#eaf5ff;--green:#2f8b69;--mint:#eaf8f3;
+ --gold:#e5a52d;--red:#cf5149;--purple:#7057a4;--ink:#1f2937;--muted:#667085;
+ --line:#d8e3ee;--paper:#fff;--bg:#f5f8fc;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.72;
+background:radial-gradient(circle at 8% 0,#e7f3ff 0,transparent 30%),radial-gradient(circle at 94% 5%,#e9f9f3 0,transparent 28%),var(--bg)}
+header{position:relative;overflow:hidden;color:#fff;padding:58px 24px 46px;background:linear-gradient(135deg,#102b50,#2b6eaa 58%,#4e91d0)}
+header:before,header:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.08)}
+header:before{width:250px;height:250px;left:-100px;bottom:-145px}header:after{width:340px;height:340px;right:-100px;top:-155px}
+.header-inner{max-width:1180px;margin:auto;position:relative;z-index:1}.eyebrow{font-weight:900;letter-spacing:.08em;color:#d7ecff}
+h1{font-size:clamp(31px,5vw,54px);line-height:1.17;margin:10px 0 14px}.subtitle{font-size:18px;max-width:980px;color:#eef7ff}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.badge{padding:8px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.34);background:rgba(255,255,255,.1);font-size:14px}
+nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1180px;margin:auto;padding:10px 16px;display:flex;gap:8px;overflow:auto}.nav-inner a{text-decoration:none;white-space:nowrap;color:var(--navy);font-weight:900;padding:8px 12px;border-radius:9px}.nav-inner a:hover{background:var(--sky)}
+main{max-width:1180px;margin:auto;padding:28px 18px 80px}section{scroll-margin-top:76px;margin:28px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 10px 30px rgba(22,53,95,.06)}
+h2{font-size:28px;color:var(--navy);margin:0 0 18px;display:flex;align-items:center;gap:10px}h3{color:var(--blue);margin:22px 0 10px}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media(max-width:820px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.label{display:inline-block;background:var(--blue);color:#fff;border-radius:999px;padding:4px 10px;font-size:13px;font-weight:900}
+.highlight{background:linear-gradient(90deg,#fff7df,#fff);border-left:5px solid var(--gold)}.quote{font-size:18px;font-weight:800;color:#294766}
+.timeline{display:grid;grid-template-columns:120px 1fr;gap:12px 18px}.time{font-weight:900;color:var(--blue)}
+.activity{background:#f8fbff;border:1px solid #c9ddec;border-radius:14px;padding:18px}.activity h3{margin-top:0}
+.concept{margin:22px 0;border-top:5px solid var(--blue)}.concept-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.num{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--navy);color:#fff;font-weight:900}
+pre{background:#111827;color:#e5eefb;padding:18px;border-radius:13px;overflow:auto;font-size:14px;line-height:1.55}code{font-family:Consolas,"Courier New",monospace}
+.explain{background:#f8fbff;border:1px dashed #aac6e4;border-radius:12px;padding:15px}
+.question{background:#fbfcfe;border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0}.question-title{font-weight:900;color:var(--navy);margin-bottom:10px}
+.option{display:block;margin:8px 0;padding:8px 10px;border-radius:8px}.option:hover{background:#eef6ff}
+input[type=checkbox],input[type=radio]{transform:scale(1.12);margin-right:8px}.answer-box{display:none;margin-top:12px;padding:12px;border-radius:10px;background:#eefaf5;border-left:4px solid var(--green)}
+.topic-card{border-top:4px solid var(--gold)}table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf3fc;color:var(--navy)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+input[type=text]{width:100%;padding:13px;border:1px solid #b9c8d8;border-radius:10px;font-size:16px}
+button{border:0;border-radius:11px;padding:12px 18px;font-size:15px;font-weight:900;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 5px 14px rgba(43,111,174,.2)}
+button.green{background:var(--green)}button.secondary{background:#64748b}button.gold{background:#b97800}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.score-panel{display:none;margin-top:18px;padding:18px;border:2px solid #8bc0ef;border-radius:14px;background:#eff8ff}
+.correct{background:#eaf9f1!important}.wrong{background:#fff0ef!important}.small{font-size:13px;color:var(--muted)}.footer{text-align:center;padding:25px;color:#6b7280}
+@media print{nav,.actions,button{display:none!important}body{background:#fff}.card{box-shadow:none;break-inside:avoid}.answer-box{display:block}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<div class="eyebrow">2022 개정 교육과정 · 정보융합탐구과제</div>
+<h1>11차시 목표지향 개념기반 수업지도안</h1>
+<div class="subtitle">프로토타입 구현 Ⅰ — 수집·전처리·분석 기능을 함수와 모듈로 구현하고, 작은 데이터와 입력 검증을 활용하여 정상 동작을 빠르게 확인한다.</div>
+<div class="badges"><span class="badge">프로토타입</span><span class="badge">모듈화</span><span class="badge">함수</span><span class="badge">입력 검증</span><span class="badge">작은 데이터</span><span class="badge">단위 시험</span></div>
+</div></header>
+
+<nav><div class="nav-inner">
+<a href="#overview">수업 개요</a><a href="#standards">성취기준</a><a href="#opening">시작 멘트</a><a href="#activity">핵심 활동</a>
+<a href="#concepts">핵심 개념</a><a href="#papers">탐구 주제</a><a href="#closing">끝 멘트</a><a href="#formative">형성평가</a><a href="#diagnostic">진단평가</a><a href="#submit">제출</a>
+</div></nav>
+
+<main>
+<section id="overview" class="card">
+<h2>🧭 수업 개요</h2>
+<div class="grid-2">
+<div><span class="label">학습 주제</span><h3>프로토타입 구현 Ⅰ</h3>
+<p>완성된 시스템을 한 번에 만들기보다 핵심 기능이 실제로 작동하는 작은 시제품을 먼저 구현한다. 자료 수집, 입력 검증, 전처리, 분석과 결과 출력을 각각 함수로 나누고 작은 예시 자료로 실행 흐름을 확인한다.</p></div>
+<div><span class="label">핵심 산출물</span><ul>
+<li>최소 기능 프로토타입</li><li>수집·전처리·분석 함수</li><li>입력 검증과 오류 안내</li><li>작은 데이터 실행 결과</li><li>단위 시험과 개선 기록</li>
+</ul></div></div>
+<h3>차시 운영 예시</h3>
+<div class="timeline">
+<div class="time">도입 8분</div><div>완벽한 완성품과 빠르게 검증 가능한 시제품의 차이를 사례로 비교한다.</div>
+<div class="time">개념 17분</div><div>프로토타입, 최소 기능, 함수 설계, 모듈화, 수집, 전처리, 입력 검증, 분석, 단위 시험과 실행 흐름을 학습한다.</div>
+<div class="time">활동 20분</div><div>5~10개의 작은 자료로 수집→검증→전처리→분석→출력 프로토타입을 구현한다.</div>
+<div class="time">정리 5분</div><div>정상 동작, 발견한 오류와 다음 개선 기능을 한 문장씩 기록한다.</div>
+</div>
+</section>
+
+<section id="standards" class="card">
+<h2>🎯 성취기준과 학습 목표</h2>
+<h3>성취기준</h3>
+<table>
+<tr><th>영역</th><th>수업에 적용한 성취기준</th></tr>
+<tr><td>프로토타입 구현</td><td>탐구 문제의 핵심 요구사항을 충족하는 최소 기능 프로토타입을 구현한다.</td></tr>
+<tr><td>모듈화</td><td>자료 수집, 검증, 전처리, 분석과 출력 기능을 함수와 모듈로 분리한다.</td></tr>
+<tr><td>자료 처리</td><td>작은 데이터에 결측값, 형식 오류와 범위 오류를 포함하여 처리 기능을 점검한다.</td></tr>
+<tr><td>시험과 개선</td><td>함수별 예상 결과를 정하고 실행 결과를 비교하여 오류와 개선 사항을 기록한다.</td></tr>
+</table>
+<h3>학습 목표</h3>
+<ol>
+<li>프로토타입과 완성 제품의 차이를 설명할 수 있다.</li>
+<li>핵심 기능만 포함한 최소 기능 범위를 정할 수 있다.</li>
+<li>수집·전처리·분석·출력 기능을 함수로 나눌 수 있다.</li>
+<li>입력 자료의 형식, 결측값과 허용 범위를 검증할 수 있다.</li>
+<li>작은 데이터로 정상·경계·예외 동작을 확인할 수 있다.</li>
+<li>함수별 실행 결과와 오류를 기록하고 다음 개선 방향을 제시할 수 있다.</li>
+</ol>
+</section>
+
+<section id="opening" class="card highlight">
+<h2>🌅 수업 시작 멘트</h2>
+<p class="quote">“인문학자는 거대한 시대를 이해하기 위해 한 사람의 일기에서 출발하기도 하고, 철학자 아리스토텔레스는 가능성이 실제 모습으로 드러나는 과정을 중요하게 보았습니다. 과학자 패러데이는 화려한 장비보다 작은 실험을 반복하며 전자기 현상의 핵심을 확인했고, 수학자 뉴턴도 복잡한 변화를 작은 순간의 변화로 나누어 생각했습니다. 오늘 우리는 모든 기능을 완벽하게 만들려 하지 않습니다. 작지만 실제로 움직이는 첫 모델을 만들어 아이디어가 현실에서도 살아 있는지 확인하겠습니다.”</p>
+</section>
+
+<section id="activity" class="card">
+<h2>🛠️ 핵심 활동</h2>
+<div class="grid-3">
+<div class="activity"><h3>1. 최소 기능 정하기</h3><p>반드시 작동해야 하는 수집·전처리·분석·출력 기능만 선택한다.</p></div>
+<div class="activity"><h3>2. 함수로 구현하기</h3><p>한 함수가 한 가지 역할을 담당하도록 기능을 나누고 연결한다.</p></div>
+<div class="activity"><h3>3. 작은 자료로 시험하기</h3><p>정상값, 결측값과 범위 밖 값을 포함한 작은 데이터로 동작을 확인한다.</p></div>
+</div>
+</section>
+
+<section id="concepts">
+<h2>🧩 학습할 핵심 개념 10개</h2>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">1</span> 프로토타입과 최소 기능</h3><span class="label">작게 만들고 빠르게 확인</span></div>
+<p><b>개념 상세 설명:</b> 프로토타입은 아이디어와 핵심 기능의 가능성을 확인하기 위해 만든 초기 시제품이다. 모든 기능과 디자인을 구현하기보다 가장 중요한 입력, 처리와 출력이 연결되는지 먼저 검증한다.</p>
+<pre><code>prototype_features = {
+    "자료 입력": True,
+    "결측값 제거": True,
+    "평균 계산": True,
+    "그래프 출력": False,
+    "사용자 로그인": False
+}
+
+for feature, included in prototype_features.items():
+    if included:
+        print("1차 프로토타입 포함:", feature)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 첫 프로토타입에 꼭 필요한 기능만 <code>True</code>로 지정한다. 부가 기능은 뒤 단계로 미루어 핵심 흐름부터 검증한다.</div>
+<div class="question" data-answer="0,2,4">
+<div class="question-title">[개념 1] 프로토타입에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c1" value="0">① 핵심 아이디어가 실제로 작동하는지 확인하는 초기 산출물이다.</label>
+<label class="option"><input type="checkbox" name="c1" value="1">② 처음부터 모든 기능과 디자인을 완성해야 한다.</label>
+<label class="option"><input type="checkbox" name="c1" value="2">③ 최소 기능을 정하면 구현 범위를 관리하기 쉽다.</label>
+<label class="option"><input type="checkbox" name="c1" value="3">④ 오류를 찾기 위한 시험은 완성 제품에서만 한다.</label>
+<label class="option"><input type="checkbox" name="c1" value="4">⑤ 사용자나 팀의 피드백을 일찍 받을 수 있다.</label>
+<div class="answer-box">정답: ①, ③, ⑤ — 프로토타입은 핵심 기능을 빠르게 구현하고 검증하는 데 목적이 있다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">2</span> 함수의 역할과 반환값</h3><span class="label">입력을 받아 결과를 돌려준다</span></div>
+<p><b>개념 상세 설명:</b> 함수는 특정 기능을 이름 붙여 묶은 코드 단위이다. 매개변수로 자료를 받고 처리한 결과를 <code>return</code>으로 반환하면 다른 기능과 쉽게 연결하고 시험할 수 있다.</p>
+<pre><code>def calculate_mean(values):
+    if not values:
+        return None
+    return sum(values) / len(values)
+
+result = calculate_mean([12, 15, 18])
+print("평균:", result)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 리스트가 비어 있으면 <code>None</code>을 반환하고, 값이 있으면 평균을 반환한다. 출력만 하는 함수보다 반환값이 있는 함수가 다른 처리와 연결하기 쉽다.</div>
+<div class="question" data-answer="0,1,3">
+<div class="question-title">[개념 2] 함수에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c2" value="0">① 반복되는 기능을 이름 붙여 재사용할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c2" value="1">② 매개변수는 함수가 처리할 입력을 전달할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c2" value="2">③ 모든 함수는 반드시 화면에만 출력해야 한다.</label>
+<label class="option"><input type="checkbox" name="c2" value="3">④ 반환값은 다른 함수나 계산에 사용할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c2" value="4">⑤ 함수로 나누면 시험과 수정이 불가능해진다.</label>
+<div class="answer-box">정답: ①, ②, ④ — 함수는 입력을 받아 처리하고 결과를 반환하도록 설계할 수 있다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">3</span> 한 함수 한 책임</h3><span class="label">역할을 작고 분명하게</span></div>
+<p><b>개념 상세 설명:</b> 한 함수는 가능한 한 한 가지 역할만 담당해야 한다. 입력, 정제, 계산과 출력이 모두 섞인 긴 함수보다 작은 함수 여러 개가 이해, 수정과 시험에 유리하다.</p>
+<pre><code>def remove_missing(values):
+    return [value for value in values if value is not None]
+
+def calculate_maximum(values):
+    return max(values) if values else None
+
+raw = [18, None, 24, 21]
+clean = remove_missing(raw)
+maximum = calculate_maximum(clean)
+
+print("정제 자료:", clean)
+print("최댓값:", maximum)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 결측값 제거와 최댓값 계산을 서로 다른 함수로 분리한다. 한 기능의 변경이 다른 기능에 미치는 영향을 줄일 수 있다.</div>
+<div class="question" data-answer="1,2,4">
+<div class="question-title">[개념 3] 한 함수 한 책임 원칙에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c3" value="0">① 입력부터 저장까지 모든 작업을 한 함수에 넣는 것이 항상 좋다.</label>
+<label class="option"><input type="checkbox" name="c3" value="1">② 함수의 역할을 설명하기 쉬워진다.</label>
+<label class="option"><input type="checkbox" name="c3" value="2">③ 기능별 시험과 수정이 쉬워질 수 있다.</label>
+<label class="option"><input type="checkbox" name="c3" value="3">④ 함수 수가 늘면 재사용은 불가능하다.</label>
+<label class="option"><input type="checkbox" name="c3" value="4">⑤ 기능 사이의 결합을 줄이는 데 도움이 된다.</label>
+<div class="answer-box">정답: ②, ③, ⑤ — 함수는 작고 분명한 책임을 갖도록 설계한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">4</span> 모듈화</h3><span class="label">관련 기능을 파일과 영역으로 구성</span></div>
+<p><b>개념 상세 설명:</b> 모듈화는 관련된 함수, 상수와 자료형을 의미 있는 단위로 묶는 설계 방식이다. 수집 모듈, 전처리 모듈과 분석 모듈처럼 나누면 역할과 연결 관계가 분명해진다.</p>
+<pre><code># collector.py에 있다고 가정
+def collect_sample():
+    return [21.5, 22.0, 22.8, 23.1]
+
+# analyzer.py에 있다고 가정
+def summarize(values):
+    return {
+        "count": len(values),
+        "mean": sum(values) / len(values)
+    }
+
+data = collect_sample()
+summary = summarize(data)
+print(summary)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 예시는 한 화면에 작성했지만 실제 프로젝트에서는 수집과 분석 기능을 별도 파일로 나눌 수 있다. 각 모듈의 입력과 출력 형식을 일관되게 설계해야 한다.</div>
+<div class="question" data-answer="0,2,3">
+<div class="question-title">[개념 4] 모듈화에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c4" value="0">① 관련 기능을 의미 있는 단위로 묶는다.</label>
+<label class="option"><input type="checkbox" name="c4" value="1">② 모든 파일이 서로의 내부 변수에 직접 의존해야 한다.</label>
+<label class="option"><input type="checkbox" name="c4" value="2">③ 역할 분담과 유지보수에 도움이 된다.</label>
+<label class="option"><input type="checkbox" name="c4" value="3">④ 모듈 사이의 입력과 출력 규칙을 정하는 것이 중요하다.</label>
+<label class="option"><input type="checkbox" name="c4" value="4">⑤ 모듈로 나누면 함수 재사용이 어려워진다.</label>
+<div class="answer-box">정답: ①, ③, ④ — 모듈화는 관련 기능을 묶고 연결 규칙을 명확하게 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">5</span> 작은 데이터 수집</h3><span class="label">전체 자료 전에 표본으로 확인</span></div>
+<p><b>개념 상세 설명:</b> 프로토타입 단계에서는 수천 개의 실제 자료보다 구조를 대표하는 작은 자료가 유용하다. 정상값, 결측값, 중복값과 범위 밖 값을 일부 포함해 수집 기능과 다음 처리 단계를 함께 점검한다.</p>
+<pre><code>sample_rows = [
+    {"time": "09:00", "co2": 620},
+    {"time": "10:00", "co2": 780},
+    {"time": "11:00", "co2": None},
+    {"time": "11:00", "co2": None},
+    {"time": "12:00", "co2": 1450}
+]
+
+print("수집 행 수:", len(sample_rows))
+for row in sample_rows:
+    print(row)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 정상 자료뿐 아니라 결측값과 중복 행을 의도적으로 넣었다. 작은 자료라도 실제 문제에서 발생할 수 있는 형태를 대표해야 한다.</div>
+<div class="question" data-answer="0,1,4">
+<div class="question-title">[개념 5] 작은 데이터 활용에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c5" value="0">① 핵심 실행 흐름을 빠르게 확인할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c5" value="1">② 정상값과 일부 예외값을 함께 구성할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c5" value="2">③ 작은 자료로 성공하면 대규모 자료에서도 항상 완벽하다.</label>
+<label class="option"><input type="checkbox" name="c5" value="3">④ 실제 자료 구조와 달라도 전혀 문제가 없다.</label>
+<label class="option"><input type="checkbox" name="c5" value="4">⑤ 초기 오류를 적은 비용으로 발견하는 데 유용하다.</label>
+<div class="answer-box">정답: ①, ②, ⑤ — 작은 대표 자료는 초기 기능 검증에 효과적이지만 전체 성능을 보장하지는 않는다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">6</span> 입력 형식 검증</h3><span class="label">처리 전에 자료형 확인</span></div>
+<p><b>개념 상세 설명:</b> 입력 검증은 자료가 예상한 형식과 자료형을 갖는지 확인하는 과정이다. 숫자로 변환할 수 없는 문자열, 빈 입력과 잘못된 날짜 형식을 처리하지 않으면 분석 단계에서 오류가 발생한다.</p>
+<pre><code>def parse_temperature(raw):
+    if raw is None or str(raw).strip() == "":
+        return None
+
+    try:
+        return float(raw)
+    except (TypeError, ValueError):
+        return None
+
+samples = ["23.5", "", "오류", 18]
+
+for sample in samples:
+    print(sample, "→", parse_temperature(sample))</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 빈 값과 숫자로 변환할 수 없는 값을 <code>None</code>으로 통일한다. 다음 전처리 함수가 동일한 기준으로 결측값을 처리할 수 있다.</div>
+<div class="question" data-answer="1,3,4">
+<div class="question-title">[개념 6] 입력 형식 검증에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c6" value="0">① 모든 문자열은 자동으로 올바른 숫자가 된다.</label>
+<label class="option"><input type="checkbox" name="c6" value="1">② 빈 입력과 변환 실패를 구분해 처리할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c6" value="2">③ 검증 없이 분석 함수에 전달하는 것이 가장 안전하다.</label>
+<label class="option"><input type="checkbox" name="c6" value="3">④ 오류 자료를 공통된 결측 표현으로 바꿀 수 있다.</label>
+<label class="option"><input type="checkbox" name="c6" value="4">⑤ 예상한 자료형인지 처리 전에 확인해야 한다.</label>
+<div class="answer-box">정답: ②, ④, ⑤ — 입력 형식을 먼저 확인해야 이후 처리의 안정성이 높아진다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">7</span> 범위 검증과 전처리</h3><span class="label">가능한 값만 남긴다</span></div>
+<p><b>개념 상세 설명:</b> 자료형이 숫자라고 해도 현실적으로 가능한 범위인지 확인해야 한다. 센서 특성, 측정 단위와 연구 조건에 맞는 허용 범위를 정하고 범위 밖 값은 제거, 보정 또는 별도 표시한다.</p>
+<pre><code>def clean_humidity(values):
+    clean = []
+
+    for value in values:
+        if isinstance(value, (int, float)) and 0 <= value <= 100:
+            clean.append(float(value))
+
+    return clean
+
+raw = [45, 52.5, -3, 108, None, 61]
+print(clean_humidity(raw))</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 숫자이면서 0~100 범위 안에 있는 습도만 남긴다. 제거 기준은 임의로 정하지 말고 자료의 의미와 측정 조건을 근거로 정해야 한다.</div>
+<div class="question" data-answer="0,2,4">
+<div class="question-title">[개념 7] 범위 검증과 전처리에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c7" value="0">① 자료의 의미에 맞는 허용 범위를 정해야 한다.</label>
+<label class="option"><input type="checkbox" name="c7" value="1">② 숫자형 자료는 범위를 확인할 필요가 없다.</label>
+<label class="option"><input type="checkbox" name="c7" value="2">③ 범위 밖 값은 제거하거나 별도로 표시할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c7" value="3">④ 전처리 기준은 기록하지 않는 것이 좋다.</label>
+<label class="option"><input type="checkbox" name="c7" value="4">⑤ 측정 단위와 센서 특성을 함께 고려해야 한다.</label>
+<div class="answer-box">정답: ①, ③, ⑤ — 범위 검증은 자료의 의미와 측정 조건에 근거해야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">8</span> 분석 함수와 요약 결과</h3><span class="label">원자료를 의미 있는 정보로</span></div>
+<p><b>개념 상세 설명:</b> 분석 함수는 정제된 자료를 받아 평균, 최솟값, 최댓값과 자료 수처럼 탐구 질문에 필요한 결과를 계산한다. 반환 형식을 딕셔너리로 통일하면 출력과 저장 기능이 사용하기 쉽다.</p>
+<pre><code>def summarize(values):
+    if not values:
+        return {
+            "count": 0,
+            "mean": None,
+            "minimum": None,
+            "maximum": None
+        }
+
+    return {
+        "count": len(values),
+        "mean": sum(values) / len(values),
+        "minimum": min(values),
+        "maximum": max(values)
+    }
+
+print(summarize([18.2, 19.5, 21.0, 20.3]))</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 빈 자료도 오류 없이 처리하고 항상 같은 키를 가진 딕셔너리를 반환한다. 다른 모듈이 결과 구조를 예측할 수 있다.</div>
+<div class="question" data-answer="0,1,3">
+<div class="question-title">[개념 8] 분석 함수 설계에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c8" value="0">① 정제된 자료를 입력으로 받는 것이 좋다.</label>
+<label class="option"><input type="checkbox" name="c8" value="1">② 빈 자료일 때의 반환 결과도 정해야 한다.</label>
+<label class="option"><input type="checkbox" name="c8" value="2">③ 실행할 때마다 서로 다른 형식으로 반환해야 한다.</label>
+<label class="option"><input type="checkbox" name="c8" value="3">④ 일관된 결과 구조는 출력 기능과 연결하기 쉽다.</label>
+<label class="option"><input type="checkbox" name="c8" value="4">⑤ 분석 함수는 원자료를 자동으로 삭제해야 한다.</label>
+<div class="answer-box">정답: ①, ②, ④ — 분석 함수는 정제 자료와 일관된 반환 형식을 사용한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">9</span> 단위 시험과 assert</h3><span class="label">작은 기능을 독립적으로 확인</span></div>
+<p><b>개념 상세 설명:</b> 단위 시험은 함수 하나가 예상대로 작동하는지 작은 입력과 예상 결과로 확인하는 방법이다. <code>assert</code>는 조건이 거짓일 때 오류를 발생시켜 잘못된 결과를 빠르게 발견한다.</p>
+<pre><code>def remove_missing(values):
+    return [value for value in values if value is not None]
+
+assert remove_missing([1, None, 3]) == [1, 3]
+assert remove_missing([]) == []
+assert remove_missing([None]) == []
+
+print("모든 단위 시험 통과")</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 정상 입력, 빈 입력과 결측값만 있는 입력을 각각 시험한다. 함수가 수정된 뒤에도 같은 시험을 반복하면 기존 기능이 깨졌는지 확인할 수 있다.</div>
+<div class="question" data-answer="1,2,4">
+<div class="question-title">[개념 9] 단위 시험에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c9" value="0">① 전체 프로그램을 완성한 뒤 한 번만 시험한다.</label>
+<label class="option"><input type="checkbox" name="c9" value="1">② 함수의 실제 결과와 예상 결과를 비교한다.</label>
+<label class="option"><input type="checkbox" name="c9" value="2">③ 정상·경계·예외 입력을 포함할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c9" value="3">④ assert 조건이 거짓이어도 항상 통과한다.</label>
+<label class="option"><input type="checkbox" name="c9" value="4">⑤ 코드 수정 후 기능이 유지되는지 재확인할 수 있다.</label>
+<div class="answer-box">정답: ②, ③, ⑤ — 단위 시험은 작은 기능을 예상 결과와 비교해 반복 검증한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">10</span> 프로토타입 파이프라인 연결</h3><span class="label">수집→검증→전처리→분석→출력</span></div>
+<p><b>개념 상세 설명:</b> 각 함수가 정상적으로 작동하면 전체 실행 흐름을 연결한다. 단계별 중간 결과를 확인하고 오류가 발생한 위치를 기록하면 프로토타입의 개선 지점을 찾기 쉽다.</p>
+<pre><code>def collect():
+    return ["21.5", "", "오류", "23.0", "25.5"]
+
+def parse(values):
+    result = []
+    for value in values:
+        try:
+            result.append(float(value))
+        except ValueError:
+            continue
+    return result
+
+def analyze(values):
+    return sum(values) / len(values) if values else None
+
+def run():
+    raw = collect()
+    clean = parse(raw)
+    mean = analyze(clean)
+
+    print("원자료:", raw)
+    print("정제 자료:", clean)
+    print("평균:", mean)
+
+run()</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 수집, 변환과 분석 함수를 <code>run()</code>에서 순서대로 연결한다. 단계별 결과를 출력해 어느 단계에서 자료가 달라졌는지 확인한다.</div>
+<div class="question" data-answer="0,3,4">
+<div class="question-title">[개념 10] 프로토타입 파이프라인에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c10" value="0">① 단계별 입력과 출력 형식을 맞춰야 한다.</label>
+<label class="option"><input type="checkbox" name="c10" value="1">② 중간 결과는 오류 추적에 방해되므로 확인하지 않는다.</label>
+<label class="option"><input type="checkbox" name="c10" value="2">③ 모든 기능이 완성되기 전에는 함수 연결을 시험할 수 없다.</label>
+<label class="option"><input type="checkbox" name="c10" value="3">④ 전체 흐름을 작은 자료로 실행해 볼 수 있다.</label>
+<label class="option"><input type="checkbox" name="c10" value="4">⑤ 발견한 오류와 다음 개선 기능을 기록해야 한다.</label>
+<div class="answer-box">정답: ①, ④, ⑤ — 함수 사이의 형식을 맞추고 전체 흐름을 단계별로 확인한다.</div>
+</div></div>
+</section>
+
+<section id="papers" class="card">
+<h2>📚 학습과 관련한 탐구 보고서 주제 예시 5개</h2>
+<div class="grid-2">
+<div class="card topic-card"><h3>1. 교실 이산화탄소 자료 처리 프로토타입</h3><p><b>구현:</b> 소규모 센서 자료를 입력받아 결측값과 비정상값을 제거하고 평균과 최고 농도를 계산한다.</p><p><b>탐구 관점:</b> 함수 분리 전후의 코드 이해도와 오류 수정 과정을 비교한다.</p></div>
+<div class="card topic-card"><h3>2. 학교 전력 사용량 요약 시스템의 최소 기능 구현</h3><p><b>구현:</b> 날짜와 사용량을 검증하고 일평균, 최댓값과 기준 초과일을 출력한다.</p><p><b>탐구 관점:</b> 입력 검증 규칙이 결과 신뢰성에 미치는 영향을 분석한다.</p></div>
+<div class="card topic-card"><h3>3. 실험 측정값 이상 탐지 프로토타입</h3><p><b>구현:</b> 허용 범위와 평균에서의 거리 기준으로 의심 값을 표시한다.</p><p><b>탐구 관점:</b> 작은 시험 자료의 구성 방식과 오류 발견률을 비교한다.</p></div>
+<div class="card topic-card"><h3>4. 급식 만족도 자료 전처리 모듈 개발</h3><p><b>구현:</b> 빈 응답, 범위 밖 점수와 중복 응답을 처리하는 함수를 만든다.</p><p><b>탐구 관점:</b> 전처리 기준에 따른 평균과 분포 변화의 차이를 분석한다.</p></div>
+<div class="card topic-card"><h3>5. 기상 자료 수집·분석 함수의 단위 시험 연구</h3><p><b>구현:</b> 수집, 숫자 변환, 범위 검증과 요약 함수를 구현한다.</p><p><b>탐구 관점:</b> 정상·경계·예외 시험이 프로토타입 오류 감소에 미치는 효과를 기록한다.</p></div>
+</div>
+</section>
+
+<section id="closing" class="card highlight">
+<h2>🌙 수업 끝 멘트</h2>
+<p class="quote">“시는 첫 문장부터 완벽해서 태어나는 것이 아니라 고쳐 쓰는 동안 빛나고, 소설도 초고에서 인물들이 길을 잃었다가 작가의 수정으로 제자리를 찾습니다. 희곡은 대본 읽기부터 시작하고, 연극은 작은 연습실에서 수없이 넘어져 본 뒤 무대에 오릅니다. 음악가도 첫 합주에서 음정이 흔들렸다고 악기를 은퇴시키지는 않습니다. 오히려 그 흔들림이 다음 연습의 지도입니다. 오늘 만든 프로토타입이 작고 서툴러도 괜찮습니다. 움직였고, 오류를 보여 주었고, 다음 방향을 알려 주었다면 이미 훌륭한 첫 작품입니다.”</p>
+</section>
+
+<section id="formative" class="card">
+<h2>✅ 형성평가 OX 퀴즈 10개</h2><div id="oxQuestions"></div>
+</section>
+
+<section id="diagnostic" class="card">
+<h2>📝 진단평가 5지선다형 10개</h2>
+<p>각 문항은 옳은 것 3개와 틀린 것 2개로 구성되어 있습니다. 옳은 것 3개를 모두 선택하세요.</p>
+<div id="diagQuestions"></div>
+</section>
+
+<section id="submit" class="card">
+<h2>📤 학번·이름 입력 및 결과 저장</h2>
+<div class="form-row">
+<label>학번<input type="text" id="studentId" placeholder="예: 1101"></label>
+<label>이름<input type="text" id="studentName" placeholder="예: 홍길동"></label>
+</div>
+<div class="actions">
+<button onclick="gradeAll()">전체 채점</button>
+<button class="green" onclick="downloadResult()">TXT 결과 저장</button>
+<button class="secondary" onclick="showAnswers()">정답·풀이 보기</button>
+<button class="gold" onclick="window.print()">인쇄</button>
+</div>
+<div id="scorePanel" class="score-panel"></div>
+<p class="small">저장 파일명: 학번_이름_점수_11차시_응시시각.txt</p>
+</section>
+</main>
+<div class="footer">정보융합탐구과제 11차시 · 목표지향 개념기반 수업지도안</div>
+
+<script>
+const oxData=[
+["프로토타입은 핵심 기능의 가능성을 빠르게 확인하기 위한 초기 산출물이다.","O","처음부터 모든 기능을 완성하는 것이 목적은 아니다."],
+["함수의 반환값은 다른 함수나 계산에서 사용할 수 있다.","O","함수 사이의 자료 전달에 활용할 수 있다."],
+["한 함수에 가능한 모든 역할을 넣는 것이 항상 좋은 모듈화이다.","X","역할을 작고 분명하게 나누는 것이 좋다."],
+["모듈화는 관련 기능을 의미 있는 단위로 구성하는 방법이다.","O","수집, 전처리와 분석 모듈처럼 나눌 수 있다."],
+["작은 데이터로 성공하면 대규모 실제 자료에서도 모든 문제가 사라진다.","X","초기 검증에는 유용하지만 규모와 다양성 문제는 별도로 시험해야 한다."],
+["입력 검증은 자료형과 값의 범위를 처리 전에 확인하는 과정이다.","O","잘못된 입력이 분석에 전달되는 것을 막는다."],
+["범위 밖 값의 처리 기준은 자료의 의미와 측정 조건을 고려해야 한다.","O","임의 기준보다 과학적 근거가 필요하다."],
+["분석 함수의 반환 형식은 실행할 때마다 달라야 한다.","X","일관된 반환 구조가 다른 기능과 연결하기 쉽다."],
+["assert는 함수 결과가 예상과 같은지 확인하는 데 사용할 수 있다.","O","조건이 거짓이면 오류가 발생한다."],
+["프로토타입에서는 중간 결과를 확인하거나 오류를 기록할 필요가 없다.","X","중간 결과와 오류 기록은 개선 방향을 찾는 데 중요하다."]
+];
+
+const diagData=[
+{q:"프로토타입의 바람직한 특징 3개는?",o:["핵심 기능을 우선 구현한다.","작은 자료로 빠르게 시험한다.","피드백을 반영해 개선한다.","처음부터 모든 부가 기능을 완성한다.","오류를 기록하지 않는다."],a:[0,1,2],e:"핵심 기능을 작게 구현하고 빠르게 검증·개선하는 것이 목적이다."},
+{q:"함수 설계에 대한 옳은 설명 3개는?",o:["매개변수로 입력을 받을 수 있다.","return으로 결과를 돌려줄 수 있다.","반복 기능을 재사용할 수 있다.","함수는 화면 출력만 해야 한다.","함수는 시험할 수 없다."],a:[0,1,2],e:"함수는 입력, 처리와 반환을 통해 재사용 가능한 기능을 만든다."},
+{q:"한 함수 한 책임 원칙의 장점 3개는?",o:["역할을 이해하기 쉽다.","기능별 시험이 쉬워진다.","수정 범위를 줄일 수 있다.","모든 기능이 강하게 얽힌다.","재사용이 불가능해진다."],a:[0,1,2],e:"역할이 분명한 작은 함수는 시험과 유지보수에 유리하다."},
+{q:"모듈화에 대한 옳은 설명 3개는?",o:["관련 함수와 상수를 묶는다.","수집·전처리·분석 기능을 나눌 수 있다.","모듈 사이 입력과 출력 규칙을 정한다.","모든 내부 변수에 직접 접근해야 한다.","파일을 나누면 역할은 더 모호해진다."],a:[0,1,2],e:"모듈은 관련 기능을 묶고 연결 규칙을 명확히 한다."},
+{q:"작은 시험 데이터 구성 원칙 3개는?",o:["정상값을 포함한다.","결측값이나 잘못된 형식을 포함한다.","경계값을 포함한다.","실제 구조와 전혀 다른 자료만 사용한다.","한 가지 값만 반복하면 모든 문제가 검증된다."],a:[0,1,2],e:"대표적인 정상·경계·예외 자료를 함께 구성한다."},
+{q:"입력 검증에서 확인할 내용 3개는?",o:["빈 입력 여부","예상한 자료형인지","허용 범위 안인지","색상이 예쁜지","변수 이름의 길이만"],a:[0,1,2],e:"자료의 존재, 형식과 범위를 확인해야 한다."},
+{q:"전처리 기준에 대한 옳은 설명 3개는?",o:["자료의 의미에 근거한다.","측정 단위와 센서 특성을 고려한다.","제거·보정한 내용을 기록한다.","결론에 맞게 임의로 바꾼다.","기준을 공개하지 않는다."],a:[0,1,2],e:"전처리 기준은 과학적 근거와 투명성을 가져야 한다."},
+{q:"분석 함수의 좋은 반환 방식 3개는?",o:["빈 자료도 처리한다.","항상 예측 가능한 구조를 반환한다.","결과의 단위와 의미를 분명히 한다.","매번 다른 키 이름을 사용한다.","원자료를 자동으로 삭제한다."],a:[0,1,2],e:"예외를 처리하고 일관된 결과 구조를 제공해야 한다."},
+{q:"단위 시험에 적합한 방법 3개는?",o:["작은 입력과 예상 결과를 준비한다.","정상·경계·예외 입력을 시험한다.","코드 수정 후 다시 실행한다.","성공한 시험만 기록한다.","전체 프로그램 완성 전에는 시험하지 않는다."],a:[0,1,2],e:"함수별로 다양한 입력을 반복 검증한다."},
+{q:"프로토타입 전체 흐름 점검 방법 3개는?",o:["수집→검증→전처리→분석 순서를 확인한다.","단계별 중간 결과를 확인한다.","오류와 개선 사항을 기록한다.","모든 함수를 한 번에 섞어 원인을 숨긴다.","작은 자료로는 전체 흐름을 실행하지 않는다."],a:[0,1,2],e:"단계별 자료 흐름을 확인하고 문제점을 기록해야 한다."}
+];
+
+function renderOX(){
+ const wrap=document.getElementById("oxQuestions");
+ oxData.forEach((d,i)=>wrap.insertAdjacentHTML("beforeend",`
+ <div class="question" data-ox="${d[1]}">
+ <div class="question-title">${i+1}. ${d[0]}</div>
+ <label class="option"><input type="radio" name="ox${i}" value="O">O</label>
+ <label class="option"><input type="radio" name="ox${i}" value="X">X</label>
+ <div class="answer-box">정답: ${d[1]} — ${d[2]}</div></div>`));
+}
+function renderDiag(){
+ const wrap=document.getElementById("diagQuestions");
+ diagData.forEach((d,i)=>{
+  const ops=d.o.map((x,j)=>`<label class="option"><input type="checkbox" name="d${i}" value="${j}">${j+1}. ${x}</label>`).join("");
+  wrap.insertAdjacentHTML("beforeend",`<div class="question" data-answer="${d.a.join(",")}"><div class="question-title">${i+1}. ${d.q}</div>${ops}<div class="answer-box">정답: ${d.a.map(x=>x+1).join(", ")} — ${d.e}</div></div>`);
+ });
+}
+renderOX();renderDiag();
+
+function sameSet(a,b){return a.length===b.length&&a.every((v,i)=>v===b[i]);}
+function getChecks(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>Number(x.value)).sort((a,b)=>a-b);}
+function mark(q,ok){q.classList.remove("correct","wrong");q.classList.add(ok?"correct":"wrong");}
+let lastResult=null;
+function gradeAll(){
+ let concept=0,ox=0,diag=0,details=[];
+ for(let i=1;i<=10;i++){
+  const q=document.querySelector(`input[name="c${i}"]`).closest(".question");
+  const ans=q.dataset.answer.split(",").map(Number).sort((a,b)=>a-b),sel=getChecks(`c${i}`);
+  const ok=sameSet(ans,sel);if(ok)concept++;mark(q,ok);
+  details.push(`개념 ${i}: ${ok?"정답":"오답"} / 응답 ${sel.map(x=>x+1).join(",")||"미응답"} / 정답 ${ans.map(x=>x+1).join(",")}`);
+ }
+ oxData.forEach((d,i)=>{
+  const q=document.querySelector(`input[name="ox${i}"]`).closest(".question");
+  const sel=document.querySelector(`input[name="ox${i}"]:checked`)?.value||"미응답";
+  const ok=sel===d[1];if(ok)ox++;mark(q,ok);
+  details.push(`형성 OX ${i+1}: ${ok?"정답":"오답"} / 응답 ${sel} / 정답 ${d[1]} / ${d[2]}`);
+ });
+ diagData.forEach((d,i)=>{
+  const q=document.querySelector(`input[name="d${i}"]`).closest(".question"),sel=getChecks(`d${i}`);
+  const ok=sameSet(d.a,sel);if(ok)diag++;mark(q,ok);
+  details.push(`진단 ${i+1}: ${ok?"정답":"오답"} / 응답 ${sel.map(x=>x+1).join(",")||"미응답"} / 정답 ${d.a.map(x=>x+1).join(",")} / ${d.e}`);
+ });
+ const totalCorrect=concept+ox+diag,score=Math.round(totalCorrect/30*100);
+ lastResult={concept,ox,diag,totalCorrect,score,details,time:new Date()};
+ const panel=document.getElementById("scorePanel");panel.style.display="block";
+ panel.innerHTML=`<b>총점 ${score}점</b> (30문항 중 ${totalCorrect}문항 정답)<br>개념별 평가 ${concept}/10 · 형성평가 ${ox}/10 · 진단평가 ${diag}/10`;
+ panel.scrollIntoView({behavior:"smooth",block:"center"});return lastResult;
+}
+function showAnswers(){document.querySelectorAll(".answer-box").forEach(x=>x.style.display="block");}
+function safeName(s){return(s||"미입력").replace(/[\\/:*?"<>|]/g,"_").trim()||"미입력";}
+function pad(n){return String(n).padStart(2,"0")}
+function downloadResult(){
+ const id=safeName(document.getElementById("studentId").value),name=safeName(document.getElementById("studentName").value);
+ if(id==="미입력"||name==="미입력"){alert("학번과 이름을 입력하세요.");return;}
+ const r=gradeAll(),d=r.time;
+ const stamp=`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+ const text=["정보융합탐구과제 11차시 평가 결과","학습 주제: 프로토타입 구현 Ⅰ",`학번: ${id}`,`이름: ${name}`,`점수: ${r.score}점`,
+ `개념별 평가: ${r.concept}/10`,`형성평가 OX: ${r.ox}/10`,`진단평가: ${r.diag}/10`,`응시시각: ${d.toLocaleString("ko-KR")}`,"","[문항별 결과]",...r.details].join("\r\n");
+ const blob=new Blob(["\ufeff"+text],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);a.download=`${id}_${name}_${r.score}점_11차시_${stamp}.txt`;a.click();URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>

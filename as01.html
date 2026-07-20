@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보융합탐구과제 1차시 | 과목 안내와 융합 탐구의 이해</title>
+<style>
+:root{
+  --navy:#19335a; --blue:#2f6fb0; --sky:#eaf5ff; --mint:#e9f8f3;
+  --gold:#f3b23c; --red:#d9544d; --green:#2d8b68; --ink:#1f2937;
+  --muted:#667085; --paper:#ffffff; --line:#d9e3ef; --bg:#f5f8fc;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--ink); background:
+  radial-gradient(circle at 10% 0%,#e9f4ff 0,transparent 30%),
+  radial-gradient(circle at 90% 10%,#eefbf6 0,transparent 28%),var(--bg);
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif; line-height:1.72;
+}
+header{
+  background:linear-gradient(135deg,#132b4d,#2f6fb0 60%,#4f8fd0);
+  color:white; padding:58px 24px 46px; position:relative; overflow:hidden;
+}
+header:after{
+  content:""; position:absolute; width:320px;height:320px;border-radius:50%;
+  right:-90px;top:-120px;background:rgba(255,255,255,.09);
+}
+.header-inner{max-width:1180px;margin:auto;position:relative;z-index:2}
+.eyebrow{font-weight:800;letter-spacing:.08em;color:#cfe7ff}
+h1{font-size:clamp(30px,5vw,54px);line-height:1.18;margin:10px 0 14px}
+.subtitle{font-size:18px;max-width:900px;color:#edf6ff}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.badge{padding:8px 13px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(255,255,255,.1);font-size:14px}
+nav{
+  position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+}
+.nav-inner{max-width:1180px;margin:auto;padding:10px 16px;display:flex;gap:8px;overflow:auto}
+.nav-inner a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:700;padding:8px 12px;border-radius:9px}
+.nav-inner a:hover{background:var(--sky)}
+main{max-width:1180px;margin:0 auto;padding:28px 18px 80px}
+section{scroll-margin-top:72px;margin:28px 0}
+.card{
+  background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px;
+  box-shadow:0 10px 30px rgba(25,51,90,.06);
+}
+h2{font-size:28px;color:var(--navy);margin:0 0 18px;display:flex;align-items:center;gap:10px}
+h3{color:var(--blue);margin:22px 0 10px}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media(max-width:820px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.label{display:inline-block;font-size:13px;font-weight:800;color:white;background:var(--blue);padding:4px 9px;border-radius:999px}
+.highlight{background:linear-gradient(90deg,#fff7df,#fff);border-left:5px solid var(--gold)}
+.quote{font-size:18px;font-weight:700;color:#294766}
+.timeline{display:grid;grid-template-columns:120px 1fr;gap:12px 18px}
+.timeline .time{font-weight:800;color:var(--blue)}
+.concept{margin:22px 0;border-top:5px solid var(--blue)}
+.concept-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.num{width:38px;height:38px;display:inline-grid;place-items:center;border-radius:12px;background:var(--navy);color:white;font-weight:900}
+pre{background:#111827;color:#e5eefb;padding:18px;border-radius:13px;overflow:auto;font-size:14px;line-height:1.55}
+code{font-family:Consolas,"Courier New",monospace}
+.explain{background:#f8fbff;border:1px dashed #afc9e6;border-radius:12px;padding:15px}
+.question{background:#fbfcfe;border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0}
+.question-title{font-weight:900;color:var(--navy);margin-bottom:10px}
+.option{display:block;margin:8px 0;padding:8px 10px;border-radius:8px}
+.option:hover{background:#eef6ff}
+input[type=checkbox],input[type=radio]{transform:scale(1.12);margin-right:8px}
+.answer-box{display:none;margin-top:12px;padding:12px;border-radius:10px;background:#eefaf5;border-left:4px solid var(--green)}
+.topic-card{border-top:4px solid var(--gold)}
+table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:12px}
+th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}
+th{background:#eaf3fc;color:var(--navy)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+input[type=text]{width:100%;padding:13px;border:1px solid #b9c8d8;border-radius:10px;font-size:16px}
+button{
+  border:0;border-radius:11px;padding:12px 18px;font-weight:900;font-size:15px;cursor:pointer;
+  background:var(--blue);color:white;box-shadow:0 5px 14px rgba(47,111,176,.2)
+}
+button.secondary{background:#64748b} button.green{background:var(--green)} button.gold{background:#b97800}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.score-panel{display:none;margin-top:18px;padding:18px;border-radius:14px;background:#eff8ff;border:2px solid #8bc0ef}
+.correct{background:#eaf9f1!important}.wrong{background:#fff0ef!important}
+.small{font-size:13px;color:var(--muted)}
+.footer{padding:26px;text-align:center;color:#6b7280}
+details{border:1px solid var(--line);border-radius:12px;padding:12px 15px;background:#fff}
+summary{cursor:pointer;font-weight:800;color:var(--navy)}
+.print-only{display:none}
+@media print{
+  nav,.actions,button{display:none!important}
+  body{background:white}.card{box-shadow:none;break-inside:avoid}.answer-box{display:block}
+  .print-only{display:block}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="eyebrow">2022 개정 교육과정 · 정보융합탐구과제</div>
+    <h1>1차시 목표지향 개념기반 수업지도안</h1>
+    <div class="subtitle">과목 안내와 융합 탐구의 이해 — 교육과정의 방향과 평가 체계를 이해하고, 관심 분야를 탐색하여 좋은 탐구 질문과 관심 분야 지도를 만든다.</div>
+    <div class="badges">
+      <span class="badge">핵심 개념 10개</span><span class="badge">개념별 파이썬 코드</span>
+      <span class="badge">개념별 5지선다 10문항</span><span class="badge">형성평가 OX 10문항</span>
+      <span class="badge">진단평가 10문항</span><span class="badge">자동 채점 · TXT 저장</span>
+    </div>
+  </div>
+</header>
+<nav><div class="nav-inner">
+<a href="#overview">수업 개요</a><a href="#standards">성취기준</a><a href="#opening">시작 멘트</a>
+<a href="#concepts">핵심 개념</a><a href="#papers">탐구 주제</a><a href="#closing">끝 멘트</a>
+<a href="#formative">형성평가</a><a href="#diagnostic">진단평가</a><a href="#submit">제출</a>
+</div></nav>
+
+<main>
+<section id="overview" class="card">
+<h2>🧭 수업 개요</h2>
+<div class="grid-2">
+<div>
+<span class="label">학습 주제</span>
+<h3>과목 안내와 융합 탐구의 이해</h3>
+<p>2022 개정 교육과정의 방향, 정보융합탐구과제의 성격과 평가 체계를 이해하고 자신의 관심 분야를 탐색한다. 탐구 질문을 만들고 관심 분야 지도를 작성하면서 한 학기 탐구의 출발점을 마련한다.</p>
+</div>
+<div>
+<span class="label">핵심 산출물</span>
+<ul>
+<li>나의 관심 분야 지도 1개</li>
+<li>초기 탐구 질문 3개</li>
+<li>좋은 질문 선정 이유 1문단</li>
+<li>자료·도구·윤리를 포함한 간단한 탐구 계획</li>
+</ul>
+</div>
+</div>
+<h3>차시 운영 예시</h3>
+<div class="timeline">
+<div class="time">도입 10분</div><div>과목의 목적, 평가 체계, 수업 시작 멘트, 흥미 분야 빠른 설문</div>
+<div class="time">개념 20분</div><div>융합 탐구, 문제 정의, 질문, 자료, 알고리즘, 시각화, 검증, 윤리, 협업, 성찰 이해</div>
+<div class="time">활동 15분</div><div>관심 분야 지도 작성 → 질문 3개 만들기 → 질문 점검표로 개선</div>
+<div class="time">정리 5분</div><div>형성평가, 오늘의 한 문장 성찰, 다음 차시 예고</div>
+</div>
+</section>
+
+<section id="standards" class="card">
+<h2>🎯 성취기준과 학습 목표</h2>
+<h3>성취기준</h3>
+<table>
+<tr><th>영역</th><th>수업에 적용한 성취기준</th></tr>
+<tr><td>탐구 이해</td><td>정보 기술과 다른 학문 분야의 지식이 실제 문제 해결 과정에서 어떻게 연결되는지 설명한다.</td></tr>
+<tr><td>문제 발견</td><td>개인의 관심과 사회·과학적 현상에서 탐구할 가치가 있는 문제를 발견하고 구체화한다.</td></tr>
+<tr><td>탐구 설계</td><td>탐구 질문, 자료, 분석 방법, 예상 결과, 윤리적 고려를 포함한 기초 탐구 계획을 세운다.</td></tr>
+<tr><td>의사소통</td><td>관심 분야와 탐구 의도를 지도, 표, 문장, 간단한 코드 등으로 표현하고 다른 사람과 공유한다.</td></tr>
+</table>
+<h3>학습 목표</h3>
+<ol>
+<li>2022 개정 교육과정이 강조하는 역량 중심·학생 주도·융합 탐구의 방향을 설명할 수 있다.</li>
+<li>정보융합탐구과제의 수업 과정과 평가 체계를 자신의 말로 정리할 수 있다.</li>
+<li>관심 분야 지도를 작성하고 서로 연결되는 두 개 이상의 분야를 찾을 수 있다.</li>
+<li>자료로 확인 가능하고 범위가 적절한 탐구 질문을 세 개 이상 만들 수 있다.</li>
+<li>좋은 탐구에서 자료의 신뢰성, 개인정보, 저작권, 편향을 고려해야 하는 이유를 설명할 수 있다.</li>
+</ol>
+</section>
+
+<section id="opening" class="card highlight">
+<h2>🌅 수업 시작 멘트</h2>
+<p class="quote">“소크라테스는 좋은 답보다 좋은 질문이 생각을 깨운다고 보았습니다. 다윈은 오래 관찰했고, 갈릴레이는 익숙한 현상을 다시 측정했으며, 데카르트는 의심을 방법으로 삼았습니다. 오늘 우리는 거창한 결론을 내리기보다 ‘나는 무엇이 궁금한가?’라는 작은 질문 하나를 정확하게 만드는 데서 출발합니다. 수학자가 점 하나로 좌표를 시작하듯, 여러분의 관심 한 점이 한 학기 동안 멋진 탐구 지도가 될 수 있습니다.”</p>
+</section>
+
+<section id="concepts">
+<h2>🧩 학습할 핵심 개념 10개</h2>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">1</span> 융합 탐구</h3><span class="label">연결의 관점</span></div>
+<p><b>개념 상세 설명:</b> 융합 탐구는 여러 교과의 용어를 단순히 모으는 활동이 아니라, 하나의 문제를 해결하기 위해 서로 다른 지식과 방법을 적절히 연결하는 과정이다. 예를 들어 교실 공기 질 문제는 과학의 기체 개념, 수학의 통계, 정보의 센서·자료 처리, 윤리의 개인정보 보호가 함께 필요하다.</p>
+<pre><code>fields = ["과학", "수학", "정보", "윤리"]
+problem = "교실 공기 질 개선"
+for field in fields:
+    print(f"{problem} 문제에 {field} 관점을 연결합니다.")</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 리스트에 여러 분야를 저장하고 반복문으로 하나의 문제와 연결한다. 이 코드는 융합이 ‘분야 나열’에서 끝나는 것이 아니라 공통 문제를 중심으로 연결되어야 함을 보여 준다.</div>
+<div class="question" data-answer="0,1,3">
+<div class="question-title">[개념 1] 융합 탐구에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c1" value="0">① 하나의 문제를 여러 관점에서 해석할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c1" value="1">② 분야별 지식이 문제 해결 과정에서 서로 연결되어야 한다.</label>
+<label class="option"><input type="checkbox" name="c1" value="2">③ 여러 교과 이름을 제목에 넣기만 하면 융합 탐구가 완성된다.</label>
+<label class="option"><input type="checkbox" name="c1" value="3">④ 정보 기술은 자료 수집·분석·표현을 연결하는 도구가 될 수 있다.</label>
+<label class="option"><input type="checkbox" name="c1" value="4">⑤ 융합 탐구에서는 한 분야의 개념을 정확히 이해할 필요가 없다.</label>
+<div class="answer-box">정답: ①, ②, ④ — 융합은 정확한 개념을 바탕으로 공통 문제를 해결하는 연결 과정이다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">2</span> 관심 분야 지도</h3><span class="label">생각의 시각화</span></div>
+<p><b>개념 상세 설명:</b> 관심 분야 지도는 자신이 좋아하는 현상, 교과, 기술, 사회 문제, 경험을 중심 낱말에서 가지처럼 확장하여 관계를 나타낸 그림이다. 숨겨진 연결을 발견하고 탐구 주제의 범위를 조절하는 데 도움이 된다.</p>
+<pre><code>interest_map = {
+    "환경": ["미세먼지", "탄소", "생태"],
+    "정보": ["센서", "데이터", "인공지능"],
+    "연결 질문": "센서 데이터로 교실 환경을 개선할 수 있을까?"
+}
+for key, value in interest_map.items():
+    print(key, ":", value)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 딕셔너리의 키는 큰 범주, 값은 세부 관심을 나타낸다. 마지막 항목은 두 관심 영역을 연결해 탐구 질문으로 바꾼 사례이다.</div>
+<div class="question" data-answer="0,2,4">
+<div class="question-title">[개념 2] 관심 분야 지도 활용에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c2" value="0">① 관심 낱말 사이의 관계를 시각적으로 찾는 데 도움이 된다.</label>
+<label class="option"><input type="checkbox" name="c2" value="1">② 처음 작성한 지도는 탐구가 끝날 때까지 수정하면 안 된다.</label>
+<label class="option"><input type="checkbox" name="c2" value="2">③ 교과, 경험, 사회 문제, 기술을 함께 적을 수 있다.</label>
+<label class="option"><input type="checkbox" name="c2" value="3">④ 지도에는 반드시 한 분야만 포함해야 한다.</label>
+<label class="option"><input type="checkbox" name="c2" value="4">⑤ 연결된 낱말을 바탕으로 탐구 질문을 만들 수 있다.</label>
+<div class="answer-box">정답: ①, ③, ⑤ — 관심 분야 지도는 수정 가능한 사고 도구이며 다양한 요소를 연결한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">3</span> 탐구 질문</h3><span class="label">탐구의 나침반</span></div>
+<p><b>개념 상세 설명:</b> 좋은 탐구 질문은 구체적이고, 자료로 확인 가능하며, 너무 넓거나 단순하지 않다. ‘인공지능은 좋은가?’보다 ‘학습 데이터의 크기가 이미지 분류 정확도에 어떤 영향을 주는가?’가 측정과 분석에 적합하다.</p>
+<pre><code>question = "교실 CO2 농도는 환기 전후에 얼마나 달라지는가?"
+checks = {
+    "구체적": "CO2" in question,
+    "비교 가능": "전후" in question,
+    "측정 가능": "얼마나" in question
+}
+print(checks)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 질문 문자열에 측정 대상과 비교 조건이 포함되어 있는지 간단히 점검한다. 실제 탐구에서는 교사·친구와 함께 의미와 범위를 더 정교하게 검토해야 한다.</div>
+<div class="question" data-answer="1,2,4">
+<div class="question-title">[개념 3] 좋은 탐구 질문의 조건으로 옳은 것 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c3" value="0">① 답이 이미 정해져 있어 자료가 필요 없는 질문</label>
+<label class="option"><input type="checkbox" name="c3" value="1">② 관찰하거나 수집한 자료로 확인할 수 있는 질문</label>
+<label class="option"><input type="checkbox" name="c3" value="2">③ 대상, 조건, 관계가 비교적 분명한 질문</label>
+<label class="option"><input type="checkbox" name="c3" value="3">④ 한 학기 안에 다루기 어려울 만큼 무한히 넓은 질문</label>
+<label class="option"><input type="checkbox" name="c3" value="4">⑤ 탐구 과정에서 수정·구체화할 수 있는 질문</label>
+<div class="answer-box">정답: ②, ③, ⑤ — 질문은 자료로 확인 가능하고 범위가 적절해야 하며 탐구 중 개선될 수 있다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">4</span> 문제 정의</h3><span class="label">범위와 조건</span></div>
+<p><b>개념 상세 설명:</b> 문제 정의는 불편이나 궁금증을 탐구 가능한 형태로 바꾸는 과정이다. 사용자, 상황, 원인 후보, 제한 조건, 기대 효과를 분명히 하면 해결할 문제와 단순한 현상을 구분할 수 있다.</p>
+<pre><code>problem = {
+    "사용자": "교실 학생",
+    "상황": "오후 수업 집중도 저하",
+    "원인 후보": ["CO2 증가", "온도 상승"],
+    "제한": "개인정보를 수집하지 않음"
+}
+for k, v in problem.items():
+    print(f"{k}: {v}")</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 문제를 구성하는 요소를 딕셔너리로 구조화했다. 문제 정의가 명확할수록 어떤 자료를 수집하고 어떤 분석을 해야 하는지 결정하기 쉬워진다.</div>
+<div class="question" data-answer="0,3,4">
+<div class="question-title">[개념 4] 문제 정의에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c4" value="0">① 문제의 대상과 상황을 구체적으로 적는다.</label>
+<label class="option"><input type="checkbox" name="c4" value="1">② 제한 조건은 창의성을 방해하므로 기록하지 않는다.</label>
+<label class="option"><input type="checkbox" name="c4" value="2">③ 원인은 조사 전에 하나로 확정해야 한다.</label>
+<label class="option"><input type="checkbox" name="c4" value="3">④ 기대하는 변화나 해결 방향을 함께 생각할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c4" value="4">⑤ 개인정보 보호와 사용 가능한 시간도 조건에 포함될 수 있다.</label>
+<div class="answer-box">정답: ①, ④, ⑤ — 문제 정의에는 대상·상황·목표·제한 조건이 포함될 수 있다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">5</span> 자료와 근거</h3><span class="label">신뢰 가능한 판단</span></div>
+<p><b>개념 상세 설명:</b> 자료는 탐구 질문에 답하기 위한 관찰값, 측정값, 문헌, 공개 자료 등을 뜻한다. 출처, 생성 시점, 측정 방법, 결측값, 표본 수를 확인해야 하며, 자료가 많다고 자동으로 믿을 수 있는 것은 아니다.</p>
+<pre><code>dataset = [
+    {"source":"공공데이터", "year":2025, "value":42},
+    {"source":"센서측정", "year":2026, "value":None}
+]
+valid = [d for d in dataset if d["value"] is not None]
+print("사용 가능한 자료 수:", len(valid))</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 값이 비어 있는 자료를 제외해 사용 가능한 자료 수를 확인한다. 실제 분석에서는 빈값을 제거할지, 보완할지, 그 이유를 기록해야 한다.</div>
+<div class="question" data-answer="0,1,4">
+<div class="question-title">[개념 5] 자료 활용 원칙으로 옳은 것 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c5" value="0">① 자료의 출처와 생성 시점을 확인한다.</label>
+<label class="option"><input type="checkbox" name="c5" value="1">② 결측값과 이상값 처리 방법을 기록한다.</label>
+<label class="option"><input type="checkbox" name="c5" value="2">③ 자료의 양이 많으면 측정 방법은 확인하지 않아도 된다.</label>
+<label class="option"><input type="checkbox" name="c5" value="3">④ 원하는 결론과 맞지 않는 자료는 이유 없이 삭제한다.</label>
+<label class="option"><input type="checkbox" name="c5" value="4">⑤ 질문에 적합한 변수가 포함되어 있는지 살펴본다.</label>
+<div class="answer-box">정답: ①, ②, ⑤ — 출처·품질·적합성을 함께 검토해야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">6</span> 분석 알고리즘</h3><span class="label">절차의 설계</span></div>
+<p><b>개념 상세 설명:</b> 알고리즘은 문제 해결을 위한 명확한 절차이다. 융합 탐구에서는 자료 정리, 계산, 비교, 분류, 예측 등의 과정을 단계별로 설계하고 입력과 출력이 무엇인지 확인한다.</p>
+<pre><code>scores = [72, 81, 93, 88, 76]
+average = sum(scores) / len(scores)
+above = [s for s in scores if s >= average]
+print("평균:", average)
+print("평균 이상:", above)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 입력 자료의 평균을 계산하고 조건에 따라 평균 이상 값을 선택한다. 같은 자료라도 질문에 따라 평균, 중앙값, 분포, 상관관계 등 다른 알고리즘이 필요하다.</div>
+<div class="question" data-answer="1,2,3">
+<div class="question-title">[개념 6] 분석 알고리즘에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c6" value="0">① 알고리즘은 컴퓨터에서만 사용할 수 있고 사람의 절차에는 적용되지 않는다.</label>
+<label class="option"><input type="checkbox" name="c6" value="1">② 입력, 처리, 출력을 구분하면 분석 절차를 이해하기 쉽다.</label>
+<label class="option"><input type="checkbox" name="c6" value="2">③ 탐구 질문에 따라 적절한 분석 방법이 달라질 수 있다.</label>
+<label class="option"><input type="checkbox" name="c6" value="3">④ 같은 절차를 반복 가능하게 표현하는 것이 중요하다.</label>
+<label class="option"><input type="checkbox" name="c6" value="4">⑤ 복잡한 알고리즘일수록 항상 더 좋은 결과를 낸다.</label>
+<div class="answer-box">정답: ②, ③, ④ — 알고리즘은 재현 가능한 절차이며 질문과 자료에 맞아야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">7</span> 시각화와 의사소통</h3><span class="label">보이는 설명</span></div>
+<p><b>개념 상세 설명:</b> 시각화는 자료의 패턴을 빠르게 이해하도록 돕지만, 축의 범위·그래프 종류·색·비율을 부적절하게 사용하면 사실을 왜곡할 수 있다. 제목, 단위, 출처, 범례를 명확히 표시해야 한다.</p>
+<pre><code>temperatures = [21, 22, 24, 27, 26]
+for day, temp in enumerate(temperatures, start=1):
+    bar = "■" * (temp - 20)
+    print(f"{day}일 {temp}℃ {bar}")</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 수치를 문자 막대로 표현하여 변화의 크기를 눈으로 비교한다. 실제 그래프에서는 기준값을 임의로 잘라 과장하지 않도록 주의한다.</div>
+<div class="question" data-answer="0,2,3">
+<div class="question-title">[개념 7] 올바른 시각화 원칙 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c7" value="0">① 그래프 제목과 단위를 표시한다.</label>
+<label class="option"><input type="checkbox" name="c7" value="1">② 원하는 인상을 주기 위해 축 범위를 임의로 조절한다.</label>
+<label class="option"><input type="checkbox" name="c7" value="2">③ 비교 목적에 알맞은 그래프 종류를 선택한다.</label>
+<label class="option"><input type="checkbox" name="c7" value="3">④ 자료 출처와 필요한 설명을 함께 제시한다.</label>
+<label class="option"><input type="checkbox" name="c7" value="4">⑤ 화려한 색이 많을수록 정보 전달이 항상 정확해진다.</label>
+<div class="answer-box">정답: ①, ③, ④ — 시각화는 정확성, 가독성, 맥락을 함께 갖춰야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">8</span> 검증과 재현성</h3><span class="label">결과를 다시 확인하기</span></div>
+<p><b>개념 상세 설명:</b> 검증은 결과가 우연이나 오류에 의한 것이 아닌지 확인하는 과정이다. 같은 자료와 절차로 비슷한 결과가 나오는지, 다른 조건에서도 설명력이 있는지, 계산 오류는 없는지 점검한다.</p>
+<pre><code>data = [10, 12, 11, 13]
+result1 = sum(data) / len(data)
+result2 = (10 + 12 + 11 + 13) / 4
+print(result1 == result2)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 두 가지 방식으로 같은 평균을 계산해 결과가 일치하는지 확인한다. 실제 탐구에서는 코드, 자료, 실행 조건을 기록해 다른 사람이 다시 확인할 수 있게 한다.</div>
+<div class="question" data-answer="1,3,4">
+<div class="question-title">[개념 8] 검증과 재현성에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c8" value="0">① 한 번 원하는 결과가 나오면 다시 확인할 필요가 없다.</label>
+<label class="option"><input type="checkbox" name="c8" value="1">② 계산이나 분석을 다른 방법으로 교차 확인할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c8" value="2">③ 재현성을 위해 자료 출처와 코드는 숨겨야 한다.</label>
+<label class="option"><input type="checkbox" name="c8" value="3">④ 실행 조건과 처리 과정을 기록하면 재현에 도움이 된다.</label>
+<label class="option"><input type="checkbox" name="c8" value="4">⑤ 결과가 예상과 다를 때 오류뿐 아니라 가설도 다시 살펴본다.</label>
+<div class="answer-box">정답: ②, ④, ⑤ — 검증은 결과와 가설을 모두 비판적으로 점검하는 과정이다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">9</span> 정보 윤리</h3><span class="label">책임 있는 탐구</span></div>
+<p><b>개념 상세 설명:</b> 정보 윤리는 개인정보 보호, 저작권과 출처, 편향, 공정성, 안전, 설명 책임을 포함한다. 기술적으로 가능한 일이라도 사람에게 해를 줄 수 있다면 수집 범위와 공개 방법을 다시 설계해야 한다.</p>
+<pre><code>student = {"name":"홍길동", "score":92}
+safe_record = {"student_id":"A01", "score":student["score"]}
+print(safe_record)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 이름 대신 임의 식별자를 사용해 직접 식별 가능성을 줄였다. 가명 처리는 유용하지만 다른 자료와 결합하면 다시 식별될 수 있으므로 최소 수집과 접근 제한이 함께 필요하다.</div>
+<div class="question" data-answer="0,2,4">
+<div class="question-title">[개념 9] 정보 윤리에 맞는 행동 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c9" value="0">① 탐구 목적에 필요한 최소한의 개인정보만 수집한다.</label>
+<label class="option"><input type="checkbox" name="c9" value="1">② 인터넷에서 찾은 자료는 출처 없이 자유롭게 사용한다.</label>
+<label class="option"><input type="checkbox" name="c9" value="2">③ 자료의 편향이 결과에 미칠 영향을 검토한다.</label>
+<label class="option"><input type="checkbox" name="c9" value="3">④ 가명 처리한 자료는 어떤 상황에서도 재식별될 수 없다.</label>
+<label class="option"><input type="checkbox" name="c9" value="4">⑤ 결과 공개가 특정 개인이나 집단에 해를 줄 가능성을 살핀다.</label>
+<div class="answer-box">정답: ①, ③, ⑤ — 최소 수집, 편향 점검, 위해 가능성 검토가 필요하다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">10</span> 성찰과 평가</h3><span class="label">배움을 개선하는 기록</span></div>
+<p><b>개념 상세 설명:</b> 성찰은 잘한 점만 적는 감상문이 아니라 목표, 과정, 근거, 한계, 다음 행동을 되짚는 활동이다. 평가는 결과물뿐 아니라 질문 개선, 자료 처리, 협업, 윤리, 설명 과정까지 살피는 성장 중심 평가가 되어야 한다.</p>
+<pre><code>reflection = {
+    "배운 점":"질문 범위를 좁히는 방법",
+    "어려움":"측정 가능한 변수를 정하기",
+    "다음 행동":"변수 2개로 질문 다시 쓰기"
+}
+for item, text in reflection.items():
+    print(item, ":", text)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 성찰을 세 항목으로 구조화했다. ‘다음 행동’까지 기록하면 성찰이 실제 개선으로 이어진다.</div>
+<div class="question" data-answer="1,2,4">
+<div class="question-title">[개념 10] 성찰과 평가에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c10" value="0">① 성찰은 결과가 성공했을 때만 작성한다.</label>
+<label class="option"><input type="checkbox" name="c10" value="1">② 탐구 과정의 어려움과 해결 시도를 구체적으로 기록한다.</label>
+<label class="option"><input type="checkbox" name="c10" value="2">③ 다음 탐구에서 바꿀 행동을 정하면 개선에 도움이 된다.</label>
+<label class="option"><input type="checkbox" name="c10" value="3">④ 평가는 최종 발표의 디자인만으로 결정하는 것이 공정하다.</label>
+<label class="option"><input type="checkbox" name="c10" value="4">⑤ 질문·자료·분석·윤리·협업 과정도 평가할 수 있다.</label>
+<div class="answer-box">정답: ②, ③, ⑤ — 성장 중심 평가는 과정과 개선을 함께 본다.</div>
+</div></div>
+</section>
+
+<section id="papers" class="card">
+<h2>📚 학습과 관련한 탐구 보고서 주제 예시 5개</h2>
+<div class="grid-2">
+<div class="card topic-card"><h3>1. 교실 환경 자료를 활용한 집중도 개선 탐구</h3><p>온도·습도·이산화탄소 농도와 수업 시간대의 관계를 분석하고 환기 기준을 제안한다.</p><p class="small">융합: 과학 + 통계 + 센서 + 정보 윤리</p></div>
+<div class="card topic-card"><h3>2. 학교 급식 잔반량 예측과 감축 방안</h3><p>메뉴 유형, 요일, 기온, 선호도 자료를 이용해 잔반량 변화 요인을 찾고 실천 방안을 설계한다.</p><p class="small">융합: 환경 + 영양 + 데이터 분석 + 행동과학</p></div>
+<div class="card topic-card"><h3>3. 통학 경로의 안전성과 효율성 비교</h3><p>거리, 횡단보도, 조도, 교통량을 점수화하여 여러 경로를 비교하고 안전 지도를 만든다.</p><p class="small">융합: 지리 + 수학 + 그래프 알고리즘 + 시각화</p></div>
+<div class="card topic-card"><h3>4. 학습 자료의 시각화 방식에 따른 이해도 차이</h3><p>같은 자료를 표, 막대그래프, 선그래프, 인포그래픽으로 제시하고 정보 전달 효과를 비교한다.</p><p class="small">융합: 교육 + 디자인 + 통계 + 정보 표현</p></div>
+<div class="card topic-card"><h3>5. 생성형 인공지능 답변의 신뢰성 점검 방법</h3><p>질문 유형별 답변을 출처, 정확성, 편향, 설명 가능성 기준으로 분석하고 검증 절차를 제안한다.</p><p class="small">융합: 인공지능 + 언어 + 정보 윤리 + 비판적 사고</p></div>
+</div>
+</section>
+
+<section id="closing" class="card highlight">
+<h2>🌙 수업 끝 멘트</h2>
+<p class="quote">“시인은 평범한 돌에서도 이야기를 찾고, 소설가는 한 사람의 선택에서 세계를 만들며, 희곡은 질문을 무대 위에 올려 서로 다른 목소리로 시험합니다. 음악도 첫 음 하나가 없으면 교향곡을 시작할 수 없습니다. 오늘 여러분이 적은 질문이 아직 서툴러도 괜찮습니다. 질문이 너무 완벽하면 오히려 탐구할 일이 줄어드니까요. 다음 시간에는 그 질문에 운동화를 신겨 자료 속으로 뛰어가 보겠습니다.”</p>
+</section>
+
+<section id="formative" class="card">
+<h2>✅ 형성평가 OX 퀴즈 10개</h2>
+<div id="oxQuestions"></div>
+</section>
+
+<section id="diagnostic" class="card">
+<h2>📝 진단평가 5지선다형 10개</h2>
+<p>각 문항은 옳은 것 3개, 틀린 것 2개로 구성되어 있습니다. 옳은 것 3개를 모두 선택하세요.</p>
+<div id="diagQuestions"></div>
+</section>
+
+<section id="submit" class="card">
+<h2>📤 학번·이름 입력 및 결과 저장</h2>
+<div class="form-row">
+<label>학번<input type="text" id="studentId" placeholder="예: 1101"></label>
+<label>이름<input type="text" id="studentName" placeholder="예: 홍길동"></label>
+</div>
+<div class="actions">
+<button onclick="gradeAll()">전체 채점</button>
+<button class="green" onclick="downloadResult()">TXT 결과 저장</button>
+<button class="secondary" onclick="showAnswers()">정답·풀이 보기</button>
+<button class="gold" onclick="window.print()">인쇄</button>
+</div>
+<div id="scorePanel" class="score-panel"></div>
+<p class="small">저장 파일명: 학번_이름_점수_31차시_응시시각.txt</p>
+</section>
+</main>
+<div class="footer">정보융합탐구과제 1차시 · 목표지향 개념기반 수업지도안</div>
+
+<script>
+const oxData = [
+["융합 탐구는 여러 교과 이름을 나열하는 것보다 하나의 문제를 중심으로 지식과 방법을 연결하는 것이 중요하다.","O","융합의 핵심은 공통 문제를 해결하기 위한 실질적 연결이다."],
+["좋은 탐구 질문은 자료로 확인할 수 없어도 철학적으로 깊기만 하면 된다.","X","이 과목의 탐구 질문은 관찰·측정·자료 분석 등으로 확인 가능해야 한다."],
+["관심 분야 지도는 탐구 도중 새 관심이 생기면 수정할 수 있다.","O","관심 지도는 고정된 정답이 아니라 생각을 확장하는 도구이다."],
+["결측값은 언제나 삭제하는 것이 가장 올바른 처리 방법이다.","X","삭제, 대체, 별도 표시 중 자료와 목적에 맞는 방법을 선택해야 한다."],
+["시각화에서는 제목, 단위, 축, 출처를 명확히 표시하는 것이 중요하다.","O","그래프의 맥락과 해석 가능성을 높이는 기본 요소이다."],
+["복잡한 인공지능 모형을 사용하면 단순한 분석보다 항상 좋은 탐구가 된다.","X","질문과 자료에 맞는 방법이 중요하며 복잡성이 곧 타당성을 뜻하지 않는다."],
+["재현성을 높이려면 자료 출처와 분석 절차를 기록해야 한다.","O","다른 사람이 같은 절차를 확인할 수 있어야 한다."],
+["개인정보는 연구에 유용하다면 동의 없이 가능한 한 많이 수집해도 된다.","X","목적에 필요한 최소한만 적법하고 책임 있게 수집해야 한다."],
+["평가는 최종 결과물뿐 아니라 질문 개선과 협업, 윤리적 판단 과정도 포함할 수 있다.","O","과정 중심 평가는 탐구 역량의 성장을 함께 살핀다."],
+["성찰에는 다음에 바꿀 구체적인 행동을 기록하는 것이 도움이 된다.","O","성찰이 실제 개선으로 이어지게 한다."]
+];
+
+const diagData = [
+{q:"2022 개정 교육과정의 수업 방향과 연결되는 설명 3개는?",o:["학생이 질문하고 탐구하는 활동을 중시한다.","지식 암기만을 유일한 수업 목표로 삼는다.","교과 간 연결과 실제 문제 해결을 강조한다.","과정에 대한 성찰과 성장을 중시한다.","모든 학생에게 동일한 탐구 결과를 요구한다."],a:[0,2,3],e:"학생 주도성, 융합적 문제 해결, 과정과 성장이 핵심이다."},
+{q:"정보융합탐구과제에서 좋은 주제의 조건 3개는?",o:["학생의 관심과 연결된다.","한 학기 안에 다룰 수 있는 범위이다.","자료를 구할 수 있는지 고려한다.","제목이 길수록 좋은 주제이다.","결론을 미리 확정하고 시작한다."],a:[0,1,2],e:"관심, 실행 가능성, 자료 접근성을 함께 고려한다."},
+{q:"탐구 질문을 개선하는 방법 3개는?",o:["대상과 조건을 구체화한다.","측정하거나 비교할 변수를 정한다.","가능하면 범위를 무한히 넓힌다.","자료로 답할 수 있는지 확인한다.","답을 먼저 정한 뒤 질문을 맞춘다."],a:[0,1,3],e:"구체성, 측정 가능성, 자료 기반 답변 가능성이 중요하다."},
+{q:"자료의 신뢰성을 살피는 기준 3개는?",o:["출처","생성 시점","측정 방법","파일 이름의 길이","원하는 결론과의 일치 여부"],a:[0,1,2],e:"출처, 시점, 측정 방법은 자료의 맥락과 품질을 판단하는 핵심 기준이다."},
+{q:"문제 정의에 포함할 수 있는 요소 3개는?",o:["사용자 또는 대상","상황과 불편","제한 조건","정답 번호","근거 없는 확정 원인"],a:[0,1,2],e:"누구의 어떤 문제인지, 어떤 조건에서 해결할지 분명히 한다."},
+{q:"올바른 시각화 행동 3개는?",o:["비교 목적에 맞는 그래프를 선택한다.","축을 잘라 차이를 과장한다.","단위와 범례를 표시한다.","자료 출처를 밝힌다.","색을 많이 사용하면 항상 정확해진다."],a:[0,2,3],e:"그래프 선택, 단위·범례, 출처 표시가 중요하다."},
+{q:"재현성을 높이는 방법 3개는?",o:["코드와 처리 절차를 기록한다.","사용 자료의 버전과 출처를 남긴다.","실행 조건을 설명한다.","오류가 있어도 숨긴다.","결과만 이미지로 저장하고 과정을 삭제한다."],a:[0,1,2],e:"자료, 코드, 조건을 기록해야 다른 사람이 확인할 수 있다."},
+{q:"정보 윤리에 맞는 판단 3개는?",o:["필요한 최소한의 개인정보만 수집한다.","저작물의 출처와 이용 조건을 확인한다.","편향과 차별 가능성을 점검한다.","공개 자료는 모두 제한 없이 재배포한다.","가명 처리하면 보안 위험이 완전히 사라진다."],a:[0,1,2],e:"최소 수집, 저작권, 편향 점검이 책임 있는 탐구의 기본이다."},
+{q:"융합 탐구에서 정보 과목이 기여할 수 있는 역할 3개는?",o:["자료 수집 자동화","자료 분석과 알고리즘 설계","결과 시각화와 공유","다른 교과 지식을 모두 대신함","윤리 검토가 필요 없게 만듦"],a:[0,1,2],e:"정보 기술은 수집, 처리, 분석, 표현을 연결하지만 다른 분야와 윤리를 대체하지 않는다."},
+{q:"성찰 기록에 적합한 내용 3개는?",o:["새롭게 이해한 점","어려움과 해결 시도","다음 탐구에서 바꿀 행동","친구보다 높은 점수만 강조","결과가 예상과 다르면 기록 삭제"],a:[0,1,2],e:"배운 점, 어려움, 다음 행동을 구체화하면 성장이 보인다."}
+];
+
+function renderOX(){
+ const wrap=document.getElementById("oxQuestions");
+ oxData.forEach((d,i)=>{
+  wrap.insertAdjacentHTML("beforeend",`
+  <div class="question" data-ox="${d[1]}">
+   <div class="question-title">${i+1}. ${d[0]}</div>
+   <label class="option"><input type="radio" name="ox${i}" value="O">O</label>
+   <label class="option"><input type="radio" name="ox${i}" value="X">X</label>
+   <div class="answer-box">정답: ${d[1]} — ${d[2]}</div>
+  </div>`);
+ });
+}
+function renderDiag(){
+ const wrap=document.getElementById("diagQuestions");
+ diagData.forEach((d,i)=>{
+  let ops=d.o.map((x,j)=>`<label class="option"><input type="checkbox" name="d${i}" value="${j}">${j+1}. ${x}</label>`).join("");
+  wrap.insertAdjacentHTML("beforeend",`<div class="question" data-answer="${d.a.join(",")}"><div class="question-title">${i+1}. ${d.q}</div>${ops}<div class="answer-box">정답: ${d.a.map(x=>x+1).join(", ")} — ${d.e}</div></div>`);
+ });
+}
+renderOX(); renderDiag();
+
+function sameSet(a,b){return a.length===b.length && a.every((v,i)=>v===b[i]);}
+function getChecks(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>Number(x.value)).sort((a,b)=>a-b);}
+function mark(q,ok){q.classList.remove("correct","wrong");q.classList.add(ok?"correct":"wrong");}
+let lastResult=null;
+
+function gradeAll(){
+ let concept=0, ox=0, diag=0, details=[];
+ for(let i=1;i<=10;i++){
+   const q=document.querySelector(`input[name="c${i}"]`).closest(".question");
+   const ans=q.dataset.answer.split(",").map(Number).sort((a,b)=>a-b);
+   const sel=getChecks(`c${i}`); const ok=sameSet(ans,sel); if(ok) concept++;
+   mark(q,ok); details.push(`개념 ${i}: ${ok?"정답":"오답"} / 응답 ${sel.map(x=>x+1).join(",")||"미응답"} / 정답 ${ans.map(x=>x+1).join(",")}`);
+ }
+ oxData.forEach((d,i)=>{
+   const q=document.querySelector(`input[name="ox${i}"]`).closest(".question");
+   const s=document.querySelector(`input[name="ox${i}"]:checked`)?.value||"미응답";
+   const ok=s===d[1]; if(ok) ox++; mark(q,ok);
+   details.push(`형성 OX ${i+1}: ${ok?"정답":"오답"} / 응답 ${s} / 정답 ${d[1]} / ${d[2]}`);
+ });
+ diagData.forEach((d,i)=>{
+   const q=document.querySelector(`input[name="d${i}"]`).closest(".question");
+   const s=getChecks(`d${i}`); const ok=sameSet(d.a,s); if(ok) diag++; mark(q,ok);
+   details.push(`진단 ${i+1}: ${ok?"정답":"오답"} / 응답 ${s.map(x=>x+1).join(",")||"미응답"} / 정답 ${d.a.map(x=>x+1).join(",")} / ${d.e}`);
+ });
+ const totalCorrect=concept+ox+diag;
+ const score=Math.round(totalCorrect/30*100);
+ lastResult={concept,ox,diag,totalCorrect,score,details,time:new Date()};
+ const p=document.getElementById("scorePanel");
+ p.style.display="block";
+ p.innerHTML=`<b>총점 ${score}점</b> (30문항 중 ${totalCorrect}문항 정답)<br>
+ 개념별 평가 ${concept}/10 · 형성평가 ${ox}/10 · 진단평가 ${diag}/10`;
+ p.scrollIntoView({behavior:"smooth",block:"center"});
+ return lastResult;
+}
+function showAnswers(){document.querySelectorAll(".answer-box").forEach(x=>x.style.display="block");}
+function safeName(s){return (s||"미입력").replace(/[\\/:*?"<>|]/g,"_").trim()||"미입력";}
+function pad(n){return String(n).padStart(2,"0")}
+function downloadResult(){
+ const id=safeName(document.getElementById("studentId").value);
+ const name=safeName(document.getElementById("studentName").value);
+ if(id==="미입력"||name==="미입력"){alert("학번과 이름을 입력하세요.");return;}
+ const r=gradeAll(), d=r.time;
+ const stamp=`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+ const text=[
+ "정보융합탐구과제 1차시 평가 결과",
+ "학습 주제: 과목 안내와 융합 탐구의 이해",
+ `학번: ${id}`,`이름: ${name}`,
+ `점수: ${r.score}점`,`개념별 평가: ${r.concept}/10`,`형성평가 OX: ${r.ox}/10`,`진단평가: ${r.diag}/10`,
+ `응시시각: ${d.toLocaleString("ko-KR")}`,"","[문항별 결과]",...r.details
+ ].join("\r\n");
+ const blob=new Blob(["\ufeff"+text],{type:"text/plain;charset=utf-8"});
+ const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+ a.download=`${id}_${name}_${r.score}점_31차시_${stamp}.txt`; a.click(); URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>

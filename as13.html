@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보융합탐구과제 13차시 | 검증 계획과 테스트</title>
+<style>
+:root{
+ --navy:#17365f;--blue:#2c73b5;--sky:#eaf5ff;--green:#2f8b69;--mint:#eaf8f3;
+ --gold:#e5a52d;--red:#cf5149;--purple:#7057a4;--ink:#1f2937;--muted:#667085;
+ --line:#d8e3ee;--paper:#fff;--bg:#f5f8fc;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.72;
+background:radial-gradient(circle at 8% 0,#e7f3ff 0,transparent 30%),radial-gradient(circle at 94% 5%,#e9f9f3 0,transparent 28%),var(--bg)}
+header{position:relative;overflow:hidden;color:#fff;padding:58px 24px 46px;background:linear-gradient(135deg,#102b50,#2b6eaa 58%,#4e91d0)}
+header:before,header:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.08)}
+header:before{width:250px;height:250px;left:-100px;bottom:-145px}header:after{width:340px;height:340px;right:-100px;top:-155px}
+.header-inner{max-width:1180px;margin:auto;position:relative;z-index:1}.eyebrow{font-weight:900;letter-spacing:.08em;color:#d7ecff}
+h1{font-size:clamp(31px,5vw,54px);line-height:1.17;margin:10px 0 14px}.subtitle{font-size:18px;max-width:980px;color:#eef7ff}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.badge{padding:8px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.34);background:rgba(255,255,255,.1);font-size:14px}
+nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1180px;margin:auto;padding:10px 16px;display:flex;gap:8px;overflow:auto}.nav-inner a{text-decoration:none;white-space:nowrap;color:var(--navy);font-weight:900;padding:8px 12px;border-radius:9px}.nav-inner a:hover{background:var(--sky)}
+main{max-width:1180px;margin:auto;padding:28px 18px 80px}section{scroll-margin-top:76px;margin:28px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 10px 30px rgba(22,53,95,.06)}
+h2{font-size:28px;color:var(--navy);margin:0 0 18px;display:flex;align-items:center;gap:10px}h3{color:var(--blue);margin:22px 0 10px}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media(max-width:820px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.label{display:inline-block;background:var(--blue);color:#fff;border-radius:999px;padding:4px 10px;font-size:13px;font-weight:900}
+.highlight{background:linear-gradient(90deg,#fff7df,#fff);border-left:5px solid var(--gold)}.quote{font-size:18px;font-weight:800;color:#294766}
+.timeline{display:grid;grid-template-columns:120px 1fr;gap:12px 18px}.time{font-weight:900;color:var(--blue)}
+.activity{background:#f8fbff;border:1px solid #c9ddec;border-radius:14px;padding:18px}.activity h3{margin-top:0}
+.concept{margin:22px 0;border-top:5px solid var(--blue)}.concept-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.num{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--navy);color:#fff;font-weight:900}
+pre{background:#111827;color:#e5eefb;padding:18px;border-radius:13px;overflow:auto;font-size:14px;line-height:1.55}code{font-family:Consolas,"Courier New",monospace}
+.explain{background:#f8fbff;border:1px dashed #aac6e4;border-radius:12px;padding:15px}
+.question{background:#fbfcfe;border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0}.question-title{font-weight:900;color:var(--navy);margin-bottom:10px}
+.option{display:block;margin:8px 0;padding:8px 10px;border-radius:8px}.option:hover{background:#eef6ff}
+input[type=checkbox],input[type=radio]{transform:scale(1.12);margin-right:8px}.answer-box{display:none;margin-top:12px;padding:12px;border-radius:10px;background:#eefaf5;border-left:4px solid var(--green)}
+.topic-card{border-top:4px solid var(--gold)}table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf3fc;color:var(--navy)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+input[type=text]{width:100%;padding:13px;border:1px solid #b9c8d8;border-radius:10px;font-size:16px}
+button{border:0;border-radius:11px;padding:12px 18px;font-size:15px;font-weight:900;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 5px 14px rgba(43,111,174,.2)}
+button.green{background:var(--green)}button.secondary{background:#64748b}button.gold{background:#b97800}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.score-panel{display:none;margin-top:18px;padding:18px;border:2px solid #8bc0ef;border-radius:14px;background:#eff8ff}
+.correct{background:#eaf9f1!important}.wrong{background:#fff0ef!important}.small{font-size:13px;color:var(--muted)}.footer{text-align:center;padding:25px;color:#6b7280}
+@media print{nav,.actions,button{display:none!important}body{background:#fff}.card{box-shadow:none;break-inside:avoid}.answer-box{display:block}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<div class="eyebrow">2022 개정 교육과정 · 정보융합탐구과제</div>
+<h1>13차시 목표지향 개념기반 수업지도안</h1>
+<div class="subtitle">검증 계획과 테스트 — 정상·경계·예외 사례를 포함한 테스트를 설계하고, 오류를 재현·수정·기록하여 누구나 같은 결과를 확인할 수 있게 한다.</div>
+<div class="badges"><span class="badge">테스트 케이스</span><span class="badge">정상·경계·예외</span><span class="badge">디버깅 로그</span><span class="badge">오류 재현</span><span class="badge">재현성</span><span class="badge">회귀 테스트</span></div>
+</div></header>
+
+<nav><div class="nav-inner">
+<a href="#overview">수업 개요</a><a href="#standards">성취기준</a><a href="#opening">시작 멘트</a><a href="#activity">핵심 활동</a>
+<a href="#concepts">핵심 개념</a><a href="#papers">탐구 주제</a><a href="#closing">끝 멘트</a><a href="#formative">형성평가</a><a href="#diagnostic">진단평가</a><a href="#submit">제출</a>
+</div></nav>
+
+<main>
+<section id="overview" class="card">
+<h2>🧭 수업 개요</h2>
+<div class="grid-2">
+<div><span class="label">학습 주제</span><h3>검증 계획과 테스트</h3>
+<p>프로토타입이 예상대로 동작하는지 확인하기 위해 테스트 목적, 입력, 예상 결과와 실제 결과를 설계한다. 정상값뿐 아니라 경계값과 예외값을 포함하고, 오류가 발생한 조건을 재현하여 원인·수정 내용·재시험 결과를 기록한다.</p></div>
+<div><span class="label">핵심 산출물</span><ul>
+<li>검증 계획표</li><li>정상·경계·예외 테스트 케이스</li><li>실행 결과와 통과 여부</li><li>디버깅 로그</li><li>오류 재현 절차</li><li>수정 후 회귀 테스트 기록</li>
+</ul></div></div>
+<h3>차시 운영 예시</h3>
+<div class="timeline">
+<div class="time">도입 8분</div><div>‘한 번 실행되어 성공한 프로그램’과 ‘여러 조건에서 검증된 프로그램’의 차이를 비교한다.</div>
+<div class="time">개념 17분</div><div>검증 계획, 테스트 케이스, 정상·경계·예외, 예상 결과, 단위 테스트, 로그, 재현성, 원인 분석, 회귀 테스트와 기록을 학습한다.</div>
+<div class="time">활동 20분</div><div>프로토타입 기능 하나를 정하여 최소 6개의 테스트를 설계하고 오류 1개를 재현·수정한다.</div>
+<div class="time">정리 5분</div><div>가장 효과적이었던 테스트와 수정 전후 결과를 한 문장씩 기록한다.</div>
+</div>
+</section>
+
+<section id="standards" class="card">
+<h2>🎯 성취기준과 학습 목표</h2>
+<h3>성취기준</h3>
+<table>
+<tr><th>영역</th><th>수업에 적용한 성취기준</th></tr>
+<tr><td>검증 계획</td><td>기능별 검증 목적과 통과 기준을 정하고 테스트 계획을 수립한다.</td></tr>
+<tr><td>테스트 설계</td><td>정상·경계·예외 입력을 포함한 테스트 케이스를 작성하고 예상 결과를 명시한다.</td></tr>
+<tr><td>디버깅</td><td>오류를 같은 조건에서 재현하고 로그와 중간값을 활용하여 원인을 분석한다.</td></tr>
+<tr><td>수정과 재시험</td><td>오류를 수정한 뒤 기존 기능과 관련 기능을 다시 시험한다.</td></tr>
+<tr><td>재현성과 기록</td><td>실행 환경, 입력 자료, 절차, 결과와 수정 내용을 다른 사람이 따라 할 수 있게 기록한다.</td></tr>
+</table>
+<h3>학습 목표</h3>
+<ol>
+<li>검증 계획과 테스트 케이스의 구성 요소를 설명할 수 있다.</li>
+<li>정상·경계·예외 사례를 구분하여 테스트를 설계할 수 있다.</li>
+<li>예상 결과와 실제 결과를 비교하여 통과 여부를 판단할 수 있다.</li>
+<li>로그와 중간값을 활용해 오류 발생 위치를 추적할 수 있다.</li>
+<li>오류 재현 절차와 수정 내용을 체계적으로 기록할 수 있다.</li>
+<li>수정 후 회귀 테스트를 실행하여 기존 기능의 정상 동작을 확인할 수 있다.</li>
+</ol>
+</section>
+
+<section id="opening" class="card highlight">
+<h2>🌅 수업 시작 멘트</h2>
+<p class="quote">“인문학자는 한 사건을 이해하기 위해 여러 기록을 비교하고, 철학자 데카르트는 의심할 수 있는 것을 차근차근 검토하며 확실한 근거를 찾았습니다. 과학자 파스퇴르는 우연처럼 보이는 현상도 같은 조건에서 반복해 확인했고, 수학자 가우스는 답뿐 아니라 계산 과정이 타당한지 점검했습니다. 오늘 우리는 프로그램이 한 번 작동했다는 사실에 만족하지 않겠습니다. 어떤 입력에서도 같은 규칙으로 움직이는지 시험하고, 오류가 나타나면 숨기지 않고 재현하여 더 신뢰할 수 있는 산출물로 발전시키겠습니다.”</p>
+</section>
+
+<section id="activity" class="card">
+<h2>🧪 핵심 활동</h2>
+<div class="grid-3">
+<div class="activity"><h3>1. 테스트 설계하기</h3><p>기능별 정상·경계·예외 입력과 예상 결과를 표로 작성한다.</p></div>
+<div class="activity"><h3>2. 오류 재현하기</h3><p>오류가 발생한 입력, 실행 순서와 환경을 고정하여 같은 현상을 다시 만든다.</p></div>
+<div class="activity"><h3>3. 수정하고 기록하기</h3><p>원인, 수정 코드, 재시험 결과와 남은 한계를 디버깅 로그에 기록한다.</p></div>
+</div>
+</section>
+
+<section id="concepts">
+<h2>🧩 학습할 핵심 개념 10개</h2>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">1</span> 검증 계획과 통과 기준</h3><span class="label">무엇을 어떻게 확인할지 정한다</span></div>
+<p><b>개념 상세 설명:</b> 검증 계획은 어떤 기능을 어떤 입력으로 시험하고 어떤 결과가 나오면 통과인지 미리 정하는 문서이다. 테스트 목적, 입력, 예상 결과, 실제 결과와 판정을 포함하면 시험 과정이 일관되고 누락을 줄일 수 있다.</p>
+<pre><code>test_plan = {
+    "기능": "점수 평균 계산",
+    "목적": "숫자 목록의 평균이 정확한지 확인",
+    "입력": [80, 90, 100],
+    "예상 결과": 90.0,
+    "통과 기준": "실제 결과가 예상 결과와 같음"
+}
+
+for key, value in test_plan.items():
+    print(f"{key}: {value}")</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 테스트 전에 확인할 기능과 예상 결과를 명확히 적는다. 통과 기준이 정해져 있어야 성공과 실패를 객관적으로 판단할 수 있다.</div>
+<div class="question" data-answer="0,2,4">
+<div class="question-title">[개념 1] 검증 계획에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c1" value="0">① 시험할 기능과 목적을 미리 정한다.</label>
+<label class="option"><input type="checkbox" name="c1" value="1">② 예상 결과는 실행 후에만 정한다.</label>
+<label class="option"><input type="checkbox" name="c1" value="2">③ 통과 기준을 명확하게 기록해야 한다.</label>
+<label class="option"><input type="checkbox" name="c1" value="3">④ 테스트 입력은 기록하지 않는 것이 좋다.</label>
+<label class="option"><input type="checkbox" name="c1" value="4">⑤ 실제 결과와 예상 결과를 비교할 수 있다.</label>
+<div class="answer-box">정답: ①, ③, ⑤ — 검증 계획은 목적, 입력, 예상 결과와 통과 기준을 미리 정의한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">2</span> 테스트 케이스의 구성</h3><span class="label">입력·절차·예상 결과·판정</span></div>
+<p><b>개념 상세 설명:</b> 테스트 케이스는 하나의 구체적인 시험 사례이다. 식별 번호, 사전 조건, 입력, 실행 절차, 예상 결과, 실제 결과와 통과 여부를 포함하면 오류를 다시 확인하기 쉽다.</p>
+<pre><code>def grade(score):
+    return "통과" if score >= 60 else "보완"
+
+case = {
+    "번호": "TC-01",
+    "입력": 75,
+    "예상": "통과"
+}
+
+actual = grade(case["입력"])
+case["실제"] = actual
+case["판정"] = actual == case["예상"]
+
+print(case)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 테스트 입력 75에 대한 예상 결과와 실제 결과를 비교한다. 판정값이 <code>True</code>이면 테스트가 통과한 것이다.</div>
+<div class="question" data-answer="0,1,3">
+<div class="question-title">[개념 2] 테스트 케이스에 포함할 내용으로 옳은 것 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c2" value="0">① 테스트 식별 번호와 입력</label>
+<label class="option"><input type="checkbox" name="c2" value="1">② 예상 결과와 실제 결과</label>
+<label class="option"><input type="checkbox" name="c2" value="2">③ 개발자의 기분만 기록</label>
+<label class="option"><input type="checkbox" name="c2" value="3">④ 통과 여부와 비고</label>
+<label class="option"><input type="checkbox" name="c2" value="4">⑤ 실패한 테스트는 삭제</label>
+<div class="answer-box">정답: ①, ②, ④ — 테스트 사례는 입력, 기대 결과, 실제 결과와 판정을 남겨야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">3</span> 정상 사례</h3><span class="label">일반적인 사용 조건 확인</span></div>
+<p><b>개념 상세 설명:</b> 정상 사례는 사용자가 올바른 형식과 일반적인 범위의 값을 입력하는 경우이다. 기본 기능이 요구사항대로 작동하는지 확인하는 출발점이지만 정상 사례만으로 충분하지는 않다.</p>
+<pre><code>def calculate_average(values):
+    if not values:
+        return None
+    return sum(values) / len(values)
+
+normal_cases = [
+    ([80, 90, 100], 90.0),
+    ([10, 20], 15.0),
+    ([7], 7.0)
+]
+
+for values, expected in normal_cases:
+    actual = calculate_average(values)
+    print(values, actual, actual == expected)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 일반적인 숫자 목록을 입력해 평균 계산이 정확한지 확인한다. 각 사례는 입력과 예상 결과의 쌍으로 구성된다.</div>
+<div class="question" data-answer="1,2,4">
+<div class="question-title">[개념 3] 정상 사례에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c3" value="0">① 잘못된 형식만 포함해야 한다.</label>
+<label class="option"><input type="checkbox" name="c3" value="1">② 일반적인 사용 조건을 확인한다.</label>
+<label class="option"><input type="checkbox" name="c3" value="2">③ 핵심 기능이 기본 요구사항대로 작동하는지 시험한다.</label>
+<label class="option"><input type="checkbox" name="c3" value="3">④ 정상 사례만 통과하면 모든 검증이 끝난다.</label>
+<label class="option"><input type="checkbox" name="c3" value="4">⑤ 예상 결과를 미리 정하여 비교할 수 있다.</label>
+<div class="answer-box">정답: ②, ③, ⑤ — 정상 사례는 기본 동작을 확인하지만 다른 사례도 함께 필요하다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">4</span> 경계 사례</h3><span class="label">범위의 끝과 바로 바깥을 시험</span></div>
+<p><b>개념 상세 설명:</b> 경계 사례는 허용 범위의 최솟값·최댓값과 그 바로 안팎의 값을 시험한다. 비교 연산자 오류나 인덱스 범위 오류는 경계에서 자주 나타난다.</p>
+<pre><code>def valid_score(score):
+    return 0 <= score <= 100
+
+boundary_cases = [
+    (-1, False),
+    (0, True),
+    (1, True),
+    (99, True),
+    (100, True),
+    (101, False)
+]
+
+for value, expected in boundary_cases:
+    actual = valid_score(value)
+    print(value, actual, actual == expected)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 허용 범위 0~100의 경계값과 바로 바깥값을 함께 시험한다. <code>&lt;</code>와 <code>&lt;=</code>를 잘못 사용한 오류를 쉽게 발견할 수 있다.</div>
+<div class="question" data-answer="0,2,3">
+<div class="question-title">[개념 4] 경계 사례에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c4" value="0">① 최솟값과 최댓값을 시험한다.</label>
+<label class="option"><input type="checkbox" name="c4" value="1">② 범위의 중앙값 하나만 시험하면 된다.</label>
+<label class="option"><input type="checkbox" name="c4" value="2">③ 경계 바로 안쪽과 바깥쪽 값을 포함할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c4" value="3">④ 비교 연산자 오류를 발견하는 데 유용하다.</label>
+<label class="option"><input type="checkbox" name="c4" value="4">⑤ 경계값은 실제 입력에서 발생하지 않는다.</label>
+<div class="answer-box">정답: ①, ③, ④ — 범위 끝과 인접 값을 시험해 경계 오류를 찾는다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">5</span> 예외 사례</h3><span class="label">잘못된 입력에도 안전하게 대응</span></div>
+<p><b>개념 상세 설명:</b> 예외 사례는 빈 값, 잘못된 자료형, 결측값, 음수, 지나치게 큰 값처럼 정상 흐름에서 벗어난 입력이다. 프로그램이 중단되지 않고 명확한 오류 메시지나 안전한 기본값을 제공하는지 확인한다.</p>
+<pre><code>def parse_age(raw):
+    try:
+        age = int(raw)
+    except (TypeError, ValueError):
+        return None, "나이는 정수로 입력하세요."
+
+    if not 0 <= age <= 120:
+        return None, "나이는 0~120 범위로 입력하세요."
+
+    return age, "정상 입력"
+
+exception_cases = ["", "열여섯", None, -1, 999]
+
+for value in exception_cases:
+    print(value, "→", parse_age(value))</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 변환 실패와 범위 오류를 구분하여 처리한다. 예외 입력이 들어와도 프로그램 전체가 갑자기 종료되지 않도록 설계한다.</div>
+<div class="question" data-answer="0,1,4">
+<div class="question-title">[개념 5] 예외 사례에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c5" value="0">① 빈 값과 잘못된 자료형을 포함할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c5" value="1">② 프로그램이 안전하게 오류를 처리하는지 확인한다.</label>
+<label class="option"><input type="checkbox" name="c5" value="2">③ 예외 입력은 테스트에서 제외해야 한다.</label>
+<label class="option"><input type="checkbox" name="c5" value="3">④ 오류가 발생하면 항상 전체 프로그램을 종료해야 한다.</label>
+<label class="option"><input type="checkbox" name="c5" value="4">⑤ 사용자가 이해할 수 있는 오류 메시지를 확인할 수 있다.</label>
+<div class="answer-box">정답: ①, ②, ⑤ — 예외 입력에 대한 안전한 처리와 안내를 검증한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">6</span> 자동 테스트와 assert</h3><span class="label">예상 결과를 코드로 반복 확인</span></div>
+<p><b>개념 상세 설명:</b> 자동 테스트는 여러 사례를 코드로 실행해 실제 결과와 예상 결과를 빠르게 비교하는 방법이다. <code>assert</code>를 이용하면 조건이 다를 때 즉시 실패 위치를 알 수 있다.</p>
+<pre><code>def clamp(value, low, high):
+    return max(low, min(value, high))
+
+assert clamp(5, 0, 10) == 5
+assert clamp(-1, 0, 10) == 0
+assert clamp(15, 0, 10) == 10
+assert clamp(0, 0, 10) == 0
+assert clamp(10, 0, 10) == 10
+
+print("모든 테스트 통과")</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 정상값, 범위 아래·위 값과 양쪽 경계값을 한 번에 시험한다. 함수 수정 후에도 같은 테스트를 반복 실행할 수 있다.</div>
+<div class="question" data-answer="1,3,4">
+<div class="question-title">[개념 6] 자동 테스트에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c6" value="0">① 한 사례만 손으로 확인하는 것과 같다.</label>
+<label class="option"><input type="checkbox" name="c6" value="1">② 여러 테스트를 반복 실행하기 쉽다.</label>
+<label class="option"><input type="checkbox" name="c6" value="2">③ assert 조건이 거짓이어도 항상 통과한다.</label>
+<label class="option"><input type="checkbox" name="c6" value="3">④ 코드 수정 후 같은 검증을 다시 수행할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c6" value="4">⑤ 예상 결과와 실제 결과의 차이를 빠르게 발견할 수 있다.</label>
+<div class="answer-box">정답: ②, ④, ⑤ — 자동 테스트는 반복 검증과 차이 발견에 효과적이다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">7</span> 디버깅 로그</h3><span class="label">시간·입력·상태·오류를 기록</span></div>
+<p><b>개념 상세 설명:</b> 디버깅 로그는 프로그램 실행 중 중요한 상태와 오류 정보를 기록하는 자료이다. 단순한 출력보다 시간, 함수 이름, 입력값, 처리 단계와 오류 내용을 일정한 형식으로 남기면 원인을 찾기 쉽다.</p>
+<pre><code>import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s"
+)
+
+def divide(a, b):
+    logging.info("divide 시작: a=%s, b=%s", a, b)
+
+    if b == 0:
+        logging.error("0으로 나눌 수 없음")
+        return None
+
+    result = a / b
+    logging.info("divide 완료: result=%s", result)
+    return result
+
+divide(10, 2)
+divide(10, 0)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 정상 실행은 <code>INFO</code>, 문제 상황은 <code>ERROR</code> 수준으로 기록한다. 입력과 결과가 로그에 남아 오류가 발생한 조건을 확인할 수 있다.</div>
+<div class="question" data-answer="0,2,4">
+<div class="question-title">[개념 7] 디버깅 로그에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c7" value="0">① 실행 시간과 처리 단계를 기록할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c7" value="1">② 개인정보와 비밀번호를 모두 기록하는 것이 좋다.</label>
+<label class="option"><input type="checkbox" name="c7" value="2">③ 오류가 발생한 입력과 위치를 추적하는 데 도움이 된다.</label>
+<label class="option"><input type="checkbox" name="c7" value="3">④ 로그는 항상 무작위 형식으로 작성해야 한다.</label>
+<label class="option"><input type="checkbox" name="c7" value="4">⑤ 중요도에 따라 정보·경고·오류 수준을 구분할 수 있다.</label>
+<div class="answer-box">정답: ①, ③, ⑤ — 로그는 일정한 형식으로 상태와 오류를 남기되 민감정보는 보호해야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">8</span> 오류 재현성과 최소 재현 사례</h3><span class="label">같은 조건에서 같은 오류 만들기</span></div>
+<p><b>개념 상세 설명:</b> 오류 재현성은 같은 입력, 실행 순서와 환경에서 같은 오류를 다시 만들 수 있는 성질이다. 오류를 일으키는 가장 작은 입력과 코드만 남긴 최소 재현 사례를 만들면 원인을 더 쉽게 찾을 수 있다.</p>
+<pre><code>def first_item(values):
+    return values[0]
+
+# 최소 재현 사례
+sample = []
+
+try:
+    print(first_item(sample))
+except IndexError as error:
+    print("재현된 오류:", type(error).__name__)
+    print("재현 입력:", sample)
+    print("원인: 빈 목록의 첫 항목 접근")</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 복잡한 전체 프로그램 대신 빈 목록 하나로 <code>IndexError</code>가 발생하는 핵심 조건만 남겼다. 다른 사람도 같은 입력으로 오류를 확인할 수 있다.</div>
+<div class="question" data-answer="0,1,3">
+<div class="question-title">[개념 8] 오류 재현성에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c8" value="0">① 같은 입력과 절차로 같은 오류를 확인할 수 있어야 한다.</label>
+<label class="option"><input type="checkbox" name="c8" value="1">② 실행 환경과 자료 상태를 기록하는 것이 중요하다.</label>
+<label class="option"><input type="checkbox" name="c8" value="2">③ 오류가 우연히 사라지면 원인을 찾을 필요가 없다.</label>
+<label class="option"><input type="checkbox" name="c8" value="3">④ 최소 재현 사례는 오류를 만드는 핵심 조건만 남긴다.</label>
+<label class="option"><input type="checkbox" name="c8" value="4">⑤ 재현 절차는 개발자만 알고 기록하지 않아야 한다.</label>
+<div class="answer-box">정답: ①, ②, ④ — 재현 가능한 입력·환경·절차를 기록하고 최소 사례로 단순화한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">9</span> 원인 분석과 수정 확인</h3><span class="label">증상과 원인을 구분한다</span></div>
+<p><b>개념 상세 설명:</b> 오류 메시지는 증상일 수 있으며 실제 원인은 그보다 앞선 단계에 있을 수 있다. 가설을 세우고 중간값을 확인한 뒤 한 번에 한 가지를 수정하고 같은 테스트로 결과를 다시 확인한다.</p>
+<pre><code>def mean(values):
+    if len(values) == 0:
+        return None
+    return sum(values) / len(values)
+
+# 수정 전에는 빈 목록에서 ZeroDivisionError 가능
+tests = [
+    ([10, 20], 15.0),
+    ([], None)
+]
+
+for data, expected in tests:
+    actual = mean(data)
+    print({
+        "입력": data,
+        "예상": expected,
+        "실제": actual,
+        "통과": actual == expected
+    })</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 빈 목록을 먼저 처리하도록 수정하고, 오류를 재현했던 입력을 다시 사용해 수정 여부를 확인한다. 정상 입력도 함께 시험해 기존 기능이 유지되는지 살핀다.</div>
+<div class="question" data-answer="1,2,4">
+<div class="question-title">[개념 9] 오류 수정 과정에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c9" value="0">① 오류 메시지와 실제 원인은 항상 같다.</label>
+<label class="option"><input type="checkbox" name="c9" value="1">② 중간값과 실행 흐름을 확인해 원인 가설을 세울 수 있다.</label>
+<label class="option"><input type="checkbox" name="c9" value="2">③ 한 번에 한 가지를 수정하면 효과를 판단하기 쉽다.</label>
+<label class="option"><input type="checkbox" name="c9" value="3">④ 수정 후에는 이전 실패 입력을 다시 시험하지 않는다.</label>
+<label class="option"><input type="checkbox" name="c9" value="4">⑤ 수정 전후 결과와 근거를 기록해야 한다.</label>
+<div class="answer-box">정답: ②, ③, ⑤ — 원인을 단계적으로 확인하고 같은 사례로 수정 효과를 검증한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">10</span> 회귀 테스트와 검증 기록</h3><span class="label">수정 때문에 다른 기능이 깨지지 않았는지 확인</span></div>
+<p><b>개념 상세 설명:</b> 회귀 테스트는 오류를 수정하거나 기능을 추가한 뒤 기존 기능이 여전히 정상 동작하는지 확인하는 테스트이다. 테스트 결과, 코드 버전, 실행 환경과 수정 내역을 기록하면 검증의 재현성과 신뢰성이 높아진다.</p>
+<pre><code>APP_VERSION = "1.2.0"
+
+def normalize(value):
+    if value is None:
+        return None
+    return max(0, min(float(value), 100))
+
+regression_tests = [
+    (50, 50.0),
+    (-5, 0),
+    (120, 100),
+    (None, None)
+]
+
+passed = 0
+
+for value, expected in regression_tests:
+    actual = normalize(value)
+    ok = actual == expected
+    passed += ok
+    print(APP_VERSION, value, expected, actual, ok)
+
+print(f"통과: {passed}/{len(regression_tests)}")</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 정상, 경계 밖 값과 결측값을 다시 시험한다. 코드 버전을 함께 기록하여 어느 상태에서 테스트했는지 확인할 수 있다.</div>
+<div class="question" data-answer="0,3,4">
+<div class="question-title">[개념 10] 회귀 테스트와 기록에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c10" value="0">① 수정 후 기존 기능이 유지되는지 다시 확인한다.</label>
+<label class="option"><input type="checkbox" name="c10" value="1">② 새 기능만 시험하고 기존 테스트는 삭제한다.</label>
+<label class="option"><input type="checkbox" name="c10" value="2">③ 실행 환경과 코드 버전은 기록할 필요가 없다.</label>
+<label class="option"><input type="checkbox" name="c10" value="3">④ 이전에 통과한 테스트도 다시 실행할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c10" value="4">⑤ 수정 내용과 재시험 결과를 기록하면 재현성이 높아진다.</label>
+<div class="answer-box">정답: ①, ④, ⑤ — 수정의 부작용을 확인하고 버전·환경·결과를 남긴다.</div>
+</div></div>
+</section>
+
+<section id="papers" class="card">
+<h2>📚 학습과 관련한 탐구 보고서 주제 예시 5개</h2>
+<div class="grid-2">
+<div class="card topic-card"><h3>1. 경계값 테스트가 입력 검증 오류 발견에 미치는 효과</h3><p><b>구현:</b> 점수, 온도 또는 센서 범위 검사 함수를 제작하고 중앙값 중심 테스트와 경계값 중심 테스트를 비교한다.</p><p><b>탐구 관점:</b> 발견한 오류 수, 테스트 수와 수정 시간을 분석한다.</p></div>
+<div class="card topic-card"><h3>2. 디버깅 로그 수준에 따른 오류 원인 추적 시간 비교</h3><p><b>구현:</b> 로그 없음, 단순 출력, 구조화된 로그를 사용하는 세 버전을 만든다.</p><p><b>탐구 관점:</b> 오류 위치를 찾는 시간과 재현 성공률을 비교한다.</p></div>
+<div class="card topic-card"><h3>3. 자동 테스트 도입 전후의 코드 안정성 연구</h3><p><b>구현:</b> 함수별 정상·경계·예외 자동 테스트를 구성한다.</p><p><b>탐구 관점:</b> 코드 수정 횟수에 따른 재발 오류와 회귀 오류의 변화를 분석한다.</p></div>
+<div class="card topic-card"><h3>4. 최소 재현 사례가 협업 디버깅에 미치는 영향</h3><p><b>구현:</b> 전체 프로젝트 오류 설명과 최소 재현 코드 설명을 각각 제공한다.</p><p><b>탐구 관점:</b> 동료가 오류를 재현하고 원인을 찾는 데 걸린 시간을 비교한다.</p></div>
+<div class="card topic-card"><h3>5. 테스트 기록 형식에 따른 재현성 비교</h3><p><b>구현:</b> 자유 서술 기록과 입력·환경·절차·결과를 갖춘 표준 기록 양식을 만든다.</p><p><b>탐구 관점:</b> 다른 사용자의 재현 성공률과 누락 정보의 차이를 분석한다.</p></div>
+</div>
+</section>
+
+<section id="closing" class="card highlight">
+<h2>🌙 수업 끝 멘트</h2>
+<p class="quote">“시는 한 글자를 고치며 호흡을 바로잡고, 소설은 복선을 다시 읽으며 이야기의 빈틈을 메웁니다. 희곡은 리허설에서 배우가 넘어질 자리를 미리 발견하고, 연극은 그 실수를 본 공연의 웃음으로 바꿉니다. 음악가도 틀린 음을 감추기보다 다시 연주하며 정확한 소리를 찾습니다. 오늘의 오류는 여러분의 실패 증명서가 아니라 프로그램이 보내 준 개선 안내문입니다. 같은 오류를 다시 만들 수 있고, 원인을 설명하고, 고친 뒤 다시 통과시켰다면 여러분은 이미 믿을 수 있는 개발자의 리듬을 연주한 것입니다.”</p>
+</section>
+
+<section id="formative" class="card">
+<h2>✅ 형성평가 OX 퀴즈 10개</h2><div id="oxQuestions"></div>
+</section>
+
+<section id="diagnostic" class="card">
+<h2>📝 진단평가 5지선다형 10개</h2>
+<p>각 문항은 옳은 것 3개와 틀린 것 2개로 구성되어 있습니다. 옳은 것 3개를 모두 선택하세요.</p>
+<div id="diagQuestions"></div>
+</section>
+
+<section id="submit" class="card">
+<h2>📤 학번·이름 입력 및 결과 저장</h2>
+<div class="form-row">
+<label>학번<input type="text" id="studentId" placeholder="예: 1101"></label>
+<label>이름<input type="text" id="studentName" placeholder="예: 홍길동"></label>
+</div>
+<div class="actions">
+<button onclick="gradeAll()">전체 채점</button>
+<button class="green" onclick="downloadResult()">TXT 결과 저장</button>
+<button class="secondary" onclick="showAnswers()">정답·풀이 보기</button>
+<button class="gold" onclick="window.print()">인쇄</button>
+</div>
+<div id="scorePanel" class="score-panel"></div>
+<p class="small">저장 파일명: 학번_이름_점수_13차시_응시시각.txt</p>
+</section>
+</main>
+<div class="footer">정보융합탐구과제 13차시 · 목표지향 개념기반 수업지도안</div>
+
+<script>
+const oxData=[
+["검증 계획에는 시험 목적과 통과 기준을 포함할 수 있다.","O","검증 전에 판단 기준을 정해야 객관적으로 평가할 수 있다."],
+["테스트 케이스의 예상 결과는 실제 결과를 확인한 뒤 바꾸는 것이 원칙이다.","X","예상 결과는 실행 전에 요구사항을 근거로 정해야 한다."],
+["정상 사례는 일반적인 올바른 입력에서 기본 기능을 확인한다.","O","기본 요구사항에 따른 정상 동작을 확인한다."],
+["경계값 테스트는 허용 범위의 끝과 바로 안팎 값을 확인한다.","O","비교 연산자와 범위 처리 오류를 찾는 데 유용하다."],
+["예외 입력은 실제 사용자에게 발생할 수 없으므로 시험하지 않아도 된다.","X","빈 값, 형식 오류와 범위 밖 값은 실제로 발생할 수 있다."],
+["자동 테스트는 코드 수정 후 같은 검증을 반복하는 데 도움이 된다.","O","기존 테스트를 빠르게 다시 실행할 수 있다."],
+["디버깅 로그에는 비밀번호와 개인정보를 가능한 많이 남기는 것이 좋다.","X","오류 추적에 필요한 정보만 기록하고 민감정보는 보호해야 한다."],
+["최소 재현 사례는 오류를 만드는 핵심 입력과 코드만 남긴다.","O","복잡성을 줄여 원인을 찾고 공유하기 쉽다."],
+["오류를 수정한 뒤에는 실패했던 입력으로 다시 시험해야 한다.","O","같은 조건에서 오류가 해결되었는지 확인해야 한다."],
+["회귀 테스트는 수정과 관련 없는 기존 기능은 확인하지 않는다.","X","수정 때문에 기존 기능이 깨지지 않았는지 함께 확인한다."]
+];
+
+const diagData=[
+{q:"검증 계획에 포함할 내용 3개는?",o:["시험할 기능과 목적","입력과 예상 결과","통과 기준","실행 후 바꾼 임의 정답","개발자의 기분"],a:[0,1,2],e:"검증 목적, 입력·예상 결과와 통과 기준을 미리 정한다."},
+{q:"테스트 케이스의 올바른 구성 요소 3개는?",o:["식별 번호와 사전 조건","실행 절차와 입력","실제 결과와 판정","실패 사례 삭제 지시","근거 없는 성공 처리"],a:[0,1,2],e:"누구나 같은 시험을 수행하고 판정할 수 있게 기록한다."},
+{q:"정상 사례에 대한 옳은 설명 3개는?",o:["일반적인 올바른 입력을 사용한다.","기본 기능의 정상 동작을 확인한다.","예상 결과와 실제 결과를 비교한다.","예외 입력만 사용한다.","정상 사례만으로 모든 검증을 끝낸다."],a:[0,1,2],e:"정상 사례는 기본 동작 확인의 출발점이다."},
+{q:"경계 사례로 적절한 것 3개는?",o:["허용 최솟값","허용 최댓값","경계 바로 바깥값","범위와 무관한 값 하나만","항상 중앙값만"],a:[0,1,2],e:"범위 끝과 인접 값을 함께 시험한다."},
+{q:"예외 테스트의 목적 3개는?",o:["잘못된 형식을 안전하게 처리하는지 확인","빈 값이나 결측값에 대응하는지 확인","오류 메시지가 이해하기 쉬운지 확인","프로그램을 무조건 종료시키기","예외 입력을 숨기기"],a:[0,1,2],e:"예외 상황에서 안전한 처리와 회복 방법을 검증한다."},
+{q:"자동 테스트의 장점 3개는?",o:["여러 사례를 반복 실행하기 쉽다.","수정 후 같은 검증을 다시 할 수 있다.","예상 결과와 실제 결과 차이를 빠르게 찾는다.","실패 테스트를 자동으로 정답 처리한다.","경계 사례를 제외한다."],a:[0,1,2],e:"자동 테스트는 반복성과 일관성을 높인다."},
+{q:"좋은 디버깅 로그의 특징 3개는?",o:["시간과 처리 단계를 기록한다.","입력과 오류 내용을 필요한 범위에서 기록한다.","정보·경고·오류 수준을 구분한다.","비밀번호를 평문으로 저장한다.","기록 형식을 매번 바꾼다."],a:[0,1,2],e:"구조화된 로그는 원인 추적에 도움을 주며 민감정보는 제외한다."},
+{q:"오류 재현성을 높이는 방법 3개는?",o:["동일한 입력과 실행 순서를 기록한다.","실행 환경과 코드 버전을 기록한다.","최소 재현 사례를 만든다.","우연히 발생한 조건은 숨긴다.","재현 절차를 기록하지 않는다."],a:[0,1,2],e:"입력, 환경, 절차와 최소 사례를 남겨야 한다."},
+{q:"오류 수정 과정의 올바른 방법 3개는?",o:["중간값을 확인해 원인 가설을 세운다.","한 번에 한 가지를 수정한다.","같은 실패 입력으로 다시 시험한다.","오류 메시지만 삭제한다.","수정 결과를 기록하지 않는다."],a:[0,1,2],e:"원인을 단계적으로 검증하고 수정 효과를 재시험한다."},
+{q:"회귀 테스트와 검증 기록에 대한 옳은 설명 3개는?",o:["수정 후 기존 기능을 다시 시험한다.","이전에 통과한 테스트를 재실행한다.","코드 버전과 결과를 기록한다.","기존 테스트를 모두 삭제한다.","새 기능만 한 번 실행한다."],a:[0,1,2],e:"수정의 부작용을 확인하고 재현 가능한 기록을 남긴다."}
+];
+
+function renderOX(){
+ const wrap=document.getElementById("oxQuestions");
+ oxData.forEach((d,i)=>wrap.insertAdjacentHTML("beforeend",`
+ <div class="question" data-ox="${d[1]}">
+ <div class="question-title">${i+1}. ${d[0]}</div>
+ <label class="option"><input type="radio" name="ox${i}" value="O">O</label>
+ <label class="option"><input type="radio" name="ox${i}" value="X">X</label>
+ <div class="answer-box">정답: ${d[1]} — ${d[2]}</div></div>`));
+}
+function renderDiag(){
+ const wrap=document.getElementById("diagQuestions");
+ diagData.forEach((d,i)=>{
+  const ops=d.o.map((x,j)=>`<label class="option"><input type="checkbox" name="d${i}" value="${j}">${j+1}. ${x}</label>`).join("");
+  wrap.insertAdjacentHTML("beforeend",`<div class="question" data-answer="${d.a.join(",")}"><div class="question-title">${i+1}. ${d.q}</div>${ops}<div class="answer-box">정답: ${d.a.map(x=>x+1).join(", ")} — ${d.e}</div></div>`);
+ });
+}
+renderOX();renderDiag();
+
+function sameSet(a,b){return a.length===b.length&&a.every((v,i)=>v===b[i]);}
+function getChecks(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>Number(x.value)).sort((a,b)=>a-b);}
+function mark(q,ok){q.classList.remove("correct","wrong");q.classList.add(ok?"correct":"wrong");}
+let lastResult=null;
+function gradeAll(){
+ let concept=0,ox=0,diag=0,details=[];
+ for(let i=1;i<=10;i++){
+  const q=document.querySelector(`input[name="c${i}"]`).closest(".question");
+  const ans=q.dataset.answer.split(",").map(Number).sort((a,b)=>a-b),sel=getChecks(`c${i}`);
+  const ok=sameSet(ans,sel);if(ok)concept++;mark(q,ok);
+  details.push(`개념 ${i}: ${ok?"정답":"오답"} / 응답 ${sel.map(x=>x+1).join(",")||"미응답"} / 정답 ${ans.map(x=>x+1).join(",")}`);
+ }
+ oxData.forEach((d,i)=>{
+  const q=document.querySelector(`input[name="ox${i}"]`).closest(".question");
+  const sel=document.querySelector(`input[name="ox${i}"]:checked`)?.value||"미응답";
+  const ok=sel===d[1];if(ok)ox++;mark(q,ok);
+  details.push(`형성 OX ${i+1}: ${ok?"정답":"오답"} / 응답 ${sel} / 정답 ${d[1]} / ${d[2]}`);
+ });
+ diagData.forEach((d,i)=>{
+  const q=document.querySelector(`input[name="d${i}"]`).closest(".question"),sel=getChecks(`d${i}`);
+  const ok=sameSet(d.a,sel);if(ok)diag++;mark(q,ok);
+  details.push(`진단 ${i+1}: ${ok?"정답":"오답"} / 응답 ${sel.map(x=>x+1).join(",")||"미응답"} / 정답 ${d.a.map(x=>x+1).join(",")} / ${d.e}`);
+ });
+ const totalCorrect=concept+ox+diag,score=Math.round(totalCorrect/30*100);
+ lastResult={concept,ox,diag,totalCorrect,score,details,time:new Date()};
+ const panel=document.getElementById("scorePanel");panel.style.display="block";
+ panel.innerHTML=`<b>총점 ${score}점</b> (30문항 중 ${totalCorrect}문항 정답)<br>개념별 평가 ${concept}/10 · 형성평가 ${ox}/10 · 진단평가 ${diag}/10`;
+ panel.scrollIntoView({behavior:"smooth",block:"center"});return lastResult;
+}
+function showAnswers(){document.querySelectorAll(".answer-box").forEach(x=>x.style.display="block");}
+function safeName(s){return(s||"미입력").replace(/[\\/:*?"<>|]/g,"_").trim()||"미입력";}
+function pad(n){return String(n).padStart(2,"0")}
+function downloadResult(){
+ const id=safeName(document.getElementById("studentId").value),name=safeName(document.getElementById("studentName").value);
+ if(id==="미입력"||name==="미입력"){alert("학번과 이름을 입력하세요.");return;}
+ const r=gradeAll(),d=r.time;
+ const stamp=`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+ const text=["정보융합탐구과제 13차시 평가 결과","학습 주제: 검증 계획과 테스트",`학번: ${id}`,`이름: ${name}`,`점수: ${r.score}점`,
+ `개념별 평가: ${r.concept}/10`,`형성평가 OX: ${r.ox}/10`,`진단평가: ${r.diag}/10`,`응시시각: ${d.toLocaleString("ko-KR")}`,"","[문항별 결과]",...r.details].join("\r\n");
+ const blob=new Blob(["\ufeff"+text],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);a.download=`${id}_${name}_${r.score}점_13차시_${stamp}.txt`;a.click();URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>
