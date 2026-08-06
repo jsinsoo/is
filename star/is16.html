@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>상태·연산·목표 상태와 완전 탐색 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1200px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:960px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--green)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--purple)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:24%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>상태·연산·목표 상태 구조화<br>모든 후보 탐색 알고리즘 예제 10선</h1>
+<p>문제를 현재 상태, 가능한 연산, 목표 상태로 나누고 모든 후보를 빠짐없이 생성·검사하는 완전 탐색과 백트래킹 알고리즘을 설계합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">설계 원리</a><a href="#ex1">1. 비밀번호</a><a href="#ex2">2. 두 수 합</a>
+<a href="#ex3">3. 세 수 합</a><a href="#ex4">4. 순열</a><a href="#ex5">5. 조합</a>
+<a href="#ex6">6. 부분집합</a><a href="#ex7">7. 동전 조합</a><a href="#ex8">8. 좌석 배치</a>
+<a href="#ex9">9. 미로 후보</a><a href="#ex10">10. 종합 백트래킹</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 모든 후보 탐색 설계 절차</h2>
+<div class="flow">
+<div class="flow-card"><strong>상태</strong>현재까지 선택한 값, 위치, 합계 등 문제의 현재 모습을 정의합니다.</div>
+<div class="flow-card"><strong>연산</strong>현재 상태에서 수행할 수 있는 선택과 이동을 정의합니다.</div>
+<div class="flow-card"><strong>목표 상태</strong>정답으로 인정할 조건이나 탐색을 멈출 조건을 정합니다.</div>
+<div class="flow-card"><strong>후보 탐색</strong>가능한 선택을 모두 시도하고 조건을 만족하는 후보를 기록합니다.</div>
+</div>
+<div class="lead" style="margin-top:16px">
+완전 탐색은 후보 수가 작을 때 모든 경우를 검사하여 정답을 확실히 찾는 방법입니다.
+후보 수가 커지면 불가능한 선택을 일찍 중단하는 <strong>가지치기</strong>와 선택을 되돌리는 <strong>백트래킹</strong>이 필요합니다.
+</div>
+<table>
+<tr><th>설계 질문</th><th>확인 내용</th></tr>
+<tr><td>상태는 무엇인가?</td><td>현재 인덱스, 선택 목록, 누적 합, 방문 위치 등</td></tr>
+<tr><td>가능한 연산은 무엇인가?</td><td>선택·미선택, 이동, 숫자 추가, 자리 교환 등</td></tr>
+<tr><td>목표 상태는 무엇인가?</td><td>목표 합, 선택 개수, 도착 지점, 모든 자리 결정 등</td></tr>
+<tr><td>가지치기 조건은 무엇인가?</td><td>합이 목표 초과, 중복 선택, 경계 밖, 충돌 발생 등</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>세 자리 비밀번호 모든 후보 탐색</h2></div>
+<div><span class="badge">중첩 반복문</span><span class="badge">완전 탐색</span></div>
+<div class="two">
+<div><pre><code>target = "314"
+count = 0
+
+for a in range(10):
+    for b in range(10):
+        for c in range(10):
+            candidate = f"{a}{b}{c}"
+            count += 1
+
+            if candidate == target:
+                print("찾은 비밀번호:", candidate)
+                print("검사 횟수:", count)
+                break</code></pre></div>
+<div class="card">
+<h3>문제 구조</h3>
+<p><strong>상태:</strong> 현재까지 결정한 세 자리 숫자</p>
+<p><strong>연산:</strong> 각 자리에 0~9 선택</p>
+<p><strong>목표:</strong> 후보가 314와 일치</p>
+</div>
+</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>목표 합을 만드는 두 수 찾기</h2></div>
+<div><span class="badge">두 후보 선택</span><span class="badge">인덱스</span></div>
+<pre><code>numbers = [2, 7, 11, 15, 3, 6]
+target = 9
+solutions = []
+
+for i in range(len(numbers)):
+    for j in range(i + 1, len(numbers)):
+        if numbers[i] + numbers[j] == target:
+            solutions.append(
+                (numbers[i], numbers[j])
+            )
+
+print("해:", solutions)</code></pre>
+<div class="note"><strong>중복 방지</strong><br><code>j</code>를 <code>i+1</code>부터 시작하여 같은 원소를 두 번 선택하거나 순서만 다른 중복 후보를 만들지 않습니다.</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>세 수의 합이 n이 되는 경우 세기</h2></div>
+<div><span class="badge">세 변수</span><span class="badge">모든 경우</span></div>
+<div class="two">
+<div><pre><code>n = 8
+count = 0
+solutions = []
+
+for a in range(1, n + 1):
+    for b in range(1, n + 1):
+        for c in range(1, n + 1):
+            if a + b + c == n:
+                count += 1
+                solutions.append((a, b, c))
+
+print("경우의 수:", count)
+print("일부 해:", solutions[:10])</code></pre></div>
+<div class="card">
+<h3>상태와 목표</h3>
+<p>상태는 현재 선택한 <code>(a, b, c)</code>입니다.</p>
+<p>가능한 모든 양의 정수 후보를 검사합니다.</p>
+<p>합이 n이면 목표 상태입니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>재귀함수로 모든 순열 생성</h2></div>
+<div><span class="badge">순열</span><span class="badge">백트래킹</span></div>
+<pre><code>def generate_permutations(items, selected):
+    if len(selected) == len(items):
+        print(selected)
+        return
+
+    for item in items:
+        if item in selected:
+            continue
+
+        selected.append(item)
+        generate_permutations(items, selected)
+        selected.pop()
+
+generate_permutations(["A", "B", "C"], [])</code></pre>
+<div class="check"><strong>백트래킹</strong><br>후보를 하나 선택하고 재귀 호출한 뒤 <code>pop()</code>으로 선택을 취소하여 다음 후보를 탐색합니다.</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>n개 중 r개 조합 생성</h2></div>
+<div><span class="badge">조합</span><span class="badge">시작 인덱스</span></div>
+<pre><code>def generate_combinations(
+    items, r, start=0, selected=None
+):
+    if selected is None:
+        selected = []
+
+    if len(selected) == r:
+        print(selected)
+        return
+
+    for index in range(start, len(items)):
+        selected.append(items[index])
+
+        generate_combinations(
+            items,
+            r,
+            index + 1,
+            selected
+        )
+
+        selected.pop()
+
+generate_combinations(
+    ["A", "B", "C", "D"],
+    2
+)</code></pre>
+<div class="note"><strong>상태:</strong> 현재 선택 목록과 시작 인덱스<br><strong>목표:</strong> 선택한 원소 수가 r개</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>부분집합 전체 생성</h2></div>
+<div><span class="badge">포함·제외</span><span class="badge">이진 선택</span></div>
+<div class="two">
+<div><pre><code>def generate_subsets(
+    items, index=0, selected=None
+):
+    if selected is None:
+        selected = []
+
+    if index == len(items):
+        print(selected)
+        return
+
+    # 현재 원소 포함
+    selected.append(items[index])
+    generate_subsets(
+        items, index + 1, selected
+    )
+
+    # 현재 원소 제외
+    selected.pop()
+    generate_subsets(
+        items, index + 1, selected
+    )
+
+generate_subsets([1, 2, 3])</code></pre></div>
+<div class="card">
+<h3>후보 공간</h3>
+<p>각 원소마다 포함 또는 제외 두 가지 연산이 있습니다.</p>
+<p>원소가 n개이면 후보 수는 2ⁿ개입니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>목표 금액을 만드는 동전 조합</h2></div>
+<div><span class="badge">누적 합</span><span class="badge">가지치기</span></div>
+<pre><code>coins = [1, 2, 5]
+target = 7
+solutions = []
+
+def search(start, total, selected):
+    if total == target:
+        solutions.append(selected.copy())
+        return
+
+    if total > target:
+        return
+
+    for index in range(start, len(coins)):
+        coin = coins[index]
+        selected.append(coin)
+
+        search(
+            index,
+            total + coin,
+            selected
+        )
+
+        selected.pop()
+
+search(0, 0, [])
+
+print("경우의 수:", len(solutions))
+for solution in solutions:
+    print(solution)</code></pre>
+<div class="check"><strong>가지치기</strong><br>누적 합이 목표 금액을 초과하면 그 뒤의 후보는 모두 불가능하므로 즉시 탐색을 중단합니다.</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>학생 좌석 배치 모든 경우 탐색</h2></div>
+<div><span class="badge">배치</span><span class="badge">조건 검사</span></div>
+<pre><code>students = ["민준", "서연", "지우"]
+valid_arrangements = []
+
+def arrange(selected):
+    if len(selected) == len(students):
+        # 민준과 서연이 붙어 앉지 않는 조건
+        for i in range(len(selected) - 1):
+            pair = {selected[i], selected[i + 1]}
+
+            if pair == {"민준", "서연"}:
+                return
+
+        valid_arrangements.append(
+            selected.copy()
+        )
+        return
+
+    for student in students:
+        if student not in selected:
+            selected.append(student)
+            arrange(selected)
+            selected.pop()
+
+arrange([])
+
+for arrangement in valid_arrangements:
+    print(arrangement)</code></pre>
+<div class="note"><strong>목표 상태</strong><br>모든 학생의 자리가 결정되고 금지 조건을 위반하지 않은 상태입니다.</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>미로에서 모든 가능한 경로 탐색</h2></div>
+<div><span class="badge">상태 공간</span><span class="badge">방문 복원</span></div>
+<pre><code>maze = [
+    [0, 0, 0],
+    [0, 1, 0],
+    [0, 0, 0]
+]
+
+rows = len(maze)
+cols = len(maze[0])
+target = (2, 2)
+
+visited = set()
+paths = []
+
+def explore(row, col, path):
+    if not (0 <= row < rows and 0 <= col < cols):
+        return
+
+    if maze[row][col] == 1:
+        return
+
+    if (row, col) in visited:
+        return
+
+    visited.add((row, col))
+    path.append((row, col))
+
+    if (row, col) == target:
+        paths.append(path.copy())
+    else:
+        for dr, dc in [
+            (1, 0), (-1, 0),
+            (0, 1), (0, -1)
+        ]:
+            explore(
+                row + dr,
+                col + dc,
+                path
+            )
+
+    path.pop()
+    visited.remove((row, col))
+
+explore(0, 0, [])
+
+print("경로 수:", len(paths))
+for path in paths:
+    print(path)</code></pre>
+<div class="warn"><strong>상태 복원</strong><br>다른 경로에서 같은 칸을 다시 사용할 수 있도록 재귀 호출이 끝난 뒤 방문 표시와 경로를 원상 복구합니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>종합: 목표 합 부분집합 백트래킹</h2></div>
+<div><span class="badge">종합 설계</span><span class="badge">가지치기</span><span class="badge">해 기록</span></div>
+<pre><code>numbers = [2, 3, 5, 7, 8]
+target = 10
+solutions = []
+
+def subset_sum(
+    index,
+    total,
+    selected
+):
+    # 목표 상태
+    if total == target:
+        solutions.append(selected.copy())
+        return
+
+    # 실패 상태와 가지치기
+    if total > target:
+        return
+
+    if index == len(numbers):
+        return
+
+    # 현재 숫자를 선택
+    selected.append(numbers[index])
+    subset_sum(
+        index + 1,
+        total + numbers[index],
+        selected
+    )
+
+    # 선택 복원
+    selected.pop()
+
+    # 현재 숫자를 선택하지 않음
+    subset_sum(
+        index + 1,
+        total,
+        selected
+    )
+
+subset_sum(0, 0, [])
+
+print("목표 합:", target)
+print("해의 개수:", len(solutions))
+
+for solution in solutions:
+    print(solution)</code></pre>
+
+<table>
+<tr><th>구조화 요소</th><th>이 문제의 정의</th></tr>
+<tr><td>상태</td><td>현재 인덱스, 누적 합, 선택된 숫자 목록</td></tr>
+<tr><td>연산</td><td>현재 숫자를 선택하거나 선택하지 않음</td></tr>
+<tr><td>목표 상태</td><td>누적 합이 target과 같음</td></tr>
+<tr><td>실패 상태</td><td>합이 목표를 초과하거나 모든 숫자를 검사함</td></tr>
+<tr><td>복원</td><td>선택한 숫자를 pop하여 이전 상태로 돌아감</td></tr>
+<tr><td>효율성</td><td>최악에는 2ⁿ개 후보를 검사하지만 가지치기로 일부 후보 제거</td></tr>
+</table>
+
+<div class="lead" style="margin-top:14px">
+<strong>알고리즘 설명 예시</strong><br>
+“현재 상태를 검사 중인 숫자의 위치, 누적 합, 선택 목록으로 정의하였다.
+각 단계에서 숫자를 선택하는 연산과 선택하지 않는 연산을 모두 수행하였다.
+누적 합이 목표와 같으면 해를 기록하고, 목표를 초과하면 더 탐색하지 않도록 가지치기하였다.
+따라서 가능한 후보를 빠짐없이 확인하면서 불필요한 탐색을 줄였다.”
+</div>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 문제의 상태란 무엇을 의미하는가?
+<details><summary>정답 보기</summary>현재까지의 선택, 위치, 누적값 등 문제 해결 과정의 현재 모습을 의미합니다.</details></div>
+<div class="quiz"><strong>2.</strong> 완전 탐색의 가장 큰 장점은 무엇인가?
+<details><summary>정답 보기</summary>모든 후보를 검사하므로 후보 수가 감당 가능하다면 정답을 놓치지 않습니다.</details></div>
+<div class="quiz"><strong>3.</strong> 백트래킹에서 선택 후 <code>pop()</code>을 하는 이유는 무엇인가?
+<details><summary>정답 보기</summary>현재 선택을 취소하고 이전 상태로 복원하여 다른 후보를 탐색하기 위해서입니다.</details></div>
+<div class="quiz"><strong>4.</strong> 가지치기는 어떤 역할을 하는가?
+<details><summary>정답 보기</summary>정답이 될 수 없는 후보를 조기에 중단하여 불필요한 탐색을 줄입니다.</details></div>
+<div class="quiz"><strong>5.</strong> 부분집합 탐색에서 각 원소에 대해 수행하는 두 연산은 무엇인가?
+<details><summary>정답 보기</summary>현재 원소를 선택하는 연산과 선택하지 않는 연산입니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>상태·연산·목표 상태 구조화와 모든 후보 탐색 알고리즘 예제 10선</footer>
+</body>
+</html>

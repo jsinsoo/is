@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>문제 상황별 자료구조 선택 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1200px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:960px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--green)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--purple)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:24%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>문제 상황에 적절한 자료구조 선택<br>근거·구현 결과·효율성 설명 예제 10선</h1>
+<p>문제의 입력 자료, 반복되는 연산, 처리 순서와 관계 구조를 분석하여 알맞은 자료구조를 선택하고, 선택 이유와 구현 결과, 시간·공간 효율을 논리적으로 설명합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">선택 절차</a><a href="#ex1">1. 학생 점수</a><a href="#ex2">2. 중복 제거</a>
+<a href="#ex3">3. 빈도 분석</a><a href="#ex4">4. 실행 취소</a><a href="#ex5">5. 대기열</a>
+<a href="#ex6">6. 양방향 처리</a><a href="#ex7">7. 우선 작업</a><a href="#ex8">8. 친구 관계</a>
+<a href="#ex9">9. 최단 경로</a><a href="#ex10">10. 종합 추천</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 자료구조 선택 절차</h2>
+<div class="flow">
+<div class="flow-card"><strong>① 문제 분석</strong>저장할 자료와 처리 목적을 분명히 합니다.</div>
+<div class="flow-card"><strong>② 핵심 연산</strong>삽입·삭제·탐색·최솟값·관계 탐색 중 자주 수행할 연산을 찾습니다.</div>
+<div class="flow-card"><strong>③ 구조 선택</strong>연산에 유리한 리스트·집합·딕셔너리·스택·큐·힙·그래프를 선택합니다.</div>
+<div class="flow-card"><strong>④ 평가</strong>결과의 정확성, 가독성, 시간과 공간 효율을 설명합니다.</div>
+</div>
+<div class="lead" style="margin-top:16px">
+<strong>설명 문장 틀</strong><br>
+“이 문제는 ○○ 연산이 반복되므로 △△ 자료구조를 선택하였다.
+△△는 ○○ 연산을 효율적으로 수행하고, 구현 결과 □□를 얻었다.
+다만 △△는 ◇◇ 상황에서는 추가 메모리 또는 탐색 비용이 발생할 수 있다.”
+</div>
+<table>
+<tr><th>자료구조</th><th>유리한 연산</th><th>대표 사례</th></tr>
+<tr><td>리스트</td><td>순서 유지, 인덱스 접근, 순회</td><td>점수 목록, 시간 순 기록</td></tr>
+<tr><td>집합</td><td>중복 제거, 포함 여부 확인</td><td>출석자 확인, 고유 값</td></tr>
+<tr><td>딕셔너리</td><td>키 기반 조회와 빈도 누적</td><td>학생별 점수, 단어 빈도</td></tr>
+<tr><td>스택·큐·덱</td><td>최근 작업, 순차 처리, 양쪽 처리</td><td>실행 취소, 대기열, 회문 검사</td></tr>
+<tr><td>힙·그래프</td><td>최솟값 반복 추출, 관계와 경로</td><td>우선 작업, 최단 경로</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>학생 점수 순서 관리 — 리스트 선택</h2></div>
+<div><span class="badge">리스트</span><span class="badge">순서 유지</span></div>
+<div class="two">
+<div><pre><code>scores = [85, 92, 78, 96, 88]
+
+scores.append(91)
+scores[2] = 80
+
+average = sum(scores) / len(scores)
+
+print("점수:", scores)
+print("세 번째 점수:", scores[2])
+print("평균:", average)</code></pre></div>
+<div class="card">
+<h3>선택 근거</h3>
+<p>점수의 입력 순서를 유지하고, 특정 위치의 값을 수정하거나 전체를 순회해야 하므로 리스트를 선택합니다.</p>
+<h3>효율성</h3>
+<p>인덱스 접근은 빠르지만, 앞이나 중간 삽입·삭제는 뒤쪽 원소 이동이 필요합니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>행사 참가자 중복 제거 — 집합 선택</h2></div>
+<div><span class="badge">집합</span><span class="badge">중복 제거</span></div>
+<pre><code>participants = [
+    "민준", "서연", "민준",
+    "지우", "서연", "하준"
+]
+
+unique_participants = set(participants)
+
+print("고유 참가자:", unique_participants)
+print("참가자 수:", len(unique_participants))
+print("지우 참가 여부:", "지우" in unique_participants)</code></pre>
+<div class="note"><strong>선택 근거</strong><br>순서보다 고유한 이름과 빠른 포함 여부 확인이 중요하므로 집합이 적합합니다. 원래 입력 순서가 필요하다면 별도 처리가 필요합니다.</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>단어 빈도 분석 — 딕셔너리 선택</h2></div>
+<div><span class="badge">딕셔너리</span><span class="badge">빈도 누적</span></div>
+<div class="two">
+<div><pre><code>text = "데이터 분석 데이터 시각화 분석"
+words = text.split()
+
+frequency = {}
+
+for word in words:
+    frequency[word] = frequency.get(word, 0) + 1
+
+for word, count in frequency.items():
+    print(word, ":", count)
+
+most_common = max(
+    frequency,
+    key=frequency.get
+)
+
+print("가장 많이 나온 단어:", most_common)</code></pre></div>
+<div class="card">
+<h3>선택 근거</h3>
+<p>단어를 키로 사용하고 해당 단어의 출현 횟수를 값으로 누적해야 합니다.</p>
+<h3>결과</h3>
+<p>각 단어의 빈도와 최빈 단어를 빠르게 조회할 수 있습니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>최근 작업 실행 취소 — 스택 선택</h2></div>
+<div><span class="badge">스택</span><span class="badge">LIFO</span></div>
+<pre><code>document = ""
+history = []
+
+def write(text):
+    global document
+
+    history.append(document)
+    document += text
+
+def undo():
+    global document
+
+    if history:
+        document = history.pop()
+
+write("자료")
+write("구조")
+write(" 선택")
+
+print("현재:", document)
+undo()
+print("취소 후:", document)</code></pre>
+<div class="check"><strong>선택 근거</strong><br>가장 최근 작업을 가장 먼저 취소해야 하므로 후입선출 스택이 적합합니다. 리스트의 맨 뒤에서 삽입·삭제하면 효율적입니다.</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>상담 대기 순서 — 큐 선택</h2></div>
+<div><span class="badge">큐</span><span class="badge">FIFO</span><span class="badge">deque</span></div>
+<div class="two">
+<div><pre><code>from collections import deque
+
+waiting = deque()
+
+waiting.append("민준")
+waiting.append("서연")
+waiting.append("지우")
+
+while waiting:
+    student = waiting.popleft()
+    print("상담:", student)</code></pre></div>
+<div class="card">
+<h3>선택 근거</h3>
+<p>먼저 신청한 학생을 먼저 상담해야 하므로 선입선출 큐를 선택합니다.</p>
+<h3>효율성</h3>
+<p><code>deque.popleft()</code>는 리스트의 <code>pop(0)</code>보다 앞쪽 삭제에 효율적입니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>양쪽 문자 비교 — 덱 선택</h2></div>
+<div><span class="badge">덱</span><span class="badge">회문 검사</span></div>
+<pre><code>from collections import deque
+
+def is_palindrome(text):
+    characters = deque(
+        character.lower()
+        for character in text
+        if character.isalnum()
+    )
+
+    while len(characters) > 1:
+        left = characters.popleft()
+        right = characters.pop()
+
+        if left != right:
+            return False
+
+    return True
+
+print(is_palindrome("level"))
+print(is_palindrome("python"))</code></pre>
+<div class="note"><strong>선택 근거</strong><br>문자열의 왼쪽과 오른쪽을 반복해서 제거해야 하므로 양쪽 끝 연산이 빠른 덱이 적합합니다.</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>가장 긴급한 작업 처리 — 최소 힙 선택</h2></div>
+<div><span class="badge">힙</span><span class="badge">우선순위 큐</span></div>
+<div class="two">
+<div><pre><code>import heapq
+
+tasks = []
+
+heapq.heappush(tasks, (3, "교실 정리"))
+heapq.heappush(tasks, (1, "서버 장애 확인"))
+heapq.heappush(tasks, (2, "수업 자료 출력"))
+
+while tasks:
+    priority, task = heapq.heappop(tasks)
+    print(priority, task)</code></pre></div>
+<div class="card">
+<h3>선택 근거</h3>
+<p>입력 순서가 아니라 우선순위가 가장 높은 작업을 반복해서 꺼내야 합니다.</p>
+<h3>효율성</h3>
+<p>힙은 최솟값 확인과 삭제가 효율적이며, 전체를 매번 정렬하는 비용을 줄입니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>친구 관계와 공통 친구 — 그래프 선택</h2></div>
+<div><span class="badge">그래프</span><span class="badge">인접리스트</span></div>
+<pre><code>friends = {
+    "민준": {"서연", "지우"},
+    "서연": {"민준", "하준", "지우"},
+    "지우": {"민준", "서연"},
+    "하준": {"서연"}
+}
+
+def common_friends(a, b):
+    return friends[a] & friends[b]
+
+print(
+    "민준·하준의 공통 친구:",
+    common_friends("민준", "하준")
+)
+
+for person, neighbors in friends.items():
+    print(person, "차수:", len(neighbors))</code></pre>
+<div class="check"><strong>선택 근거</strong><br>학생과 친구 관계처럼 대상과 연결을 표현해야 하므로 그래프가 적합합니다. 이웃을 집합으로 저장하면 공통 친구 교집합도 쉽게 계산할 수 있습니다.</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>교실 이동의 최소 단계 — 그래프와 BFS 선택</h2></div>
+<div><span class="badge">그래프</span><span class="badge">BFS</span><span class="badge">큐</span></div>
+<pre><code>from collections import deque
+
+building = {
+    "교실": ["복도"],
+    "복도": ["교실", "계단", "도서관"],
+    "계단": ["복도", "과학실"],
+    "도서관": ["복도", "과학실"],
+    "과학실": ["계단", "도서관"]
+}
+
+def shortest_path(start, target):
+    queue = deque([(start, [start])])
+    visited = {start}
+
+    while queue:
+        place, path = queue.popleft()
+
+        if place == target:
+            return path
+
+        for next_place in building[place]:
+            if next_place not in visited:
+                visited.add(next_place)
+                queue.append(
+                    (next_place, path + [next_place])
+                )
+
+    return None
+
+path = shortest_path("교실", "과학실")
+
+print("경로:", path)
+print("이동 단계:", len(path) - 1)</code></pre>
+<div class="note"><strong>선택 근거</strong><br>장소 연결은 그래프로 나타내고, 모든 이동 비용이 같을 때 최소 간선 수 경로는 큐 기반 BFS로 찾습니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>문제 설명에 따른 자료구조 추천 프로그램</h2></div>
+<div><span class="badge">종합 판단</span><span class="badge">선택 근거</span></div>
+<pre><code>def recommend_structure(
+    keep_order=False,
+    remove_duplicates=False,
+    key_lookup=False,
+    recent_first=False,
+    arrival_first=False,
+    both_ends=False,
+    priority=False,
+    relationships=False
+):
+    if relationships:
+        return "그래프", "대상 사이의 연결과 경로를 표현할 수 있습니다."
+
+    if priority:
+        return "힙", "최우선 자료를 반복해서 효율적으로 꺼낼 수 있습니다."
+
+    if recent_first:
+        return "스택", "가장 최근 자료를 먼저 처리하는 LIFO 구조입니다."
+
+    if arrival_first:
+        return "큐", "먼저 들어온 자료를 먼저 처리하는 FIFO 구조입니다."
+
+    if both_ends:
+        return "덱", "양쪽 끝의 삽입과 삭제가 모두 효율적입니다."
+
+    if remove_duplicates:
+        return "집합", "중복을 자동으로 제거하고 포함 여부를 빠르게 확인합니다."
+
+    if key_lookup:
+        return "딕셔너리", "키를 이용해 값을 빠르게 조회하고 갱신합니다."
+
+    if keep_order:
+        return "리스트", "자료의 순서와 인덱스를 유지합니다."
+
+    return "리스트", "일반적인 순차 자료 처리에 사용할 수 있습니다."
+
+cases = [
+    {"recent_first": True},
+    {"arrival_first": True},
+    {"remove_duplicates": True},
+    {"relationships": True},
+    {"priority": True}
+]
+
+for case in cases:
+    structure, reason = recommend_structure(**case)
+    print(structure, ":", reason)</code></pre>
+
+<table>
+<tr><th>평가 항목</th><th>설명할 내용</th></tr>
+<tr><td>문제 상황</td><td>어떤 자료가 들어오고 어떤 결과가 필요한가?</td></tr>
+<tr><td>핵심 연산</td><td>삽입·삭제·포함 검사·최솟값·경로 탐색 중 무엇이 반복되는가?</td></tr>
+<tr><td>선택 근거</td><td>선택한 구조가 핵심 연산에 왜 적합한가?</td></tr>
+<tr><td>구현 결과</td><td>출력값과 문제 해결 여부가 올바른가?</td></tr>
+<tr><td>효율성</td><td>시간·공간 장점과 한계는 무엇인가?</td></tr>
+</table>
+
+<div class="lead" style="margin-top:14px">
+<strong>최종 설명 예시</strong><br>
+“상담 신청은 먼저 들어온 학생부터 처리해야 하므로 큐를 선택하였다.
+<code>deque</code>의 뒤 삽입과 앞 삭제를 사용하여 신청 순서를 유지했으며, 모든 학생이 접수 순서대로 처리되었다.
+리스트의 앞 삭제와 달리 앞쪽 원소를 반복해서 이동하지 않으므로 대기자가 많아져도 효율적이다.”
+</div>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 자료구조를 선택할 때 가장 먼저 확인해야 할 것은 무엇인가?
+<details><summary>정답 보기</summary>저장할 자료와 반복해서 수행할 핵심 연산입니다.</details></div>
+<div class="quiz"><strong>2.</strong> 중복 제거와 포함 여부 확인에 적합한 자료구조는 무엇인가?
+<details><summary>정답 보기</summary>집합입니다.</details></div>
+<div class="quiz"><strong>3.</strong> 가장 우선순위가 높은 작업을 반복해서 꺼낼 때 적합한 구조는 무엇인가?
+<details><summary>정답 보기</summary>힙을 이용한 우선순위 큐입니다.</details></div>
+<div class="quiz"><strong>4.</strong> 자료구조 선택의 효율성을 설명할 때 고려해야 할 두 자원은 무엇인가?
+<details><summary>정답 보기</summary>실행 시간과 메모리 공간입니다.</details></div>
+<div class="quiz"><strong>5.</strong> 친구 관계와 이동 경로를 표현하기에 적합한 자료구조는 무엇인가?
+<details><summary>정답 보기</summary>노드와 간선으로 관계를 나타내는 그래프입니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>문제 상황에 적절한 자료구조 선택과 근거·구현 결과·효율성 설명 예제 10선</footer>
+</body>
+</html>

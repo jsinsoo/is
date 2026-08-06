@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>중복 호출 분석과 메모이제이션 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1180px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:930px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.1rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--red)}
+.flow-card:nth-child(2){border-top:5px solid var(--gold)}
+.flow-card:nth-child(3){border-top:5px solid var(--green)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1.08fr .92fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+pre.trace{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:32%;background:#f8fbfd}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:850px){.flow,.two{grid-template-columns:1fr}}
+@media(max-width:560px){section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>중복 호출 분석과 메모이제이션<br>실행 횟수·시간 개선 예제 10선</h1>
+<p>재귀함수에서 같은 문제가 반복 계산되는 현상을 호출 횟수와 실행 시간으로 분석하고, 딕셔너리·리스트·데코레이터를 활용한 메모이제이션으로 성능을 개선합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">핵심 개념</a><a href="#ex1">1. 중복 호출 관찰</a><a href="#ex2">2. 호출 횟수</a>
+<a href="#ex3">3. 시간 측정</a><a href="#ex4">4. 딕셔너리 메모</a><a href="#ex5">5. 리스트 메모</a>
+<a href="#ex6">6. lru_cache</a><a href="#ex7">7. 계단 오르기</a><a href="#ex8">8. 격자 경로</a>
+<a href="#ex9">9. 최소 비용</a><a href="#ex10">10. 종합 비교</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 중복 호출과 메모이제이션</h2>
+<div class="flow">
+<div class="flow-card"><strong>중복 호출</strong>같은 입력값에 대한 함수가 여러 번 반복 실행되는 현상입니다.</div>
+<div class="flow-card"><strong>메모이제이션</strong>한 번 계산한 결과를 저장해 두었다가 같은 입력이 들어오면 다시 계산하지 않고 꺼내 쓰는 방법입니다.</div>
+<div class="flow-card"><strong>성능 개선</strong>호출 횟수와 실행 시간을 크게 줄여 재귀함수를 효율적으로 만듭니다.</div>
+</div>
+<div class="lead" style="margin-top:17px">
+피보나치 재귀함수는 <code>fibonacci(n-1)</code>과 <code>fibonacci(n-2)</code>를 각각 호출하면서 같은 값을 여러 번 계산합니다.
+메모이제이션을 적용하면 각 입력값은 보통 한 번만 계산되므로 실행 시간이 크게 줄어듭니다.
+</div>
+<table>
+<tr><th>분석 항목</th><th>확인 방법</th></tr>
+<tr><td>호출 횟수</td><td>전역 변수 또는 딕셔너리로 함수가 몇 번 호출되는지 셉니다.</td></tr>
+<tr><td>실행 시간</td><td><code>time.perf_counter()</code>로 시작과 종료 시각의 차이를 측정합니다.</td></tr>
+<tr><td>저장 여부</td><td>계산 전에 입력값이 메모에 있는지 확인합니다.</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>피보나치 중복 호출 관찰하기</h2></div>
+<div><span class="badge">중복 계산</span><span class="badge">호출 출력</span></div>
+<div class="two">
+<div><pre><code>def fibonacci(n):
+    print(f"fibonacci({n}) 호출")
+
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+print("결과:", fibonacci(5))</code></pre></div>
+<div class="card">
+<h3>관찰 포인트</h3>
+<p><code>fibonacci(3)</code>, <code>fibonacci(2)</code>, <code>fibonacci(1)</code> 등이 여러 번 출력됩니다.</p>
+<pre class="trace">fibonacci(5)
+├─ fibonacci(4)
+│  ├─ fibonacci(3)
+│  └─ fibonacci(2)
+└─ fibonacci(3)
+   ├─ fibonacci(2)
+   └─ fibonacci(1)</pre>
+</div>
+</div>
+<div class="warn"><strong>문제점</strong><br>같은 값을 반복 계산하므로 n이 커질수록 호출 수가 매우 빠르게 증가합니다.</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>재귀 피보나치 호출 횟수 세기</h2></div>
+<div><span class="badge">전역 변수</span><span class="badge">호출 횟수</span></div>
+<pre><code>call_count = 0
+
+def fibonacci(n):
+    global call_count
+    call_count += 1
+
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+result = fibonacci(10)
+
+print("결과:", result)
+print("호출 횟수:", call_count)</code></pre>
+<div class="note"><strong>분석</strong><br>결과값은 작지만 함수 호출은 훨씬 많이 발생합니다. 입력값을 10, 20, 30으로 바꾸어 호출 횟수 증가를 비교할 수 있습니다.</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>실행 시간 측정하기</h2></div>
+<div><span class="badge">perf_counter</span><span class="badge">시간 비교</span></div>
+<div class="two">
+<div><pre><code>import time
+
+def fibonacci(n):
+    if n < 2:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+start = time.perf_counter()
+result = fibonacci(30)
+end = time.perf_counter()
+
+print("결과:", result)
+print(f"실행 시간: {end - start:.6f}초")</code></pre></div>
+<div class="card">
+<h3>측정 원리</h3>
+<p>함수 실행 전 시각과 실행 후 시각의 차이를 계산합니다.</p>
+<p>컴퓨터 상태에 따라 시간은 달라질 수 있으므로 여러 번 실행해 비교하는 것이 좋습니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>딕셔너리 메모이제이션</h2></div>
+<div><span class="badge">딕셔너리</span><span class="badge">저장·재사용</span></div>
+<div class="two">
+<div><pre><code>memo = {0: 0, 1: 1}
+call_count = 0
+
+def fibonacci(n):
+    global call_count
+    call_count += 1
+
+    if n in memo:
+        return memo[n]
+
+    memo[n] = fibonacci(n - 1) + fibonacci(n - 2)
+    return memo[n]
+
+result = fibonacci(30)
+
+print("결과:", result)
+print("호출 횟수:", call_count)
+print("저장된 값 개수:", len(memo))</code></pre></div>
+<div class="card">
+<h3>실행 흐름</h3>
+<ol><li>입력값 n이 딕셔너리에 있는지 확인합니다.</li><li>있으면 저장값을 즉시 반환합니다.</li><li>없으면 계산한 뒤 딕셔너리에 저장합니다.</li></ol>
+</div>
+</div>
+<div class="check"><strong>개선 효과</strong><br>각 피보나치 값이 한 번씩만 계산되어 큰 입력에서도 빠르게 실행됩니다.</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>리스트를 이용한 메모이제이션</h2></div>
+<div><span class="badge">리스트</span><span class="badge">인덱스 저장</span></div>
+<pre><code>def fibonacci(n, memo=None):
+    if memo is None:
+        memo = [-1] * (n + 1)
+        memo[0] = 0
+        if n >= 1:
+            memo[1] = 1
+
+    if memo[n] != -1:
+        return memo[n]
+
+    memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
+    return memo[n]
+
+print(fibonacci(40))</code></pre>
+<div class="note"><strong>특징</strong><br>입력값이 0부터 연속된 정수라면 리스트 인덱스를 활용해 빠르게 접근할 수 있습니다.</div>
+<div class="warn"><strong>주의</strong><br>기본 매개변수에 빈 리스트를 직접 작성하면 호출 사이에 값이 공유될 수 있으므로 <code>memo=None</code> 방식이 안전합니다.</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>functools.lru_cache 활용</h2></div>
+<div><span class="badge">데코레이터</span><span class="badge">자동 캐시</span></div>
+<div class="two">
+<div><pre><code>from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def fibonacci(n):
+    if n < 2:
+        return n
+
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+print("결과:", fibonacci(100))
+print("캐시 정보:", fibonacci.cache_info())</code></pre></div>
+<div class="card">
+<h3>장점</h3>
+<p>직접 딕셔너리를 만들지 않아도 함수의 입력과 결과를 자동으로 저장합니다.</p>
+<p><code>cache_info()</code>로 적중 횟수, 누락 횟수, 현재 저장 크기를 확인할 수 있습니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>계단 오르기 문제에 메모이제이션 적용</h2></div>
+<div><span class="badge">동적 계획법</span><span class="badge">경우의 수</span></div>
+<pre><code>memo = {0: 1, 1: 1}
+
+def count_ways(n):
+    if n in memo:
+        return memo[n]
+
+    memo[n] = count_ways(n - 1) + count_ways(n - 2)
+    return memo[n]
+
+print("10칸 계단을 오르는 방법:", count_ways(10))</code></pre>
+<div class="check"><strong>문제 구조</strong><br>마지막에 1칸을 오른 경우와 2칸을 오른 경우로 나누면 같은 작은 문제가 반복됩니다. 메모이제이션이 적합한 구조입니다.</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>격자 경로 수 구하기</h2></div>
+<div><span class="badge">2차원 상태</span><span class="badge">튜플 키</span></div>
+<div class="two">
+<div><pre><code>memo = {}
+
+def count_paths(row, col):
+    if row == 0 or col == 0:
+        return 1
+
+    key = (row, col)
+
+    if key in memo:
+        return memo[key]
+
+    memo[key] = (
+        count_paths(row - 1, col)
+        + count_paths(row, col - 1)
+    )
+    return memo[key]
+
+print(count_paths(10, 10))</code></pre></div>
+<div class="card">
+<h3>메모의 키</h3>
+<p>상태가 두 값으로 결정되므로 <code>(row, col)</code> 튜플을 딕셔너리 키로 사용합니다.</p>
+<p>같은 좌표의 경로 수를 다시 계산하지 않습니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>최소 비용 경로 재귀함수</h2></div>
+<div><span class="badge">최솟값</span><span class="badge">부분 문제</span></div>
+<pre><code>cost = [1, 3, 2, 5, 4, 2]
+memo = {}
+
+def min_cost(index):
+    if index == 0:
+        return cost[0]
+    if index == 1:
+        return cost[1]
+
+    if index in memo:
+        return memo[index]
+
+    memo[index] = cost[index] + min(
+        min_cost(index - 1),
+        min_cost(index - 2)
+    )
+    return memo[index]
+
+print("최소 비용:", min_cost(len(cost) - 1))</code></pre>
+<div class="note"><strong>분석</strong><br>현재 위치까지 오는 최소 비용은 직전 칸과 두 칸 전 위치 중 더 작은 비용을 선택해 계산합니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>일반 재귀와 메모이제이션 성능 종합 비교</h2></div>
+<div><span class="badge">실행 시간</span><span class="badge">호출 횟수</span><span class="badge">종합 실습</span></div>
+<pre><code>import time
+
+normal_calls = 0
+memo_calls = 0
+
+def fibonacci_normal(n):
+    global normal_calls
+    normal_calls += 1
+
+    if n < 2:
+        return n
+
+    return (
+        fibonacci_normal(n - 1)
+        + fibonacci_normal(n - 2)
+    )
+
+memo = {0: 0, 1: 1}
+
+def fibonacci_memo(n):
+    global memo_calls
+    memo_calls += 1
+
+    if n in memo:
+        return memo[n]
+
+    memo[n] = (
+        fibonacci_memo(n - 1)
+        + fibonacci_memo(n - 2)
+    )
+    return memo[n]
+
+n = 30
+
+start = time.perf_counter()
+normal_result = fibonacci_normal(n)
+normal_time = time.perf_counter() - start
+
+start = time.perf_counter()
+memo_result = fibonacci_memo(n)
+memo_time = time.perf_counter() - start
+
+print("[일반 재귀]")
+print("결과:", normal_result)
+print("호출 횟수:", normal_calls)
+print(f"실행 시간: {normal_time:.6f}초")
+
+print("\n[메모이제이션]")
+print("결과:", memo_result)
+print("호출 횟수:", memo_calls)
+print(f"실행 시간: {memo_time:.6f}초")</code></pre>
+<table>
+<tr><th>비교 항목</th><th>일반 재귀</th><th>메모이제이션</th></tr>
+<tr><td>중복 계산</td><td>같은 값을 여러 번 계산함</td><td>계산 결과를 저장하여 재사용함</td></tr>
+<tr><td>호출 횟수</td><td>매우 빠르게 증가함</td><td>입력 크기에 비례해 증가함</td></tr>
+<tr><td>실행 시간</td><td>n이 커지면 급격히 느려짐</td><td>큰 n에서도 빠르게 실행됨</td></tr>
+<tr><td>추가 메모리</td><td>호출 스택 사용</td><td>호출 스택과 저장 공간 사용</td></tr>
+</table>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 메모이제이션의 핵심 원리는 무엇인가?
+<details><summary>정답 보기</summary>한 번 계산한 결과를 저장해 같은 입력이 다시 들어오면 재계산하지 않는 것입니다.</details></div>
+<div class="quiz"><strong>2.</strong> 함수 호출 횟수를 세기 위해 사용할 수 있는 방법은 무엇인가?
+<details><summary>정답 보기</summary>전역 변수나 딕셔너리 카운터를 사용해 함수가 호출될 때마다 값을 1 증가시킬 수 있습니다.</details></div>
+<div class="quiz"><strong>3.</strong> 실행 시간을 정밀하게 측정할 때 사용할 수 있는 함수는 무엇인가?
+<details><summary>정답 보기</summary><code>time.perf_counter()</code>입니다.</details></div>
+<div class="quiz"><strong>4.</strong> 입력 상태가 두 개의 값으로 결정될 때 딕셔너리 키로 무엇을 사용할 수 있는가?
+<details><summary>정답 보기</summary><code>(row, col)</code>과 같은 튜플을 사용할 수 있습니다.</details></div>
+<div class="quiz"><strong>5.</strong> 메모이제이션의 단점은 무엇인가?
+<details><summary>정답 보기</summary>계산 결과를 저장하기 위한 추가 메모리 공간이 필요합니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>중복 호출 분석과 메모이제이션 · 실행 횟수·시간 개선 예제 10선</footer>
+</body>
+</html>

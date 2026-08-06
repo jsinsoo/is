@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>부분 문제 분해와 점화식·도식 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1200px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:960px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--green)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--purple)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+pre.diagram{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:24%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>큰 문제의 부분 문제 분해<br>입력 크기 관계·점화식·도식 예제 10선</h1>
+<p>입력 크기 n인 문제를 더 작은 부분 문제로 나누고, 부분 문제의 크기와 개수, 결합 비용의 관계를 점화식·호출 트리·단계 표로 표현합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">핵심 원리</a><a href="#ex1">1. 자연수 합</a><a href="#ex2">2. 팩토리얼</a>
+<a href="#ex3">3. 피보나치</a><a href="#ex4">4. 계단 오르기</a><a href="#ex5">5. 이진 탐색</a>
+<a href="#ex6">6. 거듭제곱</a><a href="#ex7">7. 병합 정렬</a><a href="#ex8">8. 최대값</a>
+<a href="#ex9">9. 하노이 탑</a><a href="#ex10">10. 종합 분석</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 부분 문제 분해와 점화식</h2>
+<div class="flow">
+<div class="flow-card"><strong>입력 크기</strong>문제의 규모를 나타내는 n을 정의합니다.</div>
+<div class="flow-card"><strong>부분 문제</strong>n보다 작은 크기의 같은 형태 문제를 찾습니다.</div>
+<div class="flow-card"><strong>결합 과정</strong>부분 문제의 해를 이용해 원래 문제의 해를 만듭니다.</div>
+<div class="flow-card"><strong>점화식</strong>현재 문제와 작은 문제의 관계를 식으로 표현합니다.</div>
+</div>
+<div class="lead" style="margin-top:16px">
+점화식은 보통 <strong>부분 문제의 개수</strong>, <strong>부분 문제의 크기</strong>, <strong>분해·결합에 필요한 추가 작업</strong>으로 구성됩니다.
+예를 들어 입력을 절반 크기의 두 문제로 나누고 결합에 n만큼의 작업이 필요하면 <code>T(n)=2T(n/2)+n</code>과 같이 표현할 수 있습니다.
+</div>
+<table>
+<tr><th>확인 요소</th><th>질문</th></tr>
+<tr><td>기본 상태</td><td>입력 크기가 얼마일 때 직접 답을 구할 수 있는가?</td></tr>
+<tr><td>크기 변화</td><td>n-1, n-2, n/2 등 어떤 크기로 줄어드는가?</td></tr>
+<tr><td>부분 문제 수</td><td>재귀 호출이 한 번인가, 두 번 이상인가?</td></tr>
+<tr><td>추가 작업</td><td>덧셈, 비교, 병합, 원판 이동 등이 얼마나 필요한가?</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>1부터 n까지의 합</h2></div>
+<div><span class="badge">n-1 문제</span><span class="badge">선형 점화식</span></div>
+<div class="two">
+<div><pre><code>def recursive_sum(n):
+    if n == 1:
+        return 1
+
+    return n + recursive_sum(n - 1)
+
+print(recursive_sum(5))</code></pre></div>
+<div class="card">
+<h3>점화식</h3>
+<pre class="diagram">S(1) = 1
+S(n) = n + S(n-1)</pre>
+<h3>도식</h3>
+<pre class="diagram">S(5)
+└─ 5 + S(4)
+       └─ 4 + S(3)
+              └─ 3 + S(2)
+                     └─ 2 + S(1)</pre>
+</div>
+</div>
+<div class="note"><strong>크기 변화</strong><br>입력 크기가 매 호출마다 1씩 감소하므로 5→4→3→2→1의 관계를 가집니다.</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>팩토리얼의 부분 문제 관계</h2></div>
+<div><span class="badge">곱셈 결합</span><span class="badge">기본 상태</span></div>
+<div class="two">
+<div><pre><code>def factorial(n):
+    if n == 0:
+        return 1
+
+    return n * factorial(n - 1)
+
+for n in range(6):
+    print(n, factorial(n))</code></pre></div>
+<div class="card">
+<h3>값의 점화식</h3>
+<pre class="diagram">F(0) = 1
+F(n) = n × F(n-1)</pre>
+<h3>실행 시간 관계</h3>
+<pre class="diagram">T(0) = c
+T(n) = T(n-1) + c</pre>
+<p>한 번의 재귀 호출과 한 번의 곱셈이 추가됩니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>피보나치 호출 트리와 중복 부분 문제</h2></div>
+<div><span class="badge">두 부분 문제</span><span class="badge">호출 트리</span></div>
+<pre><code>def fibonacci(n):
+    if n < 2:
+        return n
+
+    return (
+        fibonacci(n - 1)
+        + fibonacci(n - 2)
+    )
+
+print(fibonacci(5))</code></pre>
+<div class="two">
+<div class="card">
+<h3>값의 점화식</h3>
+<pre class="diagram">F(0) = 0
+F(1) = 1
+F(n) = F(n-1) + F(n-2)</pre>
+</div>
+<div class="card">
+<h3>호출 도식</h3>
+<pre class="diagram">F(5)
+├─ F(4)
+│  ├─ F(3)
+│  └─ F(2)
+└─ F(3)
+   ├─ F(2)
+   └─ F(1)</pre>
+</div>
+</div>
+<div class="warn"><strong>중복</strong><br><code>F(3)</code>과 <code>F(2)</code>가 여러 번 나타납니다. 점화식은 자연스럽지만 단순 재귀 구현은 중복 계산이 많습니다.</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>계단 오르기의 상태 분해</h2></div>
+<div><span class="badge">경우의 수</span><span class="badge">마지막 선택</span></div>
+<div class="two">
+<div><pre><code>def count_ways(n):
+    if n == 0:
+        return 1
+    if n == 1:
+        return 1
+
+    return (
+        count_ways(n - 1)
+        + count_ways(n - 2)
+    )
+
+print(count_ways(5))</code></pre></div>
+<div class="card">
+<h3>분해 논리</h3>
+<p>n번째 칸에 도착하는 마지막 이동은 1칸 또는 2칸입니다.</p>
+<pre class="diagram">W(n) = W(n-1) + W(n-2)
+W(0) = 1, W(1) = 1</pre>
+<p>입력 크기 n이 n-1과 n-2의 두 부분 문제로 나뉩니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>이진 탐색의 입력 절반 분해</h2></div>
+<div><span class="badge">n/2 문제</span><span class="badge">로그 단계</span></div>
+<pre><code>def binary_search(data, target, left, right):
+    if left > right:
+        return -1
+
+    middle = (left + right) // 2
+
+    if data[middle] == target:
+        return middle
+
+    if data[middle] < target:
+        return binary_search(
+            data, target, middle + 1, right
+        )
+
+    return binary_search(
+        data, target, left, middle - 1
+    )
+
+numbers = list(range(1, 33))
+print(binary_search(
+    numbers, 29, 0, len(numbers) - 1
+))</code></pre>
+<div class="two">
+<div class="card">
+<h3>시간 점화식</h3>
+<pre class="diagram">T(1) = c
+T(n) = T(n/2) + c</pre>
+</div>
+<div class="card">
+<h3>크기 변화</h3>
+<pre class="diagram">32 → 16 → 8 → 4 → 2 → 1</pre>
+<p>입력이 두 배가 되어도 탐색 단계는 약 한 단계만 증가합니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>빠른 거듭제곱의 절반 분해</h2></div>
+<div><span class="badge">분할 정복</span><span class="badge">짝수·홀수</span></div>
+<pre><code>def fast_power(base, exponent):
+    if exponent == 0:
+        return 1
+
+    half = fast_power(
+        base,
+        exponent // 2
+    )
+
+    if exponent % 2 == 0:
+        return half * half
+
+    return base * half * half
+
+print(fast_power(2, 13))</code></pre>
+<div class="note"><strong>관계</strong><br>지수 n을 매번 절반으로 줄입니다. 짝수이면 절반 결과를 제곱하고, 홀수이면 밑을 한 번 더 곱합니다.</div>
+<pre class="diagram" style="margin-top:12px">P(a, 0) = 1
+P(a, n) = P(a, n/2)²              (n이 짝수)
+P(a, n) = a × P(a, floor(n/2))²   (n이 홀수)</pre>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>병합 정렬의 두 부분 문제와 결합</h2></div>
+<div><span class="badge">두 절반</span><span class="badge">병합 비용</span></div>
+<pre><code>def merge_sort(data):
+    if len(data) <= 1:
+        return data
+
+    middle = len(data) // 2
+
+    left = merge_sort(data[:middle])
+    right = merge_sort(data[middle:])
+
+    result = []
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    result.extend(left[i:])
+    result.extend(right[j:])
+
+    return result
+
+print(merge_sort([7, 3, 8, 2, 5, 1]))</code></pre>
+<div class="two">
+<div class="card">
+<h3>점화식</h3>
+<pre class="diagram">T(1) = c
+T(n) = 2T(n/2) + n</pre>
+<p>절반 크기 문제 두 개와 n개 원소 병합 작업으로 구성됩니다.</p>
+</div>
+<div class="card">
+<h3>분해 도식</h3>
+<pre class="diagram">[7,3,8,2]
+├─ [7,3]
+│  ├─ [7]
+│  └─ [3]
+└─ [8,2]
+   ├─ [8]
+   └─ [2]</pre>
+</div>
+</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>배열 최대값을 절반으로 나누어 구하기</h2></div>
+<div><span class="badge">최댓값</span><span class="badge">두 결과 결합</span></div>
+<pre><code>def divide_max(data, left, right):
+    if left == right:
+        return data[left]
+
+    middle = (left + right) // 2
+
+    left_max = divide_max(
+        data, left, middle
+    )
+    right_max = divide_max(
+        data, middle + 1, right
+    )
+
+    return max(left_max, right_max)
+
+numbers = [12, 5, 19, 3, 21, 8]
+print(divide_max(
+    numbers, 0, len(numbers) - 1
+))</code></pre>
+<div class="check"><strong>결합</strong><br>왼쪽 절반의 최대값과 오른쪽 절반의 최대값을 비교하면 전체 최대값을 얻을 수 있습니다.</div>
+<pre class="diagram" style="margin-top:12px">M(1) = 원소값
+M(n) = max(M(왼쪽 절반), M(오른쪽 절반))
+
+T(n) = 2T(n/2) + c</pre>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>하노이 탑의 점화식과 이동 도식</h2></div>
+<div><span class="badge">n-1 두 번</span><span class="badge">이동 횟수</span></div>
+<div class="two">
+<div><pre><code>def hanoi(n, start, target, helper):
+    if n == 1:
+        print(start, "→", target)
+        return
+
+    hanoi(
+        n - 1,
+        start,
+        helper,
+        target
+    )
+
+    print(start, "→", target)
+
+    hanoi(
+        n - 1,
+        helper,
+        target,
+        start
+    )
+
+hanoi(3, "A", "C", "B")</code></pre></div>
+<div class="card">
+<h3>이동 횟수 점화식</h3>
+<pre class="diagram">H(1) = 1
+H(n) = 2H(n-1) + 1</pre>
+<h3>문제 분해</h3>
+<pre class="diagram">n개 이동
+├─ n-1개를 보조 기둥으로
+├─ 가장 큰 원판 1개 이동
+└─ n-1개를 목표 기둥으로</pre>
+</div>
+</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>점화식과 입력 크기 관계 종합 분석</h2></div>
+<div><span class="badge">종합 비교</span><span class="badge">도식 출력</span></div>
+<pre><code>def show_size_change(
+    n,
+    rule,
+    minimum=1
+):
+    sizes = [n]
+
+    while n > minimum:
+        if rule == "minus_one":
+            n -= 1
+
+        elif rule == "half":
+            n //= 2
+
+        else:
+            raise ValueError(
+                "지원하지 않는 규칙입니다."
+            )
+
+        sizes.append(max(n, minimum))
+
+    return sizes
+
+print(
+    "n-1 감소:",
+    show_size_change(8, "minus_one")
+)
+
+print(
+    "절반 감소:",
+    show_size_change(32, "half")
+)</code></pre>
+
+<table>
+<tr><th>문제</th><th>부분 문제 관계</th><th>대표 점화식</th><th>입력 크기 도식</th></tr>
+<tr><td>자연수 합·팩토리얼</td><td>크기 n-1 한 개</td><td>T(n)=T(n-1)+c</td><td>n→n-1→…→1</td></tr>
+<tr><td>피보나치·계단</td><td>n-1, n-2 두 개</td><td>T(n)=T(n-1)+T(n-2)+c</td><td>두 갈래 호출 트리</td></tr>
+<tr><td>이진 탐색·빠른 거듭제곱</td><td>크기 n/2 한 개</td><td>T(n)=T(n/2)+c</td><td>n→n/2→n/4→…</td></tr>
+<tr><td>병합 정렬</td><td>크기 n/2 두 개</td><td>T(n)=2T(n/2)+n</td><td>이진 분해 후 병합</td></tr>
+<tr><td>하노이 탑</td><td>크기 n-1 두 번</td><td>H(n)=2H(n-1)+1</td><td>이동 문제가 두 번 반복</td></tr>
+</table>
+
+<div class="lead" style="margin-top:14px">
+<strong>설명 예시</strong><br>
+“병합 정렬은 입력 크기 n인 배열을 n/2 크기의 두 부분 배열로 나눈다. 두 부분 배열을 각각 정렬한 뒤 n개 원소를 비교하며 병합한다. 따라서 실행 시간은 두 개의 절반 크기 문제와 선형 병합 비용의 합인 <code>T(n)=2T(n/2)+n</code>으로 표현할 수 있다.”
+</div>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 점화식은 무엇을 표현하는가?
+<details><summary>정답 보기</summary>입력 크기 n인 문제와 더 작은 부분 문제 사이의 값 또는 실행 시간 관계를 표현합니다.</details></div>
+<div class="quiz"><strong>2.</strong> 이진 탐색에서 입력 크기는 재귀 호출마다 어떻게 변하는가?
+<details><summary>정답 보기</summary>탐색 범위가 대략 절반으로 줄어듭니다.</details></div>
+<div class="quiz"><strong>3.</strong> 병합 정렬의 점화식에서 n 항은 무엇을 의미하는가?
+<details><summary>정답 보기</summary>두 개의 정렬된 절반 배열을 하나로 병합하는 선형 작업량을 의미합니다.</details></div>
+<div class="quiz"><strong>4.</strong> 피보나치 단순 재귀에서 중복 계산이 발생하는 이유는 무엇인가?
+<details><summary>정답 보기</summary>서로 다른 호출 가지에서 같은 입력 크기의 부분 문제가 반복해서 나타나기 때문입니다.</details></div>
+<div class="quiz"><strong>5.</strong> 하노이 탑의 이동 횟수 점화식은 무엇인가?
+<details><summary>정답 보기</summary><code>H(1)=1</code>, <code>H(n)=2H(n-1)+1</code>입니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>큰 문제의 부분 문제 분해와 입력 크기 관계·점화식·도식 예제 10선</footer>
+</body>
+</html>

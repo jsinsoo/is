@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>종료 조건과 재귀 호출 · 팩토리얼·최대공약수 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1180px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:920px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.1rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--red)}
+.flow-card:nth-child(2){border-top:5px solid var(--blue)}
+.flow-card:nth-child(3){border-top:5px solid var(--green)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1.08fr .92fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+pre.trace{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:32%;background:#f8fbfd}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:850px){.flow,.two{grid-template-columns:1fr}}
+@media(max-width:560px){section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>종료 조건과 재귀 호출의 관계<br>팩토리얼·최대공약수 재귀함수 예제 10선</h1>
+<p>재귀함수가 더 작은 문제를 다시 호출하는 과정과 종료 조건에서 호출이 멈추는 원리를 추적하고, 팩토리얼과 유클리드 호제법을 포함한 다양한 문제를 재귀함수로 구현합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">핵심 개념</a><a href="#ex1">1. 카운트다운</a><a href="#ex2">2. 합계</a>
+<a href="#ex3">3. 팩토리얼</a><a href="#ex4">4. 팩토리얼 추적</a><a href="#ex5">5. 최대공약수</a>
+<a href="#ex6">6. GCD 추적</a><a href="#ex7">7. 거듭제곱</a><a href="#ex8">8. 자릿수 합</a>
+<a href="#ex9">9. 피보나치</a><a href="#ex10">10. 반복문 비교</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 재귀함수의 두 요소</h2>
+<div class="flow">
+<div class="flow-card"><strong>종료 조건</strong>더 이상 함수를 호출하지 않고 값을 직접 반환하는 조건입니다.</div>
+<div class="flow-card"><strong>재귀 호출</strong>문제의 크기를 줄여 자기 자신을 다시 호출하는 부분입니다.</div>
+<div class="flow-card"><strong>복귀 과정</strong>가장 깊은 호출이 끝난 뒤, 기다리고 있던 계산이 역순으로 완료됩니다.</div>
+</div>
+<div class="lead" style="margin-top:17px">
+재귀함수는 반드시 <strong>종료 조건에 가까워지는 방향</strong>으로 매개변수가 변해야 합니다.
+종료 조건이 없거나 매개변수가 줄어들지 않으면 호출이 계속되어 <code>RecursionError</code>가 발생할 수 있습니다.
+</div>
+<table>
+<tr><th>점검 질문</th><th>확인 내용</th></tr>
+<tr><td>언제 멈추는가?</td><td>종료 조건이 명확한지 확인합니다.</td></tr>
+<tr><td>문제가 작아지는가?</td><td>매 호출마다 n이 감소하거나 나머지가 작아지는지 확인합니다.</td></tr>
+<tr><td>무엇을 반환하는가?</td><td>종료 조건의 값과 재귀 호출 결과의 결합 방식을 확인합니다.</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>재귀 카운트다운</h2></div>
+<div><span class="badge">종료 조건</span><span class="badge">호출 순서</span></div>
+<div class="two">
+<div><pre><code>def countdown(n):
+    if n == 0:
+        print("출발!")
+        return
+
+    print(n)
+    countdown(n - 1)
+
+countdown(3)</code></pre></div>
+<div class="card">
+<h3>실행 결과</h3>
+<pre class="output">3
+2
+1
+출발!</pre>
+<h3>호출 흐름</h3>
+<pre class="trace">countdown(3)
+→ countdown(2)
+  → countdown(1)
+    → countdown(0)
+      → 종료</pre>
+</div>
+</div>
+<div class="check"><strong>핵심</strong><br><code>n == 0</code>이 종료 조건이며, <code>n - 1</code>을 전달하므로 호출할수록 종료 조건에 가까워집니다.</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>1부터 n까지의 합</h2></div>
+<div><span class="badge">누적 합</span><span class="badge">반환값</span></div>
+<div class="two">
+<div><pre><code>def recursive_sum(n):
+    if n == 1:
+        return 1
+
+    return n + recursive_sum(n - 1)
+
+print(recursive_sum(5))</code></pre></div>
+<div class="card">
+<h3>계산 전개</h3>
+<pre class="trace">recursive_sum(5)
+= 5 + recursive_sum(4)
+= 5 + 4 + recursive_sum(3)
+= 5 + 4 + 3 + 2 + recursive_sum(1)
+= 5 + 4 + 3 + 2 + 1
+= 15</pre>
+</div>
+</div>
+<div class="note"><strong>종료 조건</strong><br><code>n == 1</code>일 때 더 이상 호출하지 않고 1을 반환합니다.</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>팩토리얼 재귀함수</h2></div>
+<div><span class="badge">팩토리얼</span><span class="badge">곱셈 누적</span><span class="badge">필수 예제</span></div>
+<div class="two">
+<div><pre><code>def factorial(n):
+    if n == 0:
+        return 1
+
+    return n * factorial(n - 1)
+
+number = int(input("0 이상의 정수: "))
+print(f"{number}! = {factorial(number)}")</code></pre></div>
+<div class="card">
+<h3>예시</h3>
+<pre class="output">0 이상의 정수: 5
+5! = 120</pre>
+<h3>정의 연결</h3>
+<p><code>n! = n × (n-1)!</code></p>
+<p><code>0! = 1</code></p>
+</div>
+</div>
+<div class="warn"><strong>입력 주의</strong><br>음수를 입력하면 종료 조건에 도달하지 못하므로, 실제 프로그램에서는 음수 입력 검사가 필요합니다.</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>팩토리얼 호출과 복귀 과정 추적</h2></div>
+<div><span class="badge">호출 스택</span><span class="badge">복귀 추적</span></div>
+<pre><code>def factorial_trace(n, depth=0):
+    indent = "  " * depth
+    print(f"{indent}호출: factorial({n})")
+
+    if n == 0:
+        print(f"{indent}반환: 1")
+        return 1
+
+    result = n * factorial_trace(n - 1, depth + 1)
+    print(f"{indent}반환: {result}")
+    return result
+
+print("최종 결과:", factorial_trace(4))</code></pre>
+<div class="two">
+<div class="card">
+<h3>호출 단계</h3>
+<pre class="trace">factorial(4)
+  factorial(3)
+    factorial(2)
+      factorial(1)
+        factorial(0)</pre>
+</div>
+<div class="card">
+<h3>복귀 단계</h3>
+<pre class="trace">factorial(0) → 1
+factorial(1) → 1×1 = 1
+factorial(2) → 2×1 = 2
+factorial(3) → 3×2 = 6
+factorial(4) → 4×6 = 24</pre>
+</div>
+</div>
+<div class="check"><strong>핵심</strong><br>호출은 4→3→2→1→0 순서로 진행되고, 반환은 0→1→2→3→4의 역순으로 진행됩니다.</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>유클리드 호제법으로 최대공약수 구하기</h2></div>
+<div><span class="badge">최대공약수</span><span class="badge">나머지</span><span class="badge">필수 예제</span></div>
+<div class="two">
+<div><pre><code>def gcd(a, b):
+    if b == 0:
+        return a
+
+    return gcd(b, a % b)
+
+x, y = map(int, input("두 자연수: ").split())
+print("최대공약수:", gcd(x, y))</code></pre></div>
+<div class="card">
+<h3>예시</h3>
+<pre class="output">두 자연수: 48 18
+최대공약수: 6</pre>
+<h3>종료 조건</h3>
+<p>두 번째 수 <code>b</code>가 0이면 첫 번째 수 <code>a</code>가 최대공약수입니다.</p>
+</div>
+</div>
+<div class="note"><strong>재귀 관계</strong><br><code>gcd(a, b) = gcd(b, a % b)</code>이며, 나머지는 b보다 작으므로 반복할수록 0에 가까워집니다.</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>최대공약수 재귀 호출 추적</h2></div>
+<div><span class="badge">유클리드 호제법</span><span class="badge">호출 추적</span></div>
+<pre><code>def gcd_trace(a, b, depth=0):
+    indent = "  " * depth
+    print(f"{indent}gcd({a}, {b}) 호출")
+
+    if b == 0:
+        print(f"{indent}종료: {a} 반환")
+        return a
+
+    remainder = a % b
+    print(f"{indent}{a} % {b} = {remainder}")
+    return gcd_trace(b, remainder, depth + 1)
+
+print("결과:", gcd_trace(48, 18))</code></pre>
+<div class="card" style="margin-top:14px">
+<h3>추적 결과</h3>
+<pre class="trace">gcd(48, 18)
+48 % 18 = 12
+  gcd(18, 12)
+  18 % 12 = 6
+    gcd(12, 6)
+    12 % 6 = 0
+      gcd(6, 0)
+      종료: 6 반환</pre>
+</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>거듭제곱 재귀함수</h2></div>
+<div><span class="badge">거듭제곱</span><span class="badge">지수 감소</span></div>
+<div class="two">
+<div><pre><code>def power(base, exponent):
+    if exponent == 0:
+        return 1
+
+    return base * power(base, exponent - 1)
+
+print(power(2, 5))</code></pre></div>
+<div class="card">
+<h3>계산</h3>
+<pre class="trace">2⁵
+= 2 × 2⁴
+= 2 × 2 × 2³
+= 2 × 2 × 2 × 2²
+= 2 × 2 × 2 × 2 × 2¹
+= 32</pre>
+</div>
+</div>
+<div class="check"><strong>종료 조건</strong><br>어떤 수의 0제곱은 1이므로 <code>exponent == 0</code>일 때 1을 반환합니다.</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>자릿수의 합 재귀함수</h2></div>
+<div><span class="badge">정수 나눗셈</span><span class="badge">나머지</span><span class="badge">자릿수 분해</span></div>
+<div class="two">
+<div><pre><code>def digit_sum(n):
+    if n < 10:
+        return n
+
+    last_digit = n % 10
+    remaining = n // 10
+    return last_digit + digit_sum(remaining)
+
+print(digit_sum(4729))</code></pre></div>
+<div class="card">
+<h3>분해 과정</h3>
+<pre class="trace">4729 → 9 + digit_sum(472)
+472  → 2 + digit_sum(47)
+47   → 7 + digit_sum(4)
+4    → 4
+
+합계: 9+2+7+4 = 22</pre>
+</div>
+</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>피보나치 수열 재귀함수</h2></div>
+<div><span class="badge">두 개의 재귀 호출</span><span class="badge">중복 계산</span></div>
+<div class="two">
+<div><pre><code>def fibonacci(n):
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+for i in range(10):
+    print(fibonacci(i), end=" ")</code></pre></div>
+<div class="card">
+<h3>실행 결과</h3>
+<pre class="output">0 1 1 2 3 5 8 13 21 34</pre>
+<div class="warn"><strong>성능 주의</strong><br>같은 값을 여러 번 다시 계산하므로 n이 커지면 매우 느려집니다. 메모이제이션을 적용하면 중복 계산을 줄일 수 있습니다.</div>
+</div>
+</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>팩토리얼: 반복문과 재귀함수 비교</h2></div>
+<div><span class="badge">방법 비교</span><span class="badge">알고리즘 선택</span></div>
+<div class="two">
+<div>
+<h3>재귀함수</h3>
+<pre><code>def factorial_recursive(n):
+    if n == 0:
+        return 1
+    return n * factorial_recursive(n - 1)</code></pre>
+</div>
+<div>
+<h3>반복문</h3>
+<pre><code>def factorial_loop(n):
+    result = 1
+
+    for number in range(1, n + 1):
+        result *= number
+
+    return result</code></pre>
+</div>
+</div>
+<table>
+<tr><th>비교 항목</th><th>재귀함수</th><th>반복문</th></tr>
+<tr><td>표현</td><td>수학적 정의와 비슷해 간결함</td><td>실행 과정을 직접 반복함</td></tr>
+<tr><td>메모리</td><td>호출 정보를 스택에 저장함</td><td>일반적으로 추가 메모리가 적음</td></tr>
+<tr><td>오류 가능성</td><td>종료 조건 누락 시 무한 호출</td><td>반복 조건 오류 시 무한 반복</td></tr>
+<tr><td>적합한 문제</td><td>트리 탐색, 분할 정복, 자기 유사 구조</td><td>단순 누적 계산과 큰 반복 횟수</td></tr>
+</table>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 재귀함수가 반드시 가져야 하는 조건은 무엇인가?
+<details><summary>정답 보기</summary>재귀 호출을 멈추는 종료 조건이 반드시 필요합니다.</details></div>
+<div class="quiz"><strong>2.</strong> 팩토리얼 함수에서 <code>0!</code>의 값은 무엇인가?
+<details><summary>정답 보기</summary>1입니다.</details></div>
+<div class="quiz"><strong>3.</strong> <code>gcd(a, b)</code>의 재귀 호출에서 다음 인수는 어떻게 바뀌는가?
+<details><summary>정답 보기</summary><code>gcd(b, a % b)</code>로 바뀝니다.</details></div>
+<div class="quiz"><strong>4.</strong> 재귀 호출의 반환은 호출 순서와 같은 방향인가?
+<details><summary>정답 보기</summary>아닙니다. 가장 깊은 호출부터 역순으로 반환됩니다.</details></div>
+<div class="quiz"><strong>5.</strong> 피보나치 재귀함수가 느려지는 주된 이유는 무엇인가?
+<details><summary>정답 보기</summary>같은 피보나치 값을 여러 번 중복 계산하기 때문입니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>종료 조건과 재귀 호출 · 팩토리얼·최대공약수 재귀함수 예제 10선</footer>
+</body>
+</html>

@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>그래프 기초와 인접행렬·인접리스트 비교 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1200px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:950px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--green)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--purple)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:25%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>노드·간선·차수와 그래프 표현<br>인접행렬·인접리스트 비교 예제 10선</h1>
+<p>친구 관계, 교실 협업, 도로 연결 등의 사례를 통해 그래프의 노드·간선·차수 개념을 익히고, 같은 그래프를 인접행렬과 인접리스트로 표현하여 구조와 공간 효율을 비교합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">핵심 개념</a><a href="#ex1">1. 노드·간선</a><a href="#ex2">2. 차수</a>
+<a href="#ex3">3. 인접행렬</a><a href="#ex4">4. 행렬 연산</a><a href="#ex5">5. 인접리스트</a>
+<a href="#ex6">6. 리스트 연산</a><a href="#ex7">7. 상호 변환</a><a href="#ex8">8. 방향 그래프</a>
+<a href="#ex9">9. 공간 비교</a><a href="#ex10">10. 종합 분석</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 그래프의 기본 요소</h2>
+<div class="flow">
+<div class="flow-card"><strong>노드</strong>학생, 장소, 컴퓨터처럼 관계의 대상을 나타냅니다.</div>
+<div class="flow-card"><strong>간선</strong>친구, 도로, 통신 연결처럼 두 노드의 관계를 나타냅니다.</div>
+<div class="flow-card"><strong>차수</strong>한 노드에 연결된 간선의 개수입니다.</div>
+<div class="flow-card"><strong>그래프 표현</strong>인접행렬 또는 인접리스트로 연결 관계를 저장합니다.</div>
+</div>
+<div class="lead" style="margin-top:16px">
+노드가 많고 연결이 적은 <strong>희소 그래프</strong>에는 인접리스트가 공간 효율적입니다.
+대부분의 노드가 서로 연결된 <strong>밀집 그래프</strong>나 두 노드의 연결 여부를 빠르게 확인해야 하는 경우에는 인접행렬이 유리할 수 있습니다.
+</div>
+<table>
+<tr><th>비교 항목</th><th>인접행렬</th><th>인접리스트</th></tr>
+<tr><td>구조</td><td>노드 수 × 노드 수의 2차원 배열</td><td>각 노드별 이웃 목록</td></tr>
+<tr><td>공간</td><td>대체로 O(V²)</td><td>대체로 O(V+E)</td></tr>
+<tr><td>간선 확인</td><td>행렬 한 칸 확인</td><td>이웃 목록에서 탐색</td></tr>
+<tr><td>이웃 순회</td><td>행 전체 확인</td><td>실제 이웃만 확인</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>친구 관계에서 노드와 간선 찾기</h2></div>
+<div><span class="badge">노드</span><span class="badge">간선</span><span class="badge">무방향 그래프</span></div>
+<div class="two">
+<div><pre><code>students = ["민준", "서연", "지우", "하준"]
+
+friendships = [
+    ("민준", "서연"),
+    ("민준", "지우"),
+    ("서연", "하준")
+]
+
+print("노드 수:", len(students))
+print("간선 수:", len(friendships))
+
+for a, b in friendships:
+    print(f"{a} ↔ {b}")</code></pre></div>
+<div class="card">
+<h3>그래프 해석</h3>
+<p>학생 한 명이 노드입니다.</p>
+<p>친구 관계 하나가 간선입니다.</p>
+<p>친구 관계는 양방향이므로 무방향 그래프로 표현합니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>노드별 차수 계산</h2></div>
+<div><span class="badge">차수</span><span class="badge">딕셔너리</span></div>
+<pre><code>students = ["민준", "서연", "지우", "하준"]
+
+friendships = [
+    ("민준", "서연"),
+    ("민준", "지우"),
+    ("서연", "하준")
+]
+
+degree = {student: 0 for student in students}
+
+for a, b in friendships:
+    degree[a] += 1
+    degree[b] += 1
+
+for student, count in degree.items():
+    print(student, "차수:", count)</code></pre>
+<div class="check"><strong>무방향 그래프</strong><br>간선 하나는 양쪽 노드의 차수를 각각 1씩 증가시킵니다.</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>무방향 그래프 인접행렬 만들기</h2></div>
+<div><span class="badge">2차원 리스트</span><span class="badge">대칭 행렬</span></div>
+<div class="two">
+<div><pre><code>nodes = ["A", "B", "C", "D"]
+index = {node: i for i, node in enumerate(nodes)}
+
+edges = [
+    ("A", "B"),
+    ("A", "C"),
+    ("B", "D")
+]
+
+n = len(nodes)
+matrix = [[0] * n for _ in range(n)]
+
+for a, b in edges:
+    i = index[a]
+    j = index[b]
+
+    matrix[i][j] = 1
+    matrix[j][i] = 1
+
+for row in matrix:
+    print(row)</code></pre></div>
+<div class="card">
+<h3>출력</h3>
+<pre class="output">[0, 1, 1, 0]
+[1, 0, 0, 1]
+[1, 0, 0, 0]
+[0, 1, 0, 0]</pre>
+<p>무방향 그래프의 인접행렬은 주대각선을 기준으로 대칭입니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>인접행렬의 간선 삽입·삭제·탐색</h2></div>
+<div><span class="badge">간선 연산</span><span class="badge">O(1) 확인</span></div>
+<pre><code>nodes = ["A", "B", "C", "D"]
+index = {node: i for i, node in enumerate(nodes)}
+matrix = [[0] * 4 for _ in range(4)]
+
+def add_edge(a, b):
+    i, j = index[a], index[b]
+    matrix[i][j] = 1
+    matrix[j][i] = 1
+
+def remove_edge(a, b):
+    i, j = index[a], index[b]
+    matrix[i][j] = 0
+    matrix[j][i] = 0
+
+def has_edge(a, b):
+    return matrix[index[a]][index[b]] == 1
+
+add_edge("A", "B")
+add_edge("A", "C")
+
+print(has_edge("A", "C"))
+remove_edge("A", "C")
+print(has_edge("A", "C"))</code></pre>
+<div class="note"><strong>장점</strong><br>두 노드의 인덱스를 알면 행렬의 한 칸만 확인하여 연결 여부를 빠르게 판정할 수 있습니다.</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>무방향 그래프 인접리스트 만들기</h2></div>
+<div><span class="badge">딕셔너리</span><span class="badge">이웃 목록</span></div>
+<div class="two">
+<div><pre><code>nodes = ["A", "B", "C", "D"]
+
+edges = [
+    ("A", "B"),
+    ("A", "C"),
+    ("B", "D")
+]
+
+graph = {node: [] for node in nodes}
+
+for a, b in edges:
+    graph[a].append(b)
+    graph[b].append(a)
+
+for node, neighbors in graph.items():
+    print(node, ":", neighbors)</code></pre></div>
+<div class="card">
+<h3>출력</h3>
+<pre class="output">A : ['B', 'C']
+B : ['A', 'D']
+C : ['A']
+D : ['B']</pre>
+<p>실제로 연결된 이웃만 저장합니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>인접리스트의 간선 삽입·삭제·탐색</h2></div>
+<div><span class="badge">리스트 연산</span><span class="badge">이웃 탐색</span></div>
+<pre><code>graph = {
+    "A": [],
+    "B": [],
+    "C": [],
+    "D": []
+}
+
+def add_edge(a, b):
+    if b not in graph[a]:
+        graph[a].append(b)
+
+    if a not in graph[b]:
+        graph[b].append(a)
+
+def remove_edge(a, b):
+    if b in graph[a]:
+        graph[a].remove(b)
+
+    if a in graph[b]:
+        graph[b].remove(a)
+
+def has_edge(a, b):
+    return b in graph[a]
+
+add_edge("A", "B")
+add_edge("A", "C")
+
+print(graph)
+print(has_edge("A", "C"))
+
+remove_edge("A", "C")
+print(graph)</code></pre>
+<div class="warn"><strong>탐색 비용</strong><br>연결 여부를 확인하려면 해당 노드의 이웃 목록에서 값을 찾아야 합니다. 차수가 클수록 확인 시간이 늘어날 수 있습니다.</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>인접행렬을 인접리스트로 변환</h2></div>
+<div><span class="badge">표현 변환</span><span class="badge">전체 순회</span></div>
+<pre><code>nodes = ["A", "B", "C", "D"]
+
+matrix = [
+    [0, 1, 1, 0],
+    [1, 0, 0, 1],
+    [1, 0, 0, 0],
+    [0, 1, 0, 0]
+]
+
+graph = {node: [] for node in nodes}
+
+for i in range(len(nodes)):
+    for j in range(len(nodes)):
+        if matrix[i][j] == 1:
+            graph[nodes[i]].append(nodes[j])
+
+for node, neighbors in graph.items():
+    print(node, neighbors)</code></pre>
+<div class="check"><strong>변환 과정</strong><br>행렬의 모든 칸을 확인하고 값이 1인 열의 노드를 이웃 목록에 추가합니다.</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>방향 그래프의 진입차수·진출차수</h2></div>
+<div><span class="badge">방향 그래프</span><span class="badge">진입·진출 차수</span></div>
+<div class="two">
+<div><pre><code>nodes = ["A", "B", "C", "D"]
+
+edges = [
+    ("A", "B"),
+    ("A", "C"),
+    ("C", "B"),
+    ("B", "D")
+]
+
+in_degree = {node: 0 for node in nodes}
+out_degree = {node: 0 for node in nodes}
+
+for start, end in edges:
+    out_degree[start] += 1
+    in_degree[end] += 1
+
+for node in nodes:
+    print(
+        node,
+        "진입:", in_degree[node],
+        "진출:", out_degree[node]
+    )</code></pre></div>
+<div class="card">
+<h3>개념</h3>
+<p>진입차수는 노드로 들어오는 간선 수입니다.</p>
+<p>진출차수는 노드에서 나가는 간선 수입니다.</p>
+<p>웹 링크, 팔로우 관계, 일방통행 도로에 활용됩니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>인접행렬과 인접리스트 저장 공간 비교</h2></div>
+<div><span class="badge">공간 효율</span><span class="badge">희소 그래프</span></div>
+<pre><code>vertex_count = 1000
+edge_count = 2000
+
+matrix_cells = vertex_count * vertex_count
+
+# 무방향 그래프에서는 각 간선이
+# 두 이웃 목록에 저장된다고 단순 계산
+list_entries = vertex_count + 2 * edge_count
+
+print("인접행렬 칸 수:", matrix_cells)
+print("인접리스트 항목 수:", list_entries)
+print(
+    "행렬 / 리스트 비율:",
+    matrix_cells / list_entries
+)</code></pre>
+<div class="note"><strong>해석</strong><br>노드 1000개에 간선 2000개인 희소 그래프에서는 인접행렬이 연결되지 않은 수많은 0까지 저장하지만, 인접리스트는 실제 연결 중심으로 저장합니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>교실 협업 관계 종합 분석</h2></div>
+<div><span class="badge">종합 프로그램</span><span class="badge">차수 분석</span></div>
+<pre><code>students = [
+    "민준", "서연", "지우",
+    "하준", "예린", "도윤"
+]
+
+collaborations = [
+    ("민준", "서연"),
+    ("민준", "지우"),
+    ("민준", "하준"),
+    ("서연", "지우"),
+    ("지우", "예린"),
+    ("하준", "도윤")
+]
+
+# 인접리스트 생성
+graph = {student: [] for student in students}
+
+for a, b in collaborations:
+    graph[a].append(b)
+    graph[b].append(a)
+
+# 차수 계산
+degrees = {
+    student: len(neighbors)
+    for student, neighbors in graph.items()
+}
+
+# 가장 연결이 많은 학생
+most_connected = max(
+    degrees,
+    key=degrees.get
+)
+
+print("[인접리스트]")
+for student, neighbors in graph.items():
+    print(student, ":", neighbors)
+
+print("\n[차수]")
+for student, degree in degrees.items():
+    print(student, ":", degree)
+
+print(
+    "\n협업 연결이 가장 많은 학생:",
+    most_connected,
+    degrees[most_connected]
+)
+
+# 인접행렬 생성
+index = {
+    student: i
+    for i, student in enumerate(students)
+}
+
+n = len(students)
+matrix = [[0] * n for _ in range(n)]
+
+for a, b in collaborations:
+    i, j = index[a], index[b]
+    matrix[i][j] = 1
+    matrix[j][i] = 1
+
+print("\n[인접행렬]")
+for row in matrix:
+    print(row)</code></pre>
+
+<table>
+<tr><th>분석 관점</th><th>인접행렬</th><th>인접리스트</th></tr>
+<tr><td>친구 여부 확인</td><td>해당 행·열 한 칸 확인</td><td>이웃 목록에서 이름 탐색</td></tr>
+<tr><td>한 학생의 협업자 확인</td><td>행 전체를 검사</td><td>저장된 이웃 목록 바로 사용</td></tr>
+<tr><td>차수 계산</td><td>행의 1 개수 합산</td><td>이웃 목록 길이</td></tr>
+<tr><td>공간 효율</td><td>학생 수의 제곱만큼 필요</td><td>실제 관계 수에 비례</td></tr>
+<tr><td>권장 상황</td><td>관계가 매우 많거나 연결 확인이 빈번</td><td>관계가 적고 이웃 순회가 빈번</td></tr>
+</table>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 그래프에서 관계의 대상을 나타내는 요소는 무엇인가?
+<details><summary>정답 보기</summary>노드 또는 정점입니다.</details></div>
+<div class="quiz"><strong>2.</strong> 무방향 그래프에서 노드의 차수는 무엇을 의미하는가?
+<details><summary>정답 보기</summary>그 노드에 연결된 간선의 개수입니다.</details></div>
+<div class="quiz"><strong>3.</strong> 인접행렬의 일반적인 공간 복잡도는 무엇인가?
+<details><summary>정답 보기</summary>노드 수를 V라고 할 때 O(V²)입니다.</details></div>
+<div class="quiz"><strong>4.</strong> 희소 그래프에 인접리스트가 적합한 이유는 무엇인가?
+<details><summary>정답 보기</summary>실제로 존재하는 간선과 이웃 중심으로 저장하여 불필요한 0을 저장하지 않기 때문입니다.</details></div>
+<div class="quiz"><strong>5.</strong> 방향 그래프에서 노드로 들어오는 간선 수를 무엇이라 하는가?
+<details><summary>정답 보기</summary>진입차수입니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>노드·간선·차수와 인접행렬·인접리스트 구조 및 공간 효율 비교 예제 10선</footer>
+</body>
+</html>

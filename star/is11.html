@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FIFO와 원형 큐 구현 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1180px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:930px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--green)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--purple)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:26%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>FIFO 원리와 원형 큐의 필요성<br>deque·직접 구현 예제 10선</h1>
+<p>먼저 들어온 자료를 먼저 처리하는 선입선출 원리를 이해하고, 일반 리스트 큐의 한계를 분석한 뒤 deque와 원형 배열을 이용해 큐 연산을 구현합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">핵심 개념</a><a href="#ex1">1. FIFO 체험</a><a href="#ex2">2. 리스트 큐</a>
+<a href="#ex3">3. deque 큐</a><a href="#ex4">4. 함수 구현</a><a href="#ex5">5. 대기표</a>
+<a href="#ex6">6. 배열 큐 한계</a><a href="#ex7">7. 원형 인덱스</a><a href="#ex8">8. 원형 큐 클래스</a>
+<a href="#ex9">9. 상태 추적</a><a href="#ex10">10. 작업 스케줄러</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. FIFO와 원형 큐</h2>
+<div class="flow">
+<div class="flow-card"><strong>FIFO</strong>먼저 들어온 자료가 먼저 나오는 선입선출 방식입니다.</div>
+<div class="flow-card"><strong>enqueue</strong>큐의 뒤쪽에 새로운 자료를 추가합니다.</div>
+<div class="flow-card"><strong>dequeue</strong>큐의 앞쪽 자료를 제거하고 반환합니다.</div>
+<div class="flow-card"><strong>원형 큐</strong>배열의 끝과 처음을 연결해 빈 공간을 다시 사용합니다.</div>
+</div>
+<div class="lead" style="margin-top:16px">
+일반 배열 큐는 rear가 배열 끝에 도달하면 앞쪽에 빈 공간이 있어도 새 자료를 넣기 어렵습니다.
+원형 큐는 <code>(index + 1) % capacity</code> 계산으로 인덱스를 처음 위치로 되돌려 공간을 재사용합니다.
+</div>
+<table>
+<tr><th>연산</th><th>deque 구현</th><th>직접 구현 의미</th></tr>
+<tr><td>enqueue(x)</td><td><code>queue.append(x)</code></td><td>rear 위치에 자료 저장</td></tr>
+<tr><td>dequeue()</td><td><code>queue.popleft()</code></td><td>front 위치 자료 반환</td></tr>
+<tr><td>peek()</td><td><code>queue[0]</code></td><td>front 자료 확인</td></tr>
+<tr><td>인덱스 순환</td><td>내부에서 자동 처리</td><td><code>(index+1)%capacity</code></td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>급식 대기열로 FIFO 확인</h2></div>
+<div><span class="badge">선입선출</span><span class="badge">대기열</span></div>
+<div class="two">
+<div><pre><code>waiting = []
+
+waiting.append("민준")
+waiting.append("서연")
+waiting.append("지우")
+
+print("대기열:", waiting)
+
+first = waiting.pop(0)
+print("입장:", first)
+
+second = waiting.pop(0)
+print("입장:", second)
+
+print("남은 학생:", waiting)</code></pre></div>
+<div class="card">
+<h3>실행 결과</h3>
+<pre class="output">대기열: ['민준', '서연', '지우']
+입장: 민준
+입장: 서연
+남은 학생: ['지우']</pre>
+</div>
+</div>
+<div class="warn"><strong>한계</strong><br>리스트의 <code>pop(0)</code>은 뒤의 원소를 앞으로 이동시켜야 하므로 자료가 많으면 비효율적입니다.</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>리스트로 enqueue·dequeue 직접 구현</h2></div>
+<div><span class="badge">enqueue</span><span class="badge">dequeue</span></div>
+<pre><code>queue = []
+
+def enqueue(value):
+    queue.append(value)
+    print(f"enqueue({value}) → {queue}")
+
+def dequeue():
+    if not queue:
+        return None
+
+    value = queue[0]
+    del queue[0]
+    return value
+
+enqueue(10)
+enqueue(20)
+enqueue(30)
+
+print("dequeue:", dequeue())
+print("현재 큐:", queue)</code></pre>
+<div class="note"><strong>원리</strong><br>삽입은 리스트 뒤에서, 삭제는 리스트 앞에서 수행하므로 FIFO 순서가 유지됩니다.</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>deque를 이용한 효율적인 큐</h2></div>
+<div><span class="badge">collections</span><span class="badge">popleft</span></div>
+<div class="two">
+<div><pre><code>from collections import deque
+
+queue = deque()
+
+queue.append("작업1")
+queue.append("작업2")
+queue.append("작업3")
+
+print("처리:", queue.popleft())
+print("처리:", queue.popleft())
+print("남은 작업:", list(queue))</code></pre></div>
+<div class="card">
+<h3>장점</h3>
+<p><code>append()</code>는 뒤에 삽입합니다.</p>
+<p><code>popleft()</code>는 앞에서 효율적으로 삭제합니다.</p>
+<p>실제 파이썬 프로그램의 일반 큐에는 <code>deque</code>가 적합합니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>enqueue·dequeue·peek 함수 구현</h2></div>
+<div><span class="badge">함수 분리</span><span class="badge">예외 처리</span></div>
+<pre><code>from collections import deque
+
+queue = deque()
+
+def enqueue(value):
+    queue.append(value)
+
+def dequeue():
+    if not queue:
+        return "EMPTY"
+    return queue.popleft()
+
+def peek():
+    if not queue:
+        return "EMPTY"
+    return queue[0]
+
+def size():
+    return len(queue)
+
+enqueue("A")
+enqueue("B")
+enqueue("C")
+
+print("peek:", peek())
+print("dequeue:", dequeue())
+print("크기:", size())</code></pre>
+<div class="check"><strong>peek</strong><br>맨 앞 자료를 삭제하지 않고 확인하므로 호출 후에도 큐의 내용은 그대로 유지됩니다.</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>번호표 대기 시스템</h2></div>
+<div><span class="badge">실생활 응용</span><span class="badge">자동 번호</span></div>
+<pre><code>from collections import deque
+
+waiting = deque()
+next_number = 1
+
+def issue_ticket(name):
+    global next_number
+
+    waiting.append((next_number, name))
+    print(f"{name}님의 번호는 {next_number}번입니다.")
+    next_number += 1
+
+def call_next():
+    if not waiting:
+        print("대기자가 없습니다.")
+        return
+
+    number, name = waiting.popleft()
+    print(f"{number}번 {name}님, 입장하세요.")
+
+issue_ticket("민준")
+issue_ticket("서연")
+issue_ticket("지우")
+
+call_next()
+call_next()</code></pre>
+<div class="note"><strong>FIFO 적용</strong><br>번호표를 먼저 받은 사람이 먼저 호출되므로 큐의 처리 원리와 정확히 일치합니다.</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>선형 배열 큐의 공간 낭비</h2></div>
+<div><span class="badge">front</span><span class="badge">rear</span><span class="badge">한계 분석</span></div>
+<pre><code>capacity = 5
+queue = [None] * capacity
+front = 0
+rear = 0
+
+def enqueue(value):
+    global rear
+
+    if rear == capacity:
+        print("rear가 끝에 도달했습니다.")
+        return
+
+    queue[rear] = value
+    rear += 1
+
+def dequeue():
+    global front
+
+    if front == rear:
+        return None
+
+    value = queue[front]
+    queue[front] = None
+    front += 1
+    return value
+
+for value in [10, 20, 30, 40, 50]:
+    enqueue(value)
+
+print(dequeue())
+print(dequeue())
+print("배열:", queue)
+
+enqueue(60)</code></pre>
+<div class="warn"><strong>문제점</strong><br>앞쪽 두 칸이 비어 있지만 rear가 배열 끝에 도달했으므로 60을 삽입하지 못합니다. 이 공간 낭비를 해결하는 구조가 원형 큐입니다.</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>나머지 연산으로 인덱스 순환</h2></div>
+<div><span class="badge">모듈러</span><span class="badge">순환 인덱스</span></div>
+<div class="two">
+<div><pre><code>capacity = 5
+index = 0
+
+for _ in range(12):
+    print(index, end=" ")
+    index = (index + 1) % capacity</code></pre></div>
+<div class="card">
+<h3>실행 결과</h3>
+<pre class="output">0 1 2 3 4 0 1 2 3 4 0 1</pre>
+<p>인덱스가 마지막 위치 다음에 다시 0으로 돌아갑니다.</p>
+</div>
+</div>
+<div class="check"><strong>핵심 공식</strong><br><code>다음 위치 = (현재 위치 + 1) % 큐의 크기</code></div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>원형 큐 클래스 직접 구현</h2></div>
+<div><span class="badge">원형 배열</span><span class="badge">클래스</span></div>
+<pre><code>class CircularQueue:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.data = [None] * capacity
+        self.front = 0
+        self.rear = 0
+        self.count = 0
+
+    def is_empty(self):
+        return self.count == 0
+
+    def is_full(self):
+        return self.count == self.capacity
+
+    def enqueue(self, value):
+        if self.is_full():
+            raise OverflowError("큐가 가득 찼습니다.")
+
+        self.data[self.rear] = value
+        self.rear = (self.rear + 1) % self.capacity
+        self.count += 1
+
+    def dequeue(self):
+        if self.is_empty():
+            raise IndexError("큐가 비어 있습니다.")
+
+        value = self.data[self.front]
+        self.data[self.front] = None
+        self.front = (self.front + 1) % self.capacity
+        self.count -= 1
+        return value
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self.data[self.front]
+
+queue = CircularQueue(4)
+
+queue.enqueue("A")
+queue.enqueue("B")
+queue.enqueue("C")
+
+print(queue.dequeue())
+queue.enqueue("D")
+queue.enqueue("E")
+
+print(queue.data)
+print("front:", queue.front)
+print("rear:", queue.rear)</code></pre>
+<div class="note"><strong>count의 역할</strong><br>front와 rear가 같은 경우 빈 상태인지 가득 찬 상태인지 구분하기 위해 저장된 자료 수를 별도로 관리합니다.</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>원형 큐 상태 변화 추적</h2></div>
+<div><span class="badge">상태 추적</span><span class="badge">디버깅</span></div>
+<pre><code>class CircularQueue:
+    def __init__(self, capacity):
+        self.data = [None] * capacity
+        self.capacity = capacity
+        self.front = 0
+        self.rear = 0
+        self.count = 0
+
+    def show(self, action):
+        print(
+            f"{action:12} | data={self.data} "
+            f"| front={self.front} "
+            f"| rear={self.rear} "
+            f"| count={self.count}"
+        )
+
+    def enqueue(self, value):
+        if self.count == self.capacity:
+            self.show("enqueue 실패")
+            return
+
+        self.data[self.rear] = value
+        self.rear = (self.rear + 1) % self.capacity
+        self.count += 1
+        self.show(f"enqueue {value}")
+
+    def dequeue(self):
+        if self.count == 0:
+            self.show("dequeue 실패")
+            return None
+
+        value = self.data[self.front]
+        self.data[self.front] = None
+        self.front = (self.front + 1) % self.capacity
+        self.count -= 1
+        self.show(f"dequeue {value}")
+        return value
+
+q = CircularQueue(4)
+
+q.enqueue(10)
+q.enqueue(20)
+q.enqueue(30)
+q.dequeue()
+q.dequeue()
+q.enqueue(40)
+q.enqueue(50)
+q.enqueue(60)</code></pre>
+<div class="check"><strong>관찰</strong><br>rear가 배열 끝을 지나 0과 1 위치로 돌아가, 앞에서 비워진 공간을 다시 사용하는 과정을 확인할 수 있습니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>원형 큐 기반 프린터 작업 스케줄러</h2></div>
+<div><span class="badge">종합 프로그램</span><span class="badge">작업 처리</span></div>
+<pre><code>class PrintQueue:
+    def __init__(self, capacity=5):
+        self.capacity = capacity
+        self.data = [None] * capacity
+        self.front = 0
+        self.rear = 0
+        self.count = 0
+
+    def add_job(self, document):
+        if self.count == self.capacity:
+            print("대기열이 가득 찼습니다.")
+            return
+
+        self.data[self.rear] = document
+        self.rear = (self.rear + 1) % self.capacity
+        self.count += 1
+        print("추가:", document)
+
+    def print_next(self):
+        if self.count == 0:
+            print("인쇄할 문서가 없습니다.")
+            return
+
+        document = self.data[self.front]
+        self.data[self.front] = None
+        self.front = (self.front + 1) % self.capacity
+        self.count -= 1
+        print("인쇄:", document)
+
+    def show_jobs(self):
+        jobs = []
+
+        for offset in range(self.count):
+            index = (self.front + offset) % self.capacity
+            jobs.append(self.data[index])
+
+        print("대기 문서:", jobs)
+
+printer = PrintQueue(4)
+
+printer.add_job("수업자료.pdf")
+printer.add_job("평가계획.hwp")
+printer.add_job("학생명단.xlsx")
+
+printer.print_next()
+printer.add_job("알고리즘.pdf")
+printer.add_job("과제안내.txt")
+
+printer.show_jobs()</code></pre>
+<table>
+<tr><th>설계 요소</th><th>구현 내용</th></tr>
+<tr><td>FIFO</td><td>먼저 등록된 문서를 먼저 인쇄</td></tr>
+<tr><td>원형 인덱스</td><td>front와 rear를 나머지 연산으로 순환</td></tr>
+<tr><td>가득 찬 상태</td><td>count와 capacity가 같을 때 삽입 제한</td></tr>
+<tr><td>빈 상태</td><td>count가 0일 때 삭제 제한</td></tr>
+<tr><td>논리적 순서 출력</td><td>front부터 count개만 순환하며 확인</td></tr>
+</table>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> FIFO는 어떤 자료 처리 순서를 의미하는가?
+<details><summary>정답 보기</summary>먼저 들어온 자료를 먼저 처리하는 선입선출 순서입니다.</details></div>
+<div class="quiz"><strong>2.</strong> deque에서 큐의 앞 자료를 제거하는 메서드는 무엇인가?
+<details><summary>정답 보기</summary><code>popleft()</code>입니다.</details></div>
+<div class="quiz"><strong>3.</strong> 선형 배열 큐에서 앞쪽 빈 공간을 다시 사용하기 어려운 이유는 무엇인가?
+<details><summary>정답 보기</summary>rear 인덱스가 배열 끝에 도달하면 앞쪽이 비어 있어도 뒤로 더 이동할 수 없기 때문입니다.</details></div>
+<div class="quiz"><strong>4.</strong> 원형 큐에서 다음 인덱스를 계산하는 식은 무엇인가?
+<details><summary>정답 보기</summary><code>(현재 인덱스 + 1) % capacity</code>입니다.</details></div>
+<div class="quiz"><strong>5.</strong> front와 rear가 같을 때 빈 큐와 가득 찬 큐를 구분하는 방법은 무엇인가?
+<details><summary>정답 보기</summary>저장된 자료 수인 count를 관리하거나 한 칸을 항상 비워 두는 방식을 사용할 수 있습니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>FIFO 원리와 원형 큐의 필요성 · deque·직접 구현 예제 10선</footer>
+</body>
+</html>

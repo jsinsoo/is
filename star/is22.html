@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>퀵 정렬·빠른 거듭제곱·가장 가까운 두 점 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1200px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:960px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--green)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--purple)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+pre.diagram{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:24%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>퀵 정렬·빠른 거듭제곱·가장 가까운 두 점<br>수준별 분할 정복 예제 10선</h1>
+<p>학습 수준에 맞추어 퀵 정렬의 피벗 분할, 거듭제곱의 지수 절반 분해, 두 점 사이 거리 탐색을 구현하고 분할·해결·결합 과정과 효율성을 비교합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">핵심 원리</a><a href="#ex1">1. 퀵 정렬 기초</a><a href="#ex2">2. 분할 추적</a>
+<a href="#ex3">3. 제자리 정렬</a><a href="#ex4">4. 피벗 비교</a><a href="#ex5">5. 기본 거듭제곱</a>
+<a href="#ex6">6. 빠른 거듭제곱</a><a href="#ex7">7. 반복 거듭제곱</a><a href="#ex8">8. 두 점 거리</a>
+<a href="#ex9">9. 완전 탐색</a><a href="#ex10">10. 분할 정복 확장</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 세 문제의 수준별 선택</h2>
+<div class="flow">
+<div class="flow-card"><strong>퀵 정렬</strong>피벗보다 작은 값과 큰 값으로 나누는 분할 정복을 익힙니다.</div>
+<div class="flow-card"><strong>빠른 거듭제곱</strong>지수를 절반으로 줄여 곱셈 횟수를 줄이는 원리를 익힙니다.</div>
+<div class="flow-card"><strong>두 점 거리</strong>좌표 간 거리를 계산하고 모든 점 쌍을 비교합니다.</div>
+<div class="flow-card"><strong>심화 확장</strong>가장 가까운 두 점을 절반 분할 방식으로 개선합니다.</div>
+</div>
+<table>
+<tr><th>문제</th><th>권장 수준</th><th>핵심 분할</th><th>결합</th></tr>
+<tr><td>퀵 정렬</td><td>기초~중급</td><td>피벗보다 작은·같은·큰 값</td><td>왼쪽 정렬+피벗+오른쪽 정렬</td></tr>
+<tr><td>빠른 거듭제곱</td><td>기초~중급</td><td>지수 n을 n//2로 축소</td><td>절반 결과를 제곱</td></tr>
+<tr><td>가장 가까운 두 점</td><td>중급~심화</td><td>x좌표 기준 왼쪽·오른쪽</td><td>양쪽 최솟값과 중앙 띠 비교</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>새 리스트를 만드는 기초 퀵 정렬</h2></div>
+<div><span class="badge">피벗</span><span class="badge">분할 정복</span></div>
+<div class="two">
+<div><pre><code>def quick_sort(data):
+    if len(data) <= 1:
+        return data
+
+    pivot = data[0]
+
+    left = [
+        value for value in data[1:]
+        if value <= pivot
+    ]
+
+    right = [
+        value for value in data[1:]
+        if value > pivot
+    ]
+
+    return (
+        quick_sort(left)
+        + [pivot]
+        + quick_sort(right)
+    )
+
+numbers = [7, 3, 8, 2, 5, 1]
+print(quick_sort(numbers))</code></pre></div>
+<div class="card">
+<h3>구조</h3>
+<pre class="diagram">[7,3,8,2,5,1]
+피벗: 7
+왼쪽: [3,2,5,1]
+오른쪽: [8]
+
+정렬된 왼쪽 + [7] + 정렬된 오른쪽</pre>
+</div>
+</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>퀵 정렬 분할·결합 과정 추적</h2></div>
+<div><span class="badge">호출 깊이</span><span class="badge">중간 결과</span></div>
+<pre><code>def quick_sort_trace(data, depth=0):
+    indent = "  " * depth
+    print(f"{indent}입력: {data}")
+
+    if len(data) <= 1:
+        print(f"{indent}기본 상태: {data}")
+        return data
+
+    pivot = data[0]
+    left = [x for x in data[1:] if x <= pivot]
+    right = [x for x in data[1:] if x > pivot]
+
+    print(
+        f"{indent}피벗={pivot}, "
+        f"왼쪽={left}, 오른쪽={right}"
+    )
+
+    left_sorted = quick_sort_trace(
+        left, depth + 1
+    )
+    right_sorted = quick_sort_trace(
+        right, depth + 1
+    )
+
+    result = left_sorted + [pivot] + right_sorted
+    print(f"{indent}결합: {result}")
+
+    return result
+
+quick_sort_trace([5, 2, 7, 1, 4])</code></pre>
+<div class="check"><strong>관찰</strong><br>분할할 때는 피벗을 기준으로 두 부분을 만들고, 재귀 호출이 끝날 때 정렬된 부분들을 결합합니다.</div>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>제자리 퀵 정렬 직접 구현</h2></div>
+<div><span class="badge">Lomuto 분할</span><span class="badge">교환</span></div>
+<pre><code>def partition(data, low, high):
+    pivot = data[high]
+    smaller = low - 1
+
+    for index in range(low, high):
+        if data[index] <= pivot:
+            smaller += 1
+            data[smaller], data[index] = (
+                data[index], data[smaller]
+            )
+
+    data[smaller + 1], data[high] = (
+        data[high], data[smaller + 1]
+    )
+
+    return smaller + 1
+
+def quick_sort(data, low, high):
+    if low >= high:
+        return
+
+    pivot_index = partition(data, low, high)
+
+    quick_sort(data, low, pivot_index - 1)
+    quick_sort(data, pivot_index + 1, high)
+
+numbers = [9, 4, 7, 3, 10, 5]
+quick_sort(numbers, 0, len(numbers) - 1)
+
+print(numbers)</code></pre>
+<div class="note"><strong>결합 방식</strong><br>제자리 퀵 정렬은 분할 과정에서 피벗의 최종 위치가 결정되므로 별도의 리스트 결합이 필요하지 않습니다.</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>피벗 선택에 따른 분할 균형 비교</h2></div>
+<div><span class="badge">첫 값</span><span class="badge">중앙값</span><span class="badge">최악 경우</span></div>
+<pre><code>def split_sizes(data, pivot):
+    left = [x for x in data if x < pivot]
+    equal = [x for x in data if x == pivot]
+    right = [x for x in data if x > pivot]
+
+    return len(left), len(equal), len(right)
+
+data = list(range(1, 16))
+
+first_pivot = data[0]
+middle_pivot = data[len(data) // 2]
+
+print(
+    "첫 값 피벗:",
+    first_pivot,
+    split_sizes(data, first_pivot)
+)
+
+print(
+    "중앙값 피벗:",
+    middle_pivot,
+    split_sizes(data, middle_pivot)
+)</code></pre>
+<div class="warn"><strong>효율성</strong><br>이미 정렬된 자료에서 첫 값을 피벗으로 선택하면 한쪽 부분이 거의 비어 O(n²)에 가까워질 수 있습니다. 균형 있게 나뉘면 평균적으로 O(n log n)입니다.</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>기본 재귀 거듭제곱</h2></div>
+<div><span class="badge">지수 n-1</span><span class="badge">기초 재귀</span></div>
+<div class="two">
+<div><pre><code>def power_basic(base, exponent):
+    if exponent == 0:
+        return 1
+
+    return base * power_basic(
+        base,
+        exponent - 1
+    )
+
+print(power_basic(2, 10))</code></pre></div>
+<div class="card">
+<h3>관계</h3>
+<pre class="diagram">P(a, 0) = 1
+P(a, n) = a × P(a, n-1)
+
+10 → 9 → 8 → ... → 0</pre>
+<p>지수를 한 번에 1씩 줄이므로 n번 정도의 곱셈이 필요합니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>분할 정복을 이용한 빠른 거듭제곱</h2></div>
+<div><span class="badge">지수 절반</span><span class="badge">제곱 결합</span></div>
+<pre><code>def fast_power(base, exponent):
+    if exponent == 0:
+        return 1
+
+    half = fast_power(
+        base,
+        exponent // 2
+    )
+
+    if exponent % 2 == 0:
+        return half * half
+
+    return base * half * half
+
+print(fast_power(2, 13))</code></pre>
+<div class="two">
+<div class="card">
+<h3>짝수 지수</h3>
+<pre class="diagram">aⁿ = (aⁿᐟ²)²</pre>
+</div>
+<div class="card">
+<h3>홀수 지수</h3>
+<pre class="diagram">aⁿ = a × (a⌊ⁿᐟ²⌋)²</pre>
+</div>
+</div>
+<div class="check"><strong>크기 변화</strong><br>13→6→3→1→0처럼 지수가 절반씩 줄어 호출 단계가 크게 감소합니다.</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>반복문 기반 이진 거듭제곱</h2></div>
+<div><span class="badge">비트</span><span class="badge">반복 방식</span></div>
+<pre><code>def power_iterative(base, exponent):
+    result = 1
+
+    while exponent > 0:
+        if exponent % 2 == 1:
+            result *= base
+
+        base *= base
+        exponent //= 2
+
+    return result
+
+print(power_iterative(3, 13))</code></pre>
+<div class="note"><strong>원리</strong><br>지수의 이진 표현에서 1인 자리의 거듭제곱만 결과에 곱합니다. 재귀 호출 스택을 사용하지 않으면서 O(log n) 단계로 계산합니다.</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>두 점 사이 거리 함수</h2></div>
+<div><span class="badge">좌표</span><span class="badge">유클리드 거리</span></div>
+<div class="two">
+<div><pre><code>from math import sqrt
+
+def distance(point1, point2):
+    x1, y1 = point1
+    x2, y2 = point2
+
+    return sqrt(
+        (x2 - x1) ** 2
+        + (y2 - y1) ** 2
+    )
+
+a = (1, 2)
+b = (4, 6)
+
+print(distance(a, b))</code></pre></div>
+<div class="card">
+<h3>계산 과정</h3>
+<pre class="diagram">가로 차이: 4 - 1 = 3
+세로 차이: 6 - 2 = 4
+거리: √(3² + 4²) = 5</pre>
+</div>
+</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>가장 가까운 두 점 완전 탐색</h2></div>
+<div><span class="badge">모든 점 쌍</span><span class="badge">기초 수준</span></div>
+<pre><code>from math import hypot
+
+def closest_pair_brute(points):
+    minimum = float("inf")
+    closest = None
+    comparisons = 0
+
+    for i in range(len(points)):
+        for j in range(i + 1, len(points)):
+            comparisons += 1
+
+            x1, y1 = points[i]
+            x2, y2 = points[j]
+
+            current = hypot(
+                x2 - x1,
+                y2 - y1
+            )
+
+            if current < minimum:
+                minimum = current
+                closest = (
+                    points[i],
+                    points[j]
+                )
+
+    return closest, minimum, comparisons
+
+points = [
+    (1, 2), (5, 5), (2, 3),
+    (8, 8), (6, 5), (3, 1)
+]
+
+pair, distance_value, count = (
+    closest_pair_brute(points)
+)
+
+print("가장 가까운 점:", pair)
+print("거리:", distance_value)
+print("비교 횟수:", count)</code></pre>
+<div class="note"><strong>효율성</strong><br>점이 n개이면 모든 두 점 조합을 비교하므로 비교 횟수는 n(n-1)/2이고 시간 복잡도는 O(n²)입니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>가장 가까운 두 점 분할 정복 확장</h2></div>
+<div><span class="badge">심화</span><span class="badge">중앙 띠</span><span class="badge">분할 정복</span></div>
+<pre><code>from math import hypot
+
+def point_distance(a, b):
+    return hypot(
+        a[0] - b[0],
+        a[1] - b[1]
+    )
+
+def brute_force(points):
+    minimum = float("inf")
+    pair = None
+
+    for i in range(len(points)):
+        for j in range(i + 1, len(points)):
+            current = point_distance(
+                points[i],
+                points[j]
+            )
+
+            if current < minimum:
+                minimum = current
+                pair = (points[i], points[j])
+
+    return minimum, pair
+
+def closest_pair(points):
+    points = sorted(points)
+
+    def solve(px):
+        n = len(px)
+
+        if n <= 3:
+            return brute_force(px)
+
+        middle = n // 2
+        middle_x = px[middle][0]
+
+        left_distance, left_pair = solve(
+            px[:middle]
+        )
+        right_distance, right_pair = solve(
+            px[middle:]
+        )
+
+        if left_distance <= right_distance:
+            minimum = left_distance
+            best_pair = left_pair
+        else:
+            minimum = right_distance
+            best_pair = right_pair
+
+        strip = [
+            point for point in px
+            if abs(point[0] - middle_x) < minimum
+        ]
+
+        strip.sort(key=lambda point: point[1])
+
+        for i in range(len(strip)):
+            for j in range(
+                i + 1,
+                min(i + 8, len(strip))
+            ):
+                current = point_distance(
+                    strip[i],
+                    strip[j]
+                )
+
+                if current < minimum:
+                    minimum = current
+                    best_pair = (
+                        strip[i],
+                        strip[j]
+                    )
+
+        return minimum, best_pair
+
+    return solve(points)
+
+points = [
+    (1, 2), (5, 5), (2, 3),
+    (8, 8), (6, 5), (3, 1),
+    (4, 4.2), (4.1, 4.3)
+]
+
+minimum, pair = closest_pair(points)
+
+print("가장 가까운 두 점:", pair)
+print("최소 거리:", minimum)</code></pre>
+
+<table>
+<tr><th>단계</th><th>가장 가까운 두 점 문제의 처리</th></tr>
+<tr><td>분할</td><td>x좌표 순으로 정렬한 점을 왼쪽과 오른쪽 절반으로 나눔</td></tr>
+<tr><td>해결</td><td>각 절반에서 가장 가까운 두 점을 재귀적으로 계산</td></tr>
+<tr><td>부분 결과</td><td>왼쪽·오른쪽 최소 거리 중 작은 값을 선택</td></tr>
+<tr><td>결합</td><td>중앙선 주변의 띠 영역에서 양쪽에 걸친 더 가까운 점 쌍 검사</td></tr>
+<tr><td>효율성</td><td>정교하게 구현하면 O(n log n), 예제는 이해 중심의 단순화 버전</td></tr>
+</table>
+
+<div class="lead" style="margin-top:14px">
+<strong>수준별 선택 설명</strong><br>
+“기초 단계에서는 코드 구조가 명확한 퀵 정렬과 완전 탐색 방식의 두 점 거리 문제를 구현한다. 중급 단계에서는 빠른 거듭제곱으로 입력 크기를 절반씩 줄이는 원리를 확인한다. 심화 단계에서는 가장 가까운 두 점 문제를 좌우 부분 문제와 중앙 띠 문제로 분해하여 해결한다.”
+</div>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 퀵 정렬에서 배열을 나누는 기준값을 무엇이라 하는가?
+<details><summary>정답 보기</summary>피벗입니다.</details></div>
+<div class="quiz"><strong>2.</strong> 퀵 정렬에서 피벗 선택이 중요한 이유는 무엇인가?
+<details><summary>정답 보기</summary>피벗에 따라 부분 배열의 균형이 달라져 실행 시간이 O(n log n)에서 O(n²)까지 달라질 수 있기 때문입니다.</details></div>
+<div class="quiz"><strong>3.</strong> 빠른 거듭제곱에서 지수는 호출할 때마다 어떻게 변하는가?
+<details><summary>정답 보기</summary>정수 나눗셈을 이용해 대략 절반으로 줄어듭니다.</details></div>
+<div class="quiz"><strong>4.</strong> 가장 가까운 두 점 완전 탐색의 시간 복잡도는 무엇인가?
+<details><summary>정답 보기</summary>모든 두 점 쌍을 비교하므로 O(n²)입니다.</details></div>
+<div class="quiz"><strong>5.</strong> 가장 가까운 두 점 분할 정복에서 결합 단계에 확인하는 영역은 어디인가?
+<details><summary>정답 보기</summary>왼쪽과 오른쪽 경계에 걸친 더 가까운 점을 찾기 위해 중앙선 주변의 띠 영역을 확인합니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>퀵 정렬·빠른 거듭제곱·가장 가까운 두 점 수준별 분할 정복 예제 10선</footer>
+</body>
+</html>

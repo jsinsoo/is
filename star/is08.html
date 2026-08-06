@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>자료구조의 필요성과 선형 구조 연산 비교 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1200px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:950px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--green)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--purple)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:25%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>자료구조의 필요성과 선형 구조<br>삽입·삭제·탐색 연산 비교 예제 10선</h1>
+<p>학교생활과 정보 시스템의 실제 사례를 통해 자료구조가 필요한 이유를 탐색하고, 리스트·스택·큐·덱·연결 리스트 등 선형 자료구조의 삽입·삭제·탐색 연산을 비교합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">핵심 개념</a><a href="#ex1">1. 학생 명단</a><a href="#ex2">2. 리스트 삽입</a>
+<a href="#ex3">3. 리스트 삭제</a><a href="#ex4">4. 선형 탐색</a><a href="#ex5">5. 스택</a>
+<a href="#ex6">6. 큐</a><a href="#ex7">7. 덱</a><a href="#ex8">8. 연결 리스트</a>
+<a href="#ex9">9. 시간 측정</a><a href="#ex10">10. 종합 비교</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 자료구조가 필요한 이유</h2>
+<div class="flow">
+<div class="flow-card"><strong>자료 저장</strong>여러 값을 일정한 규칙에 따라 모아 관리합니다.</div>
+<div class="flow-card"><strong>빠른 처리</strong>문제에 맞는 구조를 선택하여 삽입·삭제·탐색 시간을 줄입니다.</div>
+<div class="flow-card"><strong>관계 표현</strong>자료의 순서, 연결, 우선순위와 같은 관계를 나타냅니다.</div>
+<div class="flow-card"><strong>재사용</strong>자료 처리 방법을 구조화하여 다양한 프로그램에 적용합니다.</div>
+</div>
+<div class="lead" style="margin-top:16px">
+같은 자료라도 어떤 연산을 자주 수행하느냐에 따라 적합한 자료구조가 달라집니다.
+중간 삽입과 삭제가 잦은지, 맨 앞과 뒤의 처리만 필요한지, 특정 값을 자주 찾는지 먼저 분석해야 합니다.
+</div>
+<table>
+<tr><th>구조</th><th>대표 특징</th><th>적합한 사례</th></tr>
+<tr><td>리스트</td><td>인덱스로 순서 있는 자료 관리</td><td>학생 명단, 점수 목록</td></tr>
+<tr><td>스택</td><td>나중에 들어온 자료를 먼저 처리</td><td>실행 취소, 함수 호출</td></tr>
+<tr><td>큐</td><td>먼저 들어온 자료를 먼저 처리</td><td>대기표, 인쇄 작업</td></tr>
+<tr><td>연결 리스트</td><td>노드를 연결하여 자료 관리</td><td>중간 삽입·삭제가 많은 목록</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>학생 명단을 개별 변수와 리스트로 관리하기</h2></div>
+<div><span class="badge">필요성 탐색</span><span class="badge">리스트</span></div>
+<div class="two">
+<div><h3>개별 변수</h3><pre><code>student1 = "민준"
+student2 = "서연"
+student3 = "지우"
+
+print(student1)
+print(student2)
+print(student3)</code></pre></div>
+<div><h3>리스트</h3><pre><code>students = ["민준", "서연", "지우"]
+
+for student in students:
+    print(student)</code></pre></div>
+</div>
+<div class="note"><strong>자료구조의 필요성</strong><br>학생 수가 늘어날수록 개별 변수는 관리하기 어렵습니다. 리스트를 사용하면 반복, 정렬, 삽입, 삭제를 하나의 구조에서 처리할 수 있습니다.</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>리스트의 위치별 삽입 비교</h2></div>
+<div><span class="badge">append</span><span class="badge">insert</span></div>
+<pre><code>students = ["민준", "서연", "지우"]
+
+students.append("하준")       # 맨 뒤 삽입
+print(students)
+
+students.insert(0, "예린")    # 맨 앞 삽입
+print(students)
+
+students.insert(2, "도윤")    # 중간 삽입
+print(students)</code></pre>
+<table>
+<tr><th>연산</th><th>특징</th><th>일반적 비용</th></tr>
+<tr><td>append(x)</td><td>맨 뒤에 자료 추가</td><td>대체로 빠름</td></tr>
+<tr><td>insert(0, x)</td><td>맨 앞에 자료 추가</td><td>기존 원소를 뒤로 이동</td></tr>
+<tr><td>insert(i, x)</td><td>중간 위치에 자료 추가</td><td>뒤쪽 원소 이동 필요</td></tr>
+</table>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>리스트의 삭제 연산 비교</h2></div>
+<div><span class="badge">pop</span><span class="badge">remove</span><span class="badge">del</span></div>
+<div class="two">
+<div><pre><code>numbers = [10, 20, 30, 40, 50]
+
+last = numbers.pop()
+print("마지막 삭제:", last)
+
+first = numbers.pop(0)
+print("첫 번째 삭제:", first)
+
+numbers.remove(30)
+print("값 30 삭제:", numbers)</code></pre></div>
+<div class="card">
+<h3>삭제 방식</h3>
+<p><code>pop()</code>: 위치를 기준으로 삭제하며 삭제값을 반환합니다.</p>
+<p><code>remove(value)</code>: 처음 발견한 해당 값을 삭제합니다.</p>
+<p><code>del numbers[i]</code>: 인덱스 위치를 직접 삭제합니다.</p>
+</div>
+</div>
+<div class="warn"><strong>주의</strong><br>없는 값을 <code>remove()</code>로 삭제하면 오류가 발생합니다. 삭제 전에 포함 여부를 확인할 수 있습니다.</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>선형 탐색 구현과 과정 확인</h2></div>
+<div><span class="badge">탐색</span><span class="badge">순차 비교</span></div>
+<div class="two">
+<div><pre><code>def linear_search(data, target):
+    for index, value in enumerate(data):
+        print(index, "번째 확인:", value)
+
+        if value == target:
+            return index
+
+    return -1
+
+scores = [72, 85, 91, 68, 88]
+result = linear_search(scores, 91)
+
+print("찾은 위치:", result)</code></pre></div>
+<div class="card">
+<h3>탐색 원리</h3>
+<p>첫 원소부터 목표값과 하나씩 비교합니다.</p>
+<p>정렬 여부와 관계없이 사용할 수 있지만, 자료가 많으면 비교 횟수가 늘어납니다.</p>
+</div>
+</div>
+<div class="check"><strong>최악의 경우</strong><br>목표값이 마지막에 있거나 목록에 없으면 모든 원소를 확인해야 합니다.</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>스택으로 실행 취소 기능 구현</h2></div>
+<div><span class="badge">LIFO</span><span class="badge">push·pop</span></div>
+<pre><code>undo_stack = []
+
+def do_action(action):
+    undo_stack.append(action)
+    print("실행:", action)
+
+def undo():
+    if not undo_stack:
+        print("취소할 작업이 없습니다.")
+        return
+
+    action = undo_stack.pop()
+    print("취소:", action)
+
+do_action("문장 입력")
+do_action("글자색 변경")
+do_action("사진 삽입")
+
+undo()
+undo()</code></pre>
+<div class="note"><strong>연산 비교</strong><br>스택은 맨 뒤 삽입 <code>append()</code>와 맨 뒤 삭제 <code>pop()</code>를 사용하므로 효율적입니다. 중간 자료 탐색에는 적합하지 않습니다.</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>큐로 급식 대기 순서 관리</h2></div>
+<div><span class="badge">FIFO</span><span class="badge">deque</span></div>
+<div class="two">
+<div><pre><code>from collections import deque
+
+waiting = deque()
+
+waiting.append("민준")
+waiting.append("서연")
+waiting.append("지우")
+
+while waiting:
+    student = waiting.popleft()
+    print("급식 입장:", student)</code></pre></div>
+<div class="card">
+<h3>큐 연산</h3>
+<p><code>append()</code>: 대기열 뒤에 추가합니다.</p>
+<p><code>popleft()</code>: 대기열 앞에서 제거합니다.</p>
+<p>리스트의 <code>pop(0)</code>보다 앞쪽 삭제에 적합합니다.</p>
+</div>
+</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>덱의 양쪽 삽입·삭제</h2></div>
+<div><span class="badge">양방향 큐</span><span class="badge">appendleft</span></div>
+<pre><code>from collections import deque
+
+tasks = deque(["과제2", "과제3"])
+
+tasks.appendleft("긴급 과제")
+tasks.append("추가 과제")
+
+print("왼쪽 처리:", tasks.popleft())
+print("오른쪽 처리:", tasks.pop())
+print("남은 작업:", list(tasks))</code></pre>
+<div class="check"><strong>특징</strong><br>덱은 양쪽 끝의 삽입과 삭제가 모두 빠릅니다. 앞과 뒤를 모두 자주 사용하는 문제에 적합합니다.</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>단순 연결 리스트의 삽입·탐색</h2></div>
+<div><span class="badge">노드</span><span class="badge">연결 구조</span></div>
+<pre><code>class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert_front(self, data):
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+
+    def search(self, target):
+        current = self.head
+
+        while current:
+            if current.data == target:
+                return True
+            current = current.next
+
+        return False
+
+linked = LinkedList()
+linked.insert_front("지우")
+linked.insert_front("서연")
+linked.insert_front("민준")
+
+print(linked.search("서연"))
+print(linked.search("하준"))</code></pre>
+<div class="note"><strong>비교</strong><br>연결 리스트는 맨 앞 삽입이 간단하지만 특정 위치로 바로 이동할 수 없어 탐색은 처음부터 연결을 따라가야 합니다.</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>리스트 앞·뒤 삽입 실행 시간 비교</h2></div>
+<div><span class="badge">성능 측정</span><span class="badge">perf_counter</span></div>
+<pre><code>import time
+
+count = 20000
+
+data1 = []
+start = time.perf_counter()
+
+for value in range(count):
+    data1.append(value)
+
+append_time = time.perf_counter() - start
+
+data2 = []
+start = time.perf_counter()
+
+for value in range(count):
+    data2.insert(0, value)
+
+front_time = time.perf_counter() - start
+
+print(f"뒤 삽입: {append_time:.6f}초")
+print(f"앞 삽입: {front_time:.6f}초")</code></pre>
+<div class="warn"><strong>해석</strong><br>앞 삽입은 기존 원소를 뒤로 이동시켜야 하므로 자료가 많을수록 시간이 증가합니다. 측정값은 실행 환경에 따라 달라집니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>선형 자료구조 연산 종합 비교</h2></div>
+<div><span class="badge">종합 선택</span><span class="badge">연산 비교</span></div>
+<table>
+<tr><th>구조</th><th>삽입</th><th>삭제</th><th>탐색</th><th>적합한 사례</th></tr>
+<tr><td>파이썬 리스트</td><td>뒤는 빠르고 앞·중간은 이동 필요</td><td>뒤는 빠르고 앞·중간은 이동 필요</td><td>인덱스 접근은 빠르고 값 탐색은 순차적</td><td>일반적인 순서 자료</td></tr>
+<tr><td>스택</td><td>맨 위 삽입</td><td>맨 위 삭제</td><td>전체 탐색에는 부적합</td><td>실행 취소, 괄호 검사</td></tr>
+<tr><td>큐</td><td>뒤 삽입</td><td>앞 삭제</td><td>전체 탐색에는 부적합</td><td>대기열, 작업 예약</td></tr>
+<tr><td>덱</td><td>양쪽 끝 삽입</td><td>양쪽 끝 삭제</td><td>중간 탐색은 순차적</td><td>양방향 작업 처리</td></tr>
+<tr><td>연결 리스트</td><td>연결 위치를 알면 효율적</td><td>이전 노드를 알면 효율적</td><td>처음부터 순차 탐색</td><td>중간 변경이 잦은 구조</td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>자료구조 선택 문장</strong><br>
+“이 문제는 자료의 앞쪽 삭제가 반복되므로 일반 리스트보다 큐가 적합하다.
+큐는 먼저 들어온 자료를 먼저 처리하며 <code>deque.popleft()</code>를 이용해 앞쪽 자료를 효율적으로 제거할 수 있다.”
+</div>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 자료구조를 선택하기 전에 먼저 분석해야 할 것은 무엇인가?
+<details><summary>정답 보기</summary>어떤 자료를 저장하고 삽입·삭제·탐색 중 어떤 연산을 자주 수행하는지 분석해야 합니다.</details></div>
+<div class="quiz"><strong>2.</strong> 스택의 자료 처리 순서는 무엇인가?
+<details><summary>정답 보기</summary>나중에 들어온 자료가 먼저 나오는 후입선출 방식입니다.</details></div>
+<div class="quiz"><strong>3.</strong> 대기표 관리에 적합한 선형 자료구조는 무엇인가?
+<details><summary>정답 보기</summary>먼저 들어온 자료를 먼저 처리하는 큐입니다.</details></div>
+<div class="quiz"><strong>4.</strong> 리스트의 맨 앞에 자료를 삽입할 때 시간이 더 걸릴 수 있는 이유는 무엇인가?
+<details><summary>정답 보기</summary>기존 원소들을 뒤쪽으로 이동해야 하기 때문입니다.</details></div>
+<div class="quiz"><strong>5.</strong> 연결 리스트에서 특정 값을 찾을 때 인덱스로 바로 이동할 수 있는가?
+<details><summary>정답 보기</summary>아닙니다. 첫 노드부터 연결을 따라 순차적으로 탐색해야 합니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>자료구조의 필요성과 선형 구조 삽입·삭제·탐색 연산 비교 예제 10선</footer>
+</body>
+</html>

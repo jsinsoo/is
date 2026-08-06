@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>반복문과 재귀함수 비교 예제 10선</title>
+<style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1200px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:930px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.1rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--purple)}
+.flow-card:nth-child(3){border-top:5px solid var(--green)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:25%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:850px){.flow,.two{grid-template-columns:1fr}}
+@media(max-width:560px){section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style>
+</head>
+<body id="top">
+<header><div class="wrap">
+<h1>동일 문제의 반복문·재귀함수 구현<br>가독성·메모리·실행 시간 비교 예제 10선</h1>
+<p>같은 문제를 반복문과 재귀함수로 각각 해결한 뒤 코드의 표현 방식, 호출 구조, 메모리 사용, 실행 시간을 비교하여 상황에 맞는 알고리즘 구현 방법을 선택합니다.</p>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#overview">비교 기준</a><a href="#ex1">1. 합계</a><a href="#ex2">2. 팩토리얼</a>
+<a href="#ex3">3. 거듭제곱</a><a href="#ex4">4. 최대공약수</a><a href="#ex5">5. 자릿수 합</a>
+<a href="#ex6">6. 리스트 합</a><a href="#ex7">7. 문자열 뒤집기</a><a href="#ex8">8. 이진 탐색</a>
+<a href="#ex9">9. 피보나치</a><a href="#ex10">10. 성능 종합</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 반복문과 재귀함수 비교 기준</h2>
+<div class="flow">
+<div class="flow-card"><strong>가독성</strong>문제의 정의와 코드 구조가 얼마나 자연스럽게 연결되는지 살펴봅니다.</div>
+<div class="flow-card"><strong>메모리</strong>반복 변수만 사용하는지, 함수 호출 정보를 스택에 계속 저장하는지 비교합니다.</div>
+<div class="flow-card"><strong>실행 시간</strong>호출 오버헤드와 중복 계산 여부를 실제 시간 측정으로 확인합니다.</div>
+</div>
+<table>
+<tr><th>비교 항목</th><th>반복문</th><th>재귀함수</th></tr>
+<tr><td>표현 방식</td><td>반복 조건과 누적 변수를 직접 작성</td><td>문제를 더 작은 같은 문제로 표현</td></tr>
+<tr><td>메모리</td><td>대체로 일정한 추가 메모리 사용</td><td>호출마다 스택 프레임 추가</td></tr>
+<tr><td>실행 속도</td><td>함수 호출 부담이 적어 빠른 편</td><td>호출 오버헤드가 있어 느릴 수 있음</td></tr>
+<tr><td>적합한 문제</td><td>단순 누적, 큰 반복 횟수</td><td>트리, 분할 정복, 자기 유사 구조</td></tr>
+</table>
+</section>
+
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>1부터 n까지의 합</h2></div>
+<div><span class="badge">누적 합</span><span class="badge">기본 비교</span></div>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def sum_loop(n):
+    total = 0
+
+    for number in range(1, n + 1):
+        total += number
+
+    return total
+
+print(sum_loop(10))</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def sum_recursive(n):
+    if n == 1:
+        return 1
+
+    return n + sum_recursive(n - 1)
+
+print(sum_recursive(10))</code></pre></div>
+</div>
+<div class="note"><strong>비교</strong><br>재귀함수는 수학적 정의와 비슷해 간결하지만, 큰 n에서는 호출 스택이 깊어집니다. 반복문은 누적 과정이 명확하고 메모리 사용이 적습니다.</div>
+</section>
+
+<section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>팩토리얼 계산</h2></div>
+<div><span class="badge">팩토리얼</span><span class="badge">곱셈 누적</span></div>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def factorial_loop(n):
+    result = 1
+
+    for number in range(1, n + 1):
+        result *= number
+
+    return result</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def factorial_recursive(n):
+    if n == 0:
+        return 1
+
+    return n * factorial_recursive(n - 1)</code></pre></div>
+</div>
+<table>
+<tr><th>항목</th><th>반복문</th><th>재귀함수</th></tr>
+<tr><td>가독성</td><td>곱셈 누적 과정을 직접 확인 가능</td><td>n! = n×(n-1)! 정의와 유사</td></tr>
+<tr><td>메모리</td><td>result와 number만 주로 사용</td><td>n만큼 호출 스택 사용</td></tr>
+<tr><td>큰 입력</td><td>상대적으로 안전</td><td>재귀 깊이 제한에 걸릴 수 있음</td></tr>
+</table>
+</section>
+
+<section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>거듭제곱 계산</h2></div>
+<div><span class="badge">거듭제곱</span><span class="badge">지수 감소</span></div>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def power_loop(base, exponent):
+    result = 1
+
+    for _ in range(exponent):
+        result *= base
+
+    return result</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def power_recursive(base, exponent):
+    if exponent == 0:
+        return 1
+
+    return base * power_recursive(
+        base, exponent - 1
+    )</code></pre></div>
+</div>
+<div class="check"><strong>확장 생각</strong><br>재귀함수는 지수를 절반씩 줄이는 분할 정복 방식으로 개선할 수 있어 빠른 거듭제곱 알고리즘으로 발전시키기 좋습니다.</div>
+</section>
+
+<section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>유클리드 호제법 최대공약수</h2></div>
+<div><span class="badge">최대공약수</span><span class="badge">나머지</span></div>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def gcd_loop(a, b):
+    while b != 0:
+        a, b = b, a % b
+
+    return a</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def gcd_recursive(a, b):
+    if b == 0:
+        return a
+
+    return gcd_recursive(b, a % b)</code></pre></div>
+</div>
+<div class="note"><strong>비교</strong><br>이 문제는 재귀 관계가 매우 분명하여 재귀 코드의 가독성이 높습니다. 하지만 반복문도 짧고 스택을 사용하지 않아 실용적입니다.</div>
+</section>
+
+<section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>정수의 자릿수 합</h2></div>
+<div><span class="badge">정수 분해</span><span class="badge">나머지</span></div>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def digit_sum_loop(n):
+    total = 0
+
+    while n > 0:
+        total += n % 10
+        n //= 10
+
+    return total</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def digit_sum_recursive(n):
+    if n < 10:
+        return n
+
+    return (
+        n % 10
+        + digit_sum_recursive(n // 10)
+    )</code></pre></div>
+</div>
+<div class="check"><strong>가독성 비교</strong><br>재귀 방식은 “마지막 자리 + 나머지 자리의 합”이라는 문제 구조를 잘 드러냅니다. 반복문은 상태 변화가 한눈에 보입니다.</div>
+</section>
+
+<section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>리스트 원소의 합</h2></div>
+<div><span class="badge">리스트</span><span class="badge">인덱스</span></div>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def list_sum_loop(numbers):
+    total = 0
+
+    for number in numbers:
+        total += number
+
+    return total</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def list_sum_recursive(numbers, index=0):
+    if index == len(numbers):
+        return 0
+
+    return (
+        numbers[index]
+        + list_sum_recursive(numbers, index + 1)
+    )</code></pre></div>
+</div>
+<div class="warn"><strong>메모리 비교</strong><br>리스트가 매우 길면 재귀 방식은 원소 수만큼 호출 스택을 사용하므로 비효율적입니다. 단순 합계는 반복문이나 내장 함수 <code>sum()</code>이 적합합니다.</div>
+</section>
+
+<section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>문자열 뒤집기</h2></div>
+<div><span class="badge">문자열</span><span class="badge">역순</span></div>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def reverse_loop(text):
+    result = ""
+
+    for character in text:
+        result = character + result
+
+    return result</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def reverse_recursive(text):
+    if len(text) <= 1:
+        return text
+
+    return (
+        reverse_recursive(text[1:])
+        + text[0]
+    )</code></pre></div>
+</div>
+<div class="note"><strong>성능 주의</strong><br>두 방식 모두 문자열을 계속 새로 만들 수 있습니다. 실제로는 슬라이싱 <code>text[::-1]</code>이나 <code>reversed()</code>가 더 효율적일 수 있습니다.</div>
+</section>
+
+<section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>이진 탐색</h2></div>
+<div><span class="badge">분할 정복</span><span class="badge">탐색</span></div>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def binary_search_loop(data, target):
+    left = 0
+    right = len(data) - 1
+
+    while left <= right:
+        middle = (left + right) // 2
+
+        if data[middle] == target:
+            return middle
+        elif data[middle] < target:
+            left = middle + 1
+        else:
+            right = middle - 1
+
+    return -1</code></pre></div>
+<div><h3>재귀함수</h3><pre><code>def binary_search_recursive(
+    data, target, left, right
+):
+    if left > right:
+        return -1
+
+    middle = (left + right) // 2
+
+    if data[middle] == target:
+        return middle
+    if data[middle] < target:
+        return binary_search_recursive(
+            data, target, middle + 1, right
+        )
+
+    return binary_search_recursive(
+        data, target, left, middle - 1
+    )</code></pre></div>
+</div>
+<div class="check"><strong>알고리즘 구조</strong><br>이진 탐색은 탐색 범위를 절반으로 줄이는 분할 정복 문제이므로 재귀 구조가 자연스럽습니다. 반복문은 함수 호출 없이 같은 효율을 얻습니다.</div>
+</section>
+
+<section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>피보나치 수열</h2></div>
+<div><span class="badge">중복 호출</span><span class="badge">성능 차이</span></div>
+<div class="two">
+<div><h3>반복문</h3><pre><code>def fibonacci_loop(n):
+    if n < 2:
+        return n
+
+    a, b = 0, 1
+
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+
+    return b</code></pre></div>
+<div><h3>일반 재귀함수</h3><pre><code>def fibonacci_recursive(n):
+    if n < 2:
+        return n
+
+    return (
+        fibonacci_recursive(n - 1)
+        + fibonacci_recursive(n - 2)
+    )</code></pre></div>
+</div>
+<div class="warn"><strong>중요 비교</strong><br>일반 재귀 피보나치는 같은 값을 반복 계산하여 실행 시간이 급격히 증가합니다. 반복문은 각 항을 한 번씩 계산하므로 훨씬 빠르고 메모리도 적게 사용합니다.</div>
+</section>
+
+<section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>실행 시간과 메모리 특성 종합 비교</h2></div>
+<div><span class="badge">perf_counter</span><span class="badge">종합 측정</span></div>
+<pre><code>import time
+
+def factorial_loop(n):
+    result = 1
+    for number in range(1, n + 1):
+        result *= number
+    return result
+
+def factorial_recursive(n):
+    if n == 0:
+        return 1
+    return n * factorial_recursive(n - 1)
+
+n = 900
+
+start = time.perf_counter()
+loop_result = factorial_loop(n)
+loop_time = time.perf_counter() - start
+
+start = time.perf_counter()
+recursive_result = factorial_recursive(n)
+recursive_time = time.perf_counter() - start
+
+print("결과 일치:", loop_result == recursive_result)
+print(f"반복문 시간: {loop_time:.8f}초")
+print(f"재귀 시간: {recursive_time:.8f}초")</code></pre>
+<div class="warn"><strong>실행 환경 주의</strong><br>파이썬의 기본 재귀 깊이는 제한되어 있으므로 지나치게 큰 n은 <code>RecursionError</code>를 일으킬 수 있습니다. 시간 측정값은 컴퓨터 상태에 따라 달라집니다.</div>
+<table>
+<tr><th>선택 기준</th><th>권장 방식</th><th>이유</th></tr>
+<tr><td>단순 누적 계산</td><td>반복문</td><td>빠르고 메모리 사용이 적음</td></tr>
+<tr><td>트리·폴더 탐색</td><td>재귀함수</td><td>중첩 구조를 자연스럽게 표현</td></tr>
+<tr><td>분할 정복</td><td>둘 다 가능</td><td>재귀는 구조가 명확하고 반복문은 호출 부담이 적음</td></tr>
+<tr><td>매우 큰 입력</td><td>반복문</td><td>재귀 깊이 제한을 피할 수 있음</td></tr>
+</table>
+</section>
+
+<section>
+<h2>마무리 진단 문제</h2>
+<div class="quiz"><strong>1.</strong> 반복문이 재귀함수보다 일반적으로 메모리를 적게 사용하는 이유는 무엇인가?
+<details><summary>정답 보기</summary>반복문은 반복 변수만 갱신하지만 재귀함수는 호출마다 지역 변수와 복귀 위치를 호출 스택에 저장하기 때문입니다.</details></div>
+<div class="quiz"><strong>2.</strong> 재귀함수의 가독성이 특히 높아질 수 있는 문제는 무엇인가?
+<details><summary>정답 보기</summary>트리 탐색, 분할 정복, 폴더 구조처럼 자기와 비슷한 작은 구조를 포함하는 문제입니다.</details></div>
+<div class="quiz"><strong>3.</strong> 일반 재귀 피보나치가 느린 이유는 무엇인가?
+<details><summary>정답 보기</summary>같은 피보나치 값을 여러 번 중복 계산하기 때문입니다.</details></div>
+<div class="quiz"><strong>4.</strong> 실행 시간을 측정할 때 사용할 수 있는 함수는 무엇인가?
+<details><summary>정답 보기</summary><code>time.perf_counter()</code>입니다.</details></div>
+<div class="quiz"><strong>5.</strong> 단순한 1부터 n까지의 합을 매우 큰 n에 대해 계산할 때 어느 방식이 더 적합한가?
+<details><summary>정답 보기</summary>호출 스택을 사용하지 않는 반복문 방식이 더 적합합니다.</details></div>
+</section>
+</main>
+
+<a class="top" href="#top">↑</a>
+<footer>동일 문제의 반복문·재귀함수 구현과 가독성·메모리·실행 시간 비교 예제 10선</footer>
+</body>
+</html>
