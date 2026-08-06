@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>가지치기·탐욕 전략과 완전 탐색 학습·수행평가 통합본</title>
+<style>
+:root {
+  --brand:#1f5e9c; --brand2:#0d9488; --ink:#18212f;
+  --muted:#667085; --line:#d8e1eb; --bg:#f5f8fc; --card:#fff;
+  --good:#edf8f1; --warn:#fff6e8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  line-height:1.7;
+}
+header {
+  background:linear-gradient(135deg,#173d6c,#1f6ea9 58%,#0d9488);
+  color:white; padding:42px 20px 34px;
+}
+header .inner, main { max-width:1280px; margin:auto; }
+h1 { margin:0 0 8px; font-size:clamp(28px,4vw,46px); line-height:1.3; }
+header p { margin:0; opacity:.93; }
+.toolbar {
+  position:sticky; top:0; z-index:20; background:rgba(255,255,255,.97);
+  border-bottom:1px solid var(--line); padding:10px 16px;
+  display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
+}
+button {
+  border:0; border-radius:8px; padding:10px 15px;
+  background:var(--brand); color:white; font:inherit; cursor:pointer;
+}
+button.secondary { background:#475467; }
+button.green { background:var(--brand2); }
+main { padding:24px 16px 60px; }
+.card {
+  background:var(--card); border:1px solid var(--line);
+  border-radius:14px; padding:22px; margin-bottom:20px;
+  box-shadow:0 7px 22px rgba(16,24,40,.05);
+}
+.notice { background:#eef7ff; border-left:5px solid var(--brand); }
+h2 { color:#174d7f; margin-top:0; }
+h3 { color:#24618f; }
+.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+.concept { border:1px solid var(--line); border-radius:10px; padding:16px; }
+.good { background:var(--good); }
+.warn { background:var(--warn); }
+.flow {
+  display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+  justify-content:center; margin:16px 0;
+}
+.flow span {
+  padding:10px 13px; background:#eaf3fb; border:1px solid #b8cfe3;
+  border-radius:8px; font-weight:700;
+}
+.flow b { color:var(--brand2); }
+.table-wrap { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; min-width:880px; }
+th,td { border:1px solid var(--line); padding:10px; vertical-align:top; font-size:14px; }
+th { background:#244f7d; color:white; }
+.code-box,.codebox {
+  background:#111827; color:#edf2f7; padding:18px;
+  border-radius:11px; overflow:auto; position:relative; margin:12px 0;
+}
+pre {
+  margin:0; white-space:pre; font-family:Consolas,"Courier New",monospace;
+  font-size:13px; line-height:1.55;
+}
+.code-box button {
+  position:absolute; right:10px; top:10px; font-size:12px;
+  padding:6px 9px; background:#334155;
+}
+.output {
+  background:#f3f6f9; border:1px solid var(--line);
+  border-radius:10px; padding:15px; overflow:auto;
+}
+.question {
+  border-left:4px solid var(--brand2); background:#f1fbf9;
+  padding:12px 15px; margin:10px 0; border-radius:8px;
+}
+details { border:1px solid var(--line); border-radius:9px; margin-top:12px; }
+summary {
+  cursor:pointer; padding:12px 14px; font-weight:700; background:#f4f7fa;
+}
+details > div { padding:14px; }
+.rubric td:first-child { font-weight:700; background:#f5f8fb; }
+.student {
+  display:grid; grid-template-columns:100px 1fr 100px 1fr; gap:8px;
+}
+.student div,.student input { border:1px solid var(--line); padding:10px; }
+.student input { width:100%; font:inherit; }
+.label { background:#eef4fa; font-weight:bold; text-align:center; }
+.qtitle { font-size:18px; font-weight:bold; }
+.choice {
+  display:block; border:1px solid var(--line); border-radius:9px;
+  padding:10px; margin:8px 0; cursor:pointer;
+}
+.choice:hover { background:#f5f8fb; }
+.choice input { margin-right:8px; transform:scale(1.15); }
+.tag {
+  display:inline-block; background:#e8f2fc; color:#174d7f;
+  border-radius:999px; padding:3px 8px; font-size:13px; font-weight:bold;
+}
+.center { text-align:center; }
+.result { display:none; }
+.score { font-size:28px; font-weight:bold; color:var(--brand); }
+.correct { background:#eaf8ef; }
+.wrong { background:#fff0f0; }
+.explain { margin-top:12px; border-top:1px dashed var(--line); padding-top:12px; }
+.section-title {
+  margin:36px 0 18px; padding:15px 18px; border-radius:12px;
+  background:linear-gradient(135deg,#e9f3fb,#eaf9f6);
+  border:1px solid #c8dceb; color:#174d7f;
+}
+@media(max-width:760px) {
+  .grid { grid-template-columns:1fr; }
+  .student { grid-template-columns:90px 1fr; }
+}
+@media print {
+  header,.toolbar,.code-box button,.center { display:none!important; }
+  body { background:white; }
+  main { max-width:none; padding:0; }
+  .card { box-shadow:none; break-inside:avoid; }
+  details > div { display:block!important; }
+  .result { display:block!important; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <h1>가지치기·탐욕 전략과 완전 탐색 학습·수행평가 통합본</h1>
+    <p>부분집합 합 · 상태 공간 · 가지치기 기준 · 탐욕 전략 비교 · 수행06 자동 채점</p>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button onclick="document.getElementById('lesson').scrollIntoView({behavior:'smooth'})">학습자료</button>
+  <button class="green" onclick="document.getElementById('assessment').scrollIntoView({behavior:'smooth'})">수행평가</button>
+  <button onclick="window.print()">인쇄 / PDF 저장</button>
+  <button class="secondary" onclick="toggleAnswers()">예시 정답 펼치기·접기</button>
+</div>
+
+<main>
+<section id="lesson">
+  <div class="section-title"><h2 style="margin:0">Ⅰ. 가지치기·탐욕 전략·완전 탐색 학습자료</h2></div>
+  
+<section class="card notice">
+<b>성취 목표</b><br/>
+  문제의 상태 공간에서 탐색하지 않아도 되는 상태를 판단하는 기준을 설계하고,
+  가지치기를 적용한 탐색과 완전 탐색을 비교하여 정확성과 효율성을 분석한다.
+</section>
+<section class="card">
+<h2>1. 문제 상황</h2>
+<p>
+    수 목록 <code>[3, 7, 11, 14, 18, 21]</code>에서 일부 수를 선택하여
+    합이 <code>32</code>가 되는 모든 부분집합을 찾는다.
+  </p>
+<div class="grid">
+<div class="concept">
+<h3>완전 탐색</h3>
+<p>각 수를 선택하거나 선택하지 않는 모든 경우를 탐색한다.</p>
+<p>수의 개수가 n개이면 최대 <b>2ⁿ</b>개의 부분집합을 확인한다.</p>
+</div>
+<div class="concept">
+<h3>가지치기</h3>
+<p>목표에 도달할 가능성이 없는 상태를 미리 판단하여 탐색에서 제외한다.</p>
+<p>정답은 유지하면서 방문 상태 수를 줄이는 것이 목표이다.</p>
+</div>
+</div>
+</section>
+<section class="card">
+<h2>2. 상태 공간 구조</h2>
+<div class="flow">
+<span>현재 수 확인</span><b>→</b>
+<span>선택</span><b>또는</b>
+<span>미선택</span><b>→</b>
+<span>다음 수로 이동</span>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>구성 요소</th><th>정의</th></tr></thead>
+<tbody>
+<tr><td>상태</td><td><code>(index, current_sum, selected)</code></td></tr>
+<tr><td>초기 상태</td><td><code>(0, 0, [])</code></td></tr>
+<tr><td>목표 상태</td><td><code>current_sum == 32</code></td></tr>
+<tr><td>전이 1</td><td>현재 수를 선택하고 다음 인덱스로 이동</td></tr>
+<tr><td>전이 2</td><td>현재 수를 선택하지 않고 다음 인덱스로 이동</td></tr>
+<tr><td>종료 조건</td><td>목표 합 도달 또는 모든 수 확인 완료</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>3. 가지치기 기준</h2>
+<div class="grid">
+<div class="concept warn">
+<h3>가지치기 1</h3>
+<p><code>current_sum &gt; target</code></p>
+<p>
+        모든 수가 양수이므로 현재 합이 이미 목표보다 크면
+        이후 수를 추가해도 합이 더 커질 뿐이다.
+      </p>
+</div>
+<div class="concept warn">
+<h3>가지치기 2</h3>
+<p><code>current_sum + suffix_sum[index] &lt; target</code></p>
+<p>
+        남은 수를 모두 더해도 목표에 도달하지 못하면
+        해당 상태 아래는 더 탐색할 필요가 없다.
+      </p>
+</div>
+</div>
+</section>
+<section class="card">
+<h2>4. 탐욕 전략과의 비교</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>방법</th>
+<th>핵심 원리</th>
+<th>정답 보장</th>
+<th>이 문제에서의 특징</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>완전 탐색</td>
+<td>모든 선택·미선택 경우 확인</td>
+<td>보장됨</td>
+<td>정확하지만 상태 수가 많음</td>
+</tr>
+<tr>
+<td>가지치기 탐색</td>
+<td>불가능한 상태를 안전하게 배제</td>
+<td>배제 기준이 타당하면 보장됨</td>
+<td>정답을 유지하면서 방문 상태 수 감소</td>
+</tr>
+<tr>
+<td>탐욕 전략</td>
+<td>현재 단계에서 가장 좋아 보이는 선택 수행</td>
+<td>일반적으로 보장되지 않음</td>
+<td>큰 수부터 선택하는 방식은 일부 정답을 놓칠 수 있음</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>5. 수행 과제</h2>
+<ol>
+<li>상태 공간을 선택·미선택의 이진 트리로 설명한다.</li>
+<li>완전 탐색 함수와 가지치기 함수의 동작을 분석한다.</li>
+<li>두 가지 가지치기 기준이 안전한 이유를 설명한다.</li>
+<li>정답 부분집합과 방문 상태 수를 출력한다.</li>
+<li>가지치기 전후의 방문 상태 감소율을 계산한다.</li>
+<li>탐욕 전략이 항상 정답을 보장하지 않는 이유를 반례와 함께 설명한다.</li>
+</ol>
+</section>
+<section class="card">
+<h2>6. 제출 산출물</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>산출물</th><th>포함 내용</th></tr></thead>
+<tbody>
+<tr><td>상태 공간 설명서</td><td>상태·초기 상태·목표 상태·선택·미선택 전이</td></tr>
+<tr><td>가지치기 기준표</td><td>배제 조건, 배제 이유, 적용 가능 조건</td></tr>
+<tr><td>전체 프로그램</td><td>완전 탐색, 가지치기 탐색, 방문 상태 수 측정</td></tr>
+<tr><td>비교 분석표</td><td>정답 일치 여부, 방문 상태 수, 감소율</td></tr>
+<tr><td>반례 분석</td><td>탐욕 전략이 정답을 놓칠 수 있는 사례</td></tr>
+<tr><td>성찰 기록</td><td>효율성 향상과 가지치기 적용의 한계</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>7. 정답 포함 전체 코드</h2>
+<div class="code-box">
+<button onclick="copyCode()">코드 복사</button>
+<pre id="code">numbers = [3, 7, 11, 14, 18, 21]
+target = 32
+
+solutions: list[list[int]] = []
+visited_pruned = 0
+visited_full = 0
+
+# 뒤에서부터 남은 합을 빠르게 계산하기 위한 배열
+suffix_sum = [0] * (len(numbers) + 1)
+
+for i in range(len(numbers) - 1, -1, -1):
+    suffix_sum[i] = suffix_sum[i + 1] + numbers[i]
+
+
+def search_pruned(
+    index: int,
+    current_sum: int,
+    selected: list[int],
+) -&gt; None:
+    """
+    가지치기를 적용하여 목표 합을 만드는 부분집합을 탐색한다.
+    """
+    global visited_pruned
+    visited_pruned += 1
+
+    # 목표 합을 찾은 경우
+    if current_sum == target:
+        solutions.append(selected.copy())
+        return
+
+    # 모든 수를 확인한 경우
+    if index == len(numbers):
+        return
+
+    # 가지치기 1:
+    # 모든 수가 양수이므로 현재 합이 목표를 넘으면 더 탐색할 필요가 없다.
+    if current_sum &gt; target:
+        return
+
+    # 가지치기 2:
+    # 남은 수를 모두 더해도 목표에 도달하지 못하면 더 탐색할 필요가 없다.
+    if current_sum + suffix_sum[index] &lt; target:
+        return
+
+    # 현재 수 선택
+    selected.append(numbers[index])
+    search_pruned(
+        index + 1,
+        current_sum + numbers[index],
+        selected,
+    )
+    selected.pop()
+
+    # 현재 수 미선택
+    search_pruned(
+        index + 1,
+        current_sum,
+        selected,
+    )
+
+
+def search_full(
+    index: int,
+    current_sum: int,
+) -&gt; None:
+    """
+    가지치기를 하지 않고 모든 선택·미선택 상태를 탐색한다.
+    """
+    global visited_full
+    visited_full += 1
+
+    if index == len(numbers):
+        return
+
+    # 현재 수 선택
+    search_full(
+        index + 1,
+        current_sum + numbers[index],
+    )
+
+    # 현재 수 미선택
+    search_full(
+        index + 1,
+        current_sum,
+    )
+
+
+search_pruned(0, 0, [])
+search_full(0, 0)
+
+# 중복 제거 후 정렬
+unique_solutions = sorted(
+    {tuple(item) for item in solutions}
+)
+
+reduction_rate = (
+    1 - visited_pruned / visited_full
+) * 100
+
+print("=" * 54)
+print("정답 부분집합")
+print("=" * 54)
+
+for item in unique_solutions:
+    print(list(item))
+
+print("\n가지치기 방문 상태 수:", visited_pruned)
+print("완전 탐색 방문 상태 수:", visited_full)
+print("감소율:", f"{reduction_rate:.1f}%")</pre>
+</div>
+</section>
+<section class="card">
+<h2>8. 예상 핵심 결과</h2>
+<div class="output"><pre>정답 부분집합
+[3, 11, 18]
+[11, 21]
+
+완전 탐색 방문 상태 수는 127이다.
+가지치기 방문 상태 수는 완전 탐색보다 작게 나타난다.
+감소율은 실행된 방문 상태 수를 기준으로 계산한다.</pre></div>
+</section>
+<section class="card">
+<h2>9. 수행평가 문항</h2>
+<div class="question">1. 이 문제의 상태, 초기 상태, 목표 상태, 전이 규칙을 설명하시오.</div>
+<div class="question">2. 현재 합이 목표보다 큰 경우 탐색을 중단해도 되는 이유를 설명하시오.</div>
+<div class="question">3. 남은 수를 모두 더해도 목표에 도달하지 못하면 탐색을 중단해도 되는 이유를 설명하시오.</div>
+<div class="question">4. 완전 탐색과 가지치기 탐색의 정답은 같아야 하는 이유를 설명하시오.</div>
+<div class="question">5. 큰 수부터 선택하는 단순 탐욕 전략이 모든 정답을 보장하지 못하는 이유를 설명하시오.</div>
+</section>
+<section class="card">
+<h2>10. 예시 정답</h2>
+<details class="answer">
+<summary>문항 1 정답</summary>
+<div>
+      상태는 현재 확인 중인 인덱스, 현재 합, 선택한 수 목록이다.
+      초기 상태는 인덱스 0, 합 0, 빈 선택 목록이며 목표 상태는 현재 합이 32인 상태이다.
+      각 단계에서 현재 수를 선택하거나 선택하지 않고 다음 인덱스로 이동한다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 2 정답</summary>
+<div>
+      모든 수가 양수이므로 현재 합이 32를 넘으면 이후 어떤 수를 추가하더라도 합은 더 커진다.
+      따라서 목표 합으로 돌아올 수 없어 해당 상태 아래를 탐색할 필요가 없다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 3 정답</summary>
+<div>
+      현재 합에 남은 모든 수를 더한 값이 32보다 작다면,
+      가능한 최대 합도 목표에 도달하지 못한다. 따라서 해당 분기는 정답을 포함할 수 없다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 4 정답</summary>
+<div>
+      가지치기는 정답이 존재할 가능성이 없는 상태만 배제한다.
+      배제 기준이 논리적으로 안전하다면 정답을 포함하는 상태는 제거되지 않으므로
+      완전 탐색과 같은 정답을 얻는다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 5 정답</summary>
+<div>
+      현재 가장 큰 수를 선택하는 것이 이후 전체 합을 정확히 32로 만드는 최선의 선택이라는 보장이 없다.
+      예를 들어 21을 먼저 선택하면 11을 더해 정답을 만들 수 있지만,
+      다른 입력에서는 큰 수 선택 때문에 작은 수들의 조합으로 이루어진 정답을 놓칠 수 있다.
+      탐욕 전략은 탐욕 선택 속성이 성립하는 문제에서만 최적해를 보장한다.
+    </div>
+</details>
+</section>
+<section class="card">
+<h2>11. 분석적 루브릭</h2>
+<div class="table-wrap">
+<table class="rubric">
+<thead>
+<tr>
+<th>평가 요소</th>
+<th>A 수준</th>
+<th>B 수준</th>
+<th>C 수준</th>
+<th>D 수준</th>
+<th>E 수준</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>상태 공간 분석<br/>20점</td>
+<td>상태·전이·목표·종료 조건을 정확히 정의하고 탐색 트리 구조를 체계적으로 설명함.</td>
+<td>주요 상태와 전이 구조를 정확하게 설명함.</td>
+<td>기본 상태와 선택·미선택 구조를 설명함.</td>
+<td>일부 요소만 설명함.</td>
+<td>상태 공간 개념을 구체화하지 못함.</td>
+</tr>
+<tr>
+<td>가지치기 기준<br/>25점</td>
+<td>두 배제 기준을 정확히 도출하고 안전성 및 적용 조건까지 논리적으로 설명함.</td>
+<td>두 가지 가지치기 기준과 이유를 정확하게 설명함.</td>
+<td>기본 가지치기 기준을 설명함.</td>
+<td>기준 일부가 부정확하거나 설명이 부족함.</td>
+<td>가지치기 기준을 제시하지 못함.</td>
+</tr>
+<tr>
+<td>프로그램 구현<br/>30점</td>
+<td>완전 탐색과 가지치기를 정확히 구현하고 방문 상태·감소율까지 체계적으로 측정함.</td>
+<td>두 탐색 방식을 정확하게 구현하고 결과를 비교함.</td>
+<td>기본 탐색 프로그램을 구현함.</td>
+<td>일부 기능만 동작하거나 오류 수정이 필요함.</td>
+<td>프로그램을 완성하지 못함.</td>
+</tr>
+<tr>
+<td>비교·분석<br/>15점</td>
+<td>정답 일치, 탐색량, 복잡도, 적용 조건을 근거로 정교하게 비교함.</td>
+<td>방문 상태 수와 감소율을 근거로 적절히 분석함.</td>
+<td>주요 차이를 설명함.</td>
+<td>일부 차이만 설명함.</td>
+<td>비교 분석이 거의 없음.</td>
+</tr>
+<tr>
+<td>탐욕 전략 성찰<br/>10점</td>
+<td>탐욕 선택의 한계와 정답 보장 조건을 반례를 들어 명확히 설명함.</td>
+<td>탐욕 전략의 한계를 적절히 설명함.</td>
+<td>탐욕 전략이 정답을 보장하지 않을 수 있음을 인식함.</td>
+<td>설명이 부분적임.</td>
+<td>탐욕 전략의 한계를 설명하지 못함.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>12. 종합 정리</h2>
+<p><b>완전 탐색:</b> 모든 상태를 확인하므로 정확하지만 상태 수가 지수적으로 증가할 수 있다.</p>
+<p><b>가지치기:</b> 정답 가능성이 없는 상태를 안전하게 제거하여 탐색량을 줄인다.</p>
+<p><b>탐욕 전략:</b> 현재의 최선 선택만 수행하므로 빠를 수 있지만 문제에 따라 정답을 보장하지 않는다.</p>
+<p><b>적용 조건:</b> 가지치기 기준은 입력 자료의 성질을 근거로 정당화해야 한다. 이 코드의 첫 번째 기준은 모든 수가 양수일 때만 안전하다.</p>
+</section>
+
+</section>
+
+<section id="assessment">
+  <div class="section-title"><h2 style="margin:0">Ⅱ. 수행06 자동 채점 평가</h2></div>
+  
+<section class="card notice">
+<b>응시 안내</b><br/>
+각 문항에서 관련 코드를 먼저 확인한 후 옳은 설명 3개를 모두 선택하세요.
+제출 후 문항별 정오답과 보기별 상세 풀이를 확인하고 TXT 결과를 저장할 수 있습니다.
+</section>
+<section class="card">
+<div class="student">
+<div class="label">학번</div><input id="sid" placeholder="예: 1101"/>
+<div class="label">이름</div><input id="sname" placeholder="예: 홍길동"/>
+</div>
+<p>응시 시작 시각: <span id="start"></span></p>
+</section>
+<div id="quiz"></div>
+<section class="card center">
+<button id="submitBtn" onclick="grade()">제출 및 채점</button>
+<button class="secondary" onclick="window.print()">인쇄 / PDF</button>
+</section>
+<section class="card result" id="result">
+<h2>채점 결과</h2>
+<div class="score" id="scoreText"></div>
+<p id="summaryText"></p>
+<button onclick="saveTxt()">결과 TXT 저장</button>
+</section>
+
+</section>
+</main>
+
+<script>
+function copyCode() {
+  const code = document.getElementById("code").innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    alert("코드를 복사했습니다.");
+  });
+}
+
+function toggleAnswers() {
+  const items = [...document.querySelectorAll("details.answer")];
+  const shouldOpen = items.some(item => !item.open);
+  items.forEach(item => item.open = shouldOpen);
+}
+</script>
+<script>
+const Q=[{"q": "다음 문제 설정에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "numbers = [3, 7, 11, 14, 18, 21]\ntarget = 32\n\nsolutions: list[list[int]] = []\nvisited_pruned = 0\nvisited_full = 0", "choices": ["numbers에서 일부 수를 선택해 합이 32가 되는 부분집합을 찾는 문제이다.", "target은 항상 0으로 설정되어 있다.", "solutions는 찾은 정답 부분집합을 저장하기 위한 목록이다.", "numbers의 모든 수를 반드시 선택해야 한다.", "visited_pruned와 visited_full은 두 탐색 방식의 방문 상태 수를 기록한다."], "answer": [0, 2, 4], "exp": ["옳음. 부분집합 합 문제이며 목표 합은 32이다.", "틀림. target은 32이다.", "옳음. 가지치기 탐색이 찾은 선택 목록을 저장한다.", "틀림. 각 수는 선택하거나 선택하지 않을 수 있다.", "옳음. 가지치기 탐색과 완전 탐색의 탐색량을 비교하기 위한 변수이다."]}, {"q": "다음 suffix_sum 계산 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "suffix_sum = [0] * (len(numbers) + 1)\n\nfor i in range(len(numbers) - 1, -1, -1):\n    suffix_sum[i] = suffix_sum[i + 1] + numbers[i]", "choices": ["suffix_sum에는 항상 numbers와 같은 값만 저장된다.", "suffix_sum[i]는 i번째 위치부터 마지막 수까지의 합을 저장한다.", "이 코드는 numbers를 오름차순으로 정렬한다.", "배열을 뒤에서 앞으로 채운다.", "남은 수를 모두 더했을 때 얻을 수 있는 최대 추가 합을 빠르게 확인할 수 있다."], "answer": [1, 3, 4], "exp": ["틀림. 각 원소는 현재 위치 이후 모든 수의 합이다.", "옳음. 현재 인덱스부터 끝까지의 누적합을 저장한다.", "틀림. 정렬 기능은 수행하지 않는다.", "옳음. 뒤쪽 누적값을 이용하므로 역순으로 계산한다.", "옳음. 가지치기 2에서 남은 가능한 최대 합을 즉시 계산할 수 있다."]}, {"q": "다음 search_pruned() 함수 시작 부분에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def search_pruned(\n    index: int,\n    current_sum: int,\n    selected: list[int],\n) -> None:\n    global visited_pruned\n    visited_pruned += 1", "choices": ["index는 현재 확인 중인 수의 위치를 나타낸다.", "visited_pruned는 함수가 종료될 때마다 0으로 초기화된다.", "current_sum은 지금까지 선택한 수들의 합이다.", "selected는 현재까지 선택한 수 목록이다.", "이 함수는 문자열만 처리한다."], "answer": [0, 2, 3], "exp": ["옳음. numbers에서 현재 판단할 위치를 나타낸다.", "틀림. 함수가 호출될 때마다 1씩 증가한다.", "옳음. 부분집합의 현재 누적 합이다.", "옳음. 현재 탐색 경로에서 선택한 수들을 저장한다.", "틀림. 정수와 정수 목록을 사용한다."]}, {"q": "다음 목표 상태와 종료 조건에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "if current_sum == target:\n    solutions.append(selected.copy())\n    return\n\nif index == len(numbers):\n    return", "choices": ["목표 합을 찾은 뒤에도 같은 분기를 끝없이 계속 탐색한다.", "현재 합이 목표와 같으면 선택 목록의 복사본을 정답에 저장한다.", "selected.copy()를 사용하면 이후 selected 변경이 저장된 정답에 영향을 주지 않는다.", "index가 0이면 항상 탐색을 종료한다.", "모든 수를 확인한 경우 더 이상 탐색하지 않고 반환한다."], "answer": [1, 2, 4], "exp": ["틀림. 정답을 저장한 뒤 return으로 해당 분기를 끝낸다.", "옳음. 목표 상태를 찾으면 정답을 기록한다.", "옳음. 가변 목록의 현재 상태를 독립적으로 보존한다.", "틀림. index가 전체 길이와 같을 때 종료한다.", "옳음. 더 이상 선택하거나 미선택할 수가 없으므로 종료한다."]}, {"q": "다음 첫 번째 가지치기 조건에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "if current_sum > target:\n    return", "choices": ["현재 합이 목표를 넘으면 해당 분기를 더 탐색하지 않는다.", "음수가 포함되어 있어도 언제나 안전하다.", "현재 합이 목표보다 작으면 반드시 정답이 없다는 뜻이다.", "모든 수가 양수라는 조건에서 안전한 가지치기이다.", "이후 수를 추가하면 합이 더 커지므로 목표 합으로 돌아갈 수 없다."], "answer": [0, 3, 4], "exp": ["옳음. 목표를 초과한 분기를 제거한다.", "틀림. 음수가 있다면 이후 합이 감소할 수 있어 안전하지 않을 수 있다.", "틀림. 남은 수를 이용해 목표에 도달할 수도 있다.", "옳음. 모든 수가 양수이므로 이후 합은 줄어들지 않는다.", "옳음. 추가 선택은 현재 합을 더 증가시킨다."]}, {"q": "다음 두 번째 가지치기 조건에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "if current_sum + suffix_sum[index] < target:\n    return", "choices": ["현재 합이 목표보다 크다는 뜻이다.", "이 조건은 남은 수를 하나도 고려하지 않는다.", "현재 합에 남은 모든 수를 더해도 목표보다 작은 경우이다.", "해당 분기에서 만들 수 있는 최대 합도 목표에 도달하지 못한다.", "정답이 존재할 수 없는 분기를 미리 제거한다."], "answer": [2, 3, 4], "exp": ["틀림. 현재 합 초과는 첫 번째 가지치기 조건이다.", "틀림. 남은 모든 수의 합을 고려한다.", "옳음. suffix_sum[index]는 남은 수의 총합이다.", "옳음. 가능한 최대 합이 목표보다 작다.", "옳음. 목표 도달 가능성이 없는 분기이므로 안전하게 중단한다."]}, {"q": "다음 선택·미선택 재귀 호출에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "selected.append(numbers[index])\nsearch_pruned(\n    index + 1,\n    current_sum + numbers[index],\n    selected,\n)\nselected.pop()\n\nsearch_pruned(\n    index + 1,\n    current_sum,\n    selected,\n)", "choices": ["첫 번째 재귀 호출은 현재 수를 선택한 경우이다.", "selected.pop()은 선택한 수를 되돌려 다른 분기를 탐색하기 위한 백트래킹이다.", "두 재귀 호출 모두 항상 현재 수를 선택한다.", "selected.pop()은 정답 목록 solutions의 마지막 항목을 삭제한다.", "두 번째 재귀 호출은 현재 수를 선택하지 않은 경우이다."], "answer": [0, 1, 4], "exp": ["옳음. 현재 수를 목록과 합에 추가한 뒤 다음 인덱스로 이동한다.", "옳음. 선택 상태를 원래대로 되돌려 미선택 분기를 탐색한다.", "틀림. 하나는 선택, 다른 하나는 미선택이다.", "틀림. selected 목록의 마지막 선택을 제거한다.", "옳음. current_sum과 selected를 바꾸지 않고 다음 수로 이동한다."]}, {"q": "다음 완전 탐색 함수에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def search_full(\n    index: int,\n    current_sum: int,\n) -> None:\n    global visited_full\n    visited_full += 1\n\n    if index == len(numbers):\n        return\n\n    search_full(\n        index + 1,\n        current_sum + numbers[index],\n    )\n\n    search_full(\n        index + 1,\n        current_sum,\n    )", "choices": ["목표 합에 도달하지 못한 분기는 처음부터 자동으로 제거한다.", "각 수에 대해 선택과 미선택 두 분기를 모두 탐색한다.", "가지치기 조건 없이 모든 상태를 방문한다.", "수의 개수가 n개이면 탐색 상태 수는 지수적으로 증가할 수 있다.", "항상 한 개의 경로만 탐색한다."], "answer": [1, 2, 3], "exp": ["틀림. 가지치기 조건이 없다.", "옳음. 현재 수를 포함하는 경우와 포함하지 않는 경우를 모두 호출한다.", "옳음. 목표 초과나 도달 불가능 여부를 검사하지 않는다.", "옳음. 부분집합 수가 2ⁿ개이므로 탐색량도 지수적으로 증가할 수 있다.", "틀림. 모든 선택 조합을 탐색한다."]}, {"q": "다음 정답 정리와 감소율 계산 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "unique_solutions = sorted(\n    {tuple(item) for item in solutions}\n)\n\nreduction_rate = (\n    1 - visited_pruned / visited_full\n) * 100", "choices": ["정답 목록을 튜플 집합으로 바꾸어 중복을 제거한다.", "감소율이 클수록 가지치기가 방문 상태를 더 적게 줄였다는 뜻이다.", "sorted()로 정답을 정렬한다.", "visited_pruned가 작아질수록 감소율은 반드시 작아진다.", "감소율은 완전 탐색 대비 가지치기로 줄어든 방문 비율이다."], "answer": [0, 2, 4], "exp": ["옳음. 튜플은 집합에 넣을 수 있어 중복 제거가 가능하다.", "틀림. 감소율이 클수록 방문 상태를 더 많이 줄인 것이다.", "옳음. 집합 결과를 정렬된 목록으로 만든다.", "틀림. visited_pruned가 작아지면 일반적으로 감소율은 커진다.", "옳음. 1에서 가지치기 방문 비율을 뺀 뒤 백분율로 바꾼다."]}, {"q": "다음 완전 탐색·가지치기·탐욕 전략 비교에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "# 완전 탐색: 모든 선택·미선택 상태 확인\n# 가지치기: 정답 가능성이 없는 상태를 안전하게 제거\n# 탐욕 전략: 현재 단계에서 가장 좋아 보이는 선택 수행", "choices": ["탐욕 전략은 모든 부분집합 합 문제에서 항상 모든 정답을 찾는다.", "완전 탐색은 모든 경우를 확인하므로 정답을 보장할 수 있다.", "가지치기는 정답이 포함된 분기를 의도적으로 제거해야 효율적이다.", "가지치기는 안전한 기준을 사용하면 정답을 유지하면서 탐색량을 줄일 수 있다.", "탐욕 전략은 현재의 최선 선택이 전체 최적해를 보장하는 문제에서만 안전하다."], "answer": [1, 3, 4], "exp": ["틀림. 일반적인 부분집합 합 문제에서는 정답을 놓칠 수 있다.", "옳음. 모든 선택 조합을 확인한다.", "틀림. 정답 가능성이 있는 분기는 제거하면 안 된다.", "옳음. 불가능한 분기만 제거하면 정답은 보존된다.", "옳음. 탐욕 선택 속성과 최적 부분 구조 등이 성립해야 한다."]}],started=new Date();
+let result=null;
+const pad=n=>String(n).padStart(2,"0");
+const fmt=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+const ffmt=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+document.getElementById("start").textContent=fmt(started);
+
+document.getElementById("quiz").innerHTML=Q.map((q,qi)=>`
+<section class="card" id="card${qi}">
+<div class="qtitle">${qi+1}. ${q.q}</div>
+<div class="codebox"><pre>${esc(q.code)}</pre></div>
+<span class="tag">옳은 것 3개 선택</span>
+${q.choices.map((c,ci)=>`
+<label class="choice" id="c${qi}_${ci}">
+<input type="checkbox" name="q${qi}" value="${ci}">
+<b>${ci+1}.</b> ${c}
+</label>`).join("")}
+<div id="e${qi}" class="explain" style="display:none"></div>
+</section>`).join("");
+
+Q.forEach((q,qi)=>{
+  document.querySelectorAll(`input[name="q${qi}"]`).forEach(input=>{
+    input.addEventListener("change",()=>{
+      if(document.querySelectorAll(`input[name="q${qi}"]:checked`).length>3){
+        input.checked=false;
+        alert("각 문항은 3개까지만 선택할 수 있습니다.");
+      }
+    });
+  });
+});
+
+const same=(a,b)=>a.length===b.length&&[...a].sort().every((v,i)=>v===[...b].sort()[i]);
+
+function grade(){
+  const id=document.getElementById("sid").value.trim();
+  const name=document.getElementById("sname").value.trim();
+  if(!id||!name){alert("학번과 이름을 입력하세요.");return;}
+
+  let correct=0;
+  const details=[];
+  const incomplete=[];
+
+  Q.forEach((q,qi)=>{
+    const selected=[...document.querySelectorAll(`input[name="q${qi}"]:checked`)].map(x=>Number(x.value));
+    if(selected.length!==3) incomplete.push(qi+1);
+
+    const ok=same(selected,q.answer);
+    if(ok) correct++;
+
+    document.getElementById(`card${qi}`).classList.add(ok?"correct":"wrong");
+
+    q.choices.forEach((_,ci)=>{
+      const label=document.getElementById(`c${qi}_${ci}`);
+      if(q.answer.includes(ci)) label.style.borderColor="#2e8b57";
+      if(selected.includes(ci)&&!q.answer.includes(ci)) label.style.borderColor="#c94a4a";
+    });
+
+    const e=document.getElementById(`e${qi}`);
+    e.style.display="block";
+    e.innerHTML=`<b>${ok?"정답":"오답"}</b><br>
+    선택: ${selected.length?selected.map(i=>i+1).join(", "):"미응답"} /
+    정답: ${q.answer.map(i=>i+1).join(", ")}
+    <ol>${q.exp.map((x,i)=>`<li><b>${i+1}번</b> ${x}</li>`).join("")}</ol>`;
+
+    details.push({
+      ok,
+      selected:selected.length?selected.map(i=>i+1).join(", "):"미응답",
+      answer:q.answer.map(i=>i+1).join(", ")
+    });
+  });
+
+  if(incomplete.length&&!confirm(`${incomplete.join(", ")}번 문항이 3개 선택되지 않았습니다. 그대로 제출하시겠습니까?`)){
+    return;
+  }
+
+  const ended=new Date();
+  const score=correct*10;
+
+  document.querySelectorAll("input").forEach(x=>x.disabled=true);
+  document.getElementById("submitBtn").disabled=true;
+  document.getElementById("result").style.display="block";
+  document.getElementById("scoreText").textContent=`${score}점 / 100점`;
+  document.getElementById("summaryText").textContent=
+    `정답 ${correct}문항, 오답 ${10-correct}문항 · 제출 시각 ${fmt(ended)}`;
+
+  result={id,name,score,correct,ended,details};
+  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+
+function saveTxt(){
+  if(!result){alert("먼저 제출 및 채점을 완료하세요.");return;}
+
+  const r=result;
+  const lines=[
+    "수행평가명: 수행06 가지치기·탐욕 전략과 완전 탐색 비교",
+    `학번: ${r.id}`,
+    `이름: ${r.name}`,
+    `점수: ${r.score}점`,
+    `정답 문항 수: ${r.correct}/10`,
+    `응시 시작 시각: ${fmt(started)}`,
+    `제출 시각: ${fmt(r.ended)}`,
+    "",
+    "===== 문항별 정오답 및 상세 풀이 ====="
+  ];
+
+  Q.forEach((q,i)=>{
+    const d=r.details[i];
+    lines.push(
+      "",
+      `[${i+1}번] ${d.ok?"정답":"오답"}`,
+      `문제: ${q.q}`,
+      "관련 코드:"
+    );
+    q.code.split("\n").forEach(line=>lines.push(`    ${line}`));
+    lines.push(`선택: ${d.selected}`,`정답: ${d.answer}`);
+
+    q.choices.forEach((choice,j)=>{
+      lines.push(`${j+1}. ${choice}`);
+      lines.push(`   풀이: ${q.exp[j]}`);
+    });
+  });
+
+  const blob=new Blob([lines.join("\n")],{type:"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  const clean=s=>s.replace(/[\\/:*?"<>|\s]+/g,"_");
+
+  a.href=url;
+  a.download=`${clean(r.id)}_${clean(r.name)}_${r.score}_수행06_${ffmt(r.ended)}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>스택·큐 직접 구현 학습·수행평가 통합본</title>
+<style>
+:root {
+  --brand:#1f5e9c; --brand2:#0d9488; --ink:#18212f;
+  --muted:#667085; --line:#d8e1eb; --bg:#f5f8fc; --card:#fff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  line-height:1.7;
+}
+header {
+  background:linear-gradient(135deg,#173d6c,#1f6ea9 58%,#0d9488);
+  color:white; padding:42px 20px 34px;
+}
+header .inner, main { max-width:1280px; margin:auto; }
+h1 {
+  margin:0 0 8px; font-size:clamp(28px,4vw,46px); line-height:1.3;
+}
+header p { margin:0; opacity:.93; }
+.toolbar {
+  position:sticky; top:0; z-index:20; background:rgba(255,255,255,.97);
+  border-bottom:1px solid var(--line); padding:10px 16px;
+  display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
+}
+button {
+  border:0; border-radius:8px; padding:10px 15px;
+  background:var(--brand); color:white; font:inherit; cursor:pointer;
+}
+button.secondary { background:#475467; }
+button.green { background:var(--brand2); }
+main { padding:24px 16px 60px; }
+.card {
+  background:var(--card); border:1px solid var(--line);
+  border-radius:14px; padding:22px; margin-bottom:20px;
+  box-shadow:0 7px 22px rgba(16,24,40,.05);
+}
+.notice { background:#eef7ff; border-left:5px solid var(--brand); }
+h2 { color:#174d7f; margin-top:0; }
+h3 { color:#24618f; }
+.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+.concept { border:1px solid var(--line); border-radius:10px; padding:16px; }
+.visual {
+  display:flex; gap:18px; align-items:flex-end; justify-content:center;
+  min-height:180px; background:#f7fafc; border-radius:10px; padding:18px;
+}
+.stack-boxes { display:flex; flex-direction:column-reverse; gap:4px; }
+.queue-boxes { display:flex; gap:4px; align-items:center; }
+.box {
+  min-width:90px; text-align:center; padding:10px;
+  border:2px solid #3b6f9d; background:#eaf3fb; border-radius:5px; font-weight:700;
+}
+.arrow { color:var(--brand2); font-weight:700; }
+.table-wrap { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; min-width:820px; }
+th,td { border:1px solid var(--line); padding:10px; vertical-align:top; font-size:14px; }
+th { background:#244f7d; color:white; }
+.code-box,.codebox {
+  background:#111827; color:#edf2f7; padding:18px;
+  border-radius:11px; overflow:auto; position:relative; margin:12px 0;
+}
+pre {
+  margin:0; white-space:pre; font-family:Consolas,"Courier New",monospace;
+  font-size:13px; line-height:1.55;
+}
+.code-box button {
+  position:absolute; right:10px; top:10px; font-size:12px;
+  padding:6px 9px; background:#334155;
+}
+.question {
+  border-left:4px solid var(--brand2); background:#f1fbf9;
+  padding:12px 15px; margin:10px 0; border-radius:8px;
+}
+details { border:1px solid var(--line); border-radius:9px; margin-top:12px; }
+summary {
+  cursor:pointer; padding:12px 14px; font-weight:700; background:#f4f7fa;
+}
+details > div { padding:14px; }
+.rubric td:first-child { font-weight:700; background:#f5f8fb; }
+.output {
+  background:#f3f6f9; border:1px solid var(--line);
+  border-radius:10px; padding:15px; overflow:auto;
+}
+.student {
+  display:grid; grid-template-columns:100px 1fr 100px 1fr; gap:8px;
+}
+.student div,.student input { border:1px solid var(--line); padding:10px; }
+.student input { width:100%; font:inherit; }
+.label { background:#eef4fa; font-weight:bold; text-align:center; }
+.qtitle { font-size:18px; font-weight:bold; }
+.choice {
+  display:block; border:1px solid var(--line); border-radius:9px;
+  padding:10px; margin:8px 0; cursor:pointer;
+}
+.choice:hover { background:#f5f8fb; }
+.choice input { margin-right:8px; transform:scale(1.15); }
+.tag {
+  display:inline-block; background:#e8f2fc; color:#174d7f;
+  border-radius:999px; padding:3px 8px; font-size:13px; font-weight:bold;
+}
+.center { text-align:center; }
+.result { display:none; }
+.score { font-size:28px; font-weight:bold; color:var(--brand); }
+.correct { background:#eaf8ef; }
+.wrong { background:#fff0f0; }
+.explain { margin-top:12px; border-top:1px dashed var(--line); padding-top:12px; }
+.section-title {
+  margin:36px 0 18px; padding:15px 18px; border-radius:12px;
+  background:linear-gradient(135deg,#e9f3fb,#eaf9f6);
+  border:1px solid #c8dceb; color:#174d7f;
+}
+@media(max-width:760px) {
+  .grid { grid-template-columns:1fr; }
+  .queue-boxes { flex-wrap:wrap; }
+  .student { grid-template-columns:90px 1fr; }
+}
+@media print {
+  header,.toolbar,.code-box button,.center { display:none!important; }
+  body { background:white; }
+  main { max-width:none; padding:0; }
+  .card { box-shadow:none; break-inside:avoid; }
+  details > div { display:block!important; }
+  .result { display:block!important; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <h1>스택·큐 직접 구현 학습·수행평가 통합본</h1>
+    <p>핵심 개념 · 직접 구현 · 동작 시각화 · 예외 처리 · 수행03 자동 채점</p>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button onclick="document.getElementById('lesson').scrollIntoView({behavior:'smooth'})">학습자료</button>
+  <button class="green" onclick="document.getElementById('assessment').scrollIntoView({behavior:'smooth'})">수행평가</button>
+  <button onclick="window.print()">인쇄 / PDF 저장</button>
+  <button class="secondary" onclick="toggleAnswers()">예시 정답 펼치기·접기</button>
+</div>
+
+<main>
+<section id="lesson">
+  <div class="section-title"><h2 style="margin:0">Ⅰ. 스택·큐 학습 및 실습 자료</h2></div>
+  
+<section class="card notice">
+<b>성취 목표</b><br/>
+  스택과 큐의 자료 처리 원리를 설명하고, 순차적인 데이터 구조를 이용하여 직접 구현하며,
+  각 연산에 따른 내부 상태 변화를 시각적으로 표현한다.
+</section>
+<section class="card">
+<h2>1. 핵심 개념</h2>
+<div class="grid">
+<div class="concept">
+<h3>스택</h3>
+<p>마지막에 삽입한 자료가 가장 먼저 삭제되는 <b>LIFO</b> 구조이다.</p>
+<div class="visual">
+<div>
+<div>TOP</div>
+<div class="stack-boxes">
+<div class="box">10</div>
+<div class="box">20</div>
+<div class="box">30</div>
+</div>
+</div>
+</div>
+</div>
+<div class="concept">
+<h3>큐</h3>
+<p>먼저 삽입한 자료가 가장 먼저 삭제되는 <b>FIFO</b> 구조이다.</p>
+<div class="visual">
+<span class="arrow">FRONT ←</span>
+<div class="queue-boxes">
+<div class="box">10</div>
+<div class="box">20</div>
+<div class="box">30</div>
+</div>
+<span class="arrow">← REAR</span>
+</div>
+</div>
+</div>
+</section>
+<section class="card">
+<h2>2. 수행 과제</h2>
+<ol>
+<li>리스트를 이용하여 스택을 직접 구현한다.</li>
+<li><code>deque</code>를 이용하여 큐를 직접 구현한다.</li>
+<li>삽입·삭제·조회 연산을 수행하고 각 단계의 상태를 출력한다.</li>
+<li>빈 자료구조에서 삭제 또는 조회할 때 발생하는 오류를 처리한다.</li>
+<li>스택과 큐의 차이와 활용 사례를 설명한다.</li>
+</ol>
+</section>
+<section class="card">
+<h2>3. 제출 산출물</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>산출물</th><th>포함 내용</th></tr>
+</thead>
+<tbody>
+<tr><td>소스 코드</td><td>Stack 클래스, Queue 클래스, 상태 시각화 함수, 예외 처리 코드</td></tr>
+<tr><td>실행 결과</td><td>각 연산 이후 스택과 큐의 상태 변화</td></tr>
+<tr><td>동작 원리 설명서</td><td>LIFO, FIFO, 삽입·삭제 위치, 활용 사례</td></tr>
+<tr><td>테스트 기록</td><td>정상 연산, 빈 스택·빈 큐, 경계 상황 검사</td></tr>
+<tr><td>성찰 기록</td><td>두 자료구조의 차이와 적절한 활용 상황</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>4. 정답 포함 전체 코드</h2>
+<div class="code-box">
+<button onclick="copyCode()">코드 복사</button>
+<pre id="code">from collections import deque
+from typing import Any
+
+
+class Stack:
+    """리스트를 이용한 스택 구현."""
+
+    def __init__(self) -&gt; None:
+        self.items: list[Any] = []
+
+    def push(self, value: Any) -&gt; None:
+        """스택의 맨 위에 자료를 삽입한다."""
+        self.items.append(value)
+
+    def pop(self) -&gt; Any:
+        """스택의 맨 위 자료를 삭제하고 반환한다."""
+        if self.is_empty():
+            raise IndexError("빈 스택에서는 pop할 수 없습니다.")
+        return self.items.pop()
+
+    def peek(self) -&gt; Any:
+        """스택의 맨 위 자료를 삭제하지 않고 반환한다."""
+        if self.is_empty():
+            raise IndexError("빈 스택에서는 peek할 수 없습니다.")
+        return self.items[-1]
+
+    def is_empty(self) -&gt; bool:
+        """스택이 비어 있는지 확인한다."""
+        return len(self.items) == 0
+
+    def size(self) -&gt; int:
+        """스택에 저장된 자료의 수를 반환한다."""
+        return len(self.items)
+
+    def snapshot(self) -&gt; list[Any]:
+        """현재 스택 상태의 복사본을 반환한다."""
+        return self.items.copy()
+
+
+class Queue:
+    """deque를 이용한 큐 구현."""
+
+    def __init__(self) -&gt; None:
+        self.items: deque[Any] = deque()
+
+    def enqueue(self, value: Any) -&gt; None:
+        """큐의 뒤쪽에 자료를 삽입한다."""
+        self.items.append(value)
+
+    def dequeue(self) -&gt; Any:
+        """큐의 앞쪽 자료를 삭제하고 반환한다."""
+        if self.is_empty():
+            raise IndexError("빈 큐에서는 dequeue할 수 없습니다.")
+        return self.items.popleft()
+
+    def front(self) -&gt; Any:
+        """큐의 앞쪽 자료를 삭제하지 않고 반환한다."""
+        if self.is_empty():
+            raise IndexError("빈 큐에서는 front를 확인할 수 없습니다.")
+        return self.items[0]
+
+    def is_empty(self) -&gt; bool:
+        """큐가 비어 있는지 확인한다."""
+        return len(self.items) == 0
+
+    def size(self) -&gt; int:
+        """큐에 저장된 자료의 수를 반환한다."""
+        return len(self.items)
+
+    def snapshot(self) -&gt; list[Any]:
+        """현재 큐 상태를 리스트로 변환하여 반환한다."""
+        return list(self.items)
+
+
+def show_stack_state(action: str, stack: Stack) -&gt; None:
+    """스택의 현재 상태를 시각적으로 출력한다."""
+    print(f"{action:&lt;18} -&gt; {stack.snapshot()}")
+
+    if stack.is_empty():
+        print("   [비어 있음]")
+    else:
+        print("   TOP")
+        for value in reversed(stack.snapshot()):
+            print(f"  ┌───────┐")
+            print(f"  │ {str(value):^5} │")
+            print(f"  └───────┘")
+
+
+def show_queue_state(action: str, queue: Queue) -&gt; None:
+    """큐의 현재 상태를 시각적으로 출력한다."""
+    print(f"{action:&lt;18} -&gt; {queue.snapshot()}")
+
+    if queue.is_empty():
+        print("   FRONT [비어 있음] REAR")
+    else:
+        values = " | ".join(str(value) for value in queue.snapshot())
+        print(f"   FRONT ← [ {values} ] ← REAR")
+
+
+stack = Stack()
+queue = Queue()
+
+print("=" * 50)
+print("[스택 상태 변화]")
+print("=" * 50)
+
+for value in [10, 20, 30]:
+    stack.push(value)
+    show_stack_state(f"push({value})", stack)
+
+removed_stack = stack.pop()
+show_stack_state(f"pop() = {removed_stack}", stack)
+
+top_value = stack.peek()
+show_stack_state(f"peek() = {top_value}", stack)
+
+print("\n" + "=" * 50)
+print("[큐 상태 변화]")
+print("=" * 50)
+
+for value in [10, 20, 30]:
+    queue.enqueue(value)
+    show_queue_state(f"enqueue({value})", queue)
+
+removed_queue = queue.dequeue()
+show_queue_state(f"dequeue() = {removed_queue}", queue)
+
+front_value = queue.front()
+show_queue_state(f"front() = {front_value}", queue)
+
+print("\n" + "=" * 50)
+print("[예외 처리 확인]")
+print("=" * 50)
+
+empty_stack = Stack()
+empty_queue = Queue()
+
+for operation in [
+    lambda: empty_stack.pop(),
+    lambda: empty_stack.peek(),
+    lambda: empty_queue.dequeue(),
+    lambda: empty_queue.front(),
+]:
+    try:
+        operation()
+    except IndexError as error:
+        print(error)</pre>
+</div>
+</section>
+<section class="card">
+<h2>5. 예상 실행 결과</h2>
+<div class="output"><pre>[스택 상태 변화]
+push(10)           -&gt; [10]
+push(20)           -&gt; [10, 20]
+push(30)           -&gt; [10, 20, 30]
+pop() = 30         -&gt; [10, 20]
+peek() = 20        -&gt; [10, 20]
+
+[큐 상태 변화]
+enqueue(10)        -&gt; [10]
+enqueue(20)        -&gt; [10, 20]
+enqueue(30)        -&gt; [10, 20, 30]
+dequeue() = 10     -&gt; [20, 30]
+front() = 20       -&gt; [20, 30]
+
+[예외 처리 확인]
+빈 스택에서는 pop할 수 없습니다.
+빈 스택에서는 peek할 수 없습니다.
+빈 큐에서는 dequeue할 수 없습니다.
+빈 큐에서는 front를 확인할 수 없습니다.</pre></div>
+</section>
+<section class="card">
+<h2>6. 수행평가 문항</h2>
+<div class="question">1. 스택과 큐의 자료 처리 순서를 LIFO와 FIFO를 사용하여 설명하시오.</div>
+<div class="question">2. 스택에서 <code>push</code>, <code>pop</code>, <code>peek</code>가 각각 수행하는 기능을 설명하시오.</div>
+<div class="question">3. 큐에서 <code>enqueue</code>, <code>dequeue</code>, <code>front</code>가 각각 수행하는 기능을 설명하시오.</div>
+<div class="question">4. 빈 스택과 빈 큐에서 삭제·조회 연산을 수행할 때 예외 처리가 필요한 이유를 설명하시오.</div>
+<div class="question">5. 스택과 큐가 실제 프로그램에서 활용되는 사례를 각각 두 가지 제시하시오.</div>
+</section>
+<section class="card">
+<h2>7. 예시 정답</h2>
+<details class="answer">
+<summary>문항 1 정답</summary>
+<div>
+      스택은 마지막에 삽입한 자료가 먼저 삭제되는 LIFO 구조이고,
+      큐는 먼저 삽입한 자료가 먼저 삭제되는 FIFO 구조이다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 2 정답</summary>
+<div>
+      push는 스택의 맨 위에 자료를 삽입하고, pop은 맨 위 자료를 삭제하면서 반환하며,
+      peek는 맨 위 자료를 삭제하지 않고 확인한다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 3 정답</summary>
+<div>
+      enqueue는 큐의 뒤쪽에 자료를 삽입하고, dequeue는 큐의 앞쪽 자료를 삭제하면서 반환하며,
+      front는 앞쪽 자료를 삭제하지 않고 확인한다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 4 정답</summary>
+<div>
+      비어 있는 자료구조에는 삭제하거나 조회할 자료가 없으므로 연산을 그대로 수행하면
+      프로그램 오류가 발생할 수 있다. 예외 처리를 통해 잘못된 연산을 명확하게 알리고
+      프로그램이 예측 가능한 방식으로 동작하도록 해야 한다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 5 정답</summary>
+<div>
+      스택은 실행 취소, 괄호 검사, 함수 호출 관리 등에 활용된다.
+      큐는 프린터 대기열, 작업 예약, 메시지 처리, 너비 우선 탐색 등에 활용된다.
+    </div>
+</details>
+</section>
+<section class="card">
+<h2>8. 분석적 루브릭</h2>
+<div class="table-wrap">
+<table class="rubric">
+<thead>
+<tr>
+<th>평가 요소</th>
+<th>A 수준</th>
+<th>B 수준</th>
+<th>C 수준</th>
+<th>D 수준</th>
+<th>E 수준</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>원리 이해<br/>20점</td>
+<td>LIFO와 FIFO, 삽입·삭제 위치, 예외 상황을 정확하고 논리적으로 설명함.</td>
+<td>두 자료구조의 원리와 주요 연산을 정확히 설명함.</td>
+<td>기본 원리와 연산을 설명함.</td>
+<td>원리 또는 연산 설명이 부분적임.</td>
+<td>개념을 인지하나 설명이 매우 제한적임.</td>
+</tr>
+<tr>
+<td>자료구조 구현<br/>35점</td>
+<td>스택과 큐를 정확하게 구현하고 크기 확인, 상태 복사, 예외 처리까지 적용함.</td>
+<td>스택과 큐의 주요 기능을 정확하게 구현함.</td>
+<td>기본 삽입·삭제·조회 기능을 구현함.</td>
+<td>일부 기능만 구현하거나 오류가 있음.</td>
+<td>코드의 일부만 작성함.</td>
+</tr>
+<tr>
+<td>동작 시각화<br/>25점</td>
+<td>모든 연산 후 상태를 정확하고 이해하기 쉽게 시각화함.</td>
+<td>주요 연산의 상태 변화를 정확하게 나타냄.</td>
+<td>기본 상태 변화를 나타냄.</td>
+<td>상태 변화 표현이 일부 부정확함.</td>
+<td>시각화가 거의 없음.</td>
+</tr>
+<tr>
+<td>테스트·성찰<br/>20점</td>
+<td>정상·경계·오류 상황을 다양하게 시험하고 활용 가치와 개선점을 구체적으로 설명함.</td>
+<td>여러 시험을 수행하고 활용 사례를 적절히 설명함.</td>
+<td>기본 시험과 활용 사례를 제시함.</td>
+<td>시험이나 성찰이 제한적임.</td>
+<td>시험 기록과 성찰이 거의 없음.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>9. 종합 정리</h2>
+<p><b>스택:</b> 한쪽 끝에서 삽입과 삭제가 이루어지며 최근 자료를 먼저 처리해야 하는 문제에 적합하다.</p>
+<p><b>큐:</b> 뒤쪽에서 삽입하고 앞쪽에서 삭제하며 요청된 순서를 유지해야 하는 문제에 적합하다.</p>
+<p><b>구현 관점:</b> 스택은 리스트의 <code>append()</code>와 <code>pop()</code>으로 효율적으로 구현할 수 있고, 큐는 앞쪽 삭제가 빠른 <code>deque</code>가 적절하다.</p>
+</section>
+
+</section>
+
+<section id="assessment">
+  <div class="section-title"><h2 style="margin:0">Ⅱ. 수행03 자동 채점 평가</h2></div>
+  
+<section class="card notice"><b>응시 안내</b><br/>모든 문항은 관련 코드를 먼저 보여 줍니다. 옳은 설명 3개를 모두 선택해야 정답으로 인정됩니다.</section>
+<section class="card"><div class="student"><div class="label">학번</div><input id="sid" placeholder="예: 1101"/><div class="label">이름</div><input id="sname" placeholder="예: 홍길동"/></div><p>응시 시작 시각: <span id="start"></span></p></section>
+<div id="quiz"></div>
+<section class="card center"><button id="submitBtn" onclick="grade()">제출 및 채점</button><button class="secondary" onclick="window.print()">인쇄 / PDF</button></section>
+<section class="card result" id="result"><h2>채점 결과</h2><div class="score" id="scoreText"></div><p id="summaryText"></p><button onclick="saveTxt()">결과 TXT 저장</button></section>
+
+</section>
+</main>
+
+<script>
+function copyCode() {
+  const code = document.getElementById("code").innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    alert("코드를 복사했습니다.");
+  });
+}
+
+function toggleAnswers() {
+  const items = [...document.querySelectorAll("details.answer")];
+  const shouldOpen = items.some(item => !item.open);
+  items.forEach(item => item.open = shouldOpen);
+}
+</script>
+<script>
+const Q=[{"q": "다음 Stack 클래스 초기화 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "class Stack:\n    def __init__(self) -> None:\n        self.items: list[Any] = []", "choices": ["Stack 객체가 생성될 때 빈 리스트를 준비한다.", "이 코드는 Queue 객체만 생성한다.", "self.items는 스택 자료를 저장하는 내부 목록이다.", "self.items에는 처음부터 1이 저장된다.", "새로 만든 스택은 비어 있는 상태이다."], "answer": [0, 2, 4], "exp": ["옳음. 생성자에서 빈 리스트를 만든다.", "틀림. Stack 클래스의 생성자이다.", "옳음. push, pop, peek 연산이 이 목록을 사용한다.", "틀림. 초기값은 빈 리스트이다.", "옳음. 빈 리스트의 길이는 0이다."]}, {"q": "다음 push() 메서드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def push(self, value: Any) -> None:\n    self.items.append(value)", "choices": ["스택의 첫 번째 자료를 삭제한다.", "append()는 리스트 끝에 자료를 추가한다.", "스택이 비어 있을 때는 사용할 수 없다.", "value가 스택의 맨 위에 삽입된다.", "메서드의 반환값은 None이다."], "answer": [1, 3, 4], "exp": ["틀림. push는 삽입 연산이다.", "옳음. 리스트 끝을 스택의 TOP으로 사용한다.", "틀림. 빈 스택에도 정상적으로 자료를 삽입할 수 있다.", "옳음. 새 자료가 가장 최근 자료가 된다.", "옳음. 반환형 주석이 None이며 별도 return 값이 없다."]}, {"q": "다음 pop() 메서드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def pop(self) -> Any:\n    if self.is_empty():\n        raise IndexError(\"빈 스택에서는 pop할 수 없습니다.\")\n    return self.items.pop()", "choices": ["스택이 비어 있는지 먼저 검사한다.", "항상 첫 번째 자료를 삭제한다.", "빈 스택이면 IndexError를 발생시킨다.", "정상 상태에서는 맨 위 자료를 삭제하고 반환한다.", "스택이 비어 있어도 반드시 0을 반환한다."], "answer": [0, 2, 3], "exp": ["옳음. 삭제 전에 is_empty()를 호출한다.", "틀림. 마지막 자료를 삭제한다.", "옳음. 잘못된 삭제 연산을 예외로 알린다.", "옳음. 인수 없는 리스트 pop()은 마지막 자료를 제거하고 반환한다.", "틀림. 빈 스택에서는 예외가 발생한다."]}, {"q": "다음 peek() 메서드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def peek(self) -> Any:\n    if self.is_empty():\n        raise IndexError(\"빈 스택에서는 peek할 수 없습니다.\")\n    return self.items[-1]", "choices": ["항상 스택의 첫 자료를 반환한다.", "스택 맨 위 자료를 확인한다.", "자료를 삭제하지 않고 반환한다.", "호출할 때마다 스택 크기가 1 감소한다.", "빈 스택에서는 IndexError를 발생시킨다."], "answer": [1, 2, 4], "exp": ["틀림. 첫 자료가 아니라 마지막 자료를 반환한다.", "옳음. items[-1]은 마지막 자료이다.", "옳음. 인덱싱은 자료를 삭제하지 않는다.", "틀림. peek는 크기를 바꾸지 않는다.", "옳음. 조회할 자료가 없으면 예외를 발생시킨다."]}, {"q": "다음 Queue 클래스 초기화 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "class Queue:\n    def __init__(self) -> None:\n        self.items: deque[Any] = deque()", "choices": ["큐의 내부 저장 구조로 deque를 사용한다.", "반드시 하나의 자료가 저장된 상태로 시작한다.", "이 코드만으로 큐의 모든 자료가 자동 정렬된다.", "새 Queue 객체는 비어 있는 상태로 시작한다.", "앞쪽 삭제에 적합한 자료구조를 준비한다."], "answer": [0, 3, 4], "exp": ["옳음. collections.deque 객체를 생성한다.", "틀림. 초기 deque는 비어 있다.", "틀림. deque는 자동 정렬 기능이 아니다.", "옳음. 인수가 없는 deque()는 빈 덱이다.", "옳음. deque는 popleft()를 효율적으로 지원한다."]}, {"q": "다음 enqueue()와 dequeue()에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def enqueue(self, value: Any) -> None:\n    self.items.append(value)\n\ndef dequeue(self) -> Any:\n    if self.is_empty():\n        raise IndexError(\"빈 큐에서는 dequeue할 수 없습니다.\")\n    return self.items.popleft()", "choices": ["dequeue()는 항상 가장 최근 자료를 제거한다.", "enqueue()는 큐의 모든 자료를 삭제한다.", "enqueue()는 큐 뒤쪽에 자료를 추가한다.", "dequeue()는 큐 앞쪽 자료를 삭제하고 반환한다.", "두 메서드의 조합으로 FIFO 처리를 구현한다."], "answer": [2, 3, 4], "exp": ["틀림. 가장 오래된 앞쪽 자료를 제거한다.", "틀림. enqueue는 삽입 연산이다.", "옳음. append()로 rear 쪽에 추가한다.", "옳음. popleft()로 front 자료를 제거한다.", "옳음. 먼저 들어온 자료가 먼저 나간다."]}, {"q": "다음 front()와 snapshot()에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def front(self) -> Any:\n    if self.is_empty():\n        raise IndexError(\"빈 큐에서는 front를 확인할 수 없습니다.\")\n    return self.items[0]\n\ndef snapshot(self) -> list[Any]:\n    return list(self.items)", "choices": ["front()는 큐의 앞쪽 자료를 삭제하지 않고 확인한다.", "snapshot()은 현재 큐 상태를 리스트로 변환한다.", "front()는 큐의 뒤쪽 자료를 삭제한다.", "snapshot()은 원본 큐를 비운다.", "snapshot()을 호출해도 원본 큐의 순서는 유지된다."], "answer": [0, 1, 4], "exp": ["옳음. items[0]을 조회만 한다.", "옳음. deque의 내용을 리스트로 복사해 반환한다.", "틀림. 삭제하지 않으며 앞쪽 자료를 조회한다.", "틀림. 원본 큐는 그대로 유지된다.", "옳음. list() 변환은 원본 deque를 변경하지 않는다."]}, {"q": "다음 코드의 실행 결과에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "stack = Stack()\nfor value in [10, 20, 30]:\n    stack.push(value)\n\nremoved = stack.pop()\ntop = stack.peek()", "choices": ["removed에는 10이 저장된다.", "removed에는 30이 저장된다.", "pop() 이후 스택 상태는 [10, 20]이다.", "top에는 20이 저장되고 스택 상태는 변하지 않는다.", "peek() 이후 스택은 [10]이 된다."], "answer": [1, 2, 3], "exp": ["틀림. 10은 가장 먼저 들어간 자료이다.", "옳음. 마지막에 넣은 30이 먼저 제거된다.", "옳음. 30을 제거한 뒤 10과 20이 남는다.", "옳음. peek는 20을 조회만 한다.", "틀림. peek는 자료를 삭제하지 않는다."]}, {"q": "다음 코드의 실행 결과에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "queue = Queue()\nfor value in [10, 20, 30]:\n    queue.enqueue(value)\n\nremoved = queue.dequeue()\nfirst = queue.front()", "choices": ["removed에는 10이 저장된다.", "removed에는 30이 저장된다.", "dequeue() 이후 큐 상태는 [20, 30]이다.", "front() 이후 큐 상태는 [30]이다.", "first에는 20이 저장되고 큐 상태는 변하지 않는다."], "answer": [0, 2, 4], "exp": ["옳음. 가장 먼저 넣은 10이 먼저 제거된다.", "틀림. 30은 가장 나중에 들어간 자료이다.", "옳음. 10을 제거한 뒤 20과 30이 남는다.", "틀림. front는 자료를 삭제하지 않는다.", "옳음. front는 20을 조회만 한다."]}, {"q": "다음 예외 처리 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "empty_stack = Stack()\nempty_queue = Queue()\n\nfor operation in [\n    lambda: empty_stack.pop(),\n    lambda: empty_stack.peek(),\n    lambda: empty_queue.dequeue(),\n    lambda: empty_queue.front(),\n]:\n    try:\n        operation()\n    except IndexError as error:\n        print(error)", "choices": ["첫 번째 오류가 발생하면 반드시 전체 프로그램이 비정상 종료한다.", "빈 자료구조에서 잘못된 삭제·조회 연산을 시험한다.", "이 코드는 정상 자료가 있는 스택과 큐만 시험한다.", "각 lambda는 나중에 호출할 연산을 표현한다.", "IndexError가 발생하면 오류 메시지를 출력한다."], "answer": [1, 3, 4], "exp": ["틀림. IndexError를 처리하므로 다음 연산 시험을 계속할 수 있다.", "옳음. 빈 스택과 빈 큐의 경계 상황을 검사한다.", "틀림. 비어 있는 자료구조를 대상으로 한다.", "옳음. lambda로 인수 없는 호출 함수를 목록에 저장한다.", "옳음. except 문에서 잡아 메시지를 출력한다."]}],started=new Date();let result=null;
+const pad=n=>String(n).padStart(2,"0");
+const fmt=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+const ffmt=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+document.getElementById("start").textContent=fmt(started);
+document.getElementById("quiz").innerHTML=Q.map((q,qi)=>`<section class="card" id="card${qi}"><div class="qtitle">${qi+1}. ${q.q}</div><div class="codebox"><pre>${esc(q.code)}</pre></div><span class="tag">옳은 것 3개 선택</span>${q.choices.map((c,ci)=>`<label class="choice" id="c${qi}_${ci}"><input type="checkbox" name="q${qi}" value="${ci}"><b>${ci+1}.</b> ${c}</label>`).join("")}<div id="e${qi}" class="explain" style="display:none"></div></section>`).join("");
+Q.forEach((q,qi)=>document.querySelectorAll(`input[name="q${qi}"]`).forEach(x=>x.onchange=()=>{if(document.querySelectorAll(`input[name="q${qi}"]:checked`).length>3){x.checked=false;alert("3개까지만 선택할 수 있습니다.");}}));
+const same=(a,b)=>a.length===b.length&&[...a].sort().every((v,i)=>v===[...b].sort()[i]);
+function grade(){
+ const id=sid.value.trim(),name=sname.value.trim();if(!id||!name){alert("학번과 이름을 입력하세요.");return}
+ let correct=0,details=[],incomplete=[];
+ Q.forEach((q,qi)=>{const selected=[...document.querySelectorAll(`input[name="q${qi}"]:checked`)].map(x=>+x.value);if(selected.length!==3)incomplete.push(qi+1);const ok=same(selected,q.answer);if(ok)correct++;
+ const card=document.getElementById(`card${qi}`);card.classList.add(ok?"correct":"wrong");
+ q.choices.forEach((_,ci)=>{const l=document.getElementById(`c${qi}_${ci}`);if(q.answer.includes(ci))l.style.borderColor="#2e8b57";if(selected.includes(ci)&&!q.answer.includes(ci))l.style.borderColor="#c94a4a";});
+ const e=document.getElementById(`e${qi}`);e.style.display="block";e.innerHTML=`<b>${ok?"정답":"오답"}</b><br>선택: ${selected.length?selected.map(i=>i+1).join(", "):"미응답"} / 정답: ${q.answer.map(i=>i+1).join(", ")}<ol>${q.exp.map((x,i)=>`<li><b>${i+1}번</b> ${x}</li>`).join("")}</ol>`;
+ details.push({ok,selected:selected.length?selected.map(i=>i+1).join(", "):"미응답",answer:q.answer.map(i=>i+1).join(", ")});});
+ if(incomplete.length&&!confirm(`${incomplete.join(", ")}번 문항이 3개 선택되지 않았습니다. 제출할까요?`))return;
+ const ended=new Date(),score=correct*10;document.querySelectorAll("input").forEach(x=>x.disabled=true);submitBtn.disabled=true;result={id,name,score,correct,ended,details};
+ document.getElementById("result").style.display="block";scoreText.textContent=`${score}점 / 100점`;summaryText.textContent=`정답 ${correct}문항, 오답 ${10-correct}문항 · 제출 ${fmt(ended)}`;document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+function saveTxt(){
+ if(!result){alert("먼저 제출하세요.");return}const r=result,L=["수행평가명: 수행03 스택·큐 직접 구현과 동작 시각화",`학번: ${r.id}`,`이름: ${r.name}`,`점수: ${r.score}점`,`정답 문항 수: ${r.correct}/10`,`시작 시각: ${fmt(started)}`,`제출 시각: ${fmt(r.ended)}`,"","===== 문항별 정오답 및 상세 풀이 ====="];
+ Q.forEach((q,i)=>{const d=r.details[i];L.push("",`[${i+1}번] ${d.ok?"정답":"오답"}`,`문제: ${q.q}`,"관련 코드:");q.code.split("\n").forEach(line=>L.push(`    ${line}`));L.push(`선택: ${d.selected}`,`정답: ${d.answer}`);q.choices.forEach((c,j)=>L.push(`${j+1}. ${c}`,`   풀이: ${q.exp[j]}`));});
+ const blob=new Blob([L.join("\n")],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),clean=s=>s.replace(/[\\/:*?"<>|\s]+/g,"_");a.href=url;a.download=`${clean(r.id)}_${clean(r.name)}_${r.score}_수행03_${ffmt(r.ended)}.txt`;a.click();URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>오픈소스·라이브러리 협력 프로젝트 학습·수행평가 통합본</title>
+<style>
+:root {
+  --brand:#1f5e9c; --brand2:#0d9488; --ink:#18212f;
+  --muted:#667085; --line:#d8e1eb; --bg:#f5f8fc; --card:#fff;
+  --good:#edf8f1; --warn:#fff6e8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  line-height:1.7;
+}
+header {
+  background:linear-gradient(135deg,#173d6c,#1f6ea9 58%,#0d9488);
+  color:white; padding:42px 20px 34px;
+}
+header .inner, main { max-width:1280px; margin:auto; }
+h1 { margin:0 0 8px; font-size:clamp(28px,4vw,46px); line-height:1.3; }
+header p { margin:0; opacity:.93; }
+.toolbar {
+  position:sticky; top:0; z-index:20; background:rgba(255,255,255,.97);
+  border-bottom:1px solid var(--line); padding:10px 16px;
+  display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
+}
+button {
+  border:0; border-radius:8px; padding:10px 15px;
+  background:var(--brand); color:white; font:inherit; cursor:pointer;
+}
+button.secondary { background:#475467; }
+button.green { background:var(--brand2); }
+main { padding:24px 16px 60px; }
+.card {
+  background:var(--card); border:1px solid var(--line);
+  border-radius:14px; padding:22px; margin-bottom:20px;
+  box-shadow:0 7px 22px rgba(16,24,40,.05);
+}
+.notice { background:#eef7ff; border-left:5px solid var(--brand); }
+h2 { color:#174d7f; margin-top:0; }
+h3 { color:#24618f; }
+.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+.concept { border:1px solid var(--line); border-radius:10px; padding:16px; }
+.good { background:var(--good); }
+.warn { background:var(--warn); }
+.flow {
+  display:flex; align-items:center; justify-content:center;
+  flex-wrap:wrap; gap:10px; margin:18px 0;
+}
+.flow span {
+  padding:10px 13px; background:#eaf3fb;
+  border:1px solid #b8cfe3; border-radius:8px; font-weight:700;
+}
+.flow b { color:var(--brand2); }
+.table-wrap { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; min-width:920px; }
+th,td { border:1px solid var(--line); padding:10px; vertical-align:top; font-size:14px; }
+th { background:#244f7d; color:white; }
+.code-box,.codebox {
+  background:#111827; color:#edf2f7; padding:18px;
+  border-radius:11px; overflow:auto; position:relative; margin:12px 0;
+}
+pre {
+  margin:0; white-space:pre; font-family:Consolas,"Courier New",monospace;
+  font-size:13px; line-height:1.55;
+}
+.code-box button {
+  position:absolute; right:10px; top:10px; font-size:12px;
+  padding:6px 9px; background:#334155;
+}
+.output {
+  background:#f3f6f9; border:1px solid var(--line);
+  border-radius:10px; padding:15px; overflow:auto;
+}
+.question {
+  border-left:4px solid var(--brand2); background:#f1fbf9;
+  padding:12px 15px; margin:10px 0; border-radius:8px;
+}
+details { border:1px solid var(--line); border-radius:9px; margin-top:12px; }
+summary {
+  cursor:pointer; padding:12px 14px; font-weight:700; background:#f4f7fa;
+}
+details > div { padding:14px; }
+.rubric td:first-child { font-weight:700; background:#f5f8fb; }
+.sheet {
+  display:grid; grid-template-columns:150px 1fr; gap:8px;
+}
+.sheet div {
+  border:1px solid var(--line); padding:10px; min-height:42px;
+}
+.sheet .label { background:#f4f7fa; font-weight:700; }
+.student {
+  display:grid; grid-template-columns:100px 1fr 100px 1fr; gap:8px;
+}
+.student div,.student input { border:1px solid var(--line); padding:10px; }
+.student input { width:100%; font:inherit; }
+.label { background:#eef4fa; font-weight:bold; text-align:center; }
+.qtitle { font-size:18px; font-weight:bold; }
+.choice {
+  display:block; border:1px solid var(--line); border-radius:9px;
+  padding:10px; margin:8px 0; cursor:pointer;
+}
+.choice:hover { background:#f5f8fb; }
+.choice input { margin-right:8px; transform:scale(1.15); }
+.tag {
+  display:inline-block; background:#e8f2fc; color:#174d7f;
+  border-radius:999px; padding:3px 8px; font-size:13px; font-weight:bold;
+}
+.center { text-align:center; }
+.result { display:none; }
+.score { font-size:28px; font-weight:bold; color:var(--brand); }
+.correct { background:#eaf8ef; }
+.wrong { background:#fff0f0; }
+.explain { margin-top:12px; border-top:1px dashed var(--line); padding-top:12px; }
+.section-title {
+  margin:36px 0 18px; padding:15px 18px; border-radius:12px;
+  background:linear-gradient(135deg,#e9f3fb,#eaf9f6);
+  border:1px solid #c8dceb; color:#174d7f;
+}
+@media(max-width:850px) {
+  .grid { grid-template-columns:1fr; }
+  .sheet { grid-template-columns:110px 1fr; }
+  .student { grid-template-columns:90px 1fr; }
+}
+@media print {
+  header,.toolbar,.code-box button,.center { display:none!important; }
+  body { background:white; }
+  main { max-width:none; padding:0; }
+  .card { box-shadow:none; break-inside:avoid; }
+  details > div { display:block!important; }
+  .result { display:block!important; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <h1>오픈소스·라이브러리 협력 프로젝트 학습·수행평가 통합본</h1>
+    <p>Pandas · Matplotlib · 한글 시각화 · 데이터 대시보드 · 라이선스 · 수행10 자동 채점</p>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button onclick="document.getElementById('lesson').scrollIntoView({behavior:'smooth'})">학습자료</button>
+  <button class="green" onclick="document.getElementById('assessment').scrollIntoView({behavior:'smooth'})">수행평가</button>
+  <button onclick="window.print()">인쇄 / PDF 저장</button>
+  <button class="secondary" onclick="toggleAnswers()">예시 정답 펼치기·접기</button>
+</div>
+
+<main>
+<section id="lesson">
+  <div class="section-title"><h2 style="margin:0">Ⅰ. 오픈소스·라이브러리 협력 프로젝트 학습자료</h2></div>
+  
+<section class="card notice">
+<b>성취 목표</b><br/>
+  오픈소스와 라이브러리의 기능 및 라이선스를 이해하고, 팀원과 역할을 분담하여
+  데이터 수집·전처리·검색·시각화 기능을 갖춘 프로그램을 협력적으로 개발한다.
+</section>
+<section class="card">
+<h2>1. 프로젝트 개요</h2>
+<div class="sheet">
+<div class="label">프로젝트명</div>
+<div>학교생활 데이터 검색·분석 대시보드</div>
+<div class="label">해결할 문제</div>
+<div>급식·공지·행사 자료가 흩어져 있어 필요한 정보를 빠르게 찾기 어려운 문제</div>
+<div class="label">주요 사용자</div>
+<div>학생, 교사, 학교 행사 담당자</div>
+<div class="label">사용 기술</div>
+<div>Python, Pandas, Matplotlib, CSV</div>
+<div class="label">핵심 산출물</div>
+<div>소스 코드, 정제 데이터, 검색 결과, 그래프 2종, 협업 기록, 발표·성찰 보고서</div>
+</div>
+</section>
+<section class="card">
+<h2>2. Matplotlib 한글 글꼴 설정</h2>
+<div class="grid">
+<div class="concept good">
+<h3>Windows 환경</h3>
+<div class="output"><pre>plt.rcParams["font.family"] = "Malgun Gothic"
+plt.rcParams["axes.unicode_minus"] = False</pre></div>
+<p>맑은 고딕을 사용하여 그래프 제목, 축 이름, 범례의 한글이 깨지지 않도록 한다.</p>
+</div>
+<div class="concept warn">
+<h3>운영체제별 고려</h3>
+<p>Windows는 Malgun Gothic, macOS는 AppleGothic, Linux·Colab은 설치된 한글 글꼴을 사용해야 한다.</p>
+<p><code>axes.unicode_minus=False</code>는 음수 기호가 네모로 표시되는 문제를 줄인다.</p>
+</div>
+</div>
+</section>
+<section class="card">
+<h2>3. 오픈소스와 라이브러리 조사</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>도구</th><th>프로젝트에서의 역할</th><th>확인할 사항</th></tr>
+</thead>
+<tbody>
+<tr><td>Python</td><td>전체 프로그램의 실행 환경</td><td>버전과 배포 조건</td></tr>
+<tr><td>Pandas</td><td>CSV 입력, 결측값 처리, 조건 검색, 집계</td><td>BSD 3-Clause License</td></tr>
+<tr><td>Matplotlib</td><td>막대그래프와 선그래프 생성</td><td>라이선스와 글꼴 환경</td></tr>
+<tr><td>CSV</td><td>원본·정제·검색 결과 데이터 저장</td><td>자료 출처와 개인정보 포함 여부</td></tr>
+<tr><td>Git 또는 공유 폴더</td><td>코드와 문서 변경 내용 공유</td><td>작성자·변경 이유·충돌 관리</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>4. 프로젝트 자료 흐름</h2>
+<div class="flow">
+<span>가상 데이터 생성</span><b>→</b>
+<span>CSV 저장</span><b>→</b>
+<span>자료 불러오기</span><b>→</b>
+<span>전처리</span><b>→</b>
+<span>조건 검색</span><b>→</b>
+<span>그래프 2종</span><b>→</b>
+<span>출처·라이선스 표시</span>
+</div>
+</section>
+<section class="card">
+<h2>5. 필수 기능과 제한 조건</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>구분</th><th>요구 기능</th><th>검증 기준</th></tr>
+</thead>
+<tbody>
+<tr><td>자료 입력</td><td>CSV 파일을 안전하게 불러온다.</td><td>파일 없음·빈 파일·인코딩 오류 처리</td></tr>
+<tr><td>전처리</td><td>필수 열, 날짜, 숫자형, 결측값을 처리한다.</td><td>누락 열과 잘못된 자료형 검사</td></tr>
+<tr><td>조건 검색</td><td>제목, 분류, 최소 중요도로 검색한다.</td><td>검색 결과가 조건과 일치</td></tr>
+<tr><td>시각화</td><td>막대그래프와 선그래프를 생성한다.</td><td>한글 제목·축·범례가 정상 표시</td></tr>
+<tr><td>산출물 저장</td><td>정제 CSV, 검색 결과 CSV, PNG 2개를 저장한다.</td><td>파일 존재 여부 확인</td></tr>
+<tr><td>윤리·라이선스</td><td>자료 출처와 라이브러리 라이선스를 표시한다.</td><td>보고서와 실행 결과에 명시</td></tr>
+<tr><td>협업</td><td>역할, 변경 내용, 오류 수정 과정을 기록한다.</td><td>개인별 기여 내용 확인 가능</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>6. 팀 역할 분담 예시</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>역할</th><th>주요 업무</th><th>제출 증거</th></tr>
+</thead>
+<tbody>
+<tr><td>기획·관리</td><td>문제 정의, 일정, 회의 진행, 기능 통합</td><td>기획서, 회의록</td></tr>
+<tr><td>데이터 담당</td><td>자료 구성, 출처 기록, 전처리 기준 설계</td><td>원본·정제 CSV, 데이터 설명서</td></tr>
+<tr><td>개발 담당</td><td>불러오기, 검색, 오류 처리 함수 구현</td><td>소스 코드, 변경 기록</td></tr>
+<tr><td>시각화 담당</td><td>글꼴 설정, 그래프 2종, 결과 해석</td><td>PNG, 시각화 설명서</td></tr>
+<tr><td>시험·문서 담당</td><td>시험 자료, 오류 수정, 라이선스, 발표 자료</td><td>테스트 보고서, 발표 자료</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>7. 정답 포함 전체 코드</h2>
+<div class="code-box">
+<button onclick="copyCode()">코드 복사</button>
+<pre id="code">"""
+오픈소스·라이브러리 활용 협력 프로젝트 예시
+- Pandas를 이용한 데이터 전처리와 검색
+- Matplotlib을 이용한 그래프 2종 생성
+- 한글 글꼴과 음수 기호 설정
+- 오류 처리, 출처·라이선스 표시
+- CSV와 PNG 산출물 저장
+"""
+
+from pathlib import Path
+import platform
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# --------------------------------------------------
+# 1. Matplotlib 한글 글꼴 설정
+# --------------------------------------------------
+if platform.system() == "Windows":
+    plt.rcParams["font.family"] = "Malgun Gothic"
+elif platform.system() == "Darwin":
+    plt.rcParams["font.family"] = "AppleGothic"
+else:
+    # 리눅스·코랩에서 나눔고딕이 설치된 경우 사용한다.
+    plt.rcParams["font.family"] = "NanumGothic"
+
+# 음수 기호가 네모로 깨지는 현상을 방지한다.
+plt.rcParams["axes.unicode_minus"] = False
+
+
+# --------------------------------------------------
+# 2. 출력 폴더와 자료 정보
+# --------------------------------------------------
+OUTPUT_DIR = Path("school_dashboard_output")
+OUTPUT_DIR.mkdir(exist_ok=True)
+
+DATA_SOURCE = "수업용 가상 학교생활 데이터"
+DATA_LICENSE = "교육 목적 자유 이용, 재배포 시 출처 표시"
+LIBRARIES = {
+    "pandas": "BSD 3-Clause License",
+    "matplotlib": "PSF-based License",
+}
+
+
+# --------------------------------------------------
+# 3. 가상 데이터 생성
+# --------------------------------------------------
+sample_data = pd.DataFrame({
+    "date": [
+        "2026-07-01",
+        "2026-07-02",
+        "2026-07-03",
+        "2026-07-04",
+        "2026-07-05",
+        "2026-07-06",
+    ],
+    "category": [
+        "급식",
+        "공지",
+        "행사",
+        "공지",
+        "급식",
+        "행사",
+    ],
+    "title": [
+        "7월 식단 안내",
+        "과학실 안전교육",
+        "수학·과학 체험전",
+        "도서관 운영 시간",
+        None,
+        "동아리 발표회",
+    ],
+    "views": [120, 85, 210, None, 98, 175],
+    "importance": [3, 5, 4, 2, 3, 5],
+})
+
+sample_csv = OUTPUT_DIR / "school_data.csv"
+
+sample_data.to_csv(
+    sample_csv,
+    index=False,
+    encoding="utf-8-sig",
+)
+
+
+# --------------------------------------------------
+# 4. 데이터 불러오기
+# --------------------------------------------------
+def load_data(path: str | Path) -&gt; pd.DataFrame:
+    """CSV 파일을 안전하게 불러온다."""
+    path = Path(path)
+
+    if not path.exists():
+        raise FileNotFoundError(
+            f"파일을 찾을 수 없습니다: {path}"
+        )
+
+    try:
+        return pd.read_csv(path)
+    except pd.errors.EmptyDataError as error:
+        raise ValueError(
+            "데이터 파일이 비어 있습니다."
+        ) from error
+    except UnicodeDecodeError:
+        return pd.read_csv(
+            path,
+            encoding="cp949",
+        )
+
+
+# --------------------------------------------------
+# 5. 데이터 전처리
+# --------------------------------------------------
+def preprocess(df: pd.DataFrame) -&gt; pd.DataFrame:
+    """필수 열을 확인하고 결측값과 자료형을 정리한다."""
+    required_columns = {
+        "date",
+        "category",
+        "title",
+        "views",
+        "importance",
+    }
+
+    missing_columns = (
+        required_columns - set(df.columns)
+    )
+
+    if missing_columns:
+        raise ValueError(
+            "필수 열이 없습니다: "
+            f"{sorted(missing_columns)}"
+        )
+
+    cleaned = df.copy()
+
+    cleaned["date"] = pd.to_datetime(
+        cleaned["date"],
+        errors="coerce",
+    )
+
+    cleaned["title"] = (
+        cleaned["title"]
+        .fillna("제목 없음")
+    )
+
+    cleaned["views"] = pd.to_numeric(
+        cleaned["views"],
+        errors="coerce",
+    )
+
+    cleaned["importance"] = pd.to_numeric(
+        cleaned["importance"],
+        errors="coerce",
+    )
+
+    cleaned["views"] = (
+        cleaned["views"]
+        .fillna(cleaned["views"].median())
+    )
+
+    cleaned["importance"] = (
+        cleaned["importance"]
+        .fillna(3)
+        .clip(1, 5)
+    )
+
+    cleaned = cleaned.dropna(
+        subset=["date", "category"]
+    )
+
+    return cleaned
+
+
+# --------------------------------------------------
+# 6. 조건 검색
+# --------------------------------------------------
+def search_data(
+    df: pd.DataFrame,
+    keyword: str = "",
+    category: str = "",
+    min_importance: int = 1,
+) -&gt; pd.DataFrame:
+    """검색 조건을 만족하는 자료를 반환한다."""
+    result = df.copy()
+
+    if keyword:
+        result = result[
+            result["title"].str.contains(
+                keyword,
+                case=False,
+                na=False,
+            )
+        ]
+
+    if category:
+        result = result[
+            result["category"] == category
+        ]
+
+    result = result[
+        result["importance"] &gt;= min_importance
+    ]
+
+    return result.sort_values(
+        ["importance", "views"],
+        ascending=[False, False],
+    )
+
+
+# --------------------------------------------------
+# 7. 시각화
+# --------------------------------------------------
+def visualize(
+    df: pd.DataFrame,
+) -&gt; list[Path]:
+    """분류별 자료 수와 날짜별 조회 수 그래프를 저장한다."""
+    graph_paths: list[Path] = []
+
+    # 그래프 1: 분류별 자료 수
+    category_counts = (
+        df["category"]
+        .value_counts()
+    )
+
+    plt.figure(figsize=(8, 5))
+    category_counts.plot(kind="bar")
+    plt.xlabel("분류")
+    plt.ylabel("자료 수")
+    plt.title("분류별 학교생활 자료 수")
+    plt.xticks(rotation=0)
+    plt.tight_layout()
+
+    graph1 = (
+        OUTPUT_DIR
+        / "category_counts.png"
+    )
+
+    plt.savefig(
+        graph1,
+        dpi=150,
+    )
+    plt.close()
+
+    graph_paths.append(graph1)
+
+    # 그래프 2: 날짜별 조회 수
+    daily_views = (
+        df.groupby(
+            "date",
+            as_index=False,
+        )["views"]
+        .sum()
+    )
+
+    plt.figure(figsize=(9, 5))
+    plt.plot(
+        daily_views["date"],
+        daily_views["views"],
+        marker="o",
+    )
+    plt.xlabel("날짜")
+    plt.ylabel("조회 수")
+    plt.title("날짜별 학교생활 자료 조회 수")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+
+    graph2 = (
+        OUTPUT_DIR
+        / "daily_views.png"
+    )
+
+    plt.savefig(
+        graph2,
+        dpi=150,
+    )
+    plt.close()
+
+    graph_paths.append(graph2)
+
+    return graph_paths
+
+
+# --------------------------------------------------
+# 8. 프로젝트 실행
+# --------------------------------------------------
+def main() -&gt; None:
+    try:
+        raw_data = load_data(sample_csv)
+        cleaned_data = preprocess(raw_data)
+
+        # 중요도 3 이상 자료 검색
+        search_result = search_data(
+            cleaned_data,
+            min_importance=3,
+        )
+
+        cleaned_path = (
+            OUTPUT_DIR
+            / "cleaned_school_data.csv"
+        )
+
+        result_path = (
+            OUTPUT_DIR
+            / "search_result.csv"
+        )
+
+        cleaned_data.to_csv(
+            cleaned_path,
+            index=False,
+            encoding="utf-8-sig",
+        )
+
+        search_result.to_csv(
+            result_path,
+            index=False,
+            encoding="utf-8-sig",
+        )
+
+        graph_paths = visualize(
+            cleaned_data
+        )
+
+        print("[검색 결과]")
+        print(
+            search_result.to_string(
+                index=False
+            )
+        )
+
+        print("\n[생성된 산출물]")
+        print("원본 데이터:", sample_csv)
+        print("정제 데이터:", cleaned_path)
+        print("검색 결과:", result_path)
+
+        for graph_path in graph_paths:
+            print("그래프:", graph_path)
+
+        print("\n[자료 출처·라이선스]")
+        print("자료 출처:", DATA_SOURCE)
+        print("자료 이용 조건:", DATA_LICENSE)
+
+        print("\n[사용 라이브러리]")
+        for name, license_name in LIBRARIES.items():
+            print(
+                f"{name}: {license_name}"
+            )
+
+    except (
+        FileNotFoundError,
+        ValueError,
+    ) as error:
+        print(
+            "처리 중 오류:",
+            error,
+        )
+
+
+if __name__ == "__main__":
+    main()
+</pre>
+</div>
+</section>
+<section class="card">
+<h2>8. 예상 실행 결과와 산출 파일</h2>
+<div class="output"><pre>실행 결과 요약
+
+1. school_dashboard_output 폴더가 생성된다.
+2. 제목 결측값은 "제목 없음"으로 대체된다.
+3. 조회 수 결측값은 조회 수 중앙값으로 대체된다.
+4. 중요도는 1~5 범위로 제한된다.
+5. 중요도 3 이상인 자료가 중요도와 조회 수에 따라 정렬된다.
+6. 다음 산출물이 생성된다.
+
+- school_data.csv
+- cleaned_school_data.csv
+- search_result.csv
+- category_counts.png
+- daily_views.png
+
+7. 자료 출처와 이용 조건, Pandas와 Matplotlib 라이선스 정보가 출력된다.</pre></div>
+</section>
+<section class="card">
+<h2>9. 시험 계획</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>시험 사례</th><th>시험 입력</th><th>예상 결과</th></tr>
+</thead>
+<tbody>
+<tr><td>정상 파일</td><td>필수 열이 모두 있는 CSV</td><td>정상 처리 및 산출물 생성</td></tr>
+<tr><td>파일 없음</td><td>존재하지 않는 경로</td><td>FileNotFoundError 처리</td></tr>
+<tr><td>빈 파일</td><td>내용이 없는 CSV</td><td>빈 데이터 오류 안내</td></tr>
+<tr><td>필수 열 누락</td><td>importance 열이 없는 자료</td><td>누락 열 이름 출력</td></tr>
+<tr><td>결측 제목</td><td>title 값이 없음</td><td>"제목 없음"으로 대체</td></tr>
+<tr><td>결측 조회 수</td><td>views 값이 없음</td><td>중앙값으로 대체</td></tr>
+<tr><td>한글 그래프</td><td>한글 제목·축 이름</td><td>글자가 깨지지 않고 출력</td></tr>
+<tr><td>음수 기호</td><td>음수 값이 포함된 그래프</td><td>마이너스 기호가 정상 출력</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>10. 협업 기록 양식</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>날짜</th><th>작성자</th><th>파일·기능</th><th>변경 내용</th><th>변경 이유</th><th>검토자</th></tr>
+</thead>
+<tbody>
+<tr><td>예시</td><td>팀원 A</td><td>preprocess()</td><td>결측 조회 수 중앙값 대체 추가</td><td>빈 값으로 계산 오류 발생</td><td>팀원 B</td></tr>
+<tr><td> </td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td> </td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td> </td><td></td><td></td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>11. 수행평가 문항</h2>
+<div class="question">1. Pandas와 Matplotlib이 프로젝트에서 수행하는 역할을 각각 설명하시오.</div>
+<div class="question">2. <code>plt.rcParams["font.family"]</code>와 <code>plt.rcParams["axes.unicode_minus"]</code> 설정이 필요한 이유를 설명하시오.</div>
+<div class="question">3. 오픈소스 라이브러리를 사용할 때 출처와 라이선스를 확인해야 하는 이유를 설명하시오.</div>
+<div class="question">4. 팀 프로젝트에서 코드 변경 기록과 개인별 기여 기록이 필요한 이유를 설명하시오.</div>
+<div class="question">5. 이 프로젝트의 데이터 윤리 문제와 개선 방안을 각각 두 가지 제시하시오.</div>
+</section>
+<section class="card">
+<h2>12. 예시 정답</h2>
+<details class="answer">
+<summary>문항 1 정답</summary>
+<div>
+      Pandas는 CSV 불러오기, 자료형 변환, 결측값 처리, 조건 검색, 집계에 사용한다.
+      Matplotlib은 분석 결과를 막대그래프와 선그래프로 표현하고 PNG 파일로 저장하는 데 사용한다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 2 정답</summary>
+<div>
+      font.family 설정은 그래프의 제목, 축 이름, 범례에서 한글이 깨지는 것을 방지한다.
+      axes.unicode_minus를 False로 설정하면 일부 한글 글꼴에서 음수 기호가 네모로 표시되는 문제를 줄일 수 있다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 3 정답</summary>
+<div>
+      오픈소스는 자유롭게 사용할 수 있더라도 라이선스마다 출처 표시, 수정본 배포,
+      저작권 고지 등의 조건이 다르다. 조건을 확인하지 않으면 저작권과 배포 규정을 위반할 수 있다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 4 정답</summary>
+<div>
+      변경 기록은 오류 발생 원인을 추적하고 이전 상태로 되돌리는 데 도움이 된다.
+      개인별 기여 기록은 역할 수행과 협업 과정을 공정하게 평가하고,
+      특정 팀원에게 업무가 집중되었는지 확인하는 근거가 된다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 5 정답</summary>
+<div>
+      개인정보가 포함된 학교 자료를 그대로 사용하거나 조회 수를 학생 선호도로 단정하는 문제가 생길 수 있다.
+      개인정보를 제거하고 필요한 열만 사용하며, 데이터 출처와 수집 목적을 공개하고,
+      분석 결과의 한계와 편향 가능성을 함께 제시해야 한다.
+    </div>
+</details>
+</section>
+<section class="card">
+<h2>13. 분석적 루브릭</h2>
+<div class="table-wrap">
+<table class="rubric">
+<thead>
+<tr>
+<th>평가 요소</th>
+<th>A 수준</th>
+<th>B 수준</th>
+<th>C 수준</th>
+<th>D 수준</th>
+<th>E 수준</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>오픈소스 이해<br/>20점</td>
+<td>도구의 기능과 라이선스를 정확히 조사하고 프로젝트 목적에 맞게 선택·적용함.</td>
+<td>주요 라이브러리 기능과 라이선스를 정확히 설명함.</td>
+<td>기본 기능과 출처 표시 필요성을 설명함.</td>
+<td>기능 또는 라이선스 설명이 부분적임.</td>
+<td>오픈소스의 의미와 조건을 설명하지 못함.</td>
+</tr>
+<tr>
+<td>프로그램 구현<br/>30점</td>
+<td>전처리·검색·시각화·저장·오류 처리를 모두 정확하고 효율적으로 구현함.</td>
+<td>주요 요구 기능을 정확하게 구현함.</td>
+<td>기본 자료 처리와 그래프 기능을 구현함.</td>
+<td>일부 기능만 동작하거나 오류 수정이 필요함.</td>
+<td>프로그램을 완성하지 못함.</td>
+</tr>
+<tr>
+<td>시각화·검증<br/>20점</td>
+<td>한글·음수 표시를 포함한 그래프를 정확히 생성하고 다양한 시험으로 체계적으로 검증함.</td>
+<td>그래프 2종을 생성하고 주요 시험을 수행함.</td>
+<td>기본 그래프와 시험 결과를 제시함.</td>
+<td>그래프 또는 시험 기록이 일부 부족함.</td>
+<td>시각화와 검증이 거의 없음.</td>
+</tr>
+<tr>
+<td>협력·공유<br/>20점</td>
+<td>역할을 주도적으로 수행하고 변경·오류·기여 기록을 체계적으로 공유하며 팀 문제를 해결함.</td>
+<td>역할을 충실히 수행하고 원활하게 협력함.</td>
+<td>정해진 역할을 수행하고 기본적으로 협력함.</td>
+<td>협력과 기록이 부분적임.</td>
+<td>협업 참여와 기여 확인이 어려움.</td>
+</tr>
+<tr>
+<td>윤리·성찰<br/>10점</td>
+<td>출처·라이선스·개인정보·편향·오용 가능성을 분석하고 구체적인 개선안을 제시함.</td>
+<td>주요 윤리 문제와 개선 방안을 설명함.</td>
+<td>기본 윤리 문제를 인식함.</td>
+<td>성찰이 부분적임.</td>
+<td>윤리적 고려가 거의 없음.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>14. 최종 제출 산출물</h2>
+<ul>
+<li>프로젝트_기획서.pdf</li>
+<li>학교생활_대시보드.py</li>
+<li>school_data.csv</li>
+<li>cleaned_school_data.csv</li>
+<li>search_result.csv</li>
+<li>category_counts.png</li>
+<li>daily_views.png</li>
+<li>테스트_보고서.pdf</li>
+<li>협업_변경기록.csv</li>
+<li>오픈소스_라이선스_조사서.pdf</li>
+<li>발표_및_성찰보고서.pdf</li>
+</ul>
+</section>
+
+</section>
+
+<section id="assessment">
+  <div class="section-title"><h2 style="margin:0">Ⅱ. 수행10 자동 채점 평가</h2></div>
+  
+<section class="card notice">
+<b>응시 안내</b><br/>
+각 문항에서 관련 코드를 먼저 확인한 후 옳은 설명 3개를 모두 선택하세요.
+제출 후 문항별 정오답과 보기별 상세 풀이를 확인하고 TXT 결과를 저장할 수 있습니다.
+</section>
+<section class="card">
+<div class="student">
+<div class="label">학번</div><input id="sid" placeholder="예: 1101"/>
+<div class="label">이름</div><input id="sname" placeholder="예: 홍길동"/>
+</div>
+<p>응시 시작 시각: <span id="start"></span></p>
+</section>
+<div id="quiz"></div>
+<section class="card center">
+<button id="submitBtn" onclick="grade()">제출 및 채점</button>
+<button class="secondary" onclick="window.print()">인쇄 / PDF</button>
+</section>
+<section class="card result" id="result">
+<h2>채점 결과</h2>
+<div class="score" id="scoreText"></div>
+<p id="summaryText"></p>
+<button onclick="saveTxt()">결과 TXT 저장</button>
+</section>
+
+</section>
+</main>
+
+<script>
+function copyCode() {
+  const code = document.getElementById("code").innerText;
+
+  navigator.clipboard.writeText(code).then(() => {
+    alert("코드를 복사했습니다.");
+  });
+}
+
+function toggleAnswers() {
+  const items = [
+    ...document.querySelectorAll(
+      "details.answer"
+    )
+  ];
+
+  const shouldOpen = items.some(
+    item => !item.open
+  );
+
+  items.forEach(
+    item => item.open = shouldOpen
+  );
+}
+</script>
+<script>
+const Q=[{"q": "다음 운영체제별 한글 글꼴 설정 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "if platform.system() == \"Windows\":\n    plt.rcParams[\"font.family\"] = \"Malgun Gothic\"\nelif platform.system() == \"Darwin\":\n    plt.rcParams[\"font.family\"] = \"AppleGothic\"\nelse:\n    plt.rcParams[\"font.family\"] = \"NanumGothic\"\n\nplt.rcParams[\"axes.unicode_minus\"] = False", "choices": ["Windows에서는 맑은 고딕을 사용하도록 설정한다.", "모든 운영체제에서 반드시 Malgun Gothic만 사용한다.", "macOS에서는 AppleGothic을 사용하도록 설정한다.", "이 설정은 CSV 파일의 결측값을 자동으로 제거한다.", "axes.unicode_minus=False는 음수 기호가 깨지는 현상을 줄이는 데 도움을 준다."], "answer": [0, 2, 4], "exp": ["옳음. platform.system()이 Windows이면 Malgun Gothic을 지정한다.", "틀림. 운영체제에 따라 서로 다른 글꼴을 선택한다.", "옳음. Darwin은 macOS를 나타내며 AppleGothic을 사용한다.", "틀림. 글꼴 설정은 그래프 표시와 관련되며 데이터 전처리 기능이 아니다.", "옳음. 일부 한글 글꼴에서 마이너스 기호가 네모로 표시되는 문제를 줄인다."]}, {"q": "다음 출력 폴더와 라이선스 정보 설정에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "OUTPUT_DIR = Path(\"school_dashboard_output\")\nOUTPUT_DIR.mkdir(exist_ok=True)\n\nDATA_SOURCE = \"수업용 가상 학교생활 데이터\"\nDATA_LICENSE = \"교육 목적 자유 이용, 재배포 시 출처 표시\"\n\nLIBRARIES = {\n    \"pandas\": \"BSD 3-Clause License\",\n    \"matplotlib\": \"PSF-based License\",\n}", "choices": ["exist_ok=True이면 폴더가 이미 있을 때 반드시 오류가 발생한다.", "출력 산출물을 저장할 폴더를 생성한다.", "LIBRARIES에는 학생 개인정보만 저장한다.", "자료 출처와 자료 이용 조건을 문자열로 기록한다.", "사용 라이브러리와 라이선스 정보를 딕셔너리에 저장한다."], "answer": [1, 3, 4], "exp": ["틀림. 이미 존재해도 오류 없이 넘어가게 한다.", "옳음. CSV와 PNG 등의 산출물을 저장할 디렉터리이다.", "틀림. 라이브러리 이름과 라이선스가 저장되어 있다.", "옳음. 출처와 재이용 조건을 명시하는 데 활용한다.", "옳음. 라이브러리별 라이선스 이름을 대응시킨다."]}, {"q": "다음 가상 데이터 생성 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "sample_data = pd.DataFrame({\n    \"date\": [\"2026-07-01\", \"2026-07-02\"],\n    \"category\": [\"급식\", \"공지\"],\n    \"title\": [\"7월 식단 안내\", \"과학실 안전교육\"],\n    \"views\": [120, 85],\n    \"importance\": [3, 5],\n})\n\nsample_csv = OUTPUT_DIR / \"school_data.csv\"\n\nsample_data.to_csv(\n    sample_csv,\n    index=False,\n    encoding=\"utf-8-sig\",\n)", "choices": ["날짜, 분류, 제목, 조회 수, 중요도 열을 가진 데이터프레임을 만든다.", "to_csv()는 그래프 PNG만 생성한다.", "sample_csv는 저장할 CSV 파일 경로를 나타낸다.", "index=False는 데이터프레임 인덱스를 별도 열로 저장하지 않게 한다.", "utf-8-sig는 한글을 반드시 깨뜨리는 인코딩이다."], "answer": [0, 2, 3], "exp": ["옳음. 프로젝트에서 사용할 핵심 학교생활 자료 열이다.", "틀림. 데이터프레임을 CSV 파일로 저장한다.", "옳음. 출력 폴더와 파일명을 결합한 경로이다.", "옳음. 불필요한 인덱스 열 생성을 방지한다.", "틀림. 일부 스프레드시트에서 한글 호환성을 높이는 데 활용한다."]}, {"q": "다음 CSV 불러오기 함수에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def load_data(path: str | Path) -> pd.DataFrame:\n    path = Path(path)\n\n    if not path.exists():\n        raise FileNotFoundError(\n            f\"파일을 찾을 수 없습니다: {path}\"\n        )\n\n    try:\n        return pd.read_csv(path)\n    except pd.errors.EmptyDataError as error:\n        raise ValueError(\n            \"데이터 파일이 비어 있습니다.\"\n        ) from error\n    except UnicodeDecodeError:\n        return pd.read_csv(path, encoding=\"cp949\")", "choices": ["파일이 없어도 항상 빈 데이터프레임을 반환한다.", "파일이 존재하지 않으면 FileNotFoundError를 발생시킨다.", "빈 CSV 파일은 ValueError로 바꾸어 안내한다.", "UnicodeDecodeError가 발생하면 파일을 삭제한다.", "기본 인코딩으로 읽지 못하면 cp949로 다시 시도한다."], "answer": [1, 2, 4], "exp": ["틀림. 파일이 없으면 예외가 발생한다.", "옳음. path.exists()로 파일 존재 여부를 먼저 확인한다.", "옳음. EmptyDataError를 사용자에게 이해하기 쉬운 ValueError로 변환한다.", "틀림. 파일을 삭제하지 않고 다른 인코딩으로 읽는다.", "옳음. 한글 Windows 계열 인코딩을 대안으로 사용한다."]}, {"q": "다음 필수 열 검사 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "required_columns = {\n    \"date\",\n    \"category\",\n    \"title\",\n    \"views\",\n    \"importance\",\n}\n\nmissing_columns = (\n    required_columns - set(df.columns)\n)\n\nif missing_columns:\n    raise ValueError(\n        \"필수 열이 없습니다: \"\n        f\"{sorted(missing_columns)}\"\n    )", "choices": ["required_columns는 반드시 필요한 열 이름의 집합이다.", "누락 열이 있으면 자동으로 임의의 값을 채워 넣는다.", "df.columns의 모든 열을 삭제한다.", "집합 차집합으로 누락된 열을 찾는다.", "누락된 열이 있으면 이름을 정렬하여 오류 메시지에 포함한다."], "answer": [0, 3, 4], "exp": ["옳음. 전처리와 검색에 필요한 열을 정의한다.", "틀림. 자동 생성하지 않고 ValueError를 발생시킨다.", "틀림. 열을 검사할 뿐 삭제하지 않는다.", "옳음. 필요한 열에서 실제 열을 빼면 누락된 열을 얻는다.", "옳음. 어떤 열이 없는지 구체적으로 알 수 있다."]}, {"q": "다음 날짜·제목·조회 수 전처리 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "cleaned = df.copy()\n\ncleaned[\"date\"] = pd.to_datetime(\n    cleaned[\"date\"],\n    errors=\"coerce\",\n)\n\ncleaned[\"title\"] = (\n    cleaned[\"title\"]\n    .fillna(\"제목 없음\")\n)\n\ncleaned[\"views\"] = pd.to_numeric(\n    cleaned[\"views\"],\n    errors=\"coerce\",\n)", "choices": ["조회 수를 항상 문자열로 변환한다.", "errors='coerce'는 모든 날짜를 오늘 날짜로 바꾼다.", "원본 데이터프레임을 직접 수정하지 않도록 복사본을 만든다.", "잘못된 날짜는 결측 날짜로 변환될 수 있다.", "제목 결측값은 '제목 없음'으로 대체한다."], "answer": [2, 3, 4], "exp": ["틀림. pd.to_numeric은 숫자형으로 변환한다.", "틀림. 변환 실패 값을 결측값으로 처리한다.", "옳음. cleaned에서 전처리해 원본 보존에 도움을 준다.", "옳음. 변환할 수 없는 날짜는 NaT가 된다.", "옳음. 사용자에게 빈 제목 대신 대체 문구를 제공한다."]}, {"q": "다음 결측값과 중요도 처리 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "cleaned[\"views\"] = (\n    cleaned[\"views\"]\n    .fillna(cleaned[\"views\"].median())\n)\n\ncleaned[\"importance\"] = (\n    cleaned[\"importance\"]\n    .fillna(3)\n    .clip(1, 5)\n)\n\ncleaned = cleaned.dropna(\n    subset=[\"date\", \"category\"]\n)", "choices": ["조회 수 결측값은 조회 수 중앙값으로 대체한다.", "중요도 결측값은 3으로 채우고 1~5 범위로 제한한다.", "조회 수 결측값을 무조건 최댓값으로 대체한다.", "clip(1, 5)는 중요도 값을 모두 5로 만든다.", "날짜나 분류가 없는 행은 제거한다."], "answer": [0, 1, 4], "exp": ["옳음. 극단값 영향이 비교적 적은 중앙값을 사용한다.", "옳음. 기본값을 채운 뒤 허용 범위 밖 값을 경계값으로 제한한다.", "틀림. 중앙값으로 대체한다.", "틀림. 1 미만은 1, 5 초과는 5로 제한한다.", "옳음. 핵심 검색·정렬 기준이 없는 행을 제외한다."]}, {"q": "다음 조건 검색 함수에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def search_data(\n    df: pd.DataFrame,\n    keyword: str = \"\",\n    category: str = \"\",\n    min_importance: int = 1,\n) -> pd.DataFrame:\n    result = df.copy()\n\n    if keyword:\n        result = result[\n            result[\"title\"].str.contains(\n                keyword,\n                case=False,\n                na=False,\n            )\n        ]\n\n    if category:\n        result = result[\n            result[\"category\"] == category\n        ]\n\n    result = result[\n        result[\"importance\"] >= min_importance\n    ]", "choices": ["case=False는 영문 검색에서 대소문자를 반드시 구분한다.", "keyword가 있으면 제목에 해당 문자열이 포함된 자료를 검색한다.", "category가 있으면 정확히 같은 분류만 남긴다.", "최소 중요도 이상인 자료만 남긴다.", "na=False는 결측 제목을 항상 검색 결과에 포함한다."], "answer": [1, 2, 3], "exp": ["틀림. case=False는 대소문자를 구분하지 않는 설정이다.", "옳음. str.contains()로 제목 부분 문자열 검색을 수행한다.", "옳음. category 열과 입력 분류의 동등 비교를 사용한다.", "옳음. importance가 기준값 이상인지 검사한다.", "틀림. 결측값은 포함하지 않도록 False로 처리한다."]}, {"q": "다음 검색 결과 정렬과 시각화 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "return result.sort_values(\n    [\"importance\", \"views\"],\n    ascending=[False, False],\n)\n\ncategory_counts = (\n    df[\"category\"]\n    .value_counts()\n)\n\ncategory_counts.plot(kind=\"bar\")", "choices": ["검색 결과를 중요도 내림차순으로 정렬한다.", "ascending=[False, False]는 두 열을 오름차순으로 정렬한다.", "중요도가 같으면 조회 수 내림차순으로 정렬한다.", "value_counts()는 모든 분류 이름을 삭제한다.", "분류별 자료 수를 계산하여 막대그래프로 표현한다."], "answer": [0, 2, 4], "exp": ["옳음. 첫 번째 정렬 기준은 importance이며 False는 내림차순이다.", "틀림. False는 내림차순을 의미한다.", "옳음. 두 번째 기준인 views도 내림차순이다.", "틀림. 각 값의 빈도를 계산한다.", "옳음. 각 분류의 출현 횟수를 계산해 bar 그래프로 그린다."]}, {"q": "다음 실행 구조와 협력·라이선스 해석에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def main() -> None:\n    try:\n        raw_data = load_data(sample_csv)\n        cleaned_data = preprocess(raw_data)\n        search_result = search_data(\n            cleaned_data,\n            min_importance=3,\n        )\n        graph_paths = visualize(cleaned_data)\n\n        print(\"자료 출처:\", DATA_SOURCE)\n        print(\"자료 이용 조건:\", DATA_LICENSE)\n\n        for name, license_name in LIBRARIES.items():\n            print(f\"{name}: {license_name}\")\n\n    except (FileNotFoundError, ValueError) as error:\n        print(\"처리 중 오류:\", error)\n\n\nif __name__ == \"__main__\":\n    main()", "choices": ["오픈소스 라이브러리는 라이선스를 확인하지 않고 자유롭게 재배포해도 된다.", "데이터 불러오기·전처리·검색·시각화 단계를 순서대로 실행한다.", "협력 프로젝트에서는 변경 기록과 개인별 기여 기록이 필요하지 않다.", "자료 출처와 이용 조건, 라이브러리 라이선스를 출력한다.", "파일 및 데이터 오류를 처리하여 사용자에게 안내한다."], "answer": [1, 3, 4], "exp": ["틀림. 오픈소스도 라이선스별 출처 표시와 배포 조건을 확인해야 한다.", "옳음. 프로젝트의 주요 처리 흐름을 main()에서 통합한다.", "틀림. 오류 추적과 공정한 역할 평가를 위해 협업 기록이 필요하다.", "옳음. 자료와 도구의 사용 조건을 명시한다.", "옳음. 예상 가능한 오류를 잡아 이해하기 쉬운 메시지를 출력한다."]}],started=new Date();
+let result=null;
+const pad=n=>String(n).padStart(2,"0");
+const fmt=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+const ffmt=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+document.getElementById("start").textContent=fmt(started);
+
+document.getElementById("quiz").innerHTML=Q.map((q,qi)=>`
+<section class="card" id="card${qi}">
+<div class="qtitle">${qi+1}. ${q.q}</div>
+<div class="codebox"><pre>${esc(q.code)}</pre></div>
+<span class="tag">옳은 것 3개 선택</span>
+${q.choices.map((c,ci)=>`
+<label class="choice" id="c${qi}_${ci}">
+<input type="checkbox" name="q${qi}" value="${ci}">
+<b>${ci+1}.</b> ${c}
+</label>`).join("")}
+<div id="e${qi}" class="explain" style="display:none"></div>
+</section>`).join("");
+
+Q.forEach((q,qi)=>{
+  document.querySelectorAll(`input[name="q${qi}"]`).forEach(input=>{
+    input.addEventListener("change",()=>{
+      if(document.querySelectorAll(`input[name="q${qi}"]:checked`).length>3){
+        input.checked=false;
+        alert("각 문항은 3개까지만 선택할 수 있습니다.");
+      }
+    });
+  });
+});
+
+const same=(a,b)=>a.length===b.length&&[...a].sort().every((v,i)=>v===[...b].sort()[i]);
+
+function grade(){
+  const id=document.getElementById("sid").value.trim();
+  const name=document.getElementById("sname").value.trim();
+  if(!id||!name){alert("학번과 이름을 입력하세요.");return;}
+
+  let correct=0;
+  const details=[];
+  const incomplete=[];
+
+  Q.forEach((q,qi)=>{
+    const selected=[...document.querySelectorAll(`input[name="q${qi}"]:checked`)].map(x=>Number(x.value));
+    if(selected.length!==3) incomplete.push(qi+1);
+
+    const ok=same(selected,q.answer);
+    if(ok) correct++;
+
+    document.getElementById(`card${qi}`).classList.add(ok?"correct":"wrong");
+
+    q.choices.forEach((_,ci)=>{
+      const label=document.getElementById(`c${qi}_${ci}`);
+      if(q.answer.includes(ci)) label.style.borderColor="#2e8b57";
+      if(selected.includes(ci)&&!q.answer.includes(ci)) label.style.borderColor="#c94a4a";
+    });
+
+    const e=document.getElementById(`e${qi}`);
+    e.style.display="block";
+    e.innerHTML=`<b>${ok?"정답":"오답"}</b><br>
+    선택: ${selected.length?selected.map(i=>i+1).join(", "):"미응답"} /
+    정답: ${q.answer.map(i=>i+1).join(", ")}
+    <ol>${q.exp.map((x,i)=>`<li><b>${i+1}번</b> ${x}</li>`).join("")}</ol>`;
+
+    details.push({
+      ok,
+      selected:selected.length?selected.map(i=>i+1).join(", "):"미응답",
+      answer:q.answer.map(i=>i+1).join(", ")
+    });
+  });
+
+  if(incomplete.length&&!confirm(`${incomplete.join(", ")}번 문항이 3개 선택되지 않았습니다. 그대로 제출하시겠습니까?`)){
+    return;
+  }
+
+  const ended=new Date();
+  const score=correct*10;
+
+  document.querySelectorAll("input").forEach(x=>x.disabled=true);
+  document.getElementById("submitBtn").disabled=true;
+  document.getElementById("result").style.display="block";
+  document.getElementById("scoreText").textContent=`${score}점 / 100점`;
+  document.getElementById("summaryText").textContent=
+    `정답 ${correct}문항, 오답 ${10-correct}문항 · 제출 시각 ${fmt(ended)}`;
+
+  result={id,name,score,correct,ended,details};
+  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+
+function saveTxt(){
+  if(!result){alert("먼저 제출 및 채점을 완료하세요.");return;}
+
+  const r=result;
+  const lines=[
+    "수행평가명: 수행10 오픈소스·라이브러리 활용 협력 프로젝트",
+    `학번: ${r.id}`,
+    `이름: ${r.name}`,
+    `점수: ${r.score}점`,
+    `정답 문항 수: ${r.correct}/10`,
+    `응시 시작 시각: ${fmt(started)}`,
+    `제출 시각: ${fmt(r.ended)}`,
+    "",
+    "===== 문항별 정오답 및 상세 풀이 ====="
+  ];
+
+  Q.forEach((q,i)=>{
+    const d=r.details[i];
+    lines.push(
+      "",
+      `[${i+1}번] ${d.ok?"정답":"오답"}`,
+      `문제: ${q.q}`,
+      "관련 코드:"
+    );
+    q.code.split("\n").forEach(line=>lines.push(`    ${line}`));
+    lines.push(`선택: ${d.selected}`,`정답: ${d.answer}`);
+
+    q.choices.forEach((choice,j)=>{
+      lines.push(`${j+1}. ${choice}`);
+      lines.push(`   풀이: ${q.exp[j]}`);
+    });
+  });
+
+  const blob=new Blob([lines.join("\n")],{type:"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  const clean=s=>s.replace(/[\\/:*?"<>|\s]+/g,"_");
+
+  a.href=url;
+  a.download=`${clean(r.id)}_${clean(r.name)}_${r.score}_수행10_${ffmt(r.ended)}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>단순 재귀와 메모이제이션 학습·수행평가 통합본</title>
+<style>
+:root {
+  --brand:#1f5e9c; --brand2:#0d9488; --ink:#18212f;
+  --line:#d7e0ea; --bg:#f5f8fc; --card:#ffffff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  line-height:1.7;
+}
+header {
+  background:linear-gradient(135deg,#173d6c,#1f6ea9 58%,#0d9488);
+  color:white; padding:42px 20px 34px;
+}
+header .inner, main { max-width:1200px; margin:auto; }
+h1 { margin:0 0 8px; font-size:clamp(28px,4vw,46px); }
+header p { margin:0; opacity:.92; }
+.toolbar {
+  position:sticky; top:0; z-index:20; background:rgba(255,255,255,.97);
+  border-bottom:1px solid var(--line); padding:10px 16px;
+  display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
+}
+button {
+  border:0; border-radius:8px; padding:10px 15px;
+  background:var(--brand); color:white; font:inherit; cursor:pointer;
+}
+button.secondary { background:#475467; }
+button.green { background:var(--brand2); }
+main { padding:24px 16px 60px; }
+.card {
+  background:var(--card); border:1px solid var(--line);
+  border-radius:14px; padding:22px; margin-bottom:20px;
+  box-shadow:0 7px 22px rgba(16,24,40,.05);
+}
+h2 { color:#174d7f; margin-top:0; }
+h3 { color:#24618f; }
+.notice {
+  background:#eef7ff; border-left:5px solid var(--brand);
+  padding:15px; border-radius:9px;
+}
+.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+table { border-collapse:collapse; width:100%; }
+th,td { border:1px solid var(--line); padding:10px; vertical-align:top; }
+th { background:#244f7d; color:white; }
+.good { background:#eef9f2; }
+.warn { background:#fff8e8; }
+.code-box,.codebox {
+  background:#111827; color:#edf2f7; padding:18px;
+  border-radius:11px; overflow:auto; position:relative; margin:12px 0;
+}
+pre {
+  margin:0; white-space:pre; font-family:Consolas,"Courier New",monospace;
+  font-size:13px; line-height:1.55;
+}
+.code-box button {
+  position:absolute; right:10px; top:10px; font-size:12px;
+  padding:6px 9px; background:#334155;
+}
+.question {
+  border-left:4px solid var(--brand2); background:#f1fbf9;
+  padding:12px 15px; margin:10px 0; border-radius:8px;
+}
+details { border:1px solid var(--line); border-radius:9px; margin-top:12px; }
+summary {
+  cursor:pointer; padding:12px 14px; font-weight:700;
+  background:#f4f7fa;
+}
+details > div { padding:14px; }
+.student {
+  display:grid; grid-template-columns:100px 1fr 100px 1fr; gap:8px;
+}
+.student div,.student input { border:1px solid var(--line); padding:10px; }
+.student input { width:100%; font:inherit; }
+.label { background:#eef4fa; font-weight:bold; text-align:center; }
+.qtitle { font-size:18px; font-weight:bold; }
+.choice {
+  display:block; border:1px solid var(--line); border-radius:9px;
+  padding:10px; margin:8px 0; cursor:pointer;
+}
+.choice:hover { background:#f5f8fb; }
+.choice input { margin-right:8px; transform:scale(1.15); }
+.tag {
+  display:inline-block; background:#e8f2fc; color:#174d7f;
+  border-radius:999px; padding:3px 8px; font-size:13px; font-weight:bold;
+}
+.center { text-align:center; }
+.result { display:none; }
+.score { font-size:28px; font-weight:bold; color:var(--brand); }
+.correct { background:#eaf8ef; }
+.wrong { background:#fff0f0; }
+.explain { margin-top:12px; border-top:1px dashed var(--line); padding-top:12px; }
+.section-title {
+  margin:36px 0 18px; padding:15px 18px; border-radius:12px;
+  background:linear-gradient(135deg,#e9f3fb,#eaf9f6);
+  border:1px solid #c8dceb; color:#174d7f;
+}
+@media(max-width:760px) {
+  .grid { grid-template-columns:1fr; }
+  .student { grid-template-columns:90px 1fr; }
+}
+@media print {
+  header,.toolbar,.code-box button,.center { display:none!important; }
+  body { background:white; }
+  main { max-width:none; padding:0; }
+  .card { box-shadow:none; break-inside:avoid; }
+  details > div { display:block!important; }
+  .result { display:block!important; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <h1>단순 재귀와 메모이제이션 학습·수행평가 통합본</h1>
+    <p>개념 학습 · 효율성 비교 · 전체 코드 · 5지선다형 10문항 · 자동 채점 · TXT 저장</p>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button onclick="document.getElementById('lesson').scrollIntoView({behavior:'smooth'})">학습자료</button>
+  <button class="green" onclick="document.getElementById('assessment').scrollIntoView({behavior:'smooth'})">수행평가</button>
+  <button onclick="window.print()">인쇄 / PDF 저장</button>
+  <button class="secondary" onclick="toggleAnswers()">예시 정답 펼치기·접기</button>
+</div>
+
+<main>
+<section id="lesson">
+  <div class="section-title"><h2 style="margin:0">Ⅰ. 학습 및 효율성 평가 자료</h2></div>
+  
+<section class="card notice">
+<b>학습 목표</b><br/>
+  동일한 피보나치 값을 계산하는 단순 재귀와 메모이제이션의 실행 과정을 비교하고,
+  실행 시간, 함수 호출 횟수, 메모리 사용량을 근거로 효율성을 평가한다.
+</section>
+<section class="card">
+<h2>1. 두 방식의 차이</h2>
+<div class="grid">
+<div>
+<h3>단순 재귀</h3>
+<p>이미 계산한 피보나치 값도 다시 계산한다. 입력값이 증가할수록 중복 호출이 급격히 증가한다.</p>
+</div>
+<div>
+<h3>메모이제이션</h3>
+<p>한 번 계산한 값을 캐시에 저장한 뒤 같은 입력이 다시 요청되면 저장된 값을 바로 반환한다.</p>
+</div>
+</div>
+<table>
+<thead>
+<tr><th>비교 항목</th><th>단순 재귀</th><th>메모이제이션</th></tr>
+</thead>
+<tbody>
+<tr><td>계산 결과</td><td>동일</td><td>동일</td></tr>
+<tr><td>중복 계산</td><td class="warn">매우 많음</td><td class="good">거의 없음</td></tr>
+<tr><td>시간 복잡도</td><td>약 O(2ⁿ)</td><td>O(n)</td></tr>
+<tr><td>추가 저장 공간</td><td>재귀 호출 스택</td><td>재귀 호출 스택과 캐시</td></tr>
+<tr><td>큰 입력 처리</td><td class="warn">매우 느림</td><td class="good">상대적으로 빠름</td></tr>
+</tbody>
+</table>
+</section>
+<section class="card">
+<h2>2. 효율성 평가 전체 코드</h2>
+<div class="code-box">
+<button onclick="copyCode()">코드 복사</button>
+<pre id="code">from functools import lru_cache
+from time import perf_counter
+import tracemalloc
+
+# --------------------------------------------------
+# 1. 함수 호출 횟수를 저장할 전역 변수
+# --------------------------------------------------
+simple_calls = 0
+memo_calls = 0
+
+
+# --------------------------------------------------
+# 2. 단순 재귀 피보나치 함수
+# --------------------------------------------------
+def fibonacci_simple(n: int) -&gt; int:
+    """단순 재귀 방식으로 n번째 피보나치 수를 반환한다."""
+    global simple_calls
+    simple_calls += 1
+
+    if not isinstance(n, int):
+        raise TypeError("n은 정수여야 합니다.")
+    if n &lt; 1:
+        raise ValueError("n은 1 이상의 정수여야 합니다.")
+    if n in (1, 2):
+        return 1
+
+    return fibonacci_simple(n - 1) + fibonacci_simple(n - 2)
+
+
+# --------------------------------------------------
+# 3. 메모이제이션 피보나치 함수
+# --------------------------------------------------
+@lru_cache(maxsize=None)
+def fibonacci_memo(n: int) -&gt; int:
+    """메모이제이션 방식으로 n번째 피보나치 수를 반환한다."""
+    global memo_calls
+    memo_calls += 1
+
+    if not isinstance(n, int):
+        raise TypeError("n은 정수여야 합니다.")
+    if n &lt; 1:
+        raise ValueError("n은 1 이상의 정수여야 합니다.")
+    if n in (1, 2):
+        return 1
+
+    return fibonacci_memo(n - 1) + fibonacci_memo(n - 2)
+
+
+# --------------------------------------------------
+# 4. 함수의 실행 시간과 최대 메모리 사용량 측정
+# --------------------------------------------------
+def measure(function, n: int):
+    """함수의 결과, 실행 시간, 최대 메모리 사용량을 반환한다."""
+    tracemalloc.start()
+
+    start = perf_counter()
+    result = function(n)
+    elapsed = perf_counter() - start
+
+    current_memory, peak_memory = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+
+    return result, elapsed, peak_memory
+
+
+# --------------------------------------------------
+# 5. 효율성 비교 실험
+# --------------------------------------------------
+test_values = [5, 10, 20, 30, 35]
+
+print("=" * 92)
+print("단순 재귀와 메모이제이션 효율성 비교")
+print("=" * 92)
+print(
+    f"{'n':&gt;3} | {'결과':&gt;10} | "
+    f"{'단순 시간(초)':&gt;14} | {'메모 시간(초)':&gt;14} | "
+    f"{'단순 호출':&gt;12} | {'메모 호출':&gt;10}"
+)
+print("-" * 92)
+
+for n in test_values:
+    # 각 실험 전에 호출 횟수와 캐시를 초기화한다.
+    simple_calls = 0
+    memo_calls = 0
+    fibonacci_memo.cache_clear()
+
+    simple_result, simple_time, simple_memory = measure(
+        fibonacci_simple, n
+    )
+
+    memo_result, memo_time, memo_memory = measure(
+        fibonacci_memo, n
+    )
+
+    assert simple_result == memo_result
+
+    print(
+        f"{n:&gt;3} | {simple_result:&gt;10} | "
+        f"{simple_time:&gt;14.8f} | {memo_time:&gt;14.8f} | "
+        f"{simple_calls:&gt;12,} | {memo_calls:&gt;10,}"
+    )
+
+    print(
+        f"    최대 메모리 사용량: "
+        f"단순 재귀 {simple_memory / 1024:.2f}KB, "
+        f"메모이제이션 {memo_memory / 1024:.2f}KB"
+    )
+
+print("-" * 92)
+print("메모이제이션 캐시 정보:", fibonacci_memo.cache_info())
+
+
+# --------------------------------------------------
+# 6. 오류 입력 검사
+# --------------------------------------------------
+print("\n[오류 입력 검사]")
+
+for value in [0, -1, 3.5]:
+    try:
+        fibonacci_simple(value)
+    except (TypeError, ValueError) as error:
+        print(f"입력 {value!r}: {error}")</pre>
+</div>
+</section>
+<section class="card">
+<h2>3. 측정 항목</h2>
+<table>
+<thead><tr><th>측정 항목</th><th>의미</th><th>평가 방법</th></tr></thead>
+<tbody>
+<tr><td>실행 결과</td><td>두 방식의 정확성</td><td>같은 n에서 반환값이 같은지 확인</td></tr>
+<tr><td>실행 시간</td><td>계산 속도</td><td><code>perf_counter()</code>로 측정</td></tr>
+<tr><td>함수 호출 횟수</td><td>중복 계산 정도</td><td>전역 변수를 호출할 때마다 1씩 증가</td></tr>
+<tr><td>최대 메모리</td><td>실행 중 사용한 메모리의 최댓값</td><td><code>tracemalloc</code>로 측정</td></tr>
+<tr><td>캐시 정보</td><td>저장값 재사용 정도</td><td><code>cache_info()</code>로 확인</td></tr>
+</tbody>
+</table>
+</section>
+<section class="card">
+<h2>4. 수행평가 문항</h2>
+<div class="question">1. 단순 재귀와 메모이제이션의 계산 결과가 같은 이유를 설명하시오.</div>
+<div class="question">2. n이 증가할수록 단순 재귀의 함수 호출 횟수가 급격히 늘어나는 이유를 설명하시오.</div>
+<div class="question">3. 실행 시간과 함수 호출 횟수를 근거로 두 방식의 효율성을 비교하시오.</div>
+<div class="question">4. 메모이제이션이 메모리를 추가로 사용하는 이유를 설명하시오.</div>
+<div class="question">5. n=40 이상에서 단순 재귀 방식의 사용이 적절한지 판단하고 근거를 제시하시오.</div>
+</section>
+<section class="card">
+<h2>5. 예시 정답</h2>
+<details class="answer">
+<summary>문항 1 정답</summary>
+<div>두 함수는 모두 F(1)=1, F(2)=1이라는 종료 조건과 F(n)=F(n-1)+F(n-2)라는 동일한 점화식을 사용하므로 최종 계산 결과가 같다.</div>
+</details>
+<details class="answer">
+<summary>문항 2 정답</summary>
+<div>단순 재귀는 같은 하위 문제를 여러 경로에서 반복 호출한다. 예를 들어 F(5)를 계산할 때 F(3), F(2), F(1)이 여러 번 다시 계산되므로 입력값이 커질수록 호출 횟수가 매우 빠르게 증가한다.</div>
+</details>
+<details class="answer">
+<summary>문항 3 정답</summary>
+<div>단순 재귀는 중복 계산 때문에 실행 시간과 호출 횟수가 크게 증가한다. 메모이제이션은 각 피보나치 값을 한 번만 계산하고 저장된 결과를 재사용하므로 실행 시간이 짧고 호출 횟수가 n에 비례한다.</div>
+</details>
+<details class="answer">
+<summary>문항 4 정답</summary>
+<div>메모이제이션은 이전에 계산한 입력값과 결과를 캐시에 저장해야 하므로 추가 메모리를 사용한다. 대신 이 저장 공간을 이용하여 중복 계산을 없애고 실행 시간을 줄인다.</div>
+</details>
+<details class="answer">
+<summary>문항 5 정답</summary>
+<div>n=40 이상에서는 단순 재귀의 호출 횟수가 매우 많아 실행 시간이 지나치게 길어질 수 있으므로 적절하지 않다. 메모이제이션이나 반복문 방식이 더 적합하다.</div>
+</details>
+</section>
+<section class="card">
+<h2>6. 평가 결론</h2>
+<p><b>정확성:</b> 두 방식은 동일한 점화식과 종료 조건을 사용하므로 결과가 같다.</p>
+<p><b>시간 효율성:</b> 메모이제이션이 단순 재귀보다 훨씬 우수하다.</p>
+<p><b>공간 효율성:</b> 단순 재귀는 캐시를 사용하지 않지만 호출 스택을 사용하며, 메모이제이션은 캐시 저장 공간이 추가로 필요하다.</p>
+<p><b>종합 판단:</b> 입력값이 작고 재귀 원리를 학습하는 경우에는 단순 재귀가 유용하지만, 실제 계산에서는 메모이제이션 또는 반복 방식이 더 적절하다.</p>
+</section>
+
+</section>
+
+<section id="assessment">
+  <div class="section-title"><h2 style="margin:0">Ⅱ. 수행01 자동 채점 평가</h2></div>
+  
+<section class="card notice">
+<b>응시 안내</b><br/>
+각 문항에서 관련 코드를 먼저 확인한 후 옳은 설명 3개를 모두 선택하세요.
+제출 후 문항별 정오답과 보기별 상세 풀이를 확인하고 TXT 파일로 저장할 수 있습니다.
+</section>
+<section class="card">
+<div class="student">
+<div class="label">학번</div><input id="sid" placeholder="예: 1101"/>
+<div class="label">이름</div><input id="sname" placeholder="예: 홍길동"/>
+</div>
+<p>응시 시작 시각: <span id="start"></span></p>
+</section>
+<div id="quiz"></div>
+<section class="card center">
+<button id="submitBtn" onclick="grade()">제출 및 채점</button>
+<button class="secondary" onclick="window.print()">인쇄 / PDF</button>
+</section>
+<section class="card result" id="result">
+<h2>채점 결과</h2>
+<div class="score" id="scoreText"></div>
+<p id="summaryText"></p>
+<button onclick="saveTxt()">결과 TXT 저장</button>
+</section>
+
+</section>
+</main>
+
+<script>
+function copyCode() {
+  const code = document.getElementById("code").innerText;
+  navigator.clipboard.writeText(code).then(() => alert("코드를 복사했습니다."));
+}
+function toggleAnswers() {
+  const items = [...document.querySelectorAll("details.answer")];
+  const shouldOpen = items.some(item => !item.open);
+  items.forEach(item => item.open = shouldOpen);
+}
+</script>
+<script>
+const Q=[{"q": "다음 단순 재귀 피보나치 함수에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def fibonacci_simple(n: int) -> int:\n    global simple_calls\n    simple_calls += 1\n\n    if not isinstance(n, int):\n        raise TypeError(\"n은 정수여야 합니다.\")\n    if n < 1:\n        raise ValueError(\"n은 1 이상의 정수여야 합니다.\")\n    if n in (1, 2):\n        return 1\n\n    return fibonacci_simple(n - 1) + fibonacci_simple(n - 2)", "choices": ["함수가 호출될 때마다 simple_calls가 1씩 증가한다.", "이미 계산한 값을 자동으로 캐시에 저장한다.", "n이 1 또는 2이면 1을 반환한다.", "정수가 아닌 입력은 자동으로 정수로 변환한다.", "n번째 값은 앞의 두 피보나치 값을 더해 계산한다."], "answer": [0, 2, 4], "exp": ["옳음. 함수 본문 시작 부분에서 전역 호출 횟수를 증가시킨다.", "틀림. 단순 재귀 함수에는 캐시 기능이 적용되어 있지 않다.", "옳음. 피보나치 수열의 초기 조건을 구현한다.", "틀림. 정수가 아니면 TypeError를 발생시킨다.", "옳음. F(n)=F(n-1)+F(n-2)의 점화식을 사용한다."]}, {"q": "다음 메모이제이션 피보나치 함수에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "@lru_cache(maxsize=None)\ndef fibonacci_memo(n: int) -> int:\n    global memo_calls\n    memo_calls += 1\n\n    if n in (1, 2):\n        return 1\n\n    return fibonacci_memo(n - 1) + fibonacci_memo(n - 2)", "choices": ["데코레이터는 재귀 호출을 자동으로 반복문으로 변환한다.", "lru_cache는 계산한 입력과 결과를 저장할 수 있다.", "캐시를 사용하면 추가 메모리가 전혀 필요하지 않다.", "같은 n이 다시 요청되면 저장된 결과를 재사용할 수 있다.", "maxsize=None은 캐시 항목 수에 명시적인 제한을 두지 않는다는 뜻이다."], "answer": [1, 3, 4], "exp": ["틀림. 함수 구조는 재귀 방식으로 유지된다.", "옳음. 함수의 인수와 반환값을 캐시에 보관한다.", "틀림. 저장된 값을 보관하기 위한 추가 공간이 필요하다.", "옳음. 동일 입력에서는 중복 계산 대신 캐시 결과를 사용할 수 있다.", "옳음. 캐시 크기에 고정된 상한을 두지 않는다."]}, {"q": "다음 측정 함수에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def measure(function, n: int):\n    tracemalloc.start()\n\n    start = perf_counter()\n    result = function(n)\n    elapsed = perf_counter() - start\n\n    current_memory, peak_memory = tracemalloc.get_traced_memory()\n    tracemalloc.stop()\n\n    return result, elapsed, peak_memory", "choices": ["function(n)의 반환 결과를 result에 저장한다.", "함수 호출 횟수를 자동으로 0으로 초기화한다.", "perf_counter() 전후의 차이로 실행 시간을 측정한다.", "peak_memory에는 추적 중 최대 메모리 사용량이 저장된다.", "반환값은 실행 시간 하나뿐이다."], "answer": [0, 2, 3], "exp": ["옳음. 측정 대상 함수의 계산 결과를 저장한다.", "틀림. 호출 횟수 초기화는 실험 반복문에서 별도로 수행한다.", "옳음. 시작 시각과 종료 시각의 차이를 계산한다.", "옳음. get_traced_memory()의 두 번째 값이 최대 추적 메모리이다.", "틀림. 결과, 실행 시간, 최대 메모리의 세 값을 반환한다."]}, {"q": "다음 실험 초기화 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "for n in test_values:\n    simple_calls = 0\n    memo_calls = 0\n    fibonacci_memo.cache_clear()", "choices": ["cache_clear()는 fibonacci_memo 함수 자체를 삭제한다.", "각 입력값의 실험 전에 두 호출 횟수를 0으로 초기화한다.", "이전 입력에서 저장된 메모이제이션 캐시를 비운다.", "simple_calls를 이전 실험 값에 계속 누적한다.", "각 입력값을 유사한 초기 조건에서 비교하기 위한 코드이다."], "answer": [1, 2, 4], "exp": ["틀림. 캐시만 비우며 함수는 그대로 유지된다.", "옳음. 입력별 호출 횟수를 독립적으로 측정할 수 있다.", "옳음. 이전 실험의 저장값이 다음 실험에 영향을 주는 것을 막는다.", "틀림. 매 실험마다 0으로 다시 설정한다.", "옳음. 공정한 비교를 위한 초기화 과정이다."]}, {"q": "다음 두 함수의 측정과 검증 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "simple_result, simple_time, simple_memory = measure(\n    fibonacci_simple, n\n)\n\nmemo_result, memo_time, memo_memory = measure(\n    fibonacci_memo, n\n)\n\nassert simple_result == memo_result", "choices": ["단순 재귀와 메모이제이션의 결과·시간·메모리를 각각 측정한다.", "두 함수의 실행 시간은 반드시 완전히 같아야 한다.", "결과가 다르더라도 assert는 항상 통과한다.", "두 함수에 같은 n을 입력한다.", "assert로 두 방식의 계산 결과가 같은지 검증한다."], "answer": [0, 3, 4], "exp": ["옳음. measure()가 세 종류의 측정값을 반환한다.", "틀림. 중복 계산과 캐시 사용 차이로 실행 시간은 다를 수 있다.", "틀림. 결과가 다르면 AssertionError가 발생할 수 있다.", "옳음. 동일 입력을 사용하여 공정하게 비교한다.", "옳음. 계산 정확성의 일치 여부를 확인한다."]}, {"q": "다음 출력 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "print(\n    f\"{n:>3} | {simple_result:>10} | \"\n    f\"{simple_time:>14.8f} | {memo_time:>14.8f} | \"\n    f\"{simple_calls:>12,} | {memo_calls:>10,}\"\n)", "choices": ["메모리 사용량만 출력하고 실행 시간은 출력하지 않는다.", "simple_calls와 memo_calls를 항상 같은 값으로 만든다.", "n과 계산 결과를 정렬된 형식으로 출력한다.", "두 방식의 실행 시간을 소수점 이하 8자리로 출력한다.", "호출 횟수에는 천 단위 구분 기호가 적용될 수 있다."], "answer": [2, 3, 4], "exp": ["틀림. simple_time과 memo_time을 모두 출력한다.", "틀림. 출력할 뿐 호출 횟수 값을 변경하지 않는다.", "옳음. 폭 지정 형식으로 표 형태를 만든다.", "옳음. .8f 형식으로 8자리까지 표현한다.", "옳음. 쉼표 형식 지정자가 큰 호출 횟수를 읽기 쉽게 표시한다."]}, {"q": "다음 캐시 정보 확인 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "print(\n    \"메모이제이션 캐시 정보:\",\n    fibonacci_memo.cache_info()\n)", "choices": ["캐시 적중 횟수와 실패 횟수 등을 확인할 수 있다.", "현재 캐시에 저장된 항목 수를 확인할 수 있다.", "함수의 소스 코드를 자동으로 수정한다.", "캐시를 모두 삭제한 뒤 아무 정보도 반환하지 않는다.", "메모이제이션이 저장값을 재사용했는지 분석하는 데 활용할 수 있다."], "answer": [0, 1, 4], "exp": ["옳음. hits와 misses 정보가 제공된다.", "옳음. currsize를 통해 현재 항목 수를 볼 수 있다.", "틀림. cache_info()는 상태를 조회할 뿐 코드를 수정하지 않는다.", "틀림. 캐시 정보 객체를 반환하며 삭제 기능은 cache_clear()이다.", "옳음. 캐시 동작을 정량적으로 확인하는 자료가 된다."]}, {"q": "다음 오류 입력 검사 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "for value in [0, -1, 3.5]:\n    try:\n        fibonacci_simple(value)\n    except (TypeError, ValueError) as error:\n        print(f\"입력 {value!r}: {error}\")", "choices": ["모든 입력을 정상 피보나치 값으로 계산한다.", "0과 -1은 허용 범위보다 작은 입력으로 검사한다.", "3.5는 정수가 아닌 입력으로 검사한다.", "TypeError와 ValueError가 발생하면 오류 메시지를 출력한다.", "예외가 발생하면 반드시 전체 프로그램이 즉시 종료한다."], "answer": [1, 2, 3], "exp": ["틀림. 세 입력 모두 오류 검증용이다.", "옳음. n은 1 이상이어야 하므로 값 오류 대상이다.", "옳음. 실수는 정수형 조건을 만족하지 않는다.", "옳음. except 구문이 두 예외를 처리하여 메시지를 출력한다.", "틀림. 예외를 처리하므로 반복 검사를 계속할 수 있다."]}, {"q": "다음 함수 호출 횟수 측정 방식에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "simple_calls = 0\nmemo_calls = 0\n\ndef fibonacci_simple(n):\n    global simple_calls\n    simple_calls += 1\n    ...\n\n@lru_cache(maxsize=None)\ndef fibonacci_memo(n):\n    global memo_calls\n    memo_calls += 1\n    ...", "choices": ["전역 변수는 실제 함수 본문이 실행된 횟수를 기록한다.", "global 문은 변수를 항상 지역 변수로 새로 만든다.", "단순 재귀는 같은 하위 문제를 여러 번 실행하여 호출 횟수가 크게 증가할 수 있다.", "두 방식의 호출 횟수는 모든 n에서 반드시 같다.", "메모이제이션은 캐시 적중 시 함수 본문을 다시 실행하지 않아 memo_calls 증가를 줄일 수 있다."], "answer": [0, 2, 4], "exp": ["옳음. 함수 본문 진입 때마다 카운터를 증가시킨다.", "틀림. global은 함수 밖의 전역 변수를 수정하겠다는 뜻이다.", "옳음. 같은 피보나치 값을 여러 재귀 경로에서 다시 계산한다.", "틀림. 메모이제이션은 중복 실행을 줄이므로 호출 횟수가 크게 다를 수 있다.", "옳음. 캐시 결과가 반환되면 장식된 원래 함수 본문은 다시 실행되지 않는다."]}, {"q": "단순 재귀와 메모이제이션의 효율성 결과를 해석하는 설명으로 옳은 것을 모두 고르시오.", "code": "# 단순 재귀: 같은 하위 문제를 반복 계산\n# 메모이제이션: 계산 결과를 캐시에 저장하고 재사용\n# 두 방식은 같은 종료 조건과 점화식을 사용", "choices": ["메모이제이션은 모든 문제에서 추가 메모리 없이 항상 최선이다.", "두 방식은 같은 피보나치 정의를 사용하므로 계산 결과가 같다.", "n이 커져도 단순 재귀의 실행 시간은 거의 일정하다.", "단순 재귀의 시간 복잡도는 대략 O(2ⁿ)으로 볼 수 있다.", "메모이제이션은 각 상태를 한 번 계산하여 O(n) 시간으로 개선될 수 있다."], "answer": [1, 3, 4], "exp": ["틀림. 캐시 공간이 필요하며 문제 특성에 따라 적합성이 달라진다.", "옳음. 종료 조건과 점화식이 동일하다.", "틀림. 입력이 커질수록 호출 횟수와 실행 시간이 급격히 증가한다.", "옳음. 중복 호출 트리가 지수적으로 증가한다.", "옳음. 계산한 상태를 저장하여 중복 계산을 제거한다."]}],started=new Date();
+let result=null;
+const pad=n=>String(n).padStart(2,"0");
+const fmt=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+const ffmt=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+document.getElementById("start").textContent=fmt(started);
+
+document.getElementById("quiz").innerHTML=Q.map((q,qi)=>`
+<section class="card" id="card${qi}">
+<div class="qtitle">${qi+1}. ${q.q}</div>
+<div class="codebox"><pre>${esc(q.code)}</pre></div>
+<span class="tag">옳은 것 3개 선택</span>
+${q.choices.map((c,ci)=>`
+<label class="choice" id="c${qi}_${ci}">
+<input type="checkbox" name="q${qi}" value="${ci}">
+<b>${ci+1}.</b> ${c}
+</label>`).join("")}
+<div id="e${qi}" class="explain" style="display:none"></div>
+</section>`).join("");
+
+Q.forEach((q,qi)=>{
+  document.querySelectorAll(`input[name="q${qi}"]`).forEach(input=>{
+    input.addEventListener("change",()=>{
+      if(document.querySelectorAll(`input[name="q${qi}"]:checked`).length>3){
+        input.checked=false;
+        alert("각 문항은 3개까지만 선택할 수 있습니다.");
+      }
+    });
+  });
+});
+
+const same=(a,b)=>a.length===b.length&&[...a].sort().every((v,i)=>v===[...b].sort()[i]);
+
+function grade(){
+  const id=document.getElementById("sid").value.trim();
+  const name=document.getElementById("sname").value.trim();
+  if(!id||!name){alert("학번과 이름을 입력하세요.");return;}
+
+  let correct=0;
+  const details=[];
+  const incomplete=[];
+
+  Q.forEach((q,qi)=>{
+    const selected=[...document.querySelectorAll(`input[name="q${qi}"]:checked`)].map(x=>Number(x.value));
+    if(selected.length!==3) incomplete.push(qi+1);
+
+    const ok=same(selected,q.answer);
+    if(ok) correct++;
+
+    document.getElementById(`card${qi}`).classList.add(ok?"correct":"wrong");
+
+    q.choices.forEach((_,ci)=>{
+      const label=document.getElementById(`c${qi}_${ci}`);
+      if(q.answer.includes(ci)) label.style.borderColor="#2e8b57";
+      if(selected.includes(ci)&&!q.answer.includes(ci)) label.style.borderColor="#c94a4a";
+    });
+
+    const e=document.getElementById(`e${qi}`);
+    e.style.display="block";
+    e.innerHTML=`<b>${ok?"정답":"오답"}</b><br>
+    선택: ${selected.length?selected.map(i=>i+1).join(", "):"미응답"} /
+    정답: ${q.answer.map(i=>i+1).join(", ")}
+    <ol>${q.exp.map((x,i)=>`<li><b>${i+1}번</b> ${x}</li>`).join("")}</ol>`;
+
+    details.push({
+      ok,
+      selected:selected.length?selected.map(i=>i+1).join(", "):"미응답",
+      answer:q.answer.map(i=>i+1).join(", ")
+    });
+  });
+
+  if(incomplete.length&&!confirm(`${incomplete.join(", ")}번 문항이 3개 선택되지 않았습니다. 그대로 제출하시겠습니까?`)){
+    return;
+  }
+
+  const ended=new Date();
+  const score=correct*10;
+
+  document.querySelectorAll("input").forEach(x=>x.disabled=true);
+  document.getElementById("submitBtn").disabled=true;
+  document.getElementById("result").style.display="block";
+  document.getElementById("scoreText").textContent=`${score}점 / 100점`;
+  document.getElementById("summaryText").textContent=
+    `정답 ${correct}문항, 오답 ${10-correct}문항 · 제출 시각 ${fmt(ended)}`;
+
+  result={id,name,score,correct,ended,details};
+  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+
+function saveTxt(){
+  if(!result){alert("먼저 제출 및 채점을 완료하세요.");return;}
+
+  const r=result;
+  const lines=[
+    "수행평가명: 수행01 단순 재귀와 메모이제이션 효율성 평가",
+    `학번: ${r.id}`,
+    `이름: ${r.name}`,
+    `점수: ${r.score}점`,
+    `정답 문항 수: ${r.correct}/10`,
+    `응시 시작 시각: ${fmt(started)}`,
+    `제출 시각: ${fmt(r.ended)}`,
+    "",
+    "===== 문항별 정오답 및 상세 풀이 ====="
+  ];
+
+  Q.forEach((q,i)=>{
+    const d=r.details[i];
+    lines.push(
+      "",
+      `[${i+1}번] ${d.ok?"정답":"오답"}`,
+      `문제: ${q.q}`,
+      "관련 코드:"
+    );
+    q.code.split("\n").forEach(line=>lines.push(`    ${line}`));
+    lines.push(`선택: ${d.selected}`,`정답: ${d.answer}`);
+
+    q.choices.forEach((choice,j)=>{
+      lines.push(`${j+1}. ${choice}`);
+      lines.push(`   풀이: ${q.exp[j]}`);
+    });
+  });
+
+  const blob=new Blob([lines.join("\n")],{type:"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  const clean=s=>s.replace(/[\\/:*?"<>|\s]+/g,"_");
+
+  a.href=url;
+  a.download=`${clean(r.id)}_${clean(r.name)}_${r.score}_수행01_${ffmt(r.ended)}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>

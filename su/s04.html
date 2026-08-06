@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>스택 활용 괄호 검사 학습·수행평가 통합본</title>
+<style>
+:root {
+  --brand:#1f5e9c; --brand2:#0d9488; --ink:#18212f;
+  --muted:#667085; --line:#d8e1eb; --bg:#f5f8fc; --card:#fff;
+  --good:#edf8f1; --warn:#fff6e8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  line-height:1.7;
+}
+header {
+  background:linear-gradient(135deg,#173d6c,#1f6ea9 58%,#0d9488);
+  color:white; padding:42px 20px 34px;
+}
+header .inner, main { max-width:1280px; margin:auto; }
+h1 { margin:0 0 8px; font-size:clamp(28px,4vw,46px); line-height:1.3; }
+header p { margin:0; opacity:.93; }
+.toolbar {
+  position:sticky; top:0; z-index:20; background:rgba(255,255,255,.97);
+  border-bottom:1px solid var(--line); padding:10px 16px;
+  display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
+}
+button {
+  border:0; border-radius:8px; padding:10px 15px;
+  background:var(--brand); color:white; font:inherit; cursor:pointer;
+}
+button.secondary { background:#475467; }
+button.green { background:var(--brand2); }
+main { padding:24px 16px 60px; }
+.card {
+  background:var(--card); border:1px solid var(--line);
+  border-radius:14px; padding:22px; margin-bottom:20px;
+  box-shadow:0 7px 22px rgba(16,24,40,.05);
+}
+.notice { background:#eef7ff; border-left:5px solid var(--brand); }
+h2 { color:#174d7f; margin-top:0; }
+h3 { color:#24618f; }
+.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+.concept { border:1px solid var(--line); border-radius:10px; padding:16px; }
+.good { background:var(--good); }
+.warn { background:var(--warn); }
+.stack-visual {
+  display:flex; flex-direction:column; align-items:center; gap:5px;
+  margin:16px auto; max-width:220px;
+}
+.stack-item {
+  width:120px; text-align:center; padding:10px;
+  border:2px solid #3b6f9d; background:#eaf3fb;
+  border-radius:5px; font-weight:700;
+}
+.arrow { color:var(--brand2); font-weight:800; }
+.table-wrap { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; min-width:850px; }
+th,td { border:1px solid var(--line); padding:10px; vertical-align:top; font-size:14px; }
+th { background:#244f7d; color:white; }
+.code-box,.codebox {
+  background:#111827; color:#edf2f7; padding:18px;
+  border-radius:11px; overflow:auto; position:relative; margin:12px 0;
+}
+pre {
+  margin:0; white-space:pre; font-family:Consolas,"Courier New",monospace;
+  font-size:13px; line-height:1.55;
+}
+.code-box button {
+  position:absolute; right:10px; top:10px; font-size:12px;
+  padding:6px 9px; background:#334155;
+}
+.output {
+  background:#f3f6f9; border:1px solid var(--line);
+  border-radius:10px; padding:15px; overflow:auto;
+}
+.question {
+  border-left:4px solid var(--brand2); background:#f1fbf9;
+  padding:12px 15px; margin:10px 0; border-radius:8px;
+}
+details { border:1px solid var(--line); border-radius:9px; margin-top:12px; }
+summary {
+  cursor:pointer; padding:12px 14px; font-weight:700; background:#f4f7fa;
+}
+details > div { padding:14px; }
+.rubric td:first-child { font-weight:700; background:#f5f8fb; }
+.student {
+  display:grid; grid-template-columns:110px 1fr 110px 1fr; gap:8px;
+}
+.student div,.student input {
+  border:1px solid var(--line); padding:10px; min-height:42px;
+}
+.student input { width:100%; font:inherit; }
+.label { background:#eef4fa; font-weight:700; text-align:center; }
+.qtitle { font-size:18px; font-weight:800; margin-bottom:10px; }
+.choice {
+  display:block; border:1px solid var(--line); border-radius:9px;
+  padding:10px 12px; margin:8px 0; cursor:pointer;
+}
+.choice:hover { background:#f5f8fb; }
+.choice input { margin-right:8px; transform:scale(1.15); }
+.tag {
+  display:inline-block; padding:3px 8px; border-radius:999px;
+  background:#e8f2fc; color:#174d7f; font-weight:700; font-size:13px;
+}
+.center { text-align:center; }
+.result { display:none; }
+.score { font-size:28px; font-weight:900; color:var(--brand); }
+.correct { background:#eaf8ef; }
+.wrong { background:#fff0f0; }
+.explain { margin-top:12px; border-top:1px dashed var(--line); padding-top:12px; }
+.section-title {
+  margin:36px 0 18px; padding:15px 18px; border-radius:12px;
+  background:linear-gradient(135deg,#e9f3fb,#eaf9f6);
+  border:1px solid #c8dceb; color:#174d7f;
+}
+@media(max-width:760px) {
+  .grid { grid-template-columns:1fr; }
+  .student { grid-template-columns:90px 1fr; }
+}
+@media print {
+  header,.toolbar,.code-box button,.center { display:none!important; }
+  body { background:white; }
+  main { max-width:none; padding:0; }
+  .card { box-shadow:none; break-inside:avoid; }
+  details > div { display:block!important; }
+  .result { display:block!important; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <h1>스택 활용 괄호 검사 학습·수행평가 통합본</h1>
+    <p>문제 분석 · 알고리즘 설계 · 전체 코드 · 효율성 분석 · 수행04 자동 채점</p>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button onclick="document.getElementById('lesson').scrollIntoView({behavior:'smooth'})">학습자료</button>
+  <button class="green" onclick="document.getElementById('assessment').scrollIntoView({behavior:'smooth'})">수행평가</button>
+  <button onclick="window.print()">인쇄 / PDF 저장</button>
+  <button class="secondary" onclick="toggleAnswers()">예시 정답 펼치기·접기</button>
+</div>
+
+<main>
+<section id="lesson">
+  <div class="section-title"><h2 style="margin:0">Ⅰ. 스택 활용 괄호 검사 학습자료</h2></div>
+  
+<section class="card notice">
+<b>성취 목표</b><br/>
+  문제의 특성에 적합한 자료구조를 선택하고, 스택을 활용하여 괄호의 짝과 순서를
+  검사하는 프로그램을 작성하며, 다양한 시험 자료를 통해 정확성과 효율성을 분석한다.
+</section>
+<section class="card">
+<h2>1. 문제 상황</h2>
+<p>
+    수식이나 프로그램 코드에 사용된 소괄호 <code>()</code>, 대괄호 <code>[]</code>,
+    중괄호 <code>{}</code>가 올바른 순서로 열리고 닫혔는지 검사하는 프로그램을 작성한다.
+  </p>
+<div class="grid">
+<div class="concept good">
+<h3>올바른 예</h3>
+<p><code>(a+b)*[c-d]</code></p>
+<p><code>{[()]}</code></p>
+<p><code>{[(a+b)*(c-d)]}</code></p>
+</div>
+<div class="concept warn">
+<h3>올바르지 않은 예</h3>
+<p><code>(a+b]</code> — 종류가 다름</p>
+<p><code>((a+b)</code> — 닫는 괄호 부족</p>
+<p><code>)(a+b)(</code> — 순서가 잘못됨</p>
+</div>
+</div>
+</section>
+<section class="card">
+<h2>2. 스택이 적합한 이유</h2>
+<p>
+    가장 최근에 열린 괄호가 가장 먼저 닫혀야 하므로, 마지막에 저장한 자료를 먼저 꺼내는
+    <b>LIFO</b> 구조인 스택이 적합하다.
+  </p>
+<div class="stack-visual">
+<div class="arrow">TOP</div>
+<div class="stack-item">(</div>
+<div class="stack-item">[</div>
+<div class="stack-item">{</div>
+<div class="arrow">최근 여는 괄호부터 확인</div>
+</div>
+</section>
+<section class="card">
+<h2>3. 알고리즘 설계</h2>
+<ol>
+<li>빈 스택을 준비한다.</li>
+<li>문자열의 문자를 앞에서부터 하나씩 확인한다.</li>
+<li>여는 괄호를 만나면 스택에 삽입한다.</li>
+<li>닫는 괄호를 만나면 스택이 비어 있는지 확인한다.</li>
+<li>스택의 맨 위 여는 괄호와 현재 닫는 괄호가 짝을 이루는지 확인한다.</li>
+<li>짝이 맞으면 스택에서 제거하고, 맞지 않으면 False를 반환한다.</li>
+<li>문자열 검사가 끝난 뒤 스택이 비어 있으면 True를 반환한다.</li>
+</ol>
+</section>
+<section class="card">
+<h2>4. 수행 과제</h2>
+<ol>
+<li>함수 <code>is_balanced(text)</code>를 작성한다.</li>
+<li>소괄호·대괄호·중괄호를 모두 처리한다.</li>
+<li>괄호가 없는 문자열과 빈 문자열도 검사한다.</li>
+<li>정상·오류·경계 사례를 포함한 시험 자료를 만든다.</li>
+<li>프로그램의 시간 복잡도와 공간 복잡도를 분석한다.</li>
+</ol>
+</section>
+<section class="card">
+<h2>5. 제출 산출물</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>산출물</th><th>포함 내용</th></tr>
+</thead>
+<tbody>
+<tr><td>문제 분석지</td><td>괄호 검사 문제의 특징과 스택 선택 이유</td></tr>
+<tr><td>알고리즘</td><td>입력·처리·출력, 의사코드 또는 순서도</td></tr>
+<tr><td>전체 코드</td><td>괄호 검사 함수, 시험 자료, 검증 코드</td></tr>
+<tr><td>테스트 보고서</td><td>정상·오류·경계 사례와 예상·실제 결과</td></tr>
+<tr><td>효율성 분석</td><td>시간 복잡도와 공간 복잡도</td></tr>
+<tr><td>성찰 기록</td><td>스택 활용의 장점과 개선 가능성</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>6. 정답 포함 전체 코드</h2>
+<div class="code-box">
+<button onclick="copyCode()">코드 복사</button>
+<pre id="code">def is_balanced(text: str) -&gt; bool:
+    """
+    문자열에 포함된 (), [], {} 괄호의 짝과 순서가 올바른지 검사한다.
+    괄호가 없거나 빈 문자열인 경우 True를 반환한다.
+    """
+    stack: list[str] = []
+    pairs = {")": "(", "]": "[", "}": "{"}
+    opening = set(pairs.values())
+
+    for ch in text:
+        # 여는 괄호는 스택에 저장한다.
+        if ch in opening:
+            stack.append(ch)
+
+        # 닫는 괄호를 만나면 스택의 맨 위와 짝을 확인한다.
+        elif ch in pairs:
+            # 스택이 비어 있으면 대응하는 여는 괄호가 없는 경우이다.
+            if not stack:
+                return False
+
+            # 가장 최근의 여는 괄호가 현재 닫는 괄호와 맞지 않는 경우이다.
+            if stack[-1] != pairs[ch]:
+                return False
+
+            # 짝이 맞으면 여는 괄호를 스택에서 제거한다.
+            stack.pop()
+
+    # 검사가 끝난 뒤 스택이 비어 있어야 모든 괄호의 짝이 맞는다.
+    return len(stack) == 0
+
+
+test_cases = {
+    "A": "(a+b)*[c-d]",
+    "B": "{{a+b}*[c-d]}",
+    "C": "(a+b]",
+    "D": "((a+b)",
+    "E": "{[()]}",
+    "F": "",
+    "G": "abc+123",
+    "H": ")(a+b)(",
+    "I": "{[(a+b)*(c-d)]}",
+}
+
+print("=" * 56)
+print("괄호 짝 검사 결과")
+print("=" * 56)
+
+for name, text in test_cases.items():
+    result = is_balanced(text)
+    state = "올바름" if result else "올바르지 않음"
+    print(f"{name}. {text!r:&lt;24} -&gt; {result:&lt;5} ({state})")
+
+
+# 추가 시험
+assert is_balanced("(a+b)*[c-d]") is True
+assert is_balanced("{{a+b}*[c-d]}") is True
+assert is_balanced("(a+b]") is False
+assert is_balanced("((a+b)") is False
+assert is_balanced("{[()]}") is True
+assert is_balanced("") is True
+assert is_balanced("abc+123") is True
+
+print("\n모든 핵심 시험을 통과했습니다.")</pre>
+</div>
+</section>
+<section class="card">
+<h2>7. 예상 실행 결과</h2>
+<div class="output"><pre>괄호 짝 검사 결과
+A. '(a+b)*[c-d]'          -&gt; True  (올바름)
+B. '{{a+b}*[c-d]}'        -&gt; True  (올바름)
+C. '(a+b]'                -&gt; False (올바르지 않음)
+D. '((a+b)'               -&gt; False (올바르지 않음)
+E. '{[()]}'               -&gt; True  (올바름)
+F. ''                     -&gt; True  (올바름)
+G. 'abc+123'              -&gt; True  (올바름)
+H. ')(a+b)('              -&gt; False (올바르지 않음)
+I. '{{[(a+b)*(c-d)]}}'    -&gt; True  (올바름)
+
+모든 핵심 시험을 통과했습니다.</pre></div>
+</section>
+<section class="card">
+<h2>8. 시험 자료 분석</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>구분</th><th>입력</th><th>예상 결과</th><th>이유</th></tr>
+</thead>
+<tbody>
+<tr><td>A</td><td><code>(a+b)*[c-d]</code></td><td>True</td><td>모든 괄호의 종류와 순서가 올바름</td></tr>
+<tr><td>B</td><td><code>{{a+b}*[c-d]}</code></td><td>True</td><td>중첩 괄호가 올바르게 닫힘</td></tr>
+<tr><td>C</td><td><code>(a+b]</code></td><td>False</td><td>여는 괄호와 닫는 괄호 종류가 다름</td></tr>
+<tr><td>D</td><td><code>((a+b)</code></td><td>False</td><td>검사 종료 후 스택에 여는 괄호가 남음</td></tr>
+<tr><td>E</td><td><code>{[()]}</code></td><td>True</td><td>가장 안쪽 괄호부터 차례로 닫힘</td></tr>
+<tr><td>F</td><td>빈 문자열</td><td>True</td><td>잘못된 괄호가 없고 스택도 비어 있음</td></tr>
+<tr><td>G</td><td><code>abc+123</code></td><td>True</td><td>괄호가 없으므로 균형을 위반하지 않음</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>9. 수행평가 문항</h2>
+<div class="question">1. 이 문제에서 큐보다 스택이 더 적합한 이유를 설명하시오.</div>
+<div class="question">2. 여는 괄호와 닫는 괄호를 각각 만났을 때 수행하는 연산을 설명하시오.</div>
+<div class="question">3. 닫는 괄호를 만났을 때 스택이 비어 있으면 False를 반환해야 하는 이유를 설명하시오.</div>
+<div class="question">4. 문자열 검사가 끝난 뒤 <code>len(stack) == 0</code>을 확인해야 하는 이유를 설명하시오.</div>
+<div class="question">5. 문자열 길이가 n일 때 이 알고리즘의 시간 복잡도와 공간 복잡도를 설명하시오.</div>
+</section>
+<section class="card">
+<h2>10. 예시 정답</h2>
+<details class="answer">
+<summary>문항 1 정답</summary>
+<div>
+      가장 최근에 열린 괄호가 가장 먼저 닫혀야 하므로 LIFO 방식의 스택이 적합하다.
+      큐는 먼저 들어온 자료를 먼저 처리하므로 중첩 괄호의 짝을 검사하기에 적합하지 않다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 2 정답</summary>
+<div>
+      여는 괄호는 스택에 삽입한다. 닫는 괄호를 만나면 스택의 맨 위 자료가
+      현재 닫는 괄호와 짝을 이루는지 확인하고, 짝이 맞으면 스택에서 제거한다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 3 정답</summary>
+<div>
+      스택이 비어 있다는 것은 현재 닫는 괄호에 대응하는 이전의 여는 괄호가 없다는 뜻이다.
+      따라서 괄호의 순서가 올바르지 않으므로 False를 반환한다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 4 정답</summary>
+<div>
+      문자열 검사가 끝났는데 스택에 여는 괄호가 남아 있다면 닫히지 않은 괄호가 있다는 뜻이다.
+      모든 괄호가 정확하게 닫혔을 때만 스택이 비어 있으므로 이를 최종 조건으로 확인한다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 5 정답</summary>
+<div>
+      문자열의 각 문자를 한 번씩 검사하므로 시간 복잡도는 O(n)이다.
+      모든 문자가 여는 괄호일 수 있으므로 최악의 경우 스택에 n개의 문자를 저장하여
+      공간 복잡도는 O(n)이다.
+    </div>
+</details>
+</section>
+<section class="card">
+<h2>11. 분석적 루브릭</h2>
+<div class="table-wrap">
+<table class="rubric">
+<thead>
+<tr>
+<th>평가 요소</th>
+<th>A 수준</th>
+<th>B 수준</th>
+<th>C 수준</th>
+<th>D 수준</th>
+<th>E 수준</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>자료구조 선택<br/>20점</td>
+<td>문제 특성을 정확히 분석하고 스택 선택 이유를 LIFO와 중첩 구조에 근거하여 논리적으로 설명함.</td>
+<td>스택 선택 이유를 정확하게 설명함.</td>
+<td>스택이 적합함을 기본 수준으로 설명함.</td>
+<td>스택을 선택했으나 이유가 부분적임.</td>
+<td>자료구조 선택이 부적절하거나 설명하지 못함.</td>
+</tr>
+<tr>
+<td>알고리즘 설계<br/>25점</td>
+<td>종류 불일치, 빈 스택, 미종결 괄호, 빈 문자열까지 고려하여 체계적으로 설계함.</td>
+<td>주요 예외 상황을 포함한 정확한 알고리즘을 설계함.</td>
+<td>기본 괄호 검사 알고리즘을 설계함.</td>
+<td>알고리즘 일부가 누락되거나 부정확함.</td>
+<td>검사 절차를 구체화하지 못함.</td>
+</tr>
+<tr>
+<td>프로그램 구현<br/>35점</td>
+<td>코드가 정확하고 가독성이 높으며 다양한 시험과 검증 코드를 포함함.</td>
+<td>주요 입력에서 정확하게 동작하는 프로그램을 완성함.</td>
+<td>기본 시험 자료에서 동작하는 프로그램을 작성함.</td>
+<td>일부 입력에서 오류가 발생하거나 수정 지원이 필요함.</td>
+<td>프로그램을 완성하지 못함.</td>
+</tr>
+<tr>
+<td>검증·효율성 분석<br/>20점</td>
+<td>정상·오류·경계 사례를 체계적으로 검증하고 시간·공간 복잡도를 정확히 분석함.</td>
+<td>여러 시험 자료로 정확성을 확인하고 효율성을 설명함.</td>
+<td>기본 시험과 복잡도를 설명함.</td>
+<td>시험이나 분석이 제한적임.</td>
+<td>검증 기록과 효율성 설명이 거의 없음.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>12. 종합 정리</h2>
+<p><b>문제 해결 원리:</b> 최근에 열린 괄호를 가장 먼저 확인해야 하므로 스택을 사용한다.</p>
+<p><b>정확성 조건:</b> 닫는 괄호의 짝이 맞아야 하고, 검사 종료 후 스택이 비어 있어야 한다.</p>
+<p><b>효율성:</b> 문자열을 한 번 순회하므로 시간 복잡도는 O(n)이며, 최악의 공간 복잡도는 O(n)이다.</p>
+<p><b>확장 가능성:</b> 수식 검사, 프로그램 코드 문법 검사, 태그 중첩 검사 등에 활용할 수 있다.</p>
+</section>
+
+</section>
+
+<section id="assessment">
+  <div class="section-title"><h2 style="margin:0">Ⅱ. 수행04 자동 채점 평가</h2></div>
+  
+<section class="card notice">
+<b>응시 안내</b><br/>
+각 문항에는 옳은 설명 3개와 틀린 설명 2개가 있습니다. 코드 관련 문항은 관련 코드를 먼저 제시합니다.
+옳은 설명 3개를 모두 선택해야 정답으로 인정되며, 제출 후 문항별 정오답과 상세 풀이를 확인할 수 있습니다.
+</section>
+<section class="card">
+<div class="student">
+<div class="label">학번</div><input id="sid" placeholder="예: 1101"/>
+<div class="label">이름</div><input id="sname" placeholder="예: 홍길동"/>
+</div>
+<p>응시 시작 시각: <span id="start"></span></p>
+</section>
+<div id="quiz"></div>
+<section class="card center">
+<button id="submitBtn" onclick="grade()">제출 및 채점</button>
+<button class="secondary" onclick="window.print()">인쇄 / PDF</button>
+</section>
+<section class="card result" id="result">
+<h2>채점 결과</h2>
+<div class="score" id="scoreText"></div>
+<p id="summaryText"></p>
+<button onclick="saveTxt()">결과 TXT 저장</button>
+</section>
+
+</section>
+</main>
+
+<script>
+function copyCode() {
+  const code = document.getElementById("code").innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    alert("코드를 복사했습니다.");
+  });
+}
+
+function toggleAnswers() {
+  const items = [...document.querySelectorAll("details.answer")];
+  const shouldOpen = items.some(item => !item.open);
+  items.forEach(item => item.open = shouldOpen);
+}
+</script>
+<script>
+const Q=[{"q": "괄호 짝 검사 문제에서 스택이 적합한 이유에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "", "choices": ["가장 최근에 열린 괄호가 가장 먼저 닫혀야 하기 때문이다.", "큐의 FIFO 방식만이 괄호 중첩 순서를 정확히 처리할 수 있기 때문이다.", "스택은 LIFO 방식으로 자료를 처리하기 때문이다.", "스택은 문자열의 모든 문자를 자동으로 정렬하기 때문이다.", "중첩된 괄호의 안쪽부터 차례로 검사할 수 있기 때문이다."], "answer": [0, 2, 4], "exp": ["옳음. 최근에 열린 괄호와 현재 닫는 괄호를 먼저 비교해야 한다.", "틀림. FIFO 방식의 큐는 가장 오래된 여는 괄호부터 확인하므로 중첩 검사에 적합하지 않다.", "옳음. 후입선출 구조가 괄호의 중첩 처리 순서와 일치한다.", "틀림. 스택은 자료를 저장하고 꺼내는 순서를 관리할 뿐 문자열을 자동 정렬하지 않는다.", "옳음. 가장 안쪽의 괄호부터 닫히는 구조를 자연스럽게 처리한다."]}, {"q": "다음 코드의 pairs와 opening에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\nopening = set(pairs.values())", "choices": ["opening에는 ), ], }만 저장된다.", "pairs의 키는 닫는 괄호이다.", "pairs[\"(\"]의 값은 \")\"이다.", "pairs의 값은 각 닫는 괄호와 짝을 이루는 여는 괄호이다.", "opening에는 (, [, {가 저장된다."], "answer": [1, 3, 4], "exp": ["틀림. 닫는 괄호는 pairs의 키에 저장되어 있다.", "옳음. 딕셔너리의 키는 닫는 괄호 세 종류이다.", "틀림. \"(\"는 pairs의 키가 아니므로 해당 방식으로 조회할 수 없다.", "옳음. 각 값은 해당 닫는 괄호와 짝을 이루는 여는 괄호이다.", "옳음. pairs.values()를 집합으로 만들면 세 여는 괄호가 저장된다."]}, {"q": "다음 코드가 수행하는 동작에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "for ch in text:\n    if ch in opening:\n        stack.append(ch)", "choices": ["문자열을 앞에서부터 한 문자씩 검사한다.", "닫는 괄호를 만나면 이 코드에서 즉시 True를 반환한다.", "여는 괄호를 만나면 스택에 추가한다.", "일반 문자나 숫자는 이 조건에서 스택에 추가되지 않는다.", "모든 문자를 스택에 저장한다."], "answer": [0, 2, 3], "exp": ["옳음. for문은 text의 문자를 순서대로 확인한다.", "틀림. 이 코드에는 True를 반환하는 문장이 없다.", "옳음. ch가 opening에 포함되면 append()를 실행한다.", "옳음. opening에 없는 문자는 이 if문에서 저장되지 않는다.", "틀림. 여는 괄호만 스택에 저장한다."]}, {"q": "다음 코드에서 False를 반환하는 상황에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "elif ch in pairs:\n    if not stack:\n        return False\n    if stack[-1] != pairs[ch]:\n        return False", "choices": ["여는 괄호를 만날 때마다 항상 False를 반환한다.", "닫는 괄호를 만났는데 스택이 비어 있는 경우이다.", "스택의 맨 위 여는 괄호와 현재 닫는 괄호의 종류가 맞지 않는 경우이다.", "일반 문자나 숫자를 만나면 반드시 False를 반환한다.", "대응하는 여는 괄호가 없거나 순서가 잘못된 경우이다."], "answer": [1, 2, 4], "exp": ["틀림. 여는 괄호는 앞의 if문에서 스택에 저장된다.", "옳음. 닫는 괄호보다 앞선 여는 괄호가 없다는 뜻이다.", "옳음. 가장 최근 여는 괄호와 현재 닫는 괄호의 짝이 다르면 잘못된 구조이다.", "틀림. 괄호가 아닌 문자는 별도 처리 없이 다음 문자로 넘어간다.", "옳음. 두 조건은 괄호 부족과 괄호 종류·순서 오류를 검사한다."]}, {"q": "다음 코드에서 stack.pop()이 실행되는 조건과 효과에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "if stack[-1] != pairs[ch]:\n    return False\n\nstack.pop()", "choices": ["스택의 맨 위 여는 괄호와 현재 닫는 괄호의 짝이 맞을 때 실행된다.", "스택의 모든 자료를 한 번에 삭제한다.", "현재 닫는 괄호를 스택에 추가한다.", "짝이 맞은 여는 괄호를 스택에서 제거한다.", "괄호 한 쌍의 검사가 완료되었음을 의미한다."], "answer": [0, 3, 4], "exp": ["옳음. 불일치하면 이미 False를 반환하므로 이후에는 짝이 맞는 경우만 남는다.", "틀림. pop()은 맨 위 자료 하나만 제거한다.", "틀림. 닫는 괄호는 스택에 추가하지 않고 대응하는 여는 괄호를 제거한다.", "옳음. pop()은 스택 맨 위 자료 하나를 제거한다.", "옳음. 여는 괄호와 닫는 괄호 한 쌍이 처리된 것이다."]}, {"q": "다음 반환문의 의미에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "return len(stack) == 0", "choices": ["스택의 길이가 1이면 True를 반환한다.", "문자열에 괄호가 없으면 항상 False를 반환한다.", "문자열 검사가 끝난 뒤 스택이 비어 있으면 True를 반환한다.", "스택에 여는 괄호가 남아 있으면 False를 반환한다.", "닫히지 않은 여는 괄호가 있는지 최종적으로 검사한다."], "answer": [2, 3, 4], "exp": ["틀림. 길이가 정확히 0일 때만 True이다.", "틀림. 괄호가 없으면 스택은 비어 있으므로 True를 반환한다.", "옳음. 모든 여는 괄호가 정상적으로 닫혔다는 뜻이다.", "옳음. 남은 자료는 닫히지 않은 여는 괄호를 의미한다.", "옳음. 반복문이 끝난 뒤 미종결 괄호를 확인하는 최종 검사이다."]}, {"q": "다음 입력에 대한 실행 결과로 옳은 것을 모두 고르시오.", "code": "print(is_balanced(\"(a+b)*[c-d]\"))\nprint(is_balanced(\"(a+b]\"))\nprint(is_balanced(\"{[()]}\"))\nprint(is_balanced(\"abc+123\"))\nprint(is_balanced(\"\"))", "choices": ["첫 번째 출력은 True이다.", "두 번째 출력은 False이다.", "네 번째 출력은 괄호가 없으므로 False이다.", "다섯 번째 출력은 빈 문자열이므로 오류가 발생한다.", "세 번째, 네 번째, 다섯 번째 출력은 모두 True이다."], "answer": [0, 1, 4], "exp": ["옳음. 소괄호와 대괄호의 짝과 순서가 모두 올바르다.", "옳음. 여는 소괄호와 닫는 대괄호의 종류가 맞지 않는다.", "틀림. 괄호가 없으면 스택이 비어 있어 True이다.", "틀림. 반복문을 건너뛴 뒤 스택 길이가 0이므로 True를 반환한다.", "옳음. 중첩 괄호는 올바르고, 괄호가 없는 문자열과 빈 문자열도 균형을 위반하지 않는다."]}, {"q": "괄호 짝 검사 알고리즘의 효율성에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "", "choices": ["문자열 길이가 늘어나도 실행 시간은 항상 O(1)이다.", "문자열의 각 문자를 최대 한 번씩 확인하므로 시간 복잡도는 O(n)이다.", "최악의 경우 모든 문자가 여는 괄호이면 스택에 n개가 저장될 수 있다.", "최악의 공간 복잡도는 O(n)이다.", "스택에는 언제나 자료가 한 개만 저장된다."], "answer": [1, 2, 3], "exp": ["틀림. 입력 길이에 비례하여 검사 횟수가 증가한다.", "옳음. 길이 n인 문자열을 한 번 순회한다.", "옳음. 닫는 괄호가 없으면 모든 여는 괄호가 스택에 남는다.", "옳음. 최대로 n개의 괄호를 저장할 수 있다.", "틀림. 중첩 깊이에 따라 여러 여는 괄호가 저장될 수 있다."]}, {"q": "다음 assert 문을 이용한 검증에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "assert is_balanced(\"(a+b)*[c-d]\") is True\nassert is_balanced(\"(a+b]\") is False\nassert is_balanced(\"((a+b)\") is False", "choices": ["첫 번째 문장은 정상 괄호 문자열이 True인지 검사한다.", "assert는 검사 결과가 달라도 항상 프로그램을 계속 실행한다.", "두 번째 문장은 서로 다른 종류의 괄호가 False인지 검사한다.", "세 문장은 모두 함수 실행 시간을 측정하기 위한 코드이다.", "세 번째 문장은 닫히지 않은 여는 괄호가 False인지 검사한다."], "answer": [0, 2, 4], "exp": ["옳음. 정상 사례의 기대값을 검증한다.", "틀림. 조건이 거짓이면 AssertionError가 발생할 수 있다.", "옳음. 괄호 종류 불일치 사례를 검증한다.", "틀림. assert는 결과의 정확성을 검증하는 기능이다.", "옳음. 검사 종료 후 스택에 여는 괄호가 남는 사례를 검증한다."]}, {"q": "괄호 짝 검사 프로그램의 확장과 활용에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "", "choices": ["괄호 검사에는 자료구조가 전혀 필요하지 않다.", "프로그램 코드의 괄호 문법 검사에 활용할 수 있다.", "현재 알고리즘은 문자열을 자동으로 올바르게 수정한다.", "HTML과 같은 태그의 중첩 검사 원리로 확장할 수 있다.", "수식의 괄호 구조를 사전에 검사하는 데 활용할 수 있다."], "answer": [1, 3, 4], "exp": ["틀림. 중첩 순서를 관리하기 위해 스택을 사용한다.", "옳음. 코드 작성 중 괄호 누락이나 순서 오류를 찾는 데 활용할 수 있다.", "틀림. 현재 함수는 올바른지 판별할 뿐 문자열을 수정하지 않는다.", "옳음. 여는 태그와 닫는 태그의 중첩 관계도 스택으로 검사할 수 있다.", "옳음. 수식을 계산하기 전에 구조적 오류를 탐지할 수 있다."]}];
+const started=new Date();
+let result=null;
+const pad=n=>String(n).padStart(2,"0");
+const fmt=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+const ffmt=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+document.getElementById("start").textContent=fmt(started);
+
+document.getElementById("quiz").innerHTML=Q.map((q,qi)=>`
+<section class="card" id="card${qi}">
+<div class="qtitle">${qi+1}. ${q.q}</div>
+${q.code?`<div class="codebox"><pre>${esc(q.code)}</pre></div>`:""}
+<span class="tag">옳은 것 3개 선택</span>
+${q.choices.map((c,ci)=>`
+<label class="choice" id="c${qi}_${ci}">
+<input type="checkbox" name="q${qi}" value="${ci}">
+<b>${ci+1}.</b> ${c}
+</label>`).join("")}
+<div id="e${qi}" class="explain" style="display:none"></div>
+</section>`).join("");
+
+Q.forEach((q,qi)=>{
+  document.querySelectorAll(`input[name="q${qi}"]`).forEach(input=>{
+    input.addEventListener("change",()=>{
+      const checked=document.querySelectorAll(`input[name="q${qi}"]:checked`);
+      if(checked.length>3){
+        input.checked=false;
+        alert("각 문항은 3개까지만 선택할 수 있습니다.");
+      }
+    });
+  });
+});
+
+const sameSet=(a,b)=>a.length===b.length&&[...a].sort().every((v,i)=>v===[...b].sort()[i]);
+
+function grade(){
+  const id=document.getElementById("sid").value.trim();
+  const name=document.getElementById("sname").value.trim();
+  if(!id||!name){alert("학번과 이름을 입력하세요.");return;}
+
+  let correct=0;
+  const details=[];
+  const incomplete=[];
+
+  Q.forEach((q,qi)=>{
+    const selected=[...document.querySelectorAll(`input[name="q${qi}"]:checked`)].map(x=>Number(x.value));
+    if(selected.length!==3) incomplete.push(qi+1);
+    const ok=sameSet(selected,q.answer);
+    if(ok) correct++;
+
+    const card=document.getElementById(`card${qi}`);
+    card.classList.add(ok?"correct":"wrong");
+
+    q.choices.forEach((_,ci)=>{
+      const label=document.getElementById(`c${qi}_${ci}`);
+      if(q.answer.includes(ci)) label.style.borderColor="#2e8b57";
+      if(selected.includes(ci)&&!q.answer.includes(ci)) label.style.borderColor="#c94a4a";
+    });
+
+    const e=document.getElementById(`e${qi}`);
+    e.style.display="block";
+    e.innerHTML=`<b>${ok?"정답":"오답"}</b><br>
+    선택: ${selected.length?selected.map(i=>i+1).join(", "):"미응답"} /
+    정답: ${q.answer.map(i=>i+1).join(", ")}
+    <ol>${q.exp.map((x,i)=>`<li><b>${i+1}번</b> ${x}</li>`).join("")}</ol>`;
+
+    details.push({
+      ok,
+      selected:selected.length?selected.map(i=>i+1).join(", "):"미응답",
+      answer:q.answer.map(i=>i+1).join(", ")
+    });
+  });
+
+  if(incomplete.length&&!confirm(`${incomplete.join(", ")}번 문항이 3개 선택되지 않았습니다. 그대로 제출하시겠습니까?`)){
+    document.querySelectorAll("[id^=card]").forEach(x=>x.classList.remove("correct","wrong"));
+    document.querySelectorAll(".explain").forEach(x=>x.style.display="none");
+    return;
+  }
+
+  const ended=new Date();
+  const score=correct*10;
+  document.querySelectorAll("input").forEach(x=>x.disabled=true);
+  document.getElementById("submitBtn").disabled=true;
+  document.getElementById("result").style.display="block";
+  document.getElementById("scoreText").textContent=`${score}점 / 100점`;
+  document.getElementById("summaryText").textContent=
+    `정답 ${correct}문항, 오답 ${10-correct}문항 · 제출 시각 ${fmt(ended)}`;
+
+  result={id,name,score,correct,ended,details};
+  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+
+function saveTxt(){
+  if(!result){alert("먼저 제출 및 채점을 완료하세요.");return;}
+
+  const r=result;
+  const lines=[
+    "수행평가명: 수행04 스택 활용 괄호 짝 검사",
+    `학번: ${r.id}`,
+    `이름: ${r.name}`,
+    `점수: ${r.score}점`,
+    `정답 문항 수: ${r.correct}/10`,
+    `응시 시작 시각: ${fmt(started)}`,
+    `제출 시각: ${fmt(r.ended)}`,
+    "",
+    "===== 문항별 정오답 및 상세 풀이 ====="
+  ];
+
+  Q.forEach((q,i)=>{
+    const d=r.details[i];
+    lines.push(
+      "",
+      `[${i+1}번] ${d.ok?"정답":"오답"}`,
+      `문제: ${q.q}`
+    );
+    if(q.code){
+      lines.push("관련 코드:");
+      q.code.split("\\n").forEach(line=>lines.push(`    ${line}`));
+    }
+    lines.push(`선택: ${d.selected}`,`정답: ${d.answer}`);
+
+    q.choices.forEach((choice,j)=>{
+      lines.push(`${j+1}. ${choice}`);
+      lines.push(`   풀이: ${q.exp[j]}`);
+    });
+  });
+
+  const blob=new Blob([lines.join("\\n")],{type:"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  const clean=s=>s.replace(/[\\\\/:*?"<>|\\s]+/g,"_");
+
+  a.href=url;
+  a.download=`${clean(r.id)}_${clean(r.name)}_${r.score}_수행04_${ffmt(r.ended)}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>

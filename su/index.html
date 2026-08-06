@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>정보과학 수행평가</title>
+
+<style>
+html, body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial, sans-serif;
+}
+
+/* 상단 메뉴 */
+#top{
+    height:36px;
+    padding:4px 8px;
+    border-bottom:1px solid #ccc;
+    background:#f5f5f5;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+/* 아주 작은 드롭다운 */
+#fileSelect{
+    width:330px;
+    height:24px;
+    font-size:12px;
+}
+
+#teacherMail{
+    font-size:12px;
+    font-weight:bold;
+    color:#17324d;
+    text-decoration:none;
+    white-space:nowrap;
+}
+
+#teacherMail:hover{
+    color:#2f6fa3;
+    text-decoration:underline;
+}
+
+/* 본문 */
+#main{
+    width:100%;
+    height:calc(100vh - 36px);
+    border:none;
+}
+</style>
+</head>
+
+<body>
+
+<div id="top">
+    <select id="fileSelect"
+            onchange="loadPage(this.value)">
+
+<option value="s01.html">01. 단순재귀와_메모이제이션 수행평가</option>
+<option value="s02.html">02. 반복구조와_재귀구조 수행평가</option>
+<option value="s03.html">03. 스택_큐_직접구현 수행평가</option>
+<option value="s04.html">04. 스택_큐_활용_괄호검사 수행평가</option>
+<option value="s05.html">05. 상태공간_완전탐색_BFS 수행평가</option>
+<option value="s06.html">06. 가지치기_탐욕전략_완전탐색 수행평가</option>
+<option value="s07.html">07. 분할정복_병합정렬 수행평가</option>
+<option value="s08.html">08. 동적계획법_계단오르기 수행평가</option>
+<option value="s09.html">09. 정보과학프로젝트_교실공기질 수행평가</option>
+<option value="s10.html">10. 오픈소스_라이브러리_협력프로젝트</option>
+<option value="a01.html">개념01. 의사결정나무</option>
+<option value="a02.html">개념02. 혼동행렬</option>
+<option value="ss.html">정보과학 과세특 예문</option>
+<option value="scode.html">정보과학 과세특 수행평가</option>
+<option value="lib.html">파이썬 라이브러리 총정리</option>
+<option value="libex.html">파이썬 라이브러리 예제코드</option>
+<option value="inf71.html">파이썬 Built-in Functions</option>
+<option value="QLearn.html">Queue Learn</option>
+    </select>
+
+<a id="teacherMail"
+   href="https://mail.google.com/mail/?view=cm&fs=1&to=onstar6395@js.hs.kr"
+   target="_blank"
+   style="font-size:12px;font-weight:bold;text-decoration:none;color:#17324d;">
+    📧 선생님 Gmail: onstar6395@js.hs.kr
+</a>
+
+</div>
+
+<iframe
+    id="main"
+    src="s01.html">
+</iframe>
+
+<script>
+function loadPage(file){
+    document.getElementById("main").src = file;
+}
+</script>
+
+</body>
+</html>

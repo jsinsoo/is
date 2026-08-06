@@ -1,0 +1,1352 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>활용 영역 분류에 따른 파이썬 라이브러리 총정리</title>
+<style>
+:root {
+  --navy:#17324d; --blue:#246a9b; --teal:#128277; --bg:#f3f7fb;
+  --card:#fff; --line:#d8e2ec; --ink:#182433; --muted:#657485;
+  --std:#e8f4ff; --ext:#fff1df;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,var(--navy),var(--blue) 60%,var(--teal));color:#fff;padding:44px 20px 36px}
+header .inner, main{max-width:1500px;margin:auto}
+h1{margin:0 0 10px;font-size:clamp(30px,4vw,50px);line-height:1.25}
+header p{margin:0;opacity:.94}
+.toolbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line);padding:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+button,select,input{font:inherit;border-radius:8px}
+button{border:0;background:var(--blue);color:#fff;padding:9px 13px;cursor:pointer}
+button.alt{background:#52606d}
+select,input{border:1px solid var(--line);background:#fff;padding:9px 11px}
+input{min-width:270px}
+main{padding:22px 14px 70px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:22px;box-shadow:0 7px 22px rgba(20,45,70,.06)}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat{border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;background:#f9fbfd}
+.stat strong{display:block;font-size:28px;color:var(--blue)}
+.category{scroll-margin-top:85px}.category-head{display:flex;gap:14px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:15px}
+.icon{font-size:34px;line-height:1}
+h2{margin:0;color:#174d7f} .category-head p{margin:5px 0 0;color:var(--muted)}
+.table-wrap{overflow-x:auto;padding-top:8px}
+table{border-collapse:collapse;width:100%;min-width:1180px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top;font-size:14px}
+th{background:#244f7d;color:#fff;position:static}
+td:first-child{min-width:150px}
+.type{display:inline-block;margin-left:7px;padding:2px 7px;border-radius:999px;font-size:12px;font-weight:700}
+.type.std{background:var(--std);color:#15548a} .type.ext{background:var(--ext);color:#995300}
+td code{background:#eef3f7;padding:3px 6px;border-radius:5px;white-space:nowrap}
+td pre{margin:0;background:#111827;color:#eef2f7;border-radius:8px;padding:10px;white-space:pre;overflow:auto;font:12px/1.45 Consolas,"Courier New",monospace;max-width:430px}
+.copy{margin-top:7px;background:var(--teal);padding:6px 9px;font-size:12px}
+.hidden{display:none!important}
+.guide{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.guide div{border:1px solid var(--line);border-radius:11px;padding:14px;background:#f9fbfd}
+#topBtn{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;box-shadow:0 5px 16px rgba(0,0,0,.18)}
+@media(max-width:900px){.summary-grid,.guide{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.summary-grid,.guide{grid-template-columns:1fr}input{min-width:180px;width:100%}.toolbar>*{flex:1 1 auto}.category-head{flex-direction:column}}
+@media print{header,.toolbar,#topBtn,.copy{display:none!important}body{background:#fff}main{max-width:none;padding:0}.card{box-shadow:none;break-inside:avoid}th{position:static}}
+</style>
+</head>
+<body>
+<header><div class="inner">
+<h1>활용 영역 분류에 따른 파이썬 라이브러리 총정리</h1>
+<p>표준 라이브러리와 외부 라이브러리를 활용 목적별로 분류한 통합 참고 자료</p>
+</div></header>
+
+<div class="toolbar">
+<select id="jump" onchange="goCategory()"><option value="">활용 영역 이동</option>
+<option value="cat-1">1. 기본 문법·시스템·유틸리티</option><option value="cat-2">2. 자료구조·알고리즘</option><option value="cat-3">3. 데이터 분석·전처리</option><option value="cat-4">4. 데이터 시각화</option><option value="cat-5">5. 머신러닝·인공지능</option><option value="cat-6">6. 자연어 처리·생성형 AI</option><option value="cat-7">7. 이미지·컴퓨터 비전</option><option value="cat-8">8. 웹 개발·API</option><option value="cat-9">9. 웹 수집·자동화</option><option value="cat-10">10. 데이터베이스</option><option value="cat-11">11. 파일·문서·스프레드시트</option><option value="cat-12">12. 과학·공학·신호 처리</option><option value="cat-13">13. 오디오·음성·멀티미디어</option><option value="cat-14">14. 게임·GUI·교육용 인터페이스</option><option value="cat-15">15. 테스트·품질·배포</option><option value="cat-16">16. 보안·암호·네트워크</option>
+</select>
+<input id="search" type="search" placeholder="라이브러리·기능·활용 분야 검색" oninput="filterRows()">
+<button onclick="filterRows()">검색</button>
+<button class="alt" onclick="resetSearch()">초기화</button>
+<button onclick="window.print()">인쇄 / PDF</button>
+</div>
+
+<main>
+<section class="card">
+<h2>전체 구성</h2>
+<div class="summary-grid">
+<div class="stat"><strong>16</strong>활용 영역</div>
+<div class="stat"><strong>124</strong>라이브러리 항목</div>
+<div class="stat"><strong>26</strong>표준 라이브러리</div>
+<div class="stat"><strong>98</strong>외부 라이브러리</div>
+</div>
+</section>
+
+<section class="card">
+<h2>라이브러리 선택 원칙</h2>
+<div class="guide">
+<div><b>① 문제와 자료 형태 확인</b><br>표, 이미지, 텍스트, 소리, 데이터베이스 등 처리 대상과 최종 산출물을 먼저 정한다.</div>
+<div><b>② 표준 라이브러리 우선 검토</b><br>간단한 기능은 설치가 필요 없는 표준 라이브러리로 해결 가능한지 확인한다.</div>
+<div><b>③ 성능과 학습 난이도 비교</b><br>자료 크기, 실행 속도, 사용 편의성, 유지보수성을 함께 비교한다.</div>
+<div><b>④ 라이선스와 출처 확인</b><br>배포, 수정, 상업적 이용, 저작권 고지 조건을 공식 문서에서 확인한다.</div>
+<div><b>⑤ 예외 상황 검증</b><br>빈 자료, 잘못된 자료형, 파일 없음, 네트워크 오류, 결측값을 시험한다.</div>
+<div><b>⑥ 가상환경과 버전 기록</b><br>프로젝트별 가상환경을 사용하고 requirements.txt에 설치 버전을 기록한다.</div>
+</div>
+</section>
+
+
+    <section class="category card" id="cat-1">
+      <div class="category-head">
+        <span class="icon">🧰</span>
+        <div><h2>1. 기본 문법·시스템·유틸리티</h2><p>파일, 경로, 운영체제, 날짜, 수학, 난수, 명령행 인수 등 프로그램의 기본 기능을 지원하는 표준 라이브러리 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="기본 문법·시스템·유틸리티 math 제곱근, 삼각함수, 로그, 원주율 등 수학 계산 수치 계산, 기하·과학 문제">
+          <td><b>math</b><span class="type std">표준</span></td>
+          <td>제곱근, 삼각함수, 로그, 원주율 등 수학 계산</td>
+          <td>수치 계산, 기하·과학 문제</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import math
+print(math.sqrt(81))</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="기본 문법·시스템·유틸리티 random 난수 생성, 임의 선택, 순서 섞기 게임, 모의실험, 표본 추출">
+          <td><b>random</b><span class="type std">표준</span></td>
+          <td>난수 생성, 임의 선택, 순서 섞기</td>
+          <td>게임, 모의실험, 표본 추출</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import random
+print(random.randint(1, 6))</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="기본 문법·시스템·유틸리티 datetime 날짜·시각 생성, 계산, 형식 변환 응시 시각, 일정, 로그 기록">
+          <td><b>datetime</b><span class="type std">표준</span></td>
+          <td>날짜·시각 생성, 계산, 형식 변환</td>
+          <td>응시 시각, 일정, 로그 기록</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>from datetime import datetime
+print(datetime.now())</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="기본 문법·시스템·유틸리티 pathlib 운영체제 독립적인 파일·폴더 경로 처리 폴더 생성, 파일 저장">
+          <td><b>pathlib</b><span class="type std">표준</span></td>
+          <td>운영체제 독립적인 파일·폴더 경로 처리</td>
+          <td>폴더 생성, 파일 저장</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>from pathlib import Path
+Path(&#x27;output&#x27;).mkdir(exist_ok=True)</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="기본 문법·시스템·유틸리티 os 운영체제 기능, 환경 변수, 파일 시스템 접근 환경 설정, 폴더 탐색">
+          <td><b>os</b><span class="type std">표준</span></td>
+          <td>운영체제 기능, 환경 변수, 파일 시스템 접근</td>
+          <td>환경 설정, 폴더 탐색</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import os
+print(os.getcwd())</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="기본 문법·시스템·유틸리티 sys 파이썬 실행 환경, 명령행 인수, 종료 처리 실행 인수, 모듈 경로 확인">
+          <td><b>sys</b><span class="type std">표준</span></td>
+          <td>파이썬 실행 환경, 명령행 인수, 종료 처리</td>
+          <td>실행 인수, 모듈 경로 확인</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import sys
+print(sys.version)</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="기본 문법·시스템·유틸리티 argparse 명령행 옵션과 인수 분석 cli 프로그램 제작">
+          <td><b>argparse</b><span class="type std">표준</span></td>
+          <td>명령행 옵션과 인수 분석</td>
+          <td>CLI 프로그램 제작</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import argparse
+parser = argparse.ArgumentParser()</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="기본 문법·시스템·유틸리티 logging 실행 정보·경고·오류 기록 디버깅, 서버 로그">
+          <td><b>logging</b><span class="type std">표준</span></td>
+          <td>실행 정보·경고·오류 기록</td>
+          <td>디버깅, 서버 로그</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import logging
+logging.warning(&#x27;확인 필요&#x27;)</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="기본 문법·시스템·유틸리티 time 시간 측정, 지연, 성능 비교 실행 시간 비교">
+          <td><b>time</b><span class="type std">표준</span></td>
+          <td>시간 측정, 지연, 성능 비교</td>
+          <td>실행 시간 비교</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import time
+start = time.perf_counter()</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="기본 문법·시스템·유틸리티 statistics 평균, 중앙값, 분산, 표준편차 기초 통계 분석">
+          <td><b>statistics</b><span class="type std">표준</span></td>
+          <td>평균, 중앙값, 분산, 표준편차</td>
+          <td>기초 통계 분석</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>from statistics import mean
+print(mean([1,2,3]))</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-2">
+      <div class="category-head">
+        <span class="icon">🧩</span>
+        <div><h2>2. 자료구조·알고리즘</h2><p>효율적인 자료 저장, 빈도 계산, 정렬, 탐색, 그래프·트리 알고리즘을 지원하는 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="자료구조·알고리즘 collections deque, counter, defaultdict 등 특화 자료구조 큐·스택, 빈도 분석">
+          <td><b>collections</b><span class="type std">표준</span></td>
+          <td>deque, Counter, defaultdict 등 특화 자료구조</td>
+          <td>큐·스택, 빈도 분석</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>from collections import Counter
+print(Counter(&#x27;banana&#x27;))</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="자료구조·알고리즘 heapq 최소 힙 기반 우선순위 큐 최단 경로, 작업 우선순위">
+          <td><b>heapq</b><span class="type std">표준</span></td>
+          <td>최소 힙 기반 우선순위 큐</td>
+          <td>최단 경로, 작업 우선순위</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import heapq
+heap = [3,1,2]
+heapq.heapify(heap)</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="자료구조·알고리즘 bisect 정렬 목록의 이진 탐색과 삽입 위치 계산 정렬 상태 유지">
+          <td><b>bisect</b><span class="type std">표준</span></td>
+          <td>정렬 목록의 이진 탐색과 삽입 위치 계산</td>
+          <td>정렬 상태 유지</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import bisect
+print(bisect.bisect_left([1,3,5], 4))</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="자료구조·알고리즘 itertools 순열, 조합, 누적, 반복자 조합 완전 탐색, 경우의 수">
+          <td><b>itertools</b><span class="type std">표준</span></td>
+          <td>순열, 조합, 누적, 반복자 조합</td>
+          <td>완전 탐색, 경우의 수</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>from itertools import combinations
+print(list(combinations([1,2,3],2)))</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="자료구조·알고리즘 functools 캐시, 부분 함수, 누적 처리 메모이제이션, 함수형 처리">
+          <td><b>functools</b><span class="type std">표준</span></td>
+          <td>캐시, 부분 함수, 누적 처리</td>
+          <td>메모이제이션, 함수형 처리</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>from functools import lru_cache</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="자료구조·알고리즘 networkx 그래프 생성, 분석, 최단 경로, 중심성 관계망·교통망 분석">
+          <td><b>networkx</b><span class="type ext">외부</span></td>
+          <td>그래프 생성, 분석, 최단 경로, 중심성</td>
+          <td>관계망·교통망 분석</td>
+          <td><code>pip install networkx</code></td>
+          <td><pre>import networkx as nx
+G = nx.Graph()</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="자료구조·알고리즘 sortedcontainers 정렬된 리스트·집합·사전 실시간 순위, 범위 탐색">
+          <td><b>sortedcontainers</b><span class="type ext">외부</span></td>
+          <td>정렬된 리스트·집합·사전</td>
+          <td>실시간 순위, 범위 탐색</td>
+          <td><code>pip install sortedcontainers</code></td>
+          <td><pre>from sortedcontainers import SortedList</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-3">
+      <div class="category-head">
+        <span class="icon">📊</span>
+        <div><h2>3. 데이터 분석·전처리</h2><p>표 형태 자료를 정리하고 결측값·이상값을 처리하며 통계와 집계를 수행하는 핵심 데이터 과학 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="데이터 분석·전처리 numpy 고속 다차원 배열과 벡터화 수치 연산 과학 계산, 행렬 처리">
+          <td><b>NumPy</b><span class="type ext">외부</span></td>
+          <td>고속 다차원 배열과 벡터화 수치 연산</td>
+          <td>과학 계산, 행렬 처리</td>
+          <td><code>pip install numpy</code></td>
+          <td><pre>import numpy as np
+arr = np.array([1,2,3])</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터 분석·전처리 pandas dataframe 기반 데이터 불러오기·전처리·집계 csv 분석, 결측값 처리">
+          <td><b>Pandas</b><span class="type ext">외부</span></td>
+          <td>DataFrame 기반 데이터 불러오기·전처리·집계</td>
+          <td>CSV 분석, 결측값 처리</td>
+          <td><code>pip install pandas</code></td>
+          <td><pre>import pandas as pd
+df = pd.DataFrame({&#x27;x&#x27;:[1,2]})</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터 분석·전처리 polars 고속 열 지향 dataframe 처리 대규모 데이터 분석">
+          <td><b>Polars</b><span class="type ext">외부</span></td>
+          <td>고속 열 지향 DataFrame 처리</td>
+          <td>대규모 데이터 분석</td>
+          <td><code>pip install polars</code></td>
+          <td><pre>import polars as pl</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터 분석·전처리 scipy 과학 계산, 최적화, 적분, 신호 처리 공학·과학 연구">
+          <td><b>SciPy</b><span class="type ext">외부</span></td>
+          <td>과학 계산, 최적화, 적분, 신호 처리</td>
+          <td>공학·과학 연구</td>
+          <td><code>pip install scipy</code></td>
+          <td><pre>from scipy import optimize</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터 분석·전처리 statsmodels 통계 모형과 회귀 분석 가설 검정, 시계열 통계">
+          <td><b>statsmodels</b><span class="type ext">외부</span></td>
+          <td>통계 모형과 회귀 분석</td>
+          <td>가설 검정, 시계열 통계</td>
+          <td><code>pip install statsmodels</code></td>
+          <td><pre>import statsmodels.api as sm</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터 분석·전처리 pyarrow arrow·parquet 데이터 처리 대용량 파일 교환">
+          <td><b>PyArrow</b><span class="type ext">외부</span></td>
+          <td>Arrow·Parquet 데이터 처리</td>
+          <td>대용량 파일 교환</td>
+          <td><code>pip install pyarrow</code></td>
+          <td><pre>import pyarrow.parquet as pq</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터 분석·전처리 dask 병렬·분산 dataframe과 배열 처리 메모리보다 큰 데이터">
+          <td><b>Dask</b><span class="type ext">외부</span></td>
+          <td>병렬·분산 DataFrame과 배열 처리</td>
+          <td>메모리보다 큰 데이터</td>
+          <td><code>pip install dask</code></td>
+          <td><pre>import dask.dataframe as dd</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터 분석·전처리 vaex 메모리 매핑 기반 대규모 표 분석 수억 행 탐색">
+          <td><b>Vaex</b><span class="type ext">외부</span></td>
+          <td>메모리 매핑 기반 대규모 표 분석</td>
+          <td>수억 행 탐색</td>
+          <td><code>pip install vaex</code></td>
+          <td><pre>import vaex</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-4">
+      <div class="category-head">
+        <span class="icon">📈</span>
+        <div><h2>4. 데이터 시각화</h2><p>분석 결과를 그래프, 대시보드, 지도, 인터랙티브 차트로 표현하는 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="데이터 시각화 matplotlib 선·막대·산점도·히스토그램 등 기본 시각화 보고서, 수행평가 그래프">
+          <td><b>Matplotlib</b><span class="type ext">외부</span></td>
+          <td>선·막대·산점도·히스토그램 등 기본 시각화</td>
+          <td>보고서, 수행평가 그래프</td>
+          <td><code>pip install matplotlib</code></td>
+          <td><pre>import matplotlib.pyplot as plt
+plt.plot([1,2],[3,4])</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터 시각화 seaborn 통계적 그래프와 세련된 기본 디자인 상관관계, 분포 비교">
+          <td><b>Seaborn</b><span class="type ext">외부</span></td>
+          <td>통계적 그래프와 세련된 기본 디자인</td>
+          <td>상관관계, 분포 비교</td>
+          <td><code>pip install seaborn</code></td>
+          <td><pre>import seaborn as sns</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터 시각화 plotly 인터랙티브 웹 그래프 대시보드, 마우스 탐색">
+          <td><b>Plotly</b><span class="type ext">외부</span></td>
+          <td>인터랙티브 웹 그래프</td>
+          <td>대시보드, 마우스 탐색</td>
+          <td><code>pip install plotly</code></td>
+          <td><pre>import plotly.express as px</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터 시각화 bokeh 브라우저 기반 대화형 시각화 실시간 데이터 표현">
+          <td><b>Bokeh</b><span class="type ext">외부</span></td>
+          <td>브라우저 기반 대화형 시각화</td>
+          <td>실시간 데이터 표현</td>
+          <td><code>pip install bokeh</code></td>
+          <td><pre>from bokeh.plotting import figure</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터 시각화 altair 선언형 통계 시각화 간결한 차트 문법">
+          <td><b>Altair</b><span class="type ext">외부</span></td>
+          <td>선언형 통계 시각화</td>
+          <td>간결한 차트 문법</td>
+          <td><code>pip install altair</code></td>
+          <td><pre>import altair as alt</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터 시각화 folium leaflet 기반 지도 시각화 공공데이터 지도">
+          <td><b>Folium</b><span class="type ext">외부</span></td>
+          <td>Leaflet 기반 지도 시각화</td>
+          <td>공공데이터 지도</td>
+          <td><code>pip install folium</code></td>
+          <td><pre>import folium
+m = folium.Map()</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터 시각화 wordcloud 단어 빈도 기반 워드클라우드 텍스트 시각화">
+          <td><b>WordCloud</b><span class="type ext">외부</span></td>
+          <td>단어 빈도 기반 워드클라우드</td>
+          <td>텍스트 시각화</td>
+          <td><code>pip install wordcloud</code></td>
+          <td><pre>from wordcloud import WordCloud</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-5">
+      <div class="category-head">
+        <span class="icon">🤖</span>
+        <div><h2>5. 머신러닝·인공지능</h2><p>분류, 회귀, 군집화, 추천, 딥러닝, 모델 해석을 수행하는 인공지능 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="머신러닝·인공지능 scikit-learn 전통적 머신러닝과 전처리·평가 분류, 회귀, 군집화">
+          <td><b>scikit-learn</b><span class="type ext">외부</span></td>
+          <td>전통적 머신러닝과 전처리·평가</td>
+          <td>분류, 회귀, 군집화</td>
+          <td><code>pip install scikit-learn</code></td>
+          <td><pre>from sklearn.tree import DecisionTreeClassifier</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="머신러닝·인공지능 xgboost 그래디언트 부스팅 기반 고성능 모델 정형 데이터 예측">
+          <td><b>XGBoost</b><span class="type ext">외부</span></td>
+          <td>그래디언트 부스팅 기반 고성능 모델</td>
+          <td>정형 데이터 예측</td>
+          <td><code>pip install xgboost</code></td>
+          <td><pre>from xgboost import XGBClassifier</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="머신러닝·인공지능 lightgbm 대규모 데이터용 경량 부스팅 빠른 분류·회귀">
+          <td><b>LightGBM</b><span class="type ext">외부</span></td>
+          <td>대규모 데이터용 경량 부스팅</td>
+          <td>빠른 분류·회귀</td>
+          <td><code>pip install lightgbm</code></td>
+          <td><pre>from lightgbm import LGBMClassifier</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="머신러닝·인공지능 catboost 범주형 변수 처리에 강한 부스팅 범주형 데이터 예측">
+          <td><b>CatBoost</b><span class="type ext">외부</span></td>
+          <td>범주형 변수 처리에 강한 부스팅</td>
+          <td>범주형 데이터 예측</td>
+          <td><code>pip install catboost</code></td>
+          <td><pre>from catboost import CatBoostClassifier</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="머신러닝·인공지능 tensorflow 딥러닝 모델 설계·학습·배포 신경망, 이미지·음성">
+          <td><b>TensorFlow</b><span class="type ext">외부</span></td>
+          <td>딥러닝 모델 설계·학습·배포</td>
+          <td>신경망, 이미지·음성</td>
+          <td><code>pip install tensorflow</code></td>
+          <td><pre>import tensorflow as tf</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="머신러닝·인공지능 keras 고수준 딥러닝 api 신경망 빠른 구현">
+          <td><b>Keras</b><span class="type ext">외부</span></td>
+          <td>고수준 딥러닝 API</td>
+          <td>신경망 빠른 구현</td>
+          <td><code>pip install keras</code></td>
+          <td><pre>from keras import Sequential</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="머신러닝·인공지능 pytorch 동적 계산 그래프 기반 딥러닝 연구·모델 개발">
+          <td><b>PyTorch</b><span class="type ext">외부</span></td>
+          <td>동적 계산 그래프 기반 딥러닝</td>
+          <td>연구·모델 개발</td>
+          <td><code>pip install pytorch</code></td>
+          <td><pre>import torch</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="머신러닝·인공지능 shap 모델 예측의 변수 영향 설명 설명 가능한 인공지능">
+          <td><b>SHAP</b><span class="type ext">외부</span></td>
+          <td>모델 예측의 변수 영향 설명</td>
+          <td>설명 가능한 인공지능</td>
+          <td><code>pip install shap</code></td>
+          <td><pre>import shap</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="머신러닝·인공지능 optuna 하이퍼파라미터 자동 최적화 모델 성능 개선">
+          <td><b>Optuna</b><span class="type ext">외부</span></td>
+          <td>하이퍼파라미터 자동 최적화</td>
+          <td>모델 성능 개선</td>
+          <td><code>pip install optuna</code></td>
+          <td><pre>import optuna</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-6">
+      <div class="category-head">
+        <span class="icon">💬</span>
+        <div><h2>6. 자연어 처리·생성형 AI</h2><p>텍스트 전처리, 형태소 분석, 임베딩, 언어 모델, 문서 검색과 생성형 인공지능을 다루는 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="자연어 처리·생성형 ai nltk 토큰화, 품사, 말뭉치 등 nlp 기초 영어 텍스트 분석">
+          <td><b>NLTK</b><span class="type ext">외부</span></td>
+          <td>토큰화, 품사, 말뭉치 등 NLP 기초</td>
+          <td>영어 텍스트 분석</td>
+          <td><code>pip install nltk</code></td>
+          <td><pre>import nltk</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="자연어 처리·생성형 ai spacy 고속 토큰화, 개체명, 구문 분석 산업용 nlp">
+          <td><b>spaCy</b><span class="type ext">외부</span></td>
+          <td>고속 토큰화, 개체명, 구문 분석</td>
+          <td>산업용 NLP</td>
+          <td><code>pip install spacy</code></td>
+          <td><pre>import spacy</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="자연어 처리·생성형 ai konlpy 한국어 형태소 분석기 통합 한국어 문장 분석">
+          <td><b>KoNLPy</b><span class="type ext">외부</span></td>
+          <td>한국어 형태소 분석기 통합</td>
+          <td>한국어 문장 분석</td>
+          <td><code>pip install konlpy</code></td>
+          <td><pre>from konlpy.tag import Okt</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="자연어 처리·생성형 ai gensim word2vec, doc2vec, 토픽 모델링 임베딩·문서 분석">
+          <td><b>Gensim</b><span class="type ext">외부</span></td>
+          <td>Word2Vec, Doc2Vec, 토픽 모델링</td>
+          <td>임베딩·문서 분석</td>
+          <td><code>pip install gensim</code></td>
+          <td><pre>from gensim.models import Word2Vec</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="자연어 처리·생성형 ai transformers 사전학습 언어 모델 활용 bert, gpt 계열 모델">
+          <td><b>Transformers</b><span class="type ext">외부</span></td>
+          <td>사전학습 언어 모델 활용</td>
+          <td>BERT, GPT 계열 모델</td>
+          <td><code>pip install transformers</code></td>
+          <td><pre>from transformers import pipeline</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="자연어 처리·생성형 ai sentence-transformers 문장 임베딩과 의미 유사도 의미 검색, rag">
+          <td><b>Sentence-Transformers</b><span class="type ext">외부</span></td>
+          <td>문장 임베딩과 의미 유사도</td>
+          <td>의미 검색, RAG</td>
+          <td><code>pip install sentence-transformers</code></td>
+          <td><pre>from sentence_transformers import SentenceTransformer</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="자연어 처리·생성형 ai langchain 언어 모델·도구·검색 파이프라인 구성 생성형 ai 앱">
+          <td><b>LangChain</b><span class="type ext">외부</span></td>
+          <td>언어 모델·도구·검색 파이프라인 구성</td>
+          <td>생성형 AI 앱</td>
+          <td><code>pip install langchain</code></td>
+          <td><pre>from langchain_core.prompts import PromptTemplate</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="자연어 처리·생성형 ai llamaindex 문서 인덱싱과 검색 증강 생성 문서 기반 질의응답">
+          <td><b>LlamaIndex</b><span class="type ext">외부</span></td>
+          <td>문서 인덱싱과 검색 증강 생성</td>
+          <td>문서 기반 질의응답</td>
+          <td><code>pip install llamaindex</code></td>
+          <td><pre>from llama_index.core import VectorStoreIndex</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-7">
+      <div class="category-head">
+        <span class="icon">🖼️</span>
+        <div><h2>7. 이미지·컴퓨터 비전</h2><p>이미지 읽기, 변환, 특징 추출, 객체 인식, 영상 처리에 활용되는 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="이미지·컴퓨터 비전 pillow 이미지 열기, 크기 변경, 저장 기본 이미지 처리">
+          <td><b>Pillow</b><span class="type ext">외부</span></td>
+          <td>이미지 열기, 크기 변경, 저장</td>
+          <td>기본 이미지 처리</td>
+          <td><code>pip install pillow</code></td>
+          <td><pre>from PIL import Image</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="이미지·컴퓨터 비전 opencv 고성능 이미지·영상 처리 객체 검출, 카메라">
+          <td><b>OpenCV</b><span class="type ext">외부</span></td>
+          <td>고성능 이미지·영상 처리</td>
+          <td>객체 검출, 카메라</td>
+          <td><code>pip install opencv</code></td>
+          <td><pre>import cv2</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="이미지·컴퓨터 비전 scikit-image 과학적 이미지 처리 알고리즘 필터, 분할, 특징 추출">
+          <td><b>scikit-image</b><span class="type ext">외부</span></td>
+          <td>과학적 이미지 처리 알고리즘</td>
+          <td>필터, 분할, 특징 추출</td>
+          <td><code>pip install scikit-image</code></td>
+          <td><pre>from skimage import io</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="이미지·컴퓨터 비전 imageio 다양한 이미지·영상 파일 입출력 gif, 프레임 처리">
+          <td><b>imageio</b><span class="type ext">외부</span></td>
+          <td>다양한 이미지·영상 파일 입출력</td>
+          <td>GIF, 프레임 처리</td>
+          <td><code>pip install imageio</code></td>
+          <td><pre>import imageio.v3 as iio</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="이미지·컴퓨터 비전 albumentations 딥러닝용 이미지 증강 학습 데이터 확장">
+          <td><b>Albumentations</b><span class="type ext">외부</span></td>
+          <td>딥러닝용 이미지 증강</td>
+          <td>학습 데이터 확장</td>
+          <td><code>pip install albumentations</code></td>
+          <td><pre>import albumentations as A</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="이미지·컴퓨터 비전 ultralytics yolo 기반 객체 탐지·분할 실시간 객체 인식">
+          <td><b>Ultralytics</b><span class="type ext">외부</span></td>
+          <td>YOLO 기반 객체 탐지·분할</td>
+          <td>실시간 객체 인식</td>
+          <td><code>pip install ultralytics</code></td>
+          <td><pre>from ultralytics import YOLO</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="이미지·컴퓨터 비전 mediapipe 얼굴·손·자세 추적 피지컬 컴퓨팅, 동작 인식">
+          <td><b>Mediapipe</b><span class="type ext">외부</span></td>
+          <td>얼굴·손·자세 추적</td>
+          <td>피지컬 컴퓨팅, 동작 인식</td>
+          <td><code>pip install mediapipe</code></td>
+          <td><pre>import mediapipe as mp</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-8">
+      <div class="category-head">
+        <span class="icon">🌐</span>
+        <div><h2>8. 웹 개발·API</h2><p>웹 서버, REST API, 웹 애플리케이션, 사용자 인터페이스를 제작하는 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="웹 개발·api flask 가벼운 웹 서버와 api 소규모 웹 서비스">
+          <td><b>Flask</b><span class="type ext">외부</span></td>
+          <td>가벼운 웹 서버와 API</td>
+          <td>소규모 웹 서비스</td>
+          <td><code>pip install flask</code></td>
+          <td><pre>from flask import Flask
+app = Flask(__name__)</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="웹 개발·api django orm·관리자·인증을 갖춘 웹 프레임워크 대규모 웹 서비스">
+          <td><b>Django</b><span class="type ext">외부</span></td>
+          <td>ORM·관리자·인증을 갖춘 웹 프레임워크</td>
+          <td>대규모 웹 서비스</td>
+          <td><code>pip install django</code></td>
+          <td><pre>import django</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="웹 개발·api fastapi 비동기 기반 고성능 api 머신러닝 api 서버">
+          <td><b>FastAPI</b><span class="type ext">외부</span></td>
+          <td>비동기 기반 고성능 API</td>
+          <td>머신러닝 API 서버</td>
+          <td><code>pip install fastapi</code></td>
+          <td><pre>from fastapi import FastAPI</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="웹 개발·api streamlit 데이터 앱을 빠르게 제작 분석 대시보드">
+          <td><b>Streamlit</b><span class="type ext">외부</span></td>
+          <td>데이터 앱을 빠르게 제작</td>
+          <td>분석 대시보드</td>
+          <td><code>pip install streamlit</code></td>
+          <td><pre>import streamlit as st</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="웹 개발·api gradio 모델 데모용 웹 ui ai 체험 페이지">
+          <td><b>Gradio</b><span class="type ext">외부</span></td>
+          <td>모델 데모용 웹 UI</td>
+          <td>AI 체험 페이지</td>
+          <td><code>pip install gradio</code></td>
+          <td><pre>import gradio as gr</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="웹 개발·api dash plotly 기반 분석 대시보드 업무용 데이터 앱">
+          <td><b>Dash</b><span class="type ext">외부</span></td>
+          <td>Plotly 기반 분석 대시보드</td>
+          <td>업무용 데이터 앱</td>
+          <td><code>pip install dash</code></td>
+          <td><pre>from dash import Dash</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="웹 개발·api jinja2 html 템플릿 렌더링 동적 웹페이지">
+          <td><b>Jinja2</b><span class="type ext">외부</span></td>
+          <td>HTML 템플릿 렌더링</td>
+          <td>동적 웹페이지</td>
+          <td><code>pip install jinja2</code></td>
+          <td><pre>from jinja2 import Template</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="웹 개발·api uvicorn asgi 웹 서버 fastapi 실행">
+          <td><b>Uvicorn</b><span class="type ext">외부</span></td>
+          <td>ASGI 웹 서버</td>
+          <td>FastAPI 실행</td>
+          <td><code>pip install uvicorn</code></td>
+          <td><pre>import uvicorn</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-9">
+      <div class="category-head">
+        <span class="icon">🕸️</span>
+        <div><h2>9. 웹 수집·자동화</h2><p>웹 요청, HTML 분석, 브라우저 조작, 반복 작업 자동화를 수행하는 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="웹 수집·자동화 requests http 요청과 api 호출 공공데이터 api">
+          <td><b>requests</b><span class="type ext">외부</span></td>
+          <td>HTTP 요청과 API 호출</td>
+          <td>공공데이터 API</td>
+          <td><code>pip install requests</code></td>
+          <td><pre>import requests
+r = requests.get(&#x27;https://example.com&#x27;)</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="웹 수집·자동화 beautifulsoup4 html·xml 문서 분석 웹페이지 정보 추출">
+          <td><b>BeautifulSoup4</b><span class="type ext">외부</span></td>
+          <td>HTML·XML 문서 분석</td>
+          <td>웹페이지 정보 추출</td>
+          <td><code>pip install beautifulsoup4</code></td>
+          <td><pre>from bs4 import BeautifulSoup</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="웹 수집·자동화 selenium 실제 브라우저 자동 조작 로그인, 동적 페이지">
+          <td><b>Selenium</b><span class="type ext">외부</span></td>
+          <td>실제 브라우저 자동 조작</td>
+          <td>로그인, 동적 페이지</td>
+          <td><code>pip install selenium</code></td>
+          <td><pre>from selenium import webdriver</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="웹 수집·자동화 playwright 현대적 브라우저 자동화 웹 테스트, 크롤링">
+          <td><b>Playwright</b><span class="type ext">외부</span></td>
+          <td>현대적 브라우저 자동화</td>
+          <td>웹 테스트, 크롤링</td>
+          <td><code>pip install playwright</code></td>
+          <td><pre>from playwright.sync_api import sync_playwright</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="웹 수집·자동화 scrapy 대규모 웹 크롤링 프레임워크 수집 파이프라인">
+          <td><b>Scrapy</b><span class="type ext">외부</span></td>
+          <td>대규모 웹 크롤링 프레임워크</td>
+          <td>수집 파이프라인</td>
+          <td><code>pip install scrapy</code></td>
+          <td><pre>import scrapy</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="웹 수집·자동화 pyautogui 마우스·키보드·화면 자동화 반복 업무 자동화">
+          <td><b>PyAutoGUI</b><span class="type ext">외부</span></td>
+          <td>마우스·키보드·화면 자동화</td>
+          <td>반복 업무 자동화</td>
+          <td><code>pip install pyautogui</code></td>
+          <td><pre>import pyautogui</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="웹 수집·자동화 schedule 간단한 주기 작업 예약 정기 수집, 백업">
+          <td><b>schedule</b><span class="type ext">외부</span></td>
+          <td>간단한 주기 작업 예약</td>
+          <td>정기 수집, 백업</td>
+          <td><code>pip install schedule</code></td>
+          <td><pre>import schedule</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-10">
+      <div class="category-head">
+        <span class="icon">🗄️</span>
+        <div><h2>10. 데이터베이스</h2><p>관계형·비관계형 데이터베이스와 연결하여 자료를 저장, 조회, 수정하는 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="데이터베이스 sqlite3 sqlite 데이터베이스 연결 로컬 db 실습">
+          <td><b>sqlite3</b><span class="type std">표준</span></td>
+          <td>SQLite 데이터베이스 연결</td>
+          <td>로컬 DB 실습</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import sqlite3
+con = sqlite3.connect(&#x27;data.db&#x27;)</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터베이스 sqlalchemy sql 추상화와 orm 다양한 db 통합">
+          <td><b>SQLAlchemy</b><span class="type ext">외부</span></td>
+          <td>SQL 추상화와 ORM</td>
+          <td>다양한 DB 통합</td>
+          <td><code>pip install sqlalchemy</code></td>
+          <td><pre>from sqlalchemy import create_engine</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터베이스 pymysql mysql 연결 드라이버 mysql 실습">
+          <td><b>PyMySQL</b><span class="type ext">외부</span></td>
+          <td>MySQL 연결 드라이버</td>
+          <td>MySQL 실습</td>
+          <td><code>pip install pymysql</code></td>
+          <td><pre>import pymysql</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터베이스 mysql-connector-python 공식 mysql 파이썬 연결 mysql crud">
+          <td><b>mysql-connector-python</b><span class="type ext">외부</span></td>
+          <td>공식 MySQL 파이썬 연결</td>
+          <td>MySQL CRUD</td>
+          <td><code>pip install mysql-connector-python</code></td>
+          <td><pre>import mysql.connector</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터베이스 psycopg postgresql 연결 웹 서비스 db">
+          <td><b>psycopg</b><span class="type ext">외부</span></td>
+          <td>PostgreSQL 연결</td>
+          <td>웹 서비스 DB</td>
+          <td><code>pip install psycopg</code></td>
+          <td><pre>import psycopg</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터베이스 pymongo mongodb 연결 문서형 데이터 저장">
+          <td><b>pymongo</b><span class="type ext">외부</span></td>
+          <td>MongoDB 연결</td>
+          <td>문서형 데이터 저장</td>
+          <td><code>pip install pymongo</code></td>
+          <td><pre>from pymongo import MongoClient</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="데이터베이스 redis redis 캐시·메시지 저장소 연결 세션, 캐시, 큐">
+          <td><b>redis</b><span class="type ext">외부</span></td>
+          <td>Redis 캐시·메시지 저장소 연결</td>
+          <td>세션, 캐시, 큐</td>
+          <td><code>pip install redis</code></td>
+          <td><pre>import redis</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-11">
+      <div class="category-head">
+        <span class="icon">📄</span>
+        <div><h2>11. 파일·문서·스프레드시트</h2><p>CSV, JSON, Excel, PDF, Word, PowerPoint 등 다양한 문서 형식을 생성하고 편집하는 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="파일·문서·스프레드시트 csv csv 파일 읽기·쓰기 표 데이터 교환">
+          <td><b>csv</b><span class="type std">표준</span></td>
+          <td>CSV 파일 읽기·쓰기</td>
+          <td>표 데이터 교환</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import csv</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="파일·문서·스프레드시트 json json 직렬화·역직렬화 api 데이터 저장">
+          <td><b>json</b><span class="type std">표준</span></td>
+          <td>JSON 직렬화·역직렬화</td>
+          <td>API 데이터 저장</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import json</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="파일·문서·스프레드시트 openpyxl excel xlsx 읽기·쓰기 성적표, 통계표">
+          <td><b>openpyxl</b><span class="type ext">외부</span></td>
+          <td>Excel xlsx 읽기·쓰기</td>
+          <td>성적표, 통계표</td>
+          <td><code>pip install openpyxl</code></td>
+          <td><pre>from openpyxl import Workbook</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="파일·문서·스프레드시트 xlsxwriter 서식과 차트가 포함된 excel 생성 보고서 자동화">
+          <td><b>XlsxWriter</b><span class="type ext">외부</span></td>
+          <td>서식과 차트가 포함된 Excel 생성</td>
+          <td>보고서 자동화</td>
+          <td><code>pip install xlsxwriter</code></td>
+          <td><pre>import xlsxwriter</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="파일·문서·스프레드시트 python-docx word 문서 생성·편집 보고서, 학습지">
+          <td><b>python-docx</b><span class="type ext">외부</span></td>
+          <td>Word 문서 생성·편집</td>
+          <td>보고서, 학습지</td>
+          <td><code>pip install python-docx</code></td>
+          <td><pre>from docx import Document</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="파일·문서·스프레드시트 python-pptx powerpoint 생성·편집 발표자료 자동화">
+          <td><b>python-pptx</b><span class="type ext">외부</span></td>
+          <td>PowerPoint 생성·편집</td>
+          <td>발표자료 자동화</td>
+          <td><code>pip install python-pptx</code></td>
+          <td><pre>from pptx import Presentation</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="파일·문서·스프레드시트 pymupdf pdf 읽기·텍스트·이미지 처리 pdf 분석">
+          <td><b>PyMuPDF</b><span class="type ext">외부</span></td>
+          <td>PDF 읽기·텍스트·이미지 처리</td>
+          <td>PDF 분석</td>
+          <td><code>pip install pymupdf</code></td>
+          <td><pre>import fitz</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="파일·문서·스프레드시트 reportlab pdf 문서 직접 생성 증명서, 보고서">
+          <td><b>ReportLab</b><span class="type ext">외부</span></td>
+          <td>PDF 문서 직접 생성</td>
+          <td>증명서, 보고서</td>
+          <td><code>pip install reportlab</code></td>
+          <td><pre>from reportlab.pdfgen import canvas</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-12">
+      <div class="category-head">
+        <span class="icon">🔬</span>
+        <div><h2>12. 과학·공학·신호 처리</h2><p>수치해석, 물리·화학 계산, 신호 분석, 제어, 시뮬레이션에 활용되는 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="과학·공학·신호 처리 scipy 최적화, 적분, 보간, 신호 처리 공학 계산">
+          <td><b>SciPy</b><span class="type ext">외부</span></td>
+          <td>최적화, 적분, 보간, 신호 처리</td>
+          <td>공학 계산</td>
+          <td><code>pip install scipy</code></td>
+          <td><pre>from scipy import signal</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="과학·공학·신호 처리 sympy 기호 수학과 식 전개·미분·적분 수학식 분석">
+          <td><b>SymPy</b><span class="type ext">외부</span></td>
+          <td>기호 수학과 식 전개·미분·적분</td>
+          <td>수학식 분석</td>
+          <td><code>pip install sympy</code></td>
+          <td><pre>import sympy as sp</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="과학·공학·신호 처리 numba jit 컴파일 기반 수치 코드 가속 반복 계산 고속화">
+          <td><b>Numba</b><span class="type ext">외부</span></td>
+          <td>JIT 컴파일 기반 수치 코드 가속</td>
+          <td>반복 계산 고속화</td>
+          <td><code>pip install numba</code></td>
+          <td><pre>from numba import jit</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="과학·공학·신호 처리 pint 물리 단위 계산과 변환 과학 실험 자료">
+          <td><b>Pint</b><span class="type ext">외부</span></td>
+          <td>물리 단위 계산과 변환</td>
+          <td>과학 실험 자료</td>
+          <td><code>pip install pint</code></td>
+          <td><pre>from pint import UnitRegistry</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="과학·공학·신호 처리 astropy 천문학 좌표·시간·단위 처리 천문 데이터 분석">
+          <td><b>Astropy</b><span class="type ext">외부</span></td>
+          <td>천문학 좌표·시간·단위 처리</td>
+          <td>천문 데이터 분석</td>
+          <td><code>pip install astropy</code></td>
+          <td><pre>from astropy import units as u</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="과학·공학·신호 처리 biopython 생명정보학 서열·파일 처리 dna·단백질 분석">
+          <td><b>Biopython</b><span class="type ext">외부</span></td>
+          <td>생명정보학 서열·파일 처리</td>
+          <td>DNA·단백질 분석</td>
+          <td><code>pip install biopython</code></td>
+          <td><pre>from Bio import SeqIO</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="과학·공학·신호 처리 rdkit 화학정보학 분자 구조 처리 화합물 특성 분석">
+          <td><b>RDKit</b><span class="type ext">외부</span></td>
+          <td>화학정보학 분자 구조 처리</td>
+          <td>화합물 특성 분석</td>
+          <td><code>pip install rdkit</code></td>
+          <td><pre>from rdkit import Chem</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="과학·공학·신호 처리 control 제어 시스템 모델링·분석 로봇·공정 제어">
+          <td><b>control</b><span class="type ext">외부</span></td>
+          <td>제어 시스템 모델링·분석</td>
+          <td>로봇·공정 제어</td>
+          <td><code>pip install control</code></td>
+          <td><pre>import control</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-13">
+      <div class="category-head">
+        <span class="icon">🎵</span>
+        <div><h2>13. 오디오·음성·멀티미디어</h2><p>음성 파일 처리, 음악 정보 분석, 녹음·재생, 영상·오디오 변환을 수행하는 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="오디오·음성·멀티미디어 wave wav 파일의 기본 입출력 음성 파일 구조 확인">
+          <td><b>wave</b><span class="type std">표준</span></td>
+          <td>WAV 파일의 기본 입출력</td>
+          <td>음성 파일 구조 확인</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import wave</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="오디오·음성·멀티미디어 librosa 오디오 특징 추출과 음악 분석 mfcc, 스펙트로그램">
+          <td><b>librosa</b><span class="type ext">외부</span></td>
+          <td>오디오 특징 추출과 음악 분석</td>
+          <td>MFCC, 스펙트로그램</td>
+          <td><code>pip install librosa</code></td>
+          <td><pre>import librosa</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="오디오·음성·멀티미디어 pydub 오디오 자르기·결합·변환 수업 음성 편집">
+          <td><b>pydub</b><span class="type ext">외부</span></td>
+          <td>오디오 자르기·결합·변환</td>
+          <td>수업 음성 편집</td>
+          <td><code>pip install pydub</code></td>
+          <td><pre>from pydub import AudioSegment</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="오디오·음성·멀티미디어 soundfile 오디오 배열 입출력 wav 저장·읽기">
+          <td><b>soundfile</b><span class="type ext">외부</span></td>
+          <td>오디오 배열 입출력</td>
+          <td>WAV 저장·읽기</td>
+          <td><code>pip install soundfile</code></td>
+          <td><pre>import soundfile as sf</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="오디오·음성·멀티미디어 sounddevice 마이크 녹음과 소리 재생 실시간 오디오">
+          <td><b>sounddevice</b><span class="type ext">외부</span></td>
+          <td>마이크 녹음과 소리 재생</td>
+          <td>실시간 오디오</td>
+          <td><code>pip install sounddevice</code></td>
+          <td><pre>import sounddevice as sd</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="오디오·음성·멀티미디어 moviepy 영상·오디오 편집 자막, 클립 결합">
+          <td><b>moviepy</b><span class="type ext">외부</span></td>
+          <td>영상·오디오 편집</td>
+          <td>자막, 클립 결합</td>
+          <td><code>pip install moviepy</code></td>
+          <td><pre>from moviepy import VideoFileClip</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="오디오·음성·멀티미디어 ffmpeg-python ffmpeg 명령을 파이썬으로 제어 형식 변환, 인코딩">
+          <td><b>ffmpeg-python</b><span class="type ext">외부</span></td>
+          <td>FFmpeg 명령을 파이썬으로 제어</td>
+          <td>형식 변환, 인코딩</td>
+          <td><code>pip install ffmpeg-python</code></td>
+          <td><pre>import ffmpeg</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-14">
+      <div class="category-head">
+        <span class="icon">🎮</span>
+        <div><h2>14. 게임·GUI·교육용 인터페이스</h2><p>데스크톱 화면, 게임, 시뮬레이션, 교육용 인터랙티브 프로그램을 만드는 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="게임·gui·교육용 인터페이스 tkinter 기본 데스크톱 gui 입력창, 버튼, 학습 앱">
+          <td><b>tkinter</b><span class="type std">표준</span></td>
+          <td>기본 데스크톱 GUI</td>
+          <td>입력창, 버튼, 학습 앱</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import tkinter as tk</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="게임·gui·교육용 인터페이스 pyqt 전문적인 데스크톱 gui 복합 응용프로그램">
+          <td><b>PyQt</b><span class="type ext">외부</span></td>
+          <td>전문적인 데스크톱 GUI</td>
+          <td>복합 응용프로그램</td>
+          <td><code>pip install pyqt6</code></td>
+          <td><pre>from PyQt6.QtWidgets import QApplication</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="게임·gui·교육용 인터페이스 pyside qt 공식 파이썬 바인딩 데스크톱 앱">
+          <td><b>PySide</b><span class="type ext">외부</span></td>
+          <td>Qt 공식 파이썬 바인딩</td>
+          <td>데스크톱 앱</td>
+          <td><code>pip install pyside6</code></td>
+          <td><pre>from PySide6.QtWidgets import QApplication</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="게임·gui·교육용 인터페이스 pygame 2d 게임과 멀티미디어 게임, 시뮬레이션">
+          <td><b>pygame</b><span class="type ext">외부</span></td>
+          <td>2D 게임과 멀티미디어</td>
+          <td>게임, 시뮬레이션</td>
+          <td><code>pip install pygame</code></td>
+          <td><pre>import pygame</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="게임·gui·교육용 인터페이스 arcade 교육 친화적 2d 게임 프레임워크 게임 프로그래밍">
+          <td><b>arcade</b><span class="type ext">외부</span></td>
+          <td>교육 친화적 2D 게임 프레임워크</td>
+          <td>게임 프로그래밍</td>
+          <td><code>pip install arcade</code></td>
+          <td><pre>import arcade</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="게임·gui·교육용 인터페이스 turtle 거북이 그래픽 초급 알고리즘·도형">
+          <td><b>turtle</b><span class="type std">표준</span></td>
+          <td>거북이 그래픽</td>
+          <td>초급 알고리즘·도형</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import turtle</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="게임·gui·교육용 인터페이스 kivy 멀티터치·모바일 gui 모바일 앱 실험">
+          <td><b>Kivy</b><span class="type ext">외부</span></td>
+          <td>멀티터치·모바일 GUI</td>
+          <td>모바일 앱 실험</td>
+          <td><code>pip install kivy</code></td>
+          <td><pre>from kivy.app import App</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-15">
+      <div class="category-head">
+        <span class="icon">✅</span>
+        <div><h2>15. 테스트·품질·배포</h2><p>프로그램의 정확성 검증, 코드 품질 관리, 패키징과 배포를 지원하는 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="테스트·품질·배포 unittest 단위 테스트 프레임워크 함수 정확성 검증">
+          <td><b>unittest</b><span class="type std">표준</span></td>
+          <td>단위 테스트 프레임워크</td>
+          <td>함수 정확성 검증</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import unittest</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="테스트·품질·배포 pytest 간결한 테스트와 fixture 자동화된 테스트">
+          <td><b>pytest</b><span class="type ext">외부</span></td>
+          <td>간결한 테스트와 fixture</td>
+          <td>자동화된 테스트</td>
+          <td><code>pip install pytest</code></td>
+          <td><pre>import pytest</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="테스트·품질·배포 hypothesis 속성 기반 자동 시험 데이터 생성 경계값 검증">
+          <td><b>hypothesis</b><span class="type ext">외부</span></td>
+          <td>속성 기반 자동 시험 데이터 생성</td>
+          <td>경계값 검증</td>
+          <td><code>pip install hypothesis</code></td>
+          <td><pre>from hypothesis import given</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="테스트·품질·배포 coverage 테스트 코드 실행 범위 측정 테스트 누락 확인">
+          <td><b>coverage</b><span class="type ext">외부</span></td>
+          <td>테스트 코드 실행 범위 측정</td>
+          <td>테스트 누락 확인</td>
+          <td><code>pip install coverage</code></td>
+          <td><pre>import coverage</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="테스트·품질·배포 black 파이썬 코드 자동 서식 코드 스타일 통일">
+          <td><b>black</b><span class="type ext">외부</span></td>
+          <td>파이썬 코드 자동 서식</td>
+          <td>코드 스타일 통일</td>
+          <td><code>pip install black</code></td>
+          <td><pre>import black</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="테스트·품질·배포 ruff 빠른 린터와 코드 검사 문법·스타일 점검">
+          <td><b>ruff</b><span class="type ext">외부</span></td>
+          <td>빠른 린터와 코드 검사</td>
+          <td>문법·스타일 점검</td>
+          <td><code>pip install ruff</code></td>
+          <td><pre>import ruff</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="테스트·품질·배포 mypy 정적 타입 검사 자료형 오류 예방">
+          <td><b>mypy</b><span class="type ext">외부</span></td>
+          <td>정적 타입 검사</td>
+          <td>자료형 오류 예방</td>
+          <td><code>pip install mypy</code></td>
+          <td><pre>import mypy</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="테스트·품질·배포 pyinstaller 파이썬 프로그램 실행 파일 제작 windows exe 배포">
+          <td><b>PyInstaller</b><span class="type ext">외부</span></td>
+          <td>파이썬 프로그램 실행 파일 제작</td>
+          <td>Windows exe 배포</td>
+          <td><code>pip install pyinstaller</code></td>
+          <td><pre>import PyInstaller</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+    <section class="category card" id="cat-16">
+      <div class="category-head">
+        <span class="icon">🔐</span>
+        <div><h2>16. 보안·암호·네트워크</h2><p>암호화, 해시, 인증, 소켓 통신, 네트워크 패킷 분석을 다루는 영역</p></div>
+      </div>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>라이브러리</th><th>핵심 기능</th><th>대표 활용</th><th>설치</th><th>기본 코드</th></tr></thead>
+        <tbody>
+        <tr data-search="보안·암호·네트워크 hashlib sha 계열 해시 계산 무결성·비밀번호 처리">
+          <td><b>hashlib</b><span class="type std">표준</span></td>
+          <td>SHA 계열 해시 계산</td>
+          <td>무결성·비밀번호 처리</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import hashlib
+print(hashlib.sha256(b&#x27;data&#x27;).hexdigest())</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="보안·암호·네트워크 secrets 보안용 난수와 토큰 생성 비밀번호·인증 토큰">
+          <td><b>secrets</b><span class="type std">표준</span></td>
+          <td>보안용 난수와 토큰 생성</td>
+          <td>비밀번호·인증 토큰</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import secrets
+print(secrets.token_hex(16))</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="보안·암호·네트워크 hmac 키 기반 메시지 인증 코드 무결성·인증">
+          <td><b>hmac</b><span class="type std">표준</span></td>
+          <td>키 기반 메시지 인증 코드</td>
+          <td>무결성·인증</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import hmac</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="보안·암호·네트워크 cryptography 고수준 암호화와 인증서 처리 대칭키·공개키 암호">
+          <td><b>cryptography</b><span class="type ext">외부</span></td>
+          <td>고수준 암호화와 인증서 처리</td>
+          <td>대칭키·공개키 암호</td>
+          <td><code>pip install cryptography</code></td>
+          <td><pre>from cryptography.fernet import Fernet</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="보안·암호·네트워크 pycryptodome aes, rsa 등 암호 알고리즘 암호 실습">
+          <td><b>PyCryptodome</b><span class="type ext">외부</span></td>
+          <td>AES, RSA 등 암호 알고리즘</td>
+          <td>암호 실습</td>
+          <td><code>pip install pycryptodome</code></td>
+          <td><pre>from Crypto.Cipher import AES</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="보안·암호·네트워크 socket tcp·udp 네트워크 통신 채팅, 서버·클라이언트">
+          <td><b>socket</b><span class="type std">표준</span></td>
+          <td>TCP·UDP 네트워크 통신</td>
+          <td>채팅, 서버·클라이언트</td>
+          <td><code>설치 불필요</code></td>
+          <td><pre>import socket</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="보안·암호·네트워크 scapy 패킷 생성·분석 네트워크 보안 실습">
+          <td><b>Scapy</b><span class="type ext">외부</span></td>
+          <td>패킷 생성·분석</td>
+          <td>네트워크 보안 실습</td>
+          <td><code>pip install scapy</code></td>
+          <td><pre>from scapy.all import sniff</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        
+        <tr data-search="보안·암호·네트워크 paramiko ssh 연결과 원격 명령 서버 자동화">
+          <td><b>paramiko</b><span class="type ext">외부</span></td>
+          <td>SSH 연결과 원격 명령</td>
+          <td>서버 자동화</td>
+          <td><code>pip install paramiko</code></td>
+          <td><pre>import paramiko</pre><button class="copy" onclick="copyCode(this)">코드 복사</button></td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+    
+</main>
+<button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
+
+<script>
+function goCategory(){
+  const id=document.getElementById("jump").value;
+  if(id) document.getElementById(id).scrollIntoView({behavior:"smooth",block:"start"});
+}
+function filterRows(){
+  const q=document.getElementById("search").value.trim().toLowerCase();
+  document.querySelectorAll("tbody tr").forEach(row=>{
+    row.classList.toggle("hidden", q && !row.dataset.search.includes(q));
+  });
+  document.querySelectorAll(".category").forEach(cat=>{
+    const visible=[...cat.querySelectorAll("tbody tr")].some(r=>!r.classList.contains("hidden"));
+    cat.classList.toggle("hidden", q && !visible);
+  });
+}
+function resetSearch(){
+  document.getElementById("search").value="";
+  document.querySelectorAll(".hidden").forEach(x=>x.classList.remove("hidden"));
+}
+async function copyCode(btn){
+  const code=btn.previousElementSibling.innerText;
+  try {
+    await navigator.clipboard.writeText(code);
+    const old=btn.textContent; btn.textContent="복사 완료";
+    setTimeout(()=>btn.textContent=old,1200);
+  } catch(e) {
+    alert("복사하지 못했습니다. 브라우저 권한을 확인하세요.");
+  }
+}
+</script>
+</body>
+</html>

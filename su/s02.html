@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>반복구조와 재귀구조 학습·수행평가 통합본</title>
+<style>
+:root {
+  --brand:#1f5e9c; --brand2:#0d9488; --ink:#18212f;
+  --muted:#667085; --line:#d7e0ea; --bg:#f5f8fc; --card:#ffffff;
+  --good:#edf8f1; --warn:#fff7e8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  line-height:1.7;
+}
+header {
+  background:linear-gradient(135deg,#173d6c,#1f6ea9 58%,#0d9488);
+  color:white; padding:42px 20px 34px;
+}
+header .inner, main { max-width:1280px; margin:auto; }
+h1 { margin:0 0 8px; font-size:clamp(28px,4vw,46px); line-height:1.3; }
+header p { margin:0; opacity:.93; }
+.toolbar {
+  position:sticky; top:0; z-index:20; background:rgba(255,255,255,.97);
+  border-bottom:1px solid var(--line); padding:10px 16px;
+  display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
+  backdrop-filter:blur(8px);
+}
+button {
+  border:0; border-radius:8px; padding:10px 15px;
+  background:var(--brand); color:white; font:inherit; cursor:pointer;
+}
+button.secondary { background:#475467; }
+button.green { background:var(--brand2); }
+main { padding:24px 16px 60px; }
+.card {
+  background:var(--card); border:1px solid var(--line);
+  border-radius:14px; padding:22px; margin-bottom:20px;
+  box-shadow:0 7px 22px rgba(16,24,40,.05);
+}
+.notice {
+  background:#eef7ff; border-left:5px solid var(--brand);
+}
+h2 { color:#174d7f; margin-top:0; }
+h3 { color:#24618f; }
+.grid {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:16px;
+}
+.method {
+  border:1px solid var(--line); border-radius:10px; padding:16px;
+}
+.table-wrap { overflow-x:auto; }
+table {
+  border-collapse:collapse; width:100%; min-width:840px;
+}
+th,td {
+  border:1px solid var(--line); padding:10px; vertical-align:top; font-size:14px;
+}
+th { background:#244f7d; color:white; }
+.good { background:var(--good); }
+.warn { background:var(--warn); }
+.code-box,.codebox {
+  background:#111827; color:#edf2f7; padding:18px;
+  border-radius:11px; overflow:auto; position:relative; margin:12px 0;
+}
+pre {
+  margin:0; white-space:pre; font-family:Consolas,"Courier New",monospace;
+  font-size:13px; line-height:1.55;
+}
+.code-box button {
+  position:absolute; right:10px; top:10px; font-size:12px;
+  padding:6px 9px; background:#334155;
+}
+.question {
+  border-left:4px solid var(--brand2); background:#f1fbf9;
+  padding:12px 15px; margin:10px 0; border-radius:8px;
+}
+details {
+  border:1px solid var(--line); border-radius:9px; margin-top:12px;
+}
+summary {
+  cursor:pointer; padding:12px 14px; font-weight:700;
+  background:#f4f7fa;
+}
+details > div { padding:14px; }
+.rubric td:first-child {
+  font-weight:700; background:#f5f8fb;
+}
+.small { color:var(--muted); font-size:13px; }
+.student {
+  display:grid; grid-template-columns:100px 1fr 100px 1fr; gap:8px;
+}
+.student div,.student input {
+  border:1px solid var(--line); padding:10px;
+}
+.student input { width:100%; font:inherit; }
+.label { background:#eef4fa; font-weight:bold; text-align:center; }
+.qtitle { font-size:18px; font-weight:bold; }
+.choice {
+  display:block; border:1px solid var(--line); border-radius:9px;
+  padding:10px; margin:8px 0; cursor:pointer;
+}
+.choice:hover { background:#f5f8fb; }
+.choice input { margin-right:8px; transform:scale(1.15); }
+.tag {
+  display:inline-block; background:#e8f2fc; color:#174d7f;
+  border-radius:999px; padding:3px 8px; font-size:13px; font-weight:bold;
+}
+.center { text-align:center; }
+.result { display:none; }
+.score { font-size:28px; font-weight:bold; color:var(--brand); }
+.correct { background:#eaf8ef; }
+.wrong { background:#fff0f0; }
+.explain {
+  margin-top:12px; border-top:1px dashed var(--line); padding-top:12px;
+}
+.section-title {
+  margin:36px 0 18px; padding:15px 18px; border-radius:12px;
+  background:linear-gradient(135deg,#e9f3fb,#eaf9f6);
+  border:1px solid #c8dceb; color:#174d7f;
+}
+@media(max-width:760px) {
+  .grid { grid-template-columns:1fr; }
+  .student { grid-template-columns:90px 1fr; }
+}
+@media print {
+  header,.toolbar,.code-box button,.center { display:none!important; }
+  body { background:white; }
+  main { max-width:none; padding:0; }
+  .card { box-shadow:none; break-inside:avoid; }
+  details > div { display:block!important; }
+  .result { display:block!important; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <h1>반복구조와 재귀구조 학습·수행평가 통합본</h1>
+    <p>개념 학습 · 팩토리얼 성능 비교 · 전체 코드 · 수행02 자동 채점 · TXT 저장</p>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button onclick="document.getElementById('lesson').scrollIntoView({behavior:'smooth'})">학습자료</button>
+  <button class="green" onclick="document.getElementById('assessment').scrollIntoView({behavior:'smooth'})">수행평가</button>
+  <button onclick="window.print()">인쇄 / PDF 저장</button>
+  <button class="secondary" onclick="toggleAnswers()">예시 정답 펼치기·접기</button>
+</div>
+
+<main>
+<section id="lesson">
+  <div class="section-title"><h2 style="margin:0">Ⅰ. 반복구조와 재귀구조 학습자료</h2></div>
+  
+<section class="card notice">
+<b>학습 목표</b><br/>
+  같은 팩토리얼 문제를 반복구조와 재귀구조로 각각 해결하고,
+  실행 결과, 실행 시간, 중앙값, 최대 메모리 사용량을 근거로 두 방식의 효율성을 평가한다.
+</section>
+<section class="card">
+<h2>1. 두 방식의 특징</h2>
+<div class="grid">
+<div class="method">
+<h3>반복구조</h3>
+<p><code>for</code>문을 이용하여 2부터 n까지 차례로 곱한다.</p>
+<p>함수 호출이 중첩되지 않으므로 호출 스택 부담이 작고 큰 입력에서 안정적이다.</p>
+</div>
+<div class="method">
+<h3>재귀구조</h3>
+<p><code>n! = n × (n-1)!</code>이라는 수학적 정의를 함수가 자신을 호출하는 방식으로 표현한다.</p>
+<p>구조가 직관적이지만 입력값이 증가하면 재귀 호출 깊이와 호출 비용이 증가한다.</p>
+</div>
+</div>
+</section>
+<section class="card">
+<h2>2. 성능 비교 기준</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>평가 항목</th>
+<th>반복구조</th>
+<th>재귀구조</th>
+<th>평가 관점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>계산 결과</td>
+<td class="good">정확</td>
+<td class="good">정확</td>
+<td>같은 n에서 결과가 일치하는지 확인</td>
+</tr>
+<tr>
+<td>시간 복잡도</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>두 방식 모두 n에 비례하여 곱셈 수행</td>
+</tr>
+<tr>
+<td>함수 호출 비용</td>
+<td class="good">낮음</td>
+<td class="warn">매 단계 함수 호출 발생</td>
+<td>재귀 방식의 추가 오버헤드 확인</td>
+</tr>
+<tr>
+<td>공간 복잡도</td>
+<td class="good">O(1) 수준</td>
+<td class="warn">O(n)</td>
+<td>재귀 호출 스택 사용 여부 비교</td>
+</tr>
+<tr>
+<td>재귀 깊이 제한</td>
+<td class="good">영향 없음</td>
+<td class="warn">제한 있음</td>
+<td>매우 큰 n에서 RecursionError 가능</td>
+</tr>
+<tr>
+<td>표현의 직관성</td>
+<td>절차가 명확함</td>
+<td class="good">수학적 정의와 유사함</td>
+<td>문제 구조에 따른 코드 가독성 평가</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>3. 효율성 평가 전체 코드</h2>
+<p class="small">평균뿐 아니라 중앙값과 최솟값도 측정하여 매우 짧은 실행 시간에서 발생할 수 있는 측정 흔들림을 함께 확인합니다.</p>
+<div class="code-box">
+<button onclick="copyCode()">코드 복사</button>
+<pre id="code">import math
+import sys
+import time
+import tracemalloc
+from statistics import mean, median
+
+# 재귀 호출 최대 깊이를 기본값보다 크게 설정한다.
+sys.setrecursionlimit(2000)
+
+
+def factorial_iter(n: int) -&gt; int:
+    """반복구조를 이용하여 n!을 계산한다."""
+    if not isinstance(n, int):
+        raise TypeError("n은 정수여야 합니다.")
+    if n &lt; 0:
+        raise ValueError("n은 0 이상이어야 합니다.")
+
+    result = 1
+
+    for value in range(2, n + 1):
+        result *= value
+
+    return result
+
+
+def factorial_rec(n: int) -&gt; int:
+    """재귀구조를 이용하여 n!을 계산한다."""
+    if not isinstance(n, int):
+        raise TypeError("n은 정수여야 합니다.")
+    if n &lt; 0:
+        raise ValueError("n은 0 이상이어야 합니다.")
+
+    if n in (0, 1):
+        return 1
+
+    return n * factorial_rec(n - 1)
+
+
+def measure_time(function, n: int, repeat: int = 100) -&gt; dict:
+    """
+    함수를 여러 번 실행하여 평균, 중앙값, 최솟값을 반환한다.
+    매우 짧은 실행은 측정 오차가 크므로 반복 측정한다.
+    """
+    measured = []
+
+    for _ in range(repeat):
+        start = time.perf_counter()
+        function(n)
+        elapsed = time.perf_counter() - start
+        measured.append(elapsed)
+
+    return {
+        "mean": mean(measured),
+        "median": median(measured),
+        "minimum": min(measured),
+    }
+
+
+def measure_peak_memory(function, n: int) -&gt; int:
+    """함수 실행 중 최대 메모리 사용량을 바이트 단위로 반환한다."""
+    tracemalloc.start()
+
+    function(n)
+
+    current_memory, peak_memory = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+
+    return peak_memory
+
+
+def compare_factorial(n: int, repeat: int = 100) -&gt; dict:
+    """반복구조와 재귀구조의 결과, 시간, 메모리를 비교한다."""
+    iter_result = factorial_iter(n)
+    rec_result = factorial_rec(n)
+
+    iter_time = measure_time(factorial_iter, n, repeat)
+    rec_time = measure_time(factorial_rec, n, repeat)
+
+    iter_memory = measure_peak_memory(factorial_iter, n)
+    rec_memory = measure_peak_memory(factorial_rec, n)
+
+    return {
+        "n": n,
+        "same_result": iter_result == rec_result,
+        "iter_mean": iter_time["mean"],
+        "iter_median": iter_time["median"],
+        "iter_minimum": iter_time["minimum"],
+        "rec_mean": rec_time["mean"],
+        "rec_median": rec_time["median"],
+        "rec_minimum": rec_time["minimum"],
+        "iter_memory": iter_memory,
+        "rec_memory": rec_memory,
+    }
+
+
+inputs = [10, 100, 300, 500]
+repeat = 100
+
+print("=" * 118)
+print("반복구조와 재귀구조의 팩토리얼 성능 비교")
+print("=" * 118)
+print(
+    f"{'n':&gt;4} | {'값 일치':&gt;7} | "
+    f"{'반복 평균(초)':&gt;14} | {'재귀 평균(초)':&gt;14} | "
+    f"{'반복 중앙값':&gt;14} | {'재귀 중앙값':&gt;14} | "
+    f"{'반복 메모리(KB)':&gt;16} | {'재귀 메모리(KB)':&gt;16}"
+)
+print("-" * 118)
+
+results = []
+
+for n in inputs:
+    comparison = compare_factorial(n, repeat)
+    results.append(comparison)
+
+    print(
+        f"{comparison['n']:&gt;4} | "
+        f"{str(comparison['same_result']):&gt;7} | "
+        f"{comparison['iter_mean']:&gt;14.8f} | "
+        f"{comparison['rec_mean']:&gt;14.8f} | "
+        f"{comparison['iter_median']:&gt;14.8f} | "
+        f"{comparison['rec_median']:&gt;14.8f} | "
+        f"{comparison['iter_memory'] / 1024:&gt;16.2f} | "
+        f"{comparison['rec_memory'] / 1024:&gt;16.2f}"
+    )
+
+print("-" * 118)
+
+# 표준 라이브러리와 결과 비교
+for n in inputs:
+    assert factorial_iter(n) == math.factorial(n)
+    assert factorial_rec(n) == math.factorial(n)
+
+print("모든 계산 결과가 math.factorial()과 일치합니다.")
+
+
+# 오류 입력 검사
+print("\n[오류 입력 검사]")
+
+for value in [-1, 3.5, "10"]:
+    for function in (factorial_iter, factorial_rec):
+        try:
+            function(value)
+        except (TypeError, ValueError) as error:
+            print(f"{function.__name__}({value!r}) -&gt; {error}")</pre>
+</div>
+</section>
+<section class="card">
+<h2>4. 측정 항목 설명</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>측정 항목</th><th>사용 기능</th><th>의미</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>평균 실행 시간</td>
+<td><code>mean()</code></td>
+<td>100회 측정한 전체 실행 시간의 평균</td>
+</tr>
+<tr>
+<td>중앙 실행 시간</td>
+<td><code>median()</code></td>
+<td>일시적인 시스템 부하의 영향을 줄여 대표 시간을 확인</td>
+</tr>
+<tr>
+<td>최소 실행 시간</td>
+<td><code>min()</code></td>
+<td>측정 중 가장 방해가 적었던 실행 시간</td>
+</tr>
+<tr>
+<td>최대 메모리</td>
+<td><code>tracemalloc</code></td>
+<td>함수 실행 중 관측된 최대 추가 메모리 사용량</td>
+</tr>
+<tr>
+<td>정확성</td>
+<td><code>assert</code></td>
+<td>두 함수의 결과가 표준 라이브러리 결과와 같은지 확인</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>5. 결과 해석 방법</h2>
+<ol>
+<li><b>값 일치</b>가 모두 True인지 확인한다.</li>
+<li>반복 평균 시간과 재귀 평균 시간을 비교한다.</li>
+<li>평균과 중앙값의 차이가 큰 경우 측정 환경의 일시적인 영향을 고려한다.</li>
+<li>재귀 방식의 최대 메모리 사용량이 반복 방식보다 큰지 확인한다.</li>
+<li>n이 증가할수록 두 방식의 시간 차이와 메모리 차이가 어떻게 변하는지 분석한다.</li>
+</ol>
+</section>
+<section class="card">
+<h2>6. 수행평가 문항</h2>
+<div class="question">1. 반복구조와 재귀구조의 계산 결과가 같은 이유를 설명하시오.</div>
+<div class="question">2. 두 방식의 시간 복잡도가 모두 O(n)인데도 재귀 방식이 더 느릴 수 있는 이유를 설명하시오.</div>
+<div class="question">3. 재귀 방식이 반복 방식보다 메모리를 더 많이 사용할 수 있는 이유를 설명하시오.</div>
+<div class="question">4. 평균 실행 시간과 중앙 실행 시간을 함께 비교해야 하는 이유를 설명하시오.</div>
+<div class="question">5. n이 매우 큰 경우 어떤 방식을 선택하는 것이 적절한지 근거와 함께 판단하시오.</div>
+</section>
+<section class="card">
+<h2>7. 예시 정답</h2>
+<details class="answer">
+<summary>문항 1 정답</summary>
+<div>
+      두 함수 모두 0!과 1!을 1로 정의하고, 2부터 n까지의 정수를 모두 한 번씩 곱한다.
+      계산 절차의 표현 방식만 다르므로 최종 결과는 같다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 2 정답</summary>
+<div>
+      두 방식 모두 곱셈 횟수는 n에 비례하지만 재귀 방식은 각 단계에서 새로운 함수 호출,
+      매개변수 전달, 반환 주소와 지역 상태 저장이 추가로 발생한다. 따라서 같은 O(n)이라도
+      실제 실행 시간의 상수 비용은 재귀 방식이 더 클 수 있다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 3 정답</summary>
+<div>
+      재귀 방식은 각 호출이 끝날 때까지 이전 호출의 매개변수, 지역 변수, 반환 위치를
+      호출 스택에 보관한다. n이 증가하면 스택 프레임이 n단계 가까이 쌓이므로 추가 메모리가 필요하다.
+      반복 방식은 하나의 함수 안에서 변수 값을 갱신하므로 추가 공간이 상대적으로 작다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 4 정답</summary>
+<div>
+      매우 짧은 실행 시간은 운영체제의 작업 전환이나 다른 프로그램의 실행 상태에 영향을 받는다.
+      평균은 큰 이상값의 영향을 받을 수 있으므로 중앙값을 함께 보면 대표적인 실행 시간을
+      더 안정적으로 판단할 수 있다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 5 정답</summary>
+<div>
+      매우 큰 n에서는 반복구조가 더 적절하다. 반복구조는 재귀 깊이 제한을 받지 않고
+      호출 스택이 계속 쌓이지 않으며 함수 호출 오버헤드도 작다. 재귀구조는 수학적 정의를
+      표현하는 데 직관적이지만 큰 입력에서는 RecursionError와 메모리 증가 가능성이 있다.
+    </div>
+</details>
+</section>
+<section class="card">
+<h2>8. 분석적 루브릭</h2>
+<div class="table-wrap">
+<table class="rubric">
+<thead>
+<tr>
+<th>평가 요소</th>
+<th>A 수준</th>
+<th>B 수준</th>
+<th>C 수준</th>
+<th>D 수준</th>
+<th>E 수준</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>프로그램 구현<br/>30점</td>
+<td>두 방식을 정확하게 구현하고 예외 처리와 검증까지 체계적으로 적용함.</td>
+<td>두 방식을 정확하게 구현하고 주요 시험을 수행함.</td>
+<td>두 방식의 기본 기능을 구현함.</td>
+<td>한 방식만 완성하거나 일부 오류가 있음.</td>
+<td>코드의 일부만 작성함.</td>
+</tr>
+<tr>
+<td>실험 설계<br/>20점</td>
+<td>동일 조건, 반복 횟수, 평균·중앙값·메모리를 포함하여 공정하게 설계함.</td>
+<td>동일 조건에서 여러 번 측정하고 주요 자료를 수집함.</td>
+<td>기본 실행 시간과 결과를 측정함.</td>
+<td>측정 조건이 일부 불명확함.</td>
+<td>비교 실험 자료가 거의 없음.</td>
+</tr>
+<tr>
+<td>결과 분석<br/>35점</td>
+<td>시간·공간 복잡도, 함수 호출 비용, 재귀 깊이를 근거로 정교하게 분석함.</td>
+<td>여러 측정 결과를 근거로 두 방식의 차이를 적절히 분석함.</td>
+<td>주요 차이를 설명하고 결론을 제시함.</td>
+<td>일부 차이만 단편적으로 설명함.</td>
+<td>분석이 매우 제한적임.</td>
+</tr>
+<tr>
+<td>결론·성찰<br/>15점</td>
+<td>문제 특성과 입력 크기에 따라 적절한 방식을 선택하고 한계를 구체적으로 제시함.</td>
+<td>적절한 방식을 선택하고 타당한 근거를 제시함.</td>
+<td>기본 결론을 제시함.</td>
+<td>결론의 근거가 부족함.</td>
+<td>결론을 제시하지 못함.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>9. 종합 결론</h2>
+<p><b>정확성:</b> 반복구조와 재귀구조는 같은 팩토리얼 정의를 사용하므로 결과가 같다.</p>
+<p><b>시간 효율성:</b> 두 방식 모두 O(n)이지만, 재귀구조는 함수 호출 오버헤드 때문에 일반적으로 더 느리다.</p>
+<p><b>공간 효율성:</b> 반복구조는 추가 공간 사용이 작지만, 재귀구조는 호출 스택 때문에 O(n)의 추가 공간을 사용한다.</p>
+<p><b>활용 판단:</b> 수학적 정의를 이해하거나 재귀적 문제 구조를 표현할 때는 재귀구조가 유용하다. 큰 입력을 안정적으로 처리하는 실제 계산에서는 반복구조가 더 적절하다.</p>
+</section>
+
+</section>
+
+<section id="assessment">
+  <div class="section-title"><h2 style="margin:0">Ⅱ. 수행02 자동 채점 평가</h2></div>
+  
+<section class="card notice"><b>응시 안내</b><br/>각 문항에서 관련 코드를 먼저 확인한 후 옳은 설명 3개를 모두 선택하세요. 제출 후 정오답과 보기별 상세 풀이가 표시됩니다.</section>
+<section class="card"><div class="student"><div class="label">학번</div><input id="sid" placeholder="예: 1101"/><div class="label">이름</div><input id="sname" placeholder="예: 홍길동"/></div><p>응시 시작 시각: <span id="start"></span></p></section>
+<div id="quiz"></div>
+<section class="card center"><button id="submitBtn" onclick="grade()">제출 및 채점</button><button class="secondary" onclick="window.print()">인쇄 / PDF</button></section>
+<section class="card result" id="result"><h2>채점 결과</h2><div class="score" id="scoreText"></div><p id="summaryText"></p><button onclick="saveTxt()">결과 TXT 저장</button></section>
+
+</section>
+</main>
+
+<script>
+function copyCode() {
+  const code = document.getElementById("code").innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    alert("코드를 복사했습니다.");
+  });
+}
+
+function toggleAnswers() {
+  const items = [...document.querySelectorAll("details.answer")];
+  const shouldOpen = items.some(item => !item.open);
+  items.forEach(item => item.open = shouldOpen);
+}
+</script>
+<script>
+const Q=[{"q": "다음 반복구조 팩토리얼 함수에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def factorial_iter(n: int) -> int:\n    if not isinstance(n, int):\n        raise TypeError(\"n은 정수여야 합니다.\")\n    if n < 0:\n        raise ValueError(\"n은 0 이상이어야 합니다.\")\n\n    result = 1\n    for value in range(2, n + 1):\n        result *= value\n\n    return result", "choices": ["정수가 아닌 입력에는 TypeError를 발생시킨다.", "n이 0이면 반드시 오류가 발생한다.", "음수 입력에는 ValueError를 발생시킨다.", "반복문이 실행될 때마다 result를 0으로 초기화한다.", "2부터 n까지의 값을 result에 차례로 곱한다."], "answer": [0, 2, 4], "exp": ["옳음. isinstance(n, int)가 거짓이면 TypeError가 발생한다.", "틀림. n이 0이면 반복문을 건너뛰고 1을 반환하므로 0!을 올바르게 계산한다.", "옳음. 팩토리얼의 입력 범위를 벗어난 음수는 ValueError로 처리한다.", "틀림. result는 반복문 전에 한 번만 1로 초기화한다.", "옳음. range(2, n+1)의 각 값을 누적하여 곱한다."]}, {"q": "다음 재귀구조 팩토리얼 함수에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def factorial_rec(n: int) -> int:\n    if not isinstance(n, int):\n        raise TypeError(\"n은 정수여야 합니다.\")\n    if n < 0:\n        raise ValueError(\"n은 0 이상이어야 합니다.\")\n\n    if n in (0, 1):\n        return 1\n\n    return n * factorial_rec(n - 1)", "choices": ["n이 증가할수록 재귀 호출 깊이는 항상 감소한다.", "n이 0 또는 1이면 1을 반환한다.", "함수는 자기 자신을 한 번도 호출하지 않는다.", "종료 조건이 있어 재귀 호출이 멈출 수 있다.", "n! = n × (n-1)!의 관계를 이용한다."], "answer": [1, 3, 4], "exp": ["틀림. 입력 n이 커지면 필요한 재귀 호출 깊이도 증가한다.", "옳음. 0!과 1!의 값을 1로 정의한다.", "틀림. 마지막 줄에서 factorial_rec(n-1)을 호출한다.", "옳음. n이 0 또는 1이 되면 추가 재귀 호출 없이 반환한다.", "옳음. 팩토리얼의 재귀적 정의를 코드로 표현한다."]}, {"q": "다음 시간 측정 함수에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def measure_time(function, n: int, repeat: int = 100) -> dict:\n    measured = []\n\n    for _ in range(repeat):\n        start = time.perf_counter()\n        function(n)\n        elapsed = time.perf_counter() - start\n        measured.append(elapsed)\n\n    return {\n        \"mean\": mean(measured),\n        \"median\": median(measured),\n        \"minimum\": min(measured),\n    }", "choices": ["function(n)을 repeat회 실행한다.", "함수의 실행 결과값만 저장하고 시간은 측정하지 않는다.", "각 실행의 경과 시간을 measured에 저장한다.", "평균, 중앙값, 최솟값을 딕셔너리로 반환한다.", "repeat 값과 관계없이 항상 한 번만 실행한다."], "answer": [0, 2, 3], "exp": ["옳음. for문이 repeat 횟수만큼 반복된다.", "틀림. 함수의 반환값이 아니라 실행 경과 시간을 측정한다.", "옳음. perf_counter() 전후 차이를 measured에 추가한다.", "옳음. mean, median, min의 결과를 반환한다.", "틀림. repeat 기본값은 100이며 지정한 횟수만큼 실행한다."]}, {"q": "다음 최대 메모리 측정 함수에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def measure_peak_memory(function, n: int) -> int:\n    tracemalloc.start()\n\n    function(n)\n\n    current_memory, peak_memory = tracemalloc.get_traced_memory()\n    tracemalloc.stop()\n\n    return peak_memory", "choices": ["함수 실행 시간을 초 단위로 반환한다.", "tracemalloc.start()는 메모리 추적을 시작한다.", "peak_memory에는 추적 중 관측된 최대 메모리 값이 저장된다.", "운영체제 전체의 모든 메모리를 완벽하게 측정한다.", "측정이 끝난 뒤 tracemalloc.stop()을 호출한다."], "answer": [1, 2, 4], "exp": ["틀림. 반환값은 최대 메모리 사용량이며 실행 시간이 아니다.", "옳음. 파이썬 메모리 할당 추적을 시작한다.", "옳음. get_traced_memory()의 두 번째 값이 최대 추적 메모리이다.", "틀림. 파이썬 할당 추적 도구이므로 시스템 전체 메모리를 완벽히 나타내지 않는다.", "옳음. 측정 후 추적을 종료한다."]}, {"q": "다음 비교 함수가 수행하는 작업에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def compare_factorial(n: int, repeat: int = 100) -> dict:\n    iter_result = factorial_iter(n)\n    rec_result = factorial_rec(n)\n\n    iter_time = measure_time(factorial_iter, n, repeat)\n    rec_time = measure_time(factorial_rec, n, repeat)\n\n    iter_memory = measure_peak_memory(factorial_iter, n)\n    rec_memory = measure_peak_memory(factorial_rec, n)\n\n    return {\n        \"same_result\": iter_result == rec_result,\n        \"iter_mean\": iter_time[\"mean\"],\n        \"rec_mean\": rec_time[\"mean\"],\n        \"iter_memory\": iter_memory,\n        \"rec_memory\": rec_memory,\n    }", "choices": ["반복 방식과 재귀 방식의 계산 결과를 각각 구한다.", "반복 방식의 결과만 확인하고 재귀 방식은 실행하지 않는다.", "항상 두 방식의 결과가 다르다고 반환한다.", "두 방식의 실행 시간을 같은 반복 횟수로 측정한다.", "두 방식의 최대 메모리 사용량을 측정한다."], "answer": [0, 3, 4], "exp": ["옳음. factorial_iter와 factorial_rec를 모두 호출한다.", "틀림. 반복 방식과 재귀 방식을 모두 실행한다.", "틀림. 실제 결과를 비교한 불리언 값을 same_result에 저장한다.", "옳음. 두 measure_time 호출에 같은 repeat 값을 전달한다.", "옳음. 두 함수 모두 measure_peak_memory로 측정한다."]}, {"q": "다음 코드의 입력값과 반복 측정 조건에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "inputs = [10, 100, 300, 500]\nrepeat = 100\n\nresults = []\n\nfor n in inputs:\n    comparison = compare_factorial(n, repeat)\n    results.append(comparison)", "choices": ["입력값은 모두 음수이다.", "compare_factorial은 한 번도 호출되지 않는다.", "네 개의 입력값에 대해 비교 실험을 수행한다.", "각 입력에서 실행 시간 측정 반복 횟수는 100회이다.", "각 비교 결과를 results 목록에 저장한다."], "answer": [2, 3, 4], "exp": ["틀림. 입력값은 모두 0보다 큰 정수이다.", "틀림. for문에서 각 n마다 compare_factorial을 호출한다.", "옳음. 10, 100, 300, 500의 네 입력을 사용한다.", "옳음. repeat 값 100을 비교 함수에 전달한다.", "옳음. 반환된 딕셔너리를 results에 추가한다."]}, {"q": "다음 정확성 검증 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "for n in inputs:\n    assert factorial_iter(n) == math.factorial(n)\n    assert factorial_rec(n) == math.factorial(n)\n\nprint(\"모든 계산 결과가 math.factorial()과 일치합니다.\")", "choices": ["사용자 정의 반복 함수 결과를 표준 라이브러리 함수와 비교한다.", "사용자 정의 재귀 함수 결과도 math.factorial()과 비교한다.", "assert는 실행 시간을 자동으로 줄인다.", "결과가 달라도 항상 안내 문장이 출력된다.", "모든 assert를 통과하면 일치 안내 문장이 출력된다."], "answer": [0, 1, 4], "exp": ["옳음. factorial_iter의 정확성을 표준 함수로 확인한다.", "옳음. factorial_rec의 정확성도 같은 방식으로 확인한다.", "틀림. assert는 조건 검증 기능이며 최적화 기능이 아니다.", "틀림. 조건이 거짓이면 AssertionError가 발생하여 정상 흐름이 중단될 수 있다.", "옳음. 모든 조건이 참이면 마지막 print문까지 실행된다."]}, {"q": "다음 오류 입력 검사 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "for value in [-1, 3.5, \"10\"]:\n    for function in (factorial_iter, factorial_rec):\n        try:\n            function(value)\n        except (TypeError, ValueError) as error:\n            print(f\"{function.__name__}({value!r}) -> {error}\")", "choices": ["오류가 발생하면 프로그램이 반드시 즉시 비정상 종료한다.", "-1, 3.5, 문자열 \"10\"을 두 함수에 각각 입력한다.", "TypeError와 ValueError를 처리한다.", "오류가 발생하면 함수 이름, 입력값, 오류 내용을 출력한다.", "정상 입력 10만을 시험하는 코드이다."], "answer": [1, 2, 3], "exp": ["틀림. 예외를 처리하므로 다음 시험을 계속할 수 있다.", "옳음. 세 오류 입력을 반복 함수와 재귀 함수에 모두 적용한다.", "옳음. except 구문이 두 예외 형식을 처리한다.", "옳음. 함수 이름과 repr 형식의 입력값, 오류 메시지를 출력한다.", "틀림. 정수 10이 아니라 문자열 \"10\"을 포함한 오류 입력을 검사한다."]}, {"q": "다음 재귀 깊이 설정에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "import sys\nsys.setrecursionlimit(2000)", "choices": ["파이썬의 최대 재귀 호출 깊이 제한을 2000으로 설정한다.", "모든 반복문을 재귀 함수로 자동 변환한다.", "기본 재귀 깊이보다 큰 입력을 시험하기 위한 목적이 있을 수 있다.", "메모리 사용량을 항상 0으로 만든다.", "재귀 호출이 무한히 안전해지는 것은 아니다."], "answer": [0, 2, 4], "exp": ["옳음. 허용할 최대 재귀 깊이를 변경한다.", "틀림. 코드 구조를 자동 변환하지 않는다.", "옳음. n=500과 같은 재귀 실험을 안정적으로 수행하려는 설정이다.", "틀림. 재귀 호출 스택은 메모리를 사용한다.", "옳음. 제한이 커질 뿐 너무 깊은 재귀에는 여전히 위험과 메모리 부담이 있다."]}, {"q": "반복구조와 재귀구조의 성능 비교 결과를 해석하는 방법으로 옳은 것을 모두 고르시오.", "code": "# 공정한 비교를 위해 같은 n과 repeat를 사용한다.\n# 평균·중앙값·최솟값과 최대 메모리를 함께 확인한다.\n# 두 함수의 결과는 math.factorial()로 검증한다.", "choices": ["두 방식의 시간 복잡도가 O(n)이면 실제 실행 시간도 반드시 완전히 같다.", "같은 입력과 반복 횟수를 사용해야 비교가 공정하다.", "큰 입력에서도 재귀 깊이 제한은 전혀 고려할 필요가 없다.", "평균과 중앙값을 함께 보면 일시적인 측정 흔들림을 판단하는 데 도움이 된다.", "재귀 방식은 호출 스택 때문에 반복 방식보다 메모리를 더 사용할 수 있다."], "answer": [1, 3, 4], "exp": ["틀림. 같은 빅오라도 함수 호출 비용과 상수 계수 때문에 실제 시간은 다를 수 있다.", "옳음. 실험 조건을 통제해야 방식 자체의 차이를 비교할 수 있다.", "틀림. 큰 입력에서는 RecursionError와 스택 메모리를 고려해야 한다.", "옳음. 평균은 이상값의 영향을 받을 수 있어 중앙값과 함께 보는 것이 유용하다.", "옳음. 재귀 호출마다 스택 프레임이 누적된다."]}],started=new Date();let result=null;
+const pad=n=>String(n).padStart(2,"0");
+const fmt=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+const ffmt=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+document.getElementById("start").textContent=fmt(started);
+document.getElementById("quiz").innerHTML=Q.map((q,qi)=>`<section class="card" id="card${qi}"><div class="qtitle">${qi+1}. ${q.q}</div><div class="codebox"><pre>${esc(q.code)}</pre></div><span class="tag">옳은 것 3개 선택</span>${q.choices.map((c,ci)=>`<label class="choice" id="c${qi}_${ci}"><input type="checkbox" name="q${qi}" value="${ci}"><b>${ci+1}.</b> ${c}</label>`).join("")}<div id="e${qi}" class="explain" style="display:none"></div></section>`).join("");
+Q.forEach((q,qi)=>document.querySelectorAll(`input[name="q${qi}"]`).forEach(x=>x.onchange=()=>{if(document.querySelectorAll(`input[name="q${qi}"]:checked`).length>3){x.checked=false;alert("3개까지만 선택할 수 있습니다.");}}));
+const same=(a,b)=>a.length===b.length&&[...a].sort().every((v,i)=>v===[...b].sort()[i]);
+function grade(){
+ const id=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();if(!id||!name){alert("학번과 이름을 입력하세요.");return}
+ let correct=0,details=[],incomplete=[];
+ Q.forEach((q,qi)=>{const selected=[...document.querySelectorAll(`input[name="q${qi}"]:checked`)].map(x=>+x.value);if(selected.length!==3)incomplete.push(qi+1);const ok=same(selected,q.answer);if(ok)correct++;
+ const card=document.getElementById(`card${qi}`);card.classList.add(ok?"correct":"wrong");
+ q.choices.forEach((_,ci)=>{const l=document.getElementById(`c${qi}_${ci}`);if(q.answer.includes(ci))l.style.borderColor="#2e8b57";if(selected.includes(ci)&&!q.answer.includes(ci))l.style.borderColor="#c94a4a";});
+ const e=document.getElementById(`e${qi}`);e.style.display="block";e.innerHTML=`<b>${ok?"정답":"오답"}</b><br>선택: ${selected.length?selected.map(i=>i+1).join(", "):"미응답"} / 정답: ${q.answer.map(i=>i+1).join(", ")}<ol>${q.exp.map((x,i)=>`<li><b>${i+1}번</b> ${x}</li>`).join("")}</ol>`;
+ details.push({ok,selected:selected.length?selected.map(i=>i+1).join(", "):"미응답",answer:q.answer.map(i=>i+1).join(", ")});});
+ if(incomplete.length&&!confirm(`${incomplete.join(", ")}번 문항이 3개 선택되지 않았습니다. 제출할까요?`))return;
+ const ended=new Date(),score=correct*10;document.querySelectorAll("input").forEach(x=>x.disabled=true);document.getElementById("submitBtn").disabled=true;result={id,name,score,correct,ended,details};
+ document.getElementById("result").style.display="block";document.getElementById("scoreText").textContent=`${score}점 / 100점`;document.getElementById("summaryText").textContent=`정답 ${correct}문항, 오답 ${10-correct}문항 · 제출 ${fmt(ended)}`;document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+function saveTxt(){
+ if(!result){alert("먼저 제출하세요.");return}const r=result,L=["수행평가명: 수행02 반복구조와 재귀구조 성능 비교",`학번: ${r.id}`,`이름: ${r.name}`,`점수: ${r.score}점`,`정답 문항 수: ${r.correct}/10`,`시작 시각: ${fmt(started)}`,`제출 시각: ${fmt(r.ended)}`,"","===== 문항별 정오답 및 상세 풀이 ====="];
+ Q.forEach((q,i)=>{const d=r.details[i];L.push("",`[${i+1}번] ${d.ok?"정답":"오답"}`,`문제: ${q.q}`,"관련 코드:");q.code.split("\n").forEach(line=>L.push(`    ${line}`));L.push(`선택: ${d.selected}`,`정답: ${d.answer}`);q.choices.forEach((c,j)=>L.push(`${j+1}. ${c}`,`   풀이: ${q.exp[j]}`));});
+ const blob=new Blob([L.join("\n")],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),clean=s=>s.replace(/[\\/:*?"<>|\s]+/g,"_");a.href=url;a.download=`${clean(r.id)}_${clean(r.name)}_${r.score}_수행02_${ffmt(r.ended)}.txt`;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>

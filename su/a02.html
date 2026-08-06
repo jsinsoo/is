@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>혼동행렬 개념기반 목표지향 학습</title>
+<style>
+:root{--navy:#15334d;--blue:#286fa6;--light:#eaf5ff;--green:#147b63;--red:#c43c3c;--orange:#d46b16;--line:#d7e2eb;--bg:#f4f7fa;--code:#172231;--gray:#657181}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:#1f2d3a;line-height:1.72}
+header{background:linear-gradient(135deg,#102a40,#176c9e);color:#fff;padding:48px 20px 42px}.header-inner{max-width:1220px;margin:auto}header h1{margin:0 0 12px;font-size:clamp(30px,4vw,48px)}header p{margin:0;font-size:17px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.badge{border:1px solid #ffffff55;background:#ffffff18;padding:5px 11px;border-radius:999px;font-size:13px}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 2px 10px #17324a12}.nav-inner{max-width:1220px;margin:auto;padding:10px 15px;display:flex;gap:7px;overflow-x:auto}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;font-size:14px;padding:7px 11px;border-radius:8px}nav a:hover{background:var(--light)}
+main{max-width:1220px;margin:24px auto 80px;padding:0 16px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px;margin-bottom:22px;box-shadow:0 8px 24px #15334d0c}
+h2{margin-top:0;color:var(--navy);border-left:7px solid var(--blue);padding-left:12px;font-size:28px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}.card{border:1px solid var(--line);border-radius:14px;padding:17px}.card strong{color:var(--navy)}
+.flow{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;align-items:center;margin-top:20px}.flow div{background:var(--light);border:1px solid #bdd8ed;border-radius:10px;padding:11px 15px;font-weight:800}.flow span{font-size:22px;color:var(--blue)}
+.identity{display:grid;grid-template-columns:1fr 1fr;gap:14px}label.title{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:12px;border:1px solid #b8c5d1;border-radius:9px;font-size:16px;margin-top:5px}
+.notice{background:#fff6e8;border-left:5px solid var(--orange);padding:13px 15px;border-radius:8px}.lesson{border:1px solid var(--line);border-radius:17px;overflow:hidden;margin:25px 0}.lesson-head{background:linear-gradient(90deg,#edf7ff,#f9fcfe);padding:15px 18px;border-bottom:1px solid var(--line)}.lesson-head h3{margin:0 0 5px;color:#18547d}.lesson-head p{margin:0;color:#4c6275}.lesson-body{padding:20px}
+.detail{background:#f8fbfd;border-left:5px solid var(--blue);padding:14px 15px;border-radius:8px;margin-bottom:15px}.code-label{font-weight:900;color:var(--navy);margin:10px 0 7px}.code-wrap{position:relative}pre{background:var(--code);color:#eff6fb;padding:18px;border-radius:12px;overflow:auto;margin:0;font-family:Consolas,monospace;font-size:14px;line-height:1.62}.copy{position:absolute;right:9px;top:9px;border:0;border-radius:7px;padding:6px 10px;font-weight:800;cursor:pointer}
+.question{margin-top:17px;border:1px solid #cfdae4;background:#fbfdff;border-radius:13px;padding:17px}.question h4{margin:0 0 7px;color:var(--navy);font-size:18px}.instruction{font-weight:800;color:var(--red);margin-bottom:8px}.option{display:block;padding:10px 11px;margin:7px 0;border:1px solid #d8e1e8;border-radius:9px;background:#fff;cursor:pointer}.option:hover{background:#eff7ff}.option input{margin-right:8px;transform:scale(1.15)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.action{border:0;border-radius:10px;padding:12px 18px;font-weight:900;cursor:pointer;font-size:15px}.primary{background:var(--blue);color:#fff}.success{background:var(--green);color:#fff}.secondary{background:#e7edf2;color:#263a4c}
+#result{display:none;margin-top:22px;background:#eef8ff;border:1px solid #bdd8ec;border-radius:14px;padding:20px}.score{font-size:30px;font-weight:900;color:var(--navy)}.feedback-item{padding:12px;margin:8px 0;border-radius:9px}.correct{background:#e8f8ef;border-left:5px solid #169466}.incorrect{background:#fff0f0;border-left:5px solid #cc4646}
+.cm-demo{display:grid;grid-template-columns:repeat(3,1fr);max-width:560px;margin:18px auto;border:1px solid var(--line)}.cm-demo div{padding:12px;border:1px solid var(--line);text-align:center}.cm-head{background:#edf7ff;font-weight:800}.cm-good{background:#e8f8ef}.cm-bad{background:#fff0f0}
+footer{text-align:center;color:var(--gray);padding:30px}
+.full-explain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:13px;margin-top:14px}
+.full-explain-card{border:1px solid var(--line);border-radius:13px;padding:15px;background:#fbfdff}
+.full-explain-card strong{color:var(--navy)}
+.full-explain-card p{margin:7px 0 0}
+
+@media(max-width:720px){section{padding:19px}.identity{grid-template-columns:1fr}h2{font-size:23px}}@media print{nav,.actions,.copy{display:none!important}body{background:#fff}section,.lesson{box-shadow:none;break-inside:avoid}}
+</style></head>
+<body>
+<header><div class="header-inner"><h1>혼동행렬 개념기반 목표지향 학습</h1><p>실제값과 예측값의 관계를 객체지향 코드로 구현하고 다양한 분류 평가 지표를 해석합니다.</p><div class="badges"><span class="badge">개념 24개</span><span class="badge">OOP 코드 24개</span><span class="badge">5지선다형 24문항</span><span class="badge">자동 채점</span><span class="badge">전체 통합 코드</span><span class="badge">TXT 저장</span></div></div></header>
+<nav><div class="nav-inner"><a href="#goal">학습 목표</a><a href="#idea">핵심 아이디어</a><a href="#identity">학번·이름</a><a href="#lessons">개념·코드·문제</a><a href="#fullcode">전체 코드·상세 설명</a><a href="#submit">채점·저장</a></div></nav>
+<main>
+<section id="goal"><h2>1. 목표지향 학습 설계</h2><div class="grid"><div class="card"><strong>최종 목표</strong><br>혼동행렬을 구성하고 각 평가 지표를 목적에 맞게 해석한다.</div><div class="card"><strong>이해 목표</strong><br>TP·TN·FP·FN과 정확도·정밀도·재현율의 관계를 이해한다.</div><div class="card"><strong>수행 목표</strong><br>혼동행렬 계산과 평가 기능을 클래스와 메서드로 구현한다.</div><div class="card"><strong>평가 목표</strong><br>코드와 실행 결과를 근거로 옳은 진술 3개를 선택한다.</div></div><div class="flow"><div>실제값</div><span>→</span><div>예측값</div><span>→</span><div>혼동행렬</div><span>→</span><div>평가지표</div><span>→</span><div>모델 개선</div></div></section>
+<section id="idea"><h2>2. 핵심 아이디어</h2><div class="cm-demo"><div class="cm-head"></div><div class="cm-head">예측 양성</div><div class="cm-head">예측 음성</div><div class="cm-head">실제 양성</div><div class="cm-good">TP</div><div class="cm-bad">FN</div><div class="cm-head">실제 음성</div><div class="cm-bad">FP</div><div class="cm-good">TN</div></div><div class="grid"><div class="card"><strong>큰 아이디어 1</strong><br>혼동행렬은 정답과 오답의 유형을 구분한다.</div><div class="card"><strong>큰 아이디어 2</strong><br>하나의 지표만으로 모델 성능을 완전히 설명할 수 없다.</div><div class="card"><strong>큰 아이디어 3</strong><br>임계값과 클래스 불균형은 혼동행렬과 지표에 영향을 준다.</div><div class="card"><strong>큰 아이디어 4</strong><br>오류 비용과 사용 목적에 따라 중요한 지표가 달라진다.</div></div></section>
+<section id="identity"><h2>3. 학습자 정보</h2><div class="identity"><div><label class="title" for="studentId">학번</label><input id="studentId" type="text" placeholder="예: 1101"></div><div><label class="title" for="studentName">이름</label><input id="studentName" type="text" placeholder="예: 홍길동"></div></div></section>
+<section id="lessons"><h2>4. 개념 상세 설명·OOP 코드·문제</h2><div class="notice">각 개념 설명과 코드를 읽고 바로 아래 문제에서 <strong>옳은 것 3개</strong>를 선택하세요. 문항별 최대 3개까지 선택할 수 있습니다.</div><div id="lessonContainer"></div></section>
+
+<section id="fullcode">
+<h2>5. 모든 개념이 사용된 전체 OOP 코드</h2>
+<div class="notice">앞에서 학습한 혼동행렬 관련 개념을 하나의 실행 가능한 객체지향 프로그램으로 통합했습니다.</div>
+<div class="code-label">혼동행렬 전체 객체지향 코드</div>
+<div class="code-wrap">
+<button class="copy" type="button" onclick="copyCode(this)">전체 코드 복사</button>
+<pre><code>from dataclasses import dataclass
+from typing import Any, Iterable
+
+
+# 1. 한 개의 예측 결과
+@dataclass
+class PredictionResult:
+    actual: Any
+    predicted: Any
+    positive_probability: float | None = None
+
+
+# 2. 양성·음성 클래스 정의
+@dataclass
+class BinaryLabel:
+    positive_label: Any
+    negative_label: Any
+
+    def to_binary(self, label: Any) -&gt; str:
+        return &quot;양성&quot; if label == self.positive_label else &quot;음성&quot;
+
+
+# 3. 이진 혼동행렬
+class BinaryConfusionMatrix:
+    def __init__(self, labels: BinaryLabel):
+        self.labels = labels
+        self.tp = 0
+        self.tn = 0
+        self.fp = 0
+        self.fn = 0
+
+    def reset(self) -&gt; None:
+        self.tp = self.tn = self.fp = self.fn = 0
+
+    def update(self, actual: Any, predicted: Any) -&gt; None:
+        actual_binary = self.labels.to_binary(actual)
+        predicted_binary = self.labels.to_binary(predicted)
+
+        if actual_binary == &quot;양성&quot; and predicted_binary == &quot;양성&quot;:
+            self.tp += 1
+        elif actual_binary == &quot;음성&quot; and predicted_binary == &quot;음성&quot;:
+            self.tn += 1
+        elif actual_binary == &quot;음성&quot; and predicted_binary == &quot;양성&quot;:
+            self.fp += 1
+        else:
+            self.fn += 1
+
+    def build(self, results: Iterable[PredictionResult]) -&gt; None:
+        self.reset()
+        for result in results:
+            self.update(result.actual, result.predicted)
+
+    @property
+    def total(self) -&gt; int:
+        return self.tp + self.tn + self.fp + self.fn
+
+    def as_dict(self) -&gt; dict[str, int]:
+        return {
+            &quot;TP&quot;: self.tp,
+            &quot;TN&quot;: self.tn,
+            &quot;FP&quot;: self.fp,
+            &quot;FN&quot;: self.fn,
+        }
+
+
+# 4. 안전한 나눗셈
+class SafeDivision:
+    @staticmethod
+    def divide(numerator: float, denominator: float) -&gt; float:
+        return numerator / denominator if denominator else 0.0
+
+
+# 5. 이진 분류 평가 지표
+class BinaryMetricCalculator:
+    def __init__(self, matrix: BinaryConfusionMatrix):
+        self.matrix = matrix
+
+    def accuracy(self) -&gt; float:
+        return SafeDivision.divide(
+            self.matrix.tp + self.matrix.tn,
+            self.matrix.total
+        )
+
+    def precision(self) -&gt; float:
+        return SafeDivision.divide(
+            self.matrix.tp,
+            self.matrix.tp + self.matrix.fp
+        )
+
+    def recall(self) -&gt; float:
+        return SafeDivision.divide(
+            self.matrix.tp,
+            self.matrix.tp + self.matrix.fn
+        )
+
+    def specificity(self) -&gt; float:
+        return SafeDivision.divide(
+            self.matrix.tn,
+            self.matrix.tn + self.matrix.fp
+        )
+
+    def false_positive_rate(self) -&gt; float:
+        return SafeDivision.divide(
+            self.matrix.fp,
+            self.matrix.fp + self.matrix.tn
+        )
+
+    def false_negative_rate(self) -&gt; float:
+        return SafeDivision.divide(
+            self.matrix.fn,
+            self.matrix.fn + self.matrix.tp
+        )
+
+    def negative_predictive_value(self) -&gt; float:
+        return SafeDivision.divide(
+            self.matrix.tn,
+            self.matrix.tn + self.matrix.fn
+        )
+
+    def f1_score(self) -&gt; float:
+        precision = self.precision()
+        recall = self.recall()
+        return SafeDivision.divide(
+            2 * precision * recall,
+            precision + recall
+        )
+
+    def balanced_accuracy(self) -&gt; float:
+        return (self.recall() + self.specificity()) / 2
+
+    def all_metrics(self) -&gt; dict[str, float]:
+        return {
+            &quot;accuracy&quot;: self.accuracy(),
+            &quot;precision&quot;: self.precision(),
+            &quot;recall&quot;: self.recall(),
+            &quot;specificity&quot;: self.specificity(),
+            &quot;false_positive_rate&quot;: self.false_positive_rate(),
+            &quot;false_negative_rate&quot;: self.false_negative_rate(),
+            &quot;negative_predictive_value&quot;:
+                self.negative_predictive_value(),
+            &quot;f1_score&quot;: self.f1_score(),
+            &quot;balanced_accuracy&quot;: self.balanced_accuracy(),
+        }
+
+
+# 6. 임계값 기반 분류기
+class ThresholdClassifier:
+    def __init__(self,
+                 positive_label: Any,
+                 negative_label: Any,
+                 threshold: float = 0.5):
+        self.positive_label = positive_label
+        self.negative_label = negative_label
+        self.threshold = threshold
+
+    def predict(self, probability: float) -&gt; Any:
+        if probability &gt;= self.threshold:
+            return self.positive_label
+        return self.negative_label
+
+    def predict_many(self,
+                     probabilities: Iterable[float]) -&gt; list[Any]:
+        return [
+            self.predict(probability)
+            for probability in probabilities
+        ]
+
+
+# 7. 여러 임계값의 성능 비교
+class ThresholdAnalyzer:
+    def __init__(self,
+                 labels: BinaryLabel,
+                 probabilities: list[float],
+                 actual: list[Any]):
+        self.labels = labels
+        self.probabilities = probabilities
+        self.actual = actual
+
+    def evaluate(self, threshold: float) -&gt; dict[str, float]:
+        classifier = ThresholdClassifier(
+            self.labels.positive_label,
+            self.labels.negative_label,
+            threshold
+        )
+        predicted = classifier.predict_many(self.probabilities)
+
+        results = [
+            PredictionResult(a, p, probability)
+            for a, p, probability in zip(
+                self.actual,
+                predicted,
+                self.probabilities
+            )
+        ]
+
+        matrix = BinaryConfusionMatrix(self.labels)
+        matrix.build(results)
+        metrics = BinaryMetricCalculator(matrix).all_metrics()
+
+        return {
+            &quot;threshold&quot;: threshold,
+            **matrix.as_dict(),
+            **metrics,
+        }
+
+    def compare(self,
+                thresholds: Iterable[float]) -&gt; list[dict[str, float]]:
+        return [
+            self.evaluate(threshold)
+            for threshold in thresholds
+        ]
+
+
+# 8. 다중 클래스 혼동행렬
+class MulticlassConfusionMatrix:
+    def __init__(self, labels: list[Any]):
+        self.labels = labels
+        self.matrix = {
+            actual: {
+                predicted: 0
+                for predicted in labels
+            }
+            for actual in labels
+        }
+
+    def update(self, actual: Any, predicted: Any) -&gt; None:
+        self.matrix[actual][predicted] += 1
+
+    def build(self,
+              actual_values: Iterable[Any],
+              predicted_values: Iterable[Any]) -&gt; None:
+        for actual, predicted in zip(
+            actual_values,
+            predicted_values
+        ):
+            self.update(actual, predicted)
+
+    def diagonal_sum(self) -&gt; int:
+        return sum(
+            self.matrix[label][label]
+            for label in self.labels
+        )
+
+    def total(self) -&gt; int:
+        return sum(
+            self.matrix[actual][predicted]
+            for actual in self.labels
+            for predicted in self.labels
+        )
+
+    def accuracy(self) -&gt; float:
+        return SafeDivision.divide(
+            self.diagonal_sum(),
+            self.total()
+        )
+
+
+# 9. One-vs-Rest 변환과 클래스별 평가
+class OneVsRestEvaluator:
+    def __init__(self,
+                 actual: list[Any],
+                 predicted: list[Any],
+                 labels: list[Any]):
+        self.actual = actual
+        self.predicted = predicted
+        self.labels = labels
+
+    def evaluate_class(self, target: Any) -&gt; dict[str, float]:
+        binary_labels = BinaryLabel(
+            positive_label=target,
+            negative_label=&quot;나머지&quot;
+        )
+
+        converted_results = [
+            PredictionResult(
+                actual=(
+                    target if actual == target else &quot;나머지&quot;
+                ),
+                predicted=(
+                    target if predicted == target else &quot;나머지&quot;
+                )
+            )
+            for actual, predicted in zip(
+                self.actual,
+                self.predicted
+            )
+        ]
+
+        matrix = BinaryConfusionMatrix(binary_labels)
+        matrix.build(converted_results)
+
+        metrics = BinaryMetricCalculator(matrix).all_metrics()
+        support = sum(
+            actual == target
+            for actual in self.actual
+        )
+
+        return {
+            &quot;label&quot;: target,
+            &quot;support&quot;: support,
+            **matrix.as_dict(),
+            **metrics,
+        }
+
+    def evaluate_all(self) -&gt; list[dict[str, float]]:
+        return [
+            self.evaluate_class(label)
+            for label in self.labels
+        ]
+
+
+# 10. 매크로·가중·마이크로 평균
+class AveragingMetric:
+    @staticmethod
+    def macro_average(
+        class_reports: list[dict[str, float]],
+        metric_name: str
+    ) -&gt; float:
+        scores = [
+            report[metric_name]
+            for report in class_reports
+        ]
+        return SafeDivision.divide(
+            sum(scores),
+            len(scores)
+        )
+
+    @staticmethod
+    def weighted_average(
+        class_reports: list[dict[str, float]],
+        metric_name: str
+    ) -&gt; float:
+        total_support = sum(
+            report[&quot;support&quot;]
+            for report in class_reports
+        )
+        weighted_sum = sum(
+            report[metric_name] * report[&quot;support&quot;]
+            for report in class_reports
+        )
+        return SafeDivision.divide(
+            weighted_sum,
+            total_support
+        )
+
+    @staticmethod
+    def micro_precision(
+        class_reports: list[dict[str, float]]
+    ) -&gt; float:
+        total_tp = sum(report[&quot;TP&quot;] for report in class_reports)
+        total_fp = sum(report[&quot;FP&quot;] for report in class_reports)
+        return SafeDivision.divide(
+            total_tp,
+            total_tp + total_fp
+        )
+
+    @staticmethod
+    def micro_recall(
+        class_reports: list[dict[str, float]]
+    ) -&gt; float:
+        total_tp = sum(report[&quot;TP&quot;] for report in class_reports)
+        total_fn = sum(report[&quot;FN&quot;] for report in class_reports)
+        return SafeDivision.divide(
+            total_tp,
+            total_tp + total_fn
+        )
+
+
+# 11. 클래스 불균형 분석
+class ImbalanceAnalyzer:
+    def class_distribution(
+        self,
+        labels: Iterable[Any]
+    ) -&gt; dict[Any, int]:
+        distribution: dict[Any, int] = {}
+        for label in labels:
+            distribution[label] = (
+                distribution.get(label, 0) + 1
+            )
+        return distribution
+
+    def majority_baseline(
+        self,
+        labels: list[Any]
+    ) -&gt; float:
+        distribution = self.class_distribution(labels)
+        return SafeDivision.divide(
+            max(distribution.values()),
+            len(labels)
+        )
+
+    def imbalance_ratio(
+        self,
+        labels: list[Any]
+    ) -&gt; float:
+        counts = list(
+            self.class_distribution(labels).values()
+        )
+        return SafeDivision.divide(
+            max(counts),
+            min(counts)
+        )
+
+
+# 12. 오류 비용
+@dataclass
+class ErrorCostPolicy:
+    false_positive_cost: float = 1.0
+    false_negative_cost: float = 1.0
+
+
+class CostSensitiveEvaluator:
+    def __init__(self,
+                 matrix: BinaryConfusionMatrix,
+                 policy: ErrorCostPolicy):
+        self.matrix = matrix
+        self.policy = policy
+
+    def total_cost(self) -&gt; float:
+        return (
+            self.matrix.fp *
+            self.policy.false_positive_cost
+            +
+            self.matrix.fn *
+            self.policy.false_negative_cost
+        )
+
+    def average_cost(self) -&gt; float:
+        return SafeDivision.divide(
+            self.total_cost(),
+            self.matrix.total
+        )
+
+
+# 13. 통합 평가 보고서
+class ClassificationReport:
+    def __init__(self,
+                 actual: list[Any],
+                 predicted: list[Any],
+                 labels: list[Any]):
+        self.actual = actual
+        self.predicted = predicted
+        self.labels = labels
+
+    def create(self) -&gt; dict[str, Any]:
+        multiclass_matrix = MulticlassConfusionMatrix(
+            self.labels
+        )
+        multiclass_matrix.build(
+            self.actual,
+            self.predicted
+        )
+
+        evaluator = OneVsRestEvaluator(
+            self.actual,
+            self.predicted,
+            self.labels
+        )
+        class_reports = evaluator.evaluate_all()
+
+        return {
+            &quot;confusion_matrix&quot;:
+                multiclass_matrix.matrix,
+            &quot;accuracy&quot;:
+                multiclass_matrix.accuracy(),
+            &quot;class_reports&quot;:
+                class_reports,
+            &quot;macro_precision&quot;:
+                AveragingMetric.macro_average(
+                    class_reports,
+                    &quot;precision&quot;
+                ),
+            &quot;macro_recall&quot;:
+                AveragingMetric.macro_average(
+                    class_reports,
+                    &quot;recall&quot;
+                ),
+            &quot;macro_f1&quot;:
+                AveragingMetric.macro_average(
+                    class_reports,
+                    &quot;f1_score&quot;
+                ),
+            &quot;weighted_f1&quot;:
+                AveragingMetric.weighted_average(
+                    class_reports,
+                    &quot;f1_score&quot;
+                ),
+            &quot;micro_precision&quot;:
+                AveragingMetric.micro_precision(
+                    class_reports
+                ),
+            &quot;micro_recall&quot;:
+                AveragingMetric.micro_recall(
+                    class_reports
+                ),
+        }
+
+
+# 14. 실행 예시: 이진 분류
+binary_labels = BinaryLabel(
+    positive_label=&quot;질병 있음&quot;,
+    negative_label=&quot;질병 없음&quot;
+)
+
+actual_binary = [
+    &quot;질병 있음&quot;, &quot;질병 있음&quot;, &quot;질병 없음&quot;,
+    &quot;질병 없음&quot;, &quot;질병 있음&quot;, &quot;질병 없음&quot;,
+    &quot;질병 있음&quot;, &quot;질병 없음&quot;
+]
+
+probabilities = [
+    0.92, 0.81, 0.72, 0.15,
+    0.44, 0.20, 0.67, 0.55
+]
+
+classifier = ThresholdClassifier(
+    positive_label=&quot;질병 있음&quot;,
+    negative_label=&quot;질병 없음&quot;,
+    threshold=0.5
+)
+
+predicted_binary = classifier.predict_many(
+    probabilities
+)
+
+binary_results = [
+    PredictionResult(actual, predicted, probability)
+    for actual, predicted, probability in zip(
+        actual_binary,
+        predicted_binary,
+        probabilities
+    )
+]
+
+binary_matrix = BinaryConfusionMatrix(binary_labels)
+binary_matrix.build(binary_results)
+
+binary_metrics = BinaryMetricCalculator(
+    binary_matrix
+)
+
+print(&quot;이진 혼동행렬:&quot;, binary_matrix.as_dict())
+print(&quot;이진 평가 지표:&quot;, binary_metrics.all_metrics())
+
+threshold_analyzer = ThresholdAnalyzer(
+    binary_labels,
+    probabilities,
+    actual_binary
+)
+
+print(
+    &quot;임계값 비교:&quot;,
+    threshold_analyzer.compare([0.3, 0.5, 0.7])
+)
+
+cost_policy = ErrorCostPolicy(
+    false_positive_cost=1,
+    false_negative_cost=10
+)
+
+cost_evaluator = CostSensitiveEvaluator(
+    binary_matrix,
+    cost_policy
+)
+
+print(&quot;총 오류 비용:&quot;, cost_evaluator.total_cost())
+print(&quot;평균 오류 비용:&quot;, cost_evaluator.average_cost())
+
+
+# 15. 실행 예시: 다중 클래스 분류
+actual_multi = [
+    &quot;A&quot;, &quot;A&quot;, &quot;B&quot;, &quot;B&quot;,
+    &quot;C&quot;, &quot;C&quot;, &quot;A&quot;, &quot;B&quot;, &quot;C&quot;
+]
+
+predicted_multi = [
+    &quot;A&quot;, &quot;B&quot;, &quot;B&quot;, &quot;C&quot;,
+    &quot;C&quot;, &quot;A&quot;, &quot;A&quot;, &quot;B&quot;, &quot;C&quot;
+]
+
+report = ClassificationReport(
+    actual=actual_multi,
+    predicted=predicted_multi,
+    labels=[&quot;A&quot;, &quot;B&quot;, &quot;C&quot;]
+).create()
+
+print(&quot;다중 클래스 혼동행렬:&quot;)
+for actual_label, row in report[&quot;confusion_matrix&quot;].items():
+    print(actual_label, row)
+
+print(&quot;전체 정확도:&quot;, report[&quot;accuracy&quot;])
+print(&quot;클래스별 보고서:&quot;, report[&quot;class_reports&quot;])
+print(&quot;매크로 정밀도:&quot;, report[&quot;macro_precision&quot;])
+print(&quot;매크로 재현율:&quot;, report[&quot;macro_recall&quot;])
+print(&quot;매크로 F1:&quot;, report[&quot;macro_f1&quot;])
+print(&quot;가중 F1:&quot;, report[&quot;weighted_f1&quot;])
+print(&quot;마이크로 정밀도:&quot;, report[&quot;micro_precision&quot;])
+print(&quot;마이크로 재현율:&quot;, report[&quot;micro_recall&quot;])
+
+imbalance = ImbalanceAnalyzer()
+imbalanced_labels = [&quot;음성&quot;] * 95 + [&quot;양성&quot;] * 5
+
+print(
+    &quot;다수 클래스 기준 정확도:&quot;,
+    imbalance.majority_baseline(imbalanced_labels)
+)
+print(
+    &quot;불균형 비율:&quot;,
+    imbalance.imbalance_ratio(imbalanced_labels)
+)</code></pre>
+</div>
+<h3>전체 코드 상세 설명</h3>
+
+<div class="full-explain-grid">
+  <div class="full-explain-card"><strong>1. PredictionResult</strong><p>실제값, 예측값, 양성 확률을 한 객체에 저장합니다. 혼동행렬 구축의 기본 자료 단위입니다.</p></div>
+  <div class="full-explain-card"><strong>2. BinaryLabel</strong><p>어떤 클래스를 양성으로 볼지 정의하고 원래 레이블을 양성·음성으로 변환합니다.</p></div>
+  <div class="full-explain-card"><strong>3. BinaryConfusionMatrix</strong><p>각 예측 결과를 TP, TN, FP, FN으로 분류해 누적하고 사전 형태로 반환합니다.</p></div>
+  <div class="full-explain-card"><strong>4. SafeDivision</strong><p>분모가 0인 경우 오류 대신 0을 반환해 지표 계산을 안전하게 처리합니다.</p></div>
+  <div class="full-explain-card"><strong>5. BinaryMetricCalculator</strong><p>정확도, 정밀도, 재현율, 특이도, 거짓양성률, 거짓음성률, 음성 예측도, F1, 균형 정확도를 계산합니다.</p></div>
+  <div class="full-explain-card"><strong>6. ThresholdClassifier</strong><p>양성 확률과 임계값을 비교해 양성 또는 음성 클래스를 결정합니다.</p></div>
+  <div class="full-explain-card"><strong>7. ThresholdAnalyzer</strong><p>여러 임계값에서 혼동행렬과 모든 평가 지표를 다시 계산하여 정밀도·재현율의 변화를 비교합니다.</p></div>
+  <div class="full-explain-card"><strong>8. MulticlassConfusionMatrix</strong><p>세 개 이상의 클래스에서 실제 클래스를 행, 예측 클래스를 열로 두어 행렬을 구성합니다.</p></div>
+  <div class="full-explain-card"><strong>9. OneVsRestEvaluator</strong><p>관심 클래스 하나를 양성, 나머지를 음성으로 바꾸어 클래스별 TP, TN, FP, FN과 평가 지표를 계산합니다.</p></div>
+  <div class="full-explain-card"><strong>10. AveragingMetric</strong><p>클래스별 점수의 매크로 평균, 자료 수를 반영한 가중 평균, 합산 결과 기반 마이크로 평균을 계산합니다.</p></div>
+  <div class="full-explain-card"><strong>11. ImbalanceAnalyzer</strong><p>클래스 분포, 다수 클래스 기준 정확도, 다수·소수 클래스의 불균형 비율을 계산합니다.</p></div>
+  <div class="full-explain-card"><strong>12. ErrorCostPolicy</strong><p>거짓양성과 거짓음성에 서로 다른 비용을 설정하여 실제 문제의 위험도를 평가에 반영합니다.</p></div>
+  <div class="full-explain-card"><strong>13. CostSensitiveEvaluator</strong><p>FP·FN 개수와 오류 비용을 곱해 총비용과 자료당 평균 오류 비용을 계산합니다.</p></div>
+  <div class="full-explain-card"><strong>14. ClassificationReport</strong><p>다중 클래스 혼동행렬, 전체 정확도, 클래스별 지표, 매크로·가중·마이크로 평균을 하나의 보고서로 통합합니다.</p></div>
+  <div class="full-explain-card"><strong>15. 이진 분류 실행</strong><p>예측 확률을 임계값 0.5로 분류하고 혼동행렬·평가 지표·임계값 비교·오류 비용을 출력합니다.</p></div>
+  <div class="full-explain-card"><strong>16. 다중 분류 실행</strong><p>A·B·C 클래스의 혼동행렬을 만들고 클래스별 One-vs-Rest 평가와 여러 평균 지표를 출력합니다.</p></div>
+  <div class="full-explain-card"><strong>17. 클래스 불균형 해석</strong><p>음성 95개와 양성 5개 자료에서 다수 클래스만 예측해도 정확도 0.95가 됨을 확인하고 정확도의 한계를 설명합니다.</p></div>
+  <div class="full-explain-card"><strong>18. 객체지향 설계</strong><p>자료, 행렬, 지표, 임계값, 다중분류, 평균, 비용을 독립 클래스로 나누어 재사용성과 확장성을 높였습니다.</p></div>
+</div>
+<div class="notice" style="margin-top:16px">
+<strong>전체 실행 흐름:</strong> 실제값과 확률 준비 → 임계값으로 예측 → 이진 혼동행렬 생성 → 지표 계산 → 임계값 비교 → 오류 비용 평가 → 다중 클래스 혼동행렬 → 클래스별 평가 → 매크로·가중·마이크로 평균 → 불균형 분석
+</div>
+
+</section>
+<section id="submit"><h2>6. 채점 및 결과 저장</h2><div class="actions"><button class="action primary" onclick="gradeQuiz()">채점하기</button><button class="action success" onclick="downloadResult()">결과 TXT 저장</button><button class="action secondary" onclick="resetQuiz()">다시 풀기</button></div><div id="result"></div></section>
+</main><footer>혼동행렬 개념기반 목표지향 학습 · 객체지향 코드 분석형 평가</footer>
+<script>
+const lessons=[{"title": "1. 분류 평가와 혼동행렬", "goal": "실제값과 예측값을 비교하여 분류 결과를 표로 나타내는 목적을 설명한다.", "detail": "혼동행렬은 실제 클래스와 예측 클래스의 조합별 개수를 표로 정리한 것이다. 전체 정답률뿐 아니라 어떤 클래스를 어떻게 잘못 예측했는지 보여 준다.", "code": "class PredictionResult:\n    def __init__(self, actual, predicted):\n        self.actual = actual\n        self.predicted = predicted\n\nresult = PredictionResult(\"양성\", \"음성\")\nprint(result.actual, result.predicted)", "options": ["PredictionResult 객체는 실제값과 예측값을 함께 저장한다.", "actual은 실제 정답이다.", "predicted는 모델의 예측값이다.", "혼동행렬은 회귀 문제에서만 사용한다.", "실제값과 예측값은 반드시 항상 같아야 한다."], "answer": [0, 1, 2], "explain": "혼동행렬은 실제값과 예측값의 조합을 집계하여 분류 오류를 분석한다."}, {"title": "2. 양성 클래스와 음성 클래스", "goal": "이진 분류에서 양성과 음성 클래스의 의미를 구분한다.", "detail": "이진 분류에서는 관심 대상이나 탐지하려는 상태를 양성, 그 반대를 음성으로 정한다. 양성과 음성은 좋고 나쁨이 아니라 문제 목적에 따라 정해진다.", "code": "class BinaryLabel:\n    def __init__(self, positive_label, negative_label):\n        self.positive_label = positive_label\n        self.negative_label = negative_label\n\nlabels = BinaryLabel(\"질병 있음\", \"질병 없음\")\nprint(labels.positive_label)", "options": ["음성 클래스는 양성이 아닌 반대 범주이다.", "양성과 음성의 정의는 문제 목적에 따라 정한다.", "양성은 언제나 좋은 결과를 뜻한다.", "음성 클래스는 평가에서 제외한다.", "양성 클래스는 분석에서 관심을 두는 대상이다."], "answer": [0, 1, 4], "explain": "양성과 음성은 평가 목적에 따라 정하며 가치 판단을 뜻하지 않는다."}, {"title": "3. 참양성 TP", "goal": "실제 양성을 양성으로 올바르게 예측한 경우를 설명한다.", "detail": "참양성은 실제값이 양성이고 예측값도 양성인 경우이다. 질병이 있는 사람을 질병이 있다고 올바르게 판정한 사례가 이에 해당한다.", "code": "class ConfusionCase:\n    def is_true_positive(self, actual, predicted):\n        return actual == \"양성\" and predicted == \"양성\"\n\ncase = ConfusionCase()\nprint(case.is_true_positive(\"양성\", \"양성\"))", "options": ["참양성은 양성 사례를 올바르게 탐지한 경우이다.", "실제 음성을 양성으로 예측한 경우가 참양성이다.", "참양성은 항상 오분류이다.", "실제값과 예측값이 모두 양성이면 참양성이다.", "코드의 출력은 True이다."], "answer": [0, 3, 4], "explain": "실제 양성과 예측 양성이 일치하면 참양성이다."}, {"title": "4. 참음성 TN", "goal": "실제 음성을 음성으로 올바르게 예측한 경우를 설명한다.", "detail": "참음성은 실제값이 음성이고 예측값도 음성인 경우이다. 정상 상태를 정상이라고 올바르게 판정한 사례이다.", "code": "class ConfusionCase:\n    def is_true_negative(self, actual, predicted):\n        return actual == \"음성\" and predicted == \"음성\"\n\nprint(ConfusionCase().is_true_negative(\"음성\", \"음성\"))", "options": ["실제 양성을 음성으로 예측한 경우가 참음성이다.", "참음성은 양성 탐지 성공 횟수이다.", "실제값과 예측값이 모두 음성이면 참음성이다.", "코드의 출력은 True이다.", "참음성은 음성 사례를 올바르게 분류한 경우이다."], "answer": [2, 3, 4], "explain": "실제 음성과 예측 음성이 일치하면 참음성이다."}, {"title": "5. 거짓양성 FP", "goal": "실제 음성을 양성으로 잘못 예측한 경우를 설명한다.", "detail": "거짓양성은 실제로 음성이지만 모델이 양성이라고 예측한 경우이다. 정상 메일을 스팸으로 판정하는 오경보가 대표적이다.", "code": "class ConfusionCase:\n    def is_false_positive(self, actual, predicted):\n        return actual == \"음성\" and predicted == \"양성\"\n\nprint(ConfusionCase().is_false_positive(\"음성\", \"양성\"))", "options": ["거짓양성은 올바른 예측이다.", "실제 음성을 양성으로 예측하면 거짓양성이다.", "코드의 출력은 True이다.", "거짓양성은 오경보와 관련된다.", "실제 양성을 음성으로 예측한 경우가 거짓양성이다."], "answer": [1, 2, 3], "explain": "실제 음성을 양성으로 잘못 판정하는 오류가 거짓양성이다."}, {"title": "6. 거짓음성 FN", "goal": "실제 양성을 음성으로 잘못 예측한 경우를 설명한다.", "detail": "거짓음성은 실제로 양성이지만 모델이 음성이라고 예측한 경우이다. 위험 상황이나 질병을 놓치는 오류와 관련된다.", "code": "class ConfusionCase:\n    def is_false_negative(self, actual, predicted):\n        return actual == \"양성\" and predicted == \"음성\"\n\nprint(ConfusionCase().is_false_negative(\"양성\", \"음성\"))", "options": ["코드의 출력은 True이다.", "거짓음성은 탐지 실패와 관련된다.", "실제 음성을 양성으로 예측한 경우가 거짓음성이다.", "거짓음성은 정확한 예측이다.", "실제 양성을 음성으로 예측하면 거짓음성이다."], "answer": [0, 1, 4], "explain": "실제 양성을 놓쳐 음성으로 판정하면 거짓음성이다."}, {"title": "7. 혼동행렬 집계", "goal": "실제값과 예측값을 이용해 TP, TN, FP, FN을 계산한다.", "detail": "각 자료를 실제값과 예측값에 따라 네 가지 경우로 분류하고 개수를 누적한다. 객체는 집계 결과를 속성으로 관리한다.", "code": "class BinaryConfusionMatrix:\n    def __init__(self):\n        self.tp = self.tn = self.fp = self.fn = 0\n\n    def update(self, actual, predicted):\n        if actual == \"양성\" and predicted == \"양성\":\n            self.tp += 1\n        elif actual == \"음성\" and predicted == \"음성\":\n            self.tn += 1\n        elif actual == \"음성\" and predicted == \"양성\":\n            self.fp += 1\n        else:\n            self.fn += 1\n\nmatrix = BinaryConfusionMatrix()\nmatrix.update(\"양성\", \"양성\")\nprint(matrix.tp)", "options": ["모든 예측은 반드시 fp로 누적된다.", "update()는 실제값을 사용하지 않는다.", "tp, tn, fp, fn은 네 가지 개수를 저장한다.", "양성을 양성으로 예측하면 tp가 증가한다.", "코드의 출력은 1이다."], "answer": [2, 3, 4], "explain": "실제 양성과 예측 양성의 조합이므로 tp가 1 증가한다."}, {"title": "8. 정확도", "goal": "전체 예측 중 올바르게 예측한 비율을 계산한다.", "detail": "정확도는 전체 자료 중 TP와 TN이 차지하는 비율이다. 클래스가 매우 불균형하면 정확도만으로 좋은 모델인지 판단하기 어렵다.", "code": "class MetricCalculator:\n    def accuracy(self, tp, tn, fp, fn):\n        total = tp + tn + fp + fn\n        return (tp + tn) / total\n\nprint(MetricCalculator().accuracy(40, 50, 5, 5))", "options": ["정확도는 올바르게 예측한 비율이다.", "코드의 정확도는 0.9이다.", "TP와 TN은 분자에 포함된다.", "정확도는 FP와 FN만 더해 계산한다.", "불균형 자료에서도 정확도만 보면 항상 충분하다."], "answer": [0, 1, 2], "explain": "90/100=0.9이다."}, {"title": "9. 정밀도", "goal": "양성으로 예측한 것 중 실제 양성의 비율을 계산한다.", "detail": "정밀도는 모델이 양성이라고 예측한 사례 중 실제로 양성인 비율이다. 거짓양성을 줄이는 것이 중요한 문제에서 중요하다.", "code": "class MetricCalculator:\n    def precision(self, tp, fp):\n        return tp / (tp + fp) if tp + fp else 0.0\n\nprint(MetricCalculator().precision(40, 10))", "options": ["FP가 증가하면 정밀도는 낮아질 수 있다.", "정밀도는 TN과 FN만으로 계산한다.", "정밀도는 실제 양성 전체 중 탐지한 비율이다.", "정밀도는 양성 예측의 신뢰도를 나타낸다.", "코드의 정밀도는 0.8이다."], "answer": [0, 3, 4], "explain": "40/(40+10)=0.8이다."}, {"title": "10. 재현율", "goal": "실제 양성 중 올바르게 탐지한 비율을 계산한다.", "detail": "재현율은 실제 양성 사례 중 모델이 양성으로 올바르게 탐지한 비율이다. 놓치는 오류가 중요한 문제에서 특히 중요하다.", "code": "class MetricCalculator:\n    def recall(self, tp, fn):\n        return tp / (tp + fn) if tp + fn else 0.0\n\nprint(MetricCalculator().recall(45, 5))", "options": ["재현율은 TN만으로 계산한다.", "재현율은 실제 양성 중 탐지한 비율이다.", "코드의 재현율은 0.9이다.", "FN이 증가하면 재현율은 낮아질 수 있다.", "재현율은 양성 예측 중 실제 양성의 비율이다."], "answer": [1, 2, 3], "explain": "45/(45+5)=0.9이다."}, {"title": "11. 특이도", "goal": "실제 음성 중 올바르게 음성으로 판정한 비율을 계산한다.", "detail": "특이도는 실제 음성 중 모델이 음성으로 올바르게 분류한 비율이다. 오경보 문제를 평가할 때 중요하다.", "code": "class MetricCalculator:\n    def specificity(self, tn, fp):\n        return tn / (tn + fp) if tn + fp else 0.0\n\nprint(MetricCalculator().specificity(90, 10))", "options": ["FP가 증가하면 특이도는 낮아질 수 있다.", "특이도는 TP와 FN만으로 계산한다.", "특이도는 실제 양성 탐지율과 같다.", "특이도는 실제 음성 중 올바르게 판정한 비율이다.", "코드의 특이도는 0.9이다."], "answer": [0, 3, 4], "explain": "90/(90+10)=0.9이다."}, {"title": "12. 거짓양성률", "goal": "실제 음성 중 양성으로 잘못 예측한 비율을 계산한다.", "detail": "거짓양성률은 실제 음성 중 FP가 차지하는 비율이며 1-특이도와 같다.", "code": "class MetricCalculator:\n    def false_positive_rate(self, fp, tn):\n        return fp / (fp + tn) if fp + tn else 0.0\n\nprint(MetricCalculator().false_positive_rate(10, 90))", "options": ["거짓양성률은 실제 음성 중 잘못 양성으로 예측한 비율이다.", "코드의 결과는 0.1이다.", "거짓양성률은 1-특이도와 같다.", "거짓양성률은 TP/(TP+FN)이다.", "거짓양성률이 높을수록 오경보가 적다."], "answer": [0, 1, 2], "explain": "10/(10+90)=0.1이다."}, {"title": "13. 거짓음성률", "goal": "실제 양성 중 음성으로 놓친 비율을 계산한다.", "detail": "거짓음성률은 실제 양성 중 FN이 차지하는 비율이며 1-재현율과 같다.", "code": "class MetricCalculator:\n    def false_negative_rate(self, fn, tp):\n        return fn / (fn + tp) if fn + tp else 0.0\n\nprint(MetricCalculator().false_negative_rate(5, 45))", "options": ["거짓음성률이 높을수록 탐지 성능이 좋다.", "거짓음성률은 실제 양성 중 놓친 비율이다.", "코드의 결과는 0.1이다.", "거짓음성률은 1-재현율과 같다.", "거짓음성률은 TN/(TN+FP)이다."], "answer": [1, 2, 3], "explain": "5/(5+45)=0.1이다."}, {"title": "14. F1 점수", "goal": "정밀도와 재현율의 조화평균을 계산한다.", "detail": "F1 점수는 정밀도와 재현율을 함께 고려한다. 두 값 중 하나가 매우 낮으면 F1 점수도 낮아진다.", "code": "class MetricCalculator:\n    def f1_score(self, precision, recall):\n        if precision + recall == 0:\n            return 0.0\n        return 2 * precision * recall / (precision + recall)\n\nprint(MetricCalculator().f1_score(0.8, 0.6))", "options": ["F1 점수는 정확도와 특이도의 산술평균이다.", "두 값이 0이어도 1을 반환한다.", "F1 점수는 정밀도와 재현율의 조화평균이다.", "코드의 결과는 약 0.686이다.", "한 값이 매우 낮으면 F1 점수도 낮아진다."], "answer": [2, 3, 4], "explain": "2×0.8×0.6/(0.8+0.6)=약 0.686이다."}, {"title": "15. 균형 정확도", "goal": "양성과 음성 클래스의 성능을 균형 있게 평가한다.", "detail": "균형 정확도는 재현율과 특이도의 평균이다. 클래스 불균형에서 정확도의 한계를 보완한다.", "code": "class MetricCalculator:\n    def balanced_accuracy(self, recall, specificity):\n        return (recall + specificity) / 2\n\nprint(MetricCalculator().balanced_accuracy(0.8, 0.9))", "options": ["코드의 결과는 0.85이다.", "불균형 자료 평가에 활용할 수 있다.", "균형 정확도는 TP 개수만 사용한다.", "두 클래스의 성능 차이를 고려하지 않는다.", "균형 정확도는 재현율과 특이도의 평균이다."], "answer": [0, 1, 4], "explain": "0.85이며 양성과 음성 성능을 함께 반영한다."}, {"title": "16. 임계값", "goal": "예측 확률을 분류 결과로 바꾸는 임계값의 역할을 설명한다.", "detail": "분류 모델은 양성 확률이 임계값 이상이면 양성으로 판정한다. 임계값 변화는 TP, TN, FP, FN과 여러 지표를 바꾼다.", "code": "class ThresholdClassifier:\n    def __init__(self, threshold=0.5):\n        self.threshold = threshold\n\n    def predict(self, probability):\n        return \"양성\" if probability >= self.threshold else \"음성\"\n\nmodel = ThresholdClassifier(0.7)\nprint(model.predict(0.65))", "options": ["확률과 관계없이 항상 양성을 반환한다.", "임계값은 확률을 클래스로 바꾸는 기준이다.", "0.65는 0.7보다 작아 음성이 출력된다.", "임계값을 바꾸면 혼동행렬도 달라질 수 있다.", "임계값이 높을수록 항상 양성 예측이 많아진다."], "answer": [1, 2, 3], "explain": "0.65가 임계값보다 작아 음성이다."}, {"title": "17. 정밀도와 재현율의 상충", "goal": "임계값 변화가 정밀도와 재현율에 미치는 영향을 해석한다.", "detail": "임계값을 높이면 양성 판정이 엄격해져 정밀도가 높아질 수 있지만 재현율은 낮아질 수 있다. 목적에 맞는 균형이 필요하다.", "code": "class ThresholdPolicy:\n    def describe(self, threshold):\n        if threshold >= 0.8:\n            return \"엄격한 양성 판정\"\n        if threshold <= 0.3:\n            return \"넓은 양성 탐지\"\n        return \"균형 탐색\"\n\nprint(ThresholdPolicy().describe(0.85))", "options": ["임계값 선택은 정밀도와 재현율의 균형과 관련된다.", "임계값을 높이면 재현율이 반드시 1이 된다.", "두 지표는 항상 동시에 같은 폭으로 증가한다.", "0.85에서는 엄격한 양성 판정이 출력된다.", "높은 임계값은 양성 판정을 어렵게 할 수 있다."], "answer": [0, 3, 4], "explain": "높은 임계값은 양성 판정을 엄격하게 한다."}, {"title": "18. 다중 클래스 혼동행렬", "goal": "세 개 이상의 클래스에서 혼동행렬을 구성한다.", "detail": "다중 분류 혼동행렬은 행에 실제 클래스, 열에 예측 클래스를 두며 대각선은 정답, 대각선 밖은 오분류이다.", "code": "class MulticlassConfusionMatrix:\n    def build(self, actual, predicted):\n        labels = sorted(set(actual) | set(predicted))\n        matrix = {a: {p: 0 for p in labels} for a in labels}\n        for a, p in zip(actual, predicted):\n            matrix[a][p] += 1\n        return matrix\n\nmatrix = MulticlassConfusionMatrix().build(\n    [\"A\", \"B\", \"C\"], [\"A\", \"C\", \"C\"]\n)\nprint(matrix[\"B\"][\"C\"])", "options": ["B를 C로 예측한 개수는 1이다.", "대각선은 올바른 예측이다.", "다중 클래스에서는 혼동행렬을 만들 수 없다.", "대각선 밖의 값은 모두 정확한 예측이다.", "행은 실제 클래스, 열은 예측 클래스이다."], "answer": [0, 1, 4], "explain": "실제 B를 C로 예측한 사례가 1개이다."}, {"title": "19. One-vs-Rest 평가", "goal": "다중 클래스에서 특정 클래스를 양성으로 두고 평가한다.", "detail": "관심 클래스 하나를 양성, 나머지를 음성으로 묶어 클래스별 TP, TN, FP, FN과 지표를 계산한다.", "code": "class OneVsRestConverter:\n    def convert(self, labels, target):\n        return [\"양성\" if label == target else \"음성\"\n                for label in labels]\n\nprint(OneVsRestConverter().convert([\"A\", \"B\", \"A\"], \"A\"))", "options": ["모든 클래스를 동시에 양성으로 바꾼다.", "다중 분류에서는 클래스별 평가가 불가능하다.", "A를 양성으로 두고 나머지를 음성으로 바꾼다.", "출력은 ['양성', '음성', '양성']이다.", "클래스별 정밀도와 재현율 계산에 활용한다."], "answer": [2, 3, 4], "explain": "관심 클래스 A만 양성으로 변환한다."}, {"title": "20. 매크로 평균", "goal": "클래스별 지표를 동일한 비중으로 평균한다.", "detail": "매크로 평균은 클래스별 점수를 단순 평균하여 클래스 크기와 관계없이 모두 같은 비중으로 평가한다.", "code": "class AveragingMetric:\n    def macro_average(self, scores):\n        return sum(scores) / len(scores)\n\nprint(AveragingMetric().macro_average([0.9, 0.6, 0.3]))", "options": ["매크로 평균은 클래스별 점수를 단순 평균한다.", "코드의 결과는 0.6이다.", "각 클래스를 같은 비중으로 평가한다.", "자료가 많은 클래스에만 높은 가중치를 준다.", "클래스별 성능을 계산할 수 없다."], "answer": [0, 1, 2], "explain": "세 점수의 평균은 0.6이다."}, {"title": "21. 가중 평균", "goal": "클래스별 자료 수를 반영하여 평균 지표를 계산한다.", "detail": "가중 평균은 각 클래스 점수에 해당 클래스 자료 수를 곱해 평균하므로 자료가 많은 클래스의 영향이 더 크다.", "code": "class AveragingMetric:\n    def weighted_average(self, scores, supports):\n        total = sum(supports)\n        return sum(s * n for s, n in zip(scores, supports)) / total\n\nprint(AveragingMetric().weighted_average([0.9, 0.5], [80, 20]))", "options": ["자료가 많은 클래스의 점수가 더 크게 반영된다.", "코드의 결과는 0.82이다.", "모든 클래스에 같은 비중을 준다.", "가중 평균은 자료 수를 사용하지 않는다.", "supports는 클래스별 자료 수이다."], "answer": [0, 1, 4], "explain": "가중 평균은 0.82이다."}, {"title": "22. 마이크로 평균", "goal": "모든 클래스의 TP, FP, FN을 합산하여 전체 지표를 계산한다.", "detail": "마이크로 평균은 클래스별 TP, FP, FN을 먼저 합한 뒤 지표를 계산하여 전체 사례 수준의 성능을 반영한다.", "code": "class MicroMetric:\n    def precision(self, tp_list, fp_list):\n        tp = sum(tp_list)\n        fp = sum(fp_list)\n        return tp / (tp + fp)\n\nprint(MicroMetric().precision([30, 20], [5, 5]))", "options": ["마이크로 평균은 TP를 사용하지 않는다.", "클래스별 TP와 FP를 먼저 합산한다.", "코드의 결과는 약 0.833이다.", "전체 사례 수준의 성능을 반영한다.", "각 클래스 점수를 단순 평균한다."], "answer": [1, 2, 3], "explain": "50/(50+10)=약 0.833이다."}, {"title": "23. 클래스 불균형", "goal": "불균형 자료에서 정확도의 한계를 설명한다.", "detail": "한 클래스가 대부분이면 다수 클래스만 예측해도 높은 정확도가 나올 수 있다. 정밀도, 재현율, F1, 균형 정확도 등을 함께 봐야 한다.", "code": "class ImbalanceAnalyzer:\n    def majority_baseline(self, labels):\n        counts = {}\n        for label in labels:\n            counts[label] = counts.get(label, 0) + 1\n        return max(counts.values()) / len(labels)\n\nlabels = [\"음성\"] * 95 + [\"양성\"] * 5\nprint(ImbalanceAnalyzer().majority_baseline(labels))", "options": ["재현율과 F1 점수 등을 함께 확인해야 한다.", "높은 정확도는 모든 클래스에서 좋은 성능을 보장한다.", "소수 클래스 오류는 평가할 필요가 없다.", "다수 클래스만 예측해도 정확도 0.95를 얻을 수 있다.", "정확도만으로 성능을 판단하기 어렵다."], "answer": [0, 3, 4], "explain": "음성만 예측해도 정확도는 0.95이지만 양성을 탐지하지 못한다."}, {"title": "24. 비용 민감 평가", "goal": "거짓양성과 거짓음성의 비용이 다를 수 있음을 설명한다.", "detail": "문제 상황에 따라 FP와 FN의 영향이 다르므로 각 오류에 비용을 부여해 모델을 평가할 수 있다.", "code": "class ErrorCost:\n    def total_cost(self, fp, fn, fp_cost, fn_cost):\n        return fp * fp_cost + fn * fn_cost\n\nprint(ErrorCost().total_cost(10, 2, 1, 20))", "options": ["모든 오류의 영향은 언제나 같다.", "비용 민감 평가는 혼동행렬과 관계가 없다.", "거짓양성과 거짓음성에 서로 다른 비용을 줄 수 있다.", "코드의 총비용은 50이다.", "FN 비용이 크면 놓치는 오류를 더 중요하게 본다."], "answer": [2, 3, 4], "explain": "10×1+2×20=50이다."}];let lastResult=null;
+function escapeHtml(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function renderLessons(){const c=document.getElementById("lessonContainer");lessons.forEach((item,index)=>{let opts="";item.options.forEach((o,oi)=>opts+=`<label class="option"><input type="checkbox" name="q${index}" value="${oi}">${oi+1}. ${o}</label>`);const a=document.createElement("article");a.className="lesson";a.innerHTML=`<div class="lesson-head"><h3>${item.title}</h3><p><strong>학습 목표:</strong> ${item.goal}</p></div><div class="lesson-body"><div class="detail"><strong>개념 상세 설명</strong><br>${item.detail}</div><div class="code-label">객체지향 관련 코드</div><div class="code-wrap"><button class="copy" onclick="copyCode(this)">복사</button><pre><code>${escapeHtml(item.code)}</code></pre></div><div class="question"><h4>문제 ${index+1}. 위 개념과 코드에 관한 설명</h4><div class="instruction">옳은 것 3개를 선택하세요.</div>${opts}</div></div>`;c.appendChild(a)})}
+document.addEventListener("change",e=>{if(e.target.type!=="checkbox")return;const checked=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(checked.length>3){e.target.checked=false;alert("각 문항에서는 3개까지만 선택할 수 있습니다.")}});
+function same(a,b){return a.length===b.length&&a.every((v,i)=>v===b[i])}
+function gradeQuiz(){const id=document.getElementById("studentId").value.trim(),name=document.getElementById("studentName").value.trim();if(!id||!name){alert("학번과 이름을 입력하세요.");return}let correctCount=0;const details=[];lessons.forEach((item,index)=>{const selected=[...document.querySelectorAll(`input[name="q${index}"]:checked`)].map(x=>Number(x.value)).sort((a,b)=>a-b);const correct=same(selected,item.answer);if(correct)correctCount++;details.push({number:index+1,title:item.title,selected:selected.map(v=>v+1),answer:item.answer.map(v=>v+1),correct,explain:item.explain})});const score=Math.round(correctCount/lessons.length*100);lastResult={id,name,score,correctCount,total:lessons.length,time:new Date().toLocaleString("ko-KR"),details};let h=`<div class="score">${name} 학생: ${score}점</div><div>정답 문항: ${correctCount} / ${lessons.length} · 채점 시각: ${lastResult.time}</div>`;details.forEach(d=>h+=`<div class="feedback-item ${d.correct?"correct":"incorrect"}"><strong>${d.number}번 ${d.correct?"정답":"오답"}</strong><br>선택: ${d.selected.length?d.selected.join(", "):"미응답"} / 정답: ${d.answer.join(", ")}<br>해설: ${d.explain}</div>`);const r=document.getElementById("result");r.innerHTML=h;r.style.display="block";r.scrollIntoView({behavior:"smooth"})}
+function safe(v){return v.replace(/[\\/:*?"<>|]/g,"_").replace(/\s+/g,"_")}
+function downloadResult(){if(!lastResult){gradeQuiz();if(!lastResult)return}let t="혼동행렬 개념기반 목표지향 학습 결과\n========================================\n";t+=`학번: ${lastResult.id}\n이름: ${lastResult.name}\n점수: ${lastResult.score}점\n정답 문항: ${lastResult.correctCount} / ${lastResult.total}\n채점 시각: ${lastResult.time}\n========================================\n\n`;lastResult.details.forEach(d=>{t+=`${d.number}번 · ${d.title} · ${d.correct?"정답":"오답"}\n선택: ${d.selected.length?d.selected.join(", "):"미응답"}\n정답: ${d.answer.join(", ")}\n해설: ${d.explain}\n\n`});const blob=new Blob(["\ufeff"+t],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${safe(lastResult.id)}_${safe(lastResult.name)}_${lastResult.score}_혼동행렬.txt`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(a.href)}
+function resetQuiz(){if(!confirm("모든 응답과 채점 결과를 초기화할까요?"))return;document.querySelectorAll('input[type="checkbox"]').forEach(x=>x.checked=false);document.getElementById("studentId").value="";document.getElementById("studentName").value="";document.getElementById("result").style.display="none";lastResult=null;window.scrollTo({top:0,behavior:"smooth"})}
+function copyCode(b){navigator.clipboard.writeText(b.parentElement.querySelector("code").innerText).then(()=>{const o=b.textContent;b.textContent="완료";setTimeout(()=>b.textContent=o,900)})}
+renderLessons();
+</script></body></html>

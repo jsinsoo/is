@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>동적계획법 계단 오르기 학습·수행평가 통합본</title>
+<style>
+:root {
+  --brand:#1f5e9c; --brand2:#0d9488; --ink:#18212f;
+  --muted:#667085; --line:#d8e1eb; --bg:#f5f8fc; --card:#fff;
+  --good:#edf8f1; --warn:#fff6e8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  line-height:1.7;
+}
+header {
+  background:linear-gradient(135deg,#173d6c,#1f6ea9 58%,#0d9488);
+  color:white; padding:42px 20px 34px;
+}
+header .inner, main { max-width:1280px; margin:auto; }
+h1 { margin:0 0 8px; font-size:clamp(28px,4vw,46px); line-height:1.3; }
+header p { margin:0; opacity:.93; }
+.toolbar {
+  position:sticky; top:0; z-index:20; background:rgba(255,255,255,.97);
+  border-bottom:1px solid var(--line); padding:10px 16px;
+  display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
+}
+button {
+  border:0; border-radius:8px; padding:10px 15px;
+  background:var(--brand); color:white; font:inherit; cursor:pointer;
+}
+button.secondary { background:#475467; }
+button.green { background:var(--brand2); }
+main { padding:24px 16px 60px; }
+.card {
+  background:var(--card); border:1px solid var(--line);
+  border-radius:14px; padding:22px; margin-bottom:20px;
+  box-shadow:0 7px 22px rgba(16,24,40,.05);
+}
+.notice { background:#eef7ff; border-left:5px solid var(--brand); }
+h2 { color:#174d7f; margin-top:0; }
+h3 { color:#24618f; }
+.grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.concept { border:1px solid var(--line); border-radius:10px; padding:16px; }
+.good { background:var(--good); }
+.warn { background:var(--warn); }
+.flow {
+  display:flex; align-items:center; justify-content:center;
+  flex-wrap:wrap; gap:10px; margin:16px 0;
+}
+.flow span {
+  padding:10px 13px; background:#eaf3fb;
+  border:1px solid #b8cfe3; border-radius:8px; font-weight:700;
+}
+.flow b { color:var(--brand2); }
+.table-wrap { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; min-width:900px; }
+th,td { border:1px solid var(--line); padding:10px; vertical-align:top; font-size:14px; }
+th { background:#244f7d; color:white; }
+.code-box,.codebox {
+  background:#111827; color:#edf2f7; padding:18px;
+  border-radius:11px; overflow:auto; position:relative; margin:12px 0;
+}
+pre {
+  margin:0; white-space:pre; font-family:Consolas,"Courier New",monospace;
+  font-size:13px; line-height:1.55;
+}
+.code-box button {
+  position:absolute; right:10px; top:10px; font-size:12px;
+  padding:6px 9px; background:#334155;
+}
+.output {
+  background:#f3f6f9; border:1px solid var(--line);
+  border-radius:10px; padding:15px; overflow:auto;
+}
+.question {
+  border-left:4px solid var(--brand2); background:#f1fbf9;
+  padding:12px 15px; margin:10px 0; border-radius:8px;
+}
+details { border:1px solid var(--line); border-radius:9px; margin-top:12px; }
+summary {
+  cursor:pointer; padding:12px 14px; font-weight:700; background:#f4f7fa;
+}
+details > div { padding:14px; }
+.rubric td:first-child { font-weight:700; background:#f5f8fb; }
+.student {
+  display:grid; grid-template-columns:100px 1fr 100px 1fr; gap:8px;
+}
+.student div,.student input { border:1px solid var(--line); padding:10px; }
+.student input { width:100%; font:inherit; }
+.label { background:#eef4fa; font-weight:bold; text-align:center; }
+.qtitle { font-size:18px; font-weight:bold; }
+.choice {
+  display:block; border:1px solid var(--line); border-radius:9px;
+  padding:10px; margin:8px 0; cursor:pointer;
+}
+.choice:hover { background:#f5f8fb; }
+.choice input { margin-right:8px; transform:scale(1.15); }
+.tag {
+  display:inline-block; background:#e8f2fc; color:#174d7f;
+  border-radius:999px; padding:3px 8px; font-size:13px; font-weight:bold;
+}
+.center { text-align:center; }
+.result { display:none; }
+.score { font-size:28px; font-weight:bold; color:var(--brand); }
+.correct { background:#eaf8ef; }
+.wrong { background:#fff0f0; }
+.explain { margin-top:12px; border-top:1px dashed var(--line); padding-top:12px; }
+.section-title {
+  margin:36px 0 18px; padding:15px 18px; border-radius:12px;
+  background:linear-gradient(135deg,#e9f3fb,#eaf9f6);
+  border:1px solid #c8dceb; color:#174d7f;
+}
+@media(max-width:850px) {
+  .grid { grid-template-columns:1fr; }
+  .student { grid-template-columns:90px 1fr; }
+}
+@media print {
+  header,.toolbar,.code-box button,.center { display:none!important; }
+  body { background:white; }
+  main { max-width:none; padding:0; }
+  .card { box-shadow:none; break-inside:avoid; }
+  details > div { display:block!important; }
+  .result { display:block!important; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <h1>동적계획법 계단 오르기 학습·수행평가 통합본</h1>
+    <p>상태·점화식 · 단순 재귀 · 메모이제이션 · 테이블 방식 · 수행08 자동 채점</p>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button onclick="document.getElementById('lesson').scrollIntoView({behavior:'smooth'})">학습자료</button>
+  <button class="green" onclick="document.getElementById('assessment').scrollIntoView({behavior:'smooth'})">수행평가</button>
+  <button onclick="window.print()">인쇄 / PDF 저장</button>
+  <button class="secondary" onclick="toggleAnswers()">예시 정답 펼치기·접기</button>
+</div>
+
+<main>
+<section id="lesson">
+  <div class="section-title"><h2 style="margin:0">Ⅰ. 동적계획법 계단 오르기 학습자료</h2></div>
+  
+<section class="card notice">
+<b>성취 목표</b><br/>
+  중복되는 부분 문제를 찾아 상태와 점화식을 정의하고, 단순 재귀·메모이제이션·
+  테이블 방식으로 각각 구현한 뒤 실행 시간과 호출 횟수를 근거로 효율성을 비교한다.
+</section>
+<section class="card">
+<h2>1. 문제 상황</h2>
+<p>
+    한 번에 1칸 또는 2칸씩 오를 수 있을 때, n칸 계단을 오르는 방법의 수를 구한다.
+  </p>
+<div class="flow">
+<span>n-1칸에서 1칸 이동</span>
+<b>+</b>
+<span>n-2칸에서 2칸 이동</span>
+<b>=</b>
+<span>n칸 도달 방법</span>
+</div>
+</section>
+<section class="card">
+<h2>2. 상태와 점화식</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>구성 요소</th><th>정의</th></tr></thead>
+<tbody>
+<tr><td>상태</td><td><code>dp[n]</code>: n칸 계단을 오르는 방법의 수</td></tr>
+<tr><td>초기값</td><td><code>dp[1] = 1</code>, <code>dp[2] = 2</code></td></tr>
+<tr><td>점화식</td><td><code>dp[n] = dp[n-1] + dp[n-2]</code></td></tr>
+<tr><td>중복 부분 문제</td><td>단순 재귀에서 같은 n값을 여러 번 다시 계산함</td></tr>
+<tr><td>해결 전략</td><td>이미 계산한 값을 저장하여 재사용함</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>3. 세 가지 해결 방식</h2>
+<div class="grid">
+<div class="concept warn">
+<h3>단순 재귀</h3>
+<p>점화식을 그대로 표현하지만 같은 부분 문제를 반복 계산한다.</p>
+<p>시간 복잡도는 지수적으로 증가한다.</p>
+</div>
+<div class="concept good">
+<h3>메모이제이션</h3>
+<p>재귀 호출 결과를 캐시에 저장하고 같은 입력에서는 저장값을 반환한다.</p>
+<p>위에서 아래로 문제를 해결하는 방식이다.</p>
+</div>
+<div class="concept good">
+<h3>테이블 방식</h3>
+<p>작은 상태부터 차례로 표를 채워 큰 상태의 값을 계산한다.</p>
+<p>아래에서 위로 문제를 해결하는 방식이다.</p>
+</div>
+</div>
+</section>
+<section class="card">
+<h2>4. 수행 과제</h2>
+<ol>
+<li>계단 오르기 문제의 상태, 초기값, 점화식을 정의한다.</li>
+<li>단순 재귀 방식으로 프로그램을 작성한다.</li>
+<li>메모이제이션 방식으로 프로그램을 작성한다.</li>
+<li>테이블 방식의 동적계획법 프로그램을 작성한다.</li>
+<li>n=5, 10, 20, 30에서 결과·호출 횟수·실행 시간을 비교한다.</li>
+<li>시간 복잡도와 공간 복잡도를 분석한다.</li>
+</ol>
+</section>
+<section class="card">
+<h2>5. 제출 산출물</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>산출물</th><th>포함 내용</th></tr></thead>
+<tbody>
+<tr><td>상태 정의서</td><td>상태 의미, 초기값, 점화식, 중복 부분 문제</td></tr>
+<tr><td>전체 프로그램</td><td>단순 재귀, 메모이제이션, 테이블, 공간 최적화 방식</td></tr>
+<tr><td>비교 실험표</td><td>입력별 결과, 재귀 호출 횟수, 실행 시간, 결과 일치 여부</td></tr>
+<tr><td>효율성 분석</td><td>시간·공간 복잡도와 실제 실행 결과 해석</td></tr>
+<tr><td>오류 검사 기록</td><td>0, 음수, 실수 입력 처리 결과</td></tr>
+<tr><td>성찰 기록</td><td>중복 계산 제거의 효과와 각 방식의 활용 조건</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>6. 정답 포함 전체 코드</h2>
+<div class="code-box">
+<button onclick="copyCode()">코드 복사</button>
+<pre id="code">import time
+from functools import lru_cache
+from statistics import mean
+
+recursive_calls = 0
+
+
+def stairs_recursive(n: int) -&gt; int:
+    """단순 재귀 방식으로 n칸 계단을 오르는 방법의 수를 반환한다."""
+    global recursive_calls
+    recursive_calls += 1
+
+    if not isinstance(n, int):
+        raise TypeError("n은 정수여야 합니다.")
+    if n &lt; 1:
+        raise ValueError("n은 1 이상이어야 합니다.")
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+
+    return stairs_recursive(n - 1) + stairs_recursive(n - 2)
+
+
+def stairs_dp(n: int) -&gt; int:
+    """테이블 방식의 동적계획법으로 결과를 계산한다."""
+    if not isinstance(n, int):
+        raise TypeError("n은 정수여야 합니다.")
+    if n &lt; 1:
+        raise ValueError("n은 1 이상이어야 합니다.")
+    if n == 1:
+        return 1
+
+    dp = [0] * (n + 1)
+    dp[1], dp[2] = 1, 2
+
+    for step in range(3, n + 1):
+        dp[step] = dp[step - 1] + dp[step - 2]
+
+    return dp[n]
+
+
+@lru_cache(maxsize=None)
+def stairs_memo(n: int) -&gt; int:
+    """메모이제이션 방식으로 결과를 계산한다."""
+    if not isinstance(n, int):
+        raise TypeError("n은 정수여야 합니다.")
+    if n &lt; 1:
+        raise ValueError("n은 1 이상이어야 합니다.")
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+
+    return stairs_memo(n - 1) + stairs_memo(n - 2)
+
+
+def stairs_optimized(n: int) -&gt; int:
+    """직전 두 값만 저장하여 공간을 O(1)로 줄인 방식."""
+    if not isinstance(n, int):
+        raise TypeError("n은 정수여야 합니다.")
+    if n &lt; 1:
+        raise ValueError("n은 1 이상이어야 합니다.")
+    if n == 1:
+        return 1
+
+    previous, current = 1, 2
+
+    for _ in range(3, n + 1):
+        previous, current = current, previous + current
+
+    return current
+
+
+def average_time(function, n: int, repeat: int = 5) -&gt; float:
+    """함수를 여러 번 실행하고 평균 실행 시간을 반환한다."""
+    measured = []
+
+    for _ in range(repeat):
+        start = time.perf_counter()
+        function(n)
+        measured.append(time.perf_counter() - start)
+
+    return mean(measured)
+
+
+test_values = [5, 10, 20, 30]
+
+print("=" * 112)
+print("단순 재귀·메모이제이션·동적계획법 비교")
+print("=" * 112)
+print(
+    f"{'n':&gt;3} | {'결과':&gt;10} | {'재귀 호출':&gt;12} | "
+    f"{'재귀 시간(초)':&gt;14} | {'메모 시간(초)':&gt;14} | "
+    f"{'DP 시간(초)':&gt;14} | {'결과 일치':&gt;9}"
+)
+print("-" * 112)
+
+for n in test_values:
+    recursive_calls = 0
+    stairs_memo.cache_clear()
+
+    recursive_time = average_time(stairs_recursive, n, repeat=1)
+    recursive_result = stairs_recursive(n)
+
+    memo_time = average_time(stairs_memo, n, repeat=5)
+    memo_result = stairs_memo(n)
+
+    dp_time = average_time(stairs_dp, n, repeat=5)
+    dp_result = stairs_dp(n)
+
+    optimized_result = stairs_optimized(n)
+
+    all_same = (
+        recursive_result
+        == memo_result
+        == dp_result
+        == optimized_result
+    )
+
+    print(
+        f"{n:&gt;3} | {dp_result:&gt;10} | {recursive_calls:&gt;12,} | "
+        f"{recursive_time:&gt;14.8f} | {memo_time:&gt;14.8f} | "
+        f"{dp_time:&gt;14.8f} | {str(all_same):&gt;9}"
+    )
+
+print("-" * 112)
+print("메모이제이션 캐시 정보:", stairs_memo.cache_info())
+
+
+print("\n[오류 입력 검사]")
+
+for value in [0, -1, 3.5]:
+    for function in (
+        stairs_recursive,
+        stairs_memo,
+        stairs_dp,
+        stairs_optimized,
+    ):
+        try:
+            function(value)
+        except (TypeError, ValueError) as error:
+            print(f"{function.__name__}({value!r}) -&gt; {error}")</pre>
+</div>
+</section>
+<section class="card">
+<h2>7. 예상 핵심 결과</h2>
+<div class="output"><pre>n=5  -&gt; 결과 8
+n=10 -&gt; 결과 89
+n=20 -&gt; 결과 10946
+n=30 -&gt; 결과 1346269
+
+세 방식의 결과는 모두 같다.
+단순 재귀는 n이 커질수록 호출 횟수와 실행 시간이 급격히 증가한다.
+메모이제이션과 테이블 방식은 각 상태를 한 번만 계산하므로 훨씬 빠르다.
+실행 시간은 컴퓨터 환경에 따라 달라질 수 있다.</pre></div>
+</section>
+<section class="card">
+<h2>8. 비교 분석</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>비교 항목</th>
+<th>단순 재귀</th>
+<th>메모이제이션</th>
+<th>테이블 방식</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>결과</td>
+<td>동일</td>
+<td>동일</td>
+<td>동일</td>
+</tr>
+<tr>
+<td>중복 계산</td>
+<td>매우 많음</td>
+<td>거의 없음</td>
+<td>없음</td>
+</tr>
+<tr>
+<td>시간 복잡도</td>
+<td>약 O(2ⁿ)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>공간 복잡도</td>
+<td>O(n) 호출 스택</td>
+<td>O(n) 캐시와 호출 스택</td>
+<td>O(n) 테이블</td>
+</tr>
+<tr>
+<td>특징</td>
+<td>개념은 단순하나 큰 입력에 비효율적</td>
+<td>재귀 구조를 유지하면서 중복 계산 제거</td>
+<td>반복문으로 안정적으로 계산</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>9. 수행평가 문항</h2>
+<div class="question">1. 이 문제의 상태, 초기값, 점화식을 각각 설명하시오.</div>
+<div class="question">2. 단순 재귀에서 같은 부분 문제가 반복 계산되는 이유를 설명하시오.</div>
+<div class="question">3. 메모이제이션이 중복 계산을 줄이는 원리를 설명하시오.</div>
+<div class="question">4. 메모이제이션과 테이블 방식의 공통점과 차이점을 설명하시오.</div>
+<div class="question">5. 각 방식의 시간 복잡도와 공간 복잡도를 비교하고 큰 입력에 적합한 방식을 제안하시오.</div>
+</section>
+<section class="card">
+<h2>10. 예시 정답</h2>
+<details class="answer">
+<summary>문항 1 정답</summary>
+<div>
+      dp[n]은 n칸 계단을 오르는 방법의 수이다. 초기값은 dp[1]=1, dp[2]=2이고,
+      마지막 이동이 1칸 또는 2칸이므로 dp[n]=dp[n-1]+dp[n-2]이다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 2 정답</summary>
+<div>
+      하나의 재귀 호출이 n-1과 n-2를 다시 호출하고, 각 호출도 같은 구조로 더 작은 값을 호출한다.
+      따라서 같은 n값이 여러 재귀 경로에서 반복해서 계산된다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 3 정답</summary>
+<div>
+      메모이제이션은 한 번 계산한 입력과 결과를 캐시에 저장한다.
+      같은 입력이 다시 요청되면 재귀 계산을 반복하지 않고 저장된 결과를 바로 반환한다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 4 정답</summary>
+<div>
+      두 방식 모두 각 부분 문제를 한 번만 계산하고 결과를 저장한다는 공통점이 있다.
+      메모이제이션은 재귀 호출을 이용하여 필요한 상태부터 계산하고,
+      테이블 방식은 작은 상태부터 반복문으로 차례대로 계산한다.
+    </div>
+</details>
+<details class="answer">
+<summary>문항 5 정답</summary>
+<div>
+      단순 재귀의 시간 복잡도는 약 O(2ⁿ), 메모이제이션과 테이블 방식은 O(n)이다.
+      세 방식 모두 구현에 따라 O(n)의 공간을 사용할 수 있다.
+      큰 입력에서는 메모이제이션이나 테이블 방식이 적합하며,
+      재귀 깊이 제한을 피하려면 테이블 방식 또는 공간 최적화 반복 방식이 더 안정적이다.
+    </div>
+</details>
+</section>
+<section class="card">
+<h2>11. 분석적 루브릭</h2>
+<div class="table-wrap">
+<table class="rubric">
+<thead>
+<tr>
+<th>평가 요소</th>
+<th>A 수준</th>
+<th>B 수준</th>
+<th>C 수준</th>
+<th>D 수준</th>
+<th>E 수준</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>상태·점화식 분석<br/>20점</td>
+<td>상태·초기값·점화식과 중복 부분 문제를 정확하고 논리적으로 설명함.</td>
+<td>상태와 점화식을 정확하게 설명함.</td>
+<td>기본 상태와 점화식을 설명함.</td>
+<td>일부 요소만 설명함.</td>
+<td>상태와 점화식을 구체화하지 못함.</td>
+</tr>
+<tr>
+<td>알고리즘 설계<br/>30점</td>
+<td>재귀·메모이제이션·테이블·공간 최적화 방식을 정확하고 효율적으로 설계함.</td>
+<td>세 가지 핵심 방식을 정확하게 설계함.</td>
+<td>기본 동적계획 알고리즘을 설계함.</td>
+<td>일부 방식이 누락되거나 부정확함.</td>
+<td>알고리즘 설계가 매우 제한적임.</td>
+</tr>
+<tr>
+<td>구현·검증<br/>25점</td>
+<td>오류 처리, 캐시 초기화, 반복 측정과 결과 검증을 포함한 프로그램을 완성함.</td>
+<td>세 방식을 정확하게 구현하고 여러 입력으로 검증함.</td>
+<td>기본 입력에서 동작하는 프로그램을 구현함.</td>
+<td>부분적으로 동작하거나 수정 지원이 필요함.</td>
+<td>프로그램을 완성하지 못함.</td>
+</tr>
+<tr>
+<td>비교 실험<br/>15점</td>
+<td>호출 횟수·실행 시간·결과 일치 여부를 공정하게 측정하고 체계적으로 기록함.</td>
+<td>여러 입력에서 주요 성능 자료를 측정함.</td>
+<td>기본 실행 시간과 결과를 비교함.</td>
+<td>측정 조건이나 자료가 일부 부족함.</td>
+<td>비교 실험 자료가 거의 없음.</td>
+</tr>
+<tr>
+<td>효율성 분석<br/>10점</td>
+<td>시간·공간 복잡도와 실제 측정 결과를 연결하여 한계와 적합한 활용 상황을 설명함.</td>
+<td>복잡도와 측정 결과를 적절히 분석함.</td>
+<td>주요 효율성 차이를 설명함.</td>
+<td>분석이 부분적임.</td>
+<td>효율성을 설명하지 못함.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card">
+<h2>12. 종합 정리</h2>
+<p><b>단순 재귀:</b> 점화식을 직접 표현하지만 중복 계산이 많아 큰 입력에 비효율적이다.</p>
+<p><b>메모이제이션:</b> 재귀 결과를 저장하여 각 상태를 한 번만 계산한다.</p>
+<p><b>테이블 방식:</b> 작은 상태부터 반복적으로 계산하여 재귀 깊이 제한 없이 안정적으로 처리한다.</p>
+<p><b>공간 최적화:</b> 직전 두 상태만 필요한 문제에서는 전체 테이블 대신 두 변수만 사용하여 공간을 O(1)로 줄일 수 있다.</p>
+</section>
+
+</section>
+
+<section id="assessment">
+  <div class="section-title"><h2 style="margin:0">Ⅱ. 수행08 자동 채점 평가</h2></div>
+  
+<section class="card notice">
+<b>응시 안내</b><br/>
+각 문항에서 관련 코드를 먼저 확인한 후 옳은 설명 3개를 모두 선택하세요.
+제출 후 문항별 정오답과 보기별 상세 풀이를 확인하고 TXT 결과를 저장할 수 있습니다.
+</section>
+<section class="card">
+<div class="student">
+<div class="label">학번</div><input id="sid" placeholder="예: 1101"/>
+<div class="label">이름</div><input id="sname" placeholder="예: 홍길동"/>
+</div>
+<p>응시 시작 시각: <span id="start"></span></p>
+</section>
+<div id="quiz"></div>
+<section class="card center">
+<button id="submitBtn" onclick="grade()">제출 및 채점</button>
+<button class="secondary" onclick="window.print()">인쇄 / PDF</button>
+</section>
+<section class="card result" id="result">
+<h2>채점 결과</h2>
+<div class="score" id="scoreText"></div>
+<p id="summaryText"></p>
+<button onclick="saveTxt()">결과 TXT 저장</button>
+</section>
+
+</section>
+</main>
+
+<script>
+function copyCode() {
+  const code = document.getElementById("code").innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    alert("코드를 복사했습니다.");
+  });
+}
+
+function toggleAnswers() {
+  const items = [...document.querySelectorAll("details.answer")];
+  const shouldOpen = items.some(item => !item.open);
+  items.forEach(item => item.open = shouldOpen);
+}
+</script>
+<script>
+const Q=[{"q": "다음 계단 오르기 문제의 상태와 점화식에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "# 한 번에 1칸 또는 2칸씩 이동\n# dp[n]: n칸 계단을 오르는 방법의 수\n\ndp[1] = 1\ndp[2] = 2\ndp[n] = dp[n - 1] + dp[n - 2]", "choices": ["dp[n]은 n칸 계단을 오르는 방법의 수를 의미한다.", "dp[n]은 항상 n과 같은 값을 가진다.", "마지막 이동이 1칸인 경우와 2칸인 경우를 더해 점화식을 만든다.", "한 번에 3칸씩만 이동하는 문제의 점화식이다.", "초기값은 dp[1]=1, dp[2]=2이다."], "answer": [0, 2, 4], "exp": ["옳음. 문제를 해결하기 위한 상태의 의미이다.", "틀림. dp[n]은 n 자체가 아니라 가능한 이동 방법의 수이다.", "옳음. n-1칸에서 1칸 이동하거나 n-2칸에서 2칸 이동한다.", "틀림. 한 번에 1칸 또는 2칸 이동하는 문제이다.", "옳음. 1칸은 한 가지, 2칸은 두 가지 방법이 있다."]}, {"q": "다음 단순 재귀 함수에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def stairs_recursive(n: int) -> int:\n    global recursive_calls\n    recursive_calls += 1\n\n    if n == 1:\n        return 1\n    if n == 2:\n        return 2\n\n    return stairs_recursive(n - 1) + stairs_recursive(n - 2)", "choices": ["같은 부분 문제를 자동으로 캐시에 저장한다.", "함수가 실행될 때마다 recursive_calls가 증가한다.", "n이 커져도 호출 횟수는 항상 일정하다.", "n이 1 또는 2일 때 재귀 호출을 중단한다.", "점화식을 재귀 호출로 직접 표현한다."], "answer": [1, 3, 4], "exp": ["틀림. lru_cache가 적용되지 않은 단순 재귀 함수이다.", "옳음. 함수 본문에 들어올 때 호출 횟수를 1 증가시킨다.", "틀림. n이 커지면 중복 재귀 호출이 급격히 증가한다.", "옳음. 두 조건이 재귀의 기본 사례이다.", "옳음. n-1과 n-2 문제의 결과를 더한다."]}, {"q": "다음 테이블 방식 동적계획법 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def stairs_dp(n: int) -> int:\n    if n == 1:\n        return 1\n\n    dp = [0] * (n + 1)\n    dp[1], dp[2] = 1, 2\n\n    for step in range(3, n + 1):\n        dp[step] = dp[step - 1] + dp[step - 2]\n\n    return dp[n]", "choices": ["dp 목록은 각 계단 수의 결과를 저장한다.", "재귀 호출을 반드시 사용한다.", "작은 상태부터 큰 상태까지 반복문으로 계산한다.", "각 상태는 앞의 두 상태를 이용해 한 번씩 계산된다.", "dp 목록의 모든 값은 처음부터 정답으로 채워져 있다."], "answer": [0, 2, 3], "exp": ["옳음. 인덱스와 계단 수를 대응시켜 결과를 저장한다.", "틀림. 테이블 방식은 반복문을 사용한다.", "옳음. 3부터 n까지 차례대로 표를 채운다.", "옳음. 이미 계산된 두 값을 사용해 다음 값을 만든다.", "틀림. 처음에는 0으로 초기화하고 초기값과 점화식으로 채운다."]}, {"q": "다음 메모이제이션 함수에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "@lru_cache(maxsize=None)\ndef stairs_memo(n: int) -> int:\n    if n == 1:\n        return 1\n    if n == 2:\n        return 2\n\n    return stairs_memo(n - 1) + stairs_memo(n - 2)", "choices": ["모든 재귀 호출을 자동으로 반복문으로 바꾼다.", "계산한 입력과 결과를 캐시에 저장할 수 있다.", "같은 n이 다시 요청되면 저장된 결과를 재사용할 수 있다.", "캐시 저장을 위한 추가 공간이 전혀 필요하지 않다.", "재귀 구조를 유지하면서 중복 계산을 줄인다."], "answer": [1, 2, 4], "exp": ["틀림. 함수는 여전히 재귀 방식으로 실행된다.", "옳음. lru_cache가 함수 결과를 저장한다.", "옳음. 동일 입력의 재계산을 피할 수 있다.", "틀림. 캐시와 호출 스택을 위한 공간이 필요하다.", "옳음. 함수 구조는 재귀이지만 각 상태를 반복 계산하지 않는다."]}, {"q": "다음 공간 최적화 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def stairs_optimized(n: int) -> int:\n    if n == 1:\n        return 1\n\n    previous, current = 1, 2\n\n    for _ in range(3, n + 1):\n        previous, current = current, previous + current\n\n    return current", "choices": ["직전 두 상태만 저장하여 다음 값을 계산한다.", "모든 이전 상태를 목록에 저장한다.", "반복할 때마다 previous와 current를 모두 0으로 만든다.", "전체 dp 테이블을 만들지 않는다.", "추가 공간 복잡도를 O(1)로 줄일 수 있다."], "answer": [0, 3, 4], "exp": ["옳음. 점화식에 필요한 두 값만 유지한다.", "틀림. 이전 모든 상태를 저장하지 않는다.", "틀림. 두 변수를 다음 상태 값으로 갱신한다.", "옳음. 길이 n의 테이블을 생성하지 않는다.", "옳음. 입력 크기와 관계없이 일정 개수의 변수만 사용한다."]}, {"q": "다음 입력 검증 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "if not isinstance(n, int):\n    raise TypeError(\"n은 정수여야 합니다.\")\n\nif n < 1:\n    raise ValueError(\"n은 1 이상이어야 합니다.\")", "choices": ["실수 3.5를 자동으로 정수 3으로 변환한다.", "문자열 입력은 항상 정상적으로 계산한다.", "정수가 아닌 입력은 TypeError로 처리한다.", "0과 음수는 ValueError로 처리한다.", "함수가 요구하는 자료형과 값의 범위를 각각 검사한다."], "answer": [2, 3, 4], "exp": ["틀림. 자동 변환하지 않고 TypeError를 발생시킨다.", "틀림. 문자열은 정수형이 아니므로 오류 대상이다.", "옳음. 자료형이 int가 아니면 예외를 발생시킨다.", "옳음. 문제에서 n은 1 이상의 정수여야 한다.", "옳음. 자료형 오류와 값 범위 오류를 구분한다."]}, {"q": "다음 평균 실행 시간 측정 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "def average_time(function, n: int, repeat: int = 5) -> float:\n    measured = []\n\n    for _ in range(repeat):\n        start = time.perf_counter()\n        function(n)\n        measured.append(time.perf_counter() - start)\n\n    return mean(measured)", "choices": ["대상 함수를 repeat회 실행한다.", "각 실행의 경과 시간을 measured에 저장한다.", "함수의 계산 결과만 저장하고 시간은 측정하지 않는다.", "repeat 값과 관계없이 항상 한 번만 실행한다.", "측정값들의 평균을 반환한다."], "answer": [0, 1, 4], "exp": ["옳음. for문이 지정한 반복 횟수만큼 실행된다.", "옳음. perf_counter() 전후 차이를 목록에 추가한다.", "틀림. 측정 대상은 실행 경과 시간이다.", "틀림. repeat 값에 따라 실행 횟수가 달라진다.", "옳음. statistics.mean()으로 평균 시간을 계산한다."]}, {"q": "다음 비교 실험 초기화 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "for n in test_values:\n    recursive_calls = 0\n    stairs_memo.cache_clear()\n\n    recursive_time = average_time(\n        stairs_recursive, n, repeat=1\n    )", "choices": ["cache_clear()는 stairs_memo 함수 자체를 삭제한다.", "각 n의 실험 전에 재귀 호출 횟수를 0으로 초기화한다.", "메모이제이션 캐시를 비워 이전 입력의 영향을 줄인다.", "단순 재귀는 실행 시간이 길 수 있어 한 번 측정하도록 설정하였다.", "recursive_calls는 모든 입력의 호출 횟수를 계속 누적한다."], "answer": [1, 2, 3], "exp": ["틀림. 저장된 캐시만 삭제하고 함수는 유지한다.", "옳음. 입력별 호출 횟수를 독립적으로 측정한다.", "옳음. 같은 초기 조건에서 메모이제이션 성능을 비교할 수 있다.", "옳음. 큰 입력에서 단순 재귀의 반복 측정 부담을 줄인다.", "틀림. 각 반복 시작에서 0으로 다시 설정한다."]}, {"q": "다음 결과 일치 검사 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "code": "all_same = (\n    recursive_result\n    == memo_result\n    == dp_result\n    == optimized_result\n)", "choices": ["네 가지 방식의 계산 결과가 모두 같은지 검사한다.", "실행 시간이 모두 같은지를 검사한다.", "모든 비교가 참이면 all_same은 True이다.", "결과 중 하나만 같아도 항상 True가 된다.", "효율성 차이와 관계없이 계산 결과의 정확성 일치를 확인한다."], "answer": [0, 2, 4], "exp": ["옳음. 연쇄 비교로 네 결과의 일치를 확인한다.", "틀림. 비교 대상은 실행 시간이 아니라 계산 결과이다.", "옳음. 모든 결과가 같을 때 True가 된다.", "틀림. 네 결과가 모두 같아야 True이다.", "옳음. 서로 다른 구현이 같은 문제의 답을 계산하는지 검증한다."]}, {"q": "다음 세 방식의 효율성 해석으로 옳은 것을 모두 고르시오.", "code": "# 단순 재귀: 같은 상태를 반복 계산\n# 메모이제이션: 계산 결과를 캐시에 저장\n# 테이블 방식: 작은 상태부터 반복 계산\n# 공간 최적화: 직전 두 상태만 저장", "choices": ["메모이제이션은 캐시가 있어도 같은 상태를 무한히 반복 계산한다.", "단순 재귀의 시간 복잡도는 약 O(2ⁿ)으로 볼 수 있다.", "큰 입력에서는 단순 재귀가 항상 가장 안정적이다.", "메모이제이션과 테이블 방식의 시간 복잡도는 O(n)이다.", "공간 최적화 방식은 O(n) 시간과 O(1) 추가 공간으로 구현할 수 있다."], "answer": [1, 3, 4], "exp": ["틀림. 캐시는 같은 상태의 재계산을 줄인다.", "옳음. 중복 호출 트리가 지수적으로 증가한다.", "틀림. 단순 재귀는 실행 시간과 재귀 깊이 면에서 불리하다.", "옳음. 각 상태를 한 번씩 계산한다.", "옳음. n에 비례해 반복하되 두 변수만 유지한다."]}],started=new Date();
+let result=null;
+const pad=n=>String(n).padStart(2,"0");
+const fmt=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+const ffmt=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+document.getElementById("start").textContent=fmt(started);
+
+document.getElementById("quiz").innerHTML=Q.map((q,qi)=>`
+<section class="card" id="card${qi}">
+<div class="qtitle">${qi+1}. ${q.q}</div>
+<div class="codebox"><pre>${esc(q.code)}</pre></div>
+<span class="tag">옳은 것 3개 선택</span>
+${q.choices.map((c,ci)=>`
+<label class="choice" id="c${qi}_${ci}">
+<input type="checkbox" name="q${qi}" value="${ci}">
+<b>${ci+1}.</b> ${c}
+</label>`).join("")}
+<div id="e${qi}" class="explain" style="display:none"></div>
+</section>`).join("");
+
+Q.forEach((q,qi)=>{
+  document.querySelectorAll(`input[name="q${qi}"]`).forEach(input=>{
+    input.addEventListener("change",()=>{
+      if(document.querySelectorAll(`input[name="q${qi}"]:checked`).length>3){
+        input.checked=false;
+        alert("각 문항은 3개까지만 선택할 수 있습니다.");
+      }
+    });
+  });
+});
+
+const same=(a,b)=>a.length===b.length&&[...a].sort().every((v,i)=>v===[...b].sort()[i]);
+
+function grade(){
+  const id=document.getElementById("sid").value.trim();
+  const name=document.getElementById("sname").value.trim();
+  if(!id||!name){alert("학번과 이름을 입력하세요.");return;}
+
+  let correct=0;
+  const details=[];
+  const incomplete=[];
+
+  Q.forEach((q,qi)=>{
+    const selected=[...document.querySelectorAll(`input[name="q${qi}"]:checked`)].map(x=>Number(x.value));
+    if(selected.length!==3) incomplete.push(qi+1);
+
+    const ok=same(selected,q.answer);
+    if(ok) correct++;
+
+    document.getElementById(`card${qi}`).classList.add(ok?"correct":"wrong");
+
+    q.choices.forEach((_,ci)=>{
+      const label=document.getElementById(`c${qi}_${ci}`);
+      if(q.answer.includes(ci)) label.style.borderColor="#2e8b57";
+      if(selected.includes(ci)&&!q.answer.includes(ci)) label.style.borderColor="#c94a4a";
+    });
+
+    const e=document.getElementById(`e${qi}`);
+    e.style.display="block";
+    e.innerHTML=`<b>${ok?"정답":"오답"}</b><br>
+    선택: ${selected.length?selected.map(i=>i+1).join(", "):"미응답"} /
+    정답: ${q.answer.map(i=>i+1).join(", ")}
+    <ol>${q.exp.map((x,i)=>`<li><b>${i+1}번</b> ${x}</li>`).join("")}</ol>`;
+
+    details.push({
+      ok,
+      selected:selected.length?selected.map(i=>i+1).join(", "):"미응답",
+      answer:q.answer.map(i=>i+1).join(", ")
+    });
+  });
+
+  if(incomplete.length&&!confirm(`${incomplete.join(", ")}번 문항이 3개 선택되지 않았습니다. 그대로 제출하시겠습니까?`)){
+    return;
+  }
+
+  const ended=new Date();
+  const score=correct*10;
+
+  document.querySelectorAll("input").forEach(x=>x.disabled=true);
+  document.getElementById("submitBtn").disabled=true;
+  document.getElementById("result").style.display="block";
+  document.getElementById("scoreText").textContent=`${score}점 / 100점`;
+  document.getElementById("summaryText").textContent=
+    `정답 ${correct}문항, 오답 ${10-correct}문항 · 제출 시각 ${fmt(ended)}`;
+
+  result={id,name,score,correct,ended,details};
+  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+
+function saveTxt(){
+  if(!result){alert("먼저 제출 및 채점을 완료하세요.");return;}
+
+  const r=result;
+  const lines=[
+    "수행평가명: 수행08 동적계획법 설계와 비교 실험",
+    `학번: ${r.id}`,
+    `이름: ${r.name}`,
+    `점수: ${r.score}점`,
+    `정답 문항 수: ${r.correct}/10`,
+    `응시 시작 시각: ${fmt(started)}`,
+    `제출 시각: ${fmt(r.ended)}`,
+    "",
+    "===== 문항별 정오답 및 상세 풀이 ====="
+  ];
+
+  Q.forEach((q,i)=>{
+    const d=r.details[i];
+    lines.push(
+      "",
+      `[${i+1}번] ${d.ok?"정답":"오답"}`,
+      `문제: ${q.q}`,
+      "관련 코드:"
+    );
+    q.code.split("\n").forEach(line=>lines.push(`    ${line}`));
+    lines.push(`선택: ${d.selected}`,`정답: ${d.answer}`);
+
+    q.choices.forEach((choice,j)=>{
+      lines.push(`${j+1}. ${choice}`);
+      lines.push(`   풀이: ${q.exp[j]}`);
+    });
+  });
+
+  const blob=new Blob([lines.join("\n")],{type:"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  const clean=s=>s.replace(/[\\/:*?"<>|\s]+/g,"_");
+
+  a.href=url;
+  a.download=`${clean(r.id)}_${clean(r.name)}_${r.score}_수행08_${ffmt(r.ended)}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>

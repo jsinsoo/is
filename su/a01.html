@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>의사결정트리 개념기반 목표지향 학습</title>
+<style>
+:root {
+ --navy:#14324a; --blue:#246fa8; --blue2:#eaf5ff; --green:#147d64;
+ --mint:#eaf8f3; --orange:#d36b16; --red:#c23b3b; --line:#d7e1ea;
+ --bg:#f4f7fa; --paper:#fff; --code:#182232; --gray:#637083;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:#1e2936;line-height:1.72}
+header{background:linear-gradient(135deg,#102b40,#176b9c);color:white;padding:48px 20px 42px}
+.header-inner{max-width:1220px;margin:auto}
+header h1{margin:0 0 12px;font-size:clamp(30px,4vw,48px);letter-spacing:-1.4px}
+header p{font-size:17px;margin:0;opacity:.94}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);padding:5px 11px;border-radius:999px;font-size:13px}
+nav{position:sticky;top:0;z-index:30;background:white;border-bottom:1px solid var(--line);box-shadow:0 2px 10px rgba(20,45,70,.07)}
+.nav-inner{max-width:1220px;margin:auto;padding:10px 15px;display:flex;gap:7px;overflow-x:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;font-size:14px;padding:7px 11px;border-radius:8px}
+nav a:hover{background:var(--blue2)}
+main{max-width:1220px;margin:24px auto 80px;padding:0 16px}
+section{background:white;border:1px solid var(--line);border-radius:18px;padding:28px;margin-bottom:22px;box-shadow:0 8px 24px rgba(15,40,65,.045)}
+h2{margin-top:0;color:var(--navy);border-left:7px solid var(--blue);padding-left:12px;font-size:28px}
+h3{color:#18547d}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:14px;padding:17px;background:#fff}
+.card strong{color:var(--navy)}
+.flow{display:flex;flex-wrap:wrap;gap:9px;align-items:center;justify-content:center;margin:20px 0 2px}
+.flow div{padding:11px 15px;background:var(--blue2);border:1px solid #bdd9ee;border-radius:10px;font-weight:800;color:var(--navy)}
+.flow span{font-size:22px;color:var(--blue)}
+.identity{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label.title{font-weight:800;color:var(--navy)}
+input[type=text]{width:100%;padding:12px;border:1px solid #b9c6d2;border-radius:9px;font-size:16px;margin-top:5px}
+.lesson{border:1px solid var(--line);border-radius:17px;overflow:hidden;margin:25px 0;background:#fff}
+.lesson-head{background:linear-gradient(90deg,#edf7ff,#f7fbfe);padding:15px 18px;border-bottom:1px solid var(--line)}
+.lesson-head h3{margin:0 0 5px;font-size:21px}
+.lesson-head p{margin:0;color:#496174}
+.lesson-body{padding:20px}
+.detail{background:#f8fbfd;border-left:5px solid var(--blue);padding:14px 15px;border-radius:8px;margin-bottom:15px}
+.code-label{font-weight:900;color:var(--navy);margin:10px 0 7px}
+.code-wrap{position:relative}
+pre{background:var(--code);color:#f0f6fb;padding:18px;border-radius:12px;overflow:auto;margin:0;font-family:Consolas,monospace;font-size:14px;line-height:1.62}
+.copy{position:absolute;right:9px;top:9px;border:0;border-radius:7px;padding:6px 10px;font-weight:800;cursor:pointer}
+.question{margin-top:17px;border:1px solid #cfdce7;background:#fbfdff;border-radius:13px;padding:17px}
+.question h4{margin:0 0 7px;color:var(--navy);font-size:18px}
+.instruction{font-weight:800;color:var(--red);margin-bottom:8px}
+.option{display:block;padding:10px 11px;margin:7px 0;border:1px solid #d8e1e8;border-radius:9px;background:white;cursor:pointer}
+.option:hover{background:#eff7ff}
+.option input{margin-right:8px;transform:scale(1.15)}
+.notice{background:#fff6e8;border-left:5px solid var(--orange);padding:13px 15px;border-radius:8px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.action{border:0;border-radius:10px;padding:12px 18px;font-weight:900;cursor:pointer;font-size:15px}
+.primary{background:var(--blue);color:white}
+.success{background:var(--green);color:white}
+.secondary{background:#e7edf2;color:#263a4c}
+#result{display:none;margin-top:22px;background:#eef8ff;border:1px solid #bdd8ec;border-radius:14px;padding:20px}
+.score{font-size:30px;font-weight:900;color:var(--navy)}
+.feedback-item{padding:12px;margin:8px 0;border-radius:9px}
+.correct{background:#e8f8ef;border-left:5px solid #169466}
+.incorrect{background:#fff0f0;border-left:5px solid #cc4646}
+footer{text-align:center;color:var(--gray);padding:30px}
+
+.full-explain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:13px;margin-top:14px}
+.full-explain-card{border:1px solid var(--line);border-radius:13px;padding:15px;background:#fbfdff}
+.full-explain-card strong{color:var(--navy)}
+.full-explain-card p{margin:7px 0 0}
+.full-explain-card code{background:#eaf1f7;padding:2px 5px;border-radius:5px;color:#173d5b}
+
+@media(max-width:720px){section{padding:19px}.identity{grid-template-columns:1fr}h2{font-size:23px}}
+@media print{nav,.actions,.copy{display:none!important}body{background:white}section,.lesson{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+<div class="header-inner">
+<h1>의사결정트리 개념기반 목표지향 학습</h1>
+<p>핵심 개념을 이해하고, 객체지향 코드로 구현하며, 코드 기반 평가로 학습 결과를 확인합니다.</p>
+<div class="badges">
+<span class="badge">목표지향 학습</span>
+<span class="badge">개념 22개</span>
+<span class="badge">OOP 코드 22개</span>
+<span class="badge">5지선다형 22문항</span>
+<span class="badge">전체 통합 코드</span>
+<span class="badge">자동 채점·TXT 저장</span>
+</div>
+</div>
+</header>
+<nav>
+<div class="nav-inner">
+<a href="#goal">학습 목표</a>
+<a href="#bigidea">핵심 아이디어</a>
+<a href="#identity">학번·이름</a>
+<a href="#lessons">개념·코드·문제</a>
+<a href="#fullcode">전체 코드·상세 설명</a>
+<a href="#submit">채점·저장</a>
+</div>
+</nav>
+<main>
+<section id="goal">
+<h2>1. 목표지향 학습 설계</h2>
+<div class="grid">
+<div class="card"><strong>최종 목표</strong><br>의사결정트리의 학습·예측·평가 과정을 객체지향 구조로 설명하고 구현한다.</div>
+<div class="card"><strong>이해 목표</strong><br>노드, 분기, 불순도, 정보 이득, 가지치기, 평가의 관계를 이해한다.</div>
+<div class="card"><strong>수행 목표</strong><br>각 개념을 클래스, 속성, 메서드, 객체의 관계로 코드화한다.</div>
+<div class="card"><strong>평가 목표</strong><br>코드 실행 결과와 개념 설명을 근거로 옳은 진술 3개를 선택한다.</div>
+</div>
+<div class="flow">
+<div>개념 이해</div><span>→</span><div>OOP 모델링</div><span>→</span><div>코드 분석</div><span>→</span><div>문제 해결</div><span>→</span><div>성찰·저장</div>
+</div>
+</section>
+
+<section id="bigidea">
+<h2>2. 핵심 아이디어</h2>
+<div class="grid">
+<div class="card"><strong>큰 아이디어 1</strong><br>의사결정트리는 질문을 반복하여 자료를 더 순수한 집단으로 나눈다.</div>
+<div class="card"><strong>큰 아이디어 2</strong><br>좋은 분기는 불순도를 크게 줄이고 정보 이득을 높인다.</div>
+<div class="card"><strong>큰 아이디어 3</strong><br>트리의 복잡도는 학습 성능과 일반화 성능 사이의 균형을 결정한다.</div>
+<div class="card"><strong>큰 아이디어 4</strong><br>객체지향 설계는 데이터, 노드, 규칙, 평가 기능을 명확히 분리하고 연결한다.</div>
+</div>
+</section>
+
+<section id="identity">
+<h2>3. 학습자 정보</h2>
+<div class="identity">
+<div><label class="title" for="studentId">학번</label><input id="studentId" type="text" placeholder="예: 1101"></div>
+<div><label class="title" for="studentName">이름</label><input id="studentName" type="text" placeholder="예: 홍길동"></div>
+</div>
+</section>
+
+<section id="lessons">
+<h2>4. 개념 상세 설명·OOP 코드·문제</h2>
+<div class="notice">각 개념의 설명과 코드를 먼저 읽고, 바로 아래 문제에서 <strong>옳은 것 3개</strong>를 선택하세요. 한 문항에서 최대 3개만 선택할 수 있습니다.</div>
+<div id="lessonContainer"></div>
+</section>
+
+
+<section id="fullcode">
+<h2>5. 모든 개념이 사용된 전체 OOP 코드</h2>
+<div class="notice">앞에서 학습한 개념을 하나의 실행 가능한 의사결정트리 프로그램으로 통합했습니다. 코드 복사 후 파이썬 환경에서 실행할 수 있습니다.</div>
+<div class="code-label">의사결정트리 전체 객체지향 코드</div>
+<div class="code-wrap">
+<button class="copy" type="button" onclick="copyCode(this)">전체 코드 복사</button>
+<pre><code>import math
+from collections import Counter
+from dataclasses import dataclass
+from typing import Any, Optional
+
+
+# 1. 한 개의 학습 자료를 객체로 표현
+@dataclass
+class TrainingSample:
+    features: list[float]
+    label: Any
+
+
+# 2. 전체 자료 집합 관리
+class Dataset:
+    def __init__(self, samples: list[TrainingSample],
+                 feature_names: list[str]):
+        self.samples = samples
+        self.feature_names = feature_names
+
+    @property
+    def X(self) -&gt; list[list[float]]:
+        return [sample.features for sample in self.samples]
+
+    @property
+    def y(self) -&gt; list[Any]:
+        return [sample.label for sample in self.samples]
+
+    def __len__(self) -&gt; int:
+        return len(self.samples)
+
+
+# 3. 결측값 전처리
+class DataPreprocessor:
+    def fill_missing(self, rows: list[list[Optional[float]]],
+                     replacement: float) -&gt; list[list[float]]:
+        return [
+            [replacement if value is None else value for value in row]
+            for row in rows
+        ]
+
+
+# 4. 클래스 개수와 분포 계산
+class ClassCounter:
+    def count(self, labels: list[Any]) -&gt; dict[Any, int]:
+        return dict(Counter(labels))
+
+    def majority(self, labels: list[Any]) -&gt; Any:
+        return Counter(labels).most_common(1)[0][0]
+
+    def probabilities(self, labels: list[Any]) -&gt; dict[Any, float]:
+        counts = Counter(labels)
+        total = len(labels)
+        return {label: count / total for label, count in counts.items()}
+
+
+# 5. 지니 불순도와 엔트로피
+class ImpurityCalculator:
+    def gini(self, labels: list[Any]) -&gt; float:
+        probabilities = ClassCounter().probabilities(labels)
+        return 1.0 - sum(p ** 2 for p in probabilities.values())
+
+    def entropy(self, labels: list[Any]) -&gt; float:
+        probabilities = ClassCounter().probabilities(labels)
+        return -sum(
+            p * math.log2(p)
+            for p in probabilities.values()
+            if p &gt; 0
+        )
+
+
+# 6. 분기 규칙
+@dataclass
+class SplitRule:
+    feature_index: int
+    threshold: float
+
+    def go_right(self, row: list[float]) -&gt; bool:
+        return row[self.feature_index] &gt;= self.threshold
+
+    def describe(self, feature_names: list[str]) -&gt; str:
+        feature = feature_names[self.feature_index]
+        return f&quot;{feature} &gt;= {self.threshold}&quot;
+
+
+# 7. 분기 후보와 정보 이득
+@dataclass
+class SplitCandidate:
+    rule: SplitRule
+    gain: float
+    left_indices: list[int]
+    right_indices: list[int]
+
+
+class InformationGain:
+    def calculate(self, parent_labels: list[Any],
+                  left_labels: list[Any],
+                  right_labels: list[Any],
+                  criterion: str = &quot;gini&quot;) -&gt; float:
+        calculator = ImpurityCalculator()
+        impurity = (
+            calculator.gini if criterion == &quot;gini&quot;
+            else calculator.entropy
+        )
+
+        parent_impurity = impurity(parent_labels)
+        total = len(parent_labels)
+
+        left_weight = len(left_labels) / total
+        right_weight = len(right_labels) / total
+
+        children_impurity = (
+            left_weight * impurity(left_labels) +
+            right_weight * impurity(right_labels)
+        )
+        return parent_impurity - children_impurity
+
+
+# 8. 최적 분기 탐색
+class BestSplitFinder:
+    def __init__(self, criterion: str = &quot;gini&quot;):
+        self.criterion = criterion
+        self.gain_calculator = InformationGain()
+
+    def find(self, X: list[list[float]],
+             y: list[Any]) -&gt; Optional[SplitCandidate]:
+        best: Optional[SplitCandidate] = None
+        feature_count = len(X[0])
+
+        for feature_index in range(feature_count):
+            values = sorted(set(row[feature_index] for row in X))
+
+            if len(values) &lt; 2:
+                continue
+
+            thresholds = [
+                (values[i] + values[i + 1]) / 2
+                for i in range(len(values) - 1)
+            ]
+
+            for threshold in thresholds:
+                rule = SplitRule(feature_index, threshold)
+                left_indices = [
+                    i for i, row in enumerate(X)
+                    if not rule.go_right(row)
+                ]
+                right_indices = [
+                    i for i, row in enumerate(X)
+                    if rule.go_right(row)
+                ]
+
+                if not left_indices or not right_indices:
+                    continue
+
+                left_labels = [y[i] for i in left_indices]
+                right_labels = [y[i] for i in right_indices]
+
+                gain = self.gain_calculator.calculate(
+                    y, left_labels, right_labels, self.criterion
+                )
+
+                candidate = SplitCandidate(
+                    rule, gain, left_indices, right_indices
+                )
+
+                if best is None or candidate.gain &gt; best.gain:
+                    best = candidate
+
+        return best
+
+
+# 9. 사전 가지치기와 정지 조건
+@dataclass
+class TreeConfig:
+    max_depth: int = 5
+    min_samples_split: int = 2
+    min_samples_leaf: int = 1
+    min_gain: float = 0.0
+    criterion: str = &quot;gini&quot;
+
+
+class StopCondition:
+    def __init__(self, config: TreeConfig):
+        self.config = config
+
+    def should_stop(self, depth: int,
+                    labels: list[Any]) -&gt; bool:
+        pure = len(set(labels)) == 1
+        too_deep = depth &gt;= self.config.max_depth
+        too_small = len(labels) &lt; self.config.min_samples_split
+        return pure or too_deep or too_small
+
+
+# 10. 루트·내부·잎 노드
+class Node:
+    def __init__(self,
+                 rule: Optional[SplitRule] = None,
+                 prediction: Any = None,
+                 probabilities: Optional[dict[Any, float]] = None,
+                 depth: int = 0):
+        self.rule = rule
+        self.prediction = prediction
+        self.probabilities = probabilities or {}
+        self.depth = depth
+        self.left: Optional[&quot;Node&quot;] = None
+        self.right: Optional[&quot;Node&quot;] = None
+
+    @property
+    def is_leaf(self) -&gt; bool:
+        return self.rule is None
+
+
+# 11. 객체지향 의사결정트리 분류기
+class DecisionTreeClassifierOOP:
+    def __init__(self, config: TreeConfig):
+        self.config = config
+        self.root: Optional[Node] = None
+        self.feature_names: list[str] = []
+        self.feature_importance_raw: dict[int, float] = {}
+
+    def fit(self, dataset: Dataset) -&gt; None:
+        self.feature_names = dataset.feature_names
+        self.feature_importance_raw = {
+            i: 0.0 for i in range(len(self.feature_names))
+        }
+        self.root = self._build_tree(
+            dataset.X, dataset.y, depth=0
+        )
+
+    def _build_tree(self, X: list[list[float]],
+                    y: list[Any],
+                    depth: int) -&gt; Node:
+        counter = ClassCounter()
+        node = Node(
+            prediction=counter.majority(y),
+            probabilities=counter.probabilities(y),
+            depth=depth
+        )
+
+        stop = StopCondition(self.config)
+        if stop.should_stop(depth, y):
+            return node
+
+        finder = BestSplitFinder(self.config.criterion)
+        best = finder.find(X, y)
+
+        if best is None or best.gain &lt;= self.config.min_gain:
+            return node
+
+        if (len(best.left_indices) &lt; self.config.min_samples_leaf or
+                len(best.right_indices) &lt; self.config.min_samples_leaf):
+            return node
+
+        node.rule = best.rule
+        self.feature_importance_raw[best.rule.feature_index] += (
+            best.gain * len(y)
+        )
+
+        left_X = [X[i] for i in best.left_indices]
+        left_y = [y[i] for i in best.left_indices]
+        right_X = [X[i] for i in best.right_indices]
+        right_y = [y[i] for i in best.right_indices]
+
+        node.left = self._build_tree(left_X, left_y, depth + 1)
+        node.right = self._build_tree(right_X, right_y, depth + 1)
+
+        return node
+
+    def predict_one(self, row: list[float]) -&gt; Any:
+        if self.root is None:
+            raise RuntimeError(&quot;먼저 fit()으로 모델을 학습해야 합니다.&quot;)
+
+        node = self.root
+        while not node.is_leaf:
+            if node.rule.go_right(row):
+                node = node.right
+            else:
+                node = node.left
+        return node.prediction
+
+    def predict(self, X: list[list[float]]) -&gt; list[Any]:
+        return [self.predict_one(row) for row in X]
+
+    def predict_proba_one(self, row: list[float]) -&gt; dict[Any, float]:
+        if self.root is None:
+            raise RuntimeError(&quot;먼저 fit()으로 모델을 학습해야 합니다.&quot;)
+
+        node = self.root
+        while not node.is_leaf:
+            node = node.right if node.rule.go_right(row) else node.left
+        return node.probabilities
+
+    def feature_importances(self) -&gt; dict[str, float]:
+        total = sum(self.feature_importance_raw.values())
+
+        if total == 0:
+            return {name: 0.0 for name in self.feature_names}
+
+        return {
+            self.feature_names[index]:
+            self.feature_importance_raw[index] / total
+            for index in range(len(self.feature_names))
+        }
+
+    def print_tree(self) -&gt; None:
+        if self.root is None:
+            print(&quot;학습된 트리가 없습니다.&quot;)
+            return
+        self._print_node(self.root)
+
+    def _print_node(self, node: Node,
+                    indent: str = &quot;&quot;) -&gt; None:
+        if node.is_leaf:
+            print(
+                f&quot;{indent}잎: 예측={node.prediction}, &quot;
+                f&quot;확률={node.probabilities}&quot;
+            )
+            return
+
+        question = node.rule.describe(self.feature_names)
+        print(f&quot;{indent}[질문] {question}&quot;)
+        print(f&quot;{indent}├─ 아니오&quot;)
+        self._print_node(node.left, indent + &quot;│  &quot;)
+        print(f&quot;{indent}└─ 예&quot;)
+        self._print_node(node.right, indent + &quot;   &quot;)
+
+
+# 12. 학습·검증·시험 자료 분리
+@dataclass
+class DataSplit:
+    train: Dataset
+    validation: Dataset
+    test: Dataset
+
+
+# 13. 정확도와 혼동행렬
+class ClassificationEvaluator:
+    def accuracy(self, y_true: list[Any],
+                 y_pred: list[Any]) -&gt; float:
+        correct = sum(
+            actual == predicted
+            for actual, predicted in zip(y_true, y_pred)
+        )
+        return correct / len(y_true)
+
+    def confusion_matrix(self, y_true: list[Any],
+                         y_pred: list[Any]) -&gt; dict:
+        labels = sorted(set(y_true) | set(y_pred))
+        matrix = {
+            actual: {predicted: 0 for predicted in labels}
+            for actual in labels
+        }
+
+        for actual, predicted in zip(y_true, y_pred):
+            matrix[actual][predicted] += 1
+
+        return matrix
+
+
+# 14. 사후 가지치기 판단
+class PruningDecision:
+    def should_prune(self,
+                     validation_before: float,
+                     validation_after: float) -&gt; bool:
+        return validation_after &gt;= validation_before
+
+
+# 15. 분류 트리와 회귀 트리의 공통 인터페이스
+class BaseTreeModel:
+    def fit(self, dataset: Dataset) -&gt; None:
+        raise NotImplementedError
+
+    def predict(self, X: list[list[float]]) -&gt; list[Any]:
+        raise NotImplementedError
+
+
+class ClassificationTreeModel(BaseTreeModel):
+    def __init__(self, config: TreeConfig):
+        self.model = DecisionTreeClassifierOOP(config)
+
+    def fit(self, dataset: Dataset) -&gt; None:
+        self.model.fit(dataset)
+
+    def predict(self, X: list[list[float]]) -&gt; list[Any]:
+        return self.model.predict(X)
+
+
+class RegressionTreeModel(BaseTreeModel):
+    def fit(self, dataset: Dataset) -&gt; None:
+        self.mean_value = sum(dataset.y) / len(dataset.y)
+
+    def predict(self, X: list[list[float]]) -&gt; list[float]:
+        return [self.mean_value for _ in X]
+
+
+# 16. 전체 학습 시스템: 합성
+class LearningSystem:
+    def __init__(self,
+                 model: BaseTreeModel,
+                 evaluator: ClassificationEvaluator):
+        self.model = model
+        self.evaluator = evaluator
+
+    def train(self, dataset: Dataset) -&gt; None:
+        self.model.fit(dataset)
+
+    def evaluate(self, dataset: Dataset) -&gt; float:
+        predictions = self.model.predict(dataset.X)
+        return self.evaluator.accuracy(
+            dataset.y, predictions
+        )
+
+
+# 17. 실행 예시
+samples = [
+    TrainingSample([2, 60, 55], &quot;보충학습&quot;),
+    TrainingSample([3, 65, 60], &quot;보충학습&quot;),
+    TrainingSample([4, 70, 68], &quot;보충학습&quot;),
+    TrainingSample([5, 75, 75], &quot;합격&quot;),
+    TrainingSample([6, 80, 82], &quot;합격&quot;),
+    TrainingSample([7, 85, 88], &quot;합격&quot;),
+    TrainingSample([8, 90, 94], &quot;합격&quot;),
+    TrainingSample([1, 55, 50], &quot;보충학습&quot;),
+]
+
+dataset = Dataset(
+    samples,
+    feature_names=[&quot;학습시간&quot;, &quot;출석률&quot;, &quot;과제점수&quot;]
+)
+
+config = TreeConfig(
+    max_depth=3,
+    min_samples_split=2,
+    min_samples_leaf=1,
+    min_gain=0.0,
+    criterion=&quot;gini&quot;
+)
+
+model = ClassificationTreeModel(config)
+system = LearningSystem(
+    model=model,
+    evaluator=ClassificationEvaluator()
+)
+
+system.train(dataset)
+
+predictions = model.predict(dataset.X)
+accuracy = system.evaluate(dataset)
+
+print(&quot;예측 결과:&quot;, predictions)
+print(&quot;학습 정확도:&quot;, accuracy)
+
+tree = model.model
+tree.print_tree()
+
+new_student = [5.5, 78, 80]
+print(&quot;새 학생 예측:&quot;, tree.predict_one(new_student))
+print(&quot;새 학생 확률:&quot;, tree.predict_proba_one(new_student))
+print(&quot;특성 중요도:&quot;, tree.feature_importances())
+
+matrix = ClassificationEvaluator().confusion_matrix(
+    dataset.y, predictions
+)
+print(&quot;혼동행렬:&quot;, matrix)
+
+pruning = PruningDecision()
+print(
+    &quot;사후 가지치기 여부:&quot;,
+    pruning.should_prune(0.85, 0.87)
+)</code></pre>
+</div>
+<h3>전체 코드 상세 설명</h3>
+
+<div class="full-explain-grid">
+  <div class="full-explain-card"><strong>1. 자료 객체</strong><p><code>TrainingSample</code>은 한 행의 특성과 레이블을 저장하고, <code>Dataset</code>은 여러 객체를 모아 입력 자료와 정답을 제공한다.</p></div>
+  <div class="full-explain-card"><strong>2. 전처리</strong><p><code>DataPreprocessor</code>는 결측값을 대체한다. 실제 프로젝트에서는 평균·중앙값·최빈값 등 자료 특성에 맞는 방법을 선택해야 한다.</p></div>
+  <div class="full-explain-card"><strong>3. 클래스 분포</strong><p><code>ClassCounter</code>는 클래스별 개수, 다수 클래스, 클래스 확률을 계산한다. 잎 노드의 예측값과 확률을 정하는 데 사용된다.</p></div>
+  <div class="full-explain-card"><strong>4. 불순도</strong><p><code>ImpurityCalculator</code>는 지니 불순도와 엔트로피를 모두 지원한다. 설정에 따라 분기 품질 평가 기준을 바꿀 수 있다.</p></div>
+  <div class="full-explain-card"><strong>5. 분기 규칙</strong><p><code>SplitRule</code>은 특성 인덱스와 임계값을 캡슐화한다. 입력값이 임계값 이상이면 오른쪽, 미만이면 왼쪽으로 이동한다.</p></div>
+  <div class="full-explain-card"><strong>6. 정보 이득</strong><p><code>InformationGain</code>은 부모 불순도에서 자식 노드의 가중 불순도를 뺀다. 값이 클수록 분기 후 클래스가 더 잘 구분된다.</p></div>
+  <div class="full-explain-card"><strong>7. 최적 분기</strong><p><code>BestSplitFinder</code>는 모든 특성의 가능한 임계값을 시험하고 정보 이득이 가장 큰 후보를 선택한다.</p></div>
+  <div class="full-explain-card"><strong>8. 정지 조건</strong><p><code>TreeConfig</code>와 <code>StopCondition</code>은 최대 깊이, 최소 분할 자료 수, 최소 잎 자료 수, 최소 정보 이득을 관리한다.</p></div>
+  <div class="full-explain-card"><strong>9. 노드 객체</strong><p><code>Node</code>는 내부 노드와 잎 노드를 하나의 클래스로 표현한다. <code>rule</code>이 없으면 잎 노드이다.</p></div>
+  <div class="full-explain-card"><strong>10. 재귀 학습</strong><p><code>_build_tree()</code>는 정지 조건을 검사하고 최적 분기를 찾은 뒤 왼쪽과 오른쪽 자식 노드를 재귀적으로 생성한다.</p></div>
+  <div class="full-explain-card"><strong>11. 예측</strong><p><code>predict_one()</code>은 루트에서 시작해 분기 규칙을 반복 적용하여 잎 노드에 도달한 뒤 다수 클래스를 반환한다.</p></div>
+  <div class="full-explain-card"><strong>12. 확률 예측</strong><p><code>predict_proba_one()</code>은 잎 노드에 포함된 클래스의 비율을 반환하여 예측의 확신 정도를 보여 준다.</p></div>
+  <div class="full-explain-card"><strong>13. 특성 중요도</strong><p>각 분기의 정보 이득과 자료 수를 누적해 정규화한다. 값이 크면 모델이 그 특성을 많이 사용했다는 뜻이지만 인과관계는 아니다.</p></div>
+  <div class="full-explain-card"><strong>14. 트리 시각화</strong><p><code>print_tree()</code>는 질문, 왼쪽 가지, 오른쪽 가지, 잎의 예측값과 확률을 텍스트 구조로 출력한다.</p></div>
+  <div class="full-explain-card"><strong>15. 평가</strong><p><code>ClassificationEvaluator</code>는 정확도와 혼동행렬을 계산한다. 정확도는 전체 성능을, 혼동행렬은 오류 유형을 보여 준다.</p></div>
+  <div class="full-explain-card"><strong>16. 가지치기</strong><p><code>PruningDecision</code>은 가지 제거 전후의 검증 성능을 비교한다. 사전 가지치기는 학습 중, 사후 가지치기는 학습 후 수행한다.</p></div>
+  <div class="full-explain-card"><strong>17. 상속과 다형성</strong><p><code>BaseTreeModel</code>을 상속한 분류·회귀 모델은 같은 <code>fit()</code>, <code>predict()</code> 인터페이스를 서로 다르게 구현한다.</p></div>
+  <div class="full-explain-card"><strong>18. 합성</strong><p><code>LearningSystem</code>은 모델과 평가기 객체를 내부에 포함하여 학습과 평가 기능을 연결한다.</p></div>
+</div>
+<div class="notice" style="margin-top:16px">
+  <strong>실행 결과 해석:</strong> 예제 자료로 모델을 학습한 뒤 학습 정확도, 텍스트 트리, 새 학생 예측, 클래스 확률, 특성 중요도, 혼동행렬, 사후 가지치기 판단을 차례로 출력합니다.
+</div>
+
+</section>
+
+<section id="submit">
+<h2>6. 채점 및 결과 저장</h2>
+<div class="actions">
+<button class="action primary" type="button" onclick="gradeQuiz()">채점하기</button>
+<button class="action success" type="button" onclick="downloadResult()">결과 TXT 저장</button>
+<button class="action secondary" type="button" onclick="resetQuiz()">다시 풀기</button>
+</div>
+<div id="result"></div>
+</section>
+</main>
+<footer>의사결정트리 개념기반 목표지향 학습 · 객체지향 코드 분석형 평가</footer>
+
+<script>
+const lessons = [{"title": "1. 지도학습과 분류", "goal": "입력 특성과 정답 레이블을 이용하여 분류 모델을 학습하는 원리를 설명한다.", "detail": "의사결정트리는 정답이 포함된 학습 자료를 이용하는 지도학습 알고리즘이다. 입력 자료의 각 열은 특성, 예측하려는 값은 레이블이다. 분류에서는 범주를 예측하고, 회귀에서는 연속적인 수치를 예측한다.", "code": "class TrainingSample:\n    def __init__(self, features, label):\n        self.features = features\n        self.label = label\n\nsample = TrainingSample([5, 80], \"합격\")\nprint(sample.features, sample.label)", "options": ["TrainingSample 객체는 입력 특성과 정답 레이블을 함께 저장한다.", "features는 모델이 판단에 사용하는 입력값이다.", "label은 지도학습에서 예측하려는 정답이다.", "지도학습은 정답 레이블을 전혀 사용하지 않는다.", "이 코드는 연속적인 수치만 저장할 수 있다."], "answer": [0, 1, 2], "explain": "객체는 입력 특성과 정답 레이블을 함께 보관하며, 지도학습은 정답이 있는 자료를 이용한다."}, {"title": "2. 클래스와 객체", "goal": "의사결정트리 모델을 클래스와 객체로 표현한다.", "detail": "클래스는 모델을 만들기 위한 설계도이고 객체는 실제로 생성된 모델이다. 하나의 클래스에서 서로 다른 설정값을 가진 여러 의사결정트리 객체를 생성할 수 있다.", "code": "class DecisionTree:\n    def __init__(self, max_depth):\n        self.max_depth = max_depth\n\ntree1 = DecisionTree(3)\ntree2 = DecisionTree(5)\n\nprint(tree1.max_depth, tree2.max_depth)", "options": ["tree1과 tree2는 서로 다른 객체이다.", "두 객체는 서로 다른 max_depth 값을 가질 수 있다.", "tree1과 tree2는 항상 같은 속성값만 가져야 한다.", "__init__은 객체를 삭제할 때 호출된다.", "DecisionTree는 객체를 생성하기 위한 클래스이다."], "answer": [0, 1, 4], "explain": "클래스 하나로 서로 다른 상태를 가진 여러 객체를 만들 수 있으며 __init__은 생성자이다."}, {"title": "3. 특성과 레이블", "goal": "특성과 레이블의 역할을 구분한다.", "detail": "특성은 예측에 사용되는 입력 변수이다. 레이블은 모델이 맞히려는 목표값이다. 예를 들어 학습 시간과 출석률은 특성, 합격 여부는 레이블이 될 수 있다.", "code": "class Dataset:\n    def __init__(self, X, y):\n        self.X = X\n        self.y = y\n\ndata = Dataset(\n    [[2, 60], [5, 90]],\n    [\"보충학습\", \"합격\"]\n)\n\nprint(len(data.X), len(data.y))", "options": ["입력 자료와 레이블의 개수는 서로 대응해야 한다.", "data.X에는 반드시 문자열만 저장해야 한다.", "레이블은 모델 학습과 관계가 없다.", "data.X에는 입력 특성 자료가 저장된다.", "data.y에는 정답 레이블이 저장된다."], "answer": [0, 3, 4], "explain": "X는 입력 특성, y는 정답이며 각 입력 행은 하나의 정답과 대응한다."}, {"title": "4. 루트 노드·내부 노드·잎 노드", "goal": "트리를 구성하는 노드의 역할을 설명한다.", "detail": "루트 노드는 트리의 시작점이다. 내부 노드는 특정 특성과 기준값을 이용해 분기하며, 잎 노드는 최종 예측값을 저장한다. 의사결정트리는 노드가 계층적으로 연결된 구조이다.", "code": "class Node:\n    def __init__(self, question=None, result=None):\n        self.question = question\n        self.result = result\n        self.left = None\n        self.right = None\n\nroot = Node(question=\"점수 >= 60\")\nroot.left = Node(result=\"보충학습\")\nroot.right = Node(result=\"합격\")", "options": ["잎 노드는 반드시 새로운 질문을 가져야 한다.", "root.right의 결과는 '보충학습'이다.", "root는 판단 질문을 가진 내부 노드이다.", "root.left와 root.right는 최종 결과를 가진 잎 노드이다.", "노드 객체를 연결하여 트리 구조를 표현할 수 있다."], "answer": [2, 3, 4], "explain": "루트는 질문을 저장하고 좌우 잎 노드는 최종 예측 결과를 저장한다."}, {"title": "5. 분기 기준과 임계값", "goal": "특성값과 임계값을 비교하여 분기하는 원리를 구현한다.", "detail": "내부 노드는 특정 특성값이 임계값보다 작거나 큰지 판단한다. 이 조건에 따라 왼쪽 또는 오른쪽 자식 노드로 이동한다.", "code": "class SplitRule:\n    def __init__(self, feature_index, threshold):\n        self.feature_index = feature_index\n        self.threshold = threshold\n\n    def go_right(self, row):\n        return row[self.feature_index] >= self.threshold\n\nrule = SplitRule(0, 60)\nprint(rule.go_right([75, 90]))", "options": ["feature_index가 0이면 두 번째 특성만 비교한다.", "feature_index는 비교할 특성의 위치를 나타낸다.", "threshold는 데이터를 나누는 기준값이다.", "[75, 90]의 첫 번째 값은 60 이상이므로 True가 출력된다.", "go_right()는 항상 False를 반환한다."], "answer": [1, 2, 3], "explain": "인덱스 0의 값 75를 임계값 60과 비교하므로 True이다."}, {"title": "6. 재귀적 예측", "goal": "루트에서 잎 노드까지 재귀적으로 탐색하는 과정을 설명한다.", "detail": "의사결정트리는 현재 노드가 잎인지 확인한 뒤, 잎이 아니면 조건에 따라 자식 노드로 이동한다. 이 과정은 같은 형태가 반복되므로 재귀로 구현하기 적합하다.", "code": "class TreePredictor:\n    def predict(self, score, node):\n        if node.result is not None:\n            return node.result\n\n        if score >= 60:\n            return self.predict(score, node.right)\n        return self.predict(score, node.left)\n\npredictor = TreePredictor()\nprint(predictor.predict(72, root))", "options": ["점수가 60 이상이면 오른쪽 자식 노드로 이동한다.", "72를 입력하면 '합격'이 출력된다.", "재귀 메서드는 자기 자신을 호출할 수 없다.", "점수가 60 미만이어도 오른쪽으로 이동한다.", "잎 노드에 도달하면 result를 반환한다."], "answer": [0, 1, 4], "explain": "72는 60 이상이므로 오른쪽 잎 노드로 이동하여 합격을 반환한다."}, {"title": "7. 클래스 분포와 순도", "goal": "노드 내부의 클래스 분포와 순도를 해석한다.", "detail": "한 노드에 하나의 클래스만 있으면 순수한 노드이다. 여러 클래스가 섞여 있으면 불순도가 높다. 좋은 분기는 자식 노드의 순도를 높인다.", "code": "class ClassCounter:\n    def count(self, labels):\n        result = {}\n        for label in labels:\n            result[label] = result.get(label, 0) + 1\n        return result\n\ncounter = ClassCounter()\nprint(counter.count([\"A\", \"A\", \"B\"]))", "options": ["이 노드는 하나의 클래스만 포함하므로 완전히 순수하다.", "get(label, 0)은 기존 개수를 항상 삭제한다.", "결과에서 A의 개수는 2이다.", "결과에서 B의 개수는 1이다.", "클래스별 개수는 노드의 분포를 파악하는 데 사용된다."], "answer": [2, 3, 4], "explain": "A 2개, B 1개로 두 클래스가 섞여 있으므로 완전히 순수하지 않다."}, {"title": "8. 지니 불순도", "goal": "지니 불순도를 계산하고 의미를 해석한다.", "detail": "지니 불순도는 한 노드에서 임의로 뽑은 자료가 잘못 분류될 가능성을 나타내는 지표이다. 모든 자료가 같은 클래스이면 0이고, 여러 클래스가 고르게 섞일수록 커진다.", "code": "class GiniCalculator:\n    def calculate(self, labels):\n        total = len(labels)\n        counts = ClassCounter().count(labels)\n        gini = 1.0\n\n        for count in counts.values():\n            p = count / total\n            gini -= p ** 2\n\n        return gini\n\nprint(GiniCalculator().calculate([\"A\", \"A\", \"B\", \"B\"]))", "options": ["A와 B의 비율은 각각 0.5이다.", "지니 불순도는 0.5이다.", "모든 자료가 A라면 지니 불순도는 0이다.", "클래스가 순수할수록 지니 불순도는 커진다.", "지니 불순도는 항상 1보다 크다."], "answer": [0, 1, 2], "explain": "1-(0.5²+0.5²)=0.5이며 한 클래스만 있으면 0이다."}, {"title": "9. 엔트로피", "goal": "엔트로피를 이용해 노드의 불확실성을 계산한다.", "detail": "엔트로피는 클래스 분포의 불확실성을 나타낸다. 모든 자료가 같은 클래스이면 0이고, 클래스가 비슷한 비율로 섞일수록 값이 커진다.", "code": "import math\n\nclass EntropyCalculator:\n    def calculate(self, labels):\n        total = len(labels)\n        counts = ClassCounter().count(labels)\n        entropy = 0.0\n\n        for count in counts.values():\n            p = count / total\n            entropy -= p * math.log2(p)\n\n        return entropy\n\nprint(EntropyCalculator().calculate([\"A\", \"A\", \"B\", \"B\"]))", "options": ["한 클래스만 존재하면 엔트로피는 0이다.", "엔트로피가 낮을수록 클래스가 더 복잡하게 섞여 있다.", "엔트로피는 클래스 개수와 관계없이 항상 0이다.", "math.log2()는 밑이 2인 로그를 계산한다.", "A와 B가 같은 비율이면 엔트로피는 1이다."], "answer": [0, 3, 4], "explain": "두 클래스가 0.5씩이면 엔트로피는 1이며 한 클래스만 있으면 0이다."}, {"title": "10. 정보 이득", "goal": "분기 전후 불순도 감소량을 계산한다.", "detail": "정보 이득은 부모 노드의 불순도에서 자식 노드의 가중 불순도를 뺀 값이다. 정보 이득이 클수록 분기 후 클래스가 더 잘 구분된다.", "code": "class InformationGain:\n    def calculate(self, parent_gini, left_gini, right_gini,\n                  left_size, right_size):\n        total = left_size + right_size\n        weighted = (\n            left_size / total * left_gini +\n            right_size / total * right_gini\n        )\n        return parent_gini - weighted\n\ngain = InformationGain().calculate(0.5, 0.0, 0.0, 2, 2)\nprint(gain)", "options": ["자식 노드가 순수해질수록 정보 이득은 반드시 감소한다.", "자식 노드의 불순도는 자료 수에 따라 가중 평균한다.", "이 코드에서 정보 이득은 0.5이다.", "정보 이득이 크면 일반적으로 더 좋은 분기이다.", "정보 이득은 부모 불순도와 자식 불순도의 합이다."], "answer": [1, 2, 3], "explain": "자식 불순도가 모두 0이므로 가중 불순도는 0, 정보 이득은 0.5이다."}, {"title": "11. 최적 분기 탐색", "goal": "여러 후보 중 정보 이득이 가장 큰 분기를 선택한다.", "detail": "학습 과정에서는 여러 특성과 여러 임계값을 시험한다. 각 후보의 불순도 감소량을 계산한 뒤 가장 큰 값을 만드는 분기를 선택한다.", "code": "class SplitCandidate:\n    def __init__(self, feature, threshold, gain):\n        self.feature = feature\n        self.threshold = threshold\n        self.gain = gain\n\nclass BestSplitFinder:\n    def find(self, candidates):\n        return max(candidates, key=lambda c: c.gain)\n\ncandidates = [\n    SplitCandidate(0, 50, 0.2),\n    SplitCandidate(1, 80, 0.4)\n]\nbest = BestSplitFinder().find(candidates)\nprint(best.feature, best.threshold)", "options": ["선택된 임계값은 80이다.", "정보 이득이 가장 작은 후보를 최적 분기로 선택한다.", "lambda c: c.gain은 threshold만 비교한다.", "max()는 gain이 가장 큰 후보를 선택한다.", "선택된 특성 인덱스는 1이다."], "answer": [0, 3, 4], "explain": "gain 0.4가 가장 크므로 특성 1, 임계값 80이 선택된다."}, {"title": "12. 정지 조건", "goal": "트리 성장을 멈추는 조건을 구현한다.", "detail": "트리는 모든 노드가 무한히 분할되지 않도록 정지 조건을 사용한다. 최대 깊이 도달, 최소 자료 수 미만, 불순도 0, 정보 이득 부족 등이 대표적이다.", "code": "class StopCondition:\n    def __init__(self, max_depth, min_samples):\n        self.max_depth = max_depth\n        self.min_samples = min_samples\n\n    def should_stop(self, depth, labels):\n        pure = len(set(labels)) == 1\n        too_deep = depth >= self.max_depth\n        too_small = len(labels) < self.min_samples\n        return pure or too_deep or too_small\n\nstop = StopCondition(3, 2)\nprint(stop.should_stop(3, [\"A\", \"B\"]))", "options": ["깊이가 최대 깊이에 도달하면 분할을 멈춘다.", "모든 레이블이 같으면 순수 노드이므로 멈춘다.", "이 코드의 출력은 True이다.", "자료 수가 작을수록 반드시 계속 분할한다.", "정지 조건은 과대적합과 관계가 없다."], "answer": [0, 1, 2], "explain": "현재 깊이 3이 최대 깊이 3에 도달했으므로 True이다."}, {"title": "13. 잎 노드의 예측값", "goal": "잎 노드에서 다수 클래스를 예측값으로 결정한다.", "detail": "분류 트리의 잎 노드는 일반적으로 해당 노드에서 가장 많은 클래스를 예측값으로 사용한다. 확률 예측에서는 각 클래스의 비율을 반환할 수 있다.", "code": "class LeafMaker:\n    def majority_label(self, labels):\n        counts = ClassCounter().count(labels)\n        return max(counts, key=counts.get)\n\nmaker = LeafMaker()\nprint(maker.majority_label([\"A\", \"A\", \"B\"]))", "options": ["B가 A보다 많이 나타난다.", "A가 가장 많이 나타난다.", "majority_label()은 'A'를 반환한다.", "다수 클래스는 잎 노드의 예측값으로 사용할 수 있다.", "이 메서드는 항상 마지막 레이블만 반환한다."], "answer": [1, 2, 3], "explain": "A가 2개로 가장 많으므로 잎의 대표 예측값은 A이다."}, {"title": "14. 트리 깊이와 과대적합", "goal": "트리 깊이가 모델 복잡도와 일반화에 미치는 영향을 설명한다.", "detail": "트리가 너무 깊으면 학습 자료의 작은 차이와 잡음까지 외워 과대적합될 수 있다. 반대로 너무 얕으면 중요한 패턴을 충분히 학습하지 못해 과소적합될 수 있다.", "code": "class TreeComplexity:\n    def __init__(self, max_depth):\n        self.max_depth = max_depth\n\n    def risk_message(self):\n        if self.max_depth >= 20:\n            return \"과대적합 위험\"\n        if self.max_depth <= 1:\n            return \"과소적합 위험\"\n        return \"검증 필요\"\n\nmodel = TreeComplexity(25)\nprint(model.risk_message())", "options": ["트리가 깊을수록 항상 시험 자료 성능이 좋아진다.", "과대적합은 학습 자료와 무관하게 무조건 발생한다.", "max_depth는 트리의 복잡도를 제한한다.", "깊이 25에서는 '과대적합 위험'이 출력된다.", "너무 얕은 트리는 과소적합될 수 있다."], "answer": [2, 3, 4], "explain": "깊이는 복잡도에 영향을 주며 너무 깊거나 얕으면 각각 과대적합·과소적합 위험이 있다."}, {"title": "15. 사전 가지치기", "goal": "최대 깊이와 최소 분할 자료 수로 트리 성장을 제한한다.", "detail": "사전 가지치기는 트리를 만드는 동안 성장을 제한한다. max_depth, min_samples_split, min_samples_leaf, max_leaf_nodes 등이 대표적인 하이퍼파라미터이다.", "code": "class PrePruningConfig:\n    def __init__(self, max_depth=5,\n                 min_samples_split=4,\n                 min_samples_leaf=2):\n        self.max_depth = max_depth\n        self.min_samples_split = min_samples_split\n        self.min_samples_leaf = min_samples_leaf\n\nconfig = PrePruningConfig()\nprint(config.max_depth, config.min_samples_leaf)", "options": ["min_samples_split은 노드를 나누기 위한 최소 자료 수와 관련된다.", "min_samples_leaf는 잎 노드의 최소 자료 수와 관련된다.", "사전 가지치기는 트리를 만든 뒤 모든 노드를 삭제하는 과정이다.", "설정값을 작게 할수록 항상 과대적합이 사라진다.", "max_depth는 최대 깊이를 제한한다."], "answer": [0, 1, 4], "explain": "세 속성은 트리 성장을 사전에 제한하는 대표적인 설정이다."}, {"title": "16. 사후 가지치기", "goal": "완성된 트리에서 불필요한 가지를 줄이는 원리를 설명한다.", "detail": "사후 가지치기는 먼저 큰 트리를 만든 뒤 검증 성능에 도움이 되지 않는 가지를 제거한다. 비용 복잡도 가지치기에서는 복잡도와 오차를 함께 고려한다.", "code": "class PruningDecision:\n    def should_prune(self, validation_before,\n                     validation_after):\n        return validation_after >= validation_before\n\ndecision = PruningDecision()\nprint(decision.should_prune(0.82, 0.84))", "options": ["가지치기는 검증 성능을 절대 고려하지 않는다.", "가지 제거 후 검증 성능이 높아지면 True를 반환한다.", "0.84는 0.82보다 크므로 출력은 True이다.", "사후 가지치기는 불필요한 복잡도를 줄이는 데 사용된다.", "사후 가지치기는 트리를 만들기 전에만 수행한다."], "answer": [1, 2, 3], "explain": "가지 제거 후 검증 성능이 유지되거나 개선되면 제거를 선택할 수 있다."}, {"title": "17. 학습·검증·시험 자료 분리", "goal": "자료 분리의 목적을 설명하고 객체로 관리한다.", "detail": "학습 자료는 모델을 학습하는 데 사용하고, 검증 자료는 설정값을 선택하는 데 사용한다. 시험 자료는 최종 성능을 객관적으로 평가하는 데 사용한다.", "code": "class DataSplit:\n    def __init__(self, train, validation, test):\n        self.train = train\n        self.validation = validation\n        self.test = test\n\nsplit = DataSplit(\n    train=[1, 2, 3, 4, 5, 6],\n    validation=[7, 8],\n    test=[9, 10]\n)\nprint(len(split.train), len(split.test))", "options": ["시험 자료는 최종 성능을 확인하는 데 사용한다.", "시험 자료를 반복해서 보며 모델을 수정해도 객관성은 항상 유지된다.", "세 자료 집합은 반드시 완전히 같은 역할을 한다.", "학습 자료는 모델의 규칙을 학습하는 데 사용한다.", "검증 자료는 하이퍼파라미터 선택에 사용할 수 있다."], "answer": [0, 3, 4], "explain": "학습·검증·시험 자료는 서로 다른 역할을 하며 시험 자료는 최종 평가에 사용한다."}, {"title": "18. 정확도와 혼동행렬", "goal": "분류 결과를 정확도와 혼동행렬로 평가한다.", "detail": "정확도는 전체 예측 중 맞은 비율이다. 혼동행렬은 실제 클래스와 예측 클래스의 조합을 표로 나타내어 어떤 유형의 오류가 발생했는지 보여 준다.", "code": "class ClassificationEvaluator:\n    def accuracy(self, y_true, y_pred):\n        correct = sum(\n            a == p for a, p in zip(y_true, y_pred)\n        )\n        return correct / len(y_true)\n\nevaluator = ClassificationEvaluator()\nscore = evaluator.accuracy(\n    [\"A\", \"A\", \"B\", \"B\"],\n    [\"A\", \"B\", \"B\", \"B\"]\n)\nprint(score)", "options": ["정확도는 0.75이다.", "zip()은 실제값과 예측값을 서로 대응시킨다.", "정확도는 틀린 개수를 전체 개수에 더한 값이다.", "모든 클래스의 오류 유형은 정확도 하나로 완전히 설명된다.", "4개 예측 중 3개가 맞았다."], "answer": [0, 1, 4], "explain": "3개가 맞아 정확도는 3/4=0.75이며 오류 유형 분석에는 혼동행렬도 필요하다."}, {"title": "19. 특성 중요도", "goal": "트리에서 각 특성이 예측에 기여한 정도를 해석한다.", "detail": "특성 중요도는 한 특성이 분기에서 불순도를 얼마나 감소시켰는지 누적하여 계산한다. 값이 크면 모델이 그 특성을 많이 활용했다는 뜻이지만 인과관계를 의미하지는 않는다.", "code": "class FeatureImportance:\n    def __init__(self, names, values):\n        self.names = names\n        self.values = values\n\n    def most_important(self):\n        index = self.values.index(max(self.values))\n        return self.names[index]\n\nimportance = FeatureImportance(\n    [\"학습시간\", \"출석률\", \"과제점수\"],\n    [0.25, 0.15, 0.60]\n)\nprint(importance.most_important())", "options": ["특성 중요도가 크면 반드시 원인이라는 뜻이다.", "출석률의 중요도는 0.60이다.", "과제점수의 중요도 값이 가장 크다.", "most_important()는 '과제점수'를 반환한다.", "특성 중요도는 모델이 어떤 특성을 많이 활용했는지 해석하는 데 도움을 준다."], "answer": [2, 3, 4], "explain": "0.60인 과제점수가 가장 크지만 중요도는 인과관계를 직접 증명하지 않는다."}, {"title": "20. 결측값과 범주형 특성", "goal": "의사결정트리 학습 전 자료 전처리의 필요성을 설명한다.", "detail": "구현이나 라이브러리에 따라 결측값과 범주형 특성을 직접 처리하지 못할 수 있다. 결측값 대체, 범주형 인코딩, 자료형 통일 등의 전처리가 필요하다.", "code": "class DataPreprocessor:\n    def fill_missing(self, values, replacement):\n        return [\n            replacement if value is None else value\n            for value in values\n        ]\n\npreprocessor = DataPreprocessor()\nclean = preprocessor.fill_missing(\n    [70, None, 90], 80\n)\nprint(clean)", "options": ["None은 결측값을 나타낸다.", "결측값은 80으로 대체된다.", "출력 결과는 [70, 80, 90]이다.", "결측값은 모든 경우에 반드시 0으로만 대체해야 한다.", "전처리는 모델 학습과 전혀 관계가 없다."], "answer": [0, 1, 2], "explain": "None이 지정한 대체값 80으로 바뀌며 전처리 방법은 자료 특성에 따라 결정한다."}, {"title": "21. 분류 트리와 회귀 트리", "goal": "분류와 회귀 목적에 따라 예측값이 달라짐을 구분한다.", "detail": "분류 트리는 범주를 예측하고 회귀 트리는 연속적인 수치를 예측한다. 회귀 트리의 잎 노드에서는 해당 자료의 평균값 등을 예측값으로 사용할 수 있다.", "code": "class TreeTask:\n    def __init__(self, task_type):\n        self.task_type = task_type\n\n    def describe(self):\n        if self.task_type == \"classification\":\n            return \"범주 예측\"\n        return \"연속값 예측\"\n\nprint(TreeTask(\"regression\").describe())", "options": ["분류 트리는 범주를 예측한다.", "이 코드의 출력은 '연속값 예측'이다.", "회귀 트리는 반드시 문자열만 예측한다.", "분류와 회귀는 완전히 같은 목표값만 사용한다.", "회귀 트리는 연속적인 수치를 예측한다."], "answer": [0, 1, 4], "explain": "regression은 연속값 예측, classification은 범주 예측을 의미한다."}, {"title": "22. 의사결정트리의 장점과 한계", "goal": "의사결정트리의 해석 가능성과 불안정성을 함께 평가한다.", "detail": "의사결정트리는 규칙을 시각적으로 설명하기 쉽고 수치형·범주형 자료에 적용할 수 있다. 반면 자료가 조금만 바뀌어도 트리 구조가 크게 달라질 수 있고 깊은 트리는 과대적합되기 쉽다.", "code": "class TreeReview:\n    def strengths(self):\n        return [\"규칙 해석\", \"시각화\", \"비선형 분류\"]\n\n    def limitations(self):\n        return [\"과대적합\", \"자료 변화에 민감\"]\n\nreview = TreeReview()\nprint(review.strengths())\nprint(review.limitations())", "options": ["의사결정트리는 비선형 경계를 표현할 수 없다.", "의사결정트리는 규칙을 비교적 쉽게 설명할 수 있다.", "깊은 트리는 과대적합될 수 있다.", "자료가 조금 바뀌면 트리 구조가 달라질 수 있다.", "의사결정트리는 어떤 경우에도 과대적합되지 않는다."], "answer": [1, 2, 3], "explain": "트리는 해석이 쉽고 비선형 분류가 가능하지만 과대적합과 불안정성에 주의해야 한다."}];
+let lastResult = null;
+
+function escapeHtml(text) {
+  return text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function renderLessons() {
+  const container = document.getElementById("lessonContainer");
+  container.innerHTML = "";
+  lessons.forEach((item, index) => {
+    const lesson = document.createElement("article");
+    lesson.className = "lesson";
+    let optionsHtml = "";
+    item.options.forEach((option, oi) => {
+      optionsHtml += `<label class="option">
+        <input type="checkbox" name="q${index}" value="${oi}">
+        ${oi + 1}. ${option}
+      </label>`;
+    });
+    lesson.innerHTML = `
+      <div class="lesson-head">
+        <h3>${item.title}</h3>
+        <p><strong>학습 목표:</strong> ${item.goal}</p>
+      </div>
+      <div class="lesson-body">
+        <div class="detail"><strong>개념 상세 설명</strong><br>${item.detail}</div>
+        <div class="code-label">객체지향 관련 코드</div>
+        <div class="code-wrap">
+          <button class="copy" type="button" onclick="copyCode(this)">복사</button>
+          <pre><code>${escapeHtml(item.code)}</code></pre>
+        </div>
+        <div class="question">
+          <h4>문제 ${index + 1}. 위 개념과 코드에 관한 설명</h4>
+          <div class="instruction">옳은 것 3개를 선택하세요.</div>
+          ${optionsHtml}
+        </div>
+      </div>`;
+    container.appendChild(lesson);
+  });
+}
+
+document.addEventListener("change", event => {
+  if (event.target.type !== "checkbox") return;
+  const checked = document.querySelectorAll(`input[name="${event.target.name}"]:checked`);
+  if (checked.length > 3) {
+    event.target.checked = false;
+    alert("각 문항에서는 3개까지만 선택할 수 있습니다.");
+  }
+});
+
+function sameArray(a, b) {
+  return a.length === b.length && a.every((value, index) => value === b[index]);
+}
+
+function gradeQuiz() {
+  const id = document.getElementById("studentId").value.trim();
+  const name = document.getElementById("studentName").value.trim();
+  if (!id || !name) {
+    alert("학번과 이름을 입력하세요.");
+    return;
+  }
+
+  let correctCount = 0;
+  const details = [];
+  lessons.forEach((item, index) => {
+    const selected = [...document.querySelectorAll(`input[name="q${index}"]:checked`)]
+      .map(input => Number(input.value))
+      .sort((a,b) => a-b);
+    const correct = sameArray(selected, item.answer);
+    if (correct) correctCount += 1;
+    details.push({
+      number:index + 1,
+      title:item.title,
+      selected:selected.map(v => v + 1),
+      answer:item.answer.map(v => v + 1),
+      correct,
+      explain:item.explain
+    });
+  });
+
+  const score = Math.round(correctCount / lessons.length * 100);
+  lastResult = {
+    id, name, score, correctCount,
+    total:lessons.length,
+    time:new Date().toLocaleString("ko-KR"),
+    details
+  };
+
+  let html = `<div class="score">${name} 학생: ${score}점</div>`;
+  html += `<div>정답 문항: ${correctCount} / ${lessons.length} · 채점 시각: ${lastResult.time}</div>`;
+  details.forEach(detail => {
+    html += `<div class="feedback-item ${detail.correct ? "correct" : "incorrect"}">
+      <strong>${detail.number}번 ${detail.correct ? "정답" : "오답"}</strong><br>
+      선택: ${detail.selected.length ? detail.selected.join(", ") : "미응답"} /
+      정답: ${detail.answer.join(", ")}<br>
+      해설: ${detail.explain}
+    </div>`;
+  });
+  const result = document.getElementById("result");
+  result.innerHTML = html;
+  result.style.display = "block";
+  result.scrollIntoView({behavior:"smooth"});
+}
+
+function safeName(value) {
+  return value.replace(/[\\/:*?"<>|]/g, "_").replace(/\s+/g, "_");
+}
+
+function downloadResult() {
+  if (!lastResult) {
+    gradeQuiz();
+    if (!lastResult) return;
+  }
+
+  let text = "의사결정트리 개념기반 목표지향 학습 결과\n";
+  text += "========================================\n";
+  text += `학번: ${lastResult.id}\n`;
+  text += `이름: ${lastResult.name}\n`;
+  text += `점수: ${lastResult.score}점\n`;
+  text += `정답 문항: ${lastResult.correctCount} / ${lastResult.total}\n`;
+  text += `채점 시각: ${lastResult.time}\n`;
+  text += "========================================\n\n";
+
+  lastResult.details.forEach(detail => {
+    text += `${detail.number}번 · ${detail.title} · ${detail.correct ? "정답" : "오답"}\n`;
+    text += `선택: ${detail.selected.length ? detail.selected.join(", ") : "미응답"}\n`;
+    text += `정답: ${detail.answer.join(", ")}\n`;
+    text += `해설: ${detail.explain}\n\n`;
+  });
+
+  const blob = new Blob(["\ufeff" + text], {type:"text/plain;charset=utf-8"});
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `${safeName(lastResult.id)}_${safeName(lastResult.name)}_${lastResult.score}_의사결정트리.txt`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(link.href);
+}
+
+function resetQuiz() {
+  if (!confirm("모든 응답과 채점 결과를 초기화할까요?")) return;
+  document.querySelectorAll('input[type="checkbox"]').forEach(input => input.checked = false);
+  document.getElementById("studentId").value = "";
+  document.getElementById("studentName").value = "";
+  document.getElementById("result").style.display = "none";
+  lastResult = null;
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function copyCode(button) {
+  const code = button.parentElement.querySelector("code").innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    const original = button.textContent;
+    button.textContent = "완료";
+    setTimeout(() => button.textContent = original, 900);
+  });
+}
+
+renderLessons();
+</script>
+</body>
+</html>
