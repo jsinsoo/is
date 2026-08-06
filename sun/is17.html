@@ -1,0 +1,416 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 17차시 목표지향 개념기반 수업지도안</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:50px 20px 44px}.wrap,main{max-width:1200px;margin:auto}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}pre.trace{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top">
+<header><div class="wrap"><h1>정보과학 17차시<br>순열·조합·N-Queen 백트래킹</h1><p>선택·재귀·되돌리기의 공통 구조를 순열·조합·N-Queen 문제에 적용하고, 방문 배열·시작 인덱스·열과 대각선 집합을 활용해 중복과 충돌을 줄입니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>17차시</td><th>주제</th><td>순열·조합·N-Queen의 선택·재귀·되돌리기</td></tr><tr><th>핵심 질문</th><td colspan="3">같은 백트래킹 구조를 사용하면서도 순열·조합·N-Queen에서 상태와 후보, 충돌 조건이 어떻게 달라지는가?</td></tr><tr><th>전이 목표</th><td colspan="3">학생은 새로운 배치·선택 문제에서 상태, 후보, 목표 상태, 충돌 조건을 정의하고 선택·재귀·복원 과정을 구현하여 중복과 불필요한 탐색을 줄일 수 있다.</td></tr><tr><th>성취기준</th><td colspan="3">순열·조합·N-Queen 문제를 백트래킹으로 구현한다. 방문 배열·시작 인덱스·열과 대각선 집합을 활용하여 후보를 제한하고, 재귀 호출 후 상태를 복원하여 모든 해를 탐색한다.</td></tr><tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr><tr><td>도입</td><td>자리 배치와 체스 퀸 배치에서 선택·충돌·복원의 필요성을 탐색한다.</td><td>선택, 충돌</td></tr><tr><td>개념 형성</td><td>순열·조합·N-Queen의 상태와 후보를 비교한다.</td><td>상태, 후보</td></tr><tr><td>진단 실습</td><td>방문 배열·시작 인덱스·집합을 활용해 코드를 구현하고 추적한다.</td><td>재귀, 복원</td></tr><tr><td>정리·전이</td><td>새로운 배치 문제의 중복·충돌·가지치기 전략을 설계한다.</td><td>일반화, 최적화</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>선택·재귀·되돌리기 구조를 설명한다.</li><li>방문 배열로 순열을 생성한다.</li><li>시작 인덱스로 조합 중복을 방지한다.</li><li>N-Queen의 열·대각선 충돌을 검사한다.</li><li>집합을 활용해 충돌 검사를 최적화한다.</li></ol></div><div class="card"><h3>학습할 개념</h3><ul><li><b>후보 선택:</b> 현재 상태에서 가능한 원소나 위치를 고르는 과정</li><li><b>상태 복원:</b> 방문·선택·충돌 표시를 이전 상태로 되돌리는 과정</li><li><b>중복 방지:</b> 같은 결과를 여러 번 생성하지 않도록 후보를 제한하는 규칙</li><li><b>충돌 검사:</b> N-Queen에서 열과 대각선 조건을 확인하는 과정</li><li><b>집합 최적화:</b> 사용 중인 열·대각선을 빠르게 조회하는 방법</li></ul></div></div><div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>백트래킹은 공통적으로 후보를 선택하고 다음 상태를 재귀 탐색한 뒤 상태를 복원하지만, 효율적인 설계는 문제별 중복과 충돌 조건을 재귀 호출 전에 제거한다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">“소크라테스는 하나의 답에 머물지 않고 다른 가능성을 다시 물었고, 데카르트는 복잡한 문제를 작은 선택으로 나누었습니다. 다윈은 수많은 변이 중 환경에 맞는 선택이 살아남는 과정을 관찰했고, 가우스는 규칙을 발견해 불필요한 계산을 줄였습니다. 오늘 우리는 후보를 하나 고르고, 더 깊이 탐색하고, 맞지 않으면 되돌립니다. 인생에서 선택을 되돌리는 버튼은 드물지만 코드에서는 pop()이 친절하게 기다리고 있습니다. 다만 시험 답안을 제출한 뒤에는 backtracking이 지원되지 않을 수 있으니 오늘 충분히 연습해 봅시다.”</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow"><div class="flow-card"><strong>선택</strong>현재 상태에서 가능한 후보를 하나 고릅니다.</div><div class="flow-card"><strong>재귀</strong>선택이 반영된 다음 상태를 탐색합니다.</div><div class="flow-card"><strong>검사</strong>목표 상태와 충돌·중복 조건을 확인합니다.</div><div class="flow-card"><strong>복원</strong>선택과 사용 표시를 되돌려 다른 후보를 탐색합니다.</div></div>
+<ul><li>백트래킹의 최소 구조</li><li>방문 배열을 이용한 순열 생성</li><li>순열 재귀 호출 깊이 추적</li><li>중복 원소 순열의 같은 깊이 중복 방지</li><li>시작 인덱스를 이용한 조합 생성</li><li>목표 합 조합과 가지치기</li><li>N-Queen의 열·대각선 안전 검사</li><li>4-Queen 모든 해와 보드 출력</li><li>열·대각선 집합 기반 최적화</li><li>순열·조합·N-Queen의 상태와 후보 규모 비교</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol><li><b>방문 배열과 집합을 이용한 순열 생성 성능 비교</b></li><li><b>중복 원소 비율이 순열 후보 수에 미치는 영향</b></li><li><b>N-Queen 크기에 따른 탐색 노드 수와 실행 시간 분석</b></li><li><b>기본 충돌 검사와 집합 기반 충돌 검사의 성능 비교</b></li><li><b>가지치기 규칙이 조합 합 탐색의 효율에 미치는 영향</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 코드의 상태·후보·목표·충돌 검사·복원 과정을 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>선택·재귀·되돌리기의 최소 구조</h2></div>
+<div><span class="badge">백트래킹 틀</span><span class="badge">append·pop</span></div>
+<div class="two">
+<div><pre><code>items = ["A", "B"]
+selected = []
+
+def search(depth):
+    if depth == len(items):
+        print("완성:", selected)
+        return
+
+    for item in items:
+        if item in selected:
+            continue
+
+        # 1. 선택
+        selected.append(item)
+        print("선택:", selected)
+
+        # 2. 재귀
+        search(depth + 1)
+
+        # 3. 되돌리기
+        removed = selected.pop()
+        print("복원:", removed, selected)
+
+search(0)</code></pre></div>
+<div class="card">
+<h3>핵심 코드</h3>
+<pre class="trace">selected.append(item)  # 선택
+search(depth + 1)      # 재귀
+selected.pop()         # 되돌리기</pre>
+<p>세 줄이 백트래킹의 기본 구조입니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 백트래킹 최소 구조에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> selected.append(item)은 후보 선택이다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> search(depth+1)은 다음 상태를 탐색한다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> selected.pop()은 이전 상태로 되돌린다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 되돌리기는 첫 선택을 영구 고정한다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 백트래킹에는 재귀 호출이 절대 필요 없다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>방문 배열을 이용한 순열 생성</h2></div>
+<div><span class="badge">순열</span><span class="badge">visited</span></div>
+<pre><code>items = ["A", "B", "C"]
+selected = []
+visited = [False] * len(items)
+
+def permutation():
+    if len(selected) == len(items):
+        print(selected)
+        return
+
+    for index in range(len(items)):
+        if visited[index]:
+            continue
+
+        visited[index] = True
+        selected.append(items[index])
+
+        permutation()
+
+        selected.pop()
+        visited[index] = False
+
+permutation()</code></pre>
+<div class="check"><strong>되돌리기</strong><br/>재귀 호출이 끝나면 선택 목록에서 원소를 제거하고 방문 표시를 <code>False</code>로 되돌려 다른 순열에서 다시 사용할 수 있게 합니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 방문 배열 순열 생성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> visited[index]는 해당 원소 사용 여부를 나타낸다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 모든 원소를 선택하면 하나의 순열이 완성된다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 재귀 호출 후 방문 표시를 False로 복원한다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 순열은 원소의 순서를 구분하지 않는다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 한 번 사용한 원소는 다른 순열에서도 영구히 사용할 수 없다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>순열 재귀 과정 들여쓰기 추적</h2></div>
+<div><span class="badge">호출 깊이</span><span class="badge">추적 출력</span></div>
+<pre><code>items = [1, 2, 3]
+selected = []
+used = [False] * len(items)
+
+def permutation_trace(depth=0):
+    indent = "  " * depth
+
+    if depth == len(items):
+        print(indent, "완성:", selected)
+        return
+
+    for index, item in enumerate(items):
+        if used[index]:
+            continue
+
+        print(indent, "선택 후보:", item)
+
+        used[index] = True
+        selected.append(item)
+
+        permutation_trace(depth + 1)
+
+        removed = selected.pop()
+        used[index] = False
+
+        print(indent, "되돌리기:", removed)
+
+permutation_trace()</code></pre>
+<div class="note"><strong>관찰</strong><br/>들여쓰기가 깊어질수록 더 많은 자리가 결정된 상태이며, 완성 후에는 가장 최근 선택부터 역순으로 취소됩니다.</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 순열 재귀 추적에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> depth는 결정된 자리 수와 관련 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> 들여쓰기는 호출 깊이를 보여 준다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 완성 후 최근 선택부터 되돌린다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 깊이가 깊어질수록 선택된 원소 수는 줄어든다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 추적 출력은 재귀 흐름 이해와 무관하다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>중복 원소가 있는 순열의 중복 방지</h2></div>
+<div><span class="badge">중복 순열</span><span class="badge">같은 깊이 집합</span></div>
+<pre><code>items = ["A", "A", "B"]
+selected = []
+used = [False] * len(items)
+results = []
+
+def unique_permutation():
+    if len(selected) == len(items):
+        results.append(selected.copy())
+        return
+
+    used_this_depth = set()
+
+    for index, item in enumerate(items):
+        if used[index]:
+            continue
+
+        if item in used_this_depth:
+            continue
+
+        used_this_depth.add(item)
+        used[index] = True
+        selected.append(item)
+
+        unique_permutation()
+
+        selected.pop()
+        used[index] = False
+
+unique_permutation()
+
+for result in results:
+    print(result)</code></pre>
+<div class="warn"><strong>중복 방지 원리</strong><br/>같은 재귀 깊이에서 동일한 값은 한 번만 선택하여 결과가 같은 순열을 반복 생성하지 않습니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 중복 원소 순열에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> used_this_depth는 같은 깊이의 중복 선택을 막는다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> 같은 값 A는 같은 깊이에서 한 번만 선택한다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 완성 결과는 selected.copy()로 저장한다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 중복 원소가 있어도 결과 중복은 절대 발생하지 않는다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> used_this_depth는 모든 깊이에서 하나의 전역 집합이어야 한다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>시작 인덱스를 이용한 조합 생성</h2></div>
+<div><span class="badge">조합</span><span class="badge">start</span></div>
+<div class="two">
+<div><pre><code>items = ["A", "B", "C", "D"]
+r = 2
+selected = []
+
+def combination(start):
+    if len(selected) == r:
+        print(selected)
+        return
+
+    for index in range(start, len(items)):
+        selected.append(items[index])
+
+        combination(index + 1)
+
+        selected.pop()
+
+combination(0)</code></pre></div>
+<div class="card">
+<h3>순열과 차이</h3>
+<p>순열은 아직 사용하지 않은 모든 원소를 후보로 봅니다.</p>
+<p>조합은 선택 순서를 구분하지 않으므로 현재 위치보다 뒤의 원소만 선택합니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 조합 생성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> 선택한 원소 수가 r이면 하나의 조합이 완성된다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> 다음 호출에 index+1을 전달한다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 현재 위치보다 뒤의 원소만 선택한다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> A,B와 B,A를 서로 다른 조합으로 모두 출력한다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> 조합에서는 selected.pop()이 필요 없다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>목표 합을 만드는 조합과 가지치기</h2></div>
+<div><span class="badge">조합 합</span><span class="badge">가지치기</span></div>
+<pre><code>numbers = [1, 2, 3, 4, 5]
+target = 7
+selected = []
+solutions = []
+
+def combination_sum(start, total):
+    if total == target:
+        solutions.append(selected.copy())
+        return
+
+    if total &gt; target:
+        return
+
+    for index in range(start, len(numbers)):
+        number = numbers[index]
+
+        selected.append(number)
+        combination_sum(
+            index + 1,
+            total + number
+        )
+        selected.pop()
+
+combination_sum(0, 0)
+
+for solution in solutions:
+    print(solution)</code></pre>
+<div class="check"><strong>가지치기</strong><br/>누적 합이 목표값을 넘으면 뒤의 수를 더 선택해도 해가 될 수 없으므로 재귀 호출을 중단합니다.</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 목표 합 조합에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 누적 합이 target이면 해를 기록한다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 누적 합이 target을 넘으면 가지치기한다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 다음 재귀 호출에서 index+1을 사용해 같은 원소 재사용을 막는다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 합이 커질수록 무조건 계속 탐색해야 한다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 가지치기는 해가 될 수 있는 후보만 제거한다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>N-Queen의 안전한 열 검사</h2></div>
+<div><span class="badge">N-Queen</span><span class="badge">충돌 검사</span></div>
+<div class="two">
+<div><pre><code>n = 4
+
+# queens[row] = col
+queens = [-1] * n
+
+def is_safe(row, col):
+    for previous_row in range(row):
+        previous_col = queens[previous_row]
+
+        # 같은 열
+        if previous_col == col:
+            return False
+
+        # 같은 대각선
+        if abs(row - previous_row) == abs(
+            col - previous_col
+        ):
+            return False
+
+    return True
+
+queens[0] = 1
+
+for col in range(n):
+    print(
+        "1행", col, "열:",
+        is_safe(1, col)
+    )</code></pre></div>
+<div class="card">
+<h3>상태 표현</h3>
+<p><code>queens[row] = col</code>은 해당 행의 퀸 열 위치를 의미합니다.</p>
+<p>행마다 퀸을 하나씩 놓으므로 행 충돌은 자동으로 방지됩니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 N-Queen 안전 검사에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> queens[row]=col은 해당 행의 퀸 열을 뜻한다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> 같은 열 충돌을 검사한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 행과 열 차이의 절댓값으로 대각선 충돌을 검사한다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 행 충돌은 매번 모든 행을 다시 비교해야만 막을 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 대각선 충돌은 열 값만 같으면 발생한다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>4-Queen의 모든 해 출력</h2></div>
+<div><span class="badge">4-Queen</span><span class="badge">보드 출력</span></div>
+<pre><code>n = 4
+queens = [-1] * n
+solutions = []
+
+def is_safe(row, col):
+    for previous_row in range(row):
+        previous_col = queens[previous_row]
+
+        if previous_col == col:
+            return False
+
+        if abs(row - previous_row) == abs(
+            col - previous_col
+        ):
+            return False
+
+    return True
+
+def solve(row):
+    if row == n:
+        solutions.append(queens.copy())
+        return
+
+    for col in range(n):
+        if not is_safe(row, col):
+            continue
+
+        # 선택
+        queens[row] = col
+
+        # 재귀
+        solve(row + 1)
+
+        # 되돌리기
+        queens[row] = -1
+
+solve(0)
+
+for solution in solutions:
+    print("해:", solution)
+
+    for row in range(n):
+        line = [
+            "Q" if solution[row] == col else "."
+            for col in range(n)
+        ]
+        print(" ".join(line))
+
+    print()</code></pre>
+<div class="note"><strong>목표 상태</strong><br/><code>row == n</code>이면 모든 행에 충돌 없이 퀸을 배치한 것이므로 하나의 해를 기록합니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 4-Queen 모든 해 출력에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> row==n이면 모든 행에 퀸 배치가 완료된 상태이다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 안전한 열에 퀸을 놓고 다음 행을 탐색한다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 재귀 호출 후 queens[row]를 -1로 복원한다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 충돌 여부와 관계없이 모든 열을 재귀 호출한다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> 해를 저장할 때 원본 리스트를 그대로 참조해도 항상 안전하다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>열·대각선 집합을 이용한 N-Queen 최적화</h2></div>
+<div><span class="badge">집합</span><span class="badge">빠른 충돌 확인</span></div>
+<pre><code>def count_n_queens(n):
+    columns = set()
+    diagonal1 = set()  # row - col
+    diagonal2 = set()  # row + col
+    count = 0
+
+    def solve(row):
+        nonlocal count
+
+        if row == n:
+            count += 1
+            return
+
+        for col in range(n):
+            d1 = row - col
+            d2 = row + col
+
+            if (
+                col in columns
+                or d1 in diagonal1
+                or d2 in diagonal2
+            ):
+                continue
+
+            # 선택
+            columns.add(col)
+            diagonal1.add(d1)
+            diagonal2.add(d2)
+
+            # 재귀
+            solve(row + 1)
+
+            # 되돌리기
+            columns.remove(col)
+            diagonal1.remove(d1)
+            diagonal2.remove(d2)
+
+    solve(0)
+    return count
+
+for n in range(1, 9):
+    print(n, "Queen 해의 수:", count_n_queens(n))</code></pre>
+<div class="check"><strong>효율성</strong><br/>이전 모든 퀸을 반복해서 확인하는 대신, 사용 중인 열과 두 대각선을 집합에서 빠르게 검사합니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 집합 기반 N-Queen 최적화에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> columns는 사용 중인 열을 저장한다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> row-col과 row+col로 두 대각선을 구분한다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 집합 포함 검사로 충돌 여부를 빠르게 판단한다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 재귀 호출 후 집합 원소를 제거할 필요가 없다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 집합을 사용하면 모든 후보를 검사하지 않고도 항상 공식으로 답을 구한다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>순열·조합·N-Queen 백트래킹 종합 비교</h2></div>
+<div><span class="badge">종합 비교</span><span class="badge">설계 설명</span></div>
+<table>
+<tr><th>비교 요소</th><th>순열</th><th>조합</th><th>N-Queen</th></tr>
+<tr><td>상태</td><td>선택 목록과 사용 여부</td><td>선택 목록과 시작 인덱스</td><td>현재 행과 사용 열·대각선</td></tr>
+<tr><td>선택 후보</td><td>아직 사용하지 않은 원소</td><td>현재 인덱스 이후 원소</td><td>충돌하지 않는 열</td></tr>
+<tr><td>목표 상태</td><td>모든 자리 결정</td><td>r개 선택</td><td>N개 퀸 배치</td></tr>
+<tr><td>가지치기</td><td>이미 사용한 원소 제외</td><td>남은 후보 수·합 조건</td><td>열·대각선 충돌 제외</td></tr>
+<tr><td>되돌리기</td><td>pop, visited 해제</td><td>pop</td><td>열·대각선 집합에서 제거</td></tr>
+<tr><td>후보 규모</td><td>대체로 n!</td><td>대체로 nCr</td><td>최악에는 매우 큰 탐색 공간</td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>알고리즘 설명 예시</strong><br/>
+“현재 행에서 충돌하지 않는 열을 하나 선택하고, 선택한 열과 대각선을 사용 중으로 표시한 뒤 다음 행을 재귀적으로 탐색하였다.
+모든 행에 퀸을 배치하면 해를 기록하고, 재귀 호출이 끝난 뒤 열과 대각선 표시를 제거하여 이전 상태로 되돌렸다.
+충돌하는 열은 재귀 호출 전에 제외하여 불필요한 후보 탐색을 줄였다.”
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 순열·조합·N-Queen 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 세 문제 모두 선택-재귀-복원 구조를 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 순열은 사용 여부, 조합은 시작 인덱스, N-Queen은 열·대각선 상태가 중요하다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> 가지치기 조건은 문제마다 다르다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 세 문제의 후보 규모는 항상 동일하다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> N-Queen에서는 충돌 검사가 필요 없다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">“시는 수많은 단어 후보 가운데 가장 맑은 한 단어를 선택하고, 소설은 인물의 선택을 따라 새로운 세계를 만듭니다. 희곡은 대사 하나를 바꾸며 장면의 가능성을 시험하고, 연극은 반복 연습 속에서 어색한 동작을 지우고 더 좋은 장면을 찾습니다. 음악도 틀린 음을 되돌리고 다시 연주하며 화음을 완성합니다. 여러분의 꿈도 한 번의 선택으로 끝나지 않습니다. 잘못 고른 길은 복원하고, 충돌하는 조건은 가지치기하며, 가능한 해를 끝까지 탐색하세요. 다만 친구와의 약속을 pop()으로 지우면 현실에서는 예외가 발생할 수 있습니다. 오늘의 끈기 있는 탐색이 여러분만의 아름다운 해를 찾게 하길 바랍니다.”</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 백트래킹은 선택 후 재귀 탐색하고 상태를 복원하는 방법이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 순열은 원소의 순서를 구분하지 않는다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 조합은 보통 현재 인덱스 뒤의 원소만 선택한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 재귀 호출 후 visited를 복원하면 다른 순열에서 원소를 다시 사용할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 가지치기는 조건을 위반한 상태를 더 깊이 탐색하지 않는다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. N-Queen에서는 같은 열과 같은 대각선 충돌을 검사한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. N-Queen에서 row-col과 row+col은 두 대각선 식별에 활용할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 집합을 사용하면 상태 복원이 필요 없다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 중복 순열에서는 같은 깊이에서 동일 값을 한 번만 선택할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 백트래킹은 후보 수가 커도 항상 즉시 끝난다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 백트래킹 기본 구조에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 후보를 선택한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 다음 상태를 재귀 탐색한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 선택을 되돌린다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 첫 후보만 영구 유지한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 종료 조건은 필요 없다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 순열에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 원소의 순서를 구분한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 사용 여부를 관리할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 모든 자리가 결정되면 완성된다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> A,B와 B,A를 같은 결과로 본다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 시작 인덱스만으로 항상 구현해야 한다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 조합에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 순서를 구분하지 않는다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> start 인덱스를 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> r개를 선택하면 하나의 조합이다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 같은 원소를 순서만 바꿔 여러 번 기록한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 항상 모든 원소를 선택해야 한다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 중복 순열 처리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 같은 깊이의 동일 값을 중복 선택하지 않을 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> used_this_depth 집합을 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 완성된 결과는 복사해 저장할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 동일 값은 전체 탐색에서 한 번만 사용해야 한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 중복 제거는 결과 정확성을 항상 해친다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. N-Queen 상태에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 현재 행을 상태로 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 사용 중인 열을 상태로 관리할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 사용 중인 두 대각선을 상태로 관리할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 퀸의 색상만 상태로 사용한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 충돌 정보는 상태와 무관하다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. N-Queen 충돌 검사에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 같은 열을 검사한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> row-col 대각선을 검사한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> row+col 대각선을 검사한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 행마다 여러 퀸을 반드시 놓는다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 충돌해도 재귀 호출을 계속한다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 충돌하는 후보를 제외한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 목표 합을 초과한 후보를 중단한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 탐색량을 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 항상 모든 후보를 더 깊이 탐색한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 잘못된 조건이어도 정답 누락이 없다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 집합 기반 최적화에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 포함 여부를 빠르게 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 열과 대각선 사용 상태를 저장할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 재귀 호출 후 상태를 제거할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 집합에는 숫자를 저장할 수 없다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 집합 사용만으로 재귀가 필요 없어지는 것은 아니다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 백트래킹 성능 분석에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 후보 규모를 분석한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 가지치기 전후 탐색 노드 수를 비교한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 메모리와 호출 깊이를 고려한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 정확성은 고려하지 않는다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 작은 입력 하나만으로 모든 성능을 단정한다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 알고리즘 설명에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 상태를 정의한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 후보와 충돌 조건을 설명한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 선택·재귀·복원 과정을 설명한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 결과만 말하고 과정은 생략한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 가지치기 근거는 설명하지 않는다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 10문항 × 5점 = 50점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 3점 = 30점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 17차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "백트래킹의 기본 구조는 선택-재귀-되돌리기입니다."}, "2": {"ans": [0, 1, 2], "exp": "순열은 순서를 구분하며 방문 상태를 복원해야 다른 순열을 만들 수 있습니다."}, "3": {"ans": [0, 1, 2], "exp": "호출 깊이와 선택·복원 과정을 출력하면 재귀 구조를 관찰할 수 있습니다."}, "4": {"ans": [0, 1, 2], "exp": "같은 깊이에서 동일 값을 한 번만 선택해 중복 순열을 줄입니다."}, "5": {"ans": [0, 1, 2], "exp": "조합은 순서를 구분하지 않으므로 뒤쪽 원소만 탐색하고 상태를 복원합니다."}, "6": {"ans": [0, 1, 2], "exp": "양수 목록에서는 목표 초과 시 더 탐색할 필요가 없습니다."}, "7": {"ans": [0, 1, 2], "exp": "행별로 하나씩 배치하면 행 충돌은 자동으로 방지되고 열·대각선만 검사합니다."}, "8": {"ans": [0, 1, 2], "exp": "안전한 열만 탐색하고 해는 복사해 저장하며 상태를 복원합니다."}, "9": {"ans": [0, 1, 2], "exp": "사용 중인 열과 대각선을 집합으로 관리해 충돌 검사를 빠르게 합니다."}, "10": {"ans": [0, 1, 2], "exp": "공통 구조는 같지만 상태와 후보, 가지치기 기준은 문제마다 다릅니다."}}, "ox": {"1": {"ans": true, "exp": "선택-탐색-복원이 핵심입니다."}, "2": {"ans": false, "exp": "순열은 순서를 구분합니다."}, "3": {"ans": true, "exp": "순서 중복을 막습니다."}, "4": {"ans": true, "exp": "상태 복원의 목적입니다."}, "5": {"ans": true, "exp": "불필요한 탐색을 줄입니다."}, "6": {"ans": true, "exp": "행 충돌은 행별 하나 배치로 방지됩니다."}, "7": {"ans": true, "exp": "대각선 집합 관리에 사용합니다."}, "8": {"ans": false, "exp": "재귀 후 집합에서 제거해야 합니다."}, "9": {"ans": true, "exp": "중복 결과를 줄입니다."}, "10": {"ans": false, "exp": "최악에는 매우 큰 탐색 공간을 가질 수 있습니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "선택-재귀-복원과 종료 조건이 필요합니다."}, "2": {"ans": [0, 1, 2], "exp": "순열은 순서를 구분하며 사용 여부가 중요합니다."}, "3": {"ans": [0, 1, 2], "exp": "조합은 선택 개수와 시작 위치가 중요합니다."}, "4": {"ans": [0, 1, 2], "exp": "같은 깊이 중복을 막되 다른 깊이에서는 값 사용이 가능합니다."}, "5": {"ans": [0, 1, 2], "exp": "행·열·대각선 정보가 핵심 상태입니다."}, "6": {"ans": [0, 1, 2], "exp": "안전한 위치만 다음 상태로 확장합니다."}, "7": {"ans": [0, 1, 2], "exp": "가지치기 조건은 정답을 보존하도록 정확해야 합니다."}, "8": {"ans": [0, 1, 2], "exp": "집합은 충돌 확인을 빠르게 하지만 백트래킹 구조는 유지됩니다."}, "9": {"ans": [0, 1, 2], "exp": "후보 수, 자원 사용, 정확성을 함께 평가해야 합니다."}, "10": {"ans": [0, 1, 2], "exp": "상태·후보·목표·가지치기·복원을 연결해 설명해야 합니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();
+if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;
+const now=new Date(),lines=["정보과학 17차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);
+document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"});
+const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_17차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();
+document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

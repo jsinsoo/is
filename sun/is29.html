@@ -1,0 +1,406 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 29차시 | 프로젝트 수행 계획 작성</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:52px 20px 46px;position:relative;overflow:hidden}.wrap,main{max-width:1220px;margin:auto}header:after{content:"";position:absolute;right:-80px;bottom:-100px;width:290px;height:290px;border-radius:50%;background:rgba(255,255,255,.08)}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}.hero-sub{max-width:980px;font-size:1.06rem;opacity:.96}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px;position:relative}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}section>h2:after{content:"";display:block;width:56px;height:4px;margin-top:8px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--purple))}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card{transition:transform .2s ease,box-shadow .2s ease}.flow-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(31,69,99,.10)}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}.quote strong{font-size:1.08rem;color:var(--navy)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold);color:var(--navy)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}
+.mini-menu{position:fixed;left:8px;top:8px;z-index:80}.mini-menu summary{list-style:none;width:28px;height:28px;border-radius:7px;background:rgba(23,50,77,.92);color:#fff;display:grid;place-items:center;cursor:pointer;font-size:12px;box-shadow:0 4px 12px rgba(0,0,0,.22)}.mini-menu summary::-webkit-details-marker{display:none}.mini-panel{margin-top:5px;min-width:145px;padding:7px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,.16)}.mini-panel a{display:block;padding:6px 8px;border-radius:7px;text-decoration:none;color:var(--navy);font-size:.82rem;font-weight:800}.mini-panel a:hover{background:var(--sky)}
+footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar,.mini-menu{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top"><details class="mini-menu"><summary>☰</summary><div class="mini-panel">
+<a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 10선</a><a href="#closing">끝 멘트</a><a href="#ox">형성평가</a><a href="#diag">진단평가</a><a href="#submit">제출</a>
+</div></details>
+<header><div class="wrap"><h1>정보과학 29차시<br>사용자·입력·출력·제한 조건과 프로젝트 수행 계획</h1><p class="hero-sub">컴퓨터과학 프로젝트를 시작하기 전에 사용자 요구를 분석하고, 입력과 출력, 제한 조건, 핵심 기능, 일정, 역할, 산출물, 완료 기준과 검증 방법을 체계적으로 문서화합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>29차시</td><th>주제</th><td>사용자 요구 분석과 프로젝트 수행 계획 작성</td></tr>
+<tr><th>핵심 질문</th><td colspan="3">좋은 프로젝트 수행 계획은 누구를 위해 무엇을 만들고, 어떤 자료와 제한 조건 안에서 누가 언제 어떻게 검증할 것인지를 어떻게 명확히 하는가?</td></tr>
+<tr><th>전이 목표</th><td colspan="3">학생은 새로운 프로젝트에서 사용자·입력·출력·제한 조건을 정의하고 기능을 작은 단위로 분해하여 일정·역할·산출물·완료 기준·검증 계획이 포함된 실행 가능한 수행 계획서를 작성할 수 있다.</td></tr>
+<tr><th>성취기준</th><td colspan="3">프로젝트 사용자의 요구와 사용 상황을 분석하고 입력·출력·제한 조건을 정의한다. 데이터 수집·검증·처리·저장·출력·평가 기능으로 분해하고 단계별 일정, 팀원 역할, 산출물, 완료 기준과 테스트 방법을 계획한다.</td></tr>
+<tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr>
+<tr><td>도입</td><td>계획 없이 시작한 프로젝트에서 생기는 기능 누락·역할 충돌·일정 지연 사례를 분석한다.</td><td>필요성, 사용자</td></tr>
+<tr><td>개념 형성</td><td>사용자·입력·출력·제한·기능·일정·역할·검증의 관계를 구조화한다.</td><td>요구, 구조</td></tr>
+<tr><td>진단 실습</td><td>10개 프로젝트 예제의 계획 요소와 코드를 분석하고 점검표를 작성한다.</td><td>분해, 계획</td></tr>
+<tr><td>정리·전이</td><td>자신의 프로젝트 수행 계획서를 작성하고 동료 평가를 통해 보완한다.</td><td>실행, 성찰</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>사용자와 요구를 구체적으로 정의한다.</li><li>입력·출력과 제한 조건을 명확히 한다.</li><li>프로젝트 기능을 작은 단위로 분해한다.</li><li>일정·역할·산출물·완료 기준을 연결한다.</li><li>정상·경계·예외 입력을 포함한 검증 계획을 세운다.</li></ol></div>
+<div class="card"><h3>학습할 개념</h3><ul><li><b>사용자 요구:</b> 사용자가 해결하고 싶은 불편과 필요한 기능</li><li><b>입력·출력 명세:</b> 받는 자료와 제공할 결과의 형식·범위</li><li><b>제한 조건:</b> 시간·장비·데이터·윤리·안전상의 범위</li><li><b>기능 분해:</b> 복잡한 작업을 구현·테스트 가능한 단위로 나누는 과정</li><li><b>완료 기준:</b> 산출물이 목표 수준에 도달했는지 판단하는 객관적 기준</li></ul></div></div>
+<div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>좋은 수행 계획은 해야 할 일을 나열하는 문서가 아니라 사용자 요구와 기능, 일정과 역할, 산출물과 검증 기준을 서로 연결하여 프로젝트의 성공 가능성을 높이는 설계도이다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">
+<strong>“계획은 미래를 정확히 예언하는 일이 아니라, 변화 속에서도 방향을 잃지 않게 하는 지도입니다.”</strong><br><br>
+아리스토텔레스는 목적을 분명히 알아야 올바른 수단을 선택할 수 있다고 보았고, 공자는 일을 시작하기 전에 이름과 역할을 바로 세워야 질서가 생긴다고 말했습니다. 다빈치는 위대한 작품을 만들기 전에 수많은 스케치와 구조도를 남겼고, 가우스는 복잡한 문제를 작은 단계로 나누어 해결했습니다.<br><br>
+오늘 우리는 프로젝트를 바로 코딩하지 않습니다. 누가 사용할지, 어떤 자료가 들어오고 어떤 결과가 나가야 하는지, 무엇을 반드시 만들고 무엇은 이번 범위에서 제외할지 먼저 정합니다. 계획은 창의성을 막는 문서가 아니라 좋은 아이디어가 일정 속에서 실제 결과로 완성되도록 돕는 구조입니다.<br><br>
+다만 역할 분담에서 “기획은 친구, 개발도 친구, 발표도 친구, 나는 응원 담당”이라고 작성하면 협업 알고리즘이 공정성 검사에서 실패합니다. 오늘은 책임을 나누되 꿈은 함께 키우는 실행 가능한 계획을 세워 봅시다.
+</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow">
+<div class="flow-card"><strong>요구 분석</strong>사용자·상황·불편·목표를 구체적으로 정의합니다.</div>
+<div class="flow-card"><strong>명세 작성</strong>입력·출력·제한 조건과 성공 기준을 정합니다.</div>
+<div class="flow-card"><strong>기능 분해</strong>수집·검증·처리·저장·출력·평가로 나눕니다.</div>
+<div class="flow-card"><strong>실행 계획</strong>일정·역할·산출물·완료 기준을 연결합니다.</div></div>
+<ul><li>교실 환기 알림 프로그램 수행 계획</li><li>급식 대기시간 예측 프로젝트</li><li>학교 도서 추천 프로그램</li><li>교내 최단 경로 안내 시스템</li><li>학교 전력 사용 분석 프로젝트</li><li>개인 학습 플래너 프로젝트</li><li>학교 프린터 작업 관리 시스템</li><li>실외 활동 가능 시간 추천</li><li>교실 좌석 배치 도우미</li><li>종합 수행 계획 자동 점검표</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol>
+<li><b>프로젝트 기능 분해 수준이 구현 오류와 일정 지연에 미치는 영향</b></li>
+<li><b>역할 분담 방식에 따른 모둠 프로젝트 협업 효율 비교</b></li>
+<li><b>완료 기준의 구체성이 프로젝트 결과 품질에 미치는 영향</b></li>
+<li><b>사용자 요구 분석 전후의 기능 변경 횟수 비교</b></li>
+<li><b>중간 점검과 일정 여유 시간이 프로젝트 완성도에 미치는 영향</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 예제의 사용자·입력·출력·제한 조건·기능 분해·일정·역할·검증 기준을 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>교실 환기 알림 프로그램 수행 계획</h2></div>
+<div><span class="badge">센서</span><span class="badge">환경</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>교실 수업을 운영하는 교사와 학생</td></tr>
+<tr><td>입력</td><td>시간대별 이산화탄소 농도, 온도, 습도</td></tr>
+<tr><td>출력</td><td>정상·주의·환기 필요 상태와 권장 환기 시점</td></tr>
+<tr><td>제한 조건</td><td>센서 오차 ±50ppm, 측정 간격 1분, 개인정보 수집 금지</td></tr>
+<tr><td>핵심 기능</td><td>센서값 검증, 임계값 판정, 이동평균, 경고 출력</td></tr>
+</table>
+<pre><code>def ventilation_status(co2):
+    if co2 &gt;= 1500:
+        return "즉시 환기"
+    if co2 &gt;= 1000:
+        return "환기 권장"
+    return "정상"
+
+values = [720, 890, 1040, 1320, 1560]
+
+for value in values:
+    print(value, ventilation_status(value))</code></pre>
+<div class="two">
+<div class="card"><h3>일정</h3><p>1주차 문제 정의·자료 조사<br/>2주차 센서 수집<br/>3주차 알고리즘 구현<br/>4주차 검증·발표</p></div>
+<div class="card"><h3>역할</h3><p>기획: 요구 분석<br/>데이터: 센서 기록<br/>개발: 판정 함수<br/>검증: 실제 환기 전후 비교</p></div>
+</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 교실 환기 알림 수행 계획에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 사용자는 교사와 학생으로 정의할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 입력은 이산화탄소·온도·습도 센서값이다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 센서 오차와 개인정보 미수집을 제한 조건으로 둘 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 환기 상태는 입력값과 무관하게 항상 정상이다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 검증은 실제 환기 전후 비교와 무관하다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>급식 대기시간 예측 프로젝트</h2></div>
+<div><span class="badge">큐</span><span class="badge">학교생활</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>급식실을 이용하는 학생과 운영 담당자</td></tr>
+<tr><td>입력</td><td>시간대별 도착 인원, 배식 시간, 배식대 수</td></tr>
+<tr><td>출력</td><td>개인별 예상 대기시간, 평균 대기시간, 혼잡 시간대</td></tr>
+<tr><td>제한 조건</td><td>학생 이름 대신 익명 번호 사용, 관찰 시간 5일</td></tr>
+<tr><td>기능 분해</td><td>도착 데이터 입력 → 큐 시뮬레이션 → 평균 계산 → 혼잡도 출력</td></tr>
+</table>
+<pre><code>def average_waiting(service_times):
+    current = 0
+    waits = []
+
+    for service in service_times:
+        waits.append(current)
+        current += service
+
+    return sum(waits) / len(waits)
+
+times = [2, 3, 2, 4, 1]
+print("평균 대기시간:", average_waiting(times))</code></pre>
+<div class="note"><strong>검증 기준</strong><br/>프로그램의 예상 대기시간과 실제 관찰값의 평균 오차가 2분 이내인지 확인합니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 급식 대기시간 프로젝트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 도착 인원과 배식 시간을 입력으로 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 큐 시뮬레이션으로 예상 대기시간을 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 예상값과 실제값의 평균 오차를 검증 기준으로 둘 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 학생 이름을 반드시 공개해야 한다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 관찰 기간은 정할 필요가 없다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>학교 도서 추천 프로그램</h2></div>
+<div><span class="badge">추천</span><span class="badge">딕셔너리</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>관심 분야의 책을 찾고 싶은 학생</td></tr>
+<tr><td>입력</td><td>선호 장르, 최근 읽은 도서, 평점</td></tr>
+<tr><td>출력</td><td>추천 도서 3권과 추천 이유</td></tr>
+<tr><td>제한 조건</td><td>대출 기록은 익명화, 추천 가능한 도서 100권 이내</td></tr>
+<tr><td>기능 분해</td><td>도서 데이터 불러오기 → 장르 점수 계산 → 정렬 → 상위 도서 출력</td></tr>
+</table>
+<pre><code>books = [
+    {"title": "파이썬 기초", "genre": "정보", "score": 4.7},
+    {"title": "우주의 구조", "genre": "과학", "score": 4.8},
+    {"title": "알고리즘 여행", "genre": "정보", "score": 4.6},
+]
+
+preferred = "정보"
+
+result = sorted(
+    [book for book in books if book["genre"] == preferred],
+    key=lambda book: book["score"],
+    reverse=True
+)
+
+for book in result[:3]:
+    print(book["title"], book["score"])</code></pre>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 학교 도서 추천 계획에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> 선호 장르와 평점을 입력으로 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> 추천 도서와 추천 이유를 출력할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 대출 기록은 익명화할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 추천 가능한 도서 수는 무한해야 한다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 추천 결과는 정렬과 무관하다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>교내 최단 경로 안내 시스템</h2></div>
+<div><span class="badge">그래프</span><span class="badge">BFS</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>신입생, 학부모, 외부 방문자</td></tr>
+<tr><td>입력</td><td>출발 장소와 도착 장소</td></tr>
+<tr><td>출력</td><td>이동 경로, 이동 단계 수, 예상 시간</td></tr>
+<tr><td>제한 조건</td><td>엘리베이터·계단 접근 조건 반영, 교내 지도만 사용</td></tr>
+<tr><td>기능 분해</td><td>장소 그래프 생성 → 경로 탐색 → 경로 복원 → 안내 문장 출력</td></tr>
+</table>
+<pre><code>from collections import deque
+
+def shortest_path(graph, start, target):
+    queue = deque([(start, [start])])
+    visited = {start}
+
+    while queue:
+        node, path = queue.popleft()
+
+        if node == target:
+            return path
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append((neighbor, path + [neighbor]))
+
+    return None</code></pre>
+<div class="two">
+<div class="card"><h3>일정</h3><p>지도 조사 2일 → 그래프 설계 2일 → BFS 구현 2일 → 사용자 테스트 2일</p></div>
+<div class="card"><h3>역할</h3><p>공간 조사, 그래프 입력, 알고리즘 개발, 사용자 안내 화면 제작</p></div>
+</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 교내 최단 경로 안내 계획에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> 장소를 그래프로 모델링할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> BFS로 최소 이동 단계 경로를 찾을 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 엘리베이터·계단 접근 조건을 반영할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 경로 복원은 필요 없다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 출발 장소와 도착 장소는 입력이 아니다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>학교 전력 사용 분석 프로젝트</h2></div>
+<div><span class="badge">에너지</span><span class="badge">시각화</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>학교 시설 담당자와 학생 환경 동아리</td></tr>
+<tr><td>입력</td><td>시간대별 전력 사용량, 기온, 수업 여부</td></tr>
+<tr><td>출력</td><td>평균 초과 시간대, 절감 가능 시간, 예상 절감량</td></tr>
+<tr><td>제한 조건</td><td>개별 교실 식별 정보 비공개, 한 달 자료만 분석</td></tr>
+<tr><td>기능 분해</td><td>CSV 불러오기 → 결측값 처리 → 평균 계산 → 이상 시간 탐지 → 그래프</td></tr>
+</table>
+<pre><code>power = [42, 55, 61, 64, 58, 51, 63, 60, 44]
+average = sum(power) / len(power)
+
+high_usage = [
+    (hour + 8, value)
+    for hour, value in enumerate(power)
+    if value &gt; average
+]
+
+print("평균:", average)
+print("평균 초과:", high_usage)</code></pre>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 학교 전력 분석 프로젝트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> 시간대별 전력 사용량을 입력으로 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> 결측값 처리와 평균 계산을 기능으로 분해할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 평균 초과 시간과 절감 가능 구간을 출력할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 개별 교실 식별 정보는 반드시 공개해야 한다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> 자료 기간은 제한할 필요가 없다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>개인 학습 플래너 프로젝트</h2></div>
+<div><span class="badge">일정 관리</span><span class="badge">우선순위</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>과제와 시험 일정을 관리하려는 학생</td></tr>
+<tr><td>입력</td><td>과제명, 마감일, 예상 시간, 중요도</td></tr>
+<tr><td>출력</td><td>우선순위가 반영된 오늘의 학습 목록</td></tr>
+<tr><td>제한 조건</td><td>하루 학습 가능 시간 180분, 과제당 최소 20분</td></tr>
+<tr><td>기능 분해</td><td>과제 등록 → 우선순위 계산 → 시간 배분 → 일정 출력</td></tr>
+</table>
+<pre><code>tasks = [
+    ("수학 과제", 2, 90),
+    ("정보 보고서", 1, 60),
+    ("과학 복습", 3, 40),
+]
+
+ordered = sorted(
+    tasks,
+    key=lambda task: (task[1], task[2])
+)
+
+available = 180
+
+for name, priority, minutes in ordered:
+    if minutes &lt;= available:
+        print("수행:", name, minutes, "분")
+        available -= minutes</code></pre>
+<div class="warn"><strong>윤리</strong><br/>개인 학습 기록은 사용자 본인만 확인할 수 있도록 저장 범위와 공개 범위를 제한합니다.</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 개인 학습 플래너 계획에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 과제명·마감일·예상 시간·중요도를 입력으로 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 하루 학습 가능 시간을 제한 조건으로 둘 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 우선순위 계산과 시간 배분을 기능으로 나눌 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 개인 학습 기록은 누구나 공개해야 한다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 모든 과제는 같은 우선순위이다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>학교 프린터 작업 관리 시스템</h2></div>
+<div><span class="badge">큐</span><span class="badge">작업 관리</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>공용 프린터를 사용하는 학생과 교사</td></tr>
+<tr><td>입력</td><td>문서명, 페이지 수, 제출 시각</td></tr>
+<tr><td>출력</td><td>대기 순서와 예상 완료 시간</td></tr>
+<tr><td>제한 조건</td><td>한 작업 최대 50쪽, 동일 사용자 연속 3건 제한</td></tr>
+<tr><td>기능 분해</td><td>작업 등록 → 큐 삽입 → 예상 시간 계산 → 처리 완료 제거</td></tr>
+</table>
+<pre><code>from collections import deque
+
+jobs = deque([
+    ("보고서.pdf", 10),
+    ("발표자료.pptx", 6),
+    ("과제.hwp", 4),
+])
+
+current = 0
+
+while jobs:
+    name, pages = jobs.popleft()
+    start = current
+    current += pages
+
+    print(
+        name,
+        "시작:", start,
+        "완료:", current
+    )</code></pre>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 프린터 작업 관리 시스템에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 문서명·페이지 수·제출 시각을 입력으로 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> 큐로 대기 순서를 관리할 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 작업당 최대 페이지 수를 제한할 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 완료한 작업도 큐에 계속 남겨야 한다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 예상 완료 시간은 계산할 수 없다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>실외 활동 가능 시간 추천</h2></div>
+<div><span class="badge">공공데이터</span><span class="badge">조건 판단</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>체육 수업 담당 교사와 학생</td></tr>
+<tr><td>입력</td><td>미세먼지, 기온, 강수 여부</td></tr>
+<tr><td>출력</td><td>실외 활동 가능·주의·실내 권장 상태</td></tr>
+<tr><td>제한 조건</td><td>공식 기준 사용, 건강 관련 최종 판단은 교사가 결정</td></tr>
+<tr><td>기능 분해</td><td>데이터 수집 → 단위 확인 → 기준 적용 → 추천 출력</td></tr>
+</table>
+<pre><code>def outdoor_status(pm25, rain, temperature):
+    if rain:
+        return "실내 활동 권장"
+
+    if pm25 &gt; 35:
+        return "미세먼지 주의"
+
+    if temperature &gt;= 33:
+        return "폭염 주의"
+
+    return "실외 활동 가능"
+
+print(outdoor_status(28, False, 29))</code></pre>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 실외 활동 가능 시간 추천에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 미세먼지·기온·강수 여부를 입력으로 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 공식 기준을 적용해 상태를 분류할 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 건강 관련 최종 판단은 교사가 담당하도록 제한할 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 공식 기준은 확인하지 않아도 된다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> 단위 확인은 불필요하다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>교실 좌석 배치 도우미</h2></div>
+<div><span class="badge">제약 조건</span><span class="badge">백트래킹</span></div>
+<table>
+<tr><th>항목</th><th>계획</th></tr>
+<tr><td>사용자</td><td>학급 담임교사와 학생</td></tr>
+<tr><td>입력</td><td>학생 목록, 시력·키·협업 관계 등의 제한 조건</td></tr>
+<tr><td>출력</td><td>제약 조건을 만족하는 좌석 배치 후보</td></tr>
+<tr><td>제한 조건</td><td>민감한 개인 정보는 최소화하고 교사 확인 후 사용</td></tr>
+<tr><td>기능 분해</td><td>조건 입력 → 후보 생성 → 충돌 검사 → 배치 출력</td></tr>
+</table>
+<pre><code>students = ["민준", "서연", "지우"]
+selected = []
+
+def arrange():
+    if len(selected) == len(students):
+        print(selected)
+        return
+
+    for student in students:
+        if student in selected:
+            continue
+
+        selected.append(student)
+        arrange()
+        selected.pop()
+
+arrange()</code></pre>
+<div class="note"><strong>확장 조건</strong><br/>특정 학생끼리 인접 금지, 앞자리 우선, 모둠별 균형 등의 조건을 추가할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 교실 좌석 배치 도우미에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> 학생 목록과 제약 조건을 입력으로 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 백트래킹으로 배치 후보를 생성할 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 민감한 개인정보는 최소화해야 한다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 모든 학생 정보를 제한 없이 공개해야 한다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 충돌 검사는 필요 없다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>종합 수행 계획 자동 점검표</h2></div>
+<div><span class="badge">종합 템플릿</span><span class="badge">계획 검증</span></div>
+<pre><code>project_plan = {
+    "사용자": "학생과 교사",
+    "입력": ["센서값", "시간"],
+    "출력": ["상태", "추천"],
+    "제한 조건": ["개인정보 미수집", "4주 이내"],
+    "기능": [
+        "입력",
+        "검증",
+        "처리",
+        "출력",
+        "평가"
+    ],
+    "일정": {
+        "1주차": "문제 정의",
+        "2주차": "데이터 수집",
+        "3주차": "구현",
+        "4주차": "검증과 발표"
+    },
+    "역할": {
+        "기획": "사용자 요구 분석",
+        "개발": "알고리즘 구현",
+        "데이터": "수집과 전처리",
+        "검증": "테스트와 결과 분석"
+    }
+}
+
+required = [
+    "사용자",
+    "입력",
+    "출력",
+    "제한 조건",
+    "기능",
+    "일정",
+    "역할"
+]
+
+for item in required:
+    if item in project_plan and project_plan[item]:
+        print(item, "작성 완료")
+    else:
+        print(item, "보완 필요")</code></pre>
+<table>
+<tr><th>단계</th><th>산출물</th><th>담당 역할</th><th>완료 기준</th></tr>
+<tr><td>문제 정의</td><td>사용자·문제·목표 문서</td><td>기획 담당</td><td>사용자 요구 3개 이상 정리</td></tr>
+<tr><td>데이터 설계</td><td>입력 항목·자료형·출처</td><td>데이터 담당</td><td>샘플 데이터 20건 확보</td></tr>
+<tr><td>기능 구현</td><td>핵심 함수와 테스트 코드</td><td>개발 담당</td><td>정상 입력 테스트 통과</td></tr>
+<tr><td>제한 검증</td><td>예외·오류·윤리 점검표</td><td>검증 담당</td><td>경계값·잘못된 입력 점검</td></tr>
+<tr><td>결과 발표</td><td>시연·분석·개선안</td><td>전체 팀</td><td>목표 달성 여부를 근거로 설명</td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>수행 계획 서술 예시</strong><br/>
+“본 프로젝트의 사용자는 교실 수업을 운영하는 교사와 학생이다. 입력은 시간대별 이산화탄소 농도이며, 출력은 환기 필요 상태와 권장 시점이다. 센서 오차와 개인정보 미수집을 제한 조건으로 정하였다. 기능은 데이터 입력, 유효성 검사, 이동평균 계산, 임계값 판정, 결과 출력으로 분해하였다. 1주차에는 요구 분석, 2주차에는 데이터 수집, 3주차에는 구현, 4주차에는 실제 교실에서 검증과 발표를 진행한다.”
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 종합 수행 계획 점검표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 사용자·입력·출력·제한 조건을 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 기능·일정·역할 작성 여부를 자동 점검할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> 단계별 산출물과 완료 기준을 정의할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 계획 항목이 비어 있어도 항상 작성 완료로 표시한다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 역할은 한 사람에게만 몰아야 한다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">
+시는 한 편을 쓰기 전에 마음속에 리듬과 이미지를 세우고, 소설은 인물과 사건의 흐름을 설계하며 긴 이야기를 완성합니다. 희곡은 막과 장, 등장인물의 역할이 분명할 때 갈등이 살아나고, 연극은 배우·조명·음향·무대가 각자의 시간을 지킬 때 하나의 공연이 됩니다. 음악도 각 악기의 역할과 들어올 순간이 정확해야 아름다운 합주가 됩니다.<br><br>
+여러분의 꿈도 막연한 희망만으로 이루어지지 않습니다. 오늘 해야 할 작은 기능, 이번 주에 끝낼 산출물, 함께할 사람의 역할, 실패했을 때 고칠 기준을 정하면 꿈은 조금씩 실행 가능한 계획이 됩니다. 계획이 바뀌는 것은 실패가 아니라 더 나은 정보를 반영하는 성장입니다.<br><br>
+그리고 일정표에 모든 작업을 마지막 날로 배치하면 병렬 처리처럼 보여도 실제로는 단일 코어 밤샘 작업이 됩니다. 오늘 만든 계획이 여러분의 아이디어를 지키고, 협업을 즐겁게 하며, 끝까지 완성하는 힘이 되기를 바랍니다.
+</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 프로젝트 수행 계획에는 사용자를 정의해야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 입력과 출력은 구현이 끝난 뒤에만 정하면 된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 제한 조건에는 개인정보·개발 기간·장비 조건이 포함될 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 기능 분해는 복잡한 프로젝트를 작은 작업으로 나누는 과정이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 일정은 단계별 완료 시점을 포함해야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 역할 분담에서는 각자의 책임과 산출물을 명확히 해야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 검증 기준은 프로젝트가 끝난 뒤 임의로 바꾸는 것이 좋다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 사용자 요구와 무관하게 개발자가 원하는 기능만 만들면 된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 완료 기준은 목표 달성 여부를 객관적으로 판단하게 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 수행 계획은 구현 중 수정될 수 있지만 변경 이유를 기록해야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 사용자 정의에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 주 사용자를 구체적으로 정한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 사용 상황과 불편을 확인한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 사용자의 요구를 기능 설계에 반영한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 사용자는 누구든 상관없다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 사용자 정의는 출력과 무관하다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 입력 설계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 자료의 종류와 형식을 정한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 값의 범위와 단위를 정한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 오류·결측값 처리 방법을 고려한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 입력은 무조건 문자열 하나이다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 출처는 기록할 필요가 없다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 출력 설계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 결과의 내용과 형식을 정한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 사용자에게 이해하기 쉬운 표현을 선택한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 문장·표·그래프·추천 등 형태를 정한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 출력은 사용자와 무관하다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 정확성은 확인할 필요가 없다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 제한 조건에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 개발 기간을 포함할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 장비와 데이터 범위를 포함할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 개인정보·안전·저작권을 포함할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 제한 조건은 많을수록 무조건 좋다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 계획과 무관하다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 기능 분해에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 수집·검증·처리·저장·출력으로 나눌 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 각 기능의 입력과 출력을 정할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 테스트 단위를 명확히 할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 기능은 하나로만 작성해야 한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 분해하면 협업이 불가능해진다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 일정 계획에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 단계별 시작·완료 시점을 정한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 중간 점검일을 둘 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 위험 요소와 여유 시간을 고려한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 마감일만 정하면 충분하다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 변경 사항은 기록하지 않는다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 역할 분담에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 책임과 산출물을 명확히 한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 팀원의 강점과 학습 기회를 고려한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 중복·누락을 점검한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 모든 일을 한 사람에게 맡긴다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 역할은 일정과 무관하다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 검증 계획에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 정상·경계·예외 입력을 포함한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 예측값과 실제값을 비교할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 완료 기준과 성공 지표를 정한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 성공 여부는 느낌으로만 판단한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 테스트 결과는 기록하지 않는다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 윤리적 계획에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 개인정보를 최소 수집한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 자료 출처와 저작권을 표시한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 편향·오용·안전 문제를 검토한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 동의 없는 정보를 자유롭게 공개한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 공공데이터는 출처 표시가 필요 없다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 수행 계획서에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 목표와 사용자를 연결한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 기능·일정·역할·검증 기준을 포함한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 변경 가능한 부분과 고정 조건을 구분한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 계획은 길기만 하면 좋다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 구현 가능성은 고려하지 않는다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 10문항 × 5점 = 50점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 3점 = 30점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 29차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "사용자·센서 입력·제한 조건·검증 기준을 함께 정의해야 합니다."}, "2": {"ans": [0, 1, 2], "exp": "익명화된 관찰 자료와 큐 모델을 이용하고 실제값과 비교해 검증합니다."}, "3": {"ans": [0, 1, 2], "exp": "사용자 선호와 도서 정보를 바탕으로 상위 추천을 만들고 개인정보를 보호합니다."}, "4": {"ans": [0, 1, 2], "exp": "그래프·BFS·접근 조건·경로 복원을 함께 설계해야 합니다."}, "5": {"ans": [0, 1, 2], "exp": "데이터 범위와 공개 수준을 제한하고 분석·시각화 기능을 분해합니다."}, "6": {"ans": [0, 1, 2], "exp": "개인 기록 보호와 시간·우선순위 제약을 함께 고려합니다."}, "7": {"ans": [0, 1, 2], "exp": "작업 등록·큐 삽입·시간 계산·완료 제거가 핵심 기능입니다."}, "8": {"ans": [0, 1, 2], "exp": "공식 기준과 단위를 확인하고 건강 판단은 보조 정보로 제한해야 합니다."}, "9": {"ans": [0, 1, 2], "exp": "제약 조건과 개인정보를 고려하며 후보 생성·충돌 검사를 설계합니다."}, "10": {"ans": [0, 1, 2], "exp": "필수 항목의 존재와 내용을 점검하고 단계별 책임과 완료 기준을 명확히 합니다."}}, "ox": {"1": {"ans": true, "exp": "사용 상황과 요구를 기준으로 기능을 설계합니다."}, "2": {"ans": false, "exp": "초기 계획 단계에서 정의해야 합니다."}, "3": {"ans": true, "exp": "구현 범위를 현실적으로 정합니다."}, "4": {"ans": true, "exp": "분담과 테스트가 쉬워집니다."}, "5": {"ans": true, "exp": "진행 상황을 관리할 수 있습니다."}, "6": {"ans": true, "exp": "중복과 누락을 줄입니다."}, "7": {"ans": false, "exp": "사전에 정해야 공정합니다."}, "8": {"ans": false, "exp": "사용자 중심 설계가 필요합니다."}, "9": {"ans": true, "exp": "산출물의 품질을 확인합니다."}, "10": {"ans": true, "exp": "변경 관리와 성찰에 도움이 됩니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "사용자와 사용 상황이 프로젝트의 방향을 결정합니다."}, "2": {"ans": [0, 1, 2], "exp": "입력의 형식·범위·출처·검증이 필요합니다."}, "3": {"ans": [0, 1, 2], "exp": "출력은 사용자 요구와 검증 목적에 맞아야 합니다."}, "4": {"ans": [0, 1, 2], "exp": "현실적·윤리적 범위를 정하는 조건입니다."}, "5": {"ans": [0, 1, 2], "exp": "작은 기능 단위는 구현·분담·테스트를 쉽게 합니다."}, "6": {"ans": [0, 1, 2], "exp": "세부 일정과 점검·변경 관리가 필요합니다."}, "7": {"ans": [0, 1, 2], "exp": "역할·산출물·완료 기준을 연결해야 합니다."}, "8": {"ans": [0, 1, 2], "exp": "객관적 지표와 다양한 테스트가 필요합니다."}, "9": {"ans": [0, 1, 2], "exp": "윤리적 위험과 책임을 계획 단계에서 검토합니다."}, "10": {"ans": [0, 1, 2], "exp": "구체적이고 실행 가능하며 검증 가능한 계획이 좋습니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();
+if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;
+const now=new Date(),lines=["정보과학 29차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);
+document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"});
+const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_29차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();
+document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

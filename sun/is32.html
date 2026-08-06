@@ -1,0 +1,538 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 32차시</title><style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1220px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:990px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--gold)}
+.flow-card:nth-child(3){border-top:5px solid var(--red)}
+.flow-card:nth-child(4){border-top:5px solid var(--green)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:23%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+
+header{position:relative;overflow:hidden}header:after{content:"";position:absolute;right:-80px;bottom:-100px;width:290px;height:290px;border-radius:50%;background:rgba(255,255,255,.08)}
+section>h2:after{content:"";display:block;width:56px;height:4px;margin-top:8px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--purple))}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);padding:17px;border-radius:13px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px}.ox{display:flex;gap:10px}.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.mini-menu{position:fixed;left:8px;top:8px;z-index:80}.mini-menu summary{list-style:none;width:28px;height:28px;border-radius:7px;background:#17324dee;color:#fff;display:grid;place-items:center;cursor:pointer}.mini-menu summary::-webkit-details-marker{display:none}.mini-panel{margin-top:5px;min-width:150px;padding:7px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 26px #0002}.mini-panel a{display:block;padding:6px 8px;text-decoration:none;color:var(--navy);font-size:.82rem;font-weight:800}
+@media(max-width:700px){.grid,.student{grid-template-columns:1fr}}
+</style></head><body id="top"><details class="mini-menu"><summary>☰</summary><div class="mini-panel"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 10선</a><a href="#closing">끝 멘트</a><a href="#ox">형성평가</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></details><header><div class="wrap"><h1>정보과학 32차시<br>테스트 사례 설계와 오류 재현·수정·기록</h1><p>정상·경계·예외 입력을 체계적으로 검사하고, 오류를 재현하여 수정한 뒤 회귀 테스트와 변경 기록으로 재발을 방지합니다.</p></div></header><nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단</a><a href="#submit">제출</a></div></nav><main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>32차시</td><th>주제</th><td>정상·경계·예외 입력 테스트와 오류 재현·수정·기록</td></tr>
+<tr><th>핵심 질문</th><td colspan="3">프로그램이 잘 작동한다는 것을 어떻게 증명하고, 실패한 입력을 재현하여 같은 오류가 반복되지 않게 만들 수 있는가?</td></tr>
+<tr><th>전이 목표</th><td colspan="3">학생은 입력을 정상·경계·예외로 분류하고 기대 결과와 실제 결과를 비교하여 오류를 재현·분석·수정하며 회귀 테스트와 변경 기록을 남길 수 있다.</td></tr>
+<tr><th>성취기준</th><td colspan="3">정상·경계·예외 입력을 포함한 테스트 사례를 설계하고 조건식·자료형·범위·파일 처리 오류를 재현한다. 입력 검증과 예외 처리를 적용해 수정하고 자동 테스트와 회귀 테스트로 재발을 방지한다.</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>활동</th><th>개념</th></tr><tr><td>도입</td><td>정상값에서는 성공하지만 경계값에서 실패하는 코드를 관찰한다.</td><td>실패·경계</td></tr><tr><td>개념</td><td>정상·경계·예외·회귀 테스트를 구조화한다.</td><td>분류·증거</td></tr><tr><td>실습</td><td>오류 입력을 재현하고 원인·수정·테스트를 기록한다.</td><td>재현·수정</td></tr><tr><td>전이</td><td>프로젝트 버그를 최소 재현 코드와 회귀 테스트로 문서화한다.</td><td>기록·성찰</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>정상·경계·예외 입력을 구분한다.</li><li>기대 결과와 실제 결과를 비교한다.</li><li>최소 입력으로 오류를 재현한다.</li><li>입력 검증과 예외 처리로 수정한다.</li><li>회귀 테스트와 버그 기록을 작성한다.</li></ol></div><div class="card"><h3>학습할 개념</h3><ul><li><b>정상 테스트:</b> 일반적인 사용 상황 확인</li><li><b>경계 테스트:</b> 최솟값·최댓값·임계값 전후 확인</li><li><b>예외 테스트:</b> 자료형·범위·파일 오류 확인</li><li><b>오류 재현:</b> 같은 환경과 입력에서 실패 반복</li><li><b>회귀 테스트:</b> 수정 오류의 재발 방지</li></ul></div></div><div class="lead"><b>개념 일반화</b><br>좋은 테스트는 입력 공간을 의미 있는 범주로 나누고, 실패를 재현 가능한 증거로 기록하며, 수정 결과를 자동으로 반복 검증하는 과정이다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote"><strong>“틀림을 기록하는 사람은 실수를 다음 배움의 출발점으로 바꿉니다.”</strong><br><br>소크라테스는 자신의 무지를 인정하는 데서 앎이 시작된다고 했고, 베이컨은 반복 가능한 관찰과 실험으로 지식을 검증해야 한다고 보았습니다. 갈릴레이는 예상과 다른 결과를 버리지 않고 측정했으며, 가우스는 계산 오차를 줄이기 위해 조건과 증명을 세밀하게 살폈습니다.<br><br>오늘 우리는 프로그램이 한 번 실행되었다는 사실만으로 성공을 선언하지 않습니다. 임계값 바로 전후, 빈 값, 잘못된 자료형, 존재하지 않는 파일처럼 코드가 흔들릴 수 있는 지점을 일부러 찾아갑니다.<br><br>시험 답안에서 틀린 문제를 “재현 가능한 오류 사례”라고 적는다고 점수가 오르지는 않지만, 왜 틀렸는지 분석하고 다시 풀면 다음 시험의 회귀 테스트는 통과할 수 있습니다.</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow"><div class="flow-card"><strong>입력 분류</strong>정상·경계·예외 대표값 선택</div><div class="flow-card"><strong>오류 재현</strong>환경·절차·기대·실제 결과 고정</div><div class="flow-card"><strong>원인과 수정</strong>조건식·자료형·범위 분석</div><div class="flow-card"><strong>회귀와 기록</strong>자동 테스트와 변경 이력</div></div></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol><li>경계값 테스트 도입 전후의 조건식 오류 탐지율 비교</li><li>무작위 테스트와 입력 범주 기반 테스트의 효율 비교</li><li>회귀 테스트가 버그 재발 빈도에 미치는 영향</li><li>오류 기록 양식의 구체성이 팀 디버깅 시간에 미치는 영향</li><li>사용자용 예외 메시지가 오류 해결 행동에 미치는 영향</li></ol></section>
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 코드의 입력 범주·기대 결과·오류 원인·수정 방법·회귀 테스트를 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>정상·경계·예외 입력 분류표 만들기</h2></div>
+<div><span class="badge">테스트 설계</span><span class="badge">대표값</span></div>
+<pre><code>test_cases = [
+    {
+        "name": "정상 입력",
+        "input": 75,
+        "expected": "합격"
+    },
+    {
+        "name": "경계 입력",
+        "input": 60,
+        "expected": "합격"
+    },
+    {
+        "name": "경계 바로 아래",
+        "input": 59,
+        "expected": "불합격"
+    },
+    {
+        "name": "예외 입력",
+        "input": "75점",
+        "expected": "ValueError"
+    }
+]
+
+for case in test_cases:
+    print(
+        case["name"],
+        case["input"],
+        "→",
+        case["expected"]
+    )</code></pre>
+<div class="check"><strong>핵심</strong><br/>임계값 자체와 바로 전후 값을 함께 넣어 <code>&gt;</code>와 <code>&gt;=</code>를 잘못 사용한 오류를 찾습니다.</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 정상·경계·예외 입력 분류에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 정상 입력은 일반 사용 상황을 확인한다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 경계 입력은 임계값과 바로 전후를 포함한다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 예외 입력은 잘못된 자료형과 형식을 확인한다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 모든 테스트는 같은 종류의 값만 사용한다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 기대 결과는 기록할 필요가 없다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>합격 판정의 경계 오류 재현과 수정</h2></div>
+<div><span class="badge">경계값</span><span class="badge">조건식 오류</span></div>
+<div class="two">
+<div><h3>오류 코드</h3><pre><code>def is_pass(score):
+    return score &gt; 60
+
+print(is_pass(60))
+# 기대값: True
+# 실제값: False</code></pre></div>
+<div><h3>수정 코드</h3><pre><code>def is_pass(score):
+    if not 0 &lt;= score &lt;= 100:
+        raise ValueError(
+            "점수는 0~100이어야 합니다."
+        )
+
+    return score &gt;= 60
+
+print(is_pass(60))
+# 실제값: True</code></pre></div>
+</div>
+<table>
+<tr><th>기록 항목</th><th>내용</th></tr>
+<tr><td>재현 입력</td><td>60</td></tr>
+<tr><td>기대 결과</td><td>합격</td></tr>
+<tr><td>실제 결과</td><td>불합격</td></tr>
+<tr><td>원인</td><td><code>&gt;</code> 사용으로 임계값 60 제외</td></tr>
+<tr><td>수정</td><td><code>&gt;=</code>로 변경하고 입력 범위 검증 추가</td></tr>
+</table>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 합격 판정 경계 오류에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 60점을 포함하려면 &gt;=를 사용한다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 0~100 범위 검증을 추가할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 60은 오류 재현의 핵심 입력이다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> &gt; 60은 60을 포함한다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 수정 뒤 경계 테스트는 삭제한다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>0으로 나누기 예외 처리</h2></div>
+<div><span class="badge">ZeroDivisionError</span><span class="badge">예외 입력</span></div>
+<div class="two">
+<div><h3>오류 재현</h3><pre><code>def average(total, count):
+    return total / count
+
+print(average(100, 0))
+# ZeroDivisionError</code></pre></div>
+<div><h3>수정</h3><pre><code>def average(total, count):
+    if count &lt;= 0:
+        raise ValueError(
+            "개수는 1 이상이어야 합니다."
+        )
+
+    return total / count
+
+tests = [
+    (100, 4),
+    (0, 1),
+    (100, 0)
+]
+
+for total, count in tests:
+    try:
+        print(average(total, count))
+    except ValueError as error:
+        print("오류:", error)</code></pre></div>
+</div>
+<div class="note"><strong>해석</strong><br/>내부의 <code>ZeroDivisionError</code>를 그대로 노출하기보다 사용자에게 의미 있는 입력 오류로 변환합니다.</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 0으로 나누기 처리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> count가 0이면 나눗셈 오류가 생긴다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> count&lt;=0을 검사해 ValueError를 낼 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 사용자에게 의미 있는 메시지를 제공할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> ZeroDivisionError는 정상 입력이다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 예외는 계산 함수에서 검사할 수 없다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>리스트 인덱스 경계 테스트</h2></div>
+<div><span class="badge">IndexError</span><span class="badge">범위 검사</span></div>
+<pre><code>def get_item(data, index):
+    if not isinstance(index, int):
+        raise TypeError(
+            "인덱스는 정수여야 합니다."
+        )
+
+    if index &lt; 0 or index &gt;= len(data):
+        raise IndexError(
+            "인덱스가 범위를 벗어났습니다."
+        )
+
+    return data[index]
+
+data = ["A", "B", "C"]
+
+test_indexes = [0, 2, 3, -1, 1.5]
+
+for index in test_indexes:
+    try:
+        print(index, "→", get_item(data, index))
+    except (TypeError, IndexError) as error:
+        print(index, "→ 오류:", error)</code></pre>
+<div class="check"><strong>경계값</strong><br/>첫 인덱스 0, 마지막 인덱스 <code>len(data)-1</code>, 바로 바깥값 <code>len(data)</code>를 모두 검사합니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 리스트 인덱스 경계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> 첫 인덱스 0을 검사한다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> 마지막 인덱스 len(data)-1을 검사한다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 바로 바깥값 len(data)를 검사한다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 음수 인덱스는 항상 허용해야 한다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 실수 인덱스는 자동으로 정수가 된다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>문자열 숫자 변환 오류 처리</h2></div>
+<div><span class="badge">ValueError</span><span class="badge">입력 정제</span></div>
+<pre><code>def parse_integer(text):
+    cleaned = text.strip()
+
+    if cleaned == "":
+        raise ValueError(
+            "빈 문자열은 정수로 바꿀 수 없습니다."
+        )
+
+    try:
+        return int(cleaned)
+
+    except ValueError as error:
+        raise ValueError(
+            f"정수 형식이 아닙니다: {text!r}"
+        ) from error
+
+tests = [
+    "42",
+    "  17 ",
+    "0",
+    "-3",
+    "",
+    "12.5",
+    "abc"
+]
+
+for text in tests:
+    try:
+        print(text, "→", parse_integer(text))
+    except ValueError as error:
+        print(text, "→ 오류:", error)</code></pre>
+<div class="note"><strong>테스트 범주</strong><br/>공백 포함 정상값, 0, 음수, 빈 문자열, 실수 문자열, 문자 문자열을 구분해 검사합니다.</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 문자열 정수 변환에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> 앞뒤 공백을 제거할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> 빈 문자열을 별도로 검사할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 잘못된 형식에 ValueError를 낼 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 12.5는 int로 항상 정상 변환된다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> abc는 정상 정수 입력이다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>빈 목록 평균 오류와 수정</h2></div>
+<div><span class="badge">빈 입력</span><span class="badge">경계 조건</span></div>
+<div class="two">
+<div><h3>오류 코드</h3><pre><code>def mean(values):
+    return sum(values) / len(values)
+
+print(mean([]))
+# ZeroDivisionError</code></pre></div>
+<div><h3>수정 코드</h3><pre><code>def mean(values):
+    if not values:
+        raise ValueError(
+            "평균을 계산할 값이 없습니다."
+        )
+
+    return sum(values) / len(values)
+
+for values in [
+    [10, 20, 30],
+    [0],
+    [],
+]:
+    try:
+        print(values, mean(values))
+    except ValueError as error:
+        print(values, "오류:", error)</code></pre></div>
+</div>
+<div class="warn"><strong>설계 선택</strong><br/>빈 목록에서 0을 반환할지 예외를 발생시킬지는 프로젝트 규칙에 따라 결정해야 합니다. 중요한 점은 모든 모듈이 같은 규칙을 사용하는 것입니다.</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 빈 목록 평균에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 빈 목록은 길이가 0이다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 나누기 전에 빈 입력을 검사할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 예외 또는 기본값 정책을 합의해야 한다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 빈 목록 평균은 항상 0이어야 한다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 모듈마다 다른 규칙을 써야 한다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>파일 입력 오류 재현과 안전한 처리</h2></div>
+<div><span class="badge">FileNotFoundError</span><span class="badge">encoding</span></div>
+<pre><code>from pathlib import Path
+
+def read_text_file(filename):
+    path = Path(filename)
+
+    if not path.exists():
+        raise FileNotFoundError(
+            f"파일을 찾을 수 없습니다: {filename}"
+        )
+
+    if path.suffix.lower() != ".txt":
+        raise ValueError(
+            "txt 파일만 읽을 수 있습니다."
+        )
+
+    return path.read_text(
+        encoding="utf-8"
+    )
+
+tests = [
+    "data.txt",
+    "missing.txt",
+    "image.png"
+]
+
+for filename in tests:
+    try:
+        text = read_text_file(filename)
+        print(filename, len(text))
+    except (FileNotFoundError, ValueError) as error:
+        print(filename, "오류:", error)</code></pre>
+<div class="note"><strong>재현 정보</strong><br/>운영체제, 파일 경로, 확장자, 인코딩, 실행 위치를 함께 기록하면 파일 관련 오류를 다른 컴퓨터에서도 재현하기 쉽습니다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 파일 입력 오류에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 파일 존재 여부를 확인한다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> 확장자와 인코딩을 검사한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 경로·실행 위치를 기록하면 재현에 도움이 된다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 없는 파일도 항상 빈 문자열로 읽힌다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 확장자는 파일 처리와 무관하다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>unittest로 정상·경계·예외 테스트 자동화</h2></div>
+<div><span class="badge">unittest</span><span class="badge">assertRaises</span></div>
+<pre><code>import unittest
+
+def classify_score(score):
+    if not isinstance(score, (int, float)):
+        raise TypeError(
+            "점수는 숫자여야 합니다."
+        )
+
+    if not 0 &lt;= score &lt;= 100:
+        raise ValueError(
+            "점수 범위는 0~100입니다."
+        )
+
+    return "합격" if score &gt;= 60 else "불합격"
+
+class TestClassifyScore(unittest.TestCase):
+    def test_normal(self):
+        self.assertEqual(
+            classify_score(75),
+            "합격"
+        )
+
+    def test_boundaries(self):
+        self.assertEqual(
+            classify_score(60),
+            "합격"
+        )
+        self.assertEqual(
+            classify_score(59),
+            "불합격"
+        )
+        self.assertEqual(
+            classify_score(0),
+            "불합격"
+        )
+        self.assertEqual(
+            classify_score(100),
+            "합격"
+        )
+
+    def test_invalid_type(self):
+        with self.assertRaises(TypeError):
+            classify_score("75")
+
+    def test_out_of_range(self):
+        with self.assertRaises(ValueError):
+            classify_score(101)
+
+if __name__ == "__main__":
+    unittest.main()</code></pre>
+<div class="check"><strong>자동화</strong><br/>코드를 수정할 때마다 테스트를 다시 실행하면 이전 기능이 깨졌는지 빠르게 확인할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. unittest 자동화에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 정상 입력을 검사한다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 60·59·0·100 경계값을 검사한다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> assertRaises로 예외를 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 수정 뒤 테스트 재실행은 불필요하다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> 자동 테스트는 예상 결과를 비교하지 않는다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>오류 수정 기록 자동 생성</h2></div>
+<div><span class="badge">버그 기록</span><span class="badge">JSON</span></div>
+<pre><code>import json
+from datetime import datetime
+
+bug_record = {
+    "id": "BUG-2026-001",
+    "title": "60점이 불합격으로 처리됨",
+    "environment": {
+        "python": "3.x",
+        "os": "Windows"
+    },
+    "reproduction": [
+        "classify_score(60) 실행",
+        "결과가 불합격인지 확인"
+    ],
+    "expected": "합격",
+    "actual": "불합격",
+    "cause": "score &gt; 60 조건 사용",
+    "fix": "score &gt;= 60으로 수정",
+    "regression_test": "test_boundary_60 추가",
+    "fixed_at": datetime.now().isoformat(
+        timespec="seconds"
+    )
+}
+
+print(json.dumps(
+    bug_record,
+    ensure_ascii=False,
+    indent=2
+))</code></pre>
+<div class="note"><strong>기록 목적</strong><br/>오류의 증상뿐 아니라 재현 절차, 기대 결과, 실제 결과, 원인, 수정 내용, 회귀 테스트를 함께 남깁니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 오류 수정 기록에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> 재현 절차와 환경을 기록한다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 기대 결과와 실제 결과를 구분한다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 원인·수정·회귀 테스트를 남긴다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 오류 제목만 기록하면 충분하다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 수정 날짜와 버전은 기록하면 안 된다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>종합: 테스트 실행기와 회귀 테스트</h2></div>
+<div><span class="badge">종합 테스트</span><span class="badge">PASS·FAIL</span></div>
+<pre><code>def calculate_discount(price, rate):
+    if not isinstance(price, (int, float)):
+        raise TypeError(
+            "가격은 숫자여야 합니다."
+        )
+
+    if not isinstance(rate, (int, float)):
+        raise TypeError(
+            "할인율은 숫자여야 합니다."
+        )
+
+    if price &lt; 0:
+        raise ValueError(
+            "가격은 0 이상이어야 합니다."
+        )
+
+    if not 0 &lt;= rate &lt;= 100:
+        raise ValueError(
+            "할인율은 0~100이어야 합니다."
+        )
+
+    return price * (1 - rate / 100)
+
+test_cases = [
+    {
+        "name": "정상 할인",
+        "args": (10000, 20),
+        "expected": 8000
+    },
+    {
+        "name": "경계 할인 0%",
+        "args": (10000, 0),
+        "expected": 10000
+    },
+    {
+        "name": "경계 할인 100%",
+        "args": (10000, 100),
+        "expected": 0
+    },
+    {
+        "name": "가격 0원",
+        "args": (0, 50),
+        "expected": 0
+    },
+    {
+        "name": "음수 가격",
+        "args": (-1000, 10),
+        "exception": ValueError
+    },
+    {
+        "name": "할인율 초과",
+        "args": (10000, 120),
+        "exception": ValueError
+    },
+    {
+        "name": "문자 가격",
+        "args": ("10000", 20),
+        "exception": TypeError
+    }
+]
+
+passed = 0
+
+for case in test_cases:
+    try:
+        result = calculate_discount(
+            *case["args"]
+        )
+
+        if "exception" in case:
+            print(
+                "FAIL",
+                case["name"],
+                "예외가 발생하지 않음"
+            )
+            continue
+
+        if result == case["expected"]:
+            print("PASS", case["name"])
+            passed += 1
+        else:
+            print(
+                "FAIL",
+                case["name"],
+                result,
+                case["expected"]
+            )
+
+    except Exception as error:
+        expected_error = case.get(
+            "exception"
+        )
+
+        if (
+            expected_error
+            and isinstance(error, expected_error)
+        ):
+            print("PASS", case["name"])
+            passed += 1
+        else:
+            print(
+                "FAIL",
+                case["name"],
+                type(error).__name__,
+                error
+            )
+
+print(
+    f"통과: {passed}/{len(test_cases)}"
+)</code></pre>
+<table>
+<tr><th>테스트 단계</th><th>수행 내용</th><th>기록 항목</th></tr>
+<tr><td>사례 설계</td><td>정상·경계·예외 입력 분류</td><td>입력·기대 결과·유형</td></tr>
+<tr><td>오류 재현</td><td>최소 입력으로 같은 실패 반복</td><td>환경·절차·실제 결과</td></tr>
+<tr><td>원인 분석</td><td>조건식·자료형·범위·상태 확인</td><td>원인 코드와 설명</td></tr>
+<tr><td>수정</td><td>오류 처리와 검증 조건 추가</td><td>수정 전후 코드</td></tr>
+<tr><td>회귀 테스트</td><td>기존 실패 입력을 자동 테스트에 추가</td><td>테스트 이름·통과 결과</td></tr>
+<tr><td>버전 기록</td><td>수정 목적이 드러나는 커밋 작성</td><td><code>fix: 60점 경계 판정 수정</code></td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>오류 수정 과정 설명 예시</strong><br/>
+“정상 입력 75와 경계 입력 60·59, 예외 입력 문자열을 테스트 사례로 설계하였다. 60점 입력에서 기대 결과는 합격이었으나 실제로는 불합격이 출력되어 오류를 재현하였다. 원인은 조건식에 <code>score &gt; 60</code>을 사용한 것이었으며, 이를 <code>score &gt;= 60</code>으로 수정하고 0~100 범위 검증을 추가하였다. 동일 오류의 재발을 막기 위해 60점 경계 테스트를 단위 테스트에 포함하고 수정 내용을 버전 기록에 남겼다.”
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 종합 회귀 테스트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 정상·경계·예외 사례를 함께 검사한다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 예상 예외 종류를 확인한다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> PASS·FAIL과 통과 수를 기록한다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 예외가 나면 무조건 성공이다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 이전 실패 입력은 삭제한다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">시는 지워진 단어와 다시 고친 한 줄 속에서 더 깊어지고, 소설은 인물의 실패가 다음 장면의 성장을 만듭니다. 희곡은 갈등과 실수가 있어야 변화가 시작되고, 연극은 리허설에서 오류를 많이 발견할수록 본 공연이 단단해집니다. 음악도 틀린 음을 찾아 다시 맞추는 과정에서 아름다운 화음이 완성됩니다.<br><br>여러분의 꿈도 처음부터 오류 없는 프로그램처럼 실행되지는 않습니다. 중요한 것은 실패를 숨기지 않고 어떤 조건에서 흔들렸는지 살피며, 작은 수정과 반복 연습으로 더 안정적인 자신을 만들어 가는 일입니다.<br><br>버그를 발견한 뒤 컴퓨터를 껐다 켜서 사라졌다고 보고하면 오류 수정이 아니라 오류와의 숨바꼭질입니다. 오늘 배운 재현·수정·기록의 태도가 코드와 삶의 어려움을 차분히 해결하는 힘이 되기를 바랍니다.</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 경계값 테스트는 조건식 포함·제외 오류를 찾는 데 유용하다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 정상 입력이 통과하면 예외 입력 테스트는 필요 없다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 오류 재현에는 입력값과 실행 환경을 기록하는 것이 좋다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 회귀 테스트는 수정한 오류의 재발을 막는다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 빈 목록 평균은 항상 0이어야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. assertRaises는 예상 예외 발생을 검사할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 파일 오류 재현에는 경로와 인코딩 정보가 도움이 된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 테스트는 많기만 하면 되므로 범주 분류는 필요 없다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 오류 수정 기록에는 원인과 수정 내용을 포함한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 버그 수정 뒤 기존 기능 손상 여부도 확인해야 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 정상 입력 테스트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 일반적인 사용 사례를 선택한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 기대 결과를 명확히 한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 기본 기능이 동작하는지 확인한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 오류 입력만 사용한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 경계 테스트와 완전히 같다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 경계 입력 테스트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 최솟값과 최댓값을 확인한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 임계값 바로 전후를 검사한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 빈 값과 0을 고려할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 중간값 하나만 검사한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 조건식과 무관하다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 예외 입력 테스트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 잘못된 자료형을 확인한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 범위 초과와 파일 없음 등을 확인한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 예상 예외 종류와 메시지를 확인한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 강제 종료되면 항상 성공이다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 예외는 테스트할 필요가 없다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 오류 재현 절차에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 최소 입력으로 실패를 반복한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 실행 순서와 환경을 기록한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 기대 결과와 실제 결과를 비교한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 매번 다른 입력을 쓴다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 오류 메시지는 숨긴다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 원인 분석에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 조건식과 경계값을 확인한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 자료형과 상태 변화를 확인한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 최소 재현 코드로 범위를 줄인다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 무작위로 수정한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 테스트 결과를 보지 않는다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 예외 처리 설계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 상황에 맞는 예외 종류를 선택한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 이해하기 쉬운 메시지를 제공한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 핵심 함수와 사용자 화면의 역할을 구분한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 모든 오류를 빈 문자열로 바꾼다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 원인을 기록하지 않는다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 단위 테스트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 개별 함수 결과를 자동 검사한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 정상·경계·예외 사례를 포함한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 코드 변경 후 반복 실행한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 수동 실행 한 번이면 충분하다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 실패 테스트는 삭제한다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 회귀 테스트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 이전에 실패한 입력을 포함한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 같은 오류 재발 여부를 확인한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 기존 기능 손상 여부도 확인한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 수정 뒤 테스트를 지운다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 새 기능만 검사한다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 오류 기록에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 환경과 재현 절차를 기록한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 기대 결과와 실제 결과를 기록한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 원인·수정·회귀 테스트를 기록한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 발견자의 이름만 기록한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 감정적인 평가를 쓴다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 테스트 계획에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 입력 범주별 대표값을 선택한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 예상 결과와 완료 기준을 정한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 결과와 수정 이력을 기록한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 모든 값을 무작위로만 넣는다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 실패 결과를 숨긴다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 50점 + OX 20점 + 진단평가 30점 = 총 100점</div></section>
+</main><a class="top" href="#top">↑</a><div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 32차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const A={"code": {"1": [0, 1, 2], "2": [0, 1, 2], "3": [0, 1, 2], "4": [0, 1, 2], "5": [0, 1, 2], "6": [0, 1, 2], "7": [0, 1, 2], "8": [0, 1, 2], "9": [0, 1, 2], "10": [0, 1, 2]}, "ox": {"1": true, "2": false, "3": true, "4": true, "5": false, "6": true, "7": true, "8": false, "9": true, "10": true}, "diag": {"1": [0, 1, 2], "2": [0, 1, 2], "3": [0, 1, 2], "4": [0, 1, 2], "5": [0, 1, 2], "6": [0, 1, 2], "7": [0, 1, 2], "8": [0, 1, 2], "9": [0, 1, 2], "10": [0, 1, 2]}};
+function same(a,b){return a.length===b.length&&[...a].sort().every((v,i)=>v===[...b].sort()[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>+x.value);}
+function show(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+ const sid=document.getElementById("sid").value.trim(), name=document.getElementById("sname").value.trim();
+ if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+ let score=0, lines=["정보과학 32차시 평가 결과",`학번: ${sid}`,`이름: ${name}`];
+ const now=new Date(); lines.push(`응시시각: ${now.toLocaleString("ko-KR")}`,"");
+ for(let i=1;i<=10;i++){let g=picks("code"+i),ok=same(g,A.code[i]);if(ok)score+=5;show("fb-code"+i,ok,"정상·경계·예외와 수정 원리를 확인하세요.");lines.push(`코드 ${i}: ${ok?"정답":"오답"}`);}
+ for(let i=1;i<=10;i++){let e=document.querySelector(`input[name="ox${i}"]:checked`),g=e?e.value==="true":null,ok=g===A.ox[i];if(ok)score+=2;show("fb-ox"+i,ok,"테스트의 목적과 적용 조건을 확인하세요.");lines.push(`OX ${i}: ${ok?"정답":"오답"}`);}
+ for(let i=1;i<=10;i++){let g=picks("diag"+i),ok=same(g,A.diag[i]);if(ok)score+=3;show("fb-diag"+i,ok,"테스트 설계·재현·회귀 원리를 확인하세요.");lines.push(`진단 ${i}: ${ok?"정답":"오답"}`);}
+ lines.push("",`총점: ${score} / 100점`);
+ document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+ const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+ const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_32차시_${stamp}.txt`;a.click();URL.revokeObjectURL(a.href);
+}
+function resetAll(){document.querySelectorAll('input').forEach(x=>{if(x.type!=="text")x.checked=false;});document.querySelectorAll(".feedback").forEach(x=>x.className="feedback");document.getElementById("result").textContent="제출 전 · 100점 만점";}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"&&document.querySelectorAll(`input[name="${e.target.name}"]:checked`).length>3){e.target.checked=false;alert("3개만 선택하세요.");}});
+</script>
+</body></html>

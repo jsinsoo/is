@@ -1,0 +1,464 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 12차시 목표지향 개념기반 수업지도안</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:50px 20px 44px}.wrap,main{max-width:1200px;margin:auto}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top">
+<header><div class="wrap"><h1>정보과학 12차시<br>큐 모델링과 평균 대기시간 분석</h1><p>급식·프린터·상담 예약을 큐로 모델링하고 도착·시작·종료·대기시간과 평균·중앙값·최댓값을 분석하여 효율성과 공정성을 평가합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~11</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>12차시</td><th>주제</th><td>실생활 큐 모델링과 평균 대기시간 분석</td></tr><tr><th>핵심 질문</th><td colspan="3">도착 순서·처리시간·창구 수가 대기시간과 공정성에 어떤 영향을 주며, 데이터를 근거로 운영 방식을 어떻게 개선할 수 있는가?</td></tr><tr><th>전이 목표</th><td colspan="3">학생은 새로운 대기 문제에서 도착 시각·처리시간·서버 수를 변수로 정의하고 개인별 대기시간과 요약 통계를 계산하여 효율성·공정성·비용을 함께 고려한 개선안을 제안할 수 있다.</td></tr><tr><th>성취기준</th><td colspan="3">실생활 대기 상황을 FIFO 큐로 모델링하고 도착·시작·종료 시각과 개인별 대기시간을 계산한다. 서버 수와 처리 순서를 바꾸어 평균·중앙값·최대 대기시간을 비교하고 공정성, 개인정보, 운영 비용을 고려하여 개선 방안을 설명한다.</td></tr><tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 11문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr><tr><td>도입</td><td>급식 줄과 프린터 대기 사례에서 기다림을 수치로 표현하는 방법을 탐색한다.</td><td>시간, 순서</td></tr><tr><td>개념 형성</td><td>도착·시작·종료·대기시간과 평균의 관계를 식과 코드로 연결한다.</td><td>모델링, 측정</td></tr><tr><td>진단 실습</td><td>창구 수, 작업 순서, 처리율을 바꾸어 대기시간과 통계를 비교한다.</td><td>실험, 비교</td></tr><tr><td>정리·전이</td><td>효율성·공정성·비용·윤리를 함께 고려한 운영 개선안을 제안한다.</td><td>판단, 책임</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>실생활 대기 상황을 큐의 변수로 표현한다.</li><li>도착·시작·종료·대기시간을 계산한다.</li><li>평균·중앙값·최댓값의 의미를 비교한다.</li><li>서버 수와 처리 순서 변화의 효과를 분석한다.</li><li>효율성과 공정성을 함께 고려한 개선안을 제안한다.</li></ol></div><div class="card"><h3>학습할 개념</h3><ul><li><b>대기열 모델:</b> 도착과 서비스 과정을 자료와 규칙으로 표현한 모형</li><li><b>대기시간:</b> 서비스 시작 시각에서 도착 시각을 뺀 값</li><li><b>병렬 서버:</b> 여러 창구가 동시에 고객이나 작업을 처리하는 구조</li><li><b>통계 지표:</b> 평균·중앙값·최댓값으로 대기 상황을 요약하는 값</li><li><b>이용률:</b> 도착량과 전체 처리 능력의 비율</li></ul></div></div><div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>대기시간은 도착 시각, 처리시간, 서버 수와 처리 정책의 상호작용으로 결정되며, 좋은 개선안은 평균 감소뿐 아니라 최악의 대기, 공정성, 비용과 개인정보까지 함께 평가한다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">“세네카는 시간이 부족한 것이 아니라 많은 시간을 흘려보내는 것이라고 했고, 아리스토텔레스는 공정함을 공동체 질서의 중심에 놓았습니다. 뉴턴은 시간에 따른 변화를 수학으로 표현했고, 가우스는 여러 관측값 속에서 전체의 경향을 찾았습니다. 오늘 우리는 ‘얼마나 기다렸는가’를 느낌이 아니라 데이터로 말합니다. 급식 줄에서 5분은 배고픈 학생에게 50분처럼 느껴질 수 있지만, 컴퓨터는 냉정하게 5라고 기록합니다. 그래서 평균만 믿지 말고 가장 오래 기다린 사람의 이야기까지 살펴야 합니다. 이제 기다림을 측정하고, 더 빠르면서도 더 공정한 줄을 설계해 봅시다.”</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow"><div class="flow-card"><strong>상황 모델링</strong>이름·도착·처리시간·서버 수를 자료로 표현합니다.</div><div class="flow-card"><strong>시간 계산</strong>시작·종료·개인별 대기시간을 계산합니다.</div><div class="flow-card"><strong>통계 분석</strong>평균·중앙값·최댓값과 기준 초과 인원을 분석합니다.</div><div class="flow-card"><strong>개선 평가</strong>창구 수·정책·비용·공정성을 비교합니다.</div></div>
+<ul><li>deque를 이용한 FIFO 대기열</li><li>동일 도착과 동일 처리시간 모델</li><li>서로 다른 처리시간과 평균 대기시간</li><li>도착 시각과 서버 유휴 시간</li><li>배식대 1개와 2개의 병렬 처리 비교</li><li>프린터 페이지 수 기반 처리시간</li><li>FIFO와 짧은 작업 우선 정책 비교</li><li>상담 예약 지연 누적</li><li>평균·중앙값·최대·기준 초과 인원</li><li>재사용 가능한 종합 시뮬레이션 함수</li><li>도착률·처리율·이용률 기반 혼잡도 분석</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol><li><b>배식대 수 증가가 평균·최대 대기시간에 미치는 영향</b></li><li><b>FIFO와 짧은 작업 우선 정책의 효율성과 공정성 비교</b></li><li><b>상담 시간 변동이 뒤 예약의 지연에 미치는 영향</b></li><li><b>도착률과 처리율 변화에 따른 대기열 혼잡도 분석</b></li><li><b>평균·중앙값·최댓값을 활용한 학교 대기 서비스 평가 지표 설계</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 11개</h2><p class="lead">각 코드에서 도착·시작·종료·대기시간과 처리 정책의 관계를 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>급식 대기열 기본 모델</h2></div>
+<div><span class="badge">FIFO</span><span class="badge">deque</span></div>
+<div class="two">
+<div><pre><code>from collections import deque
+
+students = deque([
+    "민준", "서연", "지우", "하준"
+])
+
+order = 1
+
+while students:
+    student = students.popleft()
+    print(f"{order}번째 입장: {student}")
+    order += 1</code></pre></div>
+<div class="card">
+<h3>모델 의미</h3>
+<p>먼저 줄을 선 학생이 먼저 입장합니다.</p>
+<p>큐의 앞에서 <code>popleft()</code>하여 FIFO 순서를 유지합니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 급식 대기열 기본 모델에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> deque는 FIFO 대기열을 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> popleft()는 가장 먼저 들어온 학생을 꺼낸다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 학생은 줄을 선 순서대로 입장한다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 가장 마지막 학생이 항상 먼저 입장한다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> while students는 큐가 비어 있을 때만 실행된다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>처리 시간이 같은 급식 대기시간</h2></div>
+<div><span class="badge">개인 대기시간</span><span class="badge">누적 시간</span></div>
+<pre><code>students = ["민준", "서연", "지우", "하준"]
+service_time = 2
+current_time = 0
+
+for student in students:
+    waiting_time = current_time
+
+    print(
+        f"{student}: 대기 {waiting_time}분, "
+        f"식판 수령 {current_time}분"
+    )
+
+    current_time += service_time</code></pre>
+<div class="note"><strong>결과 해석</strong><br/>모두 동시에 도착했다고 가정하면 첫 학생은 0분, 다음 학생들은 2분씩 더 기다립니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 처리 시간이 같은 대기시간 계산에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 모든 학생이 동시에 도착했다고 가정한다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 첫 학생의 대기시간은 0분이다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> current_time은 앞 학생들의 누적 처리 시간을 나타낸다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 모든 학생의 대기시간은 항상 0분이다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> service_time은 학생마다 자동으로 서로 다르다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>급식 평균 대기시간 계산</h2></div>
+<div><span class="badge">평균</span><span class="badge">리스트 저장</span></div>
+<div class="two">
+<div><pre><code>students = ["민준", "서연", "지우", "하준"]
+service_times = [2, 3, 1, 2]
+
+current_time = 0
+waiting_times = []
+
+for student, service in zip(
+    students, service_times
+):
+    waiting_time = current_time
+    waiting_times.append(waiting_time)
+
+    print(
+        student,
+        "대기:", waiting_time,
+        "처리:", service
+    )
+
+    current_time += service
+
+average = sum(waiting_times) / len(waiting_times)
+
+print("평균 대기시간:", average, "분")</code></pre></div>
+<div class="card">
+<h3>계산 흐름</h3>
+<p>각 학생의 대기시간은 앞 학생들의 처리 시간 합입니다.</p>
+<p>대기시간을 목록에 저장한 뒤 산술평균을 계산합니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 평균 대기시간 계산에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> 각 학생의 대기시간을 리스트에 저장한다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> zip()으로 학생과 처리시간을 연결한다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 평균은 대기시간 합을 학생 수로 나눈다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 처리시간은 평균 계산에 전혀 영향을 주지 않는다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> waiting_times는 항상 빈 리스트로 남는다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>도착 시각이 다른 급식 대기열</h2></div>
+<div><span class="badge">도착 시각</span><span class="badge">유휴 시간</span></div>
+<pre><code>students = [
+    ("민준", 0, 3),
+    ("서연", 1, 2),
+    ("지우", 5, 2),
+    ("하준", 6, 1)
+]
+
+current_time = 0
+waiting_times = []
+
+for name, arrival, service in students:
+    start = max(arrival, current_time)
+    waiting = start - arrival
+    finish = start + service
+
+    waiting_times.append(waiting)
+
+    print(
+        f"{name}: 도착={arrival}, 시작={start}, "
+        f"종료={finish}, 대기={waiting}"
+    )
+
+    current_time = finish
+
+print(
+    "평균 대기시간:",
+    sum(waiting_times) / len(waiting_times)
+)</code></pre>
+<div class="check"><strong>유휴 시간</strong><br/>다음 학생이 아직 도착하지 않았다면 배식대는 쉬게 되며, 시작 시각은 학생의 도착 시각이 됩니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 도착 시각이 다른 대기열에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> start는 arrival과 current_time 중 큰 값이다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> waiting은 start-arrival이다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 다음 학생이 늦게 도착하면 서버 유휴 시간이 생길 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 시작 시각은 항상 도착 시각보다 작다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> finish는 arrival-service로 계산한다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>배식대 1개와 2개 비교</h2></div>
+<div><span class="badge">병렬 처리</span><span class="badge">개선 분석</span></div>
+<pre><code>students = [
+    ("민준", 0, 3),
+    ("서연", 0, 2),
+    ("지우", 1, 4),
+    ("하준", 2, 2),
+    ("예린", 3, 3)
+]
+
+def simulate(server_count):
+    servers = [0] * server_count
+    waiting_times = []
+
+    for name, arrival, service in students:
+        server_index = min(
+            range(server_count),
+            key=lambda index: servers[index]
+        )
+
+        start = max(
+            arrival,
+            servers[server_index]
+        )
+
+        waiting = start - arrival
+        waiting_times.append(waiting)
+
+        servers[server_index] = start + service
+
+    return sum(waiting_times) / len(waiting_times)
+
+print("배식대 1개:", simulate(1))
+print("배식대 2개:", simulate(2))</code></pre>
+<div class="note"><strong>분석</strong><br/>처리 창구를 늘리면 동시에 여러 학생을 처리할 수 있어 평균 대기시간이 줄어드는지 비교할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 배식대 수 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> servers 리스트는 각 배식대의 다음 사용 가능 시각을 저장한다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> 가장 빨리 비는 서버를 선택한다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 창구 수가 늘면 평균 대기시간이 줄어들 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> server_count가 2여도 servers 길이는 항상 1이다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> 모든 학생은 반드시 같은 배식대만 사용한다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>프린터 작업 큐와 평균 대기시간</h2></div>
+<div><span class="badge">프린터</span><span class="badge">페이지 수</span></div>
+<div class="two">
+<div><pre><code>jobs = [
+    ("과제.pdf", 0, 4),
+    ("발표자료.pptx", 1, 2),
+    ("보고서.hwp", 2, 6),
+    ("사진.png", 4, 1)
+]
+
+current_time = 0
+waiting_times = []
+
+for filename, arrival, pages in jobs:
+    start = max(arrival, current_time)
+    waiting = start - arrival
+    finish = start + pages
+
+    waiting_times.append(waiting)
+
+    print(
+        f"{filename}: 대기={waiting}, "
+        f"인쇄 종료={finish}"
+    )
+
+    current_time = finish
+
+print(
+    "평균 대기시간:",
+    sum(waiting_times) / len(waiting_times)
+)</code></pre></div>
+<div class="card">
+<h3>가정</h3>
+<p>한 페이지를 인쇄하는 데 1분이 걸린다고 가정합니다.</p>
+<p>작업 처리 시간은 페이지 수와 같습니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 프린터 작업 큐에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 페이지 수를 처리시간으로 가정한다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 먼저 등록된 작업부터 처리한다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 앞 작업이 길면 뒤 작업의 대기시간이 늘 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 작업 도착 시각은 계산에 사용하지 않는다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 인쇄 종료 시각은 항상 0이다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>긴 작업이 앞에 있을 때의 영향</h2></div>
+<div><span class="badge">작업 순서</span><span class="badge">평균 비교</span></div>
+<pre><code>jobs = [
+    ("긴 보고서", 10),
+    ("짧은 문서1", 1),
+    ("짧은 문서2", 2),
+    ("짧은 문서3", 1)
+]
+
+def average_waiting(job_list):
+    current_time = 0
+    waits = []
+
+    for name, service in job_list:
+        waits.append(current_time)
+        current_time += service
+
+    return sum(waits) / len(waits)
+
+fifo_average = average_waiting(jobs)
+
+short_first = sorted(
+    jobs,
+    key=lambda job: job[1]
+)
+short_average = average_waiting(short_first)
+
+print("FIFO 평균:", fifo_average)
+print("짧은 작업 우선 평균:", short_average)</code></pre>
+<div class="warn"><strong>윤리·운영 관점</strong><br/>짧은 작업 우선은 평균 대기시간을 줄일 수 있지만 먼저 도착한 작업이 늦어질 수 있습니다. 공정성과 효율성을 함께 고려해야 합니다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 긴 작업과 짧은 작업 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 짧은 작업 우선은 평균 대기시간을 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> FIFO는 도착 순서를 보존한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 효율성과 공정성이 충돌할 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 짧은 작업 우선은 항상 가장 공정하다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 정렬된 작업 순서는 FIFO와 반드시 같다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>상담 예약 큐 모델링</h2></div>
+<div><span class="badge">상담 예약</span><span class="badge">예약 시각</span></div>
+<pre><code>appointments = [
+    ("민준", 0, 10),
+    ("서연", 10, 15),
+    ("지우", 20, 10),
+    ("하준", 30, 20)
+]
+
+current_time = 0
+waiting_times = []
+
+for name, appointment, duration in appointments:
+    start = max(appointment, current_time)
+    waiting = start - appointment
+    finish = start + duration
+
+    waiting_times.append(waiting)
+
+    print(
+        f"{name}: 예약={appointment}, "
+        f"상담 시작={start}, 대기={waiting}"
+    )
+
+    current_time = finish
+
+print(
+    "평균 지연시간:",
+    sum(waiting_times) / len(waiting_times)
+)</code></pre>
+<div class="check"><strong>해석</strong><br/>앞 상담이 예정 시간보다 길어지면 뒤 예약의 대기시간이 누적됩니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 상담 예약 큐에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 예약 시각보다 앞 상담 종료가 늦으면 대기가 발생한다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> start는 예약 시각과 현재 시각 중 큰 값이다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 앞 상담 지연이 뒤 예약에 누적될 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 상담 시간이 길어져도 뒤 사람에게 영향이 없다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> waiting은 finish-duration으로만 계산한다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>평균·최대·중앙 대기시간 분석</h2></div>
+<div><span class="badge">통계</span><span class="badge">median</span></div>
+<div class="two">
+<div><pre><code>from statistics import mean, median
+
+waiting_times = [0, 2, 5, 5, 8, 14, 21]
+
+print("평균:", mean(waiting_times))
+print("중앙값:", median(waiting_times))
+print("최대:", max(waiting_times))
+print("최소:", min(waiting_times))
+
+over_10 = [
+    value
+    for value in waiting_times
+    if value &gt;= 10
+]
+
+print("10분 이상 인원:", len(over_10))</code></pre></div>
+<div class="card">
+<h3>왜 여러 지표를 볼까?</h3>
+<p>평균은 전체 수준을 보여 줍니다.</p>
+<p>중앙값은 매우 긴 대기시간의 영향을 덜 받습니다.</p>
+<p>최댓값은 가장 불편한 사례를 보여 줍니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 대기시간 통계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> mean은 평균을 구한다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> median은 중앙값을 구한다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 최댓값은 가장 긴 대기 사례를 보여 준다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 평균 하나만 보면 모든 개인 불편을 완전히 알 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 10분 이상 인원은 항상 0명이다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>종합 대기열 시뮬레이션 함수</h2></div>
+<div><span class="badge">종합 프로그램</span><span class="badge">재사용 함수</span></div>
+<pre><code>from statistics import mean, median
+
+def analyze_queue(customers, server_count=1):
+    servers = [0] * server_count
+    results = []
+
+    for name, arrival, service in customers:
+        server_index = min(
+            range(server_count),
+            key=lambda index: servers[index]
+        )
+
+        start = max(
+            arrival,
+            servers[server_index]
+        )
+
+        waiting = start - arrival
+        finish = start + service
+
+        servers[server_index] = finish
+
+        results.append({
+            "이름": name,
+            "도착": arrival,
+            "시작": start,
+            "종료": finish,
+            "대기": waiting,
+            "창구": server_index + 1
+        })
+
+    waits = [item["대기"] for item in results]
+
+    summary = {
+        "평균": mean(waits),
+        "중앙값": median(waits),
+        "최대": max(waits),
+        "대기 0명": waits.count(0)
+    }
+
+    return results, summary
+
+students = [
+    ("민준", 0, 3),
+    ("서연", 0, 2),
+    ("지우", 1, 4),
+    ("하준", 2, 2),
+    ("예린", 5, 3)
+]
+
+results, summary = analyze_queue(
+    students,
+    server_count=2
+)
+
+for item in results:
+    print(item)
+
+print("\n[요약]")
+for key, value in summary.items():
+    print(key, ":", value)</code></pre>
+<table>
+<tr><th>분석 요소</th><th>의미</th></tr>
+<tr><td>server_count</td><td>배식대·프린터·상담실의 수</td></tr>
+<tr><td>가장 빠른 서버 선택</td><td>현재 종료 시각이 가장 이른 창구에 배정</td></tr>
+<tr><td>개인 결과</td><td>도착·시작·종료·대기·창구 기록</td></tr>
+<tr><td>요약 지표</td><td>평균·중앙값·최대 대기시간 분석</td></tr>
+<tr><td>개선 실험</td><td>서버 수나 처리 시간을 바꾸어 결과 비교</td></tr>
+</table>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 종합 시뮬레이션에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> server_count로 창구 수를 바꿀 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 개인별 도착·시작·종료·대기·창구를 기록한다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> 요약에는 평균·중앙값·최대 대기시간이 포함된다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 서버 수는 결과에 영향을 줄 수 없다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> results에는 이름 정보가 저장되지 않는다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+<section id="ex11">
+<div class="ex-head"><span class="num">예제 11</span><h2>도착률·처리율 기반 혼잡도 분석</h2></div>
+<div><span class="badge">도착률</span><span class="badge">처리율</span><span class="badge">혼잡도</span></div>
+<pre><code>def analyze_load(arrival_rate, service_rate, server_count=1):
+    total_service_rate = service_rate * server_count
+    utilization = arrival_rate / total_service_rate
+
+    if utilization &lt; 0.7:
+        status = "여유"
+    elif utilization &lt; 1.0:
+        status = "혼잡 주의"
+    else:
+        status = "처리 한계 초과"
+
+    return {
+        "도착률": arrival_rate,
+        "전체 처리율": total_service_rate,
+        "이용률": utilization,
+        "상태": status
+    }
+
+cases = [
+    ("급식대 1개", 18, 24, 1),
+    ("급식대 2개", 30, 20, 2),
+    ("프린터 1대", 12, 10, 1)
+]
+
+for name, arrival, service, servers in cases:
+    result = analyze_load(
+        arrival_rate=arrival,
+        service_rate=service,
+        server_count=servers
+    )
+
+    print(name)
+    print(
+        f"이용률: {result['이용률']:.2f}, "
+        f"상태: {result['상태']}"
+    )</code></pre>
+
+<table>
+<tr><th>변수</th><th>의미</th></tr>
+<tr><td>arrival_rate</td><td>단위 시간당 새로 도착하는 학생 또는 작업 수</td></tr>
+<tr><td>service_rate</td><td>서버 하나가 단위 시간당 처리할 수 있는 수</td></tr>
+<tr><td>server_count</td><td>동시에 처리 가능한 배식대·프린터·상담 창구 수</td></tr>
+<tr><td>utilization</td><td>도착률 ÷ 전체 처리율로 계산한 이용률</td></tr>
+<tr><td>이용률 1 이상</td><td>평균적으로 들어오는 양이 처리 능력 이상인 상태</td></tr>
+</table>
+
+<div class="note"><strong>상세 설명</strong><br>
+이용률이 1보다 작더라도 1에 가까워질수록 작은 지연이나 처리시간 변화가 긴 대기열로 이어질 수 있습니다.
+이 예제는 실제 대기행렬 이론을 단순화한 교육용 모델이며, 개선 전후의 처리 능력을 비교하는 지표로 활용할 수 있습니다.
+</div>
+<div class="codequiz"><h3>예제 11 확인 문제</h3><div class="qitem"><h4>11. 예제 11의 혼잡도 분석에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code11" value="0"><span><b>1.</b> 전체 처리율은 서비스율과 서버 수를 곱해 계산한다.</span></label><label class="option"><input type="checkbox" name="code11" value="1"><span><b>2.</b> 이용률은 도착률을 전체 처리율로 나눈 값이다.</span></label><label class="option"><input type="checkbox" name="code11" value="2"><span><b>3.</b> 이용률이 1 이상이면 평균 도착량이 처리 능력 이상이다.</span></label><label class="option"><input type="checkbox" name="code11" value="3"><span><b>4.</b> 서버 수가 늘어도 전체 처리율은 변하지 않는다.</span></label><label class="option"><input type="checkbox" name="code11" value="4"><span><b>5.</b> 이용률이 높을수록 항상 대기시간이 0이 된다.</span></label></div><div class="feedback" id="fb-code11"></div></div></div></section>
+
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">“시는 기다림 속에서 익은 한 문장을 세상에 내놓고, 소설은 인물이 때를 기다리며 성장하는 시간을 그립니다. 희곡은 배우가 자기 등장 순간을 기다릴 때 긴장이 생기고, 연극은 막과 막 사이의 기다림이 다음 장면을 더 빛나게 합니다. 음악도 쉼표가 있어야 다음 음이 희망처럼 들립니다. 여러분의 꿈도 줄을 서 있는 것처럼 보일 때가 있습니다. 아직 시작되지 않았다고 실패가 아니라, 더 좋은 무대를 준비하는 대기시간일 수 있습니다. 다만 숙제를 큐에 오래 넣어 두면 마감일 서버가 먼저 종료될 수 있으니 오늘 할 일은 오늘 dequeue하세요. 기다림을 성장으로 바꾸는 여러분이 되길 바랍니다.”</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 대기시간은 서비스 시작 시각에서 도착 시각을 뺀 값이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 시작 시각은 도착 시각과 현재 처리 가능 시각 중 작은 값이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 서버 수가 늘면 동시에 처리할 수 있는 수가 증가할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 평균 대기시간만으로 모든 개인의 불편을 완전히 설명할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. FIFO는 먼저 도착한 자료를 먼저 처리한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 짧은 작업 우선은 공정성과 효율성 사이의 갈등을 만들 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 앞 상담이 길어지면 뒤 예약 대기시간이 늘어날 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 도착률이 전체 처리율보다 높아도 대기열은 항상 줄어든다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 중앙값은 매우 큰 이상값의 영향을 평균보다 덜 받을 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 대기열 분석에서는 개인정보와 공정성을 고려할 필요가 없다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 2.5점, 총 25점입니다.</p><div class="qitem"><h4>1. 대기시간 기본 계산에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 시작 시각은 도착 시각보다 빠를 수 없다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 대기시간은 시작 시각-도착 시각이다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 종료 시각은 시작 시각+처리 시간이다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 대기시간은 항상 처리시간과 같다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 종료 시각은 도착 시각보다 항상 작다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 서버 유휴 시간에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 다음 고객이 아직 도착하지 않으면 생길 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> current_time보다 arrival이 크면 시작은 arrival이다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 유휴 시간에는 대기시간이 0일 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 서버는 고객 도착 전에도 처리할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 유휴 시간은 항상 오류이다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 여러 서버 시뮬레이션에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 각 서버의 사용 가능 시각을 저장한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 가장 빨리 비는 서버를 선택할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 서버 수를 바꾸어 개선 효과를 비교할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 모든 작업은 반드시 1번 서버로 간다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 서버 수는 평균 대기시간과 무관하다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 평균 대기시간에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 전체 대기시간 합을 인원수로 나눈다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 전체 수준을 한 값으로 요약한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 일부 매우 긴 대기를 숨길 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 최댓값과 항상 같다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 개인별 분포를 완전히 보여 준다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 통계 지표 선택에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 중앙값은 가운데 위치의 값을 나타낸다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 최댓값은 최악의 대기 사례를 보여 준다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 기준 이상 인원 수를 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 평균만 보면 충분하므로 다른 지표는 불필요하다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 중앙값은 항상 최댓값보다 크다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. FIFO와 짧은 작업 우선 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> FIFO는 도착 순서를 보존한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 짧은 작업 우선은 평균 대기를 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 운영 정책에는 공정성 판단이 필요하다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 짧은 작업 우선은 모든 사람에게 항상 공정하다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> FIFO는 어떤 경우에도 사용할 수 없다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 대기열 모델의 입력 자료에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 도착 시각을 포함할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 처리 시간을 포함할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 이름이나 작업 식별자를 포함할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 개인정보 보호는 필요 없다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 처리시간은 결과에 영향을 주지 않는다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 이용률에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 도착률/전체 처리율로 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 1에 가까울수록 혼잡 위험이 커질 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 서버 수 증가로 전체 처리율이 커질 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 이용률이 2이면 항상 여유롭다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 이용률은 도착률과 무관하다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 좋은 대기열 실험에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 같은 입력으로 정책을 비교한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 서버 수와 처리시간을 기록한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 평균·중앙값·최댓값을 함께 확인한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 서로 다른 입력을 사용하고 결과만 비교한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 한 번의 결과를 모든 상황에 일반화한다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 대기열 개선안 평가에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 평균 대기시간 감소를 확인한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 최대 대기시간과 공정성을 함께 본다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 추가 서버의 비용도 고려한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 평균만 줄면 어떤 차별도 허용된다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 개인정보와 이용자 경험은 무시한다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 11문항 × 5점 = 55점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 2.5점 = 25점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 12차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "deque와 popleft()를 사용하면 선입선출 순서를 자연스럽게 구현할 수 있습니다."}, "2": {"ans": [0, 1, 2], "exp": "동시 도착과 동일 처리시간 가정에서는 대기시간이 처리시간만큼 누적됩니다."}, "3": {"ans": [0, 1, 2], "exp": "앞 작업의 처리시간이 이후 학생의 대기시간을 결정하고, 저장된 값으로 평균을 계산합니다."}, "4": {"ans": [0, 1, 2], "exp": "도착 전에는 처리할 수 없으므로 시작 시각은 두 값 중 큰 값입니다."}, "5": {"ans": [0, 1, 2], "exp": "여러 서버의 종료 시각을 관리하여 가장 먼저 가능한 창구에 배정합니다."}, "6": {"ans": [0, 1, 2], "exp": "도착 시각과 페이지 수를 이용해 시작·종료·대기시간을 계산합니다."}, "7": {"ans": [0, 1, 2], "exp": "짧은 작업 우선은 효율적일 수 있지만 선착순 공정성을 해칠 수 있습니다."}, "8": {"ans": [0, 1, 2], "exp": "예약형 대기열도 앞 서비스 지연이 다음 예약에 영향을 줍니다."}, "9": {"ans": [0, 1, 2], "exp": "평균·중앙값·최댓값과 기준 초과 인원을 함께 봐야 상황을 입체적으로 판단할 수 있습니다."}, "10": {"ans": [0, 1, 2], "exp": "재사용 함수로 개인 결과와 요약 통계를 함께 반환합니다."}, "11": {"ans": [0, 1, 2], "exp": "도착률과 전체 처리율의 비율로 처리 여유와 혼잡 위험을 단순 비교합니다."}}, "ox": {"1": {"ans": true, "exp": "waiting=start-arrival입니다."}, "2": {"ans": false, "exp": "두 값 중 큰 값을 사용합니다."}, "3": {"ans": true, "exp": "병렬 처리 능력이 증가합니다."}, "4": {"ans": false, "exp": "중앙값·최댓값 등도 함께 봐야 합니다."}, "5": {"ans": true, "exp": "선입선출 원리입니다."}, "6": {"ans": true, "exp": "평균 개선과 선착순 공정성이 충돌할 수 있습니다."}, "7": {"ans": true, "exp": "지연이 누적될 수 있습니다."}, "8": {"ans": false, "exp": "처리 능력을 초과하면 대기열이 증가할 수 있습니다."}, "9": {"ans": true, "exp": "중앙값은 극단값에 덜 민감합니다."}, "10": {"ans": false, "exp": "자료 보호와 운영 공정성이 중요합니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "도착·시작·종료 시각의 관계를 정확히 구분해야 합니다."}, "2": {"ans": [0, 1, 2], "exp": "고객이 없으면 서버가 쉬는 정상적인 상황입니다."}, "3": {"ans": [0, 1, 2], "exp": "서버별 상태를 관리해 배정하고 결과를 비교합니다."}, "4": {"ans": [0, 1, 2], "exp": "평균은 유용하지만 분포 전체를 보여 주지는 못합니다."}, "5": {"ans": [0, 1, 2], "exp": "여러 지표를 함께 사용해야 합니다."}, "6": {"ans": [0, 1, 2], "exp": "효율성과 공정성을 함께 고려해야 합니다."}, "7": {"ans": [0, 1, 2], "exp": "필요한 변수와 개인정보 보호를 함께 고려해야 합니다."}, "8": {"ans": [0, 1, 2], "exp": "이용률은 시스템 부하를 나타내는 단순 지표입니다."}, "9": {"ans": [0, 1, 2], "exp": "동일 조건과 여러 지표가 공정한 비교에 필요합니다."}, "10": {"ans": [0, 1, 2], "exp": "효율성·공정성·비용·윤리를 함께 평가해야 합니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;const now=new Date(),lines=["정보과학 12차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=11;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=2.5;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+score=Math.round(score*10)/10;
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 31문항`);document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_12차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

@@ -1,0 +1,386 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>정보과학 1차시 목표지향 개념기반 수업지도안</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d8e3eb;--paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:50px 20px 44px}.wrap,main{max-width:1180px;margin:auto}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}
+nav{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line);box-shadow:0 4px 14px rgba(22,52,77,.08)}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:74px}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.grid4{display:grid;gap:12px}.grid{grid-template-columns:1fr 1fr}.grid4{grid-template-columns:repeat(4,1fr)}
+.area,.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.area strong{display:block;color:var(--navy);font-size:1.08rem}.area:nth-child(1){border-top:5px solid var(--blue)}.area:nth-child(2){border-top:5px solid var(--green)}.area:nth-child(3){border-top:5px solid var(--gold)}.area:nth-child(4){border-top:5px solid var(--purple)}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.step{background:var(--sky);border:1px solid #cfe0ec;border-radius:14px;padding:14px;text-align:center;font-weight:800;color:var(--navy)}.step span{display:block;font-size:.78rem;color:var(--muted)}
+.ex-head{display:flex;border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}.badges{margin:8px 0}
+.two{display:grid;grid-template-columns:1.12fr .88fr;gap:14px}pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output,.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap;margin-top:8px}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.answer{margin-top:10px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800;font-size:.92rem}
+.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:rgba(23,50,77,.97);color:#fff;padding:12px 16px;box-shadow:0 -4px 18px rgba(0,0,0,.18)}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold);color:#2b2415}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid4{grid-template-columns:1fr 1fr}.grid,.flow,.two{grid-template-columns:1fr}}@media(max-width:560px){.grid4,.student{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top,.scorebar{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top">
+<header><div class="wrap"><h1>정보과학 1차시<br>교과의 네 영역과 함수 진단 실습</h1><p>교과의 네 영역과 문제 해결 절차를 이해하고 함수 정의·호출·매개변수·반환값을 코드 실행과 진단 평가로 점검합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>1차시</td><th>주제</th><td>교과의 네 영역과 문제 해결 절차, 함수 정의·호출·반환값</td></tr>
+<tr><th>핵심 질문</th><td colspan="3">함수는 어떻게 복잡한 문제를 작은 기능으로 나누고 다시 연결하게 하는가?</td></tr>
+<tr><th>전이 목표</th><td colspan="3">학생은 새로운 문제를 입력·처리·출력과 작은 기능으로 분해하고 함수의 매개변수와 반환값을 활용해 해결 구조를 설계할 수 있다.</td></tr>
+<tr><th>성취기준</th><td colspan="3">정보과학 교과의 디지털 문화·데이터·알고리즘과 프로그래밍·인공지능 영역을 이해하고 문제 해결 절차와 연결한다. 함수의 정의와 호출, 매개변수와 인수, 반환값을 설명하며 실행 결과를 진단하고 오류를 수정한다.</td></tr>
+<tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 형성평가 10문항, 종합 진단평가 10문항 및 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr>
+<tr><td>도입</td><td>교과 네 영역과 생활 속 문제 해결 사례를 연결하고 함수에 대한 사전 개념을 점검한다.</td><td>연결, 구조</td></tr>
+<tr><td>개념 형성</td><td>함수 정의·호출·매개변수·인수·반환값의 예와 비예를 비교한다.</td><td>분해, 추상화</td></tr>
+<tr><td>진단 실습</td><td>10개 코드를 실행하고 결과를 예측하며 코드별 확인 문제를 해결한다.</td><td>적용, 진단</td></tr>
+<tr><td>정리·전이</td><td>새로운 문제를 함수로 분해하고 OX 및 종합 진단평가로 이해를 점검한다.</td><td>일반화, 전이</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2>
+<div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>교과의 네 영역을 설명하고 서로의 관계를 말한다.</li><li>문제 해결 절차의 각 단계를 실제 사례에 적용한다.</li><li>함수를 정의하고 올바르게 호출한다.</li><li>매개변수와 인수, print와 return의 차이를 설명한다.</li><li>실행 결과를 예측하고 함수 오류를 진단한다.</li></ol></div>
+<div class="card"><h3>학습할 개념</h3><ul><li><b>분해:</b> 복잡한 문제를 작은 기능으로 나누기</li><li><b>추상화:</b> 공통 기능을 함수로 표현하기</li><li><b>호출:</b> 정의한 기능을 필요한 시점에 실행하기</li><li><b>인터페이스:</b> 매개변수와 반환값으로 정보 전달하기</li><li><b>진단:</b> 예상 결과와 실제 결과를 비교해 오류 찾기</li></ul></div></div>
+<h3>교과의 네 영역</h3><div class="grid4"><div class="area"><strong>디지털 문화</strong>정보기술의 사회적 영향, 개인정보, 저작권과 책임을 다룹니다.</div><div class="area"><strong>데이터</strong>데이터를 수집·정리·분석하고 의미를 발견합니다.</div><div class="area"><strong>알고리즘과 프로그래밍</strong>문제를 단계적으로 설계하고 프로그램으로 구현합니다.</div><div class="area"><strong>인공지능</strong>데이터와 규칙을 이용한 분류·예측·추천 원리를 탐구합니다.</div></div>
+<h3>문제 해결 절차</h3><div class="flow"><div class="step">① 문제 이해<span>목표 파악</span></div><div class="step">② 조건 분석<span>입력·출력</span></div><div class="step">③ 알고리즘 설계<span>처리 순서</span></div><div class="step">④ 구현·실행<span>함수 작성</span></div><div class="step">⑤ 평가·개선<span>오류 수정</span></div></div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">“소크라테스는 질문으로 생각을 깨웠고, 데카르트는 복잡한 문제를 가능한 한 작은 부분으로 나누라고 했습니다. 뉴턴은 작은 원리가 거대한 우주의 움직임을 설명할 수 있음을 보여 주었고, 가우스는 복잡한 수 속에서 아름다운 질서를 발견했습니다. 오늘 우리가 만날 함수도 같습니다. 함수는 코드를 줄이는 요술 주머니가 아니라 생각을 정리하는 서랍입니다. 서랍 이름을 잘 붙이면 필요한 생각을 금방 꺼낼 수 있지만, 모든 것을 한 서랍에 넣으면 연필을 찾다가 우주의 나이를 계산하게 될지도 모릅니다. 이제 문제를 나누고, 함수를 호출하며, 생각의 질서를 만들어 봅시다.”</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><ul><li>정보과학 교과 네 영역의 특징과 상호 연결</li><li>문제 이해 → 조건 분석 → 알고리즘 설계 → 구현 → 평가·개선</li><li>함수 정의와 호출의 실행 순서</li><li>매개변수와 인수의 대응 관계</li><li>print와 return의 차이, None의 의미</li><li>여러 값 반환과 언패킹</li><li>입력 검증, 조기 반환, 조건 분류</li><li>함수 재사용, 개인정보 보호, 규칙 기반 추천, 오류 진단</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol>
+<li><b>함수 분해 방식이 프로그램 가독성과 오류 수정 시간에 미치는 영향</b></li>
+<li><b>print 중심 코드와 return 중심 코드의 재사용성 비교</b></li>
+<li><b>매개변수 설계 방식에 따른 함수 활용 범위 분석</b></li>
+<li><b>입력 검증 함수가 프로그램 안정성에 미치는 영향</b></li>
+<li><b>규칙 기반 추천 함수의 조건 변화와 결과 민감도 탐구</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 코드를 실행하고 예상 출력과 비교한 뒤, 코드 아래에서 옳은 설명 3개를 선택하세요.</p></section>
+<section class="example" id="ex1">
+<div class="ex-head"><div><span class="num">예제 1</span><h2>함수 정의와 호출 구별하기</h2></div></div>
+<div class="badges"><span class="badge">def</span><span class="badge">함수 호출</span><span class="badge">순차 실행</span></div>
+<div class="two">
+<div><pre><code>def greet():
+    print("안녕하세요.")
+
+print("수업을 시작합니다.")
+greet()
+print("수업을 마칩니다.")</code></pre></div>
+<div class="card">
+<h3>예상 출력</h3>
+<pre class="output">수업을 시작합니다.
+안녕하세요.
+수업을 마칩니다.</pre>
+<div class="check"><strong>진단 질문</strong><br/><code>def greet():</code>가 실행될 때 바로 “안녕하세요.”가 출력될까요?</div>
+</div>
+</div>
+<table>
+<tr><th>구문</th><th>설명</th></tr>
+<tr><td>def greet():</td><td><code>greet</code>라는 함수를 정의합니다. 정의만으로 함수 내부가 실행되지는 않습니다.</td></tr>
+<tr><td>greet()</td><td>정의된 함수를 호출합니다. 이때 함수 내부의 <code>print()</code>가 실행됩니다.</td></tr>
+</table>
+<div class="answer"><strong>핵심</strong> 함수는 먼저 정의하고, 필요한 시점에 호출하여 사용합니다.</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 함수 정의와 호출에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> def greet():는 greet 함수를 정의한다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 함수를 정의하는 순간 함수 내부의 print가 바로 실행된다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> greet()는 정의된 함수를 호출한다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 함수는 필요할 때 여러 번 호출할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 함수를 호출하려면 함수 이름 뒤의 괄호를 제거해야 한다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section class="example" id="ex2">
+<div class="ex-head"><div><span class="num">예제 2</span><h2>print와 return의 차이 진단하기</h2></div></div>
+<div class="badges"><span class="badge">return</span><span class="badge">출력</span><span class="badge">값 저장</span></div>
+<div class="two">
+<div><pre><code>def add_print(a, b):
+    print(a + b)
+
+def add_return(a, b):
+    return a + b
+
+x = add_print(3, 4)
+y = add_return(3, 4)
+
+print("x =", x)
+print("y =", y)</code></pre></div>
+<div class="card">
+<h3>예상 출력</h3>
+<pre class="output">7
+x = None
+y = 7</pre>
+<div class="warn"><strong>주의</strong><br/><code>print()</code>로 화면에 값을 보였다고 해서 그 값이 함수의 결과로 반환되는 것은 아닙니다.</div>
+</div>
+</div>
+<div class="answer"><strong>핵심</strong> <code>print()</code>는 화면 출력, <code>return</code>은 계산 결과 전달입니다. 반환값이 없는 함수는 기본적으로 <code>None</code>을 돌려줍니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 print와 return에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> add_print(3,4)는 화면에 7을 출력한다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> add_print()는 7을 반환하므로 x에는 7이 저장된다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 반환값이 없는 함수의 결과를 변수에 저장하면 None이 될 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> add_return(3,4)는 7을 반환한다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> print와 return은 언제나 같은 기능을 수행한다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section class="example" id="ex3">
+<div class="ex-head"><div><span class="num">예제 3</span><h2>매개변수와 인수 점검하기</h2></div></div>
+<div class="badges"><span class="badge">매개변수</span><span class="badge">인수</span><span class="badge">자료형</span></div>
+<div class="two">
+<div><pre><code>def introduce(name, subject):
+    return f"{name} 학생은 {subject} 과목을 학습합니다."
+
+message = introduce("민준", "정보")
+print(message)</code></pre></div>
+<div class="card">
+<h3>진단</h3>
+<p><code>name</code>과 <code>subject</code>는 함수 정의에 사용된 <strong>매개변수</strong>입니다.</p>
+<p><code>"민준"</code>과 <code>"정보"</code>는 함수를 호출할 때 전달한 <strong>인수</strong>입니다.</p>
+<pre class="output">민준 학생은 정보 과목을 학습합니다.</pre>
+</div>
+</div>
+<div class="check"><strong>확인 활동</strong><br/>인수의 순서를 바꾸어 <code>introduce("정보", "민준")</code>을 실행하고 문장이 어떻게 달라지는지 확인합니다.</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 매개변수와 인수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> name과 subject는 매개변수이다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> &#x27;민준&#x27;과 &#x27;정보&#x27;는 호출할 때 전달한 인수이다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> introduce()는 문자열을 반환한다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 인수의 순서를 바꾸어도 문장 의미는 항상 같다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 매개변수는 함수 밖에서만 사용할 수 있다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section class="example" id="ex4">
+<div class="ex-head"><div><span class="num">예제 4</span><h2>여러 값을 반환하는 함수</h2></div></div>
+<div class="badges"><span class="badge">튜플 반환</span><span class="badge">언패킹</span><span class="badge">데이터 영역</span></div>
+<div class="two">
+<div><pre><code>def analyze_scores(scores):
+    total = sum(scores)
+    average = total / len(scores)
+    highest = max(scores)
+    lowest = min(scores)
+    return total, average, highest, lowest
+
+scores = [85, 92, 78, 96, 89]
+total, avg, high, low = analyze_scores(scores)
+
+print("합계:", total)
+print("평균:", avg)
+print("최고:", high)
+print("최저:", low)</code></pre></div>
+<div class="card">
+<h3>문제 해결 연결</h3>
+<ol>
+<li>문제 이해: 점수의 특징을 요약한다.</li>
+<li>데이터 분석: 합계·평균·최댓값·최솟값을 선택한다.</li>
+<li>알고리즘: 네 값을 순서대로 계산한다.</li>
+<li>함수 구현: 계산 결과를 한 번에 반환한다.</li>
+</ol>
+</div>
+</div>
+<div class="answer"><strong>핵심</strong> 파이썬 함수는 쉼표로 구분하여 여러 값을 반환할 수 있으며, 호출할 때 여러 변수로 나누어 저장할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 여러 반환값에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> sum(scores)는 점수 합계를 구한다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> 함수는 한 번에 하나의 값만 반환할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> return total, average, highest, lowest는 여러 값을 돌려준다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 여러 반환값은 여러 변수로 나누어 저장할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> len(scores)는 점수의 최댓값을 구한다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section class="example" id="ex5">
+<div class="ex-head"><div><span class="num">예제 5</span><h2>입력값을 검증하는 함수</h2></div></div>
+<div class="badges"><span class="badge">조건문</span><span class="badge">조기 반환</span><span class="badge">오류 예방</span></div>
+<div class="two">
+<div><pre><code>def safe_divide(a, b):
+    if b == 0:
+        return "0으로 나눌 수 없습니다."
+    return a / b
+
+print(safe_divide(10, 2))
+print(safe_divide(10, 0))</code></pre></div>
+<div class="card">
+<h3>예상 출력</h3>
+<pre class="output">5.0
+0으로 나눌 수 없습니다.</pre>
+<p>잘못된 입력을 먼저 검사하여 함수 실행을 안전하게 종료합니다.</p>
+</div>
+</div>
+<div class="check"><strong>진단 질문</strong><br/>첫 번째 <code>return</code>이 실행되면 아래쪽의 <code>return a / b</code>도 실행될까요?<br/><strong>정답:</strong> 실행되지 않습니다. <code>return</code>은 함수 실행을 즉시 끝냅니다.</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 입력 검증 함수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> b가 0이면 오류 안내 문자열을 반환한다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> return이 실행된 뒤에도 같은 함수의 아래 문장이 계속 실행된다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> b가 0이 아니면 a/b 결과를 반환한다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 조기 반환은 잘못된 입력을 먼저 처리하는 데 유용하다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> safe_divide(10,0)은 반드시 ZeroDivisionError를 발생시킨다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section class="example" id="ex6">
+<div class="ex-head"><div><span class="num">예제 6</span><h2>데이터 영역: 미세먼지 상태 분류 함수</h2></div></div>
+<div class="badges"><span class="badge">데이터 분류</span><span class="badge">다중 조건문</span><span class="badge">반환값</span></div>
+<div class="two">
+<div><pre><code>def classify_pm10(value):
+    if value &lt;= 30:
+        return "좋음"
+    elif value &lt;= 80:
+        return "보통"
+    elif value &lt;= 150:
+        return "나쁨"
+    else:
+        return "매우 나쁨"
+
+measurements = [22, 57, 103, 171]
+
+for value in measurements:
+    result = classify_pm10(value)
+    print(value, "→", result)</code></pre></div>
+<div class="card">
+<h3>실행 결과</h3>
+<pre class="output">22 → 좋음
+57 → 보통
+103 → 나쁨
+171 → 매우 나쁨</pre>
+<p>하나의 분류 규칙을 함수로 만들면 여러 데이터에 반복 적용할 수 있습니다.</p>
+</div>
+</div>
+<div class="answer"><strong>문제 해결 절차</strong> 측정값 입력 → 구간 비교 → 상태 반환 → 반복 적용 → 결과 확인</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 미세먼지 분류 함수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 22는 &#x27;좋음&#x27;으로 분류된다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 57은 &#x27;나쁨&#x27;으로 분류된다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 103은 &#x27;나쁨&#x27;으로 분류된다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 하나의 함수를 여러 측정값에 반복 적용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 171은 &#x27;보통&#x27;으로 분류된다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section class="example" id="ex7">
+<div class="ex-head"><div><span class="num">예제 7</span><h2>디지털 문화 영역: 개인정보 가리기</h2></div></div>
+<div class="badges"><span class="badge">개인정보 보호</span><span class="badge">문자열 슬라이싱</span><span class="badge">함수 재사용</span></div>
+<div class="two">
+<div><pre><code>def mask_name(name):
+    if len(name) &lt;= 1:
+        return "*"
+    return name[0] + "*" * (len(name) - 1)
+
+students = ["김민준", "이서연", "박준"]
+
+for student in students:
+    print(mask_name(student))</code></pre></div>
+<div class="card">
+<h3>실행 결과</h3>
+<pre class="output">김**
+이**
+박*</pre>
+<p>개인정보를 그대로 공개하지 않고 일부 문자를 가리는 간단한 비식별화 활동입니다.</p>
+</div>
+</div>
+<div class="warn"><strong>윤리 점검</strong><br/>이름 일부를 가리는 것만으로 완전한 익명성이 보장되지는 않습니다. 다른 정보와 결합되면 개인을 다시 알아볼 수 있으므로 데이터 공개 범위를 함께 검토해야 합니다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 개인정보 가리기 함수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 이름 첫 글자는 남기고 나머지를 별표로 바꾼다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> 한 글자 이름은 별표 하나를 반환한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 문자열 길이에 따라 별표 개수가 달라진다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 이 방식만 사용하면 완전한 익명성이 반드시 보장된다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> name[0]은 이름의 마지막 글자를 뜻한다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section class="example" id="ex8">
+<div class="ex-head"><div><span class="num">예제 8</span><h2>인공지능 영역: 규칙 기반 추천 함수</h2></div></div>
+<div class="badges"><span class="badge">인공지능 기초</span><span class="badge">규칙 기반</span><span class="badge">추천</span></div>
+<div class="two">
+<div><pre><code>def recommend_activity(temperature, rain):
+    if rain:
+        return "실내 코딩 활동"
+    elif temperature &gt;= 28:
+        return "그늘에서 센서 관찰"
+    elif temperature &lt;= 5:
+        return "실내 데이터 분석"
+    else:
+        return "야외 사물인터넷 실험"
+
+print(recommend_activity(30, False))
+print(recommend_activity(18, True))</code></pre></div>
+<div class="card">
+<h3>진단</h3>
+<p>이 코드는 학습 데이터를 이용한 기계학습이 아니라, 사람이 만든 조건을 따르는 <strong>규칙 기반 시스템</strong>입니다.</p>
+<pre class="output">그늘에서 센서 관찰
+실내 코딩 활동</pre>
+</div>
+</div>
+<div class="check"><strong>확장 활동</strong><br/>습도, 미세먼지, 학생 선호도 등의 조건을 추가하고 추천 결과가 어떻게 달라지는지 살펴봅니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 규칙 기반 추천 함수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 비가 오면 실내 코딩 활동을 반환한다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 30도이고 비가 오지 않으면 그늘에서 센서 관찰을 반환한다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 사람이 만든 조건을 따르는 규칙 기반 방식이다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 학습 데이터를 이용해 스스로 규칙을 만든 기계학습 모델이다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> 18도이고 비가 오면 야외 사물인터넷 실험을 반환한다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section class="example" id="ex9">
+<div class="ex-head"><div><span class="num">예제 9</span><h2>함수 오류를 찾아 수정하기</h2></div></div>
+<div class="badges"><span class="badge">디버깅</span><span class="badge">들여쓰기</span><span class="badge">반환 위치</span></div>
+<div class="two">
+<div>
+<h3>오류 코드</h3>
+<pre><code>def count_even(numbers):
+    count = 0
+    for number in numbers:
+        if number % 2 == 0:
+            count += 1
+        return count
+
+print(count_even([2, 4, 5, 8]))</code></pre>
+</div>
+<div>
+<h3>수정 코드</h3>
+<pre><code>def count_even(numbers):
+    count = 0
+    for number in numbers:
+        if number % 2 == 0:
+            count += 1
+    return count
+
+print(count_even([2, 4, 5, 8]))</code></pre>
+</div>
+</div>
+<div class="warn"><strong>오류 원인</strong><br/>오류 코드의 <code>return count</code>가 반복문 안에 있어 첫 번째 숫자를 처리한 직후 함수가 종료됩니다.</div>
+<div class="answer"><strong>수정 결과</strong> 짝수 2, 4, 8을 모두 확인하므로 <code>3</code>이 출력됩니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 오류 코드와 수정 코드에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> 오류 코드의 return은 반복문 안에 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 오류 코드는 첫 번째 원소 처리 후 함수가 끝날 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 수정 코드의 결과는 3이다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 오류 코드의 문제는 함수 이름이 잘못된 것이다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 수정 코드에서는 return을 if문 안으로 더 깊게 들여써야 한다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section class="example" id="ex10">
+<div class="ex-head"><div><span class="num">예제 10</span><h2>종합 문제: 교실 환경 진단 프로그램</h2></div></div>
+<div class="badges"><span class="badge">문제 분해</span><span class="badge">함수 조합</span><span class="badge">데이터</span><span class="badge">알고리즘</span></div>
+<pre><code>def check_temperature(value):
+    if 20 &lt;= value &lt;= 26:
+        return "적정"
+    return "조절 필요"
+
+def check_co2(value):
+    if value &lt; 1000:
+        return "양호"
+    return "환기 필요"
+
+def make_report(temperature, co2):
+    temp_result = check_temperature(temperature)
+    co2_result = check_co2(co2)
+
+    return {
+        "온도": temp_result,
+        "이산화탄소": co2_result
+    }
+
+report = make_report(28, 1350)
+
+for item, result in report.items():
+    print(item, ":", result)</code></pre>
+<div class="two" style="margin-top:14px">
+<div class="card">
+<h3>실행 결과</h3>
+<pre class="output">온도 : 조절 필요
+이산화탄소 : 환기 필요</pre>
+</div>
+<div class="card">
+<h3>문제 해결 절차</h3>
+<ol>
+<li>문제: 교실 환경 상태를 진단한다.</li>
+<li>분해: 온도와 이산화탄소를 따로 판단한다.</li>
+<li>추상화: 각 판단을 함수로 만든다.</li>
+<li>통합: 보고서 함수에서 결과를 묶는다.</li>
+<li>평가: 기준값과 실제 환경의 차이를 점검한다.</li>
+</ol>
+</div>
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 교실 환경 진단 프로그램에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 온도와 이산화탄소 판단을 별도 함수로 분해했다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> make_report()는 결과를 딕셔너리로 반환한다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> 온도 28도는 &#x27;조절 필요&#x27;로 판단된다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 이산화탄소 1350ppm은 &#x27;양호&#x27;로 판단된다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 함수를 조합하면 문제를 작은 기능으로 나누기 어렵다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">“시는 짧은 문장으로 긴 마음을 반환하고, 소설은 수많은 인물을 하나의 이야기 속에서 호출합니다. 희곡은 인물마다 역할을 나누고, 연극은 그 역할을 한 무대에서 연결하며, 음악은 서로 다른 음을 매개변수처럼 받아 하나의 화음을 돌려줍니다. 여러분의 꿈도 아직 완성되지 않은 함수입니다. 오늘 결과가 예상과 달라도 인생의 문법 오류는 아닙니다. 아직 디버깅 중일 뿐입니다. 실패라는 빨간 글씨가 나타나면 ‘프로그램 종료’가 아니라 ‘다음 줄을 더 멋지게 고쳐 보라’는 안내라고 생각하세요. 여러분의 꿈 함수는 언제든 다시 호출할 수 있고, 희망이라는 반환값은 생각보다 오래 남습니다.”</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 함수는 특정 작업을 하나의 이름으로 묶은 코드이다.</h4>
+    <div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label>
+    <label class="option"><input type="radio" name="ox1" value="false"> X</label></div>
+    <div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. def로 함수를 정의하면 함수 내부가 즉시 실행된다.</h4>
+    <div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label>
+    <label class="option"><input type="radio" name="ox2" value="false"> X</label></div>
+    <div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 함수 이름 뒤에 괄호를 붙이면 함수를 호출할 수 있다.</h4>
+    <div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label>
+    <label class="option"><input type="radio" name="ox3" value="false"> X</label></div>
+    <div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. return은 값을 호출한 위치로 돌려보낼 수 있다.</h4>
+    <div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label>
+    <label class="option"><input type="radio" name="ox4" value="false"> X</label></div>
+    <div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. print()는 항상 값을 함수 밖으로 반환한다.</h4>
+    <div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label>
+    <label class="option"><input type="radio" name="ox5" value="false"> X</label></div>
+    <div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 매개변수는 함수가 값을 전달받기 위한 이름이다.</h4>
+    <div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label>
+    <label class="option"><input type="radio" name="ox6" value="false"> X</label></div>
+    <div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 인수의 순서는 함수 결과에 영향을 줄 수 없다.</h4>
+    <div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label>
+    <label class="option"><input type="radio" name="ox7" value="false"> X</label></div>
+    <div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 함수는 여러 값을 반환할 수 있다.</h4>
+    <div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label>
+    <label class="option"><input type="radio" name="ox8" value="false"> X</label></div>
+    <div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. return이 실행되면 함수는 계속 아래 문장을 실행한다.</h4>
+    <div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label>
+    <label class="option"><input type="radio" name="ox9" value="false"> X</label></div>
+    <div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 함수 분해는 문제 해결 과정을 더 명확하게 만들 수 있다.</h4>
+    <div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label>
+    <label class="option"><input type="radio" name="ox10" value="false"> X</label></div>
+    <div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 정보과학 교과의 네 영역에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 디지털 문화는 정보기술의 사회적 영향과 윤리를 다룬다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 데이터 영역은 자료의 수집·분석·시각화를 포함한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 알고리즘과 프로그래밍은 문제 해결 절차를 코드로 구현한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 인공지능은 저작권 문제와 전혀 관련이 없다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 네 영역은 서로 완전히 독립되어 연결되지 않는다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 문제 해결 절차에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 문제 이해 단계에서 해결 목표를 파악한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 데이터와 조건을 분석해 입력과 출력을 정리한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 알고리즘 설계에서 처리 순서를 계획한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 구현 후에는 평가와 개선이 필요 없다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 문제 해결은 항상 코딩부터 시작해야 한다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 함수 정의와 호출에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> def는 함수 정의에 사용한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 함수 호출은 함수 이름 뒤에 괄호를 붙인다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 함수는 여러 번 호출할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 함수 정의 전에 어떤 위치에서도 자유롭게 호출할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 함수는 반드시 매개변수를 가져야 한다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. print와 return에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> print는 화면에 내용을 표시한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> return은 값을 호출 위치로 전달한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 반환값은 변수에 저장할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> print로 보인 값은 언제나 자동 반환된다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> return 이후의 문장은 항상 실행된다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 매개변수와 인수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 매개변수는 함수 정의에 작성한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 인수는 함수 호출 때 전달한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 위치 인수는 순서에 따라 대응한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 매개변수와 인수는 반드시 같은 이름이어야 한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 인수 순서를 바꾸어도 의미는 항상 같다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 여러 반환값에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 파이썬 함수는 여러 값을 반환할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 여러 반환값은 여러 변수에 나누어 저장할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 여러 결과를 튜플처럼 묶어 다룰 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 함수는 숫자만 반환할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 여러 값을 반환하면 문법 오류가 발생한다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 입력 검증과 조기 반환에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 잘못된 입력을 먼저 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> return으로 함수 실행을 즉시 끝낼 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 0으로 나누기 같은 오류를 예방하는 데 활용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 조기 반환은 오류를 더 많이 만들기 위해 사용한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> return은 반복문에서만 사용할 수 있다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 함수의 재사용성에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 같은 함수를 여러 데이터에 적용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 함수의 역할이 분명하면 수정하기 쉽다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 중복 코드를 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 함수는 한 프로그램에서 한 번만 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 함수로 나누면 모든 프로그램이 반드시 빨라진다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 함수 오류 진단에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 들여쓰기는 실행 범위에 영향을 준다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 반복문 안의 return은 조기 종료를 만들 수 있다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 예상 출력과 실제 출력을 비교하면 도움이 된다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 문법 오류가 없으면 논리 오류도 없다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 테스트는 한 번만 하면 충분하다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 함수 설계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 함수 이름은 역할을 짐작할 수 있게 정한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 한 함수가 너무 많은 역할을 맡지 않게 한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 입력 조건과 반환값을 명확하게 한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 오류 상황은 고려하지 않는다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 중복 코드는 그대로 복사해 여러 번 쓴다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div>
+<div class="answer"><b>배점</b><br>코드별 평가 10문항 × 5점 = 50점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 3점 = 30점<br>총점 100점</div></section>
+</main>
+<a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div>
+<footer>정보과학 1차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 2, 3], "exp": "함수 정의만으로 내부 코드는 실행되지 않으며, 함수 이름 뒤에 괄호를 붙여 호출합니다."}, "2": {"ans": [0, 2, 3], "exp": "print는 화면 출력이고 return은 값을 돌려보냅니다. 반환값이 없으면 None입니다."}, "3": {"ans": [0, 1, 2], "exp": "매개변수는 함수 정의의 받을 자리이고 인수는 호출 시 전달하는 실제 값입니다."}, "4": {"ans": [0, 2, 3], "exp": "파이썬은 쉼표로 여러 값을 반환하고 언패킹으로 각각 저장할 수 있습니다."}, "5": {"ans": [0, 2, 3], "exp": "0을 먼저 검사해 문자열을 반환하므로 실제 나눗셈 오류를 피합니다."}, "6": {"ans": [0, 2, 3], "exp": "구간 조건에 따라 22는 좋음, 57은 보통, 103은 나쁨, 171은 매우 나쁨입니다."}, "7": {"ans": [0, 1, 2], "exp": "첫 글자를 남기고 나머지를 가리지만, 이것만으로 완전한 익명성이 보장되지는 않습니다."}, "8": {"ans": [0, 1, 2], "exp": "조건문으로 사람이 정한 규칙을 따르는 추천 함수이며 기계학습 모델은 아닙니다."}, "9": {"ans": [0, 1, 2], "exp": "return의 들여쓰기가 반복문 안에 있어 조기 종료되므로 반복문 밖으로 이동해야 합니다."}, "10": {"ans": [0, 1, 2], "exp": "28도는 적정 범위를 벗어나고 1350ppm은 환기가 필요합니다."}}, "ox": {"1": {"ans": true, "exp": "함수는 반복 작업을 구조화하고 재사용하게 합니다."}, "2": {"ans": false, "exp": "정의 후 호출해야 실행됩니다."}, "3": {"ans": true, "exp": "예: greet()"}, "4": {"ans": true, "exp": "return은 함수 종료와 값 전달의 역할을 합니다."}, "5": {"ans": false, "exp": "print는 화면 출력입니다."}, "6": {"ans": true, "exp": "함수 정의에서 사용됩니다."}, "7": {"ans": false, "exp": "위치 인수는 순서가 중요합니다."}, "8": {"ans": true, "exp": "쉼표로 구분하여 반환 가능합니다."}, "9": {"ans": false, "exp": "return 즉시 함수가 끝납니다."}, "10": {"ans": true, "exp": "역할별 함수는 구조와 테스트를 개선합니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "네 영역은 실제 문제 해결 과정에서 서로 연결됩니다."}, "2": {"ans": [0, 1, 2], "exp": "문제 이해와 분석, 설계, 구현, 평가·개선의 순환 과정이 중요합니다."}, "3": {"ans": [0, 1, 2], "exp": "매개변수가 없는 함수도 만들 수 있으며, 실행 흐름상 정의된 뒤 호출해야 합니다."}, "4": {"ans": [0, 1, 2], "exp": "print와 return은 목적이 다르며 return은 함수 실행을 종료합니다."}, "5": {"ans": [0, 1, 2], "exp": "매개변수는 받을 자리, 인수는 실제 값이며 순서가 중요할 수 있습니다."}, "6": {"ans": [0, 1, 2], "exp": "문자열, 리스트, 딕셔너리 등 다양한 자료형도 반환할 수 있습니다."}, "7": {"ans": [0, 1, 2], "exp": "조기 반환은 예외 조건을 먼저 처리하는 유용한 설계 방식입니다."}, "8": {"ans": [0, 1, 2], "exp": "함수 분해의 주요 장점은 재사용성과 유지보수성입니다."}, "9": {"ans": [0, 1, 2], "exp": "문법 오류가 없어도 논리 오류가 있을 수 있어 다양한 테스트가 필요합니다."}, "10": {"ans": [0, 1, 2], "exp": "좋은 함수는 역할이 분명하고 입력·출력과 오류 상황을 고려합니다."}}};
+function same(a,b){if(a.length!==b.length)return false;return [...a].sort((x,y)=>x-y).every((v,i)=>v===[...b].sort((x,y)=>x-y)[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+ const sid=document.getElementById("sid").value.trim(), name=document.getElementById("sname").value.trim();
+ if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+ let score=0, answered=0; const lines=["정보과학 1차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`];
+ const now=new Date(); lines.push(`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]");
+ for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+ lines.push("","[OX 형성평가]");
+ for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+ lines.push("","[종합 진단평가]");
+ for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+ lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);
+ document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+ const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+ const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_1차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();
+ document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

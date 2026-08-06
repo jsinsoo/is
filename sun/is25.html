@@ -1,0 +1,376 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 25차시 | 시간 복잡도와 연산 횟수 분석</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:52px 20px 46px;position:relative;overflow:hidden}.wrap,main{max-width:1200px;margin:auto}header:after{content:"";position:absolute;right:-80px;bottom:-100px;width:290px;height:290px;border-radius:50%;background:rgba(255,255,255,.08)}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}.hero-sub{max-width:960px;font-size:1.06rem;opacity:.96}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px;position:relative}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}section>h2:after{content:"";display:block;width:56px;height:4px;margin-top:8px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--purple))}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card{transition:transform .2s ease,box-shadow .2s ease}.flow-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(31,69,99,.10)}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}.quote strong{font-size:1.08rem;color:var(--navy)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold);color:#17324d}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}
+.mini-menu{position:fixed;left:8px;top:8px;z-index:80}.mini-menu summary{list-style:none;width:28px;height:28px;border-radius:7px;background:rgba(23,50,77,.92);color:#fff;display:grid;place-items:center;cursor:pointer;font-size:12px;box-shadow:0 4px 12px rgba(0,0,0,.22)}.mini-menu summary::-webkit-details-marker{display:none}.mini-panel{margin-top:5px;min-width:145px;padding:7px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,.16)}.mini-panel a{display:block;padding:6px 8px;border-radius:7px;text-decoration:none;color:var(--navy);font-size:.82rem;font-weight:800}.mini-panel a:hover{background:var(--sky)}
+footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar,.mini-menu{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top"><details class="mini-menu"><summary>☰</summary><div class="mini-panel">
+<a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 10선</a><a href="#closing">끝 멘트</a><a href="#ox">형성평가</a><a href="#diag">진단평가</a><a href="#submit">제출</a>
+</div></details>
+<header><div class="wrap"><h1>정보과학 25차시<br>시간 복잡도와 입력 크기별 연산 횟수 분석</h1><p class="hero-sub">알고리즘의 실행 시간을 단순한 초 단위가 아니라 입력 크기 n에 따른 핵심 연산 횟수와 성장률로 분석하고, O(1)·O(log n)·O(n)·O(n²)의 차이를 표·그래프·실험으로 탐구합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>25차시</td><th>주제</th><td>시간 복잡도와 입력 크기별 연산 횟수 비교</td></tr>
+<tr><th>핵심 질문</th><td colspan="3">알고리즘의 실행 시간을 핵심 연산 횟수로 표현할 때 입력 크기가 커질수록 서로 다른 시간 복잡도는 어떤 성장 차이를 보이는가?</td></tr>
+<tr><th>전이 목표</th><td colspan="3">학생은 새로운 알고리즘에서 핵심 연산을 정의하고 입력 크기에 따른 연산 횟수를 식·표·그래프로 나타내며, 시간 복잡도와 실제 실행 시간의 차이를 근거 있게 설명할 수 있다.</td></tr>
+<tr><th>성취기준</th><td colspan="3">O(1)·O(log n)·O(n)·O(n²)의 대표 알고리즘을 구현하고 핵심 연산 횟수를 측정한다. 입력 크기 변화와 연산량 증가 비율을 표와 그래프로 비교하며 빅오 표기법의 의미와 실제 실행 시간의 차이를 설명한다.</td></tr>
+<tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr>
+<tr><td>도입</td><td>같은 결과를 내는 두 코드의 반복 횟수를 비교하며 빠름의 기준을 질문한다.</td><td>연산, 규모</td></tr>
+<tr><td>개념 형성</td><td>상수·로그·선형·제곱 시간의 성장률을 구조화한다.</td><td>빅오, 성장률</td></tr>
+<tr><td>진단 실습</td><td>실제 카운터를 측정하고 표·일반 축·로그 축 그래프를 해석한다.</td><td>측정, 시각화</td></tr>
+<tr><td>정리·전이</td><td>새로운 코드의 핵심 연산과 복잡도를 추정하고 한계를 설명한다.</td><td>분석, 일반화</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>핵심 연산과 입력 크기를 정의한다.</li><li>대표 시간 복잡도의 성장률을 설명한다.</li><li>코드에서 실제 연산 횟수를 측정한다.</li><li>표와 그래프를 통해 복잡도를 비교한다.</li><li>이론 복잡도와 실제 실행 시간을 구분한다.</li></ol></div>
+<div class="card"><h3>학습할 개념</h3><ul><li><b>입력 크기 n:</b> 알고리즘이 처리하는 자료의 규모</li><li><b>핵심 연산:</b> 실행 횟수를 분석할 대표 비교·대입·반복 연산</li><li><b>빅오 표기:</b> 큰 입력에서 지배적인 증가율을 나타내는 표기</li><li><b>성장률:</b> 입력이 커질 때 연산량이 증가하는 비율</li><li><b>실험적 분석:</b> 실제 코드에서 카운터와 시간을 측정하는 방법</li></ul></div></div>
+<div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>알고리즘의 효율은 작은 입력에서의 순간적인 속도보다 입력 크기가 커질 때 연산량이 어떤 비율로 증가하는지를 통해 더 안정적으로 비교할 수 있다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">
+<strong>“빠름은 서두르는 것이 아니라, 불필요한 걸음을 줄이는 지혜입니다.”</strong><br><br>
+아리스토텔레스는 목적에 맞는 방법을 선택하는 것이 좋은 판단이라고 보았고, 데카르트는 복잡한 문제를 단순한 단계로 나누어 사고했습니다. 갈릴레이는 자연 현상을 수치로 측정했고, 가우스는 반복되는 계산에서 규칙을 찾아 더 짧은 해결의 길을 만들었습니다.<br><br>
+오늘 우리는 코드가 ‘몇 초 걸렸는가’만 보지 않습니다. 입력이 열 배, 백 배, 천 배로 커질 때 핵심 연산이 어떻게 늘어나는지를 살펴봅니다. 어떤 코드는 입력이 커져도 거의 그대로이고, 어떤 코드는 두 배 입력에서 네 배의 일을 해야 합니다. 시간 복잡도는 미래의 부담을 예측하는 수학적 지도입니다.<br><br>
+다만 지각 시간을 O(1)로 만들겠다고 준비 과정을 생략하면 등교 결과가 예외 상태가 될 수 있습니다. 오늘은 서두르지 않고 정확히 세어 보며, 빠른 코드와 성급한 코드를 구별해 봅시다.
+</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow">
+<div class="flow-card"><strong>연산 정의</strong>무엇을 한 번의 핵심 연산으로 셀지 정합니다.</div>
+<div class="flow-card"><strong>함수 모델링</strong>1·log n·n·n²으로 연산량을 표현합니다.</div>
+<div class="flow-card"><strong>표와 그래프</strong>입력 크기별 성장 차이를 시각화합니다.</div>
+<div class="flow-card"><strong>실험과 해석</strong>실제 카운터와 이론값을 비교합니다.</div></div>
+<ul><li>리스트 인덱스 접근의 O(1)</li><li>이진 탐색 비교 횟수의 O(log n)</li><li>선형 탐색 최악 비교 횟수의 O(n)</li><li>모든 원소 쌍 비교의 O(n²)</li><li>입력 크기별 이론 연산 횟수 표</li><li>네 시간 복잡도의 통합 그래프</li><li>로그 변환을 적용한 성장률 비교</li><li>실제 반복문 카운터를 이용한 이론 검증</li><li>입력 크기 두 배에 따른 증가 비율</li><li>사용자 입력 기반 연산 횟수 분석기</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol>
+<li><b>입력 크기에 따른 선형 탐색과 이진 탐색 비교 횟수 분석</b></li>
+<li><b>일반 축과 로그 축 그래프의 시간 복잡도 전달 효과 비교</b></li>
+<li><b>이론적 시간 복잡도와 실제 실행 시간의 차이 분석</b></li>
+<li><b>중첩 반복문 구조에 따른 연산 횟수 증가율 비교</b></li>
+<li><b>입력 크기 두 배 실험을 활용한 알고리즘 성장률 분류 연구</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 코드의 입력 크기·핵심 연산·반복 구조·이론식·그래프 해석을 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>O(1): 인덱스로 한 원소 접근</h2></div>
+<div><span class="badge">상수 시간</span><span class="badge">리스트 접근</span></div>
+<div class="two">
+<div><pre><code>def get_middle(data):
+    operation_count = 1
+    value = data[len(data) // 2]
+
+    return value, operation_count
+
+for n in [10, 100, 1000, 10000]:
+    data = list(range(n))
+    value, count = get_middle(data)
+
+    print(
+        f"n={n:5} | "
+        f"연산 횟수={count}"
+    )</code></pre></div>
+<div class="card">
+<h3>분석</h3>
+<p>리스트의 크기가 커져도 가운데 인덱스를 계산하고 한 번 접근합니다.</p>
+<p>따라서 핵심 연산 횟수는 입력 크기 n에 의존하지 않아 O(1)입니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 O(1) 인덱스 접근에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 리스트 크기가 커져도 특정 인덱스 접근 횟수는 거의 일정하다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 핵심 연산 수가 입력 크기 n에 의존하지 않는다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 대표 시간 복잡도는 O(1)이다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 입력 크기가 두 배가 되면 연산 횟수도 반드시 두 배가 된다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 모든 리스트 연산이 O(1)이다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>O(log n): 이진 탐색 비교 횟수</h2></div>
+<div><span class="badge">로그 시간</span><span class="badge">범위 절반</span></div>
+<pre><code>def binary_search_count(data, target):
+    left = 0
+    right = len(data) - 1
+    count = 0
+
+    while left &lt;= right:
+        count += 1
+        middle = (left + right) // 2
+
+        if data[middle] == target:
+            return middle, count
+
+        if data[middle] &lt; target:
+            left = middle + 1
+        else:
+            right = middle - 1
+
+    return -1, count
+
+for n in [8, 16, 32, 64, 128, 256]:
+    data = list(range(n))
+    _, count = binary_search_count(
+        data, n - 1
+    )
+
+    print(f"n={n:3} | 비교={count}")</code></pre>
+<div class="check"><strong>입력 크기 관계</strong><br/>입력이 8→16→32처럼 두 배가 되어도 최악의 비교 횟수는 대체로 한 번씩만 증가합니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 O(log n) 이진 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 한 번 비교할 때마다 탐색 범위를 대략 절반으로 줄인다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 입력이 두 배가 되어도 비교 횟수는 대체로 한 번 정도 증가한다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 정렬된 자료가 필요하다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 모든 원소를 처음부터 끝까지 확인한다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 시간 복잡도는 O(n²)이다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>O(n): 선형 탐색 연산 횟수</h2></div>
+<div><span class="badge">선형 시간</span><span class="badge">전체 순회</span></div>
+<pre><code>def linear_search_count(data, target):
+    count = 0
+
+    for index, value in enumerate(data):
+        count += 1
+
+        if value == target:
+            return index, count
+
+    return -1, count
+
+for n in [10, 100, 1000, 10000]:
+    data = list(range(n))
+
+    _, count = linear_search_count(
+        data, n - 1
+    )
+
+    print(
+        f"n={n:5} | "
+        f"최악 비교={count}"
+    )</code></pre>
+<div class="note"><strong>분석</strong><br/>목표값이 마지막에 있으면 모든 원소를 한 번씩 확인하므로 연산 횟수는 n과 같습니다.</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 O(n) 선형 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> 최악의 경우 모든 원소를 확인한다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> 입력 크기가 두 배가 되면 연산 횟수도 약 두 배가 된다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 대표 시간 복잡도는 O(n)이다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 목표가 마지막에 있어도 한 번만 비교한다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 자료가 커져도 비교 횟수는 일정하다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>O(n²): 모든 원소 쌍 비교</h2></div>
+<div><span class="badge">제곱 시간</span><span class="badge">이중 반복문</span></div>
+<div class="two">
+<div><pre><code>def compare_all_pairs(data):
+    count = 0
+
+    for i in range(len(data)):
+        for j in range(len(data)):
+            count += 1
+
+    return count
+
+for n in [10, 20, 40, 80]:
+    count = compare_all_pairs(
+        list(range(n))
+    )
+
+    print(
+        f"n={n:3} | "
+        f"연산 횟수={count}"
+    )</code></pre></div>
+<div class="card">
+<h3>입력 2배 효과</h3>
+<pre class="output">n=10 → 100회
+n=20 → 400회
+n=40 → 1600회
+n=80 → 6400회</pre>
+<p>n이 두 배가 되면 n²은 네 배가 됩니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 O(n²) 모든 원소 쌍 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> 이중 반복문으로 n×n번 연산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> n이 두 배가 되면 연산량은 약 네 배가 된다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 대표 시간 복잡도는 O(n²)이다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> n이 두 배가 되면 연산량은 절반이 된다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 중첩 반복문은 항상 O(log n)이다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>입력 크기별 이론 연산 횟수 표 만들기</h2></div>
+<div><span class="badge">math.log2</span><span class="badge">표 비교</span></div>
+<pre><code>import math
+
+sizes = [1, 2, 4, 8, 16, 32, 64]
+
+print(
+    "n\tO(1)\tO(log n)\tO(n)\tO(n²)"
+)
+
+for n in sizes:
+    constant = 1
+    logarithmic = math.ceil(
+        math.log2(n)
+    ) if n &gt; 1 else 0
+    linear = n
+    quadratic = n ** 2
+
+    print(
+        n,
+        constant,
+        logarithmic,
+        linear,
+        quadratic,
+        sep="\t"
+    )</code></pre>
+<table>
+<tr><th>n</th><th>O(1)</th><th>O(log₂n)</th><th>O(n)</th><th>O(n²)</th></tr>
+<tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+<tr><td>2</td><td>1</td><td>1</td><td>2</td><td>4</td></tr>
+<tr><td>4</td><td>1</td><td>2</td><td>4</td><td>16</td></tr>
+<tr><td>8</td><td>1</td><td>3</td><td>8</td><td>64</td></tr>
+<tr><td>16</td><td>1</td><td>4</td><td>16</td><td>256</td></tr>
+<tr><td>32</td><td>1</td><td>5</td><td>32</td><td>1024</td></tr>
+<tr><td>64</td><td>1</td><td>6</td><td>64</td><td>4096</td></tr>
+</table>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 이론 연산 횟수 표에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> O(1)은 n과 관계없이 1로 둘 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> O(log n)은 math.log2(n)으로 근사할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> O(n²)은 n**2로 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 빅오 표에서는 가장 느리게 증가하는 항만 남긴다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> O(log n)은 n과 항상 같다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>네 시간 복잡도 통합 그래프</h2></div>
+<div><span class="badge">Canvas</span><span class="badge">선 그래프</span></div>
+<div class="controls">
+<label>최대 n <input id="maxN" max="200" min="5" type="number" value="50"/></label>
+<button onclick="drawMainChart()">그래프 다시 그리기</button>
+</div>
+<div class="chart-box"><canvas height="390" id="mainChart" width="1050"></canvas></div>
+<div class="warn"><strong>그래프 해석</strong><br/>같은 축에서는 O(n²)이 매우 빠르게 증가하여 O(1)과 O(log n)이 바닥에 가깝게 보일 수 있습니다. 이는 성장률 차이가 매우 크다는 뜻입니다.</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 통합 그래프 해석에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 같은 축에서는 O(n²)이 빠르게 증가한다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> O(1)과 O(log n)은 바닥에 가까워 보일 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 세로축 범위가 큰 함수의 영향을 받는다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 그래프에서 O(1)이 O(n²)보다 더 가파르다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 모든 복잡도 곡선은 동일하다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>로그 눈금으로 성장률 다시 비교</h2></div>
+<div><span class="badge">로그 변환</span><span class="badge">작은 값 비교</span></div>
+<div class="chart-box"><canvas height="390" id="logChart" width="1050"></canvas></div>
+<div class="note"><strong>로그 축의 의미</strong><br/>y값에 log₁₀을 적용하면 큰 값의 압축 효과가 생겨 O(1), O(log n), O(n), O(n²)의 차이를 한 화면에서 더 자세히 관찰할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 로그 눈금 그래프에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 큰 값을 압축해 작은 성장률 차이를 더 잘 볼 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> y값에 로그 변환을 적용한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> O(1), O(log n), O(n), O(n²)을 한 화면에서 비교하기 쉽다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 로그 변환은 원래 값의 대소 관계를 무조건 뒤집는다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 로그 축에서는 n²이 상수 함수가 된다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>같은 입력에서 실제 핵심 연산 횟수 측정</h2></div>
+<div><span class="badge">실험</span><span class="badge">이론 검증</span></div>
+<pre><code>def operation_counts(n):
+    # O(1)
+    constant = 1
+
+    # O(log n)
+    value = n
+    logarithmic = 0
+
+    while value &gt; 1:
+        value //= 2
+        logarithmic += 1
+
+    # O(n)
+    linear = 0
+    for _ in range(n):
+        linear += 1
+
+    # O(n²)
+    quadratic = 0
+    for _ in range(n):
+        for _ in range(n):
+            quadratic += 1
+
+    return {
+        "O(1)": constant,
+        "O(log n)": logarithmic,
+        "O(n)": linear,
+        "O(n²)": quadratic
+    }
+
+for n in [4, 8, 16, 32]:
+    print(n, operation_counts(n))</code></pre>
+<div class="check"><strong>결과</strong><br/>반복문의 실제 카운터 값이 이론식 1, log₂n, n, n²과 같은 증가 경향을 보이는지 확인합니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 실제 연산 횟수 측정에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 카운터를 직접 증가시켜 실제 핵심 연산 횟수를 셀 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 이론식과 같은 증가 경향이 나타나는지 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> O(log n)은 값을 2로 나누는 반복으로 측정할 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 실제 측정은 이론 분석과 전혀 관련이 없다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> O(n²)은 반복문 하나로만 측정한다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>입력을 두 배로 늘렸을 때 증가 비율</h2></div>
+<div><span class="badge">성장 비율</span><span class="badge">2n / n</span></div>
+<pre><code>import math
+
+def growth_ratio(n):
+    functions = {
+        "O(1)": lambda x: 1,
+        "O(log n)": lambda x: math.log2(x),
+        "O(n)": lambda x: x,
+        "O(n²)": lambda x: x ** 2
+    }
+
+    for name, function in functions.items():
+        before = function(n)
+        after = function(2 * n)
+        ratio = after / before
+
+        print(
+            f"{name:8} | "
+            f"n={before:.2f} | "
+            f"2n={after:.2f} | "
+            f"비율={ratio:.2f}"
+        )
+
+growth_ratio(1024)</code></pre>
+<table>
+<tr><th>복잡도</th><th>n 증가 전</th><th>n을 2배로</th><th>대략적 증가</th></tr>
+<tr><td>O(1)</td><td>1</td><td>1</td><td>1배</td></tr>
+<tr><td>O(log n)</td><td>log₂n</td><td>log₂n+1</td><td>거의 동일</td></tr>
+<tr><td>O(n)</td><td>n</td><td>2n</td><td>2배</td></tr>
+<tr><td>O(n²)</td><td>n²</td><td>4n²</td><td>4배</td></tr>
+</table>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 입력 2배 성장 비율에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> O(1)은 거의 변하지 않는다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> O(n)은 약 두 배가 된다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> O(n²)은 약 네 배가 된다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> O(log n)은 정확히 네 배가 된다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 모든 복잡도는 같은 비율로 증가한다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>입력 크기 기반 연산 횟수 분석기</h2></div>
+<div><span class="badge">종합 실습</span><span class="badge">상호작용</span></div>
+<div class="controls">
+<label>입력 크기 n <input id="inputN" max="1000000" min="1" type="number" value="1000"/></label>
+<button onclick="analyzeN()">분석하기</button>
+</div>
+<div class="result" id="analysisResult"></div>
+<pre><code>import math
+
+def analyze(n):
+    results = {
+        "O(1)": 1,
+        "O(log n)": math.ceil(math.log2(n)),
+        "O(n)": n,
+        "O(n²)": n ** 2
+    }
+
+    for name, operations in results.items():
+        print(name, operations)
+
+n = int(input("입력 크기 n: "))
+analyze(n)</code></pre>
+<div class="lead" style="margin-top:14px">
+<strong>분석 문장 예시</strong><br/>
+“입력 크기가 두 배가 될 때 O(1)은 연산 수가 거의 변하지 않고, O(log n)은 약 한 단계 증가한다. O(n)은 약 두 배, O(n²)은 약 네 배 증가한다. 따라서 입력이 매우 커질수록 제곱 시간 알고리즘의 실행 부담이 선형·로그 시간보다 빠르게 커진다.”
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 연산 횟수 분석기에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 입력 크기 n에 따른 대표 연산 수를 계산한다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> O(log n)은 ceil(log2(n))으로 근사할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> O(n²)은 n*n으로 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 빅오 분석은 정확한 실행 시간을 초 단위로만 측정한다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 입력 크기는 분석 결과와 무관하다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">
+시는 짧은 한 줄로 긴 마음을 표현하고, 소설은 수많은 사건 가운데 꼭 필요한 장면을 남깁니다. 희곡은 제한된 무대에서 가장 중요한 갈등을 선명하게 드러내고, 연극은 배우의 동작 하나하나를 다듬어 불필요한 움직임을 줄입니다. 음악도 빠르게 연주하는 것보다 꼭 필요한 음을 정확한 순간에 놓는 것이 더 큰 감동을 만듭니다.<br><br>
+여러분의 꿈도 무조건 많은 일을 하는 것으로 완성되지 않습니다. 같은 시간을 쓰더라도 더 의미 있는 선택을 하고, 반복되는 실수는 줄이며, 중요한 일에 집중할 때 삶의 시간 복잡도는 더 아름다워집니다. 오늘의 작은 습관 하나가 O(1)처럼 꾸준한 힘이 되고, 매일의 배움이 O(n)처럼 차곡차곡 쌓이기를 바랍니다.<br><br>
+다만 시험 공부를 O(log n)으로 줄이겠다며 교과서를 절반씩 버리면 탐색 범위는 줄어도 점수까지 줄어들 수 있습니다. 오늘 배운 분석의 눈으로 여러분의 코드와 시간, 그리고 꿈의 경로를 더 현명하게 설계해 보세요.
+</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 빅오 표기법은 입력 크기가 커질 때 연산량 증가 경향을 나타낸다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. O(1)은 입력 크기가 두 배가 되면 연산량도 반드시 두 배가 된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 이진 탐색은 탐색 범위를 절반씩 줄인다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 선형 탐색의 최악 비교 횟수는 n에 비례할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 이중 반복문은 대표적으로 O(n²)이 될 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 입력 n이 두 배가 되면 O(n²)은 약 네 배가 된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 빅오 표기에서는 상수 배수와 낮은 차수 항을 보통 생략한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 로그 축은 큰 값을 더 크게 확대하기만 한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 실제 연산 횟수 측정은 이론적 시간 복잡도 검증에 도움이 된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 시간 복잡도가 같으면 실제 실행 시간도 언제나 완전히 같다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 빅오 표기법에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 입력 크기 증가에 따른 성장률을 나타낸다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 상수 배수와 낮은 차수 항을 생략할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 큰 입력에서 지배적인 항을 중심으로 본다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 정확한 실행 시간을 초 단위로만 나타낸다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 하드웨어에 따라 표기 자체가 매번 달라진다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. O(1)에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 입력 크기와 무관하게 연산 수가 거의 일정하다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 리스트 인덱스 접근이 대표 사례이다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 입력 2배 시 연산량이 거의 같다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 모든 알고리즘이 O(1)이다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 입력이 커지면 반드시 n배가 된다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. O(log n)에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 입력을 일정 비율로 줄인다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 이진 탐색이 대표 사례이다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 입력 2배 시 단계가 대체로 조금만 증가한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 모든 원소를 반드시 확인한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> n이 두 배면 연산량도 정확히 두 배이다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. O(n)에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 입력 원소를 한 번씩 처리할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 선형 탐색이 대표 사례이다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> n이 두 배면 연산량도 약 두 배이다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 이중 반복문이 대표 사례이다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 입력과 연산량은 무관하다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. O(n²)에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 모든 원소 쌍 비교에서 나타날 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 이중 반복문이 대표 구조이다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> n이 두 배면 연산량이 약 네 배가 된다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 로그 탐색의 대표 복잡도이다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 입력이 커져도 연산량이 거의 같다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 그래프 해석에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 축의 범위를 확인한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 성장률 차이를 비교한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 로그 축의 의미를 이해한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 곡선 색만 보고 결론을 낸다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 작은 n에서만 본 결과를 큰 n에 그대로 단정한다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 실험 설계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 같은 입력 크기에서 여러 알고리즘을 비교한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 핵심 연산 횟수를 직접 센다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 여러 입력 크기를 사용한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 한 번의 결과만으로 일반화한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 입력 조건은 기록하지 않는다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 시간 복잡도와 실제 시간에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 복잡도는 성장률을 나타낸다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 실제 시간은 구현과 환경에 영향받는다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 같은 복잡도라도 상수 차이가 있을 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 복잡도만 알면 정확한 초 단위를 알 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 하드웨어는 실제 시간과 무관하다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 입력 2배 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> O(1)은 거의 1배이다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> O(n)은 약 2배이다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> O(n²)은 약 4배이다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> O(log n)은 항상 10배이다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 모든 복잡도는 동일 비율이다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 알고리즘 분석 설명에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 핵심 연산을 정의한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 최선·평균·최악 상황을 구분할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 시간과 공간을 함께 고려한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 빅오 기호만 쓰고 근거는 생략한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 작은 입력 결과만으로 모든 경우를 판단한다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 10문항 × 5점 = 50점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 3점 = 30점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 25차시 목표지향 개념기반 수업지도안</footer>
+
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "특정 위치의 직접 접근은 입력 크기와 무관하게 일정한 연산으로 처리됩니다."}, "2": {"ans": [0, 1, 2], "exp": "이진 탐색은 정렬된 자료에서 탐색 범위를 절반씩 줄이므로 로그 시간입니다."}, "3": {"ans": [0, 1, 2], "exp": "선형 탐색은 최악의 경우 n개 원소를 모두 확인합니다."}, "4": {"ans": [0, 1, 2], "exp": "두 반복문이 각각 n번 실행되면 전체 연산량은 n²에 비례합니다."}, "5": {"ans": [0, 1, 2], "exp": "대표 함수값을 표로 계산하면 성장률 차이를 수치로 비교할 수 있습니다."}, "6": {"ans": [0, 1, 2], "exp": "성장률 차이가 크면 같은 축에서 작은 함수는 평평하게 보일 수 있습니다."}, "7": {"ans": [0, 1, 2], "exp": "로그 변환은 큰 값의 범위를 압축하여 여러 성장률을 비교하기 쉽게 합니다."}, "8": {"ans": [0, 1, 2], "exp": "카운터 실험은 이론적 성장률을 실제 코드 수준에서 검증하는 방법입니다."}, "9": {"ans": [0, 1, 2], "exp": "입력을 두 배로 했을 때의 증가 비율은 복잡도별 성장 특성을 잘 보여 줍니다."}, "10": {"ans": [0, 1, 2], "exp": "연산 횟수 분석기는 입력 크기별 성장률을 수치로 비교하게 합니다."}}, "ox": {"1": {"ans": true, "exp": "정확한 초 단위보다 성장률을 중심으로 봅니다."}, "2": {"ans": false, "exp": "대표 연산 수가 거의 일정합니다."}, "3": {"ans": true, "exp": "O(log n)의 핵심입니다."}, "4": {"ans": true, "exp": "마지막 원소를 찾을 때 모든 원소를 확인합니다."}, "5": {"ans": true, "exp": "각 반복이 n번이라면 n×n입니다."}, "6": {"ans": true, "exp": "(2n)²=4n²입니다."}, "7": {"ans": true, "exp": "가장 빠르게 증가하는 항을 중심으로 봅니다."}, "8": {"ans": false, "exp": "큰 값을 압축해 비교를 돕습니다."}, "9": {"ans": true, "exp": "같은 증가 경향을 확인할 수 있습니다."}, "10": {"ans": false, "exp": "상수·언어·하드웨어·구현 차이가 영향을 줍니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "빅오는 입력이 커질 때의 증가 양상을 추상화합니다."}, "2": {"ans": [0, 1, 2], "exp": "상수 시간은 핵심 연산 수가 n에 의존하지 않습니다."}, "3": {"ans": [0, 1, 2], "exp": "로그 시간은 문제 크기를 반복적으로 줄이는 구조에서 나타납니다."}, "4": {"ans": [0, 1, 2], "exp": "선형 시간은 입력 크기에 비례합니다."}, "5": {"ans": [0, 1, 2], "exp": "제곱 시간은 입력 증가에 따라 매우 빠르게 커집니다."}, "6": {"ans": [0, 1, 2], "exp": "그래프는 축과 범위, 변환 방식을 함께 해석해야 합니다."}, "7": {"ans": [0, 1, 2], "exp": "공정한 비교를 위해 입력과 측정 기준을 통제해야 합니다."}, "8": {"ans": [0, 1, 2], "exp": "이론적 복잡도와 실제 실행 시간은 관련 있지만 동일하지 않습니다."}, "9": {"ans": [0, 1, 2], "exp": "두 배 입력 실험은 성장률 차이를 직관적으로 보여 줍니다."}, "10": {"ans": [0, 1, 2], "exp": "분석에는 연산 기준, 입력 조건, 시간·공간 근거가 필요합니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();
+if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;
+const now=new Date(),lines=["정보과학 25차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);
+document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"});
+const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_25차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();
+document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+
+// 원본 그래프 기능 유지
+const palette={constant:"#2f6fa3",logarithmic:"#3f9562",linear:"#f2b84b",quadratic:"#c94d4d",grid:"#d7e3ec",text:"#26333f"};
+function setupCanvas(id){const canvas=document.getElementById(id);if(!canvas)return null;const dpr=window.devicePixelRatio||1,cssW=canvas.clientWidth,cssH=canvas.clientHeight;canvas.width=Math.floor(cssW*dpr);canvas.height=Math.floor(cssH*dpr);const ctx=canvas.getContext("2d");ctx.setTransform(dpr,0,0,dpr,0,0);return {canvas,ctx,w:cssW,h:cssH};}
+function drawAxes(ctx,w,h,maxX,maxY,yLabel){const m={l:62,r:22,t:25,b:48};ctx.clearRect(0,0,w,h);ctx.font="13px Malgun Gothic";ctx.strokeStyle=palette.grid;ctx.fillStyle=palette.text;ctx.lineWidth=1;for(let i=0;i<=5;i++){const y=m.t+(h-m.t-m.b)*i/5;ctx.beginPath();ctx.moveTo(m.l,y);ctx.lineTo(w-m.r,y);ctx.stroke();const val=maxY*(1-i/5);ctx.fillText(val>=1000?val.toExponential(1):val.toFixed(val<10?1:0),6,y+4);}for(let i=0;i<=5;i++){const x=m.l+(w-m.l-m.r)*i/5;ctx.beginPath();ctx.moveTo(x,m.t);ctx.lineTo(x,h-m.b);ctx.stroke();ctx.fillText(Math.round(maxX*i/5),x-8,h-m.b+22);}ctx.strokeStyle=palette.text;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(m.l,m.t);ctx.lineTo(m.l,h-m.b);ctx.lineTo(w-m.r,h-m.b);ctx.stroke();ctx.fillText("입력 크기 n",w/2-32,h-10);ctx.save();ctx.translate(16,h/2+25);ctx.rotate(-Math.PI/2);ctx.fillText(yLabel,0,0);ctx.restore();return m;}
+function drawSeries(ctx,w,h,m,maxX,maxY,fn,color){ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.beginPath();for(let n=1;n<=maxX;n++){const value=fn(n),x=m.l+(w-m.l-m.r)*(n-1)/(maxX-1||1),y=h-m.b-(h-m.t-m.b)*value/maxY;if(n===1)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();}
+function drawLegend(ctx){const items=[["O(1)",palette.constant],["O(log n)",palette.logarithmic],["O(n)",palette.linear],["O(n²)",palette.quadratic]];let x=75;ctx.font="13px Malgun Gothic";items.forEach(([label,color])=>{ctx.fillStyle=color;ctx.fillRect(x,8,20,4);ctx.fillStyle=palette.text;ctx.fillText(label,x+26,14);x+=110;});}
+function drawMainChart(){const input=document.getElementById("maxN");if(!input)return;const maxN=Math.max(5,Math.min(200,Number(input.value)||50)),setup=setupCanvas("mainChart");if(!setup)return;const {ctx,w,h}=setup,maxY=maxN*maxN,m=drawAxes(ctx,w,h,maxN,maxY,"연산 횟수");drawSeries(ctx,w,h,m,maxN,maxY,n=>1,palette.constant);drawSeries(ctx,w,h,m,maxN,maxY,n=>Math.log2(n),palette.logarithmic);drawSeries(ctx,w,h,m,maxN,maxY,n=>n,palette.linear);drawSeries(ctx,w,h,m,maxN,maxY,n=>n*n,palette.quadratic);drawLegend(ctx);}
+function drawLogChart(){const setup=setupCanvas("logChart");if(!setup)return;const maxN=100,{ctx,w,h}=setup,maxY=Math.log10(maxN*maxN+1),m=drawAxes(ctx,w,h,maxN,maxY,"log₁₀(연산 횟수+1)");drawSeries(ctx,w,h,m,maxN,maxY,n=>Math.log10(2),palette.constant);drawSeries(ctx,w,h,m,maxN,maxY,n=>Math.log10(Math.log2(n)+1),palette.logarithmic);drawSeries(ctx,w,h,m,maxN,maxY,n=>Math.log10(n+1),palette.linear);drawSeries(ctx,w,h,m,maxN,maxY,n=>Math.log10(n*n+1),palette.quadratic);drawLegend(ctx);}
+function analyzeN(){const input=document.getElementById("inputN"),result=document.getElementById("analysisResult");if(!input||!result)return;const n=Math.max(1,Math.floor(Number(input.value)||1)),log=Math.ceil(Math.log2(n)),quad=n*n;result.textContent=[`입력 크기 n = ${n.toLocaleString()}`,"",`O(1)      : 1회`,`O(log n)  : 약 ${log.toLocaleString()}회`,`O(n)      : ${n.toLocaleString()}회`,`O(n²)     : ${quad.toLocaleString()}회`,"","n을 두 배로 늘리면","O(1)은 거의 동일하고, O(log n)은 약 1회 증가하며,","O(n)은 약 2배, O(n²)은 약 4배 증가합니다."].join("\n");}
+window.addEventListener("load",()=>{drawMainChart();drawLogChart();analyzeN();});
+window.addEventListener("resize",()=>{drawMainChart();drawLogChart();});
+</script></body></html>

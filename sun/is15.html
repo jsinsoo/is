@@ -1,0 +1,347 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 15차시 목표지향 개념기반 수업지도안</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:50px 20px 44px}.wrap,main{max-width:1200px;margin:auto}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top">
+<header><div class="wrap"><h1>정보과학 15차시<br>문제 상황에 적합한 자료구조 선택</h1><p>입력 자료·핵심 연산·처리 순서·관계 구조를 분석하여 리스트·집합·딕셔너리·스택·큐·덱·힙·그래프 중 적합한 자료구조를 선택하고 근거와 효율성을 설명합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>15차시</td><th>주제</th><td>문제 상황별 자료구조 선택과 근거 설명</td></tr><tr><th>핵심 질문</th><td colspan="3">같은 자료를 저장하더라도 어떤 연산을 자주 수행하느냐에 따라 왜 다른 자료구조를 선택해야 하는가?</td></tr><tr><th>전이 목표</th><td colspan="3">학생은 새로운 문제에서 입력 자료, 반복 연산, 처리 순서와 관계 구조를 분석하고 적합한 자료구조를 선택하여 정확성·가독성·시간·공간 효율을 근거로 설명할 수 있다.</td></tr><tr><th>성취기준</th><td colspan="3">문제 상황의 자료 특성과 핵심 연산을 분석하여 리스트·집합·딕셔너리·스택·큐·덱·힙·그래프 중 적절한 자료구조를 선택하고 구현한다. 구현 결과와 시간·공간 효율, 장단점을 비교하여 선택 근거를 논리적으로 설명한다.</td></tr><tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr><tr><td>도입</td><td>학생 점수·대기열·실행 취소·친구 관계 사례에서 서로 다른 처리 규칙을 찾는다.</td><td>상황, 목적</td></tr><tr><td>개념 형성</td><td>순서·고유성·키 조회·처리 순서·우선순위·관계를 자료구조와 연결한다.</td><td>특성, 연산</td></tr><tr><td>진단 실습</td><td>10개 사례를 구현하고 선택 이유·출력 결과·시간·공간 효율을 설명한다.</td><td>구현, 비교</td></tr><tr><td>정리·전이</td><td>새로운 문제에 적합한 구조를 추천하고 대안 구조와 비교한다.</td><td>판단, 논증</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>문제의 입력 자료와 핵심 연산을 구분한다.</li><li>자료구조별 강점과 한계를 설명한다.</li><li>문제 상황에 적합한 자료구조를 선택한다.</li><li>선택한 구조로 프로그램을 구현하고 검증한다.</li><li>시간·공간 효율과 대안 구조를 논리적으로 비교한다.</li></ol></div><div class="card"><h3>학습할 개념</h3><ul><li><b>자료 특성:</b> 순서·중복·키·관계·우선순위와 같은 성질</li><li><b>핵심 연산:</b> 삽입·삭제·탐색·포함 검사·최솟값·경로 탐색</li><li><b>추상 자료형:</b> 자료와 연산의 논리적 규칙</li><li><b>시간·공간 효율:</b> 입력 크기에 따른 실행 시간과 메모리 사용</li><li><b>선택 근거:</b> 문제와 구조의 특성을 연결해 설명하는 논증</li></ul></div></div><div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>좋은 자료구조는 가장 유명한 구조가 아니라 문제에서 반복되는 핵심 연산을 정확하고 효율적으로 지원하는 구조이며, 선택은 구현 결과와 시간·공간의 장단점으로 검증되어야 한다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">“아리스토텔레스는 사물의 본질을 알려면 그것이 무엇을 위해 존재하는지 보아야 한다고 했고, 데카르트는 복잡한 문제를 알맞은 단위로 나누었습니다. 린네는 자연을 분류해 이해의 질서를 만들었으며, 가우스는 문제의 구조를 보고 가장 짧은 계산의 길을 찾았습니다. 오늘 우리는 모든 문제에 같은 자료구조를 끼워 넣지 않습니다. 망치만 들고 있으면 모든 문제가 못처럼 보인다는 말이 있지만, 급식 줄을 스택으로 만들면 마지막 학생이 먼저 먹게 되고, 친구 관계를 리스트 한 줄로만 저장하면 우정도 디버깅이 필요해집니다. 이제 문제의 성격을 듣고 가장 알맞은 구조를 선택하는 설계자가 되어 봅시다.”</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow"><div class="flow-card"><strong>문제 분석</strong>저장할 자료와 필요한 결과를 분명히 합니다.</div><div class="flow-card"><strong>핵심 연산</strong>자주 수행할 삽입·삭제·탐색·관계 연산을 찾습니다.</div><div class="flow-card"><strong>구조 선택</strong>연산에 유리한 자료구조를 선택합니다.</div><div class="flow-card"><strong>평가와 설명</strong>정확성·가독성·시간·공간 효율을 검증합니다.</div></div>
+<ul><li>순서와 인덱스가 필요한 리스트</li><li>중복 제거와 포함 검사에 적합한 집합</li><li>키 조회와 빈도 누적에 적합한 딕셔너리</li><li>최근 작업을 처리하는 스택</li><li>도착 순서대로 처리하는 큐</li><li>양쪽 끝 연산을 지원하는 덱</li><li>우선 작업을 꺼내는 힙</li><li>관계와 경로를 표현하는 그래프</li><li>동일 가중치 최단 경로와 BFS</li><li>문제 설명 기반 자료구조 추천 함수</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol><li><b>문제 유형에 따른 자료구조 선택 오류와 성능 차이 분석</b></li><li><b>리스트·집합·딕셔너리의 포함 여부 검사 시간 비교</b></li><li><b>리스트 큐와 deque 큐의 입력 크기별 실행 시간 비교</b></li><li><b>힙과 반복 정렬 방식의 우선순위 작업 처리 효율 비교</b></li><li><b>자료구조 추천 규칙 기반 프로그램의 정확도와 한계 분석</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 코드에서 문제 상황·핵심 연산·선택 자료구조·구현 결과·효율성을 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>학생 점수 순서 관리 — 리스트 선택</h2></div>
+<div><span class="badge">리스트</span><span class="badge">순서 유지</span></div>
+<div class="two">
+<div><pre><code>scores = [85, 92, 78, 96, 88]
+
+scores.append(91)
+scores[2] = 80
+
+average = sum(scores) / len(scores)
+
+print("점수:", scores)
+print("세 번째 점수:", scores[2])
+print("평균:", average)</code></pre></div>
+<div class="card">
+<h3>선택 근거</h3>
+<p>점수의 입력 순서를 유지하고, 특정 위치의 값을 수정하거나 전체를 순회해야 하므로 리스트를 선택합니다.</p>
+<h3>효율성</h3>
+<p>인덱스 접근은 빠르지만, 앞이나 중간 삽입·삭제는 뒤쪽 원소 이동이 필요합니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 리스트 선택에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 입력 순서를 유지할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 인덱스로 특정 위치의 값을 수정할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 전체 점수를 순회해 평균을 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 중복 값은 자동으로 제거된다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 앞·중간 삽입도 항상 이동 비용이 없다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>행사 참가자 중복 제거 — 집합 선택</h2></div>
+<div><span class="badge">집합</span><span class="badge">중복 제거</span></div>
+<pre><code>participants = [
+    "민준", "서연", "민준",
+    "지우", "서연", "하준"
+]
+
+unique_participants = set(participants)
+
+print("고유 참가자:", unique_participants)
+print("참가자 수:", len(unique_participants))
+print("지우 참가 여부:", "지우" in unique_participants)</code></pre>
+<div class="note"><strong>선택 근거</strong><br/>순서보다 고유한 이름과 빠른 포함 여부 확인이 중요하므로 집합이 적합합니다. 원래 입력 순서가 필요하다면 별도 처리가 필요합니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 집합 선택에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 중복 이름을 자동으로 제거할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 포함 여부를 빠르게 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 원래 입력 순서는 보장되지 않을 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 같은 이름을 여러 번 반드시 유지한다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 인덱스 0으로 첫 원소에 접근하는 것이 기본이다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>단어 빈도 분석 — 딕셔너리 선택</h2></div>
+<div><span class="badge">딕셔너리</span><span class="badge">빈도 누적</span></div>
+<div class="two">
+<div><pre><code>text = "데이터 분석 데이터 시각화 분석"
+words = text.split()
+
+frequency = {}
+
+for word in words:
+    frequency[word] = frequency.get(word, 0) + 1
+
+for word, count in frequency.items():
+    print(word, ":", count)
+
+most_common = max(
+    frequency,
+    key=frequency.get
+)
+
+print("가장 많이 나온 단어:", most_common)</code></pre></div>
+<div class="card">
+<h3>선택 근거</h3>
+<p>단어를 키로 사용하고 해당 단어의 출현 횟수를 값으로 누적해야 합니다.</p>
+<h3>결과</h3>
+<p>각 단어의 빈도와 최빈 단어를 빠르게 조회할 수 있습니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 딕셔너리 선택에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> 단어를 키로 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> 출현 횟수를 값으로 누적할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> frequency.get(word,0)으로 기본값을 처리할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 모든 키는 반드시 연속된 정수여야 한다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 딕셔너리는 빈도 계산에 사용할 수 없다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>최근 작업 실행 취소 — 스택 선택</h2></div>
+<div><span class="badge">스택</span><span class="badge">LIFO</span></div>
+<pre><code>document = ""
+history = []
+
+def write(text):
+    global document
+
+    history.append(document)
+    document += text
+
+def undo():
+    global document
+
+    if history:
+        document = history.pop()
+
+write("자료")
+write("구조")
+write(" 선택")
+
+print("현재:", document)
+undo()
+print("취소 후:", document)</code></pre>
+<div class="check"><strong>선택 근거</strong><br/>가장 최근 작업을 가장 먼저 취소해야 하므로 후입선출 스택이 적합합니다. 리스트의 맨 뒤에서 삽입·삭제하면 효율적입니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 스택 선택에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> 가장 최근 상태를 먼저 복원한다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> history.append()로 이전 상태를 저장한다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> history.pop()으로 최근 상태를 꺼낸다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 가장 오래된 상태를 먼저 취소한다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 실행 취소는 FIFO 구조가 핵심이다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>상담 대기 순서 — 큐 선택</h2></div>
+<div><span class="badge">큐</span><span class="badge">FIFO</span><span class="badge">deque</span></div>
+<div class="two">
+<div><pre><code>from collections import deque
+
+waiting = deque()
+
+waiting.append("민준")
+waiting.append("서연")
+waiting.append("지우")
+
+while waiting:
+    student = waiting.popleft()
+    print("상담:", student)</code></pre></div>
+<div class="card">
+<h3>선택 근거</h3>
+<p>먼저 신청한 학생을 먼저 상담해야 하므로 선입선출 큐를 선택합니다.</p>
+<h3>효율성</h3>
+<p><code>deque.popleft()</code>는 리스트의 <code>pop(0)</code>보다 앞쪽 삭제에 효율적입니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 큐 선택에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> 먼저 신청한 학생을 먼저 상담한다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> deque.append()로 뒤에 추가한다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> popleft()로 앞 학생을 처리한다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 가장 최근 신청자를 먼저 처리한다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> 큐는 후입선출 구조이다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>양쪽 문자 비교 — 덱 선택</h2></div>
+<div><span class="badge">덱</span><span class="badge">회문 검사</span></div>
+<pre><code>from collections import deque
+
+def is_palindrome(text):
+    characters = deque(
+        character.lower()
+        for character in text
+        if character.isalnum()
+    )
+
+    while len(characters) &gt; 1:
+        left = characters.popleft()
+        right = characters.pop()
+
+        if left != right:
+            return False
+
+    return True
+
+print(is_palindrome("level"))
+print(is_palindrome("python"))</code></pre>
+<div class="note"><strong>선택 근거</strong><br/>문자열의 왼쪽과 오른쪽을 반복해서 제거해야 하므로 양쪽 끝 연산이 빠른 덱이 적합합니다.</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 덱 선택에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 양쪽 끝에서 자료를 제거할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 회문 검사에서 왼쪽과 오른쪽 문자를 비교할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> popleft()와 pop()을 함께 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 덱은 한쪽 끝만 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 양쪽 끝 연산은 항상 느리다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>가장 긴급한 작업 처리 — 최소 힙 선택</h2></div>
+<div><span class="badge">힙</span><span class="badge">우선순위 큐</span></div>
+<div class="two">
+<div><pre><code>import heapq
+
+tasks = []
+
+heapq.heappush(tasks, (3, "교실 정리"))
+heapq.heappush(tasks, (1, "서버 장애 확인"))
+heapq.heappush(tasks, (2, "수업 자료 출력"))
+
+while tasks:
+    priority, task = heapq.heappop(tasks)
+    print(priority, task)</code></pre></div>
+<div class="card">
+<h3>선택 근거</h3>
+<p>입력 순서가 아니라 우선순위가 가장 높은 작업을 반복해서 꺼내야 합니다.</p>
+<h3>효율성</h3>
+<p>힙은 최솟값 확인과 삭제가 효율적이며, 전체를 매번 정렬하는 비용을 줄입니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 힙 선택에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 우선순위가 작은 작업을 먼저 꺼낼 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> heapq.heappush()로 작업을 추가한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> heapq.heappop()으로 최솟값을 꺼낸다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 매번 전체 정렬만 해야 한다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 힙은 우선순위 처리와 무관하다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>친구 관계와 공통 친구 — 그래프 선택</h2></div>
+<div><span class="badge">그래프</span><span class="badge">인접리스트</span></div>
+<pre><code>friends = {
+    "민준": {"서연", "지우"},
+    "서연": {"민준", "하준", "지우"},
+    "지우": {"민준", "서연"},
+    "하준": {"서연"}
+}
+
+def common_friends(a, b):
+    return friends[a] &amp; friends[b]
+
+print(
+    "민준·하준의 공통 친구:",
+    common_friends("민준", "하준")
+)
+
+for person, neighbors in friends.items():
+    print(person, "차수:", len(neighbors))</code></pre>
+<div class="check"><strong>선택 근거</strong><br/>학생과 친구 관계처럼 대상과 연결을 표현해야 하므로 그래프가 적합합니다. 이웃을 집합으로 저장하면 공통 친구 교집합도 쉽게 계산할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 그래프 선택에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 학생은 노드로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 친구 관계는 간선으로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 이웃을 집합으로 저장하면 공통 친구 교집합을 구할 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 친구 관계는 리스트 하나만으로만 표현해야 한다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> 차수는 이름의 글자 수이다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>교실 이동의 최소 단계 — 그래프와 BFS 선택</h2></div>
+<div><span class="badge">그래프</span><span class="badge">BFS</span><span class="badge">큐</span></div>
+<pre><code>from collections import deque
+
+building = {
+    "교실": ["복도"],
+    "복도": ["교실", "계단", "도서관"],
+    "계단": ["복도", "과학실"],
+    "도서관": ["복도", "과학실"],
+    "과학실": ["계단", "도서관"]
+}
+
+def shortest_path(start, target):
+    queue = deque([(start, [start])])
+    visited = {start}
+
+    while queue:
+        place, path = queue.popleft()
+
+        if place == target:
+            return path
+
+        for next_place in building[place]:
+            if next_place not in visited:
+                visited.add(next_place)
+                queue.append(
+                    (next_place, path + [next_place])
+                )
+
+    return None
+
+path = shortest_path("교실", "과학실")
+
+print("경로:", path)
+print("이동 단계:", len(path) - 1)</code></pre>
+<div class="note"><strong>선택 근거</strong><br/>장소 연결은 그래프로 나타내고, 모든 이동 비용이 같을 때 최소 간선 수 경로는 큐 기반 BFS로 찾습니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 그래프와 BFS 선택에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> 장소 연결은 그래프로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 모든 간선 비용이 같을 때 BFS로 최소 단계 경로를 찾을 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 큐에 장소와 경로를 함께 저장할 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> DFS만이 항상 최단 경로를 보장한다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> visited는 중복 방문과 무관하다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>문제 설명에 따른 자료구조 추천 프로그램</h2></div>
+<div><span class="badge">종합 판단</span><span class="badge">선택 근거</span></div>
+<pre><code>def recommend_structure(
+    keep_order=False,
+    remove_duplicates=False,
+    key_lookup=False,
+    recent_first=False,
+    arrival_first=False,
+    both_ends=False,
+    priority=False,
+    relationships=False
+):
+    if relationships:
+        return "그래프", "대상 사이의 연결과 경로를 표현할 수 있습니다."
+
+    if priority:
+        return "힙", "최우선 자료를 반복해서 효율적으로 꺼낼 수 있습니다."
+
+    if recent_first:
+        return "스택", "가장 최근 자료를 먼저 처리하는 LIFO 구조입니다."
+
+    if arrival_first:
+        return "큐", "먼저 들어온 자료를 먼저 처리하는 FIFO 구조입니다."
+
+    if both_ends:
+        return "덱", "양쪽 끝의 삽입과 삭제가 모두 효율적입니다."
+
+    if remove_duplicates:
+        return "집합", "중복을 자동으로 제거하고 포함 여부를 빠르게 확인합니다."
+
+    if key_lookup:
+        return "딕셔너리", "키를 이용해 값을 빠르게 조회하고 갱신합니다."
+
+    if keep_order:
+        return "리스트", "자료의 순서와 인덱스를 유지합니다."
+
+    return "리스트", "일반적인 순차 자료 처리에 사용할 수 있습니다."
+
+cases = [
+    {"recent_first": True},
+    {"arrival_first": True},
+    {"remove_duplicates": True},
+    {"relationships": True},
+    {"priority": True}
+]
+
+for case in cases:
+    structure, reason = recommend_structure(**case)
+    print(structure, ":", reason)</code></pre>
+<table>
+<tr><th>평가 항목</th><th>설명할 내용</th></tr>
+<tr><td>문제 상황</td><td>어떤 자료가 들어오고 어떤 결과가 필요한가?</td></tr>
+<tr><td>핵심 연산</td><td>삽입·삭제·포함 검사·최솟값·경로 탐색 중 무엇이 반복되는가?</td></tr>
+<tr><td>선택 근거</td><td>선택한 구조가 핵심 연산에 왜 적합한가?</td></tr>
+<tr><td>구현 결과</td><td>출력값과 문제 해결 여부가 올바른가?</td></tr>
+<tr><td>효율성</td><td>시간·공간 장점과 한계는 무엇인가?</td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>최종 설명 예시</strong><br/>
+“상담 신청은 먼저 들어온 학생부터 처리해야 하므로 큐를 선택하였다.
+<code>deque</code>의 뒤 삽입과 앞 삭제를 사용하여 신청 순서를 유지했으며, 모든 학생이 접수 순서대로 처리되었다.
+리스트의 앞 삭제와 달리 앞쪽 원소를 반복해서 이동하지 않으므로 대기자가 많아져도 효율적이다.”
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 자료구조 추천 프로그램에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 핵심 연산에 따라 구조를 선택한다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 관계 문제에는 그래프를 추천할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> 우선순위 문제에는 힙을 추천할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 모든 문제에는 리스트만 추천해야 한다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 선택 근거를 설명할 필요가 없다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">“시는 마음에 맞는 단어를 선택하고, 소설은 인물에게 가장 의미 있는 길을 고르게 합니다. 희곡은 한 대사의 위치가 장면 전체를 바꾸고, 연극은 배우마다 알맞은 역할을 맡을 때 무대가 살아납니다. 음악도 모든 악기가 같은 음만 내면 화음이 아니라 경보음이 됩니다. 여러분의 꿈도 마찬가지입니다. 다른 사람에게 좋은 선택이 나에게도 반드시 맞는 것은 아닙니다. 내 문제의 구조와 나의 강점을 분석해 가장 알맞은 길을 선택하세요. 단, 공부할 과목을 집합으로 만들었다고 중복 과제가 자동으로 사라지지는 않습니다. 오늘의 근거 있는 선택이 내일의 효율적인 성장으로 이어지길 바랍니다.”</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 자료구조 선택에서는 저장할 자료와 반복 연산을 먼저 분석한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 리스트는 중복 원소를 자동으로 제거한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 집합은 중복 제거와 포함 여부 검사에 적합하다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 딕셔너리는 키 기반 조회와 빈도 누적에 적합하다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 스택은 가장 최근 자료를 먼저 처리한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 큐는 가장 최근 자료를 먼저 처리한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 덱은 양쪽 끝 연산에 적합하다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 힙은 우선순위가 가장 높은 작업을 반복 추출하는 데 적합하다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 그래프는 대상 사이의 관계와 경로를 표현할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 자료구조의 장점만 설명하고 한계는 고려하지 않아도 된다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 자료구조 선택 절차에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 문제에서 저장할 자료를 확인한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 반복되는 핵심 연산을 찾는다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 시간·공간 효율을 평가한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 항상 가장 익숙한 구조만 선택한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 구현 결과의 정확성은 확인하지 않는다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 리스트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 순서를 유지한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 인덱스로 접근할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 중복을 허용한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 중복을 자동 제거한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 모든 위치 삽입이 항상 O(1)이다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 집합에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 고유 원소를 저장한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 포함 여부 검사에 적합하다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 교집합·합집합 연산을 지원한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 순서 기반 인덱스 접근이 핵심이다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 같은 원소를 여러 번 반드시 저장한다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 딕셔너리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 키와 값을 연결한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 키 기반 조회가 가능하다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 빈도 누적에 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 키는 반드시 리스트여야 한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 값을 갱신할 수 없다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 스택과 큐 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 스택은 LIFO이다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 큐는 FIFO이다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 실행 취소에는 스택이 적합하다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 대기열에는 스택만 적합하다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 두 구조는 처리 순서가 항상 같다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 덱에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 양쪽 끝 삽입이 가능하다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 양쪽 끝 삭제가 가능하다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 회문 검사에 활용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 중간 탐색이 항상 O(1)이다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 한쪽 끝만 사용할 수 있다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 힙에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 우선순위 큐 구현에 활용한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 최솟값을 반복 추출하기 좋다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 전체 정렬을 매번 하지 않아도 된다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 모든 원소가 항상 완전 정렬되어 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 최댓값만 저장할 수 있다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 그래프에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 노드는 대상을 나타낸다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 간선은 관계를 나타낸다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 경로 탐색에 활용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 관계 문제에는 사용할 수 없다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 차수는 데이터 개수와 무관하다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 자료구조 효율 설명에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 시간 복잡도를 고려한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 공간 사용량을 고려한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 입력 크기에 따른 변화를 설명한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 실행 결과가 틀려도 빠르면 된다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 한계는 설명하지 않는다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 선택 근거에 포함할 내용으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 문제 상황을 요약한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 핵심 연산과 자료구조를 연결한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 구현 결과와 장단점을 설명한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 구조 이름만 제시한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 다른 구조와의 비교는 불필요하다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 10문항 × 5점 = 50점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 3점 = 30점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 15차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "리스트는 순서와 인덱스를 유지하지만 중복을 허용하고 앞·중간 삽입은 비용이 들 수 있습니다."}, "2": {"ans": [0, 1, 2], "exp": "집합은 고유 원소와 포함 검사에 적합하지만 순서·인덱스가 핵심인 문제에는 부적합할 수 있습니다."}, "3": {"ans": [0, 1, 2], "exp": "딕셔너리는 키 기반 조회와 누적에 적합합니다."}, "4": {"ans": [0, 1, 2], "exp": "실행 취소는 최근 작업을 먼저 되돌리므로 LIFO 스택이 적합합니다."}, "5": {"ans": [0, 1, 2], "exp": "상담 대기열은 선입선출 구조이며 deque가 앞 삭제에 효율적입니다."}, "6": {"ans": [0, 1, 2], "exp": "덱은 양끝 연산이 빠르므로 회문 검사에 적합합니다."}, "7": {"ans": [0, 1, 2], "exp": "최소 힙은 최우선 작업을 반복 추출하는 데 적합합니다."}, "8": {"ans": [0, 1, 2], "exp": "그래프는 대상과 관계를 표현하고 집합 이웃은 교집합 계산에 유리합니다."}, "9": {"ans": [0, 1, 2], "exp": "동일 가중치 최단 경로에는 큐 기반 BFS가 적합합니다."}, "10": {"ans": [0, 1, 2], "exp": "자료구조 선택은 문제의 핵심 연산과 관계 구조에 근거해야 합니다."}}, "ox": {"1": {"ans": true, "exp": "문제 분석과 핵심 연산 파악이 출발점입니다."}, "2": {"ans": false, "exp": "리스트는 중복을 허용합니다."}, "3": {"ans": true, "exp": "집합의 대표 활용입니다."}, "4": {"ans": true, "exp": "키-값 구조입니다."}, "5": {"ans": true, "exp": "LIFO 구조입니다."}, "6": {"ans": false, "exp": "큐는 FIFO 구조입니다."}, "7": {"ans": true, "exp": "appendleft, popleft, append, pop을 지원합니다."}, "8": {"ans": true, "exp": "최소 힙 기준 최솟값을 빠르게 꺼냅니다."}, "9": {"ans": true, "exp": "노드와 간선으로 관계를 나타냅니다."}, "10": {"ans": false, "exp": "시간·공간 장점과 한계를 함께 설명해야 합니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "문제 분석, 핵심 연산, 구조 선택, 결과 평가가 필요합니다."}, "2": {"ans": [0, 1, 2], "exp": "리스트는 순서와 인덱스에 강점이 있습니다."}, "3": {"ans": [0, 1, 2], "exp": "집합은 고유성·포함 검사·집합 연산에 적합합니다."}, "4": {"ans": [0, 1, 2], "exp": "딕셔너리는 키 기반 관리에 적합합니다."}, "5": {"ans": [0, 1, 2], "exp": "처리 순서에 따라 적합한 구조가 달라집니다."}, "6": {"ans": [0, 1, 2], "exp": "덱은 양끝 연산에 강점이 있습니다."}, "7": {"ans": [0, 1, 2], "exp": "힙은 부분 정렬 구조이며 우선순위 처리에 적합합니다."}, "8": {"ans": [0, 1, 2], "exp": "그래프는 대상과 관계를 표현합니다."}, "9": {"ans": [0, 1, 2], "exp": "정확성, 시간, 공간, 입력 규모를 함께 고려해야 합니다."}, "10": {"ans": [0, 1, 2], "exp": "문제-연산-구조-결과-한계가 연결된 설명이 좋습니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;const now=new Date(),lines=["정보과학 15차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_15차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

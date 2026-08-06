@@ -1,0 +1,484 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 21차시</title><style>
+:root{
+ --navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;
+ --gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;
+ --paper:#fff;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:46px 20px}
+.wrap,main{max-width:1200px;margin:auto}
+header h1{margin:0 0 10px;font-size:clamp(28px,4vw,45px);line-height:1.25}
+header p{margin:0;opacity:.95;max-width:960px}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 14px rgba(0,0,0,.07)}
+nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px;font-size:.92rem}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(30,70,100,.06);scroll-margin-top:72px}
+h2{margin:0 0 10px;color:var(--navy);font-size:1.65rem}
+h3{color:var(--blue);margin:17px 0 8px}
+.lead{background:#f9fcfe;border:1px solid var(--line);padding:16px;border-radius:13px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.flow-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:#fbfdff}
+.flow-card strong{display:block;color:var(--navy);font-size:1.08rem;margin-bottom:4px}
+.flow-card:nth-child(1){border-top:5px solid var(--blue)}
+.flow-card:nth-child(2){border-top:5px solid var(--green)}
+.flow-card:nth-child(3){border-top:5px solid var(--gold)}
+.flow-card:nth-child(4){border-top:5px solid var(--purple)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}
+.num{display:inline-block;background:var(--navy);color:#fff;padding:4px 10px;border-radius:16px;font-weight:900;font-size:.88rem}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.87rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card{background:#fbfdff;border:1px solid var(--line);border-radius:14px;padding:16px}
+pre{background:var(--code);color:#eef6fb;padding:18px;border-radius:13px;overflow:auto;line-height:1.58;margin:0}
+pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}
+pre.diagram{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}
+code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+td:first-child{width:24%;background:#f8fbfd;font-weight:800}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);padding:14px;border-radius:10px}
+.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);padding:14px;border-radius:10px}
+.warn{margin-top:14px;background:#fff1f1;border-left:6px solid var(--red);padding:14px;border-radius:10px}
+.quiz{background:#f9fcfe;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff}
+summary{cursor:pointer;font-weight:900;color:var(--blue)}
+.top{position:fixed;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 7px 20px rgba(0,0,0,.22)}
+footer{text-align:center;color:var(--muted);padding:26px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}section{padding:20px 15px}}
+@media print{nav,.top{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+
+header{position:relative;overflow:hidden}header:after{content:"";position:absolute;right:-80px;bottom:-100px;width:290px;height:290px;border-radius:50%;background:rgba(255,255,255,.08)}
+section>h2:after{content:"";display:block;width:56px;height:4px;margin-top:8px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--purple))}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);padding:17px;border-radius:13px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px}.ox{display:flex;gap:10px}.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.mini-menu{position:fixed;left:8px;top:8px;z-index:80}.mini-menu summary{list-style:none;width:28px;height:28px;border-radius:7px;background:#17324dee;color:#fff;display:grid;place-items:center;cursor:pointer}.mini-menu summary::-webkit-details-marker{display:none}.mini-panel{margin-top:5px;min-width:150px;padding:7px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 26px #0002}.mini-panel a{display:block;padding:6px 8px;text-decoration:none;color:var(--navy);font-size:.82rem;font-weight:800}
+@media(max-width:700px){.grid,.student{grid-template-columns:1fr}}
+</style></head><body id="top"><details class="mini-menu"><summary>☰</summary><div class="mini-panel"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 10선</a><a href="#closing">끝 멘트</a><a href="#ox">형성평가</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></details><header><div class="wrap"><h1>정보과학 21차시<br>병합 정렬·이진 탐색과 분할 정복</h1><p>큰 문제를 작은 부분 문제로 나누고 해결한 뒤 결합하는 구조를 병합 정렬과 이진 탐색으로 구현하고, 시간·공간 복잡도와 적용 조건을 비교합니다.</p></div></header><nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단</a><a href="#submit">제출</a></div></nav><main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>21차시</td><th>주제</th><td>병합 정렬·이진 탐색과 분할·해결·결합 구조</td></tr>
+<tr><th>핵심 질문</th><td colspan="3">큰 문제를 작은 문제로 나누면 왜 더 효율적으로 해결할 수 있으며, 병합 정렬과 이진 탐색은 분할 정복을 어떻게 다르게 활용하는가?</td></tr>
+<tr><th>전이 목표</th><td colspan="3">학생은 새로운 문제를 분할·해결·결합·종료 조건으로 분석하고, 병합 정렬과 이진 탐색의 구조·시간 복잡도·입력 조건을 근거로 적절한 알고리즘을 선택할 수 있다.</td></tr>
+<tr><th>성취기준</th><td colspan="3">분할 정복의 원리를 이해하고 병합 정렬과 이진 탐색을 구현한다. 재귀 호출과 반복 탐색의 범위 변화를 추적하며 시간·공간 복잡도, 정렬 조건, 경계값과 중복값 처리 방법을 설명한다.</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>활동</th><th>개념</th></tr><tr><td>도입</td><td>큰 자료를 한 번에 처리하는 방법과 절반씩 나누는 방법을 비교한다.</td><td>분할·규모</td></tr><tr><td>개념</td><td>분할·해결·결합·종료 조건을 구조화한다.</td><td>재귀·결합</td></tr><tr><td>실습</td><td>병합 정렬과 이진 탐색의 실행 흐름을 추적한다.</td><td>정렬·탐색</td></tr><tr><td>전이</td><td>입력 조건과 복잡도를 비교해 알고리즘을 선택한다.</td><td>효율·선택</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>분할 정복의 세 단계와 종료 조건을 설명한다.</li><li>정렬된 두 리스트를 병합한다.</li><li>병합 정렬을 재귀적으로 구현한다.</li><li>반복·재귀 이진 탐색을 구현한다.</li><li>시간·공간 복잡도와 적용 조건을 비교한다.</li></ol></div><div class="card"><h3>학습할 개념</h3><ul><li><b>분할:</b> 문제를 더 작은 부분 문제로 나누는 과정</li><li><b>해결:</b> 부분 문제를 재귀적으로 처리하는 과정</li><li><b>결합:</b> 부분 결과를 전체 답으로 합치는 과정</li><li><b>종료 조건:</b> 더 이상 나누지 않는 가장 작은 입력</li><li><b>복잡도:</b> 병합 정렬 O(n log n), 이진 탐색 O(log n)</li></ul></div></div><div class="lead"><b>개념 일반화</b><br>큰 문제를 규칙적으로 나누고 각 부분의 관계를 명확히 하면 복잡한 정렬과 탐색도 예측 가능한 단계와 효율로 해결할 수 있다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote"><strong>“복잡한 문제 앞에서 지혜로운 사람은 문제를 작게 나누고, 각 조각의 질서를 발견합니다.”</strong><br><br>데카르트는 어려운 문제를 가능한 한 작은 부분으로 나누라고 했고, 공자는 배운 내용을 차근차근 익히며 연결하는 태도를 강조했습니다. 뉴턴은 복잡한 운동을 작은 변화로 분석했고, 가우스는 큰 수의 합에서도 구조와 규칙을 찾아 계산을 단순하게 만들었습니다.<br><br>오늘 우리는 큰 배열을 절반으로 나누어 정렬하고, 정렬된 자료의 중간값을 기준으로 탐색 범위를 줄입니다. 병합 정렬은 두 부분을 모두 해결해 다시 합치고, 이진 탐색은 목표가 있을 한쪽만 남깁니다.<br><br>다만 과제를 절반으로 나눈다고 자동으로 절반만 해도 되는 것은 아닙니다. 병합 단계에서 다시 합쳐야 완성됩니다. 오늘은 문제를 나누되 책임까지 나누어 버리지는 않는 멋진 분할 정복을 배워 봅시다.</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow"><div class="flow-card"><strong>분할</strong>배열과 탐색 범위를 절반으로 나눕니다.</div><div class="flow-card"><strong>해결</strong>작은 부분을 재귀 또는 반복으로 처리합니다.</div><div class="flow-card"><strong>결합</strong>정렬된 두 부분을 하나로 병합합니다.</div><div class="flow-card"><strong>효율 분석</strong>깊이·비교 횟수·추가 공간을 분석합니다.</div></div></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol><li>입력 크기에 따른 병합 정렬과 삽입 정렬의 실행 시간 비교</li><li>반복형과 재귀형 이진 탐색의 성능과 메모리 사용 비교</li><li>중복 데이터 비율이 첫 위치 이진 탐색에 미치는 영향</li><li>병합 정렬의 보조 공간 사용을 줄이는 방법 탐구</li><li>정렬 비용을 포함한 선형 탐색과 이진 탐색의 효율 비교</li></ol></section>
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 코드의 분할·해결·결합·종료 조건·입력 조건·시간과 공간 복잡도를 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>정렬된 두 리스트 병합하기</h2></div>
+<div><span class="badge">결합 단계</span><span class="badge">투 포인터</span></div>
+<div class="two">
+<div><pre><code>def merge(left, right):
+    result = []
+    i = 0
+    j = 0
+
+    while i &lt; len(left) and j &lt; len(right):
+        if left[i] &lt;= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    result.extend(left[i:])
+    result.extend(right[j:])
+
+    return result
+
+print(merge(
+    [1, 4, 7],
+    [2, 3, 8]
+))</code></pre></div>
+<div class="card">
+<h3>결합 과정</h3>
+<pre class="diagram">[1,4,7] + [2,3,8]
+
+1과 2 비교 → 1
+4와 2 비교 → 2
+4와 3 비교 → 3
+4와 8 비교 → 4
+7과 8 비교 → 7
+남은 8 추가
+
+결과: [1,2,3,4,7,8]</pre>
+</div>
+</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 정렬된 두 리스트 병합에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 두 정렬 리스트의 현재 원소를 비교해 작은 값을 결과에 넣는다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 한쪽 리스트가 끝나면 다른 쪽의 남은 원소를 이어 붙인다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 투 포인터 방식으로 두 리스트를 순차 처리할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 입력 리스트는 정렬되어 있지 않아도 항상 올바르게 병합된다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 병합 과정은 두 리스트의 모든 원소를 매번 서로 비교한다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>기본 병합 정렬 구현</h2></div>
+<div><span class="badge">분할</span><span class="badge">재귀 해결</span><span class="badge">병합</span></div>
+<pre><code>def merge_sort(data):
+    # 종료 조건
+    if len(data) &lt;= 1:
+        return data
+
+    # 1. 분할
+    middle = len(data) // 2
+    left_data = data[:middle]
+    right_data = data[middle:]
+
+    # 2. 해결
+    left_sorted = merge_sort(left_data)
+    right_sorted = merge_sort(right_data)
+
+    # 3. 결합
+    return merge(left_sorted, right_sorted)
+
+numbers = [7, 3, 8, 2, 5, 1]
+print(merge_sort(numbers))</code></pre>
+<div class="check"><strong>구조</strong><br/>배열 길이가 1 이하가 될 때까지 절반으로 나눈 뒤, 정렬된 작은 배열부터 순서대로 병합합니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 기본 병합 정렬에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 길이가 1 이하이면 이미 정렬된 상태로 본다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 배열을 절반으로 나누어 각 부분을 재귀적으로 정렬한다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 정렬된 두 부분을 merge 함수로 결합한다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 병합 정렬은 분할 없이 한 번의 반복문으로만 동작한다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 종료 조건이 없어도 재귀는 자동으로 끝난다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>병합 정렬의 분할 과정 추적</h2></div>
+<div><span class="badge">호출 깊이</span><span class="badge">분할 도식</span></div>
+<pre><code>def merge_sort_trace(data, depth=0):
+    indent = "  " * depth
+    print(f"{indent}분할 대상: {data}")
+
+    if len(data) &lt;= 1:
+        print(f"{indent}기본 상태: {data}")
+        return data
+
+    middle = len(data) // 2
+
+    left = merge_sort_trace(
+        data[:middle],
+        depth + 1
+    )
+
+    right = merge_sort_trace(
+        data[middle:],
+        depth + 1
+    )
+
+    result = merge(left, right)
+    print(f"{indent}결합 결과: {result}")
+
+    return result
+
+merge_sort_trace([7, 3, 8, 2])</code></pre>
+<div class="note"><strong>관찰</strong><br/>들여쓰기가 깊어질수록 입력이 더 작은 부분 배열로 나뉘고, 기본 상태에 도달한 뒤 역순으로 결합됩니다.</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 병합 정렬 분할 추적에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> depth에 따라 들여쓰기를 늘려 재귀 깊이를 볼 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> 기본 상태에 도달한 뒤 작은 배열부터 역순으로 결합된다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 분할 대상과 결합 결과를 출력해 재귀 흐름을 관찰할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 재귀 깊이는 입력 크기와 무관하다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 분할 과정에서는 배열이 점점 커진다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>병합 단계의 비교 횟수 측정</h2></div>
+<div><span class="badge">비교 횟수</span><span class="badge">성능 분석</span></div>
+<pre><code>comparison_count = 0
+
+def merge_count(left, right):
+    global comparison_count
+
+    result = []
+    i = j = 0
+
+    while i &lt; len(left) and j &lt; len(right):
+        comparison_count += 1
+
+        if left[i] &lt;= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    result.extend(left[i:])
+    result.extend(right[j:])
+
+    return result
+
+def merge_sort_count(data):
+    if len(data) &lt;= 1:
+        return data
+
+    middle = len(data) // 2
+
+    left = merge_sort_count(data[:middle])
+    right = merge_sort_count(data[middle:])
+
+    return merge_count(left, right)
+
+numbers = [8, 7, 6, 5, 4, 3, 2, 1]
+
+result = merge_sort_count(numbers)
+
+print("정렬 결과:", result)
+print("비교 횟수:", comparison_count)</code></pre>
+<div class="note"><strong>시간 관계</strong><br/>각 단계의 병합은 전체 원소 수에 비례하고, 분할 깊이는 대략 log₂n 단계이므로 전체 시간은 일반적으로 O(n log n)입니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 병합 비교 횟수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> merge_count에서 실제 원소 비교 횟수를 셀 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> 분할 깊이는 대략 log₂n이다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 전체 시간 복잡도는 일반적으로 O(n log n)이다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 병합 정렬은 모든 경우에 O(n²)이다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> global 변수는 비교 횟수 측정에 절대 사용할 수 없다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>인덱스 범위를 이용한 병합 정렬</h2></div>
+<div><span class="badge">제자리 수정</span><span class="badge">보조 배열</span></div>
+<pre><code>def merge_range(data, left, middle, right):
+    temp = []
+    i = left
+    j = middle + 1
+
+    while i &lt;= middle and j &lt;= right:
+        if data[i] &lt;= data[j]:
+            temp.append(data[i])
+            i += 1
+        else:
+            temp.append(data[j])
+            j += 1
+
+    temp.extend(data[i:middle + 1])
+    temp.extend(data[j:right + 1])
+
+    data[left:right + 1] = temp
+
+def merge_sort_range(data, left, right):
+    if left &gt;= right:
+        return
+
+    middle = (left + right) // 2
+
+    merge_sort_range(data, left, middle)
+    merge_sort_range(data, middle + 1, right)
+
+    merge_range(data, left, middle, right)
+
+numbers = [9, 1, 6, 3, 8, 2]
+merge_sort_range(numbers, 0, len(numbers) - 1)
+
+print(numbers)</code></pre>
+<div class="warn"><strong>공간 관점</strong><br/>원본 리스트를 직접 수정하지만 병합을 위해 보조 리스트가 필요합니다. 병합 정렬은 일반적으로 O(n)의 추가 공간을 사용합니다.</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 인덱스 범위 병합 정렬에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> left·middle·right 인덱스로 정렬 범위를 나타낸다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> 원본 리스트 구간을 병합 결과로 바꿀 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 병합을 위해 보조 리스트 temp가 필요하다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 보조 공간 없이 완전히 제자리에서만 동작한다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> left가 right보다 커도 계속 재귀 호출해야 한다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>반복문으로 이진 탐색 구현</h2></div>
+<div><span class="badge">탐색 범위 절반</span><span class="badge">반복 방식</span></div>
+<div class="two">
+<div><pre><code>def binary_search(data, target):
+    left = 0
+    right = len(data) - 1
+
+    while left &lt;= right:
+        middle = (left + right) // 2
+
+        if data[middle] == target:
+            return middle
+
+        if data[middle] &lt; target:
+            left = middle + 1
+        else:
+            right = middle - 1
+
+    return -1
+
+numbers = [2, 5, 8, 12, 16, 23, 38]
+print(binary_search(numbers, 16))</code></pre></div>
+<div class="card">
+<h3>분할 구조</h3>
+<p>중간값과 목표값을 비교합니다.</p>
+<p>목표가 크면 오른쪽 절반, 작으면 왼쪽 절반만 남깁니다.</p>
+<p>정렬된 자료에서만 사용할 수 있습니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 반복 이진 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 탐색 대상 자료는 정렬되어 있어야 한다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> 중간값과 목표값을 비교해 탐색 범위를 절반으로 줄인다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 목표가 없으면 -1을 반환할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 정렬되지 않은 자료에서도 항상 올바른 위치를 찾는다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 매 단계마다 한 칸씩만 이동한다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>재귀함수로 이진 탐색 구현</h2></div>
+<div><span class="badge">재귀 탐색</span><span class="badge">종료 조건</span></div>
+<pre><code>def binary_search_recursive(
+    data,
+    target,
+    left,
+    right
+):
+    if left &gt; right:
+        return -1
+
+    middle = (left + right) // 2
+
+    if data[middle] == target:
+        return middle
+
+    if data[middle] &lt; target:
+        return binary_search_recursive(
+            data,
+            target,
+            middle + 1,
+            right
+        )
+
+    return binary_search_recursive(
+        data,
+        target,
+        left,
+        middle - 1
+    )
+
+numbers = [2, 5, 8, 12, 16, 23, 38]
+
+print(binary_search_recursive(
+    numbers,
+    23,
+    0,
+    len(numbers) - 1
+))</code></pre>
+<div class="check"><strong>종료 조건</strong><br/><code>left &gt; right</code>이면 탐색 범위가 사라진 것이므로 목표값이 없다고 판단합니다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 재귀 이진 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> left &gt; right이면 목표가 없다는 종료 조건이다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> 목표가 중간값보다 크면 오른쪽 범위를 재귀 탐색한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 목표가 작으면 왼쪽 범위를 재귀 탐색한다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 재귀 함수에는 종료 조건이 필요 없다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 찾지 못한 경우 반드시 0을 반환해야 한다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>이진 탐색 범위 변화 추적</h2></div>
+<div><span class="badge">범위 추적</span><span class="badge">입력 크기 변화</span></div>
+<pre><code>def binary_search_trace(data, target):
+    left = 0
+    right = len(data) - 1
+    step = 1
+
+    while left &lt;= right:
+        middle = (left + right) // 2
+
+        print(
+            f"{step}단계 | "
+            f"범위={left}~{right} | "
+            f"중간={middle} | "
+            f"값={data[middle]}"
+        )
+
+        if data[middle] == target:
+            return middle
+
+        if data[middle] &lt; target:
+            left = middle + 1
+        else:
+            right = middle - 1
+
+        step += 1
+
+    return -1
+
+numbers = list(range(1, 33))
+print("위치:", binary_search_trace(numbers, 29))</code></pre>
+<div class="note"><strong>도식</strong><br/>32개 → 약 16개 → 약 8개 → 약 4개 → 약 2개 → 1개처럼 탐색 범위가 절반씩 줄어듭니다.</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 이진 탐색 범위 추적에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 각 단계의 left·right·middle을 출력할 수 있다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 32개 자료는 대략 16·8·4·2·1개로 줄어든다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 탐색 단계 수는 대략 O(log n)이다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 탐색 범위는 매 단계 두 배로 늘어난다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> 중간값 비교 없이 범위를 줄일 수 있다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>중복값의 첫 번째 위치 찾기</h2></div>
+<div><span class="badge">변형 이진 탐색</span><span class="badge">경계 탐색</span></div>
+<pre><code>def find_first(data, target):
+    left = 0
+    right = len(data) - 1
+    answer = -1
+
+    while left &lt;= right:
+        middle = (left + right) // 2
+
+        if data[middle] == target:
+            answer = middle
+            right = middle - 1
+
+        elif data[middle] &lt; target:
+            left = middle + 1
+
+        else:
+            right = middle - 1
+
+    return answer
+
+numbers = [1, 2, 2, 2, 3, 4, 5]
+
+print("첫 위치:", find_first(numbers, 2))</code></pre>
+<div class="check"><strong>해결 전략</strong><br/>목표값을 찾은 뒤 즉시 종료하지 않고, 더 앞쪽에 같은 값이 있는지 확인하기 위해 오른쪽 경계를 줄입니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 중복값 첫 위치 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> 목표를 찾아도 더 앞쪽 값을 확인하기 위해 계속 탐색한다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 목표를 찾으면 answer에 위치를 저장한다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 오른쪽 경계를 middle-1로 줄여 첫 위치를 찾는다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 목표를 찾는 즉시 종료해야 첫 위치를 얻는다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 중복값이 없을 때만 사용할 수 있다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>병합 정렬과 이진 탐색 종합 프로그램</h2></div>
+<div><span class="badge">정렬 후 탐색</span><span class="badge">종합 구현</span></div>
+<pre><code>def merge(left, right):
+    result = []
+    i = j = 0
+
+    while i &lt; len(left) and j &lt; len(right):
+        if left[i] &lt;= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    result.extend(left[i:])
+    result.extend(right[j:])
+
+    return result
+
+def merge_sort(data):
+    if len(data) &lt;= 1:
+        return data
+
+    middle = len(data) // 2
+
+    left = merge_sort(data[:middle])
+    right = merge_sort(data[middle:])
+
+    return merge(left, right)
+
+def binary_search(data, target):
+    left = 0
+    right = len(data) - 1
+
+    while left &lt;= right:
+        middle = (left + right) // 2
+
+        if data[middle] == target:
+            return middle
+
+        if data[middle] &lt; target:
+            left = middle + 1
+        else:
+            right = middle - 1
+
+    return -1
+
+raw_data = [23, 5, 17, 9, 31, 12, 4]
+target = 17
+
+sorted_data = merge_sort(raw_data)
+position = binary_search(sorted_data, target)
+
+print("원본:", raw_data)
+print("정렬:", sorted_data)
+print("목표값:", target)
+print("위치:", position)</code></pre>
+<table>
+<tr><th>비교 항목</th><th>병합 정렬</th><th>이진 탐색</th></tr>
+<tr><td>분할</td><td>왼쪽·오른쪽 절반 모두 생성</td><td>중간값 기준 한쪽 범위만 선택</td></tr>
+<tr><td>해결</td><td>두 절반을 각각 정렬</td><td>선택한 절반에서 탐색 반복</td></tr>
+<tr><td>결합</td><td>정렬된 두 절반을 병합</td><td>찾은 위치를 그대로 반환</td></tr>
+<tr><td>시간 복잡도</td><td>O(n log n)</td><td>O(log n)</td></tr>
+<tr><td>필수 조건</td><td>정렬 전 자료에 사용 가능</td><td>자료가 정렬되어 있어야 함</td></tr>
+<tr><td>추가 공간</td><td>병합을 위한 보조 공간 필요</td><td>반복 방식은 추가 공간이 매우 적음</td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>알고리즘 설명 예시</strong><br/>
+“병합 정렬은 배열을 절반 크기의 두 부분 배열로 분할하고, 각 부분을 재귀적으로 정렬한 뒤 두 결과를 크기순으로 병합하였다. 이진 탐색은 정렬된 배열의 중간값을 기준으로 목표가 존재할 수 있는 한쪽 절반만 남겨 탐색 범위를 반복해서 줄였다.”
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 병합 정렬과 이진 탐색 종합에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 정렬되지 않은 원본을 병합 정렬한 뒤 이진 탐색할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 병합 정렬은 O(n log n), 이진 탐색은 O(log n)이다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> 이진 탐색은 정렬된 자료가 필요하다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 이진 탐색을 먼저 하고 정렬하면 항상 같은 결과다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 병합 정렬은 추가 공간을 전혀 사용하지 않는다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">시는 긴 감정을 짧은 행으로 나누어 마음에 남기고, 소설은 수많은 장면을 한 이야기로 결합합니다. 희곡은 막과 장으로 나뉘지만 마지막에는 하나의 메시지가 되고, 연극은 배우·조명·음향의 작은 역할이 모여 큰 무대를 완성합니다. 음악도 한 음 한 음은 작지만 리듬과 화음 속에서 거대한 울림이 됩니다.<br><br>여러분의 꿈도 한 번에 완성할 수 없는 큰 문제일 수 있습니다. 그러나 오늘 할 일, 이번 주의 목표, 다음 단계의 도전으로 나누고 하나씩 해결하면 언젠가 멋진 결과로 결합됩니다.<br><br>그리고 이진 탐색처럼 공부 범위를 절반씩 줄이다가 마지막 한 페이지만 공부하는 전략은 탐색 알고리즘이지 시험 대비 알고리즘은 아닙니다. 오늘 배운 분할 정복의 지혜가 복잡한 문제와 큰 꿈을 차근차근 해결하는 힘이 되기를 바랍니다.</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 분할 정복은 문제를 나누고 부분 문제를 해결한 뒤 결과를 결합하는 전략이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 병합 정렬은 입력 배열이 이미 정렬되어 있어야만 사용할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 병합 정렬의 일반적인 시간 복잡도는 O(n log n)이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 이진 탐색은 정렬된 자료에서 사용할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 이진 탐색은 매 단계마다 탐색 범위를 약 절반으로 줄인다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 병합 정렬은 일반적으로 O(1)의 추가 공간만 사용한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 재귀 이진 탐색에서는 left &gt; right가 종료 조건이 될 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 중복값의 첫 위치를 찾을 때 목표를 발견하면 오른쪽 경계를 줄일 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 병합 단계에서는 정렬되지 않은 두 리스트도 항상 올바르게 합쳐진다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 병합 정렬과 이진 탐색은 모두 분할 정복 관점에서 설명할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 분할 정복의 기본 구조에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 큰 문제를 작은 부분 문제로 나눈다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 부분 문제를 재귀적으로 해결할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 필요한 경우 부분 결과를 결합한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 문제를 더 크게 합친 뒤 시작한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 종료 조건은 필요 없다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 병합 단계에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 정렬된 두 부분 배열을 비교한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 작은 값을 차례로 결과에 넣는다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 남은 원소를 마지막에 이어 붙인다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 모든 원소를 무작위로 섞는다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 입력 배열을 역순으로만 만든다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 병합 정렬에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 배열을 절반으로 나눈다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 각 절반을 재귀적으로 정렬한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 정렬된 절반을 병합한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 정렬 여부와 관계없이 중간값만 찾는다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 항상 O(n²)이다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 병합 정렬의 성능에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 분할 깊이는 대략 log n이다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 각 깊이의 병합 작업은 전체적으로 O(n)이다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 전체 시간은 일반적으로 O(n log n)이다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 추가 공간이 전혀 필요 없다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 입력 크기와 실행 시간은 무관하다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 이진 탐색 조건에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 자료가 정렬되어 있어야 한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 중간값과 목표값을 비교한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 한쪽 절반만 다음 탐색 범위로 남긴다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 연결 리스트에서만 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 매 단계 전체 자료를 다시 순회한다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 반복 이진 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> left와 right로 범위를 관리한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> while left &lt;= right 조건을 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 찾으면 인덱스를 반환할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 목표가 없으면 무한 반복한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 정렬 여부는 중요하지 않다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 재귀 이진 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 탐색 범위를 매개변수로 전달한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> left &gt; right일 때 종료할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 목표와 중간값 비교에 따라 한쪽만 재귀 호출한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 두 절반을 항상 모두 탐색한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 재귀 깊이는 O(n)만 가능하다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 첫 위치 탐색에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 목표 위치를 임시 저장한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 찾은 뒤 왼쪽 영역을 더 확인한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 중복값의 가장 앞 인덱스를 구할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 찾자마자 무조건 반환한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 정렬되지 않은 자료만 대상으로 한다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 병합 정렬과 이진 탐색 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 병합 정렬은 두 부분을 모두 해결해 결합한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 이진 탐색은 한쪽 부분만 선택한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 병합 정렬 후 이진 탐색을 연결할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 두 알고리즘 모두 O(n²)이다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 이진 탐색은 정렬 조건이 필요 없다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 알고리즘 설명에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 분할·해결·결합 과정을 구분한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 종료 조건과 입력 조건을 설명한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 시간·공간 복잡도와 선택 근거를 제시한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 코드만 보여 주고 원리는 생략한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 테스트 결과는 필요 없다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 50점 + OX 20점 + 진단평가 30점 = 총 100점</div></section>
+</main><a class="top" href="#top">↑</a><div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 21차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const A={"code": {"1": [0, 1, 2], "2": [0, 1, 2], "3": [0, 1, 2], "4": [0, 1, 2], "5": [0, 1, 2], "6": [0, 1, 2], "7": [0, 1, 2], "8": [0, 1, 2], "9": [0, 1, 2], "10": [0, 1, 2]}, "ox": {"1": true, "2": false, "3": true, "4": true, "5": true, "6": false, "7": true, "8": true, "9": false, "10": true}, "diag": {"1": [0, 1, 2], "2": [0, 1, 2], "3": [0, 1, 2], "4": [0, 1, 2], "5": [0, 1, 2], "6": [0, 1, 2], "7": [0, 1, 2], "8": [0, 1, 2], "9": [0, 1, 2], "10": [0, 1, 2]}};
+function same(a,b){return a.length===b.length&&[...a].sort().every((v,i)=>v===[...b].sort()[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>+x.value);}
+function show(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+ const sid=document.getElementById("sid").value.trim(), name=document.getElementById("sname").value.trim();
+ if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+ let score=0, lines=["정보과학 21차시 평가 결과",`학번: ${sid}`,`이름: ${name}`];
+ const now=new Date(); lines.push(`응시시각: ${now.toLocaleString("ko-KR")}`,"");
+ for(let i=1;i<=10;i++){let g=picks("code"+i),ok=same(g,A.code[i]);if(ok)score+=5;show("fb-code"+i,ok,"분할 정복과 정렬·탐색 원리를 확인하세요.");lines.push(`코드 ${i}: ${ok?"정답":"오답"}`);}
+ for(let i=1;i<=10;i++){let e=document.querySelector(`input[name="ox${i}"]:checked`),g=e?e.value==="true":null,ok=g===A.ox[i];if(ok)score+=2;show("fb-ox"+i,ok,"병합 정렬과 이진 탐색의 조건을 확인하세요.");lines.push(`OX ${i}: ${ok?"정답":"오답"}`);}
+ for(let i=1;i<=10;i++){let g=picks("diag"+i),ok=same(g,A.diag[i]);if(ok)score+=3;show("fb-diag"+i,ok,"분할·해결·결합·복잡도의 관계를 확인하세요.");lines.push(`진단 ${i}: ${ok?"정답":"오답"}`);}
+ lines.push("",`총점: ${score} / 100점`);
+ document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+ const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+ const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_21차시_${stamp}.txt`;a.click();URL.revokeObjectURL(a.href);
+}
+function resetAll(){document.querySelectorAll('input').forEach(x=>{if(x.type!=="text")x.checked=false;});document.querySelectorAll(".feedback").forEach(x=>x.className="feedback");document.getElementById("result").textContent="제출 전 · 100점 만점";}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"&&document.querySelectorAll(`input[name="${e.target.name}"]:checked`).length>3){e.target.checked=false;alert("3개만 선택하세요.");}});
+</script>
+</body></html>

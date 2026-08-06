@@ -1,0 +1,421 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 24차시 | 계단 오르기 상태·점화식 설계</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:52px 20px 46px;position:relative;overflow:hidden}.wrap,main{max-width:1200px;margin:auto}header:after{content:"";position:absolute;right:-80px;bottom:-100px;width:290px;height:290px;border-radius:50%;background:rgba(255,255,255,.08)}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}.hero-sub{max-width:960px;font-size:1.06rem;opacity:.96}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px;position:relative}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}section>h2:after{content:"";display:block;width:56px;height:4px;margin-top:8px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--purple))}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card{transition:transform .2s ease,box-shadow .2s ease}.flow-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(31,69,99,.10)}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}.quote strong{font-size:1.08rem;color:var(--navy)}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}pre.diagram{background:#fff8e7;color:var(--ink);border:1px solid #eddcae;white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}
+.mini-menu{position:fixed;left:8px;top:8px;z-index:80}.mini-menu summary{list-style:none;width:28px;height:28px;border-radius:7px;background:rgba(23,50,77,.92);color:#fff;display:grid;place-items:center;cursor:pointer;font-size:12px;box-shadow:0 4px 12px rgba(0,0,0,.22)}.mini-menu summary::-webkit-details-marker{display:none}.mini-panel{margin-top:5px;min-width:145px;padding:7px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,.16)}.mini-panel a{display:block;padding:6px 8px;border-radius:7px;text-decoration:none;color:var(--navy);font-size:.82rem;font-weight:800}.mini-panel a:hover{background:var(--sky)}
+footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar,.mini-menu{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top"><details class="mini-menu"><summary>☰</summary><div class="mini-panel">
+<a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 10선</a><a href="#closing">끝 멘트</a><a href="#ox">형성평가</a><a href="#diag">진단평가</a><a href="#submit">제출</a>
+</div></details>
+<header><div class="wrap"><h1>정보과학 24차시<br>계단 오르기 상태·초기값·점화식 설계</h1><p class="hero-sub">작은 경우를 직접 관찰하고, 마지막 이동을 기준으로 상태를 나누며, 경우의 수·제약 조건·최소 비용 문제로 확장하는 동적 계획법 설계 과정을 단계적으로 탐구합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~10</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>24차시</td><th>주제</th><td>계단 오르기 문제의 상태·초기값·점화식 설계</td></tr>
+<tr><th>핵심 질문</th><td colspan="3">문제의 답을 나타내는 상태를 어떻게 정의하고, 마지막 선택과 초기값을 이용해 정확한 점화식을 설계할 수 있는가?</td></tr>
+<tr><th>전이 목표</th><td colspan="3">학생은 새로운 경우의 수·최소 비용 문제에서 상태 의미, 기본 상태, 마지막 선택, 전이식과 계산 순서를 설계하고 재귀·메모이제이션·테이블·공간 최적화 방식으로 구현할 수 있다.</td></tr>
+<tr><th>성취기준</th><td colspan="3">계단 오르기 문제의 작은 입력을 관찰하여 상태와 초기값을 정의하고, 마지막 이동을 기준으로 점화식을 설계한다. 단순 재귀·메모이제이션·테이블·공간 최적화 방식으로 구현하며 이동 규칙·금지 계단·최소 비용 조건에 맞게 상태 전이를 확장한다.</td></tr>
+<tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 10문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr>
+<tr><td>도입</td><td>0~4칸의 이동 방법을 직접 나열해 수열의 규칙을 발견한다.</td><td>관찰, 규칙</td></tr>
+<tr><td>개념 형성</td><td>상태·초기값·마지막 이동·점화식을 구조화한다.</td><td>상태, 전이</td></tr>
+<tr><td>진단 실습</td><td>재귀·메모이제이션·테이블·공간 최적화를 구현하고 비교한다.</td><td>저장, 효율</td></tr>
+<tr><td>정리·전이</td><td>1·2·3칸, 금지 계단, 최소 비용 문제로 상태를 확장한다.</td><td>제약, 일반화</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>작은 입력을 통해 규칙을 발견한다.</li><li>dp[n]의 의미와 초기값을 정의한다.</li><li>마지막 이동을 기준으로 점화식을 만든다.</li><li>재귀·메모·테이블·공간 최적화를 비교한다.</li><li>제약 조건과 최소 비용 문제로 확장한다.</li></ol></div>
+<div class="card"><h3>학습할 개념</h3><ul><li><b>상태 정의:</b> dp[n]이 의미하는 값을 한 문장으로 표현하는 일</li><li><b>초기값:</b> 점화식을 시작할 수 있는 가장 작은 상태의 값</li><li><b>마지막 선택:</b> 현재 상태에 도달하기 직전의 가능한 이동</li><li><b>점화식:</b> 현재 상태를 더 작은 상태로 표현한 관계식</li><li><b>경로 복원:</b> 최적값을 만든 이전 상태를 저장해 실제 선택을 되찾는 과정</li></ul></div></div>
+<div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>동적 계획법의 핵심은 배열을 만드는 일이 아니라, 문제의 답을 나타내는 상태와 그 상태에 도달하는 마지막 선택을 정확히 정의하는 데 있다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">
+<strong>“한 계단을 오르는 일은 작아 보이지만, 그 한 걸음이 다음 가능성의 초기값이 됩니다.”</strong><br><br>
+아리스토텔레스는 큰 목적도 작은 행동의 반복으로 이루어진다고 보았고, 공자는 천 리 길도 한 걸음에서 시작된다고 말했습니다. 갈릴레이는 작은 운동을 관찰해 자연의 법칙을 찾았고, 파스칼은 작은 수들의 관계가 커다란 수학적 구조를 만든다는 사실을 보여 주었습니다.<br><br>
+오늘 우리는 계단을 오르는 방법을 코드로 생각합니다. 한 번에 1칸 또는 2칸을 오른다는 단순한 규칙 속에서 상태·초기값·점화식이라는 중요한 설계 원리를 발견합니다. 지금 서 있는 계단은 이전 두 계단의 가능성이 모여 만들어진 결과이며, 우리가 오늘 내딛는 한 걸음도 내일의 선택을 넓혀 줍니다.<br><br>
+다만 실제 학교 계단에서 1·2·3칸 점프 알고리즘을 실험하면 체육 선생님이 예외 처리를 실행할 수 있습니다. 오늘은 몸이 아니라 코드로 안전하게 오르며, 작은 상태를 큰 해결로 연결해 봅시다.
+</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow">
+<div class="flow-card"><strong>작은 경우 관찰</strong>0~4칸 방법을 직접 나열해 규칙을 찾습니다.</div>
+<div class="flow-card"><strong>상태와 초기값</strong>dp[n]의 의미와 시작값을 정합니다.</div>
+<div class="flow-card"><strong>점화식 설계</strong>마지막 이동을 기준으로 이전 상태를 연결합니다.</div>
+<div class="flow-card"><strong>확장과 최적화</strong>제약·비용·공간 최적화를 적용합니다.</div></div>
+<ul><li>작은 계단의 이동 경우 직접 나열</li><li>마지막 이동으로 상태 분해</li><li>단순 재귀와 기본 상태</li><li>재귀 호출 횟수와 중복 부분 문제</li><li>하향식 메모이제이션</li><li>상향식 테이블 방식</li><li>두 변수만 사용하는 공간 최적화</li><li>1·2·3칸 이동 점화식 확장</li><li>금지 계단의 도달 불가 상태 처리</li><li>최소 비용 계단과 parent 경로 복원</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol>
+<li><b>계단 수 증가에 따른 단순 재귀 호출 횟수와 메모이제이션 효과 분석</b></li>
+<li><b>1·2칸과 1·2·3칸 이동 규칙의 경우의 수 증가 비교</b></li>
+<li><b>금지 계단 위치가 전체 경로 수에 미치는 영향</b></li>
+<li><b>테이블 방식과 공간 최적화 방식의 메모리 사용량 비교</b></li>
+<li><b>최소 비용 계단 문제에서 비용 분포와 선택 경로의 관계 분석</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 10개</h2><p class="lead">각 코드의 상태 의미·초기값·마지막 선택·점화식·계산 순서·공간 사용을 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>작은 계단의 경우를 직접 나열하기</h2></div>
+<div><span class="badge">규칙 발견</span><span class="badge">작은 입력</span></div>
+<div class="two">
+<div><pre><code>ways = {
+    0: [[]],
+    1: [[1]],
+    2: [[1, 1], [2]],
+    3: [
+        [1, 1, 1],
+        [1, 2],
+        [2, 1]
+    ]
+}
+
+for stair, cases in ways.items():
+    print(stair, "칸:", len(cases), "가지")
+    for case in cases:
+        print(" ", case)</code></pre></div>
+<div class="card">
+<h3>관찰</h3>
+<pre class="diagram">0칸: 1가지
+1칸: 1가지
+2칸: 2가지
+3칸: 3가지
+4칸: 5가지</pre>
+<p>현재 값이 앞의 두 값의 합으로 나타나는 규칙을 발견할 수 있습니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 작은 계단 경우 나열에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 작은 입력을 직접 나열해 규칙을 찾을 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 0칸은 아무 이동도 하지 않는 1가지 방법으로 볼 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 1·2칸 이동 조합을 리스트로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 4칸의 경우의 수는 항상 4가지이다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 작은 입력 관찰은 점화식 설계와 무관하다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>마지막 이동으로 상태 분해하기</h2></div>
+<div><span class="badge">상태 전이</span><span class="badge">점화식</span></div>
+<pre><code>def explain_state(n):
+    print(f"목표 상태: {n}번째 계단")
+
+    if n &gt;= 1:
+        print(
+            f"경우 1: {n-1}번째 계단에서 "
+            "1칸 이동"
+        )
+
+    if n &gt;= 2:
+        print(
+            f"경우 2: {n-2}번째 계단에서 "
+            "2칸 이동"
+        )
+
+    print(
+        f"점화식: dp[{n}] = "
+        f"dp[{n-1}] + dp[{n-2}]"
+    )
+
+explain_state(6)</code></pre>
+<div class="check"><strong>중복 없음</strong><br/>마지막 이동이 1칸인 경우와 2칸인 경우는 서로 겹치지 않으므로 두 경우의 수를 더할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 상태 분해에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 마지막 이동이 1칸인 경우를 고려한다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 마지막 이동이 2칸인 경우를 고려한다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> 두 경우는 서로 겹치지 않으므로 더할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 마지막 이동은 항상 3칸이다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 점화식은 이전 상태와 무관하다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>점화식을 단순 재귀함수로 구현</h2></div>
+<div><span class="badge">재귀</span><span class="badge">초기값</span></div>
+<div class="two">
+<div><pre><code>def stairs_recursive(n):
+    if n == 0:
+        return 1
+
+    if n == 1:
+        return 1
+
+    return (
+        stairs_recursive(n - 1)
+        + stairs_recursive(n - 2)
+    )
+
+for n in range(8):
+    print(n, "칸:", stairs_recursive(n))</code></pre></div>
+<div class="card">
+<h3>코드와 점화식</h3>
+<pre class="diagram">W(0) = 1
+W(1) = 1
+W(n) = W(n-1) + W(n-2)</pre>
+<p>점화식을 코드에 직접 옮겨 가독성은 높지만 중복 호출이 발생합니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 단순 재귀 구현에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> W(0)=1과 W(1)=1을 기본 상태로 사용한다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> W(n)=W(n-1)+W(n-2)를 코드로 표현한다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> 가독성은 높지만 중복 호출이 발생할 수 있다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 재귀 호출은 한 번만 발생한다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 기본 상태가 없어도 항상 종료한다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>재귀 호출 횟수와 중복 부분 문제 분석</h2></div>
+<div><span class="badge">중복 호출</span><span class="badge">호출 수</span></div>
+<pre><code>call_count = 0
+state_calls = {}
+
+def stairs_recursive(n):
+    global call_count
+
+    call_count += 1
+    state_calls[n] = state_calls.get(n, 0) + 1
+
+    if n &lt;= 1:
+        return 1
+
+    return (
+        stairs_recursive(n - 1)
+        + stairs_recursive(n - 2)
+    )
+
+result = stairs_recursive(8)
+
+print("결과:", result)
+print("전체 호출 수:", call_count)
+
+for state in sorted(state_calls):
+    print(
+        state,
+        "상태 호출:",
+        state_calls[state]
+    )</code></pre>
+<div class="warn"><strong>문제점</strong><br/>같은 계단 수에 대한 결과가 여러 번 계산됩니다. 예를 들어 <code>stairs_recursive(4)</code>가 여러 호출 경로에서 반복됩니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 호출 횟수 분석에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> call_count로 전체 호출 수를 셀 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> state_calls로 상태별 호출 횟수를 기록할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 같은 n 상태가 여러 번 호출되는지 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 모든 상태는 정확히 한 번만 호출된다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 호출 횟수는 입력 크기와 무관하다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>하향식 메모이제이션 적용</h2></div>
+<div><span class="badge">Top-down</span><span class="badge">캐시</span></div>
+<pre><code>memo = {0: 1, 1: 1}
+new_calculations = 0
+
+def stairs_memo(n):
+    global new_calculations
+
+    if n in memo:
+        return memo[n]
+
+    new_calculations += 1
+
+    memo[n] = (
+        stairs_memo(n - 1)
+        + stairs_memo(n - 2)
+    )
+
+    return memo[n]
+
+print("결과:", stairs_memo(30))
+print("새 계산 수:", new_calculations)
+print("저장된 상태:", memo)</code></pre>
+<div class="check"><strong>개선</strong><br/>각 n의 값은 한 번만 새로 계산되고, 이후 같은 상태가 필요하면 딕셔너리에서 즉시 반환됩니다.</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 메모이제이션에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> 계산한 결과를 memo에 저장한다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> 이미 저장된 상태는 즉시 반환한다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 각 상태를 한 번만 새로 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 항상 모든 상태를 미리 계산한다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> 재귀 호출을 전혀 사용하지 않는다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>상향식 테이블 방식 구현</h2></div>
+<div><span class="badge">Bottom-up</span><span class="badge">DP 테이블</span></div>
+<div class="two">
+<div><pre><code>def stairs_table(n):
+    dp = [0] * (n + 1)
+    dp[0] = 1
+
+    if n &gt;= 1:
+        dp[1] = 1
+
+    for stair in range(2, n + 1):
+        dp[stair] = (
+            dp[stair - 1]
+            + dp[stair - 2]
+        )
+
+    print("테이블:", dp)
+    return dp[n]
+
+print("결과:", stairs_table(10))</code></pre></div>
+<div class="card">
+<h3>계산 순서</h3>
+<pre class="diagram">dp[0], dp[1]
+→ dp[2]
+→ dp[3]
+→ ...
+→ dp[n]</pre>
+<p>이전 상태가 먼저 계산되도록 작은 계단부터 표를 채웁니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 테이블 방식에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 작은 계단부터 순서대로 dp를 채운다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> dp[stair-1]과 dp[stair-2]를 이용한다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> 재귀 호출 스택을 사용하지 않는다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 큰 상태부터 무작위로 계산한다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 이전 상태가 계산되지 않아도 된다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>두 변수만 사용하는 공간 최적화</h2></div>
+<div><span class="badge">O(1) 공간</span><span class="badge">상태 압축</span></div>
+<pre><code>def stairs_optimized(n):
+    if n &lt;= 1:
+        return 1
+
+    previous2 = 1  # dp[0]
+    previous1 = 1  # dp[1]
+
+    for stair in range(2, n + 1):
+        current = previous1 + previous2
+
+        previous2 = previous1
+        previous1 = current
+
+        print(
+            f"{stair}칸: "
+            f"이전2={previous2}, "
+            f"현재={previous1}"
+        )
+
+    return previous1
+
+print("결과:", stairs_optimized(10))</code></pre>
+<div class="note"><strong>공간 최적화 근거</strong><br/>현재 상태는 바로 앞의 두 상태만 필요하므로 전체 테이블을 저장하지 않아도 됩니다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 공간 최적화에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 현재 값은 바로 앞의 두 값만 필요하다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> previous1과 previous2로 상태를 압축할 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 공간 복잡도를 O(1)로 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 전체 테이블이 반드시 필요하다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 시간 복잡도는 O(n²)로 증가한다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>한 번에 1·2·3칸을 오르는 확장 문제</h2></div>
+<div><span class="badge">점화식 확장</span><span class="badge">세 이전 상태</span></div>
+<div class="two">
+<div><pre><code>def stairs_123(n):
+    dp = [0] * (n + 1)
+    dp[0] = 1
+
+    for stair in range(1, n + 1):
+        if stair &gt;= 1:
+            dp[stair] += dp[stair - 1]
+
+        if stair &gt;= 2:
+            dp[stair] += dp[stair - 2]
+
+        if stair &gt;= 3:
+            dp[stair] += dp[stair - 3]
+
+    return dp
+
+table = stairs_123(10)
+
+for stair, value in enumerate(table):
+    print(stair, "칸:", value)</code></pre></div>
+<div class="card">
+<h3>상태 전이</h3>
+<pre class="diagram">dp[n] =
+dp[n-1]
++ dp[n-2]
++ dp[n-3]</pre>
+<p>마지막 이동이 1칸, 2칸, 3칸인 세 경우로 나눕니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 1·2·3칸 확장에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 마지막 이동이 1칸·2칸·3칸인 경우를 더한다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 점화식은 dp[n-1]+dp[n-2]+dp[n-3]이다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> 이동 규칙이 바뀌면 점화식도 바뀐다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 기본 문제와 점화식이 완전히 동일하다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> 3칸 이동은 상태 전이에 영향을 주지 않는다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>밟을 수 없는 계단이 있는 경우</h2></div>
+<div><span class="badge">제약 조건</span><span class="badge">도달 불가 상태</span></div>
+<pre><code>def stairs_with_blocked(n, blocked):
+    dp = [0] * (n + 1)
+    dp[0] = 1
+
+    for stair in range(1, n + 1):
+        if stair in blocked:
+            dp[stair] = 0
+            continue
+
+        if stair &gt;= 1:
+            dp[stair] += dp[stair - 1]
+
+        if stair &gt;= 2:
+            dp[stair] += dp[stair - 2]
+
+    return dp
+
+blocked = {3, 7}
+dp = stairs_with_blocked(10, blocked)
+
+for stair, count in enumerate(dp):
+    state = "금지" if stair in blocked else "가능"
+    print(stair, state, count)</code></pre>
+<div class="check"><strong>상태 처리</strong><br/>금지된 계단은 도착 방법의 수를 0으로 설정합니다. 이후 계단의 점화식은 이 0을 자연스럽게 반영합니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 금지 계단 처리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> 금지 계단의 경우의 수를 0으로 설정할 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 이후 상태 전이는 금지 계단의 0을 자연스럽게 반영한다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> blocked 집합으로 금지 상태를 빠르게 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 금지 계단도 일반 계단처럼 계산해야 한다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 금지 계단은 전체 경로 수와 무관하다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>계단 오르기 최소 비용 상태 설계</h2></div>
+<div><span class="badge">최솟값</span><span class="badge">최적 부분 구조</span><span class="badge">경로 복원</span></div>
+<pre><code>def minimum_cost_stairs(cost):
+    n = len(cost)
+
+    dp = [0] * n
+    parent = [-1] * n
+
+    dp[0] = cost[0]
+
+    if n &gt;= 2:
+        dp[1] = cost[1]
+
+    for stair in range(2, n):
+        if dp[stair - 1] &lt;= dp[stair - 2]:
+            dp[stair] = (
+                dp[stair - 1]
+                + cost[stair]
+            )
+            parent[stair] = stair - 1
+        else:
+            dp[stair] = (
+                dp[stair - 2]
+                + cost[stair]
+            )
+            parent[stair] = stair - 2
+
+    # 마지막 계단에서 끝나는 것으로 가정
+    path = []
+    current = n - 1
+
+    while current &gt;= 0:
+        path.append(current)
+        current = parent[current]
+
+    path.reverse()
+
+    return dp[-1], path, dp
+
+cost = [3, 5, 2, 6, 1, 4]
+
+minimum, path, table = (
+    minimum_cost_stairs(cost)
+)
+
+print("비용:", cost)
+print("최소 누적 비용:", minimum)
+print("선택 계단:", path)
+print("DP 테이블:", table)</code></pre>
+<table>
+<tr><th>설계 요소</th><th>최소 비용 계단 문제</th></tr>
+<tr><td>상태</td><td><code>dp[i]</code> = i번째 계단에 도착하는 최소 누적 비용</td></tr>
+<tr><td>마지막 이동</td><td>i-1에서 1칸 또는 i-2에서 2칸 이동</td></tr>
+<tr><td>점화식</td><td><code>dp[i] = cost[i] + min(dp[i-1], dp[i-2])</code></td></tr>
+<tr><td>초기값</td><td><code>dp[0]=cost[0]</code>, <code>dp[1]=cost[1]</code></td></tr>
+<tr><td>경로 복원</td><td>최솟값을 만든 이전 계단을 <code>parent</code>에 저장</td></tr>
+</table>
+<div class="lead" style="margin-top:14px">
+<strong>알고리즘 설명 예시</strong><br/>
+“상태 <code>dp[i]</code>를 i번째 계단에 도착하는 최소 누적 비용으로 정의하였다. i번째 계단에는 i-1번째 또는 i-2번째 계단에서 올 수 있으므로, 두 이전 상태 중 비용이 작은 값을 선택하고 현재 계단 비용을 더하였다. 따라서 점화식은 <code>dp[i]=cost[i]+min(dp[i-1], dp[i-2])</code>로 설계하였다.”
+</div>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 최소 비용 계단에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> dp[i]는 i번째 계단까지의 최소 누적 비용이다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> 이전 두 상태 중 작은 비용을 선택한다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> parent 배열로 선택 경로를 복원할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 경우의 수 문제와 완전히 같은 상태 의미이다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 항상 큰 비용 쪽을 선택한다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">
+시는 한 행씩 마음의 계단을 오르고, 소설은 한 장면씩 인물의 삶을 높여 갑니다. 희곡은 대사 하나가 다음 갈등의 발판이 되고, 연극은 반복 연습의 작은 동작들이 모여 완성된 무대를 만듭니다. 음악도 한 음씩 이어지며 결국 커다란 선율이 됩니다.<br><br>
+여러분의 꿈도 한 번에 정상에 도착하는 점프가 아닙니다. 오늘의 한 칸, 내일의 두 칸, 때로는 잠시 멈추는 선택까지 모두 자신의 경로를 만듭니다. 어떤 계단은 금지 상태처럼 돌아가야 할 수도 있고, 어떤 길은 비용이 커 보여 다른 선택을 해야 할 수도 있습니다. 중요한 것은 지금의 상태를 정확히 알고 다음 전이를 설계하는 일입니다.<br><br>
+그리고 학교 계단에서 최소 비용 경로를 찾다가 엘리베이터를 선택하면 알고리즘은 훌륭해도 체력 점수는 갱신되지 않을 수 있습니다. 오늘 배운 점화식처럼, 여러분의 작은 노력들이 서로 더해져 더 높은 꿈에 도착하기를 바랍니다.
+</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 계단 오르기 문제는 상태·초기값·점화식으로 설계할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. dp[n]은 항상 n번째 계단의 비용만 의미한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 1·2칸 이동 문제의 기본 점화식은 dp[n]=dp[n-1]+dp[n-2]이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. dp[0]=1은 아무 이동도 하지 않는 한 가지 방법을 의미할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 단순 재귀는 같은 상태를 반복 계산할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 메모이제이션은 이미 계산한 값을 저장하지 않는다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 테이블 방식은 작은 상태부터 순서대로 계산한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 공간 최적화는 필요한 이전 상태만 남기는 방법이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 금지 계단의 도착 방법 수는 0으로 설정할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 최소 비용 문제에서는 parent 정보를 이용해 경로를 복원할 수 없다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 3점, 총 30점입니다.</p><div class="qitem"><h4>1. 상태 정의에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> dp[n]의 의미를 한 문장으로 정한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 문제의 출력과 연결된 상태를 설계한다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 상태 의미에 따라 점화식이 달라질 수 있다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 상태 의미는 생략해도 된다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 모든 문제의 dp[n]은 같은 뜻이다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 초기값에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 점화식 계산을 시작하게 한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 문제 의미에 맞게 설정한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> dp[0]=1은 빈 경로 한 가지를 뜻할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 아무 값이나 넣어도 된다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> 초기값은 결과에 영향을 주지 않는다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 마지막 선택 분해에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 현재 상태에 도달하기 직전 위치를 찾는다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 서로 겹치지 않는 경우를 나눈다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 각 경우의 부분 문제를 결합한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 마지막 선택은 점화식과 무관하다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 항상 한 가지 경우만 존재한다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 메모이제이션에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 하향식 방식이다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 재귀와 캐시를 사용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 필요한 상태만 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 호출 스택을 사용하지 않는다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 결과를 저장하지 않는다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 테이블 방식에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 상향식 방식이다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 반복문으로 구현할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 계산 순서를 직접 설계한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 항상 딕셔너리만 사용한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 재귀 깊이 제한이 있다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 공간 최적화에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 참조하는 이전 상태 수를 분석한다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 전체 테이블을 줄일 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 시간 복잡도는 유지될 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 어떤 문제든 변수 하나면 충분하다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 항상 경로 복원도 가능하다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 제약 조건이 있는 DP에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 금지 상태를 0이나 무한대로 표시할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 상태 전이에 제약을 반영한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 도달 불가 여부를 구분한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 제약은 결과와 무관하다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 금지 상태도 항상 정상 상태처럼 계산한다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 최소 비용 DP에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 가능한 이전 상태 중 최솟값을 선택한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 현재 비용을 더할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 부모 정보를 저장해 경로를 복원할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 경우의 수를 더하기만 한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 항상 최댓값을 선택한다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 좋은 점화식 설명에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 상태 의미를 설명한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 초기값을 설명한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 이전 상태에서 현재 상태로의 전이를 설명한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 식만 제시하고 의미는 생략한다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 계산 순서는 고려하지 않는다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 계단 문제 확장에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 가능한 이동 칸 수가 바뀌면 전이식도 바뀐다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 금지 계단은 도달 불가 상태로 처리할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 경우의 수 문제를 최소 비용 문제로 확장할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 문제 조건이 바뀌어도 상태 정의는 항상 같다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 경로 복원은 DP와 무관하다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 10문항 × 5점 = 50점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 3점 = 30점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 24차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "작은 입력을 직접 나열하면 초기값과 규칙을 발견하는 데 도움이 됩니다."}, "2": {"ans": [0, 1, 2], "exp": "마지막 선택을 기준으로 서로 겹치지 않는 부분 문제를 나눕니다."}, "3": {"ans": [0, 1, 2], "exp": "점화식을 그대로 옮긴 단순 재귀는 직관적이지만 중복 계산이 많습니다."}, "4": {"ans": [0, 1, 2], "exp": "호출 횟수 측정은 중복 부분 문제를 확인하는 방법입니다."}, "5": {"ans": [0, 1, 2], "exp": "하향식 메모이제이션은 필요한 상태만 재귀적으로 계산하고 저장합니다."}, "6": {"ans": [0, 1, 2], "exp": "상향식 방식은 필요한 이전 값이 먼저 계산되도록 순서를 설계합니다."}, "7": {"ans": [0, 1, 2], "exp": "필요한 이전 두 상태만 남겨도 동일한 결과를 계산할 수 있습니다."}, "8": {"ans": [0, 1, 2], "exp": "가능한 마지막 이동 종류가 늘어나면 참조하는 이전 상태도 늘어납니다."}, "9": {"ans": [0, 1, 2], "exp": "도달 불가 상태를 0으로 두면 이후 점화식에 자연스럽게 반영됩니다."}, "10": {"ans": [0, 1, 2], "exp": "최소 비용 문제는 경우의 수가 아니라 최솟값을 저장하고 부모 정보를 통해 경로를 복원합니다."}}, "ox": {"1": {"ans": true, "exp": "동적 계획법 설계의 핵심 요소입니다."}, "2": {"ans": false, "exp": "문제에 따라 경우의 수나 최소 비용을 의미할 수 있습니다."}, "3": {"ans": true, "exp": "마지막 이동 두 경우를 더합니다."}, "4": {"ans": true, "exp": "출발 상태의 의미입니다."}, "5": {"ans": true, "exp": "중복 호출이 발생합니다."}, "6": {"ans": false, "exp": "저장과 재사용이 핵심입니다."}, "7": {"ans": true, "exp": "이전 상태를 먼저 계산합니다."}, "8": {"ans": true, "exp": "불필요한 저장을 줄입니다."}, "9": {"ans": true, "exp": "도달 불가 상태입니다."}, "10": {"ans": false, "exp": "이전 선택을 저장하면 복원할 수 있습니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "정확한 상태 정의가 전이식과 초기값의 출발점입니다."}, "2": {"ans": [0, 1, 2], "exp": "초기값은 문제의 의미와 일치해야 합니다."}, "3": {"ans": [0, 1, 2], "exp": "마지막 선택 분석은 점화식 설계에 유용합니다."}, "4": {"ans": [0, 1, 2], "exp": "메모이제이션은 재귀적 계산과 결과 저장을 결합합니다."}, "5": {"ans": [0, 1, 2], "exp": "테이블 방식은 배열을 작은 상태부터 채웁니다."}, "6": {"ans": [0, 1, 2], "exp": "공간 최적화는 전이식의 참조 범위에 따라 결정됩니다."}, "7": {"ans": [0, 1, 2], "exp": "제약 조건은 초기값과 전이식에 반영해야 합니다."}, "8": {"ans": [0, 1, 2], "exp": "최소 비용 문제는 min 전이와 경로 복원을 사용할 수 있습니다."}, "9": {"ans": [0, 1, 2], "exp": "상태·초기값·전이·계산 순서를 함께 설명해야 합니다."}, "10": {"ans": [0, 1, 2], "exp": "조건 변화에 맞춰 상태와 전이식을 다시 설계해야 합니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();
+if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;
+const now=new Date(),lines=["정보과학 24차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=10;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=3;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 30문항`);
+document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"});
+const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_24차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();
+document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>

@@ -1,0 +1,442 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>정보과학 13차시 목표지향 개념기반 수업지도안</title><style>
+:root{--navy:#17324d;--blue:#2f6fa3;--purple:#745ca7;--sky:#eaf4fb;--gold:#f2b84b;--green:#3f9562;--red:#c94d4d;--line:#d7e3ec;--bg:#f3f7fa;--ink:#26333f;--muted:#65727d;--code:#17212b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue),var(--purple));color:#fff;padding:50px 20px 44px}.wrap,main{max-width:1200px;margin:auto}header h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.25}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 14px #16344d18}nav .wrap{display:flex;gap:6px;overflow:auto;padding:9px}nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:7px 11px;border-radius:18px}nav a:hover{background:var(--sky)}
+main{padding:20px 16px 90px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 24px #1e46640f;scroll-margin-top:74px}
+h2{color:var(--navy);margin:0 0 12px;font-size:1.65rem}h3{color:var(--blue);margin:18px 0 8px}h4{margin:0 0 8px;color:var(--navy)}
+.grid,.two,.flow{display:grid;gap:14px}.grid,.two{grid-template-columns:1fr 1fr}.flow{grid-template-columns:repeat(4,1fr)}
+.card,.flow-card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fbfdff}.flow-card strong{display:block;color:var(--navy);font-size:1.08rem}
+.lead,.quote{background:#f9fcfe;border:1px solid var(--line);border-radius:13px;padding:16px}.quote{border-left:7px solid var(--gold);background:linear-gradient(135deg,#f8fbff,#fff9eb);font-size:1.05rem}
+.ex-head{border-left:7px solid var(--gold);padding-left:13px}.num{display:inline-block;background:var(--navy);color:#fff;border-radius:18px;padding:4px 10px;font-weight:900}.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 9px;border-radius:15px;margin:2px;font-size:.88rem}
+pre{margin:0;background:var(--code);color:#eef6fb;border-radius:13px;padding:18px;overflow:auto;line-height:1.58}pre.output{background:#f6f9fb;color:var(--ink);border:1px solid var(--line);white-space:pre-wrap}code{font-family:Consolas,"D2Coding",monospace}
+table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:var(--navy);color:#fff}
+.check{margin-top:14px;background:#eef8f1;border-left:6px solid var(--green);border-radius:10px;padding:14px}.warn{margin-top:14px;background:#fff2f2;border-left:6px solid var(--red);border-radius:10px;padding:14px}.note{margin-top:14px;background:#fff8e7;border-left:6px solid var(--gold);border-radius:10px;padding:14px}
+.codequiz{margin-top:22px;padding:18px;background:#f4f9fc;border:1px solid #cfe0ec;border-radius:14px}.qitem{background:#fbfdff;border:1px solid var(--line);border-radius:13px;padding:15px;margin:12px 0}.inst{color:var(--red);font-weight:800}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);background:#fff;padding:10px 12px;border-radius:10px;cursor:pointer}.option:hover{background:var(--sky)}.option input{margin-top:6px;transform:scale(1.1)}.ox{display:flex;gap:10px}.ox .option{min-width:100px}
+.feedback{display:none;margin-top:10px;padding:10px;border-radius:9px}.feedback.correct{display:block;background:#eaf7ee;color:#235c37}.feedback.wrong{display:block;background:#fff0f0;color:#8a2d2d}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student label{font-weight:800;color:var(--navy)}input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:9px;font:inherit;margin-top:5px}
+.scorebar{position:sticky;bottom:0;z-index:35;background:#17324df7;color:#fff;padding:12px 16px;box-shadow:0 -4px 18px #0003}.scorebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}button{border:0;border-radius:10px;padding:11px 18px;font-weight:900;cursor:pointer;font-family:inherit}.submit{background:var(--gold)}.reset{background:#fff;color:var(--navy)}
+.top{position:fixed;right:18px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;text-decoration:none;font-weight:900}footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:900px){.grid,.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}@media(max-width:560px){.student,.flow{grid-template-columns:1fr}section{padding:20px 15px}}@media print{nav,.top,.scorebar{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap}}
+</style></head><body id="top">
+<header><div class="wrap"><h1>정보과학 13차시<br>그래프 기초와 표현 방법 비교</h1><p>노드·간선·차수 개념을 이해하고, 같은 그래프를 인접행렬·인접리스트·가중치 그래프로 표현하여 구조와 공간 효율을 비교합니다.</p></div></header>
+<nav><div class="wrap"><a href="#lesson">수업지도안</a><a href="#concept">학습 개념</a><a href="#opening">시작 멘트</a><a href="#papers">소논문 주제</a><a href="#ex1">코드 1~11</a><a href="#closing">끝 멘트</a><a href="#ox">OX</a><a href="#diag">진단평가</a><a href="#submit">제출</a></div></nav>
+<main>
+<section id="lesson"><h2>Ⅰ. 목표지향 개념기반 수업지도안</h2>
+<table><tr><th>차시</th><td>13차시</td><th>주제</th><td>그래프의 기본 요소와 인접행렬·인접리스트 비교</td></tr><tr><th>핵심 질문</th><td colspan="3">복잡한 관계를 노드와 간선으로 어떻게 모델링하고, 연결 구조와 사용 목적에 따라 어떤 그래프 표현을 선택해야 하는가?</td></tr><tr><th>전이 목표</th><td colspan="3">학생은 새로운 관계 문제에서 노드·간선·방향·가중치를 정의하고, 그래프의 밀도와 주요 연산을 분석하여 인접행렬 또는 인접리스트를 선택하고 근거를 설명할 수 있다.</td></tr><tr><th>성취기준</th><td colspan="3">그래프의 노드·간선·차수와 방향성·가중치를 설명한다. 같은 그래프를 인접행렬과 인접리스트로 구현하고 간선 삽입·삭제·탐색·차수 계산과 공간 효율을 비교하여 문제에 적합한 표현을 선택한다.</td></tr><tr><th>평가 증거</th><td colspan="3">코드별 복수정답형 11문항, OX 10문항, 종합 진단평가 10문항과 자동 생성 TXT 결과</td></tr></table>
+<h3>수업 흐름</h3><table><tr><th>단계</th><th>교수·학습 활동</th><th>개념 초점</th></tr><tr><td>도입</td><td>친구 관계·도로·웹 링크 사례에서 대상과 관계를 구분한다.</td><td>대상, 연결</td></tr><tr><td>개념 형성</td><td>노드·간선·차수·방향·가중치를 그래프 모형과 연결한다.</td><td>모델링, 구조</td></tr><tr><td>진단 실습</td><td>인접행렬과 인접리스트를 구현하고 연산·공간을 비교한다.</td><td>표현, 효율</td></tr><tr><td>정리·전이</td><td>새로운 관계 데이터에 적합한 표현을 선택하고 윤리적 한계를 설명한다.</td><td>판단, 책임</td></tr></table></section>
+
+<section id="concept"><h2>Ⅱ. 학습 목표와 학습할 개념</h2><div class="grid"><div class="card"><h3>학습 목표</h3><ol><li>노드·간선·차수의 의미를 설명한다.</li><li>무방향 그래프와 방향 그래프를 구분한다.</li><li>인접행렬과 인접리스트를 구현한다.</li><li>간선 연산과 공간 효율을 비교한다.</li><li>가중치 그래프와 관계 데이터 윤리를 설명한다.</li></ol></div><div class="card"><h3>학습할 개념</h3><ul><li><b>노드와 간선:</b> 관계의 대상과 대상 사이 연결</li><li><b>차수:</b> 한 노드에 연결된 간선 수</li><li><b>인접행렬:</b> 노드 쌍의 연결을 2차원 배열에 저장하는 방식</li><li><b>인접리스트:</b> 각 노드의 실제 이웃을 목록으로 저장하는 방식</li><li><b>가중치:</b> 간선에 부여한 거리·시간·비용과 같은 수치</li></ul></div></div><div class="lead" style="margin-top:15px"><b>개념 일반화</b><br>그래프 표현의 효율성은 노드와 간선 수, 그래프의 밀도, 연결 확인과 이웃 순회의 빈도에 따라 달라지며, 관계 데이터의 해석에는 개인정보와 편향을 함께 고려해야 한다.</div></section>
+
+<section id="opening"><h2>Ⅲ. 수업 시작 멘트</h2><div class="quote">“아리스토텔레스는 인간을 관계 속에서 살아가는 존재로 보았고, 공자는 사람 사이의 관계가 공동체의 질서를 만든다고 생각했습니다. 뉴턴은 천체들이 서로 영향을 주는 관계를 법칙으로 설명했고, 오일러는 도시와 다리를 점과 선으로 바꾸어 그래프 이론의 문을 열었습니다. 오늘 우리는 사람·장소·컴퓨터를 노드로, 친구·도로·통신을 간선으로 바꾸어 세상을 새롭게 바라봅니다. 다만 친구 수가 많다고 인생의 인접행렬이 무조건 행복으로 가득 찬 것은 아닙니다. 연결의 수보다 연결의 의미를 살피며 관계를 코드로 표현해 봅시다.”</div></section>
+
+<section><h2>Ⅳ. 학습 내용</h2><div class="flow"><div class="flow-card"><strong>대상과 관계</strong>문제에서 노드와 간선을 정의합니다.</div><div class="flow-card"><strong>구조 표현</strong>인접행렬과 인접리스트로 연결을 저장합니다.</div><div class="flow-card"><strong>연산 분석</strong>삽입·삭제·탐색·차수 계산을 비교합니다.</div><div class="flow-card"><strong>선택과 윤리</strong>공간·시간·개인정보를 함께 고려합니다.</div></div>
+<ul><li>친구 관계의 노드·간선 모델링</li><li>무방향 그래프의 차수 계산</li><li>2차원 리스트 기반 인접행렬</li><li>인접행렬의 간선 삽입·삭제·탐색</li><li>딕셔너리 기반 인접리스트</li><li>인접리스트의 중복 방지와 간선 연산</li><li>인접행렬에서 인접리스트로 변환</li><li>방향 그래프의 진입차수·진출차수</li><li>희소 그래프와 밀집 그래프의 공간 비교</li><li>교실 협업 관계 종합 분석</li><li>가중치 그래프의 거리·시간·비용 분석</li></ul></section>
+
+<section id="papers"><h2>Ⅴ. 학습 관련 소논문 주제 예시 5개</h2><ol><li><b>희소·밀집 그래프에서 인접행렬과 인접리스트의 공간 효율 비교</b></li><li><b>교실 협업 관계의 차수 분포와 정보 전달 구조 분석</b></li><li><b>방향 그래프에서 진입차수·진출차수가 영향력 해석에 미치는 영향</b></li><li><b>가중치 그래프를 활용한 교내 이동 경로 비용 분석</b></li><li><b>관계 데이터 시각화에서 개인정보 보호와 편향 문제 연구</b></li></ol></section>
+
+<section><h2>Ⅵ. 학습할 코드 11개</h2><p class="lead">각 코드에서 노드·간선·차수·방향·가중치와 표현 구조를 분석한 뒤 옳은 설명 3개를 선택하세요.</p></section>
+<section id="ex1">
+<div class="ex-head"><span class="num">예제 1</span><h2>친구 관계에서 노드와 간선 찾기</h2></div>
+<div><span class="badge">노드</span><span class="badge">간선</span><span class="badge">무방향 그래프</span></div>
+<div class="two">
+<div><pre><code>students = ["민준", "서연", "지우", "하준"]
+
+friendships = [
+    ("민준", "서연"),
+    ("민준", "지우"),
+    ("서연", "하준")
+]
+
+print("노드 수:", len(students))
+print("간선 수:", len(friendships))
+
+for a, b in friendships:
+    print(f"{a} ↔ {b}")</code></pre></div>
+<div class="card">
+<h3>그래프 해석</h3>
+<p>학생 한 명이 노드입니다.</p>
+<p>친구 관계 하나가 간선입니다.</p>
+<p>친구 관계는 양방향이므로 무방향 그래프로 표현합니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 1 확인 문제</h3><div class="qitem"><h4>1. 예제 1의 노드와 간선에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code1" value="0"><span><b>1.</b> 학생 한 명은 노드로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="1"><span><b>2.</b> 친구 관계 하나는 간선으로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="2"><span><b>3.</b> 친구 관계는 무방향 그래프로 모델링할 수 있다.</span></label><label class="option"><input type="checkbox" name="code1" value="3"><span><b>4.</b> 노드 수는 항상 간선 수와 같다.</span></label><label class="option"><input type="checkbox" name="code1" value="4"><span><b>5.</b> 친구 관계는 반드시 방향 그래프이다.</span></label></div><div class="feedback" id="fb-code1"></div></div></div></section><section id="ex2">
+<div class="ex-head"><span class="num">예제 2</span><h2>노드별 차수 계산</h2></div>
+<div><span class="badge">차수</span><span class="badge">딕셔너리</span></div>
+<pre><code>students = ["민준", "서연", "지우", "하준"]
+
+friendships = [
+    ("민준", "서연"),
+    ("민준", "지우"),
+    ("서연", "하준")
+]
+
+degree = {student: 0 for student in students}
+
+for a, b in friendships:
+    degree[a] += 1
+    degree[b] += 1
+
+for student, count in degree.items():
+    print(student, "차수:", count)</code></pre>
+<div class="check"><strong>무방향 그래프</strong><br/>간선 하나는 양쪽 노드의 차수를 각각 1씩 증가시킵니다.</div>
+<div class="codequiz"><h3>예제 2 확인 문제</h3><div class="qitem"><h4>2. 예제 2의 차수 계산에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code2" value="0"><span><b>1.</b> 무방향 간선 하나는 양쪽 노드 차수를 각각 1 증가시킨다.</span></label><label class="option"><input type="checkbox" name="code2" value="1"><span><b>2.</b> 딕셔너리로 노드별 차수를 저장할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="2"><span><b>3.</b> degree.items()로 노드와 차수를 함께 순회할 수 있다.</span></label><label class="option"><input type="checkbox" name="code2" value="3"><span><b>4.</b> 한 간선은 한쪽 노드 차수만 증가시킨다.</span></label><label class="option"><input type="checkbox" name="code2" value="4"><span><b>5.</b> 차수는 노드 이름의 글자 수이다.</span></label></div><div class="feedback" id="fb-code2"></div></div></div></section><section id="ex3">
+<div class="ex-head"><span class="num">예제 3</span><h2>무방향 그래프 인접행렬 만들기</h2></div>
+<div><span class="badge">2차원 리스트</span><span class="badge">대칭 행렬</span></div>
+<div class="two">
+<div><pre><code>nodes = ["A", "B", "C", "D"]
+index = {node: i for i, node in enumerate(nodes)}
+
+edges = [
+    ("A", "B"),
+    ("A", "C"),
+    ("B", "D")
+]
+
+n = len(nodes)
+matrix = [[0] * n for _ in range(n)]
+
+for a, b in edges:
+    i = index[a]
+    j = index[b]
+
+    matrix[i][j] = 1
+    matrix[j][i] = 1
+
+for row in matrix:
+    print(row)</code></pre></div>
+<div class="card">
+<h3>출력</h3>
+<pre class="output">[0, 1, 1, 0]
+[1, 0, 0, 1]
+[1, 0, 0, 0]
+[0, 1, 0, 0]</pre>
+<p>무방향 그래프의 인접행렬은 주대각선을 기준으로 대칭입니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 3 확인 문제</h3><div class="qitem"><h4>3. 예제 3의 인접행렬에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code3" value="0"><span><b>1.</b> 노드 수가 n이면 n×n 행렬을 만든다.</span></label><label class="option"><input type="checkbox" name="code3" value="1"><span><b>2.</b> 무방향 그래프의 행렬은 대칭이다.</span></label><label class="option"><input type="checkbox" name="code3" value="2"><span><b>3.</b> matrix[i][j]=1은 두 노드가 연결되었음을 뜻한다.</span></label><label class="option"><input type="checkbox" name="code3" value="3"><span><b>4.</b> 주대각선은 항상 모두 1이어야 한다.</span></label><label class="option"><input type="checkbox" name="code3" value="4"><span><b>5.</b> 인접행렬은 1차원 리스트 하나만 사용한다.</span></label></div><div class="feedback" id="fb-code3"></div></div></div></section><section id="ex4">
+<div class="ex-head"><span class="num">예제 4</span><h2>인접행렬의 간선 삽입·삭제·탐색</h2></div>
+<div><span class="badge">간선 연산</span><span class="badge">O(1) 확인</span></div>
+<pre><code>nodes = ["A", "B", "C", "D"]
+index = {node: i for i, node in enumerate(nodes)}
+matrix = [[0] * 4 for _ in range(4)]
+
+def add_edge(a, b):
+    i, j = index[a], index[b]
+    matrix[i][j] = 1
+    matrix[j][i] = 1
+
+def remove_edge(a, b):
+    i, j = index[a], index[b]
+    matrix[i][j] = 0
+    matrix[j][i] = 0
+
+def has_edge(a, b):
+    return matrix[index[a]][index[b]] == 1
+
+add_edge("A", "B")
+add_edge("A", "C")
+
+print(has_edge("A", "C"))
+remove_edge("A", "C")
+print(has_edge("A", "C"))</code></pre>
+<div class="note"><strong>장점</strong><br/>두 노드의 인덱스를 알면 행렬의 한 칸만 확인하여 연결 여부를 빠르게 판정할 수 있습니다.</div>
+<div class="codequiz"><h3>예제 4 확인 문제</h3><div class="qitem"><h4>4. 예제 4의 인접행렬 연산에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code4" value="0"><span><b>1.</b> 간선 추가 시 두 대칭 위치를 1로 바꾼다.</span></label><label class="option"><input type="checkbox" name="code4" value="1"><span><b>2.</b> 간선 삭제 시 두 대칭 위치를 0으로 바꾼다.</span></label><label class="option"><input type="checkbox" name="code4" value="2"><span><b>3.</b> 연결 여부는 행렬 한 칸을 확인해 판정할 수 있다.</span></label><label class="option"><input type="checkbox" name="code4" value="3"><span><b>4.</b> 간선 확인에는 항상 모든 행을 순회해야 한다.</span></label><label class="option"><input type="checkbox" name="code4" value="4"><span><b>5.</b> 무방향 간선은 한쪽 위치만 바꾸면 충분하다.</span></label></div><div class="feedback" id="fb-code4"></div></div></div></section><section id="ex5">
+<div class="ex-head"><span class="num">예제 5</span><h2>무방향 그래프 인접리스트 만들기</h2></div>
+<div><span class="badge">딕셔너리</span><span class="badge">이웃 목록</span></div>
+<div class="two">
+<div><pre><code>nodes = ["A", "B", "C", "D"]
+
+edges = [
+    ("A", "B"),
+    ("A", "C"),
+    ("B", "D")
+]
+
+graph = {node: [] for node in nodes}
+
+for a, b in edges:
+    graph[a].append(b)
+    graph[b].append(a)
+
+for node, neighbors in graph.items():
+    print(node, ":", neighbors)</code></pre></div>
+<div class="card">
+<h3>출력</h3>
+<pre class="output">A : ['B', 'C']
+B : ['A', 'D']
+C : ['A']
+D : ['B']</pre>
+<p>실제로 연결된 이웃만 저장합니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 5 확인 문제</h3><div class="qitem"><h4>5. 예제 5의 인접리스트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code5" value="0"><span><b>1.</b> 각 노드별 이웃 목록을 저장한다.</span></label><label class="option"><input type="checkbox" name="code5" value="1"><span><b>2.</b> 무방향 그래프는 양쪽 이웃 목록에 서로를 추가한다.</span></label><label class="option"><input type="checkbox" name="code5" value="2"><span><b>3.</b> 실제 연결된 이웃 중심으로 저장한다.</span></label><label class="option"><input type="checkbox" name="code5" value="3"><span><b>4.</b> 연결되지 않은 모든 노드도 각 이웃 목록에 넣는다.</span></label><label class="option"><input type="checkbox" name="code5" value="4"><span><b>5.</b> 인접리스트는 딕셔너리로 표현할 수 없다.</span></label></div><div class="feedback" id="fb-code5"></div></div></div></section><section id="ex6">
+<div class="ex-head"><span class="num">예제 6</span><h2>인접리스트의 간선 삽입·삭제·탐색</h2></div>
+<div><span class="badge">리스트 연산</span><span class="badge">이웃 탐색</span></div>
+<pre><code>graph = {
+    "A": [],
+    "B": [],
+    "C": [],
+    "D": []
+}
+
+def add_edge(a, b):
+    if b not in graph[a]:
+        graph[a].append(b)
+
+    if a not in graph[b]:
+        graph[b].append(a)
+
+def remove_edge(a, b):
+    if b in graph[a]:
+        graph[a].remove(b)
+
+    if a in graph[b]:
+        graph[b].remove(a)
+
+def has_edge(a, b):
+    return b in graph[a]
+
+add_edge("A", "B")
+add_edge("A", "C")
+
+print(graph)
+print(has_edge("A", "C"))
+
+remove_edge("A", "C")
+print(graph)</code></pre>
+<div class="warn"><strong>탐색 비용</strong><br/>연결 여부를 확인하려면 해당 노드의 이웃 목록에서 값을 찾아야 합니다. 차수가 클수록 확인 시간이 늘어날 수 있습니다.</div>
+<div class="codequiz"><h3>예제 6 확인 문제</h3><div class="qitem"><h4>6. 예제 6의 인접리스트 연산에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code6" value="0"><span><b>1.</b> 중복 간선을 막기 위해 in 연산으로 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="1"><span><b>2.</b> remove()로 이웃 목록에서 간선을 삭제할 수 있다.</span></label><label class="option"><input type="checkbox" name="code6" value="2"><span><b>3.</b> has_edge는 이웃 목록에서 목표 노드를 찾는다.</span></label><label class="option"><input type="checkbox" name="code6" value="3"><span><b>4.</b> 연결 확인은 항상 O(1)이다.</span></label><label class="option"><input type="checkbox" name="code6" value="4"><span><b>5.</b> 무방향 간선 삭제는 한쪽 목록만 수정한다.</span></label></div><div class="feedback" id="fb-code6"></div></div></div></section><section id="ex7">
+<div class="ex-head"><span class="num">예제 7</span><h2>인접행렬을 인접리스트로 변환</h2></div>
+<div><span class="badge">표현 변환</span><span class="badge">전체 순회</span></div>
+<pre><code>nodes = ["A", "B", "C", "D"]
+
+matrix = [
+    [0, 1, 1, 0],
+    [1, 0, 0, 1],
+    [1, 0, 0, 0],
+    [0, 1, 0, 0]
+]
+
+graph = {node: [] for node in nodes}
+
+for i in range(len(nodes)):
+    for j in range(len(nodes)):
+        if matrix[i][j] == 1:
+            graph[nodes[i]].append(nodes[j])
+
+for node, neighbors in graph.items():
+    print(node, neighbors)</code></pre>
+<div class="check"><strong>변환 과정</strong><br/>행렬의 모든 칸을 확인하고 값이 1인 열의 노드를 이웃 목록에 추가합니다.</div>
+<div class="codequiz"><h3>예제 7 확인 문제</h3><div class="qitem"><h4>7. 예제 7의 행렬에서 리스트 변환에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code7" value="0"><span><b>1.</b> 행렬의 모든 행과 열을 순회한다.</span></label><label class="option"><input type="checkbox" name="code7" value="1"><span><b>2.</b> 값이 1인 열의 노드를 이웃 목록에 추가한다.</span></label><label class="option"><input type="checkbox" name="code7" value="2"><span><b>3.</b> 변환에는 노드 목록이 필요하다.</span></label><label class="option"><input type="checkbox" name="code7" value="3"><span><b>4.</b> 0인 칸도 모두 이웃으로 추가한다.</span></label><label class="option"><input type="checkbox" name="code7" value="4"><span><b>5.</b> 행렬을 전혀 확인하지 않고 변환한다.</span></label></div><div class="feedback" id="fb-code7"></div></div></div></section><section id="ex8">
+<div class="ex-head"><span class="num">예제 8</span><h2>방향 그래프의 진입차수·진출차수</h2></div>
+<div><span class="badge">방향 그래프</span><span class="badge">진입·진출 차수</span></div>
+<div class="two">
+<div><pre><code>nodes = ["A", "B", "C", "D"]
+
+edges = [
+    ("A", "B"),
+    ("A", "C"),
+    ("C", "B"),
+    ("B", "D")
+]
+
+in_degree = {node: 0 for node in nodes}
+out_degree = {node: 0 for node in nodes}
+
+for start, end in edges:
+    out_degree[start] += 1
+    in_degree[end] += 1
+
+for node in nodes:
+    print(
+        node,
+        "진입:", in_degree[node],
+        "진출:", out_degree[node]
+    )</code></pre></div>
+<div class="card">
+<h3>개념</h3>
+<p>진입차수는 노드로 들어오는 간선 수입니다.</p>
+<p>진출차수는 노드에서 나가는 간선 수입니다.</p>
+<p>웹 링크, 팔로우 관계, 일방통행 도로에 활용됩니다.</p>
+</div>
+</div>
+<div class="codequiz"><h3>예제 8 확인 문제</h3><div class="qitem"><h4>8. 예제 8의 방향 그래프 차수에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code8" value="0"><span><b>1.</b> 진입차수는 노드로 들어오는 간선 수이다.</span></label><label class="option"><input type="checkbox" name="code8" value="1"><span><b>2.</b> 진출차수는 노드에서 나가는 간선 수이다.</span></label><label class="option"><input type="checkbox" name="code8" value="2"><span><b>3.</b> A→B 간선은 A의 진출차수와 B의 진입차수를 증가시킨다.</span></label><label class="option"><input type="checkbox" name="code8" value="3"><span><b>4.</b> 방향 그래프에서는 차수를 계산할 수 없다.</span></label><label class="option"><input type="checkbox" name="code8" value="4"><span><b>5.</b> 모든 노드의 진입차수와 진출차수는 항상 같다.</span></label></div><div class="feedback" id="fb-code8"></div></div></div></section><section id="ex9">
+<div class="ex-head"><span class="num">예제 9</span><h2>인접행렬과 인접리스트 저장 공간 비교</h2></div>
+<div><span class="badge">공간 효율</span><span class="badge">희소 그래프</span></div>
+<pre><code>vertex_count = 1000
+edge_count = 2000
+
+matrix_cells = vertex_count * vertex_count
+
+# 무방향 그래프에서는 각 간선이
+# 두 이웃 목록에 저장된다고 단순 계산
+list_entries = vertex_count + 2 * edge_count
+
+print("인접행렬 칸 수:", matrix_cells)
+print("인접리스트 항목 수:", list_entries)
+print(
+    "행렬 / 리스트 비율:",
+    matrix_cells / list_entries
+)</code></pre>
+<div class="note"><strong>해석</strong><br/>노드 1000개에 간선 2000개인 희소 그래프에서는 인접행렬이 연결되지 않은 수많은 0까지 저장하지만, 인접리스트는 실제 연결 중심으로 저장합니다.</div>
+<div class="codequiz"><h3>예제 9 확인 문제</h3><div class="qitem"><h4>9. 예제 9의 공간 효율 비교에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code9" value="0"><span><b>1.</b> 인접행렬은 대체로 O(V²) 공간을 사용한다.</span></label><label class="option"><input type="checkbox" name="code9" value="1"><span><b>2.</b> 인접리스트는 대체로 O(V+E) 공간을 사용한다.</span></label><label class="option"><input type="checkbox" name="code9" value="2"><span><b>3.</b> 희소 그래프는 인접리스트가 공간 효율적일 수 있다.</span></label><label class="option"><input type="checkbox" name="code9" value="3"><span><b>4.</b> 노드가 많아도 인접행렬 크기는 변하지 않는다.</span></label><label class="option"><input type="checkbox" name="code9" value="4"><span><b>5.</b> 인접리스트는 연결되지 않은 모든 쌍을 저장한다.</span></label></div><div class="feedback" id="fb-code9"></div></div></div></section><section id="ex10">
+<div class="ex-head"><span class="num">예제 10</span><h2>교실 협업 관계 종합 분석</h2></div>
+<div><span class="badge">종합 프로그램</span><span class="badge">차수 분석</span></div>
+<pre><code>students = [
+    "민준", "서연", "지우",
+    "하준", "예린", "도윤"
+]
+
+collaborations = [
+    ("민준", "서연"),
+    ("민준", "지우"),
+    ("민준", "하준"),
+    ("서연", "지우"),
+    ("지우", "예린"),
+    ("하준", "도윤")
+]
+
+# 인접리스트 생성
+graph = {student: [] for student in students}
+
+for a, b in collaborations:
+    graph[a].append(b)
+    graph[b].append(a)
+
+# 차수 계산
+degrees = {
+    student: len(neighbors)
+    for student, neighbors in graph.items()
+}
+
+# 가장 연결이 많은 학생
+most_connected = max(
+    degrees,
+    key=degrees.get
+)
+
+print("[인접리스트]")
+for student, neighbors in graph.items():
+    print(student, ":", neighbors)
+
+print("\n[차수]")
+for student, degree in degrees.items():
+    print(student, ":", degree)
+
+print(
+    "\n협업 연결이 가장 많은 학생:",
+    most_connected,
+    degrees[most_connected]
+)
+
+# 인접행렬 생성
+index = {
+    student: i
+    for i, student in enumerate(students)
+}
+
+n = len(students)
+matrix = [[0] * n for _ in range(n)]
+
+for a, b in collaborations:
+    i, j = index[a], index[b]
+    matrix[i][j] = 1
+    matrix[j][i] = 1
+
+print("\n[인접행렬]")
+for row in matrix:
+    print(row)</code></pre>
+<table>
+<tr><th>분석 관점</th><th>인접행렬</th><th>인접리스트</th></tr>
+<tr><td>친구 여부 확인</td><td>해당 행·열 한 칸 확인</td><td>이웃 목록에서 이름 탐색</td></tr>
+<tr><td>한 학생의 협업자 확인</td><td>행 전체를 검사</td><td>저장된 이웃 목록 바로 사용</td></tr>
+<tr><td>차수 계산</td><td>행의 1 개수 합산</td><td>이웃 목록 길이</td></tr>
+<tr><td>공간 효율</td><td>학생 수의 제곱만큼 필요</td><td>실제 관계 수에 비례</td></tr>
+<tr><td>권장 상황</td><td>관계가 매우 많거나 연결 확인이 빈번</td><td>관계가 적고 이웃 순회가 빈번</td></tr>
+</table>
+<div class="codequiz"><h3>예제 10 확인 문제</h3><div class="qitem"><h4>10. 예제 10의 교실 협업 관계 분석에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code10" value="0"><span><b>1.</b> 이웃 목록 길이로 차수를 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="1"><span><b>2.</b> max와 degrees.get으로 가장 연결이 많은 학생을 찾을 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="2"><span><b>3.</b> 같은 관계를 행렬과 리스트 두 방식으로 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="code10" value="3"><span><b>4.</b> 인접행렬에서는 차수를 계산할 수 없다.</span></label><label class="option"><input type="checkbox" name="code10" value="4"><span><b>5.</b> 가장 연결이 많은 학생은 항상 이름이 가장 긴 학생이다.</span></label></div><div class="feedback" id="fb-code10"></div></div></div></section>
+<section id="ex11">
+<div class="ex-head"><span class="num">예제 11</span><h2>가중치 그래프와 간선 비용 분석</h2></div>
+<div><span class="badge">가중치</span><span class="badge">도로 거리</span><span class="badge">인접리스트</span></div>
+<pre><code>nodes = ["학교", "도서관", "공원", "정류장"]
+
+roads = [
+    ("학교", "도서관", 4),
+    ("학교", "공원", 7),
+    ("도서관", "정류장", 3),
+    ("공원", "정류장", 2)
+]
+
+graph = {node: [] for node in nodes}
+
+for start, end, distance in roads:
+    graph[start].append((end, distance))
+    graph[end].append((start, distance))
+
+for node, neighbors in graph.items():
+    print(node, ":", neighbors)
+
+total_distance = sum(
+    distance
+    for _, _, distance in roads
+)
+
+average_distance = total_distance / len(roads)
+
+print("전체 도로 거리:", total_distance)
+print("평균 도로 거리:", average_distance)
+
+long_roads = [
+    (start, end, distance)
+    for start, end, distance in roads
+    if distance >= 5
+]
+
+print("5 이상 도로:", long_roads)</code></pre>
+
+<table>
+<tr><th>구성 요소</th><th>의미</th></tr>
+<tr><td>노드</td><td>학교·도서관·공원·정류장과 같은 장소</td></tr>
+<tr><td>간선</td><td>두 장소 사이의 연결</td></tr>
+<tr><td>가중치</td><td>거리·시간·비용처럼 간선에 붙는 수치</td></tr>
+<tr><td>인접리스트 값</td><td><code>(이웃 노드, 가중치)</code> 형태의 튜플</td></tr>
+<tr><td>분석</td><td>전체 거리·평균 거리·긴 도로 목록 계산</td></tr>
+</table>
+
+<div class="note"><strong>상세 설명</strong><br>
+가중치 그래프는 단순한 연결 여부뿐 아니라 연결의 거리·시간·비용을 함께 저장합니다.
+무방향 그래프에서는 하나의 도로를 양쪽 노드의 이웃 목록에 모두 추가합니다.
+</div>
+<div class="codequiz"><h3>예제 11 확인 문제</h3><div class="qitem"><h4>11. 예제 11의 가중치 그래프에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="code11" value="0"><span><b>1.</b> 간선에 거리·시간·비용 값을 함께 저장할 수 있다.</span></label><label class="option"><input type="checkbox" name="code11" value="1"><span><b>2.</b> 인접리스트에 (이웃, 가중치) 튜플을 저장할 수 있다.</span></label><label class="option"><input type="checkbox" name="code11" value="2"><span><b>3.</b> 전체 거리와 평균 거리를 계산할 수 있다.</span></label><label class="option"><input type="checkbox" name="code11" value="3"><span><b>4.</b> 가중치는 반드시 문자열이어야 한다.</span></label><label class="option"><input type="checkbox" name="code11" value="4"><span><b>5.</b> 무방향 도로는 한쪽 노드에만 저장한다.</span></label></div><div class="feedback" id="fb-code11"></div></div></div></section>
+
+
+<section id="closing"><h2>Ⅶ. 수업 끝 멘트</h2><div class="quote">“시는 한 단어와 다른 단어를 연결해 마음의 길을 만들고, 소설은 인물과 사건의 간선이 얽혀 하나의 세계를 이룹니다. 희곡은 배우들의 관계가 달라질 때 장면의 의미가 바뀌고, 연극은 무대 위 모든 연결이 조화를 이룰 때 살아납니다. 음악도 음표 하나보다 음과 음 사이의 관계가 더 큰 감동을 만듭니다. 여러분의 꿈도 혼자 떨어진 노드가 아니라 가족·친구·선생님과 이어진 그래프 속에서 자랍니다. 다만 관계를 너무 많이 추가하면 인접행렬이 복잡해질 수 있으니 진심 없는 간선은 가끔 remove_edge 해도 좋습니다. 좋은 연결을 만들고 서로의 가능성을 이어 주는 사람이 되길 바랍니다.”</div></section>
+
+<section id="ox"><h2>Ⅷ. 형성평가 OX 퀴즈 10개</h2><p class="lead">각 2점, 총 20점입니다.</p><div class="qitem"><h4>1. 그래프는 노드와 간선으로 관계를 표현한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox1" value="true"> O</label><label class="option"><input type="radio" name="ox1" value="false"> X</label></div><div class="feedback" id="fb-ox1"></div></div><div class="qitem"><h4>2. 무방향 그래프의 인접행렬은 일반적으로 대칭이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox2" value="true"> O</label><label class="option"><input type="radio" name="ox2" value="false"> X</label></div><div class="feedback" id="fb-ox2"></div></div><div class="qitem"><h4>3. 인접리스트는 연결되지 않은 모든 노드 쌍을 저장한다.</h4><div class="ox"><label class="option"><input type="radio" name="ox3" value="true"> O</label><label class="option"><input type="radio" name="ox3" value="false"> X</label></div><div class="feedback" id="fb-ox3"></div></div><div class="qitem"><h4>4. 노드의 차수는 그 노드에 연결된 간선 수이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox4" value="true"> O</label><label class="option"><input type="radio" name="ox4" value="false"> X</label></div><div class="feedback" id="fb-ox4"></div></div><div class="qitem"><h4>5. 방향 그래프에는 진입차수와 진출차수가 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox5" value="true"> O</label><label class="option"><input type="radio" name="ox5" value="false"> X</label></div><div class="feedback" id="fb-ox5"></div></div><div class="qitem"><h4>6. 인접행렬의 공간은 대체로 O(V+E)이다.</h4><div class="ox"><label class="option"><input type="radio" name="ox6" value="true"> O</label><label class="option"><input type="radio" name="ox6" value="false"> X</label></div><div class="feedback" id="fb-ox6"></div></div><div class="qitem"><h4>7. 희소 그래프에는 인접리스트가 공간 효율적일 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox7" value="true"> O</label><label class="option"><input type="radio" name="ox7" value="false"> X</label></div><div class="feedback" id="fb-ox7"></div></div><div class="qitem"><h4>8. 인접행렬은 두 노드의 연결 여부를 빠르게 확인할 수 있다.</h4><div class="ox"><label class="option"><input type="radio" name="ox8" value="true"> O</label><label class="option"><input type="radio" name="ox8" value="false"> X</label></div><div class="feedback" id="fb-ox8"></div></div><div class="qitem"><h4>9. 가중치 그래프는 간선에 거리나 비용을 저장할 수 없다.</h4><div class="ox"><label class="option"><input type="radio" name="ox9" value="true"> O</label><label class="option"><input type="radio" name="ox9" value="false"> X</label></div><div class="feedback" id="fb-ox9"></div></div><div class="qitem"><h4>10. 그래프 관계 데이터는 개인정보와 편향을 고려할 필요가 없다.</h4><div class="ox"><label class="option"><input type="radio" name="ox10" value="true"> O</label><label class="option"><input type="radio" name="ox10" value="false"> X</label></div><div class="feedback" id="fb-ox10"></div></div></section>
+<section id="diag"><h2>Ⅸ. 진단평가 복수정답형 10개</h2><p class="lead">보기 5개 중 옳은 것 3개를 모두 선택하세요. 각 2.5점, 총 25점입니다.</p><div class="qitem"><h4>1. 그래프 기본 요소에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag1" value="0"><span><b>1.</b> 노드는 대상을 나타낸다.</span></label><label class="option"><input type="checkbox" name="diag1" value="1"><span><b>2.</b> 간선은 관계를 나타낸다.</span></label><label class="option"><input type="checkbox" name="diag1" value="2"><span><b>3.</b> 차수는 연결된 간선 수를 나타낸다.</span></label><label class="option"><input type="checkbox" name="diag1" value="3"><span><b>4.</b> 노드와 간선은 항상 같은 개수이다.</span></label><label class="option"><input type="checkbox" name="diag1" value="4"><span><b>5.</b> 그래프는 숫자만 표현할 수 있다.</span></label></div><div class="feedback" id="fb-diag1"></div></div><div class="qitem"><h4>2. 무방향 그래프에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag2" value="0"><span><b>1.</b> 간선에 방향이 없다.</span></label><label class="option"><input type="checkbox" name="diag2" value="1"><span><b>2.</b> 친구 관계를 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="2"><span><b>3.</b> 인접행렬이 대칭이 될 수 있다.</span></label><label class="option"><input type="checkbox" name="diag2" value="3"><span><b>4.</b> 진입차수만 존재한다.</span></label><label class="option"><input type="checkbox" name="diag2" value="4"><span><b>5.</b> A-B와 B-A는 항상 다른 두 간선이다.</span></label></div><div class="feedback" id="fb-diag2"></div></div><div class="qitem"><h4>3. 방향 그래프에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag3" value="0"><span><b>1.</b> 간선에 시작과 끝이 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="1"><span><b>2.</b> 웹 링크나 팔로우 관계를 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag3" value="2"><span><b>3.</b> 진입차수와 진출차수를 구분한다.</span></label><label class="option"><input type="checkbox" name="diag3" value="3"><span><b>4.</b> 모든 간선은 자동으로 양방향이다.</span></label><label class="option"><input type="checkbox" name="diag3" value="4"><span><b>5.</b> 방향은 분석에 영향을 주지 않는다.</span></label></div><div class="feedback" id="fb-diag3"></div></div><div class="qitem"><h4>4. 인접행렬에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag4" value="0"><span><b>1.</b> 2차원 배열로 표현한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="1"><span><b>2.</b> 두 노드 연결 여부를 빠르게 확인할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag4" value="2"><span><b>3.</b> 공간은 대체로 V²에 비례한다.</span></label><label class="option"><input type="checkbox" name="diag4" value="3"><span><b>4.</b> 희소 그래프에서 항상 가장 적은 공간을 쓴다.</span></label><label class="option"><input type="checkbox" name="diag4" value="4"><span><b>5.</b> 이웃 순회는 실제 이웃만 확인한다.</span></label></div><div class="feedback" id="fb-diag4"></div></div><div class="qitem"><h4>5. 인접리스트에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag5" value="0"><span><b>1.</b> 노드별 이웃 목록을 저장한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="1"><span><b>2.</b> 공간은 대체로 V+E에 비례한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="2"><span><b>3.</b> 희소 그래프에 적합할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag5" value="3"><span><b>4.</b> 모든 노드 쌍의 0과 1을 저장한다.</span></label><label class="option"><input type="checkbox" name="diag5" value="4"><span><b>5.</b> 연결 확인은 항상 O(1)이다.</span></label></div><div class="feedback" id="fb-diag5"></div></div><div class="qitem"><h4>6. 차수 계산에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag6" value="0"><span><b>1.</b> 무방향 그래프에서는 이웃 수가 차수이다.</span></label><label class="option"><input type="checkbox" name="diag6" value="1"><span><b>2.</b> 인접행렬에서는 행의 1 개수로 구할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="2"><span><b>3.</b> 인접리스트에서는 이웃 목록 길이로 구할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag6" value="3"><span><b>4.</b> 차수는 노드 번호와 같다.</span></label><label class="option"><input type="checkbox" name="diag6" value="4"><span><b>5.</b> 간선 추가는 차수에 영향을 주지 않는다.</span></label></div><div class="feedback" id="fb-diag6"></div></div><div class="qitem"><h4>7. 그래프 표현 선택 기준으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag7" value="0"><span><b>1.</b> 노드와 간선 수를 고려한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="1"><span><b>2.</b> 연결 확인 빈도를 고려한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="2"><span><b>3.</b> 이웃 순회 빈도를 고려한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="3"><span><b>4.</b> 항상 인접행렬만 사용한다.</span></label><label class="option"><input type="checkbox" name="diag7" value="4"><span><b>5.</b> 공간 사용은 고려하지 않는다.</span></label></div><div class="feedback" id="fb-diag7"></div></div><div class="qitem"><h4>8. 가중치 그래프에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag8" value="0"><span><b>1.</b> 간선에 수치를 저장한다.</span></label><label class="option"><input type="checkbox" name="diag8" value="1"><span><b>2.</b> 거리·시간·비용을 표현할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="2"><span><b>3.</b> 최단 경로 문제에 활용할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag8" value="3"><span><b>4.</b> 가중치는 노드 이름과 항상 같다.</span></label><label class="option"><input type="checkbox" name="diag8" value="4"><span><b>5.</b> 가중치가 있으면 그래프가 아니다.</span></label></div><div class="feedback" id="fb-diag8"></div></div><div class="qitem"><h4>9. 그래프 데이터 윤리에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag9" value="0"><span><b>1.</b> 친구 관계는 민감한 정보가 될 수 있다.</span></label><label class="option"><input type="checkbox" name="diag9" value="1"><span><b>2.</b> 익명화와 접근 통제가 필요할 수 있다.</span></label><label class="option"><input type="checkbox" name="diag9" value="2"><span><b>3.</b> 차수만으로 학생을 단정하면 편향이 생길 수 있다.</span></label><label class="option"><input type="checkbox" name="diag9" value="3"><span><b>4.</b> 연결 수가 많으면 무조건 우수한 학생이다.</span></label><label class="option"><input type="checkbox" name="diag9" value="4"><span><b>5.</b> 관계 데이터는 동의 없이 공개해도 된다.</span></label></div><div class="feedback" id="fb-diag9"></div></div><div class="qitem"><h4>10. 좋은 그래프 분석에 관한 설명으로 옳은 것을 모두 고르시오.</h4><p class="inst">옳은 것 3개를 선택하세요.</p><div class="options"><label class="option"><input type="checkbox" name="diag10" value="0"><span><b>1.</b> 그래프의 방향성과 가중치를 확인한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="1"><span><b>2.</b> 표현 방식의 장단점을 설명한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="2"><span><b>3.</b> 분석 결과의 한계를 함께 제시한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="3"><span><b>4.</b> 차수 하나로 모든 관계를 설명한다.</span></label><label class="option"><input type="checkbox" name="diag10" value="4"><span><b>5.</b> 데이터 누락 여부는 고려하지 않는다.</span></label></div><div class="feedback" id="fb-diag10"></div></div></section>
+<section id="submit"><h2>Ⅹ. 학번·이름 입력 및 제출</h2><div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="sname" type="text" placeholder="예: 홍길동"></label></div><div class="note"><b>배점</b><br>코드별 평가 11문항 × 5점 = 55점<br>OX 10문항 × 2점 = 20점<br>진단평가 10문항 × 2.5점 = 25점<br>총점 100점</div></section>
+</main><a class="top" href="#top">↑</a>
+<div class="scorebar"><div class="wrap"><div id="result">제출 전 · 100점 만점</div><div><button class="reset" onclick="resetAll()">다시 풀기</button> <button class="submit" onclick="grade()">채점하고 TXT 저장</button></div></div></div><footer>정보과학 13차시 목표지향 개념기반 수업지도안</footer>
+<script>
+const ANSWERS={"code": {"1": {"ans": [0, 1, 2], "exp": "학생은 노드, 친구 관계는 간선이며 양방향 관계는 무방향 그래프로 표현할 수 있습니다."}, "2": {"ans": [0, 1, 2], "exp": "무방향 간선은 연결된 두 노드의 차수에 모두 영향을 줍니다."}, "3": {"ans": [0, 1, 2], "exp": "인접행렬은 2차원 구조이며 무방향 그래프에서는 대칭이 됩니다."}, "4": {"ans": [0, 1, 2], "exp": "인덱스를 알면 연결 여부는 한 칸으로 확인하고 무방향 간선은 양쪽을 갱신합니다."}, "5": {"ans": [0, 1, 2], "exp": "인접리스트는 실제 연결 관계를 중심으로 저장합니다."}, "6": {"ans": [0, 1, 2], "exp": "인접리스트의 연결 확인은 이웃 수에 따라 시간이 늘 수 있고 양쪽 목록을 수정해야 합니다."}, "7": {"ans": [0, 1, 2], "exp": "행렬 전체를 확인하여 1인 위치를 이웃 관계로 바꿉니다."}, "8": {"ans": [0, 1, 2], "exp": "방향 그래프는 들어오는 간선과 나가는 간선을 따로 셉니다."}, "9": {"ans": [0, 1, 2], "exp": "희소 그래프에서는 실제 간선 중심 저장이 공간 절약에 유리합니다."}, "10": {"ans": [0, 1, 2], "exp": "차수는 연결 관계 수이며 행렬에서는 행의 1 개수, 리스트에서는 이웃 수로 계산합니다."}, "11": {"ans": [0, 1, 2], "exp": "가중치 그래프는 연결과 함께 수치 정보를 저장하고 무방향 관계는 양쪽에 추가합니다."}}, "ox": {"1": {"ans": true, "exp": "그래프의 기본 요소입니다."}, "2": {"ans": true, "exp": "양방향 연결을 양쪽 칸에 표시합니다."}, "3": {"ans": false, "exp": "실제 이웃 중심으로 저장합니다."}, "4": {"ans": true, "exp": "무방향 그래프 기준입니다."}, "5": {"ans": true, "exp": "들어오는 간선과 나가는 간선을 구분합니다."}, "6": {"ans": false, "exp": "대체로 O(V²)입니다."}, "7": {"ans": true, "exp": "불필요한 0 저장을 줄입니다."}, "8": {"ans": true, "exp": "해당 칸을 바로 확인합니다."}, "9": {"ans": false, "exp": "가중치를 함께 저장할 수 있습니다."}, "10": {"ans": false, "exp": "관계 데이터는 민감할 수 있습니다."}}, "diag": {"1": {"ans": [0, 1, 2], "exp": "노드·간선·차수는 그래프의 기본 개념입니다."}, "2": {"ans": [0, 1, 2], "exp": "무방향 간선은 양방향 관계 하나를 나타냅니다."}, "3": {"ans": [0, 1, 2], "exp": "간선 방향은 연결 의미와 차수 계산에 중요합니다."}, "4": {"ans": [0, 1, 2], "exp": "인접행렬은 연결 확인은 빠르지만 공간이 많이 들 수 있습니다."}, "5": {"ans": [0, 1, 2], "exp": "인접리스트는 실제 간선 중심 구조입니다."}, "6": {"ans": [0, 1, 2], "exp": "표현 방식에 따라 계산 방법만 달라집니다."}, "7": {"ans": [0, 1, 2], "exp": "문제의 연산과 그래프 밀도에 따라 선택합니다."}, "8": {"ans": [0, 1, 2], "exp": "가중치는 연결의 비용이나 길이를 나타냅니다."}, "9": {"ans": [0, 1, 2], "exp": "관계 데이터 해석에는 개인정보와 편향 주의가 필요합니다."}, "10": {"ans": [0, 1, 2], "exp": "구조·표현·한계를 함께 분석해야 합니다."}}};
+function same(a,b){if(a.length!==b.length)return false;const x=[...a].sort((m,n)=>m-n),y=[...b].sort((m,n)=>m-n);return x.every((v,i)=>v===y[i]);}
+function picks(n){return [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>Number(x.value));}
+function fb(id,ok,t){const e=document.getElementById(id);e.className="feedback "+(ok?"correct":"wrong");e.textContent=(ok?"정답 · ":"오답 · ")+t;}
+function clean(s){return s.trim().replace(/[\\/:*?"<>|\s]+/g,"_");}
+function grade(){
+const sid=document.getElementById("sid").value.trim(),name=document.getElementById("sname").value.trim();if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+let score=0,answered=0;const now=new Date(),lines=["정보과학 13차시 평가 결과","=".repeat(48),`학번: ${sid}`,`이름: ${name}`,`응시시각: ${now.toLocaleString("ko-KR")}`,"","[코드별 확인 평가]"];
+for(let i=1;i<=11;i++){const g=picks("code"+i),d=ANSWERS.code[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=5;fb("fb-code"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+lines.push("","[OX 형성평가]");
+for(let i=1;i<=10;i++){const el=document.querySelector(`input[name="ox${i}"]:checked`),d=ANSWERS.ox[String(i)],g=el?el.value==="true":null,ok=g===d.ans;if(el)answered++;if(ok)score+=2;fb("fb-ox"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 응답 ${g===null?"미응답":g?"O":"X"} | 정답 ${d.ans?"O":"X"}`);}
+lines.push("","[종합 진단평가]");
+for(let i=1;i<=10;i++){const g=picks("diag"+i),d=ANSWERS.diag[String(i)],ok=same(g,d.ans);if(g.length)answered++;if(ok)score+=2.5;fb("fb-diag"+i,ok,d.exp);lines.push(`${i}번: ${ok?"정답":"오답"} | 선택 ${g.map(v=>v+1).join(",")||"미응답"} | 정답 ${d.ans.map(v=>v+1).join(",")}`);}
+score=Math.round(score*10)/10;
+lines.push("","=".repeat(48),`총점: ${score} / 100점`,`응답 문항 수: ${answered} / 31문항`);document.getElementById("result").textContent=`${sid} ${name} · ${score}점 / 100점`;
+const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"_"+String(now.getHours()).padStart(2,"0")+String(now.getMinutes()).padStart(2,"0")+String(now.getSeconds()).padStart(2,"0");
+const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${clean(sid)}_${clean(name)}_${score}점_13차시_${stamp}.txt`;document.body.appendChild(a);a.click();URL.revokeObjectURL(a.href);a.remove();document.getElementById("submit").scrollIntoView({behavior:"smooth"});
+}
+function resetAll(){if(!confirm("모든 응답을 지울까요?"))return;document.querySelectorAll('input[type="radio"],input[type="checkbox"]').forEach(x=>x.checked=false);document.querySelectorAll(".feedback").forEach(x=>{x.className="feedback";x.textContent="";});document.getElementById("result").textContent="제출 전 · 100점 만점";window.scrollTo({top:0,behavior:"smooth"});}
+document.addEventListener("change",e=>{if(e.target.type==="checkbox"){const c=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);if(c.length>3){e.target.checked=false;alert("옳은 보기 3개만 선택하세요.");}}});
+</script></body></html>
