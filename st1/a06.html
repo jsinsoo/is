@@ -1,0 +1,539 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보과학 6차시 개념기반 목표지향 수업지도안</title>
+<style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --sky:#eaf4ff; --green:#1f8a70;
+  --mint:#eaf8f3; --orange:#f59e0b; --rose:#cf4568; --purple:#7656a7;
+  --ink:#17212b; --muted:#5c6978; --line:#d8e2ec; --paper:#fff; --bg:#f4f7fb;
+  --ok:#127a50; --bad:#bc2f3e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#132b42,#2f6fb3 62%,#4796dc);color:#fff;padding:42px 20px}
+.header-inner{max-width:1320px;margin:auto}
+.kicker{font-size:.9rem;letter-spacing:.08em;opacity:.88}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.2;margin:.35rem 0 .8rem}
+.subtitle{max-width:980px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1320px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+nav a{text-decoration:none;color:var(--navy);font-weight:800;white-space:nowrap;padding:8px 10px;border-radius:8px;font-size:.89rem}
+nav a:hover{background:var(--sky)}
+main{max-width:1320px;margin:auto;padding:22px 16px 76px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:25px;margin:19px 0;box-shadow:0 7px 22px rgba(23,50,77,.055)}
+h2{color:var(--navy);font-size:1.65rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}
+h3{color:var(--navy);margin:20px 0 10px}
+h4{color:#254d72;margin:16px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:13px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.04rem;margin-bottom:5px}
+.big{font-size:1.9rem;font-weight:900;color:var(--blue)}
+.story{background:linear-gradient(135deg,#fff9ea,#fff);border-left:7px solid var(--orange);padding:20px;border-radius:14px}
+.ending{background:linear-gradient(135deg,#f5efff,#fff);border-left:7px solid var(--purple);padding:20px;border-radius:14px}
+.standard{background:var(--mint);border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+.codebox{background:#111c27;color:#eaf2f8;border-radius:13px;padding:15px 17px;overflow:auto;font-family:Consolas,"D2Coding",monospace;font-size:.91rem;line-height:1.55;white-space:pre}
+.concept{border:1px solid var(--line);border-radius:16px;margin:18px 0;overflow:hidden}
+.concept-head{background:linear-gradient(90deg,#eaf4ff,#f9fcff);padding:15px 18px;border-bottom:1px solid var(--line)}
+.concept-head b{color:var(--navy);font-size:1.18rem}
+.concept-body{padding:18px}
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+@media(max-width:900px){.two{grid-template-columns:1fr}.userbox{grid-template-columns:1fr}}
+.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:800;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff0f4;color:#a63d5b}.t4{background:#fff6df;color:#8a5b00}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+.question h4{margin-top:0}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer;background:#fff}
+.option:hover{background:#f5f9fd}
+.option input{margin-right:8px;transform:scale(1.1)}
+.feedback{display:none;margin-top:11px;padding:12px;border-radius:9px;background:#f6f8fb}
+.feedback.show{display:block}
+.correct{border-left:5px solid var(--ok)}
+.wrong{border-left:5px solid var(--bad)}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+.primary{background:var(--blue);color:#fff}.secondary{background:#eaf0f6;color:var(--navy)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.quiz-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.scorebox{background:#edf7ff;border:1px solid #b9d8f0;border-radius:12px;padding:12px 15px;font-weight:800;color:var(--navy)}
+.userbox{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input[type=text]{width:100%;padding:11px;border:1px solid #cfdbe6;border-radius:9px;font-size:1rem}
+.progress-wrap{height:12px;background:#e9eef3;border-radius:999px;overflow:hidden}
+.progress{height:100%;background:linear-gradient(90deg,#2f6fb3,#1f8a70);width:0%;transition:.3s}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.small{font-size:.86rem;color:var(--muted)}
+.result-panel{display:none;border:2px solid #9ac9ea;background:#f6fbff;border-radius:15px;padding:18px;margin-top:18px}
+.result-panel.show{display:block}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 7px 24px rgba(0,0,0,.2)}
+footer{max-width:1320px;margin:0 auto 40px;padding:0 18px;color:#5e6c78;font-size:.86rem}
+@media print{nav,.print,.controls button{display:none!important}body{background:white}section{box-shadow:none;break-inside:avoid}.question{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+<div class="header-inner">
+<div class="kicker">2022 개정 고등학교 정보과학 · Ⅱ 데이터 구조 · 01 선형 데이터 구조 · 스택</div>
+<h1>6차시 개념기반 목표지향 수업지도안</h1>
+<div class="subtitle">스택의 후입선출 원리, top과 push·pop 연산, 리스트 기반 구현, 함수 호출과의 관계, 괄호 검사와 문자열 뒤집기 문제를 학습한다.</div>
+<div class="badges">
+<span class="badge">성취기준 [12정과02-01], [12정과02-02]</span>
+<span class="badge">스택의 개념·구현·활용</span>
+<span class="badge">개념별 코드 6개</span>
+<span class="badge">코드별 5지선다 6문항</span>
+<span class="badge">진단 OX 10문항</span>
+<span class="badge">형성평가 10문항</span>
+<span class="badge">자동채점·TXT 저장</span>
+</div>
+</div>
+</header>
+
+<nav><div class="nav-inner">
+<a href="#identity">수업 개요</a><a href="#start">학습 시작</a><a href="#goals">목표</a>
+<a href="#concepts">개념·코드</a><a href="#ending">학습 마무리</a>
+<a href="#diagnostic">진단평가</a><a href="#formative">형성평가</a><a href="#submit">제출·저장</a>
+</div></nav>
+
+<main>
+<section id="identity">
+<h2>1. 수업 개요와 성취수준</h2>
+<div class="standard"><b>성취기준 [12정과02-01]</b><br>스택과 큐의 원리를 이해하고, 순차적인 데이터 구조를 이용하여 스택과 큐를 구현한다.<br><br>
+<b>성취기준 [12정과02-02]</b><br>스택, 큐를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</div>
+<h3>성취수준</h3>
+<table>
+<tr><th>수준</th><th>성취 특성</th></tr>
+<tr><td>A</td><td>스택의 후입선출 원리와 top의 변화를 정확히 설명하고, 리스트로 안전한 스택을 구현하며 괄호 검사·후위 표기·실행 취소 등 문제에 적용하고 알고리즘의 정확성을 반례로 검증한다.</td></tr>
+<tr><td>B</td><td>push, pop, peek 연산을 설명하고 리스트로 스택을 구현하며 문자열 뒤집기와 괄호 검사 문제를 해결한다.</td></tr>
+<tr><td>C</td><td>주어진 연산 뒤 스택 상태를 추적하고, append와 pop을 사용하는 코드를 완성한다.</td></tr>
+<tr><td>D</td><td>스택이 나중에 들어온 자료를 먼저 꺼내는 구조임을 이해하고, 안내에 따라 삽입·삭제 결과를 확인한다.</td></tr>
+<tr><td>E</td><td>책 쌓기와 접시 쌓기 사례를 통해 스택의 기본 동작을 관찰한다.</td></tr>
+</table>
+<div class="grid">
+<div class="card"><strong>핵심 질문 1</strong>가장 최근에 들어온 자료를 먼저 처리해야 하는 상황은 무엇인가?</div>
+<div class="card"><strong>핵심 질문 2</strong>스택의 top은 자료가 들어오고 나갈 때 어떻게 변하는가?</div>
+<div class="card"><strong>핵심 질문 3</strong>함수 호출과 괄호 검사는 왜 스택의 원리로 설명할 수 있는가?</div>
+</div>
+</section>
+
+<section id="start">
+<h2>2. 학습 시작 멘트</h2>
+<div class="story">
+<h3>실험 기록과 로봇 명령: 가장 최근의 상태를 되돌리는 구조</h3>
+<p>화학 실험에서 시약을 잘못 넣었다면 가장 최근에 수행한 단계를 먼저 되돌려야 합니다. 생명과학의 현미경 관찰에서도 확대 단계를 여러 번 바꾼 뒤 이전 화면으로 돌아가려면 가장 마지막 설정부터 역순으로 복원해야 합니다.</p>
+<p>공학에서는 로봇이 여러 명령을 차례로 실행하다 문제가 생기면 가장 최근 명령부터 취소합니다. 수학의 괄호 계산에서도 가장 안쪽에서 열린 괄호가 먼저 닫혀야 식의 구조가 올바릅니다. 컴퓨터가 함수를 여러 번 호출할 때도 가장 최근에 호출한 함수가 먼저 끝나고 이전 함수로 돌아갑니다.</p>
+<p>이러한 상황의 공통점은 <b>나중에 들어온 것이 먼저 나온다</b>는 것입니다. 오늘 학습할 스택은 시간의 역순을 안전하게 관리하는 자료 구조입니다.</p>
+</div>
+</section>
+
+<section id="goals">
+<h2>3. 학습목표와 학습내용</h2>
+<h3>학습목표</h3>
+<ol>
+<li>스택의 후입선출 원리와 top의 의미를 설명할 수 있다.</li>
+<li>push, pop, peek, 크기 확인, 빈 스택 확인 연산을 구별할 수 있다.</li>
+<li>파이썬 리스트를 사용하여 스택을 구현할 수 있다.</li>
+<li>빈 스택의 삭제 오류를 방지하는 안전한 코드를 작성할 수 있다.</li>
+<li>문자열 뒤집기와 괄호 검사 문제에 스택을 적용할 수 있다.</li>
+<li>재귀 함수의 호출과 복귀를 스택의 동작과 연결하여 설명할 수 있다.</li>
+</ol>
+<h3>학습내용</h3>
+<table>
+<tr><th>개념 축</th><th>내용</th><th>학습 산출물</th></tr>
+<tr><td>스택의 원리</td><td>LIFO, top, 한쪽 끝 연산</td><td>연산 상태표</td></tr>
+<tr><td>기본 연산</td><td>push, pop, peek, size, empty</td><td>직접 구현 함수</td></tr>
+<tr><td>리스트 구현</td><td>append, pop, stack[-1]</td><td>리스트 스택</td></tr>
+<tr><td>안전한 처리</td><td>언더플로 방지, 빈 스택 검사</td><td>안전한 pop</td></tr>
+<tr><td>문제 해결</td><td>문자열 역순, 괄호 검사</td><td>응용 프로그램</td></tr>
+<tr><td>호출 스택</td><td>함수 호출·복귀와 LIFO</td><td>실행 순서 추적</td></tr>
+</table>
+</section>
+
+<section id="concepts">
+<h2>4. 개념 및 상세 설명 · 관련 코드 · 코드별 확인 문제</h2>
+
+<div class="concept">
+<div class="concept-head"><b>개념 1. 스택과 후입선출</b></div>
+<div class="concept-body"><div class="two">
+<div>
+<p>스택은 나중에 들어온 자료가 먼저 나가는 <b>후입선출</b> 방식의 선형 데이터 구조이다. 자료의 삽입과 삭제는 모두 스택의 한쪽 끝인 <b>top</b>에서 이루어진다.</p>
+<p>자료를 10, 20, 30 순서로 넣으면 삭제 순서는 30, 20, 10이다. 접시 쌓기, 실행 취소, 브라우저 뒤로 가기, 함수 호출 관리와 같은 상황에 활용된다.</p>
+<span class="tag t1">LIFO</span><span class="tag t2">top</span><span class="tag t4">push·pop</span>
+</div>
+<div><div class="codebox">stack = []
+
+stack.append(10)
+stack.append(20)
+stack.append(30)
+
+print(stack)
+print(stack.pop())
+print(stack)</div>
+<p><b>출력:</b> [10, 20, 30] → 30 → [10, 20]</p></div>
+</div>
+<div class="question" data-id="c1" data-answer="1,3,4">
+<h4>코드 1 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 스택은 후입선출 구조이다.</label>
+<label class="option"><input type="checkbox" value="2">② 첫 번째로 삭제되는 값은 10이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 첫 번째로 삭제되는 값은 30이다.</label>
+<label class="option"><input type="checkbox" value="4">④ 삭제 뒤 스택은 [10, 20]이다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ append는 스택의 맨 아래에만 값을 넣는다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ③, ④</b><br>가장 최근에 삽입한 30이 먼저 삭제되고 10, 20이 남는다.</div>
+</div>
+</div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 2. top과 기본 연산</b></div>
+<div class="concept-body"><div class="two">
+<div>
+<p><b>push</b>는 top에 자료를 삽입하고, <b>pop</b>은 top의 자료를 삭제하여 반환한다. <b>peek</b> 또는 top 확인은 자료를 삭제하지 않고 가장 위의 값을 읽는다.</p>
+<p>파이썬 리스트에서는 <code>stack[-1]</code>로 top을 확인하고 <code>len(stack)</code>으로 크기를 구할 수 있다.</p>
+</div>
+<div><div class="codebox">stack = [5, 8, 12]
+
+top = stack[-1]
+size = len(stack)
+is_empty = len(stack) == 0
+
+print(top)
+print(size)
+print(is_empty)</div></div>
+</div>
+<div class="question" data-id="c2" data-answer="1,2,5">
+<h4>코드 2 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① top에는 12가 저장된다.</label>
+<label class="option"><input type="checkbox" value="2">② size에는 3이 저장된다.</label>
+<label class="option"><input type="checkbox" value="3">③ is_empty는 True이다.</label>
+<label class="option"><input type="checkbox" value="4">④ stack[-1]을 읽으면 12가 삭제된다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ stack[-1]은 스택의 가장 위 자료를 확인한다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ⑤</b><br>stack[-1]은 마지막 원소를 확인할 뿐 삭제하지 않는다.</div>
+</div>
+</div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 3. 리스트로 스택 연산 구현하기</b></div>
+<div class="concept-body"><div class="two">
+<div>
+<p>파이썬 리스트는 마지막 위치의 삽입과 삭제를 지원하므로 스택을 간단히 구현할 수 있다. <code>append()</code>는 push, 인수 없는 <code>pop()</code>은 pop 역할을 한다.</p>
+<p>스택 연산을 함수로 분리하면 기능을 재사용하고 테스트하기 쉽다.</p>
+</div>
+<div><div class="codebox">def push(stack, value):
+    stack.append(value)
+
+def pop_stack(stack):
+    if not stack:
+        return None
+    return stack.pop()
+
+s = []
+push(s, "A")
+push(s, "B")
+print(pop_stack(s))
+print(s)</div></div>
+</div>
+<div class="question" data-id="c3" data-answer="2,3,5">
+<h4>코드 3 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 첫 출력값은 A이다.</label>
+<label class="option"><input type="checkbox" value="2">② 첫 출력값은 B이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 마지막 s는 ['A']이다.</label>
+<label class="option"><input type="checkbox" value="4">④ 빈 스택에서는 항상 오류가 발생하도록 작성되었다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ pop_stack은 삭제한 값을 반환한다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ②, ③, ⑤</b><br>B가 가장 나중에 삽입되어 먼저 삭제된다. 빈 스택이면 None을 반환한다.</div>
+</div>
+</div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 4. 빈 스택과 언더플로 방지</b></div>
+<div class="concept-body"><div class="two">
+<div>
+<p>빈 스택에서 pop을 수행하면 삭제할 자료가 없어 오류가 발생한다. 이를 <b>스택 언더플로</b> 상황이라고 설명할 수 있다.</p>
+<p>따라서 <code>if not stack</code>으로 비어 있는지 먼저 확인해야 한다. 안전한 프로그램은 정상 상황뿐 아니라 빈 구조와 같은 경계 상황도 처리한다.</p>
+</div>
+<div><div class="codebox">def safe_pop(stack):
+    if not stack:
+        return "스택이 비어 있음"
+    return stack.pop()
+
+stack = []
+print(safe_pop(stack))
+
+stack.append(7)
+print(safe_pop(stack))</div></div>
+</div>
+<div class="question" data-id="c4" data-answer="1,3,4">
+<h4>코드 4 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 첫 출력은 “스택이 비어 있음”이다.</label>
+<label class="option"><input type="checkbox" value="2">② 첫 호출에서 무조건 pop을 실행한다.</label>
+<label class="option"><input type="checkbox" value="3">③ 두 번째 출력은 7이다.</label>
+<label class="option"><input type="checkbox" value="4">④ 빈 스택 검사는 오류 예방에 도움이 된다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ not stack은 스택에 자료가 있을 때만 참이다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ③, ④</b><br>not stack은 스택이 비었을 때 참이다.</div>
+</div>
+</div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 5. 문자열 뒤집기</b></div>
+<div class="concept-body"><div class="two">
+<div>
+<p>문자열의 문자를 차례로 스택에 넣은 뒤 하나씩 꺼내면 입력 순서의 반대로 나온다. 이는 스택의 후입선출 원리를 직접 활용한 예이다.</p>
+<p>문자열 뒤집기는 스택의 동작을 이해하기 좋은 기본 문제이며, 이후 수식 변환과 경로 복원 문제로 확장할 수 있다.</p>
+</div>
+<div><div class="codebox">def reverse_text(text):
+    stack = []
+    for ch in text:
+        stack.append(ch)
+
+    result = ""
+    while stack:
+        result += stack.pop()
+    return result
+
+print(reverse_text("SCIENCE"))</div></div>
+</div>
+<div class="question" data-id="c5" data-answer="2,4,5">
+<h4>코드 5 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 출력은 SCIENCE이다.</label>
+<label class="option"><input type="checkbox" value="2">② 출력은 ECNEICS이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 문자를 넣은 순서와 같은 순서로 꺼낸다.</label>
+<label class="option"><input type="checkbox" value="4">④ while문은 스택이 빌 때까지 실행한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 가장 마지막에 넣은 문자가 가장 먼저 result에 붙는다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ②, ④, ⑤</b><br>SCIENCE의 역순은 ECNEICS이며, 마지막 문자부터 꺼낸다.</div>
+</div>
+</div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 6. 괄호 검사와 함수 호출 스택</b></div>
+<div class="concept-body"><div class="two">
+<div>
+<p>여는 괄호를 만나면 스택에 넣고, 닫는 괄호를 만나면 가장 최근의 여는 괄호를 꺼내 짝을 맞춘다. 닫는 괄호가 나왔는데 스택이 비었거나, 처리가 끝난 뒤 여는 괄호가 남으면 올바르지 않다.</p>
+<p>이 원리는 함수 호출에도 적용된다. 가장 최근에 호출된 함수가 먼저 종료되어 이전 함수로 복귀하므로 호출 스택은 후입선출 구조로 동작한다.</p>
+</div>
+<div><div class="codebox">def valid_parentheses(text):
+    stack = []
+
+    for ch in text:
+        if ch == "(":
+            stack.append(ch)
+        elif ch == ")":
+            if not stack:
+                return False
+            stack.pop()
+
+    return len(stack) == 0
+
+print(valid_parentheses("(())"))
+print(valid_parentheses("(()"))</div></div>
+</div>
+<div class="question" data-id="c6" data-answer="1,3,5">
+<h4>코드 6 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 첫 출력은 True이다.</label>
+<label class="option"><input type="checkbox" value="2">② 두 번째 출력도 True이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 닫는 괄호를 만났을 때 스택이 비어 있으면 False를 반환한다.</label>
+<label class="option"><input type="checkbox" value="4">④ 여는 괄호를 만나면 즉시 스택에서 삭제한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 검사가 끝난 뒤 스택이 비어 있어야 괄호 수가 맞는다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ③, ⑤</b><br>(())는 올바르고 (()는 여는 괄호가 하나 남으므로 False이다.</div>
+</div>
+</div></div>
+
+<div class="notice">
+<b>목표지향 통합 과제</b><br>
+실험 절차를 문자열 목록으로 입력받아 스택에 저장하고, 가장 최근 절차부터 되돌리는 프로그램을 작성한다. 이어서 소괄호가 올바르게 짝지어진 실험식인지 검사하고, 빈 스택에서도 오류가 발생하지 않도록 구현한다.
+</div>
+</section>
+
+<section id="ending">
+<h2>5. 학습 마무리 멘트</h2>
+<div class="ending">
+<h3>되돌아간다는 것은 지우는 일이 아니다</h3>
+<p>화가는 마지막에 그은 선을 지우며 그림 전체의 균형을 다시 찾고, 작가는 가장 최근에 쓴 문장을 고치며 이야기의 흐름을 바로잡습니다. 음악가도 방금 연주한 구절을 되짚으며 다음 소리를 더 정확하게 만듭니다.</p>
+<p>스택의 되돌리기는 과거를 없애는 일이 아니라, 지나온 과정을 순서대로 이해하는 일입니다. 가장 최근의 선택부터 차례로 살펴보기 때문에 어디에서 문제가 생겼는지 찾을 수 있습니다.</p>
+<p>우리는 앞으로 나아갈 때만 배우는 것이 아닙니다. 때로는 한 단계씩 되돌아보며 더 나은 길을 발견합니다. <b>스택은 기억을 쌓는 구조이면서, 성찰을 가능하게 하는 구조입니다.</b></p>
+</div>
+</section>
+
+<section id="diagnostic">
+<div class="quiz-head"><h2>6. 전체 학습내용 진단평가 OX 10문항</h2><div class="scorebox" id="diagScore">미채점</div></div>
+<div id="diagQuestions"></div>
+<div class="controls"><button class="btn primary" onclick="gradeDiagnostic()">진단평가 채점</button><button class="btn secondary" onclick="resetGroup('diagQuestions')">초기화</button></div>
+</section>
+
+<section id="formative">
+<div class="quiz-head"><h2>7. 전체 학습내용 형성평가 10문항</h2><div class="scorebox" id="formScore">미채점</div></div>
+<p class="small">각 문항은 보기 5개 중 옳은 것 3개를 모두 선택해야 정답이다.</p>
+<div id="formQuestions"></div>
+<div class="controls"><button class="btn primary" onclick="gradeFormative()">형성평가 채점</button><button class="btn secondary" onclick="resetGroup('formQuestions')">초기화</button></div>
+</section>
+
+<section id="submit">
+<h2>8. 학번·이름 입력 및 결과 저장</h2>
+<div class="userbox">
+<label><b>학번</b><input type="text" id="studentId" placeholder="예: 1101"></label>
+<label><b>이름</b><input type="text" id="studentName" placeholder="예: 홍길동"></label>
+</div>
+<h3>전체 진행률</h3>
+<div class="progress-wrap"><div class="progress" id="progress"></div></div>
+<p id="progressText" class="small">0%</p>
+<div class="controls">
+<button class="btn primary" onclick="finalSubmit()">전체 채점 및 TXT 저장</button>
+<button class="btn secondary" onclick="window.print()">인쇄 / PDF</button>
+</div>
+<div class="result-panel" id="resultPanel"></div>
+</section>
+</main>
+
+<footer>
+<p>교과서 Ⅱ단원 「선형 데이터 구조」의 ‘스택의 개념’, ‘스택의 구현’, ‘스택을 활용한 문제 해결’을 중심으로 구성한 6차시 수업자료이다.</p>
+</footer>
+<button class="print" onclick="window.print()">인쇄 / PDF</button>
+
+<script>
+const diagData = [
+ {q:"스택은 나중에 들어온 자료가 먼저 나가는 후입선출 구조이다.",a:"O",e:"스택의 핵심 원리는 LIFO, 즉 후입선출이다."},
+ {q:"스택의 삽입과 삭제는 서로 다른 양쪽 끝에서 이루어진다.",a:"X",e:"스택의 삽입과 삭제는 모두 top에서 이루어진다."},
+ {q:"파이썬 리스트의 append는 스택의 push 연산으로 사용할 수 있다.",a:"O",e:"append는 리스트 끝에 자료를 추가하므로 push로 사용할 수 있다."},
+ {q:"인수 없는 pop은 리스트의 마지막 원소를 삭제하고 반환한다.",a:"O",e:"리스트의 마지막 원소가 스택의 top 역할을 한다."},
+ {q:"stack[-1]은 top 자료를 삭제하지 않고 확인할 수 있다.",a:"O",e:"인덱스로 읽는 것은 삭제 연산이 아니다."},
+ {q:"빈 스택에서 pop을 실행해도 항상 안전하다.",a:"X",e:"빈 리스트에서 pop을 실행하면 오류가 발생하므로 먼저 검사해야 한다."},
+ {q:"문자열을 스택에 넣었다 꺼내면 역순으로 만들 수 있다.",a:"O",e:"가장 마지막에 넣은 문자가 먼저 나오기 때문이다."},
+ {q:"괄호 검사에서 닫는 괄호를 만났을 때 스택이 비어 있으면 올바른 식이다.",a:"X",e:"짝이 될 여는 괄호가 없으므로 올바르지 않다."},
+ {q:"함수 호출과 복귀는 스택의 후입선출 원리로 설명할 수 있다.",a:"O",e:"가장 최근에 호출된 함수가 먼저 종료되어 이전 함수로 복귀한다."},
+ {q:"스택은 실행 취소와 브라우저 뒤로 가기에 활용할 수 있다.",a:"O",e:"최근 상태부터 되돌리는 문제에 적합하다."}
+];
+
+const formData = [
+ {q:"스택의 기본 원리에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 나중에 들어온 자료가 먼저 나온다.","② 삽입과 삭제는 top에서 이루어진다.","③ 후입선출 구조이다.","④ 먼저 들어온 자료가 항상 먼저 나온다.","⑤ 양쪽 끝에서만 삭제해야 한다."],a:[1,2,3],e:"스택은 top 한쪽에서 삽입과 삭제가 이루어지는 후입선출 구조이다."},
+ {q:"리스트를 이용한 스택 구현에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① append는 push로 사용할 수 있다.","② pop()은 top 자료를 삭제할 수 있다.","③ stack[-1]은 top을 확인할 수 있다.","④ pop(0)만 스택 삭제에 사용할 수 있다.","⑤ len은 사용할 수 없다."],a:[1,2,3],e:"리스트 끝을 top으로 사용하면 append와 pop이 스택 연산이 된다."},
+ {q:"다음 연산 뒤의 상태로 옳은 것을 모두 고르시오.<pre>s=[]\ns.append(1)\ns.append(2)\ns.append(3)\nx=s.pop()</pre>",o:["① x는 3이다.","② s는 [1,2]이다.","③ 가장 나중에 삽입한 값이 삭제되었다.","④ x는 1이다.","⑤ s는 [2,3]이다."],a:[1,2,3],e:"후입선출에 따라 3이 삭제되고 1,2가 남는다."},
+ {q:"빈 스택 처리에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① pop 전에 비어 있는지 검사할 수 있다.","② if not stack은 빈 스택 검사에 사용할 수 있다.","③ 언더플로 오류를 예방할 수 있다.","④ 빈 스택에서도 무조건 pop해야 한다.","⑤ 빈 스택은 확인할 수 없다."],a:[1,2,3],e:"삭제 전에 빈 구조를 확인해야 안전하다."},
+ {q:"문자열 뒤집기에 스택을 사용할 때 옳은 설명을 모두 고르시오.",o:["① 문자를 순서대로 push할 수 있다.","② pop한 문자를 결과에 붙일 수 있다.","③ 입력 순서의 반대로 문자를 얻을 수 있다.","④ 스택을 사용하면 항상 원래 순서가 유지된다.","⑤ 후입선출 원리와 관계없다."],a:[1,2,3],e:"문자를 모두 넣은 뒤 꺼내면 역순이 된다."},
+ {q:"괄호 검사 알고리즘에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 여는 괄호는 스택에 넣을 수 있다.","② 닫는 괄호는 top의 여는 괄호와 짝을 맞춘다.","③ 검사 종료 뒤 스택이 비어 있어야 올바를 수 있다.","④ 닫는 괄호를 만나면 항상 True를 반환한다.","⑤ 여는 괄호 수가 남아도 올바른 식이다."],a:[1,2,3],e:"열림과 닫힘의 순서와 개수가 모두 맞아야 한다."},
+ {q:"함수 호출 스택에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 최근에 호출된 함수가 먼저 종료된다.","② 호출 지점으로 복귀할 정보를 저장한다.","③ 재귀 호출의 실행 순서를 설명할 수 있다.","④ 가장 처음 호출된 함수가 언제나 먼저 종료된다.","⑤ 함수 호출은 스택과 관계가 없다."],a:[1,2,3],e:"함수 호출 정보는 스택처럼 쌓이고 역순으로 복귀한다."},
+ {q:"스택 활용 사례로 적절한 것을 모두 고르시오.",o:["① 실행 취소","② 브라우저 뒤로 가기","③ 후위 표기식 계산","④ 병원 대기 번호의 선착순 처리","⑤ 프린터 작업의 선착순 처리"],a:[1,2,3],e:"선착순 처리는 큐가 자연스럽고 최근 상태 우선 처리는 스택이 적합하다."},
+ {q:"안전한 스택 프로그램의 특징으로 옳은 것을 모두 고르시오.",o:["① 빈 스택을 검사한다.","② push와 pop 뒤 상태를 확인한다.","③ 경계 입력을 테스트한다.","④ 오류가 나면 검사 조건을 제거한다.","⑤ top을 확인할 때 무조건 pop한다."],a:[1,2,3],e:"경계 상황과 상태 변화를 점검해야 한다."},
+ {q:"큐와 스택 비교에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 큐는 선입선출이다.","② 스택은 후입선출이다.","③ 문제의 처리 순서에 따라 구조를 선택한다.","④ 큐와 스택의 삭제 위치는 언제나 같다.","⑤ 최근 자료 우선 문제에는 큐만 사용할 수 있다."],a:[1,2,3],e:"큐와 스택은 출력 순서가 다르므로 문제의 요구에 맞게 선택해야 한다."}
+];
+
+function renderDiagnostic(){
+ const c=document.getElementById('diagQuestions');
+ c.innerHTML=diagData.map((x,i)=>`<div class="question">
+ <h4>${i+1}. ${x.q}</h4>
+ <label class="option"><input type="radio" name="d${i}" value="O"> O</label>
+ <label class="option"><input type="radio" name="d${i}" value="X"> X</label>
+ <div class="feedback" id="df${i}"></div></div>`).join('');
+}
+function renderFormative(){
+ const c=document.getElementById('formQuestions');
+ c.innerHTML=formData.map((x,i)=>`<div class="question">
+ <h4>${i+1}. ${x.q}</h4>
+ ${x.o.map((o,j)=>`<label class="option"><input type="checkbox" name="f${i}" value="${j+1}">${o}</label>`).join('')}
+ <div class="feedback" id="ff${i}"></div></div>`).join('');
+}
+renderDiagnostic(); renderFormative();
+
+document.querySelectorAll('.check-one').forEach(btn=>{
+ btn.addEventListener('click',()=>{
+   const q=btn.closest('.question');
+   const ans=q.dataset.answer.split(',').sort().join(',');
+   const selected=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort().join(',');
+   const fb=q.querySelector('.feedback');
+   if(!fb.dataset.original) fb.dataset.original=fb.innerHTML;
+   fb.className='feedback show '+(selected===ans?'correct':'wrong');
+   fb.innerHTML=(selected===ans?'<b>정답입니다.</b><br>':'<b>다시 확인하세요.</b><br>')+fb.dataset.original;
+   updateProgress();
+ });
+});
+
+function gradeDiagnostic(){
+ let score=0;
+ diagData.forEach((x,i)=>{
+   const chosen=document.querySelector(`input[name=d${i}]:checked`);
+   const ok=chosen && chosen.value===x.a;
+   if(ok) score++;
+   const fb=document.getElementById(`df${i}`);
+   fb.className='feedback show '+(ok?'correct':'wrong');
+   fb.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${x.a}<br>${x.e}`;
+ });
+ document.getElementById('diagScore').textContent=`${score}/10`;
+ updateProgress(); return score;
+}
+function gradeFormative(){
+ let score=0;
+ formData.forEach((x,i)=>{
+   const chosen=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b);
+   const ans=[...x.a].sort((a,b)=>a-b);
+   const ok=JSON.stringify(chosen)===JSON.stringify(ans);
+   if(ok) score++;
+   const fb=document.getElementById(`ff${i}`);
+   fb.className='feedback show '+(ok?'correct':'wrong');
+   fb.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${ans.map(n=>'①②③④⑤'[n-1]).join(', ')}<br>${x.e}`;
+ });
+ document.getElementById('formScore').textContent=`${score}/10`;
+ updateProgress(); return score;
+}
+function resetGroup(id){
+ document.querySelectorAll(`#${id} input`).forEach(x=>x.checked=false);
+ document.querySelectorAll(`#${id} .feedback`).forEach(x=>{x.className='feedback';x.innerHTML='';});
+ if(id==='diagQuestions') document.getElementById('diagScore').textContent='미채점';
+ if(id==='formQuestions') document.getElementById('formScore').textContent='미채점';
+ updateProgress();
+}
+function updateProgress(){
+ let answered=0;
+ document.querySelectorAll('.concept .question').forEach(q=>{if(q.querySelector('input:checked')) answered++;});
+ for(let i=0;i<10;i++) if(document.querySelector(`input[name=d${i}]:checked`)) answered++;
+ for(let i=0;i<10;i++) if(document.querySelector(`input[name=f${i}]:checked`)) answered++;
+ const pct=Math.round(answered/26*100);
+ document.getElementById('progress').style.width=pct+'%';
+ document.getElementById('progressText').textContent=pct+'%';
+}
+document.addEventListener('change',updateProgress);
+
+function finalSubmit(){
+ const sid=document.getElementById('studentId').value.trim();
+ const name=document.getElementById('studentName').value.trim();
+ if(!sid||!name){alert('학번과 이름을 입력하세요.');return;}
+ const d=gradeDiagnostic(), f=gradeFormative();
+ let codeScore=0, codeReports=[];
+ document.querySelectorAll('.concept .question').forEach((q,i)=>{
+   const ans=q.dataset.answer.split(',').sort();
+   const sel=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort();
+   const ok=JSON.stringify(ans)===JSON.stringify(sel);
+   if(ok) codeScore++;
+   const explanation=(q.querySelector('.feedback').dataset.original||q.querySelector('.feedback').textContent).replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+   codeReports.push(`코드 확인 ${i+1}: ${ok?'정답':'오답'} / 응답 ${sel.join(',')||'미응답'} / 정답 ${ans.join(',')} / 풀이: ${explanation}`);
+ });
+ const raw=codeScore+d+f, total=26, score=Math.round(raw/total*100);
+ const now=new Date();
+ const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0');
+ let lines=[];
+ lines.push('정보과학 6차시 개념기반 목표지향 학습 결과');
+ lines.push(`학번: ${sid}`); lines.push(`이름: ${name}`); lines.push(`점수: ${score}점 (${raw}/${total})`);
+ lines.push(`응시시각: ${now.toLocaleString('ko-KR')}`); lines.push('');
+ lines.push('[코드별 확인 문제]'); lines.push(...codeReports); lines.push('');
+ lines.push('[진단평가 OX]');
+ diagData.forEach((x,i)=>{const c=document.querySelector(`input[name=d${i}]:checked`)?.value||'미응답';lines.push(`${i+1}. ${c===x.a?'정답':'오답'} / 응답 ${c} / 정답 ${x.a} / 풀이: ${x.e}`);});
+ lines.push(''); lines.push('[형성평가]');
+ formData.forEach((x,i)=>{const c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b);const a=[...x.a].sort((a,b)=>a-b);const ok=JSON.stringify(c)===JSON.stringify(a);lines.push(`${i+1}. ${ok?'정답':'오답'} / 응답 ${c.join(',')||'미응답'} / 정답 ${a.join(',')} / 풀이: ${x.e}`);});
+ const text=lines.join('\n');
+ const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+ const link=document.createElement('a'); link.href=URL.createObjectURL(blob);
+ link.download=`${sid}_${name}_${score}_6차시_${stamp}.txt`; link.click(); URL.revokeObjectURL(link.href);
+ const panel=document.getElementById('resultPanel'); panel.classList.add('show');
+ panel.innerHTML=`<h3>최종 결과</h3><p class="big">${score}점</p><p>코드 확인 ${codeScore}/6 · 진단평가 ${d}/10 · 형성평가 ${f}/10</p><p><b>${sid} ${name}</b> 학생의 결과 파일을 저장했습니다.</p>`;
+}
+</script>
+</body>
+</html>

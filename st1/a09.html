@@ -1,0 +1,652 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보과학 9차시 개념기반 목표지향 수업지도안</title>
+<style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --green:#1f8a70; --orange:#f59e0b;
+  --purple:#7656a7; --ink:#17212b; --muted:#5c6978; --line:#d8e2ec;
+  --paper:#fff; --bg:#f4f7fb; --ok:#127a50; --bad:#bc2f3e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#132b42,#2f6fb3 62%,#4796dc);color:#fff;padding:42px 20px}
+.header-inner{max-width:1320px;margin:auto}
+.kicker{font-size:.9rem;letter-spacing:.08em;opacity:.88}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.2;margin:.35rem 0 .8rem}
+.subtitle{max-width:980px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1320px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+nav a{text-decoration:none;color:var(--navy);font-weight:800;white-space:nowrap;padding:8px 10px;border-radius:8px;font-size:.89rem}
+nav a:hover{background:#eaf4ff}
+main{max-width:1320px;margin:auto;padding:22px 16px 76px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:25px;margin:19px 0;box-shadow:0 7px 22px rgba(23,50,77,.055)}
+h2{color:var(--navy);font-size:1.65rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}
+h3{color:var(--navy);margin:20px 0 10px}
+h4{color:#254d72;margin:16px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:13px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.04rem;margin-bottom:5px}
+.big{font-size:1.9rem;font-weight:900;color:var(--blue)}
+.story{background:linear-gradient(135deg,#fff9ea,#fff);border-left:7px solid var(--orange);padding:20px;border-radius:14px}
+.ending{background:linear-gradient(135deg,#f5efff,#fff);border-left:7px solid var(--purple);padding:20px;border-radius:14px}
+.standard{background:#eaf8f3;border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+.codebox{background:#111c27;color:#eaf2f8;border-radius:13px;padding:15px 17px;overflow:auto;font-family:Consolas,"D2Coding",monospace;font-size:.91rem;line-height:1.55;white-space:pre}
+.concept{border:1px solid var(--line);border-radius:16px;margin:18px 0;overflow:hidden}
+.concept-head{background:linear-gradient(90deg,#eaf4ff,#f9fcff);padding:15px 18px;border-bottom:1px solid var(--line)}
+.concept-head b{color:var(--navy);font-size:1.18rem}
+.concept-body{padding:18px}
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+@media(max-width:900px){.two{grid-template-columns:1fr}.userbox{grid-template-columns:1fr}}
+.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:800;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff0f4;color:#a63d5b}.t4{background:#fff6df;color:#8a5b00}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer;background:#fff}
+.option:hover{background:#f5f9fd}
+.option input{margin-right:8px;transform:scale(1.1)}
+.feedback{display:none;margin-top:11px;padding:12px;border-radius:9px;background:#f6f8fb}
+.feedback.show{display:block}
+.correct{border-left:5px solid var(--ok)}
+.wrong{border-left:5px solid var(--bad)}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+.primary{background:var(--blue);color:#fff}
+.secondary{background:#eaf0f6;color:var(--navy)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.quiz-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.scorebox{background:#edf7ff;border:1px solid #b9d8f0;border-radius:12px;padding:12px 15px;font-weight:800;color:var(--navy)}
+.userbox{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input[type=text]{width:100%;padding:11px;border:1px solid #cfdbe6;border-radius:9px;font-size:1rem}
+.progress-wrap{height:12px;background:#e9eef3;border-radius:999px;overflow:hidden}
+.progress{height:100%;background:linear-gradient(90deg,#2f6fb3,#1f8a70);width:0%;transition:.3s}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.small{font-size:.86rem;color:var(--muted)}
+.result-panel{display:none;border:2px solid #9ac9ea;background:#f6fbff;border-radius:15px;padding:18px;margin-top:18px}
+.result-panel.show{display:block}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 7px 24px rgba(0,0,0,.2)}
+footer{max-width:1320px;margin:0 auto 40px;padding:0 18px;color:#5e6c78;font-size:.86rem}
+@media print{
+  nav,.print,.controls button{display:none!important}
+  body{background:white}
+  section{box-shadow:none;break-inside:avoid}
+  .question{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="header-inner">
+<div class="kicker">2022 개정 고등학교 정보과학 · Ⅱ 데이터 구조 · 02 비선형 데이터 구조 · 트리</div>
+<h1>9차시 개념기반 목표지향 수업지도안</h1>
+<div class="subtitle">트리의 루트·부모·자식·형제·리프·서브트리·깊이·높이 개념을 이해하고, 인접리스트와 자식 리스트로 구현하며 전위·중위·후위 순회를 학습한다.</div>
+<div class="badges">
+<span class="badge">성취기준 [12정과02-03], [12정과02-04]</span>
+<span class="badge">트리의 개념·표현·구현·활용</span>
+<span class="badge">개념별 코드 6개</span>
+<span class="badge">코드별 5지선다 6문항</span>
+<span class="badge">진단 OX 10문항</span>
+<span class="badge">형성평가 10문항</span>
+<span class="badge">자동채점·TXT 저장</span>
+</div>
+</div>
+</header>
+
+<nav><div class="nav-inner">
+<a href="#identity">수업 개요</a>
+<a href="#start">학습 시작</a>
+<a href="#goals">목표</a>
+<a href="#concepts">개념·코드</a>
+<a href="#ending">학습 마무리</a>
+<a href="#diagnostic">진단평가</a>
+<a href="#formative">형성평가</a>
+<a href="#submit">제출·저장</a>
+</div></nav>
+
+<main>
+<section id="identity">
+<h2>1. 수업 개요와 성취수준</h2>
+<div class="standard"><b>[12정과02-03]</b> 인접행렬과 인접리스트를 활용하여 트리와 그래프를 구현한다.<br><br>
+<b>[12정과02-04]</b> 트리, 그래프를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</div>
+
+<h3>성취수준</h3>
+<table>
+<tr><th>수준</th><th>성취 특성</th></tr>
+<tr><td>A</td><td>트리의 계층 구조와 모든 핵심 용어를 정확히 설명하고, 자식 리스트·인접리스트로 트리를 구현하며 전위·중위·후위 순회의 실행 순서를 분석하여 계층 자료 문제에 적절히 적용한다.</td></tr>
+<tr><td>B</td><td>루트·부모·자식·리프·깊이·높이를 구별하고, 주어진 트리를 코드로 표현하며 기본 순회 프로그램을 작성한다.</td></tr>
+<tr><td>C</td><td>트리의 주요 용어를 구별하고, 주어진 트리의 순회 결과를 예측하거나 코드의 일부를 완성한다.</td></tr>
+<tr><td>D</td><td>트리가 계층 구조임을 이해하고, 안내에 따라 부모와 자식 관계를 찾는다.</td></tr>
+<tr><td>E</td><td>가계도·조직도·파일 구조 사례를 통해 트리의 기본 모습을 확인한다.</td></tr>
+</table>
+
+<div class="grid">
+<div class="card"><strong>핵심 질문 1</strong>계층 관계를 트리로 표현하면 어떤 정보를 쉽게 찾을 수 있는가?</div>
+<div class="card"><strong>핵심 질문 2</strong>같은 트리라도 순회 순서에 따라 결과가 왜 달라지는가?</div>
+<div class="card"><strong>핵심 질문 3</strong>트리와 일반 그래프는 어떤 관계이며 무엇이 다른가?</div>
+</div>
+</section>
+
+<section id="start">
+<h2>2. 학습 시작 멘트</h2>
+<div class="story">
+<h3>생명의 진화, 별의 분류, 지식의 계보를 잇는 구조</h3>
+<p>생명과학에서는 공통 조상에서 여러 종이 갈라지는 진화 관계를 나무 모양으로 표현합니다. 천문학에서는 별을 온도와 밝기, 분광형에 따라 계층적으로 분류하고, 화학에서는 원소와 화합물의 분류 체계를 큰 범주에서 작은 범주로 나눕니다.</p>
+<p>수학에서는 하나의 식을 연산자와 피연산자의 계층으로 표현할 수 있고, 공학에서는 설계 부품을 상위 장치와 하위 부품으로 구성합니다. 컴퓨터의 폴더와 파일도 최상위 폴더 아래 여러 하위 폴더가 이어지는 구조입니다.</p>
+<p>트리는 단순히 나무처럼 생긴 그림이 아닙니다. 하나의 시작점에서 관계가 아래로 확장되는 <b>계층과 분류의 언어</b>입니다. 오늘 우리는 복잡한 대상을 부모와 자식, 깊이와 높이, 순회라는 정확한 개념으로 표현합니다.</p>
+</div>
+</section>
+
+<section id="goals">
+<h2>3. 학습목표와 학습내용</h2>
+<ol>
+<li>루트, 부모, 자식, 형제, 리프, 서브트리, 깊이, 높이의 의미를 설명할 수 있다.</li>
+<li>트리와 일반 그래프의 공통점과 차이를 설명할 수 있다.</li>
+<li>자식 리스트와 인접리스트를 사용해 트리를 구현할 수 있다.</li>
+<li>이진 트리의 전위·중위·후위 순회 원리를 설명하고 구현할 수 있다.</li>
+<li>파일 구조, 조직도, 수식 구조와 같은 계층 문제에 트리를 적용할 수 있다.</li>
+</ol>
+
+<table>
+<tr><th>개념 축</th><th>내용</th><th>학습 산출물</th></tr>
+<tr><td>트리의 기본 요소</td><td>루트, 부모, 자식, 형제, 리프</td><td>관계 분석표</td></tr>
+<tr><td>계층 정보</td><td>깊이, 높이, 레벨, 서브트리</td><td>깊이·높이 계산</td></tr>
+<tr><td>트리 표현</td><td>자식 리스트, 인접리스트</td><td>트리 구현 코드</td></tr>
+<tr><td>전위 순회</td><td>루트→왼쪽→오른쪽</td><td>preorder 함수</td></tr>
+<tr><td>중위·후위 순회</td><td>왼쪽→루트→오른쪽, 왼쪽→오른쪽→루트</td><td>inorder·postorder 함수</td></tr>
+<tr><td>트리 활용</td><td>폴더, 조직도, 수식, 분류 체계</td><td>계층 탐색 프로그램</td></tr>
+</table>
+</section>
+
+<section id="concepts">
+<h2>4. 개념 및 상세 설명 · 관련 코드 · 코드별 확인 문제</h2>
+
+<div class="concept">
+<div class="concept-head"><b>개념 1. 루트, 부모, 자식, 형제, 리프</b></div>
+<div class="concept-body">
+<div class="two">
+<div>
+<p><b>루트</b>는 트리의 시작 정점이다. 한 정점에서 바로 아래 연결된 정점은 자식, 위쪽 정점은 부모이다. 같은 부모를 가진 정점은 형제이며, 자식이 없는 정점은 리프라고 한다.</p>
+<p>아래 트리에서 A는 루트, B와 C는 A의 자식이자 서로 형제이다. D, E, F는 리프이다.</p>
+<span class="tag t1">루트</span><span class="tag t2">부모·자식</span><span class="tag t4">리프</span>
+</div>
+<div><div class="codebox">tree = {
+    "A": ["B", "C"],
+    "B": ["D", "E"],
+    "C": ["F"],
+    "D": [],
+    "E": [],
+    "F": []
+}
+
+print(tree["A"])
+print(tree["B"])
+print([node for node in tree if not tree[node]])</div>
+<p><b>출력:</b> ['B','C'], ['D','E'], ['D','E','F']</p></div>
+</div>
+
+<div class="question" data-id="c1" data-answer="1,3,5">
+<h4>코드 1 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① A는 루트이다.</label>
+<label class="option"><input type="checkbox" value="2">② B와 D는 형제이다.</label>
+<label class="option"><input type="checkbox" value="3">③ B와 C는 형제이다.</label>
+<label class="option"><input type="checkbox" value="4">④ C는 리프이다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ D, E, F는 자식이 없는 리프이다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ③, ⑤</b><br>B와 C는 같은 부모 A를 가지며, D·E·F는 자식 리스트가 비어 있는 리프이다.</div>
+</div>
+</div>
+</div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 2. 깊이, 높이, 서브트리</b></div>
+<div class="concept-body">
+<div class="two">
+<div>
+<p><b>깊이</b>는 루트에서 해당 정점까지 지나가는 간선 수이다. 루트의 깊이는 0이다. <b>높이</b>는 해당 정점에서 가장 멀리 있는 리프까지의 간선 수이다.</p>
+<p>어떤 정점과 그 아래 모든 자손으로 이루어진 부분 구조를 서브트리라고 한다.</p>
+</div>
+<div><div class="codebox">tree = {
+    "A": ["B", "C"],
+    "B": ["D", "E"],
+    "C": ["F"],
+    "D": [], "E": [], "F": []
+}
+
+def depth(node, target, d=0):
+    if node == target:
+        return d
+    for child in tree[node]:
+        result = depth(child, target, d + 1)
+        if result != -1:
+            return result
+    return -1
+
+print(depth("A", "E"))
+print(depth("A", "C"))</div>
+<p><b>출력:</b> 2, 1</p></div>
+</div>
+
+<div class="question" data-id="c2" data-answer="1,2,4">
+<h4>코드 2 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① E의 깊이는 2이다.</label>
+<label class="option"><input type="checkbox" value="2">② C의 깊이는 1이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 루트 A의 깊이는 1이다.</label>
+<label class="option"><input type="checkbox" value="4">④ B와 그 아래 D, E는 하나의 서브트리를 이룰 수 있다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 깊이는 항상 리프에서 루트까지의 간선 수만을 의미한다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ④</b><br>루트의 깊이는 0이며, 깊이는 루트에서 해당 정점까지의 거리이다.</div>
+</div>
+</div>
+</div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 3. 인접리스트와 부모 배열로 트리 구현하기</b></div>
+<div class="concept-body">
+<div class="two">
+<div>
+<p>트리는 그래프의 한 종류이므로 인접리스트로 표현할 수 있다. 무방향 간선으로 입력받으면 부모를 정하기 위해 루트에서 탐색하며 방문하지 않은 정점의 부모를 기록한다.</p>
+</div>
+<div><div class="codebox">n = 6
+edges = [(0,1), (0,2), (1,3), (1,4), (2,5)]
+graph = [[] for _ in range(n)]
+
+for a, b in edges:
+    graph[a].append(b)
+    graph[b].append(a)
+
+parent = [-1] * n
+parent[0] = 0
+stack = [0]
+
+while stack:
+    v = stack.pop()
+    for nxt in graph[v]:
+        if parent[nxt] == -1:
+            parent[nxt] = v
+            stack.append(nxt)
+
+print(parent)</div>
+<p><b>출력:</b> [0, 0, 0, 1, 1, 2]</p></div>
+</div>
+
+<div class="question" data-id="c3" data-answer="2,3,5">
+<h4>코드 3 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 정점 3의 부모는 0이다.</label>
+<label class="option"><input type="checkbox" value="2">② 정점 3과 4의 부모는 1이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 정점 5의 부모는 2이다.</label>
+<label class="option"><input type="checkbox" value="4">④ parent 배열은 각 정점의 자식 수만 저장한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 방문하지 않은 정점만 부모를 정하도록 검사한다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ②, ③, ⑤</b><br>parent 배열은 각 정점의 부모 정점을 저장하며, 이미 정한 부모를 다시 바꾸지 않는다.</div>
+</div>
+</div>
+</div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 4. 전위 순회</b></div>
+<div class="concept-body">
+<div class="two">
+<div>
+<p><b>전위 순회</b>는 현재 정점을 먼저 방문하고, 그 다음 왼쪽 서브트리와 오른쪽 서브트리를 방문한다. 순서는 ‘루트→왼쪽→오른쪽’이다.</p>
+<p>계층 구조를 위에서 아래로 출력하거나 폴더 구조를 상위 폴더부터 확인할 때 유용하다.</p>
+</div>
+<div><div class="codebox">tree = {
+    "A": ["B", "C"],
+    "B": ["D", "E"],
+    "C": ["F", "G"],
+    "D": [], "E": [], "F": [], "G": []
+}
+
+def preorder(node):
+    print(node, end=" ")
+    for child in tree[node]:
+        preorder(child)
+
+preorder("A")</div>
+<p><b>출력:</b> A B D E C F G</p></div>
+</div>
+
+<div class="question" data-id="c4" data-answer="1,3,4">
+<h4>코드 4 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① A가 가장 먼저 출력된다.</label>
+<label class="option"><input type="checkbox" value="2">② 출력 순서는 D B E A F C G이다.</label>
+<label class="option"><input type="checkbox" value="3">③ B의 서브트리는 C보다 먼저 방문한다.</label>
+<label class="option"><input type="checkbox" value="4">④ 전위 순회는 현재 정점을 자식보다 먼저 처리한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 리프에서는 반드시 무한 재귀가 발생한다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ③, ④</b><br>전위 순회는 루트를 먼저 처리하고 자식 순서대로 재귀 방문한다.</div>
+</div>
+</div>
+</div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 5. 중위 순회와 후위 순회</b></div>
+<div class="concept-body">
+<div class="two">
+<div>
+<p>이진 트리에서 <b>중위 순회</b>는 ‘왼쪽→루트→오른쪽’, <b>후위 순회</b>는 ‘왼쪽→오른쪽→루트’ 순서이다.</p>
+<p>중위 순회는 이진 탐색 트리의 값을 정렬된 순서로 읽는 데 활용할 수 있고, 후위 순회는 자식 처리를 끝낸 뒤 부모를 처리해야 하는 계산과 삭제에 적합하다.</p>
+</div>
+<div><div class="codebox">left = {"A":"B", "B":"D", "C":"F"}
+right = {"A":"C", "B":"E", "C":"G"}
+
+def inorder(node):
+    if node in left:
+        inorder(left[node])
+    print(node, end=" ")
+    if node in right:
+        inorder(right[node])
+
+def postorder(node):
+    if node in left:
+        postorder(left[node])
+    if node in right:
+        postorder(right[node])
+    print(node, end=" ")
+
+inorder("A")
+print()
+postorder("A")</div>
+<p><b>출력:</b><br>D B E A F C G<br>D E B F G C A</p></div>
+</div>
+
+<div class="question" data-id="c5" data-answer="1,2,5">
+<h4>코드 5 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 중위 순회에서 A는 B의 서브트리 뒤, C의 서브트리 앞에 출력된다.</label>
+<label class="option"><input type="checkbox" value="2">② 후위 순회에서 A는 가장 마지막에 출력된다.</label>
+<label class="option"><input type="checkbox" value="3">③ 후위 순회는 루트를 항상 가장 먼저 처리한다.</label>
+<label class="option"><input type="checkbox" value="4">④ 중위 순회와 후위 순회 결과는 항상 같다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 후위 순회는 자식들을 처리한 뒤 부모를 처리한다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ⑤</b><br>후위 순회는 루트를 마지막에 처리하며, 중위 순회와 방문 순서가 다르다.</div>
+</div>
+</div>
+</div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 6. 트리의 높이와 리프 수 구하기</b></div>
+<div class="concept-body">
+<div class="two">
+<div>
+<p>트리의 높이는 루트에서 가장 깊은 리프까지의 간선 수로 볼 수 있다. 리프 수와 높이는 계층 구조의 규모와 형태를 이해하는 데 도움이 된다.</p>
+<p>아래 함수는 각 서브트리의 높이를 구해 가장 큰 값에 1을 더한다.</p>
+</div>
+<div><div class="codebox">tree = {
+    "A": ["B", "C"],
+    "B": ["D", "E"],
+    "C": ["F"],
+    "D": [], "E": [], "F": []
+}
+
+def height(node):
+    if not tree[node]:
+        return 0
+    return 1 + max(height(child) for child in tree[node])
+
+def leaf_count(node):
+    if not tree[node]:
+        return 1
+    return sum(leaf_count(child) for child in tree[node])
+
+print(height("A"))
+print(leaf_count("A"))</div>
+<p><b>출력:</b> 2, 3</p></div>
+</div>
+
+<div class="question" data-id="c6" data-answer="2,4,5">
+<h4>코드 6 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① A의 높이는 3이다.</label>
+<label class="option"><input type="checkbox" value="2">② A의 높이는 2이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 리프는 D와 E 두 개뿐이다.</label>
+<label class="option"><input type="checkbox" value="4">④ 리프 수는 3이다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 리프에서는 높이 0과 리프 수 1을 반환한다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ②, ④, ⑤</b><br>가장 긴 경로는 A-B-D 또는 A-B-E로 간선 2개이며, 리프는 D·E·F이다.</div>
+</div>
+</div>
+</div>
+
+<div class="notice"><b>목표지향 통합 과제</b><br>
+학교 조직도 또는 과학 분류 체계를 트리로 모델링한다. 루트·부모·자식·리프를 표시하고, 인접리스트 또는 자식 리스트로 구현한다. 전위 순회로 전체 구조를 출력하고 트리의 높이와 리프 수를 계산한다.</div>
+</section>
+
+<section id="ending">
+<h2>5. 학습 마무리 멘트</h2>
+<div class="ending">
+<h3>뿌리에서 가지로, 가지에서 다시 전체로</h3>
+<p>한 그루의 나무는 뿌리에서 시작하지만, 가지마다 서로 다른 방향으로 자랍니다. 문학의 한 주제도 여러 인물과 사건으로 뻗어 나가고, 음악의 한 동기도 다양한 변주를 만들며 작품 전체를 이룹니다.</p>
+<p>트리는 위에서 아래로 내려다보면 분류와 확장의 구조이고, 아래에서 위로 바라보면 작은 부분들이 모여 하나의 전체가 되는 구조입니다. 전위·중위·후위 순회는 같은 대상을 서로 다른 관점에서 읽는 방법입니다.</p>
+<p><b>좋은 탐구는 하나의 뿌리에서 시작해 여러 가지 가능성을 살피고, 다시 전체의 의미로 돌아옵니다.</b></p>
+</div>
+</section>
+
+<section id="diagnostic">
+<div class="quiz-head"><h2>6. 전체 학습내용 진단평가 OX 10문항</h2><div class="scorebox" id="diagScore">미채점</div></div>
+<div id="diagQuestions"></div>
+<div class="controls">
+<button class="btn primary" onclick="gradeDiagnostic()">진단평가 채점</button>
+<button class="btn secondary" onclick="resetGroup('diagQuestions')">초기화</button>
+</div>
+</section>
+
+<section id="formative">
+<div class="quiz-head"><h2>7. 전체 학습내용 형성평가 10문항</h2><div class="scorebox" id="formScore">미채점</div></div>
+<p class="small">각 문항은 보기 5개 중 옳은 것 3개를 모두 선택해야 정답이다.</p>
+<div id="formQuestions"></div>
+<div class="controls">
+<button class="btn primary" onclick="gradeFormative()">형성평가 채점</button>
+<button class="btn secondary" onclick="resetGroup('formQuestions')">초기화</button>
+</div>
+</section>
+
+<section id="submit">
+<h2>8. 학번·이름 입력 및 결과 저장</h2>
+<div class="userbox">
+<label><b>학번</b><input type="text" id="studentId" placeholder="예: 1101"></label>
+<label><b>이름</b><input type="text" id="studentName" placeholder="예: 홍길동"></label>
+</div>
+
+<h3>전체 진행률</h3>
+<div class="progress-wrap"><div class="progress" id="progress"></div></div>
+<p id="progressText" class="small">0%</p>
+
+<div class="controls">
+<button class="btn primary" onclick="finalSubmit()">전체 채점 및 TXT 저장</button>
+<button class="btn secondary" onclick="window.print()">인쇄 / PDF</button>
+</div>
+<div class="result-panel" id="resultPanel"></div>
+</section>
+</main>
+
+<footer><p>교과서 Ⅱ단원 「비선형 데이터 구조」의 ‘트리의 개념’, ‘트리의 표현’, ‘트리의 구현’, ‘트리를 활용한 문제 해결’을 중심으로 구성한 9차시 수업자료이다.</p></footer>
+<button class="print" onclick="window.print()">인쇄 / PDF</button>
+
+<script>
+const diagData = [
+ {q:"트리의 가장 위 시작 정점을 루트라고 한다.",a:"O",e:"루트는 트리의 시작점이며 부모가 없다."},
+ {q:"같은 부모를 가진 정점들을 형제라고 할 수 있다.",a:"O",e:"형제 정점은 동일한 부모를 공유한다."},
+ {q:"자식이 없는 정점을 리프라고 한다.",a:"O",e:"리프는 트리의 끝에 위치하는 정점이다."},
+ {q:"루트의 깊이는 일반적으로 1로만 정의한다.",a:"X",e:"이 수업에서는 루트에서 자신까지의 간선 수를 깊이로 보므로 루트 깊이는 0이다."},
+ {q:"트리는 그래프의 한 종류로 볼 수 있다.",a:"O",e:"트리는 연결되고 순환이 없는 그래프 구조로 설명할 수 있다."},
+ {q:"전위 순회는 루트를 자식보다 먼저 방문한다.",a:"O",e:"전위 순회의 순서는 루트-왼쪽-오른쪽이다."},
+ {q:"후위 순회는 루트를 가장 먼저 방문한다.",a:"X",e:"후위 순회는 자식들을 먼저 방문하고 루트를 마지막에 처리한다."},
+ {q:"중위 순회는 이진 트리에서 왼쪽-루트-오른쪽 순서이다.",a:"O",e:"중위 순회의 기본 순서이다."},
+ {q:"트리의 높이는 가장 깊은 리프까지의 거리와 관련 있다.",a:"O",e:"해당 정점에서 가장 먼 리프까지의 간선 수로 볼 수 있다."},
+ {q:"트리는 파일 구조나 조직도를 표현하는 데 사용할 수 없다.",a:"X",e:"파일 구조와 조직도는 대표적인 계층형 트리 사례이다."}
+];
+
+const formData = [
+ {q:"트리의 기본 용어에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 루트는 트리의 시작 정점이다.","② 자식이 없는 정점은 리프이다.","③ 같은 부모를 가진 정점은 형제이다.","④ 모든 정점은 반드시 두 자식을 가진다.","⑤ 루트에는 반드시 부모가 있다."],a:[1,2,3],e:"루트·리프·형제는 트리의 핵심 관계 용어이다."},
+ {q:"깊이와 높이에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 깊이는 루트에서 정점까지의 거리와 관련 있다.","② 높이는 정점에서 가장 먼 리프까지의 거리와 관련 있다.","③ 루트의 깊이는 0으로 둘 수 있다.","④ 모든 정점의 높이는 같다.","⑤ 리프의 높이는 반드시 5이다."],a:[1,2,3],e:"깊이와 높이는 기준 방향이 서로 다르다."},
+ {q:"서브트리에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 특정 정점과 그 자손들로 구성할 수 있다.","② 전체 트리의 일부가 될 수 있다.","③ 서브트리도 트리 구조를 가진다.","④ 루트만 서브트리를 만들 수 있다.","⑤ 자식 정점은 포함할 수 없다."],a:[1,2,3],e:"어떤 정점을 루트로 보는 하위 구조가 서브트리이다."},
+ {q:"트리 표현에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 자식 리스트로 표현할 수 있다.","② 인접리스트로 표현할 수 있다.","③ 부모 배열을 사용할 수 있다.","④ 트리는 코드로 표현할 수 없다.","⑤ 정점 관계를 저장할 필요가 없다."],a:[1,2,3],e:"트리는 목적에 따라 여러 방식으로 구현할 수 있다."},
+ {q:"전위 순회에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 현재 정점을 먼저 처리한다.","② 왼쪽 서브트리를 오른쪽보다 먼저 방문할 수 있다.","③ 계층 구조를 상위부터 출력하는 데 활용할 수 있다.","④ 루트를 항상 마지막에 처리한다.","⑤ 자식은 방문하지 않는다."],a:[1,2,3],e:"전위 순회는 루트를 먼저 방문한다."},
+ {q:"중위 순회에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 이진 트리에서 왼쪽-루트-오른쪽 순서이다.","② 왼쪽 서브트리 뒤에 루트를 처리한다.","③ 오른쪽 서브트리는 루트 뒤에 처리한다.","④ 루트를 항상 가장 먼저 처리한다.","⑤ 일반적으로 자식 순서와 무관하다."],a:[1,2,3],e:"중위 순회는 이진 트리의 좌우 구조를 기준으로 한다."},
+ {q:"후위 순회에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 왼쪽과 오른쪽 자식을 먼저 처리한다.","② 부모를 자식보다 나중에 처리한다.","③ 트리 삭제나 계산에 활용할 수 있다.","④ 루트가 항상 첫 출력이다.","⑤ 전위 순회와 항상 결과가 같다."],a:[1,2,3],e:"후위 순회는 자식 처리 후 부모를 처리한다."},
+ {q:"이진 트리에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 각 정점은 최대 두 자식을 가질 수 있다.","② 왼쪽 자식과 오른쪽 자식을 구별할 수 있다.","③ 전위·중위·후위 순회를 적용할 수 있다.","④ 모든 정점은 정확히 두 자식을 가져야 한다.","⑤ 리프가 존재할 수 없다."],a:[1,2,3],e:"이진 트리는 자식 수의 최대가 두 개인 트리이다."},
+ {q:"트리 프로그램 점검 방법으로 옳은 것을 모두 고르시오.",o:["① 루트가 올바른지 확인한다.","② 부모·자식 관계를 확인한다.","③ 순회 결과를 손으로 추적한다.","④ 순환이 생겨도 무시한다.","⑤ 방문한 정점을 무조건 다시 부모로 정한다."],a:[1,2,3],e:"구조와 순회 결과를 함께 점검해야 한다."},
+ {q:"트리 활용 사례로 옳은 것을 모두 고르시오.",o:["① 폴더 구조","② 조직도","③ 수식 구조","④ 관계가 전혀 없는 단일 숫자만 저장","⑤ 선착순 대기열만 표현"],a:[1,2,3],e:"계층 관계와 분류 구조를 표현하는 문제에 트리가 적합하다."}
+];
+
+function renderDiagnostic(){
+ document.getElementById('diagQuestions').innerHTML=diagData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4>
+ <label class="option"><input type="radio" name="d${i}" value="O"> O</label>
+ <label class="option"><input type="radio" name="d${i}" value="X"> X</label>
+ <div class="feedback" id="df${i}"></div></div>`).join('');
+}
+
+function renderFormative(){
+ document.getElementById('formQuestions').innerHTML=formData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4>
+ ${x.o.map((o,j)=>`<label class="option"><input type="checkbox" name="f${i}" value="${j+1}">${o}</label>`).join('')}
+ <div class="feedback" id="ff${i}"></div></div>`).join('');
+}
+renderDiagnostic();
+renderFormative();
+
+document.querySelectorAll('.check-one').forEach(btn=>{
+ btn.addEventListener('click',()=>{
+   const q=btn.closest('.question');
+   const ans=q.dataset.answer.split(',').sort().join(',');
+   const selected=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort().join(',');
+   const fb=q.querySelector('.feedback');
+   if(!fb.dataset.original) fb.dataset.original=fb.innerHTML;
+   fb.className='feedback show '+(selected===ans?'correct':'wrong');
+   fb.innerHTML=(selected===ans?'<b>정답입니다.</b><br>':'<b>다시 확인하세요.</b><br>')+fb.dataset.original;
+   updateProgress();
+ });
+});
+
+function gradeDiagnostic(){
+ let score=0;
+ diagData.forEach((x,i)=>{
+   const chosen=document.querySelector(`input[name=d${i}]:checked`);
+   const ok=chosen && chosen.value===x.a;
+   if(ok) score++;
+   const fb=document.getElementById(`df${i}`);
+   fb.className='feedback show '+(ok?'correct':'wrong');
+   fb.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${x.a}<br>${x.e}`;
+ });
+ document.getElementById('diagScore').textContent=`${score}/10`;
+ updateProgress();
+ return score;
+}
+
+function gradeFormative(){
+ let score=0;
+ formData.forEach((x,i)=>{
+   const chosen=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b);
+   const ans=[...x.a].sort((a,b)=>a-b);
+   const ok=JSON.stringify(chosen)===JSON.stringify(ans);
+   if(ok) score++;
+   const fb=document.getElementById(`ff${i}`);
+   fb.className='feedback show '+(ok?'correct':'wrong');
+   fb.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${ans.map(n=>'①②③④⑤'[n-1]).join(', ')}<br>${x.e}`;
+ });
+ document.getElementById('formScore').textContent=`${score}/10`;
+ updateProgress();
+ return score;
+}
+
+function resetGroup(id){
+ document.querySelectorAll(`#${id} input`).forEach(x=>x.checked=false);
+ document.querySelectorAll(`#${id} .feedback`).forEach(x=>{x.className='feedback';x.innerHTML='';});
+ if(id==='diagQuestions') document.getElementById('diagScore').textContent='미채점';
+ if(id==='formQuestions') document.getElementById('formScore').textContent='미채점';
+ updateProgress();
+}
+
+function updateProgress(){
+ let answered=0;
+ document.querySelectorAll('.concept .question').forEach(q=>{if(q.querySelector('input:checked')) answered++;});
+ for(let i=0;i<10;i++) if(document.querySelector(`input[name=d${i}]:checked`)) answered++;
+ for(let i=0;i<10;i++) if(document.querySelector(`input[name=f${i}]:checked`)) answered++;
+ const pct=Math.round(answered/26*100);
+ document.getElementById('progress').style.width=pct+'%';
+ document.getElementById('progressText').textContent=pct+'%';
+}
+document.addEventListener('change',updateProgress);
+
+function finalSubmit(){
+ const sid=document.getElementById('studentId').value.trim();
+ const name=document.getElementById('studentName').value.trim();
+ if(!sid||!name){
+   alert('학번과 이름을 입력하세요.');
+   return;
+ }
+
+ const d=gradeDiagnostic();
+ const f=gradeFormative();
+ let codeScore=0;
+ let codeReports=[];
+
+ document.querySelectorAll('.concept .question').forEach((q,i)=>{
+   const ans=q.dataset.answer.split(',').sort();
+   const sel=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort();
+   const ok=JSON.stringify(ans)===JSON.stringify(sel);
+   if(ok) codeScore++;
+   const explanation=(q.querySelector('.feedback').dataset.original||q.querySelector('.feedback').textContent)
+     .replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+   codeReports.push(`코드 확인 ${i+1}: ${ok?'정답':'오답'} / 응답 ${sel.join(',')||'미응답'} / 정답 ${ans.join(',')} / 풀이: ${explanation}`);
+ });
+
+ const raw=codeScore+d+f;
+ const total=26;
+ const score=Math.round(raw/total*100);
+ const now=new Date();
+ const stamp=now.getFullYear()
+   +String(now.getMonth()+1).padStart(2,'0')
+   +String(now.getDate()).padStart(2,'0')+'_'
+   +String(now.getHours()).padStart(2,'0')
+   +String(now.getMinutes()).padStart(2,'0')
+   +String(now.getSeconds()).padStart(2,'0');
+
+ let lines=[
+   '정보과학 9차시 개념기반 목표지향 학습 결과',
+   `학번: ${sid}`,
+   `이름: ${name}`,
+   `점수: ${score}점 (${raw}/${total})`,
+   `응시시각: ${now.toLocaleString('ko-KR')}`,
+   '',
+   '[코드별 확인 문제]',
+   ...codeReports,
+   '',
+   '[진단평가 OX]'
+ ];
+
+ diagData.forEach((x,i)=>{
+   const c=document.querySelector(`input[name=d${i}]:checked`)?.value||'미응답';
+   lines.push(`${i+1}. ${c===x.a?'정답':'오답'} / 응답 ${c} / 정답 ${x.a} / 풀이: ${x.e}`);
+ });
+
+ lines.push('','[형성평가]');
+ formData.forEach((x,i)=>{
+   const c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b);
+   const a=[...x.a].sort((a,b)=>a-b);
+   const ok=JSON.stringify(c)===JSON.stringify(a);
+   lines.push(`${i+1}. ${ok?'정답':'오답'} / 응답 ${c.join(',')||'미응답'} / 정답 ${a.join(',')} / 풀이: ${x.e}`);
+ });
+
+ const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});
+ const link=document.createElement('a');
+ link.href=URL.createObjectURL(blob);
+ link.download=`${sid}_${name}_${score}_9차시_${stamp}.txt`;
+ link.click();
+ URL.revokeObjectURL(link.href);
+
+ const panel=document.getElementById('resultPanel');
+ panel.classList.add('show');
+ panel.innerHTML=`<h3>최종 결과</h3><p class="big">${score}점</p>
+ <p>코드 확인 ${codeScore}/6 · 진단평가 ${d}/10 · 형성평가 ${f}/10</p>
+ <p><b>${sid} ${name}</b> 학생의 결과 파일을 저장했습니다.</p>`;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보과학 5차시 개념기반 목표지향 수업지도안</title>
+<style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --sky:#eaf4ff; --green:#1f8a70;
+  --mint:#eaf8f3; --orange:#f59e0b; --rose:#cf4568; --purple:#7656a7;
+  --ink:#17212b; --muted:#5c6978; --line:#d8e2ec; --paper:#fff; --bg:#f4f7fb;
+  --ok:#127a50; --bad:#bc2f3e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#132b42,#2f6fb3 62%,#4796dc);color:#fff;padding:42px 20px}
+.header-inner{max-width:1320px;margin:auto}
+.kicker{font-size:.9rem;letter-spacing:.08em;opacity:.88}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.2;margin:.35rem 0 .8rem}
+.subtitle{max-width:980px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1320px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+nav a{text-decoration:none;color:var(--navy);font-weight:800;white-space:nowrap;padding:8px 10px;border-radius:8px;font-size:.89rem}
+nav a:hover{background:var(--sky)}
+main{max-width:1320px;margin:auto;padding:22px 16px 76px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:25px;margin:19px 0;box-shadow:0 7px 22px rgba(23,50,77,.055)}
+h2{color:var(--navy);font-size:1.65rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}
+h3{color:var(--navy);margin:20px 0 10px}
+h4{color:#254d72;margin:16px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:13px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.04rem;margin-bottom:5px}
+.big{font-size:1.9rem;font-weight:900;color:var(--blue)}
+.story{background:linear-gradient(135deg,#fff9ea,#fff);border-left:7px solid var(--orange);padding:20px;border-radius:14px}
+.ending{background:linear-gradient(135deg,#f5efff,#fff);border-left:7px solid var(--purple);padding:20px;border-radius:14px}
+.standard{background:var(--mint);border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+.codebox{background:#111c27;color:#eaf2f8;border-radius:13px;padding:15px 17px;overflow:auto;font-family:Consolas,"D2Coding",monospace;font-size:.91rem;line-height:1.55;white-space:pre}
+.concept{border:1px solid var(--line);border-radius:16px;margin:18px 0;overflow:hidden}
+.concept-head{background:linear-gradient(90deg,#eaf4ff,#f9fcff);padding:15px 18px;border-bottom:1px solid var(--line)}
+.concept-head b{color:var(--navy);font-size:1.18rem}
+.concept-body{padding:18px}
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+@media(max-width:900px){.two{grid-template-columns:1fr}.userbox{grid-template-columns:1fr}}
+.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:800;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff0f4;color:#a63d5b}.t4{background:#fff6df;color:#8a5b00}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+.question h4{margin-top:0}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer;background:#fff}
+.option:hover{background:#f5f9fd}
+.option input{margin-right:8px;transform:scale(1.1)}
+.feedback{display:none;margin-top:11px;padding:12px;border-radius:9px;background:#f6f8fb}
+.feedback.show{display:block}
+.correct{border-left:5px solid var(--ok)}
+.wrong{border-left:5px solid var(--bad)}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+.primary{background:var(--blue);color:#fff}.secondary{background:#eaf0f6;color:var(--navy)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.quiz-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.scorebox{background:#edf7ff;border:1px solid #b9d8f0;border-radius:12px;padding:12px 15px;font-weight:800;color:var(--navy)}
+.userbox{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input[type=text]{width:100%;padding:11px;border:1px solid #cfdbe6;border-radius:9px;font-size:1rem}
+.progress-wrap{height:12px;background:#e9eef3;border-radius:999px;overflow:hidden}
+.progress{height:100%;background:linear-gradient(90deg,#2f6fb3,#1f8a70);width:0%;transition:.3s}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.small{font-size:.86rem;color:var(--muted)}
+.result-panel{display:none;border:2px solid #9ac9ea;background:#f6fbff;border-radius:15px;padding:18px;margin-top:18px}
+.result-panel.show{display:block}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 7px 24px rgba(0,0,0,.2)}
+footer{max-width:1320px;margin:0 auto 40px;padding:0 18px;color:#5e6c78;font-size:.86rem}
+@media print{nav,.print,.controls button{display:none!important}body{background:white}section{box-shadow:none;break-inside:avoid}.question{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+<div class="header-inner">
+<div class="kicker">2022 개정 고등학교 정보과학 · Ⅱ 데이터 구조 · 01 선형 데이터 구조 · 큐</div>
+<h1>5차시 개념기반 목표지향 수업지도안</h1>
+<div class="subtitle">큐의 선입선출 원리, front와 rear, 삽입·삭제 연산, 리스트와 deque를 이용한 구현, 큐를 활용한 순서 처리 문제를 학습한다.</div>
+<div class="badges">
+<span class="badge">성취기준 [12정과02-01]</span>
+<span class="badge">큐의 개념·구현·활용</span>
+<span class="badge">개념별 코드 6개</span>
+<span class="badge">코드별 5지선다 6문항</span>
+<span class="badge">진단 OX 10문항</span>
+<span class="badge">형성평가 10문항</span>
+<span class="badge">자동채점·TXT 저장</span>
+</div>
+</div>
+</header>
+
+<nav><div class="nav-inner">
+<a href="#identity">수업 개요</a><a href="#start">학습 시작</a><a href="#goals">목표</a>
+<a href="#concepts">개념·코드</a><a href="#ending">학습 마무리</a>
+<a href="#diagnostic">진단평가</a><a href="#formative">형성평가</a><a href="#submit">제출·저장</a>
+</div></nav>
+
+<main>
+<section id="identity">
+<h2>1. 수업 개요와 성취수준</h2>
+<div class="standard"><b>성취기준 [12정과02-01]</b><br>스택과 큐의 원리를 이해하고, 순차적인 데이터 구조를 이용하여 스택과 큐를 구현한다.</div>
+<h3>성취수준</h3>
+<table>
+<tr><th>수준</th><th>성취 특성</th></tr>
+<tr><td>A</td><td>큐의 선입선출 원리와 각 연산의 상태 변화를 정확히 설명하고, 리스트와 deque를 이용해 큐를 구현하며 자료 이동 비용과 예외 상황을 비교하여 문제에 적합한 구현을 선택한다.</td></tr>
+<tr><td>B</td><td>front와 rear, 삽입·삭제 연산을 설명하고 리스트 또는 deque로 큐를 구현하며 순서 처리 문제를 해결한다.</td></tr>
+<tr><td>C</td><td>주어진 큐 연산 뒤의 상태를 추적하고, append와 popleft 또는 pop(0)을 사용한 코드를 완성한다.</td></tr>
+<tr><td>D</td><td>큐가 먼저 들어온 자료를 먼저 꺼내는 구조임을 이해하고, 안내에 따라 삽입·삭제 결과를 확인한다.</td></tr>
+<tr><td>E</td><td>생활 속 줄서기 사례와 큐의 동작을 연결하여 기본 연산을 관찰한다.</td></tr>
+</table>
+<div class="grid">
+<div class="card"><strong>핵심 질문 1</strong>먼저 도착한 데이터가 먼저 처리되어야 하는 상황은 무엇인가?</div>
+<div class="card"><strong>핵심 질문 2</strong>큐의 입구와 출구를 분리하면 데이터의 순서는 어떻게 보존되는가?</div>
+<div class="card"><strong>핵심 질문 3</strong>같은 큐라도 리스트와 deque 구현의 효율은 왜 달라지는가?</div>
+</div>
+</section>
+
+<section id="start">
+<h2>2. 학습 시작 멘트</h2>
+<div class="story">
+<h3>입자 검출기에서 우주 통신까지: 순서가 중요한 과학</h3>
+<p>물리 실험의 입자 검출기는 짧은 시간 동안 들어온 수많은 신호를 순서대로 기록합니다. 먼저 들어온 신호를 뒤로 미루면 실제 사건의 시간 순서가 바뀌어 분석 결과가 왜곡될 수 있습니다. 화학 자동 분석 장비에서도 시료가 들어온 순서대로 처리되어야 실험 기록과 결과가 정확히 대응됩니다.</p>
+<p>생명과학의 DNA 분석 장비는 연속적으로 들어오는 데이터를 버퍼에 저장한 뒤 앞에서부터 처리하고, 천문 관측소는 망원경에서 전달되는 관측 요청을 순서대로 관리합니다. 공학에서는 프린터 작업, 네트워크 패킷, 고객 호출, 센서 이벤트처럼 기다리는 자료를 공정하게 처리해야 할 때가 많습니다.</p>
+<p>큐는 이러한 순서를 보존하는 데이터 구조입니다. 줄을 선 사람처럼 먼저 들어온 자료가 먼저 나갑니다. 오늘 우리는 단순히 리스트에 값을 넣고 빼는 것이 아니라, <b>시간과 순서를 공정하게 관리하는 구조</b>를 설계합니다.</p>
+</div>
+</section>
+
+<section id="goals">
+<h2>3. 학습목표와 학습내용</h2>
+<h3>학습목표</h3>
+<ol>
+<li>큐의 선입선출 원리와 front, rear의 의미를 설명할 수 있다.</li>
+<li>삽입, 삭제, 맨 앞 데이터 확인, 빈 큐 확인 연산을 구별할 수 있다.</li>
+<li>파이썬 리스트와 <code>collections.deque</code>를 이용하여 큐를 구현할 수 있다.</li>
+<li><code>pop(0)</code>과 <code>popleft()</code>의 처리 차이를 설명할 수 있다.</li>
+<li>대기열과 순서 처리 문제에 큐를 적용할 수 있다.</li>
+</ol>
+<h3>학습내용</h3>
+<table>
+<tr><th>개념 축</th><th>내용</th><th>학습 산출물</th></tr>
+<tr><td>큐의 원리</td><td>FIFO, 입구 rear, 출구 front</td><td>연산 상태표</td></tr>
+<tr><td>기본 연산</td><td>삽입, 삭제, front 확인, 크기, 빈 큐</td><td>직접 구현 코드</td></tr>
+<tr><td>리스트 구현</td><td>append, pop(0)</td><td>리스트 큐</td></tr>
+<tr><td>deque 구현</td><td>append, popleft</td><td>효율적인 큐</td></tr>
+<tr><td>안전한 처리</td><td>빈 큐 삭제 방지, 조건 검사</td><td>예외 방지 코드</td></tr>
+<tr><td>큐 활용</td><td>대기표, 작업 처리, 카드 순환</td><td>순서 처리 프로그램</td></tr>
+</table>
+</section>
+
+<section id="concepts">
+<h2>4. 개념 및 상세 설명 · 관련 코드 · 코드별 확인 문제</h2>
+
+<div class="concept">
+<div class="concept-head"><b>개념 1. 큐와 선입선출</b></div>
+<div class="concept-body"><div class="two">
+<div>
+<p>큐는 먼저 들어온 자료가 먼저 나가는 <b>선입선출</b> 방식의 선형 데이터 구조이다. 삽입은 뒤쪽 rear에서, 삭제는 앞쪽 front에서 이루어진다.</p>
+<p>자료를 10, 20, 30 순서로 삽입하면 삭제 순서도 10, 20, 30이다. 줄서기, 대기 번호, 네트워크 작업 처리와 같은 상황에 적합하다.</p>
+<span class="tag t1">FIFO</span><span class="tag t2">front</span><span class="tag t4">rear</span>
+</div>
+<div><div class="codebox">queue = []
+
+queue.append(10)
+queue.append(20)
+queue.append(30)
+
+print(queue)
+print(queue.pop(0))
+print(queue)</div>
+<p><b>출력:</b> [10, 20, 30] → 10 → [20, 30]</p></div>
+</div>
+<div class="question" data-id="c1" data-answer="1,2,4">
+<h4>코드 1 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 큐는 선입선출 구조이다.</label>
+<label class="option"><input type="checkbox" value="2">② 첫 번째로 삭제되는 값은 10이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 삭제 뒤 큐는 [10, 20]이다.</label>
+<label class="option"><input type="checkbox" value="4">④ 삭제 뒤 큐는 [20, 30]이다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ append는 항상 큐의 front에 값을 넣는다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ④</b><br>10이 가장 먼저 들어왔으므로 가장 먼저 삭제된다. append는 리스트의 뒤쪽에 값을 추가한다.</div>
+</div>
+</div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 2. front와 rear, 기본 연산</b></div>
+<div class="concept-body"><div class="two">
+<div>
+<p><b>front</b>는 다음에 삭제될 자료가 있는 출구 쪽이고, <b>rear</b>는 새 자료가 들어오는 입구 쪽이다.</p>
+<p>큐의 주요 연산에는 삽입, 삭제, 맨 앞 자료 확인, 크기 확인, 빈 큐 확인이 있다. 맨 앞 자료를 확인할 때는 삭제하지 않고 <code>queue[0]</code>을 읽는다.</p>
+</div>
+<div><div class="codebox">queue = [5, 8, 12]
+
+front = queue[0]
+size = len(queue)
+is_empty = len(queue) == 0
+
+print(front)
+print(size)
+print(is_empty)</div></div>
+</div>
+<div class="question" data-id="c2" data-answer="1,3,5">
+<h4>코드 2 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① front에는 5가 저장된다.</label>
+<label class="option"><input type="checkbox" value="2">② size에는 2가 저장된다.</label>
+<label class="option"><input type="checkbox" value="3">③ is_empty는 False이다.</label>
+<label class="option"><input type="checkbox" value="4">④ queue[0]을 읽으면 5가 큐에서 삭제된다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ len(queue)는 큐에 저장된 자료 수를 나타낸다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ③, ⑤</b><br>큐에는 3개 자료가 있고 queue[0]은 값을 확인할 뿐 삭제하지 않는다.</div>
+</div>
+</div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 3. 리스트를 이용한 큐 구현</b></div>
+<div class="concept-body"><div class="two">
+<div>
+<p>파이썬 리스트에서는 <code>append()</code>로 rear에 삽입하고 <code>pop(0)</code>으로 front에서 삭제할 수 있다.</p>
+<p>원리는 쉽게 표현되지만 리스트의 첫 원소를 삭제하면 뒤의 원소들이 앞으로 이동해야 하므로 자료가 많을 때 비효율적일 수 있다.</p>
+</div>
+<div><div class="codebox">def enqueue(queue, value):
+    queue.append(value)
+
+def dequeue(queue):
+    if not queue:
+        return None
+    return queue.pop(0)
+
+q = []
+enqueue(q, "A")
+enqueue(q, "B")
+print(dequeue(q))
+print(q)</div></div>
+</div>
+<div class="question" data-id="c3" data-answer="2,3,4">
+<h4>코드 3 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 첫 출력값은 B이다.</label>
+<label class="option"><input type="checkbox" value="2">② 첫 출력값은 A이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 마지막 q는 ['B']이다.</label>
+<label class="option"><input type="checkbox" value="4">④ 빈 큐에서 dequeue를 호출하면 None을 반환한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ pop(0)은 리스트의 마지막 원소를 삭제한다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ②, ③, ④</b><br>A가 먼저 삽입되었으므로 먼저 삭제된다. pop(0)은 첫 원소를 삭제한다.</div>
+</div>
+</div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 4. deque를 이용한 효율적인 큐</b></div>
+<div class="concept-body"><div class="two">
+<div>
+<p><code>collections.deque</code>는 양쪽 끝에서 자료를 빠르게 삽입·삭제할 수 있도록 만든 자료 구조이다. 큐에서는 <code>append()</code>와 <code>popleft()</code>를 사용한다.</p>
+<p>리스트의 <code>pop(0)</code>과 달리 앞 원소를 삭제할 때 나머지 원소 전체를 이동시키지 않아 큐 구현에 더 적합하다.</p>
+</div>
+<div><div class="codebox">from collections import deque
+
+q = deque()
+q.append(100)
+q.append(200)
+q.append(300)
+
+print(q.popleft())
+print(q[0])
+print(len(q))</div></div>
+</div>
+<div class="question" data-id="c4" data-answer="1,2,5">
+<h4>코드 4 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 첫 출력값은 100이다.</label>
+<label class="option"><input type="checkbox" value="2">② 두 번째 출력값은 200이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 마지막 길이는 3이다.</label>
+<label class="option"><input type="checkbox" value="4">④ popleft는 오른쪽 끝 자료를 삭제한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ deque는 큐의 앞쪽 삭제에 적합하다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ⑤</b><br>100을 삭제한 뒤 큐는 200, 300이 남아 길이는 2이다.</div>
+</div>
+</div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 5. 빈 큐와 안전한 삭제</b></div>
+<div class="concept-body"><div class="two">
+<div>
+<p>빈 큐에서 삭제 연산을 수행하면 오류가 발생할 수 있다. 따라서 삭제 전에 큐가 비어 있는지 검사해야 한다.</p>
+<p><code>if q:</code>는 큐에 자료가 있을 때 참이고, <code>if not q:</code>는 큐가 비었을 때 참이다. 안전한 프로그램은 정상 입력뿐 아니라 빈 구조와 같은 경계 상황도 처리한다.</p>
+</div>
+<div><div class="codebox">from collections import deque
+
+def safe_dequeue(q):
+    if not q:
+        return "비어 있음"
+    return q.popleft()
+
+q = deque()
+print(safe_dequeue(q))
+q.append("자료")
+print(safe_dequeue(q))</div></div>
+</div>
+<div class="question" data-id="c5" data-answer="1,3,4">
+<h4>코드 5 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 첫 출력은 “비어 있음”이다.</label>
+<label class="option"><input type="checkbox" value="2">② 빈 큐에서 무조건 popleft를 실행한다.</label>
+<label class="option"><input type="checkbox" value="3">③ 두 번째 출력은 “자료”이다.</label>
+<label class="option"><input type="checkbox" value="4">④ 빈 큐 검사는 오류를 예방하는 데 도움이 된다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ not q는 큐에 자료가 있을 때만 참이다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ③, ④</b><br>not q는 큐가 비었을 때 참이다. 빈 큐에서는 삭제하지 않고 안내 문자열을 반환한다.</div>
+</div>
+</div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 6. 큐를 활용한 작업 순서 처리</b></div>
+<div class="concept-body"><div class="two">
+<div>
+<p>큐는 먼저 요청된 작업을 먼저 처리하는 상황에 적합하다. 아래 프로그램은 프린터 작업을 입력된 순서대로 처리한다.</p>
+<p>처리할 때마다 front의 작업을 꺼내고, 큐가 빌 때까지 반복한다. 이는 실생활의 대기 번호, 서버 요청, 센서 이벤트 처리와 같은 원리이다.</p>
+</div>
+<div><div class="codebox">from collections import deque
+
+jobs = deque(["보고서", "그래프", "사진"])
+
+while jobs:
+    current = jobs.popleft()
+    print(current, "인쇄")
+
+print("모든 작업 완료")</div></div>
+</div>
+<div class="question" data-id="c6" data-answer="2,4,5">
+<h4>코드 6 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 사진이 가장 먼저 인쇄된다.</label>
+<label class="option"><input type="checkbox" value="2">② 보고서가 가장 먼저 인쇄된다.</label>
+<label class="option"><input type="checkbox" value="3">③ while문은 jobs가 비어 있어도 계속 실행된다.</label>
+<label class="option"><input type="checkbox" value="4">④ 작업은 보고서, 그래프, 사진 순서로 처리된다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 마지막에는 “모든 작업 완료”가 출력된다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ②, ④, ⑤</b><br>큐의 선입선출 원리에 따라 처음 저장된 보고서부터 처리하며, 큐가 비면 반복을 끝낸다.</div>
+</div>
+</div></div>
+
+<div class="notice">
+<b>목표지향 통합 과제</b><br>
+과학 실험 장비의 측정 요청을 순서대로 처리하는 큐 프로그램을 작성한다. 측정 이름을 삽입하고, 가장 먼저 들어온 요청을 삭제·처리하며, 현재 대기 중인 첫 요청과 전체 대기 수를 출력한다. 빈 큐 삭제도 안전하게 처리한다.
+</div>
+</section>
+
+<section id="ending">
+<h2>5. 학습 마무리 멘트</h2>
+<div class="ending">
+<h3>기다림에도 질서가 있다</h3>
+<p>공연장 앞에 선 줄, 병원에서 받은 대기 번호, 도서관에서 기다리는 예약 도서에는 공통된 약속이 있습니다. 먼저 기다린 사람의 시간을 먼저 존중한다는 것입니다.</p>
+<p>큐는 자료를 저장하는 기술이지만, 그 안에는 순서를 지키는 태도가 담겨 있습니다. 누군가의 요청을 잊지 않고, 뒤에 온 일이 앞의 일을 함부로 밀어내지 않도록 합니다. 예술 공연의 장면도, 문학의 사건도, 음악의 음표도 순서가 바뀌면 전혀 다른 의미가 됩니다.</p>
+<p>프로그래밍에서 좋은 구조를 선택한다는 것은 데이터의 의미를 존중하는 일입니다. 오늘 배운 큐는 우리에게 말합니다. <b>빠르게 처리하는 것만큼, 올바른 순서로 처리하는 것도 중요하다.</b></p>
+</div>
+</section>
+
+<section id="diagnostic">
+<div class="quiz-head"><h2>6. 전체 학습내용 진단평가 OX 10문항</h2><div class="scorebox" id="diagScore">미채점</div></div>
+<div id="diagQuestions"></div>
+<div class="controls"><button class="btn primary" onclick="gradeDiagnostic()">진단평가 채점</button><button class="btn secondary" onclick="resetGroup('diagQuestions')">초기화</button></div>
+</section>
+
+<section id="formative">
+<div class="quiz-head"><h2>7. 전체 학습내용 형성평가 10문항</h2><div class="scorebox" id="formScore">미채점</div></div>
+<p class="small">각 문항은 보기 5개 중 옳은 것 3개를 모두 선택해야 정답이다.</p>
+<div id="formQuestions"></div>
+<div class="controls"><button class="btn primary" onclick="gradeFormative()">형성평가 채점</button><button class="btn secondary" onclick="resetGroup('formQuestions')">초기화</button></div>
+</section>
+
+<section id="submit">
+<h2>8. 학번·이름 입력 및 결과 저장</h2>
+<div class="userbox">
+<label><b>학번</b><input type="text" id="studentId" placeholder="예: 1101"></label>
+<label><b>이름</b><input type="text" id="studentName" placeholder="예: 홍길동"></label>
+</div>
+<h3>전체 진행률</h3>
+<div class="progress-wrap"><div class="progress" id="progress"></div></div>
+<p id="progressText" class="small">0%</p>
+<div class="controls">
+<button class="btn primary" onclick="finalSubmit()">전체 채점 및 TXT 저장</button>
+<button class="btn secondary" onclick="window.print()">인쇄 / PDF</button>
+</div>
+<div class="result-panel" id="resultPanel"></div>
+</section>
+</main>
+
+<footer>
+<p>교과서 Ⅱ단원 「선형 데이터 구조」의 ‘큐의 개념’, ‘큐의 구현’, ‘큐를 활용한 문제 해결’을 중심으로 구성한 5차시 수업자료이다.</p>
+</footer>
+<button class="print" onclick="window.print()">인쇄 / PDF</button>
+
+<script>
+const diagData = [
+ {q:"큐는 먼저 들어온 자료가 먼저 나가는 선입선출 구조이다.",a:"O",e:"큐의 핵심 원리는 FIFO, 즉 선입선출이다."},
+ {q:"큐에서는 보통 rear에서 삽입하고 front에서 삭제한다.",a:"O",e:"입구 rear에서 자료를 넣고 출구 front에서 자료를 꺼낸다."},
+ {q:"리스트의 append는 첫 번째 위치에 자료를 삽입한다.",a:"X",e:"append는 리스트의 마지막 위치에 자료를 추가한다."},
+ {q:"리스트의 pop(0)은 첫 번째 자료를 삭제한다.",a:"O",e:"인덱스 0의 원소를 삭제하고 반환한다."},
+ {q:"deque의 popleft는 왼쪽 끝 자료를 삭제한다.",a:"O",e:"popleft는 큐의 front 역할을 하는 왼쪽 끝에서 자료를 꺼낸다."},
+ {q:"빈 큐에서 삭제 연산을 해도 항상 오류가 발생하지 않는다.",a:"X",e:"구현에 따라 IndexError가 발생할 수 있으므로 비어 있는지 검사해야 한다."},
+ {q:"queue[0]은 맨 앞 자료를 확인하면서 동시에 삭제한다.",a:"X",e:"queue[0]은 값을 읽을 뿐 삭제하지 않는다."},
+ {q:"len(queue)는 큐에 저장된 자료 수를 확인하는 데 사용할 수 있다.",a:"O",e:"len은 현재 자료의 개수를 반환한다."},
+ {q:"deque는 큐 앞쪽의 삽입·삭제에 적합하다.",a:"O",e:"deque는 양쪽 끝 연산을 효율적으로 지원한다."},
+ {q:"큐는 프린터 작업이나 대기 번호 처리에 활용할 수 있다.",a:"O",e:"요청 순서를 보존해야 하는 문제에 큐가 적합하다."}
+];
+
+const formData = [
+ {q:"큐의 기본 원리에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 먼저 들어온 자료가 먼저 나간다.","② 삽입은 보통 rear에서 이루어진다.","③ 삭제는 보통 front에서 이루어진다.","④ 나중에 들어온 자료가 항상 먼저 나간다.","⑤ 큐는 순서를 보존하지 않는다."],a:[1,2,3],e:"큐는 rear 삽입, front 삭제의 선입선출 구조이다."},
+ {q:"리스트를 이용한 큐 구현에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① append로 뒤쪽에 삽입할 수 있다.","② pop(0)으로 앞쪽 자료를 삭제할 수 있다.","③ queue[0]으로 앞쪽 자료를 확인할 수 있다.","④ pop()은 항상 앞쪽 자료를 삭제한다.","⑤ len은 사용할 수 없다."],a:[1,2,3],e:"리스트 큐는 append와 pop(0)을 사용할 수 있다."},
+ {q:"deque에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① collections 모듈에서 가져올 수 있다.","② append로 오른쪽에 삽입할 수 있다.","③ popleft로 왼쪽 자료를 삭제할 수 있다.","④ 큐에는 사용할 수 없다.","⑤ 앞쪽 삭제 때 모든 원소를 반드시 이동한다."],a:[1,2,3],e:"deque는 양쪽 끝 연산을 효율적으로 지원하므로 큐에 적합하다."},
+ {q:"빈 큐 처리에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 삭제 전에 비어 있는지 확인할 수 있다.","② if not q는 빈 큐 검사에 사용할 수 있다.","③ 빈 큐 삭제 오류를 예방할 수 있다.","④ 빈 큐에서도 무조건 popleft를 실행해야 한다.","⑤ 빈 큐 여부는 확인할 수 없다."],a:[1,2,3],e:"비어 있는지 확인한 뒤 삭제해야 안전하다."},
+ {q:"다음 연산 뒤 큐 상태에 관한 설명으로 옳은 것을 모두 고르시오.<pre>q=[]\nq.append(1)\nq.append(2)\nq.append(3)\nx=q.pop(0)</pre>",o:["① x는 1이다.","② q는 [2,3]이다.","③ 가장 먼저 삽입된 값이 삭제되었다.","④ x는 3이다.","⑤ q는 [1,2]이다."],a:[1,2,3],e:"선입선출에 따라 1이 삭제되고 2,3이 남는다."},
+ {q:"front와 rear에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① front는 다음에 삭제될 자료 쪽이다.","② rear는 새 자료가 삽입되는 쪽이다.","③ 큐의 양쪽 끝 역할을 나타낸다.","④ front와 rear는 항상 같은 위치이다.","⑤ rear에서만 삭제해야 한다."],a:[1,2,3],e:"front와 rear는 큐의 출구와 입구 역할을 한다."},
+ {q:"큐 활용 사례로 적절한 것을 모두 고르시오.",o:["① 프린터 작업 대기열","② 병원 대기 번호","③ 네트워크 요청 순서 처리","④ 가장 최근 작업만 즉시 취소하기","⑤ 웹 브라우저 뒤로 가기 기록"],a:[1,2,3],e:"최근 작업 우선 처리는 스택이 더 자연스럽고, 순서 대기는 큐에 적합하다."},
+ {q:"리스트의 pop(0)과 deque의 popleft 비교로 옳은 것을 모두 고르시오.",o:["① 둘 다 앞쪽 자료를 삭제할 수 있다.","② deque는 앞쪽 삭제에 더 적합하다.","③ 자료가 많을 때 구현 효율이 달라질 수 있다.","④ 둘은 언제나 내부 동작이 완전히 같다.","⑤ popleft는 오른쪽 끝을 삭제한다."],a:[1,2,3],e:"결과는 비슷하지만 내부 처리와 효율은 다를 수 있다."},
+ {q:"안전한 큐 프로그램의 특징으로 옳은 것을 모두 고르시오.",o:["① 빈 큐를 검사한다.","② 삽입·삭제 뒤 상태를 확인한다.","③ 입력 순서와 출력 순서를 검증한다.","④ 오류가 나도 조건 검사를 제거한다.","⑤ 자료 수를 확인하지 않는다."],a:[1,2,3],e:"경계 상황과 상태 변화를 점검해야 한다."},
+ {q:"큐 구현 코드에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① enqueue는 삽입 연산을 의미할 수 있다.","② dequeue는 삭제 연산을 의미할 수 있다.","③ 큐의 크기는 len으로 구할 수 있다.","④ 큐는 함수로 구현할 수 없다.","⑤ 반환값은 사용할 수 없다."],a:[1,2,3],e:"큐 연산은 함수로 분리할 수 있고 삭제된 값을 반환할 수도 있다."}
+];
+
+function renderDiagnostic(){
+ const c=document.getElementById('diagQuestions');
+ c.innerHTML=diagData.map((x,i)=>`<div class="question">
+ <h4>${i+1}. ${x.q}</h4>
+ <label class="option"><input type="radio" name="d${i}" value="O"> O</label>
+ <label class="option"><input type="radio" name="d${i}" value="X"> X</label>
+ <div class="feedback" id="df${i}"></div></div>`).join('');
+}
+function renderFormative(){
+ const c=document.getElementById('formQuestions');
+ c.innerHTML=formData.map((x,i)=>`<div class="question">
+ <h4>${i+1}. ${x.q}</h4>
+ ${x.o.map((o,j)=>`<label class="option"><input type="checkbox" name="f${i}" value="${j+1}">${o}</label>`).join('')}
+ <div class="feedback" id="ff${i}"></div></div>`).join('');
+}
+renderDiagnostic(); renderFormative();
+
+document.querySelectorAll('.check-one').forEach(btn=>{
+ btn.addEventListener('click',()=>{
+   const q=btn.closest('.question');
+   const ans=q.dataset.answer.split(',').sort().join(',');
+   const selected=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort().join(',');
+   const fb=q.querySelector('.feedback');
+   if(!fb.dataset.original) fb.dataset.original=fb.innerHTML;
+   fb.className='feedback show '+(selected===ans?'correct':'wrong');
+   fb.innerHTML=(selected===ans?'<b>정답입니다.</b><br>':'<b>다시 확인하세요.</b><br>')+fb.dataset.original;
+   updateProgress();
+ });
+});
+
+function gradeDiagnostic(){
+ let score=0;
+ diagData.forEach((x,i)=>{
+   const chosen=document.querySelector(`input[name=d${i}]:checked`);
+   const ok=chosen && chosen.value===x.a;
+   if(ok) score++;
+   const fb=document.getElementById(`df${i}`);
+   fb.className='feedback show '+(ok?'correct':'wrong');
+   fb.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${x.a}<br>${x.e}`;
+ });
+ document.getElementById('diagScore').textContent=`${score}/10`;
+ updateProgress(); return score;
+}
+function gradeFormative(){
+ let score=0;
+ formData.forEach((x,i)=>{
+   const chosen=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b);
+   const ans=[...x.a].sort((a,b)=>a-b);
+   const ok=JSON.stringify(chosen)===JSON.stringify(ans);
+   if(ok) score++;
+   const fb=document.getElementById(`ff${i}`);
+   fb.className='feedback show '+(ok?'correct':'wrong');
+   fb.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${ans.map(n=>'①②③④⑤'[n-1]).join(', ')}<br>${x.e}`;
+ });
+ document.getElementById('formScore').textContent=`${score}/10`;
+ updateProgress(); return score;
+}
+function resetGroup(id){
+ document.querySelectorAll(`#${id} input`).forEach(x=>x.checked=false);
+ document.querySelectorAll(`#${id} .feedback`).forEach(x=>{x.className='feedback';x.innerHTML='';});
+ if(id==='diagQuestions') document.getElementById('diagScore').textContent='미채점';
+ if(id==='formQuestions') document.getElementById('formScore').textContent='미채점';
+ updateProgress();
+}
+function updateProgress(){
+ let answered=0;
+ document.querySelectorAll('.concept .question').forEach(q=>{if(q.querySelector('input:checked')) answered++;});
+ for(let i=0;i<10;i++) if(document.querySelector(`input[name=d${i}]:checked`)) answered++;
+ for(let i=0;i<10;i++) if(document.querySelector(`input[name=f${i}]:checked`)) answered++;
+ const pct=Math.round(answered/26*100);
+ document.getElementById('progress').style.width=pct+'%';
+ document.getElementById('progressText').textContent=pct+'%';
+}
+document.addEventListener('change',updateProgress);
+
+function finalSubmit(){
+ const sid=document.getElementById('studentId').value.trim();
+ const name=document.getElementById('studentName').value.trim();
+ if(!sid||!name){alert('학번과 이름을 입력하세요.');return;}
+ const d=gradeDiagnostic(), f=gradeFormative();
+ let codeScore=0, codeReports=[];
+ document.querySelectorAll('.concept .question').forEach((q,i)=>{
+   const ans=q.dataset.answer.split(',').sort();
+   const sel=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort();
+   const ok=JSON.stringify(ans)===JSON.stringify(sel);
+   if(ok) codeScore++;
+   const explanation=(q.querySelector('.feedback').dataset.original||q.querySelector('.feedback').textContent).replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+   codeReports.push(`코드 확인 ${i+1}: ${ok?'정답':'오답'} / 응답 ${sel.join(',')||'미응답'} / 정답 ${ans.join(',')} / 풀이: ${explanation}`);
+ });
+ const raw=codeScore+d+f, total=26, score=Math.round(raw/total*100);
+ const now=new Date();
+ const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0');
+ let lines=[];
+ lines.push('정보과학 5차시 개념기반 목표지향 학습 결과');
+ lines.push(`학번: ${sid}`); lines.push(`이름: ${name}`); lines.push(`점수: ${score}점 (${raw}/${total})`);
+ lines.push(`응시시각: ${now.toLocaleString('ko-KR')}`); lines.push('');
+ lines.push('[코드별 확인 문제]'); lines.push(...codeReports); lines.push('');
+ lines.push('[진단평가 OX]');
+ diagData.forEach((x,i)=>{const c=document.querySelector(`input[name=d${i}]:checked`)?.value||'미응답';lines.push(`${i+1}. ${c===x.a?'정답':'오답'} / 응답 ${c} / 정답 ${x.a} / 풀이: ${x.e}`);});
+ lines.push(''); lines.push('[형성평가]');
+ formData.forEach((x,i)=>{const c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b);const a=[...x.a].sort((a,b)=>a-b);const ok=JSON.stringify(c)===JSON.stringify(a);lines.push(`${i+1}. ${ok?'정답':'오답'} / 응답 ${c.join(',')||'미응답'} / 정답 ${a.join(',')} / 풀이: ${x.e}`);});
+ const text=lines.join('\n');
+ const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+ const link=document.createElement('a'); link.href=URL.createObjectURL(blob);
+ link.download=`${sid}_${name}_${score}_5차시_${stamp}.txt`; link.click(); URL.revokeObjectURL(link.href);
+ const panel=document.getElementById('resultPanel'); panel.classList.add('show');
+ panel.innerHTML=`<h3>최종 결과</h3><p class="big">${score}점</p><p>코드 확인 ${codeScore}/6 · 진단평가 ${d}/10 · 형성평가 ${f}/10</p><p><b>${sid} ${name}</b> 학생의 결과 파일을 저장했습니다.</p>`;
+}
+</script>
+</body>
+</html>

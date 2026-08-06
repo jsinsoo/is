@@ -1,0 +1,759 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보과학 12차시 1·2단원 성취수준별 수행평가</title>
+<style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --green:#1f8a70; --orange:#f59e0b;
+  --purple:#7656a7; --rose:#cf4568; --ink:#17212b; --muted:#5c6978;
+  --line:#d8e2ec; --paper:#fff; --bg:#f4f7fb; --ok:#127a50; --bad:#bc2f3e;
+  --a:#1864ab; --b:#14805e; --c:#9c6b00; --d:#b45518; --e:#99445e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#132b42,#2f6fb3 60%,#1f8a70);color:#fff;padding:42px 20px}
+.header-inner{max-width:1380px;margin:auto}
+.kicker{font-size:.9rem;letter-spacing:.08em;opacity:.9}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.2;margin:.35rem 0 .8rem}
+.subtitle{max-width:1080px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1380px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+nav a{text-decoration:none;color:var(--navy);font-weight:800;white-space:nowrap;padding:8px 10px;border-radius:8px;font-size:.89rem}
+nav a:hover{background:#eaf4ff}
+main{max-width:1380px;margin:auto;padding:22px 16px 76px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:25px;margin:19px 0;box-shadow:0 7px 22px rgba(23,50,77,.055)}
+h2{color:var(--navy);font-size:1.65rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}
+h3{color:var(--navy);margin:20px 0 10px}
+h4{color:#254d72;margin:16px 0 8px}
+.standard{background:#eaf8f3;border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}
+.story{background:linear-gradient(135deg,#fff9ea,#fff);border-left:7px solid var(--orange);padding:20px;border-radius:14px}
+.ending{background:linear-gradient(135deg,#f5efff,#fff);border-left:7px solid var(--purple);padding:20px;border-radius:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:13px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.05rem;margin-bottom:5px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+.task{border:1px solid var(--line);border-radius:18px;margin:22px 0;overflow:hidden}
+.task-head{padding:18px;color:#fff}
+.level-a .task-head{background:linear-gradient(90deg,#174e86,#2f6fb3)}
+.level-b .task-head{background:linear-gradient(90deg,#146b58,#1f8a70)}
+.level-c .task-head{background:linear-gradient(90deg,#8a5b00,#c18a16)}
+.level-d .task-head{background:linear-gradient(90deg,#9c4615,#d8752c)}
+.level-e .task-head{background:linear-gradient(90deg,#80364d,#b75b78)}
+.task-head h3{color:#fff;margin:0 0 5px}
+.task-body{padding:20px}
+.two{display:grid;grid-template-columns:1.02fr .98fr;gap:18px}
+@media(max-width:950px){.two{grid-template-columns:1fr}.userbox{grid-template-columns:1fr}}
+.codebox{background:#111c27;color:#eaf2f8;border-radius:13px;padding:15px 17px;overflow:auto;font-family:Consolas,"D2Coding",monospace;font-size:.9rem;line-height:1.55;white-space:pre}
+.step{background:#f7fafc;border-left:5px solid var(--blue);padding:12px 14px;border-radius:8px;margin:9px 0}
+.rubric{font-size:.88rem}
+.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:800;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff0f4;color:#a63d5b}.t4{background:#fff6df;color:#8a5b00}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer;background:#fff}
+.option:hover{background:#f5f9fd}
+.option input{margin-right:8px;transform:scale(1.1)}
+.short-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:760px){.short-grid{grid-template-columns:1fr}}
+.short-item{border:1px solid #d8e2ec;border-radius:12px;padding:12px;background:#fbfdff}
+.short-item input{width:100%;padding:10px;border:1px solid #cbd7e2;border-radius:8px;margin-top:7px;font-size:.96rem}
+.feedback{display:none;margin-top:11px;padding:12px;border-radius:9px;background:#f6f8fb}
+.feedback.show{display:block}
+.correct{border-left:5px solid var(--ok)}
+.wrong{border-left:5px solid var(--bad)}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+.primary{background:var(--blue);color:#fff}
+.secondary{background:#eaf0f6;color:var(--navy)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.userbox{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input[type=text]{width:100%;padding:11px;border:1px solid #cfdbe6;border-radius:9px;font-size:1rem}
+.progress-wrap{height:12px;background:#e9eef3;border-radius:999px;overflow:hidden}
+.progress{height:100%;background:linear-gradient(90deg,#2f6fb3,#1f8a70);width:0%;transition:.3s}
+.result-panel{display:none;border:2px solid #9ac9ea;background:#f6fbff;border-radius:15px;padding:18px;margin-top:18px}
+.result-panel.show{display:block}
+.big{font-size:1.9rem;font-weight:900;color:var(--blue)}
+.small{font-size:.86rem;color:var(--muted)}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 7px 24px rgba(0,0,0,.2)}
+footer{max-width:1380px;margin:0 auto 40px;padding:0 18px;color:#5e6c78;font-size:.86rem}
+@media print{
+  nav,.print,.controls button{display:none!important}
+  body{background:white}
+  section,.task{box-shadow:none;break-inside:avoid}
+  .question,.short-item{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="header-inner">
+<div class="kicker">2022 개정 고등학교 정보과학 · 12차시 수행평가 · Ⅰ 프로그래밍 + Ⅱ 데이터 구조</div>
+<h1>1·2단원 성취수준별 수행평가</h1>
+<div class="subtitle">A~E 성취수준에 맞춘 5개 수행과제를 통해 함수·재귀·큐·스택·그래프·트리·BFS·DFS의 이해와 적용 능력을 평가한다.</div>
+<div class="badges">
+<span class="badge">성취수준 A~E</span>
+<span class="badge">수행과제 5개</span>
+<span class="badge">예시 코드·상세 설명</span>
+<span class="badge">5지선다 5문항</span>
+<span class="badge">단답형 20문항</span>
+<span class="badge">자동채점·TXT 저장</span>
+</div>
+</div>
+</header>
+
+<nav><div class="nav-inner">
+<a href="#overview">평가 개요</a>
+<a href="#taskA">A 수행과제</a>
+<a href="#taskB">B 수행과제</a>
+<a href="#taskC">C 수행과제</a>
+<a href="#taskD">D 수행과제</a>
+<a href="#taskE">E 수행과제</a>
+<a href="#submit">채점·저장</a>
+</div></nav>
+
+<main>
+<section id="overview">
+<h2>1. 수행평가 개요</h2>
+<div class="standard">
+<b>관련 성취기준</b><br>
+[12정과01-01] 함수 정의와 호출, 매개변수를 활용한 프로그램 작성<br>
+[12정과01-02] 재귀 관계 파악과 재귀 프로그램 작성<br>
+[12정과01-03] 반복 구조와 재귀 구조 비교·분석<br>
+[12정과02-01] 스택과 큐의 원리 이해 및 구현<br>
+[12정과02-02] 스택과 큐를 활용한 문제 해결<br>
+[12정과02-03] 인접행렬과 인접리스트를 활용한 트리·그래프 구현<br>
+[12정과02-04] 트리와 그래프를 활용한 문제 해결
+</div>
+
+<h3>평가 목표</h3>
+<div class="grid">
+<div class="card"><strong>개념 이해</strong>함수, 재귀, 큐, 스택, 그래프, 트리의 핵심 원리를 설명한다.</div>
+<div class="card"><strong>코드 구현</strong>문제 상황에 적합한 자료 구조와 알고리즘을 코드로 구현한다.</div>
+<div class="card"><strong>분석과 설명</strong>실행 순서, 상태 변화, 효율, 오류 가능성을 근거로 설명한다.</div>
+<div class="card"><strong>문제 해결</strong>새로운 상황을 추상화하고 적절한 구조와 탐색 방법을 선택한다.</div>
+</div>
+
+<h3>공통 평가 기준</h3>
+<table class="rubric">
+<tr><th>평가 요소</th><th>배점</th><th>평가 관점</th></tr>
+<tr><td>문제 분석</td><td>20</td><td>입력·출력·처리 조건과 필요한 자료 구조를 정확히 파악함</td></tr>
+<tr><td>알고리즘 설계</td><td>20</td><td>함수, 반복·재귀, 자료 구조와 탐색 절차를 논리적으로 구성함</td></tr>
+<tr><td>코드 구현</td><td>30</td><td>정확한 문법, 올바른 결과, 경계 상황 처리, 적절한 함수 분리</td></tr>
+<tr><td>검증과 개선</td><td>15</td><td>여러 입력으로 검증하고 오류 원인과 개선 방안을 제시함</td></tr>
+<tr><td>설명과 표현</td><td>15</td><td>코드의 핵심 부분과 자료 구조 상태 변화를 근거 있게 설명함</td></tr>
+</table>
+
+<div class="story">
+<h3>수행평가 시작 이야기</h3>
+<p>과학자는 하나의 현상을 관찰하는 데서 멈추지 않고, 설명할 수 있는 모형을 만들고 실험으로 검증합니다. 프로그래밍 수행평가도 같은 과정입니다. 문제를 분석하고, 자료의 순서와 관계를 구조로 표현하고, 코드로 구현한 뒤 결과를 검증해야 합니다.</p>
+<p>이번 수행평가는 정답 코드를 그대로 기억하는 평가가 아닙니다. <b>왜 이 함수가 필요한지, 왜 큐나 스택을 선택했는지, 왜 BFS 또는 DFS가 적합한지 설명할 수 있는가</b>를 평가합니다.</p>
+</div>
+</section>
+
+<section id="taskA" class="task level-a">
+<div class="task-head">
+<h3>A 수준 수행과제 · 과학관 안전 대피 경로 분석 시스템</h3>
+<div>그래프 모델링 + BFS·DFS + 함수 모듈화 + 경로 복원 + 효율 분석</div>
+</div>
+<div class="task-body">
+<div class="two">
+<div>
+<h4>수행과제</h4>
+<p>과학관 전시실을 정점, 통로를 간선으로 하는 무방향 그래프를 구현한다. 출발 전시실에서 비상구까지 가장 적은 통로를 지나는 경로를 BFS로 구하고, DFS로 전체 연결 여부를 확인한다.</p>
+<div class="step"><b>필수 조건 1</b> 그래프 생성, BFS, DFS, 경로 복원을 각각 함수로 분리한다.</div>
+<div class="step"><b>필수 조건 2</b>존재하지 않는 정점과 연결되지 않은 비상구를 안전하게 처리한다.</div>
+<div class="step"><b>필수 조건 3</b>BFS와 DFS의 목적·방문 순서·자료 구조 차이를 설명한다.</div>
+<div class="step"><b>필수 조건 4</b>인접행렬과 인접리스트 중 선택한 표현의 근거를 제시한다.</div>
+</div>
+<div>
+<h4>예시 코드</h4>
+<div class="codebox">from collections import deque
+
+def build_graph(n, edges):
+    graph = [[] for _ in range(n)]
+    for a, b in edges:
+        graph[a].append(b)
+        graph[b].append(a)
+    return graph
+
+def shortest_path(graph, start, end):
+    if not (0 <= start < len(graph) and
+            0 <= end < len(graph)):
+        return []
+
+    q = deque([start])
+    parent = [-1] * len(graph)
+    parent[start] = start
+
+    while q:
+        v = q.popleft()
+
+        if v == end:
+            break
+
+        for nxt in graph[v]:
+            if parent[nxt] == -1:
+                parent[nxt] = v
+                q.append(nxt)
+
+    if parent[end] == -1:
+        return []
+
+    path = []
+    cur = end
+
+    while cur != start:
+        path.append(cur)
+        cur = parent[cur]
+
+    path.append(start)
+    path.reverse()
+    return path
+
+def dfs(graph, v, visited):
+    visited[v] = True
+
+    for nxt in graph[v]:
+        if not visited[nxt]:
+            dfs(graph, nxt, visited)
+
+edges = [(0,1), (0,2), (1,3),
+         (2,3), (3,4), (4,5)]
+graph = build_graph(6, edges)
+
+print(shortest_path(graph, 0, 5))
+
+visited = [False] * len(graph)
+dfs(graph, 0, visited)
+print(all(visited))</div>
+</div>
+</div>
+
+<h4>상세 설명</h4>
+<p><code>build_graph()</code>는 무방향 간선을 양쪽 정점의 인접리스트에 저장한다. <code>shortest_path()</code>는 큐를 사용해 가까운 정점부터 방문하고, 각 정점의 부모를 기록하여 도착점에서 출발점까지 경로를 역추적한다. <code>dfs()</code>는 재귀 호출로 한 경로를 깊게 방문하며 모든 정점의 방문 여부를 통해 그래프의 연결성을 확인한다.</p>
+<p>비가중 그래프에서 BFS는 출발점에서 사용한 간선 수가 작은 순서로 정점을 방문하므로 가장 적은 통로를 지나는 경로를 찾을 수 있다. 인접리스트는 실제 연결된 통로만 저장하므로 전시실 수에 비해 통로 수가 적은 경우 공간 면에서 유리하다.</p>
+
+<div class="question mcq" data-answer="1,3,5">
+<h4>A 수행과제 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① BFS는 비가중 그래프에서 최소 간선 수 경로를 찾는 데 활용할 수 있다.</label>
+<label class="option"><input type="checkbox" value="2">② parent 배열은 각 정점의 가중치만 저장한다.</label>
+<label class="option"><input type="checkbox" value="3">③ 무방향 간선은 양쪽 정점의 인접리스트에 기록한다.</label>
+<label class="option"><input type="checkbox" value="4">④ DFS는 반드시 큐의 popleft로만 구현한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 방문 결과가 모두 True이면 시작점에서 모든 정점에 도달할 수 있다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ③, ⑤</b><br>parent는 경로 복원을 위한 이전 정점을 저장하며 DFS는 재귀 또는 스택으로 구현할 수 있다.</div>
+</div>
+
+<h4>A 수행과제 단답형 4문항</h4>
+<div class="short-grid">
+<div class="short-item"><b>A-1.</b> BFS에서 사용하는 핵심 선형 자료 구조는?<input class="short" data-answer="큐|queue" data-explain="BFS는 먼저 발견한 정점을 먼저 처리하므로 큐를 사용한다."></div>
+<div class="short-item"><b>A-2.</b> 경로 복원을 위해 각 정점의 이전 정점을 기록하는 배열 이름은?<input class="short" data-answer="parent|부모|부모 배열" data-explain="parent 배열은 도착점에서 출발점으로 역추적하는 데 사용한다."></div>
+<div class="short-item"><b>A-3.</b> DFS에서 중복 방문을 방지하는 배열은?<input class="short" data-answer="visited|방문 배열|방문여부" data-explain="visited 배열은 이미 방문한 정점을 다시 처리하지 않게 한다."></div>
+<div class="short-item"><b>A-4.</b> 간선 수에 비해 정점 수가 많은 희소 그래프에 적합한 표현은?<input class="short" data-answer="인접리스트|인접 리스트" data-explain="인접리스트는 실제 이웃만 저장하므로 희소 그래프에서 공간을 절약한다."></div>
+</div>
+</div>
+</section>
+
+<section id="taskB" class="task level-b">
+<div class="task-head">
+<h3>B 수준 수행과제 · 실험 요청 처리와 실행 취소 시스템</h3>
+<div>큐 + 스택 + 함수 분리 + 빈 구조 처리</div>
+</div>
+<div class="task-body">
+<div class="two">
+<div>
+<h4>수행과제</h4>
+<p>과학 실험실의 측정 요청은 접수 순서대로 처리하고, 완료된 작업은 가장 최근 작업부터 취소할 수 있는 프로그램을 작성한다.</p>
+<div class="step"><b>필수 조건 1</b>요청 대기열은 큐로 구현한다.</div>
+<div class="step"><b>필수 조건 2</b>완료 기록은 스택으로 구현한다.</div>
+<div class="step"><b>필수 조건 3</b>접수, 처리, 취소 기능을 함수로 분리한다.</div>
+<div class="step"><b>필수 조건 4</b>빈 큐와 빈 스택을 안전하게 처리한다.</div>
+</div>
+<div>
+<h4>예시 코드</h4>
+<div class="codebox">from collections import deque
+
+waiting = deque()
+completed = []
+
+def request(name):
+    waiting.append(name)
+
+def process():
+    if not waiting:
+        return "대기 요청 없음"
+
+    job = waiting.popleft()
+    completed.append(job)
+    return job + " 처리 완료"
+
+def undo():
+    if not completed:
+        return "취소할 작업 없음"
+
+    job = completed.pop()
+    waiting.appendleft(job)
+    return job + " 처리 취소"
+
+request("온도 측정")
+request("산도 측정")
+
+print(process())
+print(process())
+print(undo())
+print(list(waiting))
+print(completed)</div>
+</div>
+</div>
+
+<h4>상세 설명</h4>
+<p><code>waiting</code>은 먼저 접수된 요청을 먼저 처리해야 하므로 큐로 구성한다. <code>completed</code>는 가장 최근에 완료한 작업을 먼저 취소해야 하므로 스택으로 구성한다. <code>process()</code>는 큐의 앞에서 요청을 꺼내 완료 스택에 넣고, <code>undo()</code>는 완료 스택의 top을 꺼내 대기열 앞에 되돌린다.</p>
+<p>서로 다른 처리 순서를 하나의 프로그램에서 동시에 관리하는 것이 핵심이다. 삭제 전에 구조가 비어 있는지 검사하여 오류를 예방한다.</p>
+
+<div class="question mcq" data-answer="1,2,4">
+<h4>B 수행과제 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① waiting은 선입선출 방식으로 처리된다.</label>
+<label class="option"><input type="checkbox" value="2">② completed의 가장 최근 작업은 pop으로 꺼낼 수 있다.</label>
+<label class="option"><input type="checkbox" value="3">③ undo는 가장 오래전에 완료한 작업부터 취소한다.</label>
+<label class="option"><input type="checkbox" value="4">④ 빈 구조 검사는 삭제 오류를 예방한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 큐와 스택의 삭제 순서는 항상 같다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ④</b><br>취소는 최근 완료 작업부터 이루어지며 큐와 스택의 출력 순서는 다르다.</div>
+</div>
+
+<h4>B 수행과제 단답형 4문항</h4>
+<div class="short-grid">
+<div class="short-item"><b>B-1.</b> 먼저 접수한 요청을 먼저 처리하는 원리는?<input class="short" data-answer="선입선출|fifo" data-explain="큐는 먼저 들어온 자료가 먼저 나가는 선입선출 구조이다."></div>
+<div class="short-item"><b>B-2.</b> 최근 완료 작업을 먼저 취소하는 자료 구조는?<input class="short" data-answer="스택|stack" data-explain="스택은 후입선출이므로 최근 상태 되돌리기에 적합하다."></div>
+<div class="short-item"><b>B-3.</b> deque의 앞쪽 자료를 삭제하는 메서드는?<input class="short" data-answer="popleft|popleft()" data-explain="popleft()는 deque의 왼쪽 끝 자료를 삭제하고 반환한다."></div>
+<div class="short-item"><b>B-4.</b> 리스트 스택의 top 자료를 삭제하는 메서드는?<input class="short" data-answer="pop|pop()" data-explain="인수 없는 pop()은 리스트의 마지막 원소를 삭제한다."></div>
+</div>
+</div>
+</section>
+
+<section id="taskC" class="task level-c">
+<div class="task-head">
+<h3>C 수준 수행과제 · 재귀와 반복으로 자연수 합 비교하기</h3>
+<div>함수 + 반복 구조 + 재귀 구조 + 실행 결과 비교</div>
+</div>
+<div class="task-body">
+<div class="two">
+<div>
+<h4>수행과제</h4>
+<p>1부터 n까지의 합을 반복 함수와 재귀 함수로 각각 구현하고, 두 함수의 결과가 같은지 확인한다.</p>
+<div class="step"><b>필수 조건 1</b>반복 함수에서 누적 변수를 사용한다.</div>
+<div class="step"><b>필수 조건 2</b>재귀 함수에 종료 조건을 작성한다.</div>
+<div class="step"><b>필수 조건 3</b>n=1, 5, 10을 입력하여 결과를 비교한다.</div>
+<div class="step"><b>필수 조건 4</b>두 방식의 종료 원리 차이를 설명한다.</div>
+</div>
+<div>
+<h4>예시 코드</h4>
+<div class="codebox">def sum_iter(n):
+    total = 0
+
+    for value in range(1, n + 1):
+        total += value
+
+    return total
+
+def sum_rec(n):
+    if n == 0:
+        return 0
+
+    return n + sum_rec(n - 1)
+
+for n in [1, 5, 10]:
+    a = sum_iter(n)
+    b = sum_rec(n)
+
+    print(n, a, b, a == b)</div>
+</div>
+</div>
+
+<h4>상세 설명</h4>
+<p><code>sum_iter()</code>는 <code>total</code>에 1부터 n까지 값을 누적한다. <code>sum_rec()</code>는 현재 n과 더 작은 문제 <code>sum_rec(n-1)</code>의 결과를 더한다. n이 0이면 0을 반환하여 재귀 호출을 종료한다.</p>
+<p>반복 구조는 반복 범위를 모두 처리하면 끝나고, 재귀 구조는 종료 조건에 도달한 뒤 호출 순서의 반대로 복귀한다. 동일한 문제를 서로 다른 구조로 구현하고 결과를 비교하는 것이 핵심이다.</p>
+
+<div class="question mcq" data-answer="2,3,5">
+<h4>C 수행과제 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① sum_iter(5)의 결과는 10이다.</label>
+<label class="option"><input type="checkbox" value="2">② sum_rec의 종료 조건은 n==0이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 두 함수는 같은 n에 대해 같은 결과를 반환한다.</label>
+<label class="option"><input type="checkbox" value="4">④ 재귀 호출에서는 n이 1씩 증가한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 반복 함수는 total에 값을 누적한다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ②, ③, ⑤</b><br>sum_iter(5)는 15이며 재귀 호출에서는 n이 1씩 감소한다.</div>
+</div>
+
+<h4>C 수행과제 단답형 4문항</h4>
+<div class="short-grid">
+<div class="short-item"><b>C-1.</b> 반복 함수에서 합을 저장하는 변수 이름은?<input class="short" data-answer="total" data-explain="total 변수에 각 value를 누적한다."></div>
+<div class="short-item"><b>C-2.</b> sum_rec(5)의 반환값은?<input class="short" data-answer="15" data-explain="1+2+3+4+5는 15이다."></div>
+<div class="short-item"><b>C-3.</b> 재귀 호출을 멈추는 조건을 무엇이라고 하는가?<input class="short" data-answer="종료조건|종료 조건|기본조건|기본 조건" data-explain="재귀 함수는 종료 조건에서 더 이상 자기 자신을 호출하지 않는다."></div>
+<div class="short-item"><b>C-4.</b> 함수가 결과를 호출한 곳으로 돌려주는 명령어는?<input class="short" data-answer="return" data-explain="return은 값을 반환하며 함수 실행을 종료한다."></div>
+</div>
+</div>
+</section>
+
+<section id="taskD" class="task level-d">
+<div class="task-head">
+<h3>D 수준 수행과제 · 큐와 스택의 상태 추적 프로그램</h3>
+<div>기본 연산 구별 + 실행 결과 추적</div>
+</div>
+<div class="task-body">
+<div class="two">
+<div>
+<h4>수행과제</h4>
+<p>같은 자료 A, B, C를 큐와 스택에 넣고 각각 하나씩 삭제한 뒤 남은 상태를 출력한다.</p>
+<div class="step"><b>필수 조건 1</b>큐에는 deque를 사용한다.</div>
+<div class="step"><b>필수 조건 2</b>스택에는 리스트를 사용한다.</div>
+<div class="step"><b>필수 조건 3</b>삭제된 값과 남은 상태를 출력한다.</div>
+<div class="step"><b>필수 조건 4</b>선입선출과 후입선출을 설명한다.</div>
+</div>
+<div>
+<h4>예시 코드</h4>
+<div class="codebox">from collections import deque
+
+queue = deque()
+stack = []
+
+for value in ["A", "B", "C"]:
+    queue.append(value)
+    stack.append(value)
+
+q_value = queue.popleft()
+s_value = stack.pop()
+
+print("큐 삭제:", q_value)
+print("큐 상태:", list(queue))
+print("스택 삭제:", s_value)
+print("스택 상태:", stack)</div>
+</div>
+</div>
+
+<h4>상세 설명</h4>
+<p>큐에는 A, B, C가 들어온 순서대로 저장되며 <code>popleft()</code>를 실행하면 가장 먼저 들어온 A가 삭제된다. 스택에서는 <code>pop()</code>을 실행하면 가장 나중에 들어온 C가 삭제된다.</p>
+<p>연산 뒤 큐에는 B, C가 남고 스택에는 A, B가 남는다. 자료 구조의 상태를 단계별로 기록하면 실행 결과를 정확히 예측할 수 있다.</p>
+
+<div class="question mcq" data-answer="1,3,4">
+<h4>D 수행과제 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 큐에서 삭제되는 값은 A이다.</label>
+<label class="option"><input type="checkbox" value="2">② 스택에서 삭제되는 값도 A이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 삭제 뒤 큐에는 B와 C가 남는다.</label>
+<label class="option"><input type="checkbox" value="4">④ 삭제 뒤 스택에는 A와 B가 남는다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 큐는 후입선출 구조이다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ③, ④</b><br>스택에서는 C가 삭제되며 큐는 선입선출 구조이다.</div>
+</div>
+
+<h4>D 수행과제 단답형 4문항</h4>
+<div class="short-grid">
+<div class="short-item"><b>D-1.</b> 큐에서 처음 삭제되는 값은?<input class="short" data-answer="A|a" data-explain="A가 가장 먼저 삽입되었으므로 먼저 삭제된다."></div>
+<div class="short-item"><b>D-2.</b> 스택에서 처음 삭제되는 값은?<input class="short" data-answer="C|c" data-explain="C가 가장 나중에 삽입되었으므로 먼저 삭제된다."></div>
+<div class="short-item"><b>D-3.</b> 큐의 처리 원리를 한글로 쓰시오.<input class="short" data-answer="선입선출" data-explain="먼저 들어온 자료가 먼저 나간다."></div>
+<div class="short-item"><b>D-4.</b> 스택의 처리 원리를 한글로 쓰시오.<input class="short" data-answer="후입선출" data-explain="나중에 들어온 자료가 먼저 나간다."></div>
+</div>
+</div>
+</section>
+
+<section id="taskE" class="task level-e">
+<div class="task-head">
+<h3>E 수준 수행과제 · 함수 호출과 트리 관계 확인하기</h3>
+<div>예시 코드 실행 + 핵심 용어 확인</div>
+</div>
+<div class="task-body">
+<div class="two">
+<div>
+<h4>수행과제</h4>
+<p>간단한 함수 호출 코드와 트리 자료를 실행하고, 출력 결과와 부모·자식·리프 관계를 확인한다.</p>
+<div class="step"><b>필수 조건 1</b>함수 정의와 호출을 구별한다.</div>
+<div class="step"><b>필수 조건 2</b>트리의 루트와 리프를 찾는다.</div>
+<div class="step"><b>필수 조건 3</b>코드를 그대로 실행하고 결과를 기록한다.</div>
+<div class="step"><b>필수 조건 4</b>교사의 안내에 따라 한 부분을 수정한다.</div>
+</div>
+<div>
+<h4>예시 코드</h4>
+<div class="codebox">def greet(name):
+    return name + " 학생, 시작합니다."
+
+print(greet("민수"))
+
+tree = {
+    "과학": ["물리", "화학"],
+    "물리": [],
+    "화학": []
+}
+
+print("루트:", "과학")
+print("과학의 자식:", tree["과학"])
+print("리프:", [x for x in tree
+                 if not tree[x]])</div>
+</div>
+</div>
+
+<h4>상세 설명</h4>
+<p><code>greet</code> 함수는 이름을 매개변수로 받아 문자열을 반환한다. 함수는 정의만으로 실행되지 않으며 <code>greet("민수")</code>처럼 호출할 때 본문이 실행된다.</p>
+<p>트리에서 ‘과학’은 시작 정점인 루트이고 ‘물리’, ‘화학’은 과학의 자식이다. 자식 목록이 비어 있으므로 물리와 화학은 리프이다.</p>
+
+<div class="question mcq" data-answer="2,4,5">
+<h4>E 수행과제 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 함수는 정의하는 순간 반드시 출력한다.</label>
+<label class="option"><input type="checkbox" value="2">② name은 매개변수이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 물리는 과학의 부모이다.</label>
+<label class="option"><input type="checkbox" value="4">④ 과학은 트리의 루트이다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 물리와 화학은 리프이다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ②, ④, ⑤</b><br>함수는 호출할 때 실행되며 물리와 화학은 과학의 자식이다.</div>
+</div>
+
+<h4>E 수행과제 단답형 4문항</h4>
+<div class="short-grid">
+<div class="short-item"><b>E-1.</b> 함수를 정의할 때 사용하는 파이썬 키워드는?<input class="short" data-answer="def" data-explain="파이썬에서는 def로 함수를 정의한다."></div>
+<div class="short-item"><b>E-2.</b> 함수가 값을 돌려줄 때 사용하는 키워드는?<input class="short" data-answer="return" data-explain="return은 값을 호출한 곳으로 반환한다."></div>
+<div class="short-item"><b>E-3.</b> 트리의 시작 정점을 무엇이라고 하는가?<input class="short" data-answer="루트|root" data-explain="트리의 가장 위 시작 정점은 루트이다."></div>
+<div class="short-item"><b>E-4.</b> 자식이 없는 정점을 무엇이라고 하는가?<input class="short" data-answer="리프|leaf|단말정점|단말 정점" data-explain="자식이 없는 정점을 리프 또는 단말 정점이라고 한다."></div>
+</div>
+</div>
+</section>
+
+<section id="submit">
+<h2>2. 자동 채점 및 결과 저장</h2>
+<div class="notice">
+<b>채점 방식</b><br>
+5지선다형 5문항과 단답형 20문항을 자동 채점한다. 수행 산출물의 실제 코드·설명·검증 결과는 교사가 공통 루브릭으로 별도 평가한다.
+</div>
+
+<div class="userbox">
+<label><b>학번</b><input type="text" id="studentId" placeholder="예: 1101"></label>
+<label><b>이름</b><input type="text" id="studentName" placeholder="예: 홍길동"></label>
+</div>
+
+<h3>전체 진행률</h3>
+<div class="progress-wrap"><div class="progress" id="progress"></div></div>
+<p id="progressText" class="small">0%</p>
+
+<div class="controls">
+<button class="btn primary" onclick="gradeAll()">전체 채점 및 TXT 저장</button>
+<button class="btn secondary" onclick="resetAll()">전체 초기화</button>
+<button class="btn secondary" onclick="window.print()">인쇄 / PDF</button>
+</div>
+
+<div class="result-panel" id="resultPanel"></div>
+</section>
+
+<section>
+<h2>3. 수행평가 마무리 성찰</h2>
+<div class="ending">
+<h3>결과보다 중요한 것은 선택의 이유이다</h3>
+<p>같은 문제를 해결하더라도 어떤 학생은 반복문을, 어떤 학생은 재귀 함수를 선택할 수 있습니다. 어떤 관계는 그래프로, 어떤 계층은 트리로 표현할 수 있습니다. 중요한 것은 단지 실행되는 코드를 제출하는 것이 아닙니다.</p>
+<p>왜 이 구조를 선택했는지, 어떤 입력에서 오류가 날 수 있는지, 더 나은 방법은 무엇인지 설명하는 과정에서 프로그램은 하나의 사고 결과가 됩니다.</p>
+<p><b>좋은 수행평가는 답을 보여 주는 데서 끝나지 않고, 답에 도달한 생각의 구조를 드러냅니다.</b></p>
+</div>
+</section>
+</main>
+
+<footer><p>1·2단원 성취수준 A~E에 따른 수행과제, 예시 코드, 상세 설명, 5지선다형 및 단답형 평가를 포함한 12차시 수행평가 자료이다.</p></footer>
+<button class="print" onclick="window.print()">인쇄 / PDF</button>
+
+<script>
+function normalizeText(value){
+  return value.trim().toLowerCase().replace(/\s+/g,'').replace(/[()]/g,'');
+}
+
+document.querySelectorAll('.check-one').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const q=btn.closest('.question');
+    const ans=q.dataset.answer.split(',').sort().join(',');
+    const selected=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort().join(',');
+    const fb=q.querySelector('.feedback');
+
+    if(!fb.dataset.original){
+      fb.dataset.original=fb.innerHTML;
+    }
+
+    const ok=selected===ans;
+    fb.className='feedback show '+(ok?'correct':'wrong');
+    fb.innerHTML=(ok?'<b>정답입니다.</b><br>':'<b>다시 확인하세요.</b><br>')+fb.dataset.original;
+    updateProgress();
+  });
+});
+
+function gradeMCQ(){
+  let score=0;
+  let reports=[];
+
+  document.querySelectorAll('.mcq').forEach((q,i)=>{
+    const ans=q.dataset.answer.split(',').sort();
+    const selected=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort();
+    const ok=JSON.stringify(ans)===JSON.stringify(selected);
+
+    if(ok) score++;
+
+    const fb=q.querySelector('.feedback');
+    if(!fb.dataset.original){
+      fb.dataset.original=fb.innerHTML;
+    }
+
+    fb.className='feedback show '+(ok?'correct':'wrong');
+    fb.innerHTML=(ok?'<b>정답입니다.</b><br>':'<b>오답입니다.</b><br>')+fb.dataset.original;
+
+    const text=fb.dataset.original.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+    reports.push(
+      `${String.fromCharCode(65+i)} 수준 5지선다: ${ok?'정답':'오답'} / 응답 ${selected.join(',')||'미응답'} / 정답 ${ans.join(',')} / 풀이: ${text}`
+    );
+  });
+
+  return {score, reports};
+}
+
+function gradeShort(){
+  let score=0;
+  let reports=[];
+
+  document.querySelectorAll('.short').forEach((input,i)=>{
+    const answers=input.dataset.answer.split('|').map(normalizeText);
+    const response=normalizeText(input.value);
+    const ok=response!=='' && answers.includes(response);
+
+    if(ok) score++;
+
+    input.style.borderColor=ok?'#127a50':'#bc2f3e';
+    input.style.background=ok?'#eefaf5':'#fff1f3';
+
+    const item=input.closest('.short-item');
+    let fb=item.querySelector('.feedback');
+
+    if(!fb){
+      fb=document.createElement('div');
+      item.appendChild(fb);
+    }
+
+    fb.className='feedback show '+(ok?'correct':'wrong');
+    fb.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답 예시: ${input.dataset.answer.split('|')[0]}<br>${input.dataset.explain}`;
+
+    const label=item.querySelector('b').textContent;
+    reports.push(
+      `${label} ${ok?'정답':'오답'} / 응답 ${input.value.trim()||'미응답'} / 정답 예시 ${input.dataset.answer.split('|')[0]} / 풀이: ${input.dataset.explain}`
+    );
+  });
+
+  return {score, reports};
+}
+
+function updateProgress(){
+  let answered=0;
+
+  document.querySelectorAll('.mcq').forEach(q=>{
+    if(q.querySelector('input:checked')) answered++;
+  });
+
+  document.querySelectorAll('.short').forEach(input=>{
+    if(input.value.trim()) answered++;
+  });
+
+  const total=25;
+  const pct=Math.round(answered/total*100);
+
+  document.getElementById('progress').style.width=pct+'%';
+  document.getElementById('progressText').textContent=pct+'%';
+}
+
+document.addEventListener('change',updateProgress);
+document.addEventListener('input',updateProgress);
+
+function gradeAll(){
+  const sid=document.getElementById('studentId').value.trim();
+  const name=document.getElementById('studentName').value.trim();
+
+  if(!sid || !name){
+    alert('학번과 이름을 입력하세요.');
+    return;
+  }
+
+  const mcq=gradeMCQ();
+  const short=gradeShort();
+
+  const raw=mcq.score+short.score;
+  const total=25;
+  const score=Math.round(raw/total*100);
+  const now=new Date();
+
+  const stamp=now.getFullYear()
+    +String(now.getMonth()+1).padStart(2,'0')
+    +String(now.getDate()).padStart(2,'0')+'_'
+    +String(now.getHours()).padStart(2,'0')
+    +String(now.getMinutes()).padStart(2,'0')
+    +String(now.getSeconds()).padStart(2,'0');
+
+  const lines=[
+    '정보과학 12차시 1·2단원 성취수준별 수행평가 결과',
+    `학번: ${sid}`,
+    `이름: ${name}`,
+    `자동채점 점수: ${score}점 (${raw}/${total})`,
+    `5지선다형: ${mcq.score}/5`,
+    `단답형: ${short.score}/20`,
+    `응시시각: ${now.toLocaleString('ko-KR')}`,
+    '',
+    '[5지선다형 결과]',
+    ...mcq.reports,
+    '',
+    '[단답형 결과]',
+    ...short.reports,
+    '',
+    '[교사 수행 산출물 평가 안내]',
+    '문제 분석 20점 / 알고리즘 설계 20점 / 코드 구현 30점 / 검증과 개선 15점 / 설명과 표현 15점',
+    '실제 수행 산출물 점수는 교사가 별도로 평가합니다.'
+  ];
+
+  const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});
+  const link=document.createElement('a');
+
+  link.href=URL.createObjectURL(blob);
+  link.download=`${sid}_${name}_${score}_12차시_수행평가_${stamp}.txt`;
+  link.click();
+
+  URL.revokeObjectURL(link.href);
+
+  const panel=document.getElementById('resultPanel');
+  panel.classList.add('show');
+  panel.innerHTML=`
+    <h3>자동채점 결과</h3>
+    <p class="big">${score}점</p>
+    <p>5지선다형 ${mcq.score}/5 · 단답형 ${short.score}/20</p>
+    <p><b>${sid} ${name}</b> 학생의 결과 파일을 저장했습니다.</p>
+    <p class="small">실제 코드 산출물과 설명은 공통 루브릭으로 별도 평가합니다.</p>
+  `;
+}
+
+function resetAll(){
+  document.querySelectorAll('input[type=checkbox]').forEach(x=>x.checked=false);
+  document.querySelectorAll('.short').forEach(input=>{
+    input.value='';
+    input.style.borderColor='';
+    input.style.background='';
+  });
+
+  document.querySelectorAll('.feedback').forEach(fb=>{
+    fb.className='feedback';
+    if(fb.dataset.original){
+      fb.innerHTML=fb.dataset.original;
+    }else{
+      fb.remove();
+    }
+  });
+
+  document.getElementById('resultPanel').className='result-panel';
+  document.getElementById('resultPanel').innerHTML='';
+  updateProgress();
+}
+</script>
+</body>
+</html>

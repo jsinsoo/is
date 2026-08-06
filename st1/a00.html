@@ -1,0 +1,568 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2022 개정 고등학교 정보과학 2학기 10차시 연간 계획서</title>
+<style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --sky:#eaf4ff; --green:#1f8a70;
+  --mint:#eaf8f3; --orange:#f59e0b; --rose:#d94f70; --line:#d8e2ec;
+  --ink:#1d2733; --muted:#5c6b7a; --paper:#ffffff; --bg:#f4f7fb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.65}
+header{background:linear-gradient(135deg,#17324d,#2f6fb3);color:white;padding:46px 24px 38px}
+.header-inner{max-width:1280px;margin:auto}
+.kicker{font-size:.92rem;letter-spacing:.08em;opacity:.9}
+h1{font-size:clamp(2rem,4vw,3.3rem);line-height:1.22;margin:.35rem 0 .7rem}
+.subtitle{max-width:940px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+.badge{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:7px 12px;font-size:.88rem}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1280px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 14px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);padding:8px 11px;border-radius:8px;font-weight:700;font-size:.9rem}
+nav a:hover{background:var(--sky)}
+main{max-width:1280px;margin:0 auto;padding:26px 18px 70px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:20px 0;box-shadow:0 6px 20px rgba(23,50,77,.05)}
+h2{color:var(--navy);font-size:1.65rem;margin:0 0 18px;border-left:7px solid var(--blue);padding-left:12px}
+h3{color:var(--navy);margin:22px 0 10px}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:15px 17px;border-radius:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:14px;padding:17px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.06rem;margin-bottom:5px}
+.metric{font-size:2rem;font-weight:800;color:var(--blue)}
+table{width:100%;border-collapse:collapse;margin:13px 0;font-size:.93rem}
+th,td{border:1px solid var(--line);padding:10px 11px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+.session{border:1px solid var(--line);border-radius:16px;margin:18px 0;overflow:hidden}
+.session-head{display:flex;justify-content:space-between;gap:12px;align-items:center;background:linear-gradient(90deg,#eaf4ff,#f8fbff);padding:15px 18px;border-bottom:1px solid var(--line)}
+.session-title{font-size:1.18rem;font-weight:800;color:var(--navy)}
+.session-meta{color:var(--muted);font-size:.88rem}
+.session-body{padding:17px 18px}
+.cols{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
+@media(max-width:850px){.cols{grid-template-columns:1fr}.session-head{align-items:flex-start;flex-direction:column}}
+ul{margin:7px 0;padding-left:21px}
+li{margin:3px 0}
+.code-list{background:#101a25;color:#eaf2f8;border-radius:12px;padding:14px 16px;font-family:Consolas,monospace;font-size:.88rem;white-space:pre-wrap}
+.tag{display:inline-block;padding:3px 8px;border-radius:999px;font-size:.78rem;font-weight:700;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff1f4;color:#a63d5b}.t4{background:#fff7e5;color:#9a6500}
+.standard{border-left:5px solid var(--green);background:var(--mint);padding:12px 14px;border-radius:9px;margin:8px 0}
+.check{font-weight:700;color:var(--green)}
+.compact td,.compact th{padding:8px;font-size:.88rem}
+details{border:1px solid var(--line);border-radius:12px;margin:10px 0;background:#fff}
+summary{cursor:pointer;font-weight:800;color:var(--navy);padding:13px 15px}
+details>div{padding:0 15px 15px}
+footer{max-width:1280px;margin:0 auto 40px;padding:0 18px;color:#607080;font-size:.86rem}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:800;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+@media print{
+  body{background:white}.print,nav{display:none}section{box-shadow:none;break-inside:avoid}
+  .session{break-inside:avoid}header{padding:28px 18px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="kicker">2022 개정 교육과정 · 고등학교 정보과학 · 2학기 1차고사 이전</div>
+    <h1>Ⅰ 프로그래밍 · Ⅱ 데이터 구조<br>10차시 압축형 연간 계획서</h1>
+    <div class="subtitle">
+      총 12차시 중 10차시는 교과서 Ⅰ·Ⅱ단원의 전 개념과 필수 코드를 학습하고,
+      마지막 2차시는 학습 내용 정리와 수행평가로 운영하도록 설계한 수업 계획이다.
+    </div>
+    <div class="badges">
+      <span class="badge">Ⅰ단원 4차시</span>
+      <span class="badge">Ⅱ단원 6차시</span>
+      <span class="badge">성취기준 7개 전부 반영</span>
+      <span class="badge">매 차시 개념·코드·문제 해결·형성평가</span>
+      <span class="badge">1차고사 대비 누락 방지형</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#overview">운영 개요</a>
+    <a href="#standards">성취기준</a>
+    <a href="#map">10차시 배당</a>
+    <a href="#sessions">차시별 계획</a>
+    <a href="#coverage">전 개념·코드 점검표</a>
+    <a href="#assessment">평가 계획</a>
+    <a href="#review">11~12차시</a>
+  </div>
+</nav>
+
+<main>
+<section id="overview">
+<h2>1. 운영 개요</h2>
+<div class="grid">
+  <div class="card"><strong>전체 수업</strong><div class="metric">12차시</div>1차고사 이전 2학기 운영</div>
+  <div class="card"><strong>교과 학습</strong><div class="metric">10차시</div>Ⅰ 프로그래밍 + Ⅱ 데이터 구조</div>
+  <div class="card"><strong>정리·보충</strong><div class="metric">1차시</div>개념망, 코드 추적, 오개념 보정</div>
+  <div class="card"><strong>수행평가</strong><div class="metric">1차시</div>통합 문제 해결 프로그래밍</div>
+</div>
+<div class="notice" style="margin-top:16px">
+  <strong>압축 운영 원칙:</strong> 교과서의 소단원 순서는 유지하되, 설명 중심 수업을 줄이고
+  ‘핵심 개념 20분 → 코드 실행·추적 20분 → 변형 문제 25분 → 형성평가 10분’의 공통 구조로 운영한다.
+  모든 차시에서 이전 차시 개념을 코드 안에 다시 사용하여 반복 노출한다.
+</div>
+
+<h3>단원별 시간 배당</h3>
+<table>
+<tr><th>단원</th><th>교과서 범위</th><th>차시</th><th>배당 근거</th></tr>
+<tr><td>Ⅰ. 프로그래밍</td><td>함수, 재귀 함수, 반복 구조와 재귀 구조</td><td>1~4차시</td><td>함수 1차시 + 재귀 함수 2차시 + 구조 비교·통합 1차시</td></tr>
+<tr><td>Ⅱ. 데이터 구조</td><td>큐, 스택, 그래프, 트리</td><td>5~10차시</td><td>선형 구조 3차시 + 비선형 구조 3차시</td></tr>
+<tr><td>정리·평가</td><td>Ⅰ·Ⅱ단원 통합</td><td>11~12차시</td><td>개념 정리 1차시 + 수행평가 1차시</td></tr>
+</table>
+</section>
+
+<section id="standards">
+<h2>2. 2022 고등학교 정보과학 성취기준 전체 반영</h2>
+<div class="standard"><b>[12정과01-01]</b> 함수 정의와 호출의 원리를 이해하고, 매개변수를 활용한 함수 프로그램을 작성한다.</div>
+<div class="standard"><b>[12정과01-02]</b> 주어진 문제에서 적용할 수 있는 재귀관계를 파악하고, 재귀구조를 활용하여 프로그램을 작성한다.</div>
+<div class="standard"><b>[12정과01-03]</b> 반복구조와 재귀구조를 활용하여 문제를 해결하고, 두 방식의 차이를 비교·분석한다.</div>
+<div class="standard"><b>[12정과02-01]</b> 스택과 큐의 원리를 이해하고, 순차적인 데이터 구조를 이용하여 스택과 큐를 구현한다.</div>
+<div class="standard"><b>[12정과02-02]</b> 스택, 큐를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</div>
+<div class="standard"><b>[12정과02-03]</b> 인접행렬과 인접리스트를 활용하여 트리와 그래프를 구현한다.</div>
+<div class="standard"><b>[12정과02-04]</b> 트리, 그래프를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</div>
+
+<h3>성취기준-차시 연계표</h3>
+<table class="compact">
+<tr><th>성취기준</th><th>주 학습 차시</th><th>보강·재확인 차시</th><th>최종 확인 방법</th></tr>
+<tr><td>[12정과01-01]</td><td>1</td><td>2, 4</td><td>매개변수·반환값·변수 범위를 포함한 함수 작성</td></tr>
+<tr><td>[12정과01-02]</td><td>2, 3</td><td>4</td><td>종료 조건과 재귀 관계를 직접 설계</td></tr>
+<tr><td>[12정과01-03]</td><td>4</td><td>11, 12</td><td>동일 문제의 반복/재귀 구현 및 비교</td></tr>
+<tr><td>[12정과02-01]</td><td>5, 6</td><td>7</td><td>리스트와 라이브러리로 큐·스택 구현</td></tr>
+<tr><td>[12정과02-02]</td><td>6, 7</td><td>10, 12</td><td>실생활·수식·탐색 문제에 구조 선택</td></tr>
+<tr><td>[12정과02-03]</td><td>8, 9</td><td>10</td><td>인접행렬·인접리스트 구현 및 변환</td></tr>
+<tr><td>[12정과02-04]</td><td>8~10</td><td>12</td><td>그래프·트리 기반 문제 해결 프로그램</td></tr>
+</table>
+</section>
+
+<section id="map">
+<h2>3. 10차시 전체 배당표</h2>
+<table>
+<tr><th>차시</th><th>대단원·중단원</th><th>핵심 개념</th><th>필수 코드 산출물</th><th>성취기준</th></tr>
+<tr><td>1</td><td>Ⅰ-01 함수</td><td>정의, 호출, 복귀, 매개변수, 반환값, 지역·전역 변수</td><td>4종 함수 + 변수 범위 실험</td><td>01-01</td></tr>
+<tr><td>2</td><td>Ⅰ-02 재귀 함수 ①</td><td>재귀 정의, 호출 스택, 종료 조건, 단일 호출</td><td>카운트다운, 합, 팩토리얼</td><td>01-02</td></tr>
+<tr><td>3</td><td>Ⅰ-02 재귀 함수 ②</td><td>매개·전역 변수, 다중 호출, 피보나치, 하노이 탑</td><td>피보나치, 하노이 탑, 호출 횟수</td><td>01-02</td></tr>
+<tr><td>4</td><td>Ⅰ 통합</td><td>반복 구조와 재귀 구조 비교, 재귀 문제 해결</td><td>합·팩토리얼·피보나치 반복/재귀 비교</td><td>01-01~03</td></tr>
+<tr><td>5</td><td>Ⅱ-01 큐</td><td>FIFO, front/rear, 삽입·삭제, 리스트·deque</td><td>큐 직접 구현 + deque 구현</td><td>02-01</td></tr>
+<tr><td>6</td><td>Ⅱ-01 스택</td><td>LIFO, top, push/pop, 리스트 구현</td><td>스택 구현, 괄호 검사, 뒤집기</td><td>02-01,02</td></tr>
+<tr><td>7</td><td>Ⅱ 선형 구조 통합</td><td>큐·스택 선택 기준, 응용 문제, 상태 추적</td><td>프린터 큐, 후위 표기/미로 경로</td><td>02-01,02</td></tr>
+<tr><td>8</td><td>Ⅱ-02 그래프</td><td>정점·간선, 방향/무방향, 가중치, 인접행렬·리스트</td><td>그래프 2방식 구현, 순회 기초</td><td>02-03,04</td></tr>
+<tr><td>9</td><td>Ⅱ-02 트리</td><td>루트·부모·자식·리프·깊이·높이, 표현·순회</td><td>트리 인접리스트, 전위·중위·후위 순회</td><td>02-03,04</td></tr>
+<tr><td>10</td><td>Ⅱ 통합</td><td>그래프·트리 활용, BFS/DFS 연결, 구조 선택</td><td>BFS·DFS, 연결 요소/경로 탐색</td><td>02-02~04</td></tr>
+</table>
+</section>
+
+<section id="sessions">
+<h2>4. 차시별 상세 교수·학습 계획</h2>
+
+<div class="session">
+<div class="session-head"><div class="session-title">1차시 · 함수의 정의와 호출 및 함수 설계</div><div class="session-meta">Ⅰ-01 전체 압축</div></div>
+<div class="session-body"><div class="cols">
+<div>
+<h3>개념</h3>
+<ul>
+<li>함수의 필요성: 분해, 추상화, 재사용, 유지보수</li>
+<li><code>def</code>, 함수 이름, 매개변수, 인수, 함수 본문, 호출, 복귀</li>
+<li>반환값이 없는 함수와 있는 함수, 단일·다중 매개변수, 기본 흐름</li>
+<li>지역 변수, 전역 변수, 이름의 유효 범위, <code>global</code> 사용 시 주의</li>
+</ul>
+<h3>수업 활동</h3>
+<ul><li>호출 전·후 실행 순서를 화살표로 추적</li><li>함수를 사용하지 않은 코드와 함수화 코드 비교</li><li>매개변수와 반환값을 바꾸어 재사용성 확인</li></ul>
+</div>
+<div>
+<h3>필수 코드</h3>
+<div class="code-list">def greet():
+    print("안녕하세요")
+
+def add(a, b):
+    return a + b
+
+def min_max(data):
+    return min(data), max(data)
+
+total = 0
+def accumulate(x):
+    global total
+    total += x
+    return total</div>
+<p><span class="tag t1">호출·복귀 추적</span><span class="tag t2">매개변수</span><span class="tag t3">반환값</span><span class="tag t4">지역·전역 변수</span></p>
+<b>형성평가:</b> 실행 결과 3문항 + 함수 설계 1문항
+</div></div></div></div>
+
+<div class="session">
+<div class="session-head"><div class="session-title">2차시 · 재귀 함수의 정의, 호출과 복귀, 단일 호출</div><div class="session-meta">Ⅰ-02-1 + Ⅰ-02-2 일부</div></div>
+<div class="session-body"><div class="cols">
+<div>
+<h3>개념</h3>
+<ul>
+<li>자기 자신을 호출하는 함수, 큰 문제와 같은 형태의 작은 문제</li>
+<li>종료 조건(base case)과 재귀 단계(recursive case)</li>
+<li>호출 프레임의 생성, 복귀 순서, 무한 재귀와 재귀 깊이</li>
+<li>매개변수 변화로 현재 상태 표현</li>
+</ul>
+<h3>필수 문제</h3>
+<ul><li>n부터 1까지 출력</li><li>1부터 n까지의 합</li><li>팩토리얼</li><li>문자열 역순 출력</li></ul>
+</div>
+<div>
+<div class="code-list">def countdown(n):
+    if n == 0:
+        return
+    print(n)
+    countdown(n - 1)
+
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)</div>
+<p><span class="tag t1">종료 조건</span><span class="tag t2">단일 호출</span><span class="tag t4">호출 스택</span></p>
+<b>형성평가:</b> 종료 조건 찾기, 호출·복귀 순서 그리기
+</div></div></div></div>
+
+<div class="session">
+<div class="session-head"><div class="session-title">3차시 · 재귀 함수 설계: 다중 호출, 피보나치, 하노이 탑</div><div class="session-meta">Ⅰ-02-2 전체</div></div>
+<div class="session-body"><div class="cols">
+<div>
+<h3>개념</h3>
+<ul>
+<li>재귀 관계를 식과 코드로 표현</li>
+<li>매개변수·전역 변수로 상태와 누적 결과 관리</li>
+<li>단일 호출과 다중 호출의 차이</li>
+<li>다중 호출의 중복 계산과 호출 횟수 증가</li>
+<li>하노이 탑: n-1개 이동 → 큰 원판 이동 → n-1개 이동</li>
+</ul>
+</div>
+<div>
+<div class="code-list">def fib(n):
+    if n <= 1:
+        return n
+    return fib(n - 2) + fib(n - 1)
+
+def hanoi(n, start, via, end):
+    if n == 1:
+        print(start, "->", end)
+        return
+    hanoi(n - 1, start, end, via)
+    print(start, "->", end)
+    hanoi(n - 1, via, start, end)</div>
+<b>형성평가:</b> fib(5) 호출 트리, 하노이 탑 3개 이동 순서
+</div></div></div></div>
+
+<div class="session">
+<div class="session-head"><div class="session-title">4차시 · 반복 구조와 재귀 구조 비교 및 Ⅰ단원 통합</div><div class="session-meta">Ⅰ-02-3 + 대단원 마무리</div></div>
+<div class="session-body"><div class="cols">
+<div>
+<h3>개념</h3>
+<ul>
+<li>반복 구조와 재귀 구조의 표현 방식, 종료 방식, 메모리 사용 비교</li>
+<li>반복→재귀, 재귀→반복 변환</li>
+<li>재귀가 자연스러운 문제와 반복이 효율적인 문제 구별</li>
+<li>정확성, 가독성, 호출 깊이, 중복 계산 관점의 비교</li>
+</ul>
+<h3>통합 과제</h3>
+<ul><li>합, 팩토리얼, 최대공약수 중 2개를 두 방식으로 구현</li><li>코드 길이·호출 횟수·메모리·이해 용이성 비교표 작성</li></ul>
+</div>
+<div>
+<div class="code-list">def sum_iter(n):
+    result = 0
+    for i in range(1, n + 1):
+        result += i
+    return result
+
+def sum_rec(n):
+    if n == 0:
+        return 0
+    return n + sum_rec(n - 1)</div>
+<b>형성평가:</b> 구조 선택 이유를 근거와 함께 서술
+</div></div></div></div>
+
+<div class="session">
+<div class="session-head"><div class="session-title">5차시 · 큐의 개념, 구현, 라이브러리 활용</div><div class="session-meta">Ⅱ-01-1 큐 전체</div></div>
+<div class="session-body"><div class="cols">
+<div>
+<h3>개념</h3>
+<ul>
+<li>선입선출(FIFO), front와 rear, 삽입과 삭제</li>
+<li>빈 큐, 큐의 크기, 맨 앞 데이터 확인</li>
+<li>리스트 기반 구현의 특징과 <code>pop(0)</code>의 이동 비용</li>
+<li><code>collections.deque</code>의 <code>append</code>, <code>popleft</code></li>
+<li>대기열, 작업 처리, 순서 보존 문제</li>
+</ul>
+</div>
+<div>
+<div class="code-list">from collections import deque
+
+q = deque()
+q.append(10)
+q.append(20)
+front = q[0]
+removed = q.popleft()
+
+# 리스트로 원리 구현
+queue = []
+queue.append(1)
+queue.append(2)
+queue.pop(0)</div>
+<b>형성평가:</b> 연산 후 큐 상태 추적 + 직접 구현
+</div></div></div></div>
+
+<div class="session">
+<div class="session-head"><div class="session-title">6차시 · 스택의 개념, 구현, 문제 해결</div><div class="session-meta">Ⅱ-01-2 스택 전체</div></div>
+<div class="session-body"><div class="cols">
+<div>
+<h3>개념</h3>
+<ul>
+<li>후입선출(LIFO), top, push, pop, peek</li>
+<li>리스트의 <code>append</code>, <code>pop</code>으로 구현</li>
+<li>함수 호출과 스택의 관계</li>
+<li>문자열 뒤집기, 괄호 검사, 실행 취소, 후위 표기</li>
+</ul>
+</div>
+<div>
+<div class="code-list">def is_valid_parentheses(text):
+    stack = []
+    for ch in text:
+        if ch == '(':
+            stack.append(ch)
+        elif ch == ')':
+            if not stack:
+                return False
+            stack.pop()
+    return not stack</div>
+<b>형성평가:</b> 잘못된 괄호 문자열 반례 찾기
+</div></div></div></div>
+
+<div class="session">
+<div class="session-head"><div class="session-title">7차시 · 큐·스택 통합 응용과 구조 선택</div><div class="session-meta">Ⅱ-01 중단원 마무리</div></div>
+<div class="session-body"><div class="cols">
+<div>
+<h3>개념·활동</h3>
+<ul>
+<li>문제의 데이터 입·출력 순서로 적절한 구조 결정</li>
+<li>큐와 스택의 공통점·차이점 비교</li>
+<li>언더플로, 빈 구조 검사, 연산 순서 오류</li>
+<li>프린터 대기열 또는 카드 버리기 문제</li>
+<li>괄호 검사 또는 후위 표기 계산 문제</li>
+</ul>
+</div>
+<div>
+<div class="code-list">from collections import deque
+
+def printer_queue(priorities):
+    q = deque(enumerate(priorities))
+    order = []
+    while q:
+        item = q.popleft()
+        if any(item[1] < x[1] for x in q):
+            q.append(item)
+        else:
+            order.append(item[0])
+    return order</div>
+<b>형성평가:</b> 같은 자료를 큐와 스택에 넣었을 때 출력 순서 비교
+</div></div></div></div>
+
+<div class="session">
+<div class="session-head"><div class="session-title">8차시 · 그래프의 개념, 표현, 구현, 활용</div><div class="session-meta">Ⅱ-02-1 그래프 전체</div></div>
+<div class="session-body"><div class="cols">
+<div>
+<h3>개념</h3>
+<ul>
+<li>정점, 간선, 인접, 차수, 경로, 연결</li>
+<li>방향·무방향 그래프, 가중·비가중 그래프</li>
+<li>인접행렬과 인접리스트의 구조와 장단점</li>
+<li>정점·간선 추가, 이웃 정점 조회</li>
+<li>교통망, 친구 관계, 연결 관계 모델링</li>
+</ul>
+</div>
+<div>
+<div class="code-list">n = 5
+matrix = [[0] * n for _ in range(n)]
+edges = [(0,1), (0,2), (1,3), (2,4)]
+for a, b in edges:
+    matrix[a][b] = matrix[b][a] = 1
+
+graph = [[] for _ in range(n)]
+for a, b in edges:
+    graph[a].append(b)
+    graph[b].append(a)</div>
+<b>형성평가:</b> 행렬↔리스트 변환, 공간 사용 비교
+</div></div></div></div>
+
+<div class="session">
+<div class="session-head"><div class="session-title">9차시 · 트리의 개념, 표현, 구현, 순회</div><div class="session-meta">Ⅱ-02-2 트리 전체</div></div>
+<div class="session-body"><div class="cols">
+<div>
+<h3>개념</h3>
+<ul>
+<li>루트, 부모, 자식, 형제, 리프, 서브트리, 깊이, 높이</li>
+<li>트리와 일반 그래프의 관계, 순환이 없는 연결 구조</li>
+<li>인접리스트 및 자식 리스트 표현</li>
+<li>이진 트리의 전위·중위·후위 순회</li>
+<li>파일 시스템, 조직도, 식 구조 활용</li>
+</ul>
+</div>
+<div>
+<div class="code-list">tree = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F', 'G'],
+    'D': [], 'E': [], 'F': [], 'G': []
+}
+
+def preorder(node):
+    print(node, end=' ')
+    for child in tree[node]:
+        preorder(child)</div>
+<b>형성평가:</b> 주어진 트리의 순회 결과 작성
+</div></div></div></div>
+
+<div class="session">
+<div class="session-head"><div class="session-title">10차시 · 그래프·트리 통합 문제 해결과 Ⅱ단원 마무리</div><div class="session-meta">Ⅱ-02 중단원·대단원 마무리</div></div>
+<div class="session-body"><div class="cols">
+<div>
+<h3>개념·활동</h3>
+<ul>
+<li>그래프/트리, 인접행렬/인접리스트 선택 기준</li>
+<li>큐를 이용한 너비 우선 탐색, 스택·재귀를 이용한 깊이 우선 탐색</li>
+<li>방문 여부 배열, 중복 방문 방지, 연결 요소와 경로 탐색</li>
+<li>Ⅰ단원 재귀와 Ⅱ단원 자료 구조의 연결</li>
+<li>1차고사 범위 전체 개념망 완성</li>
+</ul>
+</div>
+<div>
+<div class="code-list">from collections import deque
+
+def bfs(graph, start):
+    visited = [False] * len(graph)
+    q = deque([start])
+    visited[start] = True
+    order = []
+    while q:
+        v = q.popleft()
+        order.append(v)
+        for nxt in graph[v]:
+            if not visited[nxt]:
+                visited[nxt] = True
+                q.append(nxt)
+    return order
+
+def dfs(graph, v, visited, order):
+    visited[v] = True
+    order.append(v)
+    for nxt in graph[v]:
+        if not visited[nxt]:
+            dfs(graph, nxt, visited, order)</div>
+<b>형성평가:</b> BFS·DFS 방문 순서와 사용 구조 설명
+</div></div></div></div>
+</section>
+
+<section id="coverage">
+<h2>5. 교과서 전 개념·필수 코드 누락 방지 점검표</h2>
+<details open><summary>Ⅰ. 프로그래밍</summary><div>
+<table class="compact">
+<tr><th>교과서 항목</th><th>개념 요소</th><th>코드 요소</th><th>차시</th></tr>
+<tr><td>함수의 정의</td><td>함수 필요성, def, 이름, 본문</td><td>인수 없는 함수</td><td>1</td></tr>
+<tr><td>함수의 호출과 복귀</td><td>호출 흐름, 복귀 지점</td><td>호출 전·후 출력 추적</td><td>1</td></tr>
+<tr><td>반환값과 매개변수</td><td>인수/매개변수, return, 다중 반환</td><td>계산·최솟값/최댓값 함수</td><td>1</td></tr>
+<tr><td>지역·전역 변수</td><td>변수 범위, global</td><td>누적값 함수, 범위 실험</td><td>1</td></tr>
+<tr><td>재귀 함수 정의</td><td>자기 호출, 종료 조건</td><td>카운트다운, 합, 팩토리얼</td><td>2</td></tr>
+<tr><td>재귀 호출과 복귀</td><td>호출 스택, 복귀 순서</td><td>호출 단계 추적</td><td>2</td></tr>
+<tr><td>매개·전역 변수 사용</td><td>상태 전달, 누적 관리</td><td>재귀 누적·호출 횟수</td><td>2~3</td></tr>
+<tr><td>단일·다중 호출</td><td>호출 트리, 중복 계산</td><td>피보나치</td><td>3</td></tr>
+<tr><td>반복·재귀 비교</td><td>표현, 종료, 메모리, 효율</td><td>동일 문제 2방식 구현</td><td>4</td></tr>
+<tr><td>재귀 문제 해결</td><td>재귀 관계, 문제 분해</td><td>하노이 탑, 최대공약수 등</td><td>3~4</td></tr>
+</table>
+</div></details>
+
+<details open><summary>Ⅱ. 데이터 구조</summary><div>
+<table class="compact">
+<tr><th>교과서 항목</th><th>개념 요소</th><th>코드 요소</th><th>차시</th></tr>
+<tr><td>큐의 개념</td><td>FIFO, front/rear, 삽입·삭제</td><td>상태 추적</td><td>5</td></tr>
+<tr><td>큐의 구현</td><td>리스트, deque</td><td>append, pop(0), popleft</td><td>5</td></tr>
+<tr><td>큐 활용</td><td>대기열, 순서 처리</td><td>프린터 큐/카드 문제</td><td>5,7</td></tr>
+<tr><td>스택의 개념</td><td>LIFO, top, push/pop</td><td>상태 추적</td><td>6</td></tr>
+<tr><td>스택의 구현</td><td>리스트 기반</td><td>append, pop, peek</td><td>6</td></tr>
+<tr><td>스택 활용</td><td>괄호, 역순, 후위식</td><td>괄호 검사</td><td>6,7</td></tr>
+<tr><td>그래프의 개념</td><td>정점, 간선, 방향, 가중치, 경로</td><td>입력 모델링</td><td>8</td></tr>
+<tr><td>그래프의 표현</td><td>인접행렬, 인접리스트</td><td>양방향 간선 저장</td><td>8</td></tr>
+<tr><td>그래프의 구현</td><td>정점·간선 추가, 이웃 조회</td><td>행렬/리스트 변환</td><td>8</td></tr>
+<tr><td>그래프 활용</td><td>연결·경로·순회</td><td>BFS, DFS</td><td>8,10</td></tr>
+<tr><td>트리의 개념</td><td>루트, 부모·자식, 리프, 깊이·높이</td><td>구조 추적</td><td>9</td></tr>
+<tr><td>트리의 표현</td><td>인접리스트, 자식 리스트</td><td>트리 저장</td><td>9</td></tr>
+<tr><td>트리의 구현</td><td>재귀 순회</td><td>전위·중위·후위</td><td>9</td></tr>
+<tr><td>트리 활용</td><td>계층 구조, 경로, 탐색</td><td>서브트리/순회 문제</td><td>9,10</td></tr>
+</table>
+<p class="check">✓ 교과서 목차의 모든 소단원 및 2022 개정 성취기준의 핵심 내용 요소를 1회 이상 직접 구현하고, 2회 이상 재사용하도록 배치함.</p>
+</div></details>
+</section>
+
+<section id="assessment">
+<h2>6. 매 차시 평가 및 1차고사 연계</h2>
+<table>
+<tr><th>평가 유형</th><th>운영</th><th>내용</th><th>비율 예시</th></tr>
+<tr><td>진단 확인</td><td>수업 시작 5분</td><td>전 차시 코드 1문항, 핵심 용어 2문항</td><td>피드백용</td></tr>
+<tr><td>코드 추적</td><td>매 차시</td><td>변수, 자료 구조 상태, 함수 호출·복귀, 방문 순서</td><td>30%</td></tr>
+<tr><td>코드 완성</td><td>매 차시</td><td>빈칸, 오류 수정, 연산 추가</td><td>30%</td></tr>
+<tr><td>문제 해결</td><td>차시 후반</td><td>새 상황에 적합한 함수·자료 구조를 선택하여 구현</td><td>30%</td></tr>
+<tr><td>설명·비교</td><td>4·7·10차시</td><td>반복/재귀, 큐/스택, 행렬/리스트 비교</td><td>10%</td></tr>
+</table>
+<h3>1차고사 문항 구성 권장</h3>
+<ul>
+<li>개념 이해 25%: 용어, 원리, 구조의 특징</li>
+<li>실행 결과·상태 추적 30%: 함수 호출, 재귀 복귀, 큐·스택 상태, 그래프 순회</li>
+<li>코드 완성·오류 수정 25%: 종료 조건, 빈 구조 검사, visited 처리</li>
+<li>문제 해결·비교 분석 20%: 적절한 구조 선택과 근거, 반복·재귀 비교</li>
+</ul>
+</section>
+
+<section id="review">
+<h2>7. 11~12차시 운영안</h2>
+<div class="grid">
+<div class="card">
+<strong>11차시 · 학습 내용 정리</strong>
+<ul>
+<li>Ⅰ·Ⅱ단원 전체 개념 지도 작성</li>
+<li>성취기준별 핵심 문제 1개씩 해결</li>
+<li>함수→재귀→스택→DFS, 큐→BFS 연결 구조 정리</li>
+<li>오답 유형별 보충: 종료 조건, 변수 범위, 빈 구조, 방문 처리</li>
+<li>1차고사형 코드 추적·서술 문제 풀이</li>
+</ul>
+</div>
+<div class="card">
+<strong>12차시 · 수행평가</strong>
+<ul>
+<li>주제: 관계망 또는 미로 탐색 프로그램</li>
+<li>필수 요소: 함수 2개 이상, 큐 또는 스택, 그래프 또는 트리</li>
+<li>선택 요소: 재귀 DFS와 반복 DFS 비교</li>
+<li>산출물: 소스 코드, 실행 결과, 구조 선택 이유, 테스트 결과</li>
+<li>평가: 정확성 35, 구조 활용 25, 코드 품질 20, 설명 10, 테스트 10</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section>
+<h2>8. 수업 운영을 위한 최소 필수 준비물</h2>
+<ul>
+<li>파이썬 실행 환경: IDLE, Colab, Jupyter 또는 VS Code 중 1개</li>
+<li>차시별 1쪽 핵심 개념지 + 1쪽 코드 실습지</li>
+<li>교사용 실행 추적판: 함수 호출 스택, 큐·스택 상태, 그래프 방문 배열</li>
+<li>학생용 공통 코드 템플릿: 입력 → 함수 정의 → 자료 구조 생성 → 처리 → 출력</li>
+<li>차시 종료 3분 점검표: “설명할 수 있음 / 코드로 구현 가능 / 새 문제에 적용 가능”</li>
+</ul>
+</section>
+</main>
+
+<footer>
+  <p><b>자료 구성 근거:</b> 업로드한 교과서 차례의 Ⅰ단원 ‘함수·재귀 함수’와 Ⅱ단원 ‘큐·스택·그래프·트리’ 전 항목,
+  2022 개정 고등학교 정보과학 교육과정의 프로그래밍 및 데이터 구조 성취기준을 대응하여 재구성함.</p>
+</footer>
+<button class="print" onclick="window.print()">인쇄 / PDF</button>
+</body>
+</html>

@@ -1,0 +1,734 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보과학 10차시 개념기반 목표지향 수업지도안</title>
+<style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --green:#1f8a70; --orange:#f59e0b;
+  --purple:#7656a7; --ink:#17212b; --muted:#5c6978; --line:#d8e2ec;
+  --paper:#fff; --bg:#f4f7fb; --ok:#127a50; --bad:#bc2f3e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#132b42,#2f6fb3 62%,#4796dc);color:#fff;padding:42px 20px}
+.header-inner{max-width:1320px;margin:auto}
+.kicker{font-size:.9rem;letter-spacing:.08em;opacity:.88}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.2;margin:.35rem 0 .8rem}
+.subtitle{max-width:980px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1320px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+nav a{text-decoration:none;color:var(--navy);font-weight:800;white-space:nowrap;padding:8px 10px;border-radius:8px;font-size:.89rem}
+nav a:hover{background:#eaf4ff}
+main{max-width:1320px;margin:auto;padding:22px 16px 76px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:25px;margin:19px 0;box-shadow:0 7px 22px rgba(23,50,77,.055)}
+h2{color:var(--navy);font-size:1.65rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}
+h3{color:var(--navy);margin:20px 0 10px}
+h4{color:#254d72;margin:16px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:13px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.04rem;margin-bottom:5px}
+.big{font-size:1.9rem;font-weight:900;color:var(--blue)}
+.story{background:linear-gradient(135deg,#fff9ea,#fff);border-left:7px solid var(--orange);padding:20px;border-radius:14px}
+.ending{background:linear-gradient(135deg,#f5efff,#fff);border-left:7px solid var(--purple);padding:20px;border-radius:14px}
+.standard{background:#eaf8f3;border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+.codebox{background:#111c27;color:#eaf2f8;border-radius:13px;padding:15px 17px;overflow:auto;font-family:Consolas,"D2Coding",monospace;font-size:.91rem;line-height:1.55;white-space:pre}
+.concept{border:1px solid var(--line);border-radius:16px;margin:18px 0;overflow:hidden}
+.concept-head{background:linear-gradient(90deg,#eaf4ff,#f9fcff);padding:15px 18px;border-bottom:1px solid var(--line)}
+.concept-head b{color:var(--navy);font-size:1.18rem}
+.concept-body{padding:18px}
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+@media(max-width:900px){.two{grid-template-columns:1fr}.userbox{grid-template-columns:1fr}}
+.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:800;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff0f4;color:#a63d5b}.t4{background:#fff6df;color:#8a5b00}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer;background:#fff}
+.option:hover{background:#f5f9fd}
+.option input{margin-right:8px;transform:scale(1.1)}
+.feedback{display:none;margin-top:11px;padding:12px;border-radius:9px;background:#f6f8fb}
+.feedback.show{display:block}
+.correct{border-left:5px solid var(--ok)}
+.wrong{border-left:5px solid var(--bad)}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+.primary{background:var(--blue);color:#fff}
+.secondary{background:#eaf0f6;color:var(--navy)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.quiz-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.scorebox{background:#edf7ff;border:1px solid #b9d8f0;border-radius:12px;padding:12px 15px;font-weight:800;color:var(--navy)}
+.userbox{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input[type=text]{width:100%;padding:11px;border:1px solid #cfdbe6;border-radius:9px;font-size:1rem}
+.progress-wrap{height:12px;background:#e9eef3;border-radius:999px;overflow:hidden}
+.progress{height:100%;background:linear-gradient(90deg,#2f6fb3,#1f8a70);width:0%;transition:.3s}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.small{font-size:.86rem;color:var(--muted)}
+.result-panel{display:none;border:2px solid #9ac9ea;background:#f6fbff;border-radius:15px;padding:18px;margin-top:18px}
+.result-panel.show{display:block}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 7px 24px rgba(0,0,0,.2)}
+footer{max-width:1320px;margin:0 auto 40px;padding:0 18px;color:#5e6c78;font-size:.86rem}
+@media print{
+  nav,.print,.controls button{display:none!important}
+  body{background:white}
+  section{box-shadow:none;break-inside:avoid}
+  .question{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="header-inner">
+<div class="kicker">2022 개정 고등학교 정보과학 · Ⅱ 데이터 구조 · 그래프·트리 통합</div>
+<h1>10차시 개념기반 목표지향 수업지도안</h1>
+<div class="subtitle">그래프와 트리의 관계를 통합하고, 큐를 이용한 너비 우선 탐색과 재귀·스택을 이용한 깊이 우선 탐색으로 경로·연결 요소·계층 구조 문제를 해결한다.</div>
+<div class="badges">
+<span class="badge">성취기준 [12정과02-02]~[12정과02-04]</span>
+<span class="badge">Ⅱ단원 통합</span>
+<span class="badge">개념별 코드 6개</span>
+<span class="badge">코드별 5지선다 6문항</span>
+<span class="badge">진단 OX 10문항</span>
+<span class="badge">형성평가 10문항</span>
+<span class="badge">자동채점·TXT 저장</span>
+</div>
+</div>
+</header>
+
+<nav><div class="nav-inner">
+<a href="#identity">수업 개요</a>
+<a href="#start">학습 시작</a>
+<a href="#goals">목표</a>
+<a href="#concepts">개념·코드</a>
+<a href="#ending">학습 마무리</a>
+<a href="#diagnostic">진단평가</a>
+<a href="#formative">형성평가</a>
+<a href="#submit">제출·저장</a>
+</div></nav>
+
+<main>
+<section id="identity">
+<h2>1. 수업 개요와 성취수준</h2>
+<div class="standard">
+<b>[12정과02-02]</b> 스택, 큐를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.<br><br>
+<b>[12정과02-03]</b> 인접행렬과 인접리스트를 활용하여 트리와 그래프를 구현한다.<br><br>
+<b>[12정과02-04]</b> 트리, 그래프를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.
+</div>
+
+<h3>성취수준</h3>
+<table>
+<tr><th>수준</th><th>성취 특성</th></tr>
+<tr><td>A</td><td>그래프와 트리의 특성을 비교하고, 인접리스트·방문 배열·큐·스택·재귀를 결합해 BFS와 DFS를 정확히 구현하며 경로·연결 요소·계층 탐색 문제에 적합한 방법을 선택하고 효율과 정확성을 분석한다.</td></tr>
+<tr><td>B</td><td>BFS와 DFS의 원리와 사용하는 자료 구조를 설명하고, 주어진 그래프를 순회하여 방문 순서와 연결 관계를 구한다.</td></tr>
+<tr><td>C</td><td>주어진 탐색 코드의 방문 순서를 추적하고, 방문 배열과 큐 또는 재귀 호출 부분을 완성한다.</td></tr>
+<tr><td>D</td><td>BFS와 DFS를 구별하고, 안내에 따라 큐·스택·재귀 중 필요한 구조를 선택한다.</td></tr>
+<tr><td>E</td><td>그래프에서 한 정점부터 여러 정점을 방문하는 과정을 관찰한다.</td></tr>
+</table>
+
+<div class="grid">
+<div class="card"><strong>핵심 질문 1</strong>가까운 곳부터 찾는 탐색과 한 길을 끝까지 가는 탐색은 어떻게 다른가?</div>
+<div class="card"><strong>핵심 질문 2</strong>방문 여부를 기록하지 않으면 그래프 탐색에서 어떤 문제가 생기는가?</div>
+<div class="card"><strong>핵심 질문 3</strong>트리는 왜 그래프 탐색의 특별한 사례로 볼 수 있는가?</div>
+</div>
+</section>
+
+<section id="start">
+<h2>2. 학습 시작 멘트</h2>
+<div class="story">
+<h3>구조대의 탐색, 신경망의 신호, 우주 통신의 경로</h3>
+<p>재난 현장에서 구조대는 출발 지점에서 가까운 구역부터 넓게 수색할 수도 있고, 하나의 통로를 끝까지 따라간 뒤 되돌아올 수도 있습니다. 두 방식은 모두 탐색이지만 목적과 순서가 다릅니다.</p>
+<p>생명과학에서는 신경 신호가 인접한 세포로 퍼지는 과정을 살피고, 천문학과 통신공학에서는 여러 중계 지점을 거쳐 목적지에 도달할 수 있는지 조사합니다. 화학 반응망에서도 한 물질에서 어떤 반응 경로를 통해 다른 물질로 이어지는지 분석합니다.</p>
+<p>오늘 우리는 그래프 속 모든 길을 무작정 걷지 않습니다. 가까운 정점부터 탐색하는 너비 우선 탐색과, 한 경로를 깊게 탐색하는 깊이 우선 탐색을 비교하여 <b>문제의 목적에 맞는 탐색 전략</b>을 선택합니다.</p>
+</div>
+</section>
+
+<section id="goals">
+<h2>3. 학습목표와 학습내용</h2>
+<ol>
+<li>그래프와 트리의 공통점과 차이를 설명할 수 있다.</li>
+<li>방문 배열의 필요성과 중복 방문 방지 원리를 설명할 수 있다.</li>
+<li>큐를 이용하여 너비 우선 탐색을 구현할 수 있다.</li>
+<li>재귀 함수와 스택을 이용하여 깊이 우선 탐색을 구현할 수 있다.</li>
+<li>BFS와 DFS의 방문 순서와 활용 문제를 비교할 수 있다.</li>
+<li>연결 요소와 경로 존재 여부를 탐색 프로그램으로 해결할 수 있다.</li>
+</ol>
+
+<table>
+<tr><th>개념 축</th><th>내용</th><th>학습 산출물</th></tr>
+<tr><td>그래프·트리 통합</td><td>연결, 순환, 계층, 루트</td><td>구조 비교표</td></tr>
+<tr><td>방문 관리</td><td>visited 배열, 중복 방문 방지</td><td>방문 상태표</td></tr>
+<tr><td>BFS</td><td>큐, 가까운 정점부터 방문</td><td>너비 우선 탐색 함수</td></tr>
+<tr><td>DFS</td><td>재귀·스택, 한 경로를 깊게 방문</td><td>깊이 우선 탐색 함수</td></tr>
+<tr><td>연결 요소</td><td>서로 연결된 정점 집합</td><td>연결 요소 수 계산</td></tr>
+<tr><td>경로 탐색</td><td>출발점에서 도착점 도달 여부</td><td>경로 존재 확인 프로그램</td></tr>
+</table>
+</section>
+
+<section id="concepts">
+<h2>4. 개념 및 상세 설명 · 관련 코드 · 코드별 확인 문제</h2>
+
+<div class="concept">
+<div class="concept-head"><b>개념 1. 그래프와 트리의 관계</b></div>
+<div class="concept-body">
+<div class="two">
+<div>
+<p>트리는 그래프의 한 종류이다. 일반적으로 트리는 모든 정점이 연결되어 있고 순환이 없으며, 루트를 정하면 부모·자식의 계층 관계를 표현할 수 있다.</p>
+<p>일반 그래프는 순환이 있을 수 있고 여러 경로가 존재할 수 있으므로 방문한 정점을 기록해야 한다.</p>
+</div>
+<div><div class="codebox">tree_edges = [(0,1), (0,2), (1,3)]
+graph_edges = [(0,1), (1,2), (2,0), (2,3)]
+
+print("트리 간선 수:", len(tree_edges))
+print("그래프 간선 수:", len(graph_edges))
+print("그래프에는 0-1-2-0 순환이 있음")</div></div>
+</div>
+
+<div class="question" data-id="c1" data-answer="1,3,5">
+<h4>코드 1 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 트리는 그래프의 한 종류로 볼 수 있다.</label>
+<label class="option"><input type="checkbox" value="2">② 모든 일반 그래프에는 반드시 루트가 있다.</label>
+<label class="option"><input type="checkbox" value="3">③ graph_edges에는 0-1-2-0의 순환이 존재한다.</label>
+<label class="option"><input type="checkbox" value="4">④ 트리는 반드시 순환을 포함해야 한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 일반 그래프 탐색에서는 방문 기록이 중요하다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ③, ⑤</b><br>트리는 연결되고 순환이 없는 그래프로 볼 수 있으며, 일반 그래프는 중복 방문을 막아야 한다.</div>
+</div>
+</div>
+</div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 2. 방문 배열과 중복 방문 방지</b></div>
+<div class="concept-body">
+<div class="two">
+<div>
+<p>그래프에는 여러 경로와 순환이 있을 수 있다. 방문 여부를 기록하지 않으면 같은 정점을 반복 처리하거나 무한히 순환할 수 있다.</p>
+<p><code>visited[v]</code>를 True로 바꾸면 해당 정점을 이미 처리했음을 나타낸다.</p>
+</div>
+<div><div class="codebox">graph = [
+    [1, 2],
+    [0, 2],
+    [0, 1, 3],
+    [2]
+]
+
+visited = [False] * len(graph)
+visited[0] = True
+
+for nxt in graph[0]:
+    if not visited[nxt]:
+        visited[nxt] = True
+
+print(visited)</div>
+<p><b>출력:</b> [True, True, True, False]</p></div>
+</div>
+
+<div class="question" data-id="c2" data-answer="1,2,4">
+<h4>코드 2 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 정점 0, 1, 2는 방문 표시된다.</label>
+<label class="option"><input type="checkbox" value="2">② 정점 3은 아직 False이다.</label>
+<label class="option"><input type="checkbox" value="3">③ visited는 각 정점의 가중치만 저장한다.</label>
+<label class="option"><input type="checkbox" value="4">④ 방문 배열은 중복 방문을 줄이는 데 사용한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 순환 그래프에서는 방문 기록이 필요하지 않다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ④</b><br>visited는 정점별 방문 여부를 저장하며 순환과 중복 처리를 방지한다.</div>
+</div>
+</div>
+</div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 3. 큐를 이용한 너비 우선 탐색</b></div>
+<div class="concept-body">
+<div class="two">
+<div>
+<p><b>너비 우선 탐색(BFS)</b>은 시작 정점에서 가까운 정점부터 층별로 방문한다. 먼저 발견한 정점을 먼저 처리해야 하므로 큐를 사용한다.</p>
+<p>정점을 큐에 넣을 때 방문 표시를 하면 같은 정점이 여러 번 큐에 들어가는 것을 막을 수 있다.</p>
+</div>
+<div><div class="codebox">from collections import deque
+
+graph = [
+    [1, 2],
+    [0, 3, 4],
+    [0, 5],
+    [1], [1], [2]
+]
+
+def bfs(start):
+    visited = [False] * len(graph)
+    q = deque([start])
+    visited[start] = True
+    order = []
+
+    while q:
+        v = q.popleft()
+        order.append(v)
+
+        for nxt in graph[v]:
+            if not visited[nxt]:
+                visited[nxt] = True
+                q.append(nxt)
+
+    return order
+
+print(bfs(0))</div>
+<p><b>출력:</b> [0, 1, 2, 3, 4, 5]</p></div>
+</div>
+
+<div class="question" data-id="c3" data-answer="2,3,5">
+<h4>코드 3 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① BFS는 스택의 pop만 사용한다.</label>
+<label class="option"><input type="checkbox" value="2">② 시작 정점 0이 가장 먼저 방문된다.</label>
+<label class="option"><input type="checkbox" value="3">③ 정점 1과 2는 3, 4, 5보다 먼저 방문된다.</label>
+<label class="option"><input type="checkbox" value="4">④ 방문 표시는 큐에서 꺼낸 뒤에만 해야 한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ BFS는 가까운 정점부터 방문하는 탐색이다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ②, ③, ⑤</b><br>BFS는 큐를 사용하며 시작점과의 거리가 작은 정점부터 방문한다.</div>
+</div>
+</div>
+</div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 4. 재귀 함수를 이용한 깊이 우선 탐색</b></div>
+<div class="concept-body">
+<div class="two">
+<div>
+<p><b>깊이 우선 탐색(DFS)</b>은 한 경로를 가능한 깊게 따라간 뒤 더 갈 곳이 없으면 이전 정점으로 되돌아온다.</p>
+<p>재귀 호출의 호출 스택이 현재 경로를 기억하므로 DFS를 자연스럽게 표현할 수 있다.</p>
+</div>
+<div><div class="codebox">graph = [
+    [1, 2],
+    [0, 3, 4],
+    [0, 5],
+    [1], [1], [2]
+]
+
+def dfs(v, visited, order):
+    visited[v] = True
+    order.append(v)
+
+    for nxt in graph[v]:
+        if not visited[nxt]:
+            dfs(nxt, visited, order)
+
+visited = [False] * len(graph)
+order = []
+dfs(0, visited, order)
+print(order)</div>
+<p><b>출력:</b> [0, 1, 3, 4, 2, 5]</p></div>
+</div>
+
+<div class="question" data-id="c4" data-answer="1,3,4">
+<h4>코드 4 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① DFS는 한 경로를 깊게 탐색한다.</label>
+<label class="option"><input type="checkbox" value="2">② 출력 순서는 [0,1,2,3,4,5]이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 정점 3은 정점 2보다 먼저 방문된다.</label>
+<label class="option"><input type="checkbox" value="4">④ 재귀 호출 스택이 되돌아갈 경로를 기억한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 방문 배열이 없어도 순환 그래프에서 항상 안전하다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ③, ④</b><br>DFS는 0-1-3 방향으로 깊게 진행한 뒤 되돌아오며 방문 배열이 필요하다.</div>
+</div>
+</div>
+</div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 5. 스택을 이용한 반복형 DFS</b></div>
+<div class="concept-body">
+<div class="two">
+<div>
+<p>DFS는 재귀 함수뿐 아니라 명시적인 스택으로도 구현할 수 있다. 스택에서 최근에 넣은 정점을 먼저 꺼내므로 한 경로를 깊게 탐색한다.</p>
+<p>이웃을 역순으로 넣으면 재귀 DFS와 비슷한 방문 순서를 만들 수 있다.</p>
+</div>
+<div><div class="codebox">graph = [
+    [1, 2],
+    [0, 3, 4],
+    [0, 5],
+    [1], [1], [2]
+]
+
+def dfs_stack(start):
+    visited = [False] * len(graph)
+    stack = [start]
+    order = []
+
+    while stack:
+        v = stack.pop()
+
+        if visited[v]:
+            continue
+
+        visited[v] = True
+        order.append(v)
+
+        for nxt in reversed(graph[v]):
+            if not visited[nxt]:
+                stack.append(nxt)
+
+    return order
+
+print(dfs_stack(0))</div>
+<p><b>출력:</b> [0, 1, 3, 4, 2, 5]</p></div>
+</div>
+
+<div class="question" data-id="c5" data-answer="1,2,5">
+<h4>코드 5 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 명시적인 리스트 스택으로 DFS를 구현한다.</label>
+<label class="option"><input type="checkbox" value="2">② stack.pop()은 가장 최근에 넣은 정점을 꺼낸다.</label>
+<label class="option"><input type="checkbox" value="3">③ visited[v]가 True여도 반드시 다시 방문한다.</label>
+<label class="option"><input type="checkbox" value="4">④ 이 코드는 큐의 popleft를 사용한다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 이웃을 넣는 순서에 따라 방문 순서가 달라질 수 있다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ⑤</b><br>반복형 DFS는 스택을 사용하며 이웃의 저장 순서가 탐색 순서에 영향을 준다.</div>
+</div>
+</div>
+</div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 6. 연결 요소와 경로 존재 확인</b></div>
+<div class="concept-body">
+<div class="two">
+<div>
+<p>서로 경로로 연결된 정점들의 집합을 연결 요소라고 한다. 방문하지 않은 정점에서 새 탐색을 시작할 때마다 연결 요소 수가 하나 증가한다.</p>
+<p>BFS 또는 DFS를 이용해 출발점에서 도착점에 도달할 수 있는지도 확인할 수 있다.</p>
+</div>
+<div><div class="codebox">graph = [
+    [1],
+    [0, 2],
+    [1],
+    [4],
+    [3],
+    []
+]
+
+def mark(start, visited):
+    stack = [start]
+    visited[start] = True
+
+    while stack:
+        v = stack.pop()
+        for nxt in graph[v]:
+            if not visited[nxt]:
+                visited[nxt] = True
+                stack.append(nxt)
+
+visited = [False] * len(graph)
+count = 0
+
+for v in range(len(graph)):
+    if not visited[v]:
+        mark(v, visited)
+        count += 1
+
+print(count)</div>
+<p><b>출력:</b> 3</p></div>
+</div>
+
+<div class="question" data-id="c6" data-answer="2,4,5">
+<h4>코드 6 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 모든 정점은 하나의 연결 요소에 속한다.</label>
+<label class="option"><input type="checkbox" value="2">② 0, 1, 2는 하나의 연결 요소이다.</label>
+<label class="option"><input type="checkbox" value="3">③ 3과 4는 서로 연결되지 않는다.</label>
+<label class="option"><input type="checkbox" value="4">④ 정점 5는 혼자 하나의 연결 요소를 이룬다.</label>
+<label class="option"><input type="checkbox" value="5">⑤ 전체 연결 요소 수는 3이다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ②, ④, ⑤</b><br>연결 요소는 {0,1,2}, {3,4}, {5}의 세 개이다.</div>
+</div>
+</div>
+</div>
+
+<div class="notice"><b>목표지향 통합 과제</b><br>
+과학관 전시실 연결 지도를 인접리스트로 구현한다. BFS로 출발 전시실에서 가까운 순서의 방문 결과를 구하고, DFS로 한 경로를 깊게 탐색한 결과를 구한다. 이어서 전체 연결 요소 수와 특정 전시실까지의 도달 가능 여부를 출력하고 두 탐색의 차이를 설명한다.</div>
+</section>
+
+<section id="ending">
+<h2>5. 학습 마무리 멘트</h2>
+<div class="ending">
+<h3>넓게 바라보는 길과 깊이 들어가는 길</h3>
+<p>어떤 사람은 한 시대의 여러 작품을 넓게 살피며 공통된 흐름을 발견하고, 어떤 사람은 한 작품을 깊이 읽으며 한 문장 속에 숨은 의미를 찾습니다. 두 탐구 방식은 서로 경쟁하지 않습니다. 질문이 다르기 때문에 길이 다른 것입니다.</p>
+<p>너비 우선 탐색은 가까운 가능성을 차례로 확인하고, 깊이 우선 탐색은 하나의 가능성을 끝까지 따라갑니다. 삶에서도 때로는 주변을 고르게 살펴야 하고, 때로는 한 문제에 깊이 몰입해야 합니다.</p>
+<p><b>좋은 탐색은 많이 방문하는 것이 아니라, 목적에 맞는 순서로 질문을 이어 가는 일입니다.</b></p>
+</div>
+</section>
+
+<section id="diagnostic">
+<div class="quiz-head"><h2>6. 전체 학습내용 진단평가 OX 10문항</h2><div class="scorebox" id="diagScore">미채점</div></div>
+<div id="diagQuestions"></div>
+<div class="controls">
+<button class="btn primary" onclick="gradeDiagnostic()">진단평가 채점</button>
+<button class="btn secondary" onclick="resetGroup('diagQuestions')">초기화</button>
+</div>
+</section>
+
+<section id="formative">
+<div class="quiz-head"><h2>7. 전체 학습내용 형성평가 10문항</h2><div class="scorebox" id="formScore">미채점</div></div>
+<p class="small">각 문항은 보기 5개 중 옳은 것 3개를 모두 선택해야 정답이다.</p>
+<div id="formQuestions"></div>
+<div class="controls">
+<button class="btn primary" onclick="gradeFormative()">형성평가 채점</button>
+<button class="btn secondary" onclick="resetGroup('formQuestions')">초기화</button>
+</div>
+</section>
+
+<section id="submit">
+<h2>8. 학번·이름 입력 및 결과 저장</h2>
+<div class="userbox">
+<label><b>학번</b><input type="text" id="studentId" placeholder="예: 1101"></label>
+<label><b>이름</b><input type="text" id="studentName" placeholder="예: 홍길동"></label>
+</div>
+
+<h3>전체 진행률</h3>
+<div class="progress-wrap"><div class="progress" id="progress"></div></div>
+<p id="progressText" class="small">0%</p>
+
+<div class="controls">
+<button class="btn primary" onclick="finalSubmit()">전체 채점 및 TXT 저장</button>
+<button class="btn secondary" onclick="window.print()">인쇄 / PDF</button>
+</div>
+<div class="result-panel" id="resultPanel"></div>
+</section>
+</main>
+
+<footer><p>교과서 Ⅱ단원 「비선형 데이터 구조」의 그래프·트리 활용과 Ⅱ단원 전체 통합 문제 해결을 중심으로 구성한 10차시 수업자료이다.</p></footer>
+<button class="print" onclick="window.print()">인쇄 / PDF</button>
+
+<script>
+const diagData = [
+ {q:"트리는 그래프의 한 종류로 볼 수 있다.",a:"O",e:"트리는 일반적으로 연결되고 순환이 없는 그래프이다."},
+ {q:"그래프 탐색에서 방문 배열은 중복 방문 방지에 사용한다.",a:"O",e:"순환과 여러 경로 때문에 방문 여부를 기록해야 한다."},
+ {q:"BFS는 일반적으로 큐를 사용한다.",a:"O",e:"먼저 발견한 정점을 먼저 처리하여 가까운 정점부터 방문한다."},
+ {q:"DFS는 한 경로를 가능한 깊게 탐색한 뒤 되돌아온다.",a:"O",e:"재귀 호출이나 스택으로 구현할 수 있다."},
+ {q:"BFS와 DFS의 방문 순서는 언제나 완전히 같다.",a:"X",e:"탐색 전략과 이웃 순서에 따라 방문 순서가 달라진다."},
+ {q:"재귀 DFS에서는 호출 스택이 되돌아갈 경로를 기억한다.",a:"O",e:"가장 최근 호출부터 복귀하는 스택 구조를 이용한다."},
+ {q:"반복형 DFS는 명시적인 스택으로 구현할 수 있다.",a:"O",e:"리스트의 append와 pop으로 구현할 수 있다."},
+ {q:"연결 요소는 서로 경로로 연결된 정점들의 집합이다.",a:"O",e:"같은 연결 요소의 정점 사이에는 경로가 존재한다."},
+ {q:"방문하지 않은 정점에서 새 탐색을 시작하면 연결 요소를 셀 수 있다.",a:"O",e:"새 탐색 한 번이 새로운 연결 요소 하나에 해당한다."},
+ {q:"순환 그래프에서는 방문 기록 없이도 항상 안전하게 DFS를 실행할 수 있다.",a:"X",e:"같은 정점을 반복 방문해 무한 호출이 발생할 수 있다."}
+];
+
+const formData = [
+ {q:"그래프와 트리의 관계에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 트리는 그래프의 한 종류이다.","② 트리는 일반적으로 순환이 없다.","③ 루트를 정하면 부모·자식 관계를 표현할 수 있다.","④ 모든 일반 그래프는 반드시 트리이다.","⑤ 트리는 반드시 여러 연결 요소를 가진다."],a:[1,2,3],e:"트리는 연결되고 순환이 없는 그래프의 특별한 형태로 볼 수 있다."},
+ {q:"방문 배열에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 정점별 방문 여부를 저장한다.","② 중복 방문을 방지한다.","③ 순환 그래프의 무한 반복을 막는 데 도움을 준다.","④ 간선 가중치만 저장한다.","⑤ 탐색에서는 절대로 사용하지 않는다."],a:[1,2,3],e:"visited는 그래프 탐색의 안전성과 효율을 높인다."},
+ {q:"BFS에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 큐를 사용할 수 있다.","② 가까운 정점부터 방문한다.","③ 최단 간선 수 경로 탐색에 활용할 수 있다.","④ 한 경로만 끝까지 간 뒤 시작한다.","⑤ 반드시 재귀만 사용한다."],a:[1,2,3],e:"BFS는 층별 탐색으로 비가중 그래프의 최단 간선 수 문제에 활용된다."},
+ {q:"DFS에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 재귀 함수로 구현할 수 있다.","② 스택으로 구현할 수 있다.","③ 한 경로를 깊게 탐색한다.","④ 반드시 큐의 popleft만 사용한다.","⑤ 방문 기록은 사용할 수 없다."],a:[1,2,3],e:"DFS는 호출 스택 또는 명시적 스택을 사용한다."},
+ {q:"BFS 코드 작성 시 옳은 방법을 모두 고르시오.",o:["① 시작 정점을 큐에 넣는다.","② 발견한 정점을 방문 표시한다.","③ 큐가 빌 때까지 반복한다.","④ 같은 정점을 무조건 계속 큐에 넣는다.","⑤ popleft 대신 항상 마지막 원소만 꺼낸다."],a:[1,2,3],e:"큐와 방문 배열을 함께 사용한다."},
+ {q:"재귀 DFS 코드 작성 시 옳은 방법을 모두 고르시오.",o:["① 현재 정점을 방문 표시한다.","② 방문하지 않은 이웃을 재귀 호출한다.","③ 종료는 더 방문할 이웃이 없을 때 자연스럽게 이루어진다.","④ 순환 그래프에서 visited를 제거한다.","⑤ 모든 이웃을 방문 여부와 관계없이 호출한다."],a:[1,2,3],e:"현재 정점 처리 후 방문하지 않은 이웃으로 재귀 진행한다."},
+ {q:"반복형 DFS에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 명시적인 스택을 사용한다.","② 최근에 넣은 정점을 먼저 꺼낸다.","③ 이웃을 넣는 순서가 방문 순서에 영향을 준다.","④ 큐와 완전히 같은 순서만 만든다.","⑤ pop을 사용할 수 없다."],a:[1,2,3],e:"스택의 후입선출 특성이 깊이 우선 탐색을 만든다."},
+ {q:"연결 요소에 관한 설명으로 옳은 것을 모두 고르시오.",o:["① 서로 경로로 연결된 정점 집합이다.","② 방문하지 않은 정점마다 새 탐색을 시작해 셀 수 있다.","③ 고립 정점도 하나의 연결 요소가 될 수 있다.","④ 그래프에는 항상 연결 요소가 하나뿐이다.","⑤ 연결 요소는 정점과 무관하다."],a:[1,2,3],e:"고립 정점도 독립된 연결 요소 하나이다."},
+ {q:"BFS와 DFS 비교로 옳은 것을 모두 고르시오.",o:["① BFS는 큐와 관련 있다.","② DFS는 스택·재귀와 관련 있다.","③ 문제 목적에 따라 적합한 탐색이 달라진다.","④ 두 탐색은 언제나 같은 자료 구조를 사용한다.","⑤ 방문 순서는 절대로 달라지지 않는다."],a:[1,2,3],e:"가까운 거리 탐색과 깊은 경로 탐색이라는 차이가 있다."},
+ {q:"Ⅱ단원 통합 관점에서 옳은 설명을 모두 고르시오.",o:["① 큐는 BFS에 활용된다.","② 스택과 재귀는 DFS에 활용된다.","③ 인접리스트는 그래프·트리의 연결 관계를 저장한다.","④ 자료 구조 선택은 탐색과 무관하다.","⑤ 방문 배열은 사용할 수 없다."],a:[1,2,3],e:"큐·스택·재귀·인접리스트·방문 배열이 통합되어 탐색 프로그램을 구성한다."}
+];
+
+function renderDiagnostic(){
+ document.getElementById('diagQuestions').innerHTML=diagData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4>
+ <label class="option"><input type="radio" name="d${i}" value="O"> O</label>
+ <label class="option"><input type="radio" name="d${i}" value="X"> X</label>
+ <div class="feedback" id="df${i}"></div></div>`).join('');
+}
+
+function renderFormative(){
+ document.getElementById('formQuestions').innerHTML=formData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4>
+ ${x.o.map((o,j)=>`<label class="option"><input type="checkbox" name="f${i}" value="${j+1}">${o}</label>`).join('')}
+ <div class="feedback" id="ff${i}"></div></div>`).join('');
+}
+renderDiagnostic();
+renderFormative();
+
+document.querySelectorAll('.check-one').forEach(btn=>{
+ btn.addEventListener('click',()=>{
+   const q=btn.closest('.question');
+   const ans=q.dataset.answer.split(',').sort().join(',');
+   const selected=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort().join(',');
+   const fb=q.querySelector('.feedback');
+
+   if(!fb.dataset.original){
+     fb.dataset.original=fb.innerHTML;
+   }
+
+   fb.className='feedback show '+(selected===ans?'correct':'wrong');
+   fb.innerHTML=(selected===ans?'<b>정답입니다.</b><br>':'<b>다시 확인하세요.</b><br>')+fb.dataset.original;
+   updateProgress();
+ });
+});
+
+function gradeDiagnostic(){
+ let score=0;
+
+ diagData.forEach((x,i)=>{
+   const chosen=document.querySelector(`input[name=d${i}]:checked`);
+   const ok=chosen && chosen.value===x.a;
+
+   if(ok) score++;
+
+   const fb=document.getElementById(`df${i}`);
+   fb.className='feedback show '+(ok?'correct':'wrong');
+   fb.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${x.a}<br>${x.e}`;
+ });
+
+ document.getElementById('diagScore').textContent=`${score}/10`;
+ updateProgress();
+ return score;
+}
+
+function gradeFormative(){
+ let score=0;
+
+ formData.forEach((x,i)=>{
+   const chosen=[...document.querySelectorAll(`input[name=f${i}]:checked`)]
+     .map(v=>+v.value).sort((a,b)=>a-b);
+   const ans=[...x.a].sort((a,b)=>a-b);
+   const ok=JSON.stringify(chosen)===JSON.stringify(ans);
+
+   if(ok) score++;
+
+   const fb=document.getElementById(`ff${i}`);
+   fb.className='feedback show '+(ok?'correct':'wrong');
+   fb.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${ans.map(n=>'①②③④⑤'[n-1]).join(', ')}<br>${x.e}`;
+ });
+
+ document.getElementById('formScore').textContent=`${score}/10`;
+ updateProgress();
+ return score;
+}
+
+function resetGroup(id){
+ document.querySelectorAll(`#${id} input`).forEach(x=>x.checked=false);
+ document.querySelectorAll(`#${id} .feedback`).forEach(x=>{
+   x.className='feedback';
+   x.innerHTML='';
+ });
+
+ if(id==='diagQuestions'){
+   document.getElementById('diagScore').textContent='미채점';
+ }
+
+ if(id==='formQuestions'){
+   document.getElementById('formScore').textContent='미채점';
+ }
+
+ updateProgress();
+}
+
+function updateProgress(){
+ let answered=0;
+
+ document.querySelectorAll('.concept .question').forEach(q=>{
+   if(q.querySelector('input:checked')) answered++;
+ });
+
+ for(let i=0;i<10;i++){
+   if(document.querySelector(`input[name=d${i}]:checked`)) answered++;
+ }
+
+ for(let i=0;i<10;i++){
+   if(document.querySelector(`input[name=f${i}]:checked`)) answered++;
+ }
+
+ const pct=Math.round(answered/26*100);
+ document.getElementById('progress').style.width=pct+'%';
+ document.getElementById('progressText').textContent=pct+'%';
+}
+
+document.addEventListener('change',updateProgress);
+
+function finalSubmit(){
+ const sid=document.getElementById('studentId').value.trim();
+ const name=document.getElementById('studentName').value.trim();
+
+ if(!sid || !name){
+   alert('학번과 이름을 입력하세요.');
+   return;
+ }
+
+ const d=gradeDiagnostic();
+ const f=gradeFormative();
+
+ let codeScore=0;
+ let codeReports=[];
+
+ document.querySelectorAll('.concept .question').forEach((q,i)=>{
+   const ans=q.dataset.answer.split(',').sort();
+   const sel=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort();
+   const ok=JSON.stringify(ans)===JSON.stringify(sel);
+
+   if(ok) codeScore++;
+
+   const explanation=(q.querySelector('.feedback').dataset.original || q.querySelector('.feedback').textContent)
+     .replace(/<[^>]+>/g,' ')
+     .replace(/\s+/g,' ')
+     .trim();
+
+   codeReports.push(
+     `코드 확인 ${i+1}: ${ok?'정답':'오답'} / 응답 ${sel.join(',')||'미응답'} / 정답 ${ans.join(',')} / 풀이: ${explanation}`
+   );
+ });
+
+ const raw=codeScore+d+f;
+ const total=26;
+ const score=Math.round(raw/total*100);
+ const now=new Date();
+
+ const stamp=now.getFullYear()
+   +String(now.getMonth()+1).padStart(2,'0')
+   +String(now.getDate()).padStart(2,'0')+'_'
+   +String(now.getHours()).padStart(2,'0')
+   +String(now.getMinutes()).padStart(2,'0')
+   +String(now.getSeconds()).padStart(2,'0');
+
+ let lines=[
+   '정보과학 10차시 개념기반 목표지향 학습 결과',
+   `학번: ${sid}`,
+   `이름: ${name}`,
+   `점수: ${score}점 (${raw}/${total})`,
+   `응시시각: ${now.toLocaleString('ko-KR')}`,
+   '',
+   '[코드별 확인 문제]',
+   ...codeReports,
+   '',
+   '[진단평가 OX]'
+ ];
+
+ diagData.forEach((x,i)=>{
+   const c=document.querySelector(`input[name=d${i}]:checked`)?.value || '미응답';
+
+   lines.push(
+     `${i+1}. ${c===x.a?'정답':'오답'} / 응답 ${c} / 정답 ${x.a} / 풀이: ${x.e}`
+   );
+ });
+
+ lines.push('','[형성평가]');
+
+ formData.forEach((x,i)=>{
+   const c=[...document.querySelectorAll(`input[name=f${i}]:checked`)]
+     .map(v=>+v.value).sort((a,b)=>a-b);
+   const a=[...x.a].sort((a,b)=>a-b);
+   const ok=JSON.stringify(c)===JSON.stringify(a);
+
+   lines.push(
+     `${i+1}. ${ok?'정답':'오답'} / 응답 ${c.join(',')||'미응답'} / 정답 ${a.join(',')} / 풀이: ${x.e}`
+   );
+ });
+
+ const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});
+ const link=document.createElement('a');
+
+ link.href=URL.createObjectURL(blob);
+ link.download=`${sid}_${name}_${score}_10차시_${stamp}.txt`;
+ link.click();
+
+ URL.revokeObjectURL(link.href);
+
+ const panel=document.getElementById('resultPanel');
+ panel.classList.add('show');
+ panel.innerHTML=`
+   <h3>최종 결과</h3>
+   <p class="big">${score}점</p>
+   <p>코드 확인 ${codeScore}/6 · 진단평가 ${d}/10 · 형성평가 ${f}/10</p>
+   <p><b>${sid} ${name}</b> 학생의 결과 파일을 저장했습니다.</p>
+ `;
+}
+</script>
+</body>
+</html>
