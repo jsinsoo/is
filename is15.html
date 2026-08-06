@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>정보과학 15차시 목표지향 개념기반 수업지도안</title>
+<style>
+:root{--n:#17324d;--b:#2f6fa3;--g:#f2b84b;--l:#d7e3ec;--bg:#f3f7fa;--ok:#eaf8ef;--no:#fff0f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:"Malgun Gothic",sans-serif;color:#26333f;line-height:1.7}
+header{background:linear-gradient(135deg,var(--n),var(--b));color:#fff;padding:36px 20px}
+header div,main,nav div{max-width:1150px;margin:auto}h1{margin:0 0 8px}nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--l);z-index:5}
+nav div{display:flex;gap:8px;overflow:auto;padding:9px}nav a{white-space:nowrap;color:var(--n);font-weight:700;text-decoration:none;padding:7px 10px}
+main{padding:18px 15px 70px}section{background:#fff;border:1px solid var(--l);border-radius:16px;padding:24px;margin:16px 0}
+h2{color:var(--n);border-left:7px solid var(--g);padding-left:11px}h3{color:var(--b)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.card{border:1px solid var(--l);background:#f9fcfe;border-radius:12px;padding:15px}
+.tag{display:inline-block;background:#eaf4fb;color:var(--b);font-weight:700;border-radius:15px;padding:3px 9px;margin:2px}
+.quote{background:#fff8e8;border-left:6px solid var(--g);padding:18px;border-radius:12px}
+table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--l);padding:9px;vertical-align:top}th{background:var(--n);color:#fff}
+pre{background:#17212b;color:#edf5fa;padding:18px;border-radius:12px;overflow:auto;line-height:1.55}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:10px}input[type=text]{width:100%;padding:10px;border:1px solid #aebdca;border-radius:8px}
+.q{border:1px solid var(--l);border-radius:12px;padding:14px;margin:11px 0}.q.good{background:var(--ok);border-color:#58a675}.q.bad{background:var(--no);border-color:#d86b6b}
+.opts label{display:block;padding:6px}.exp{display:none;background:#fff;padding:8px;margin-top:7px;border-left:4px solid var(--g)}
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:800;cursor:pointer}.primary{background:var(--b);color:#fff}.secondary{background:#e7eef4}.danger{background:#c94d4d;color:#fff}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}#result{display:none;background:#eef8ff;border:2px solid var(--b);border-radius:12px;padding:16px;margin-top:15px}
+.progress{height:11px;background:#e5edf3;border-radius:8px;overflow:hidden;margin:12px 0}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--b),var(--g))}
+@media(max-width:650px){.student{grid-template-columns:1fr}}@media print{nav,.actions{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header><div><h1>정보과학 15차시 목표지향 개념기반 수업지도안</h1><p>프로젝트 산출물을 기능적·윤리적 관점에서 평가하고 결과를 책임 있게 공유하기</p></div></header>
+<nav><div><a href="#s1">성취기준</a><a href="#s2">개념</a><a href="#s3">학습내용</a><a href="#s4">소논문</a><a href="#s5">코드</a><a href="#s6">평가</a></div></nav>
+<main>
+<section id="s1">
+<h2>1. 성취기준과 학습 목표</h2>
+<div class="card"><b>[12정과04-05]</b> 프로젝트의 산출물을 기능적, 윤리적 관점에서 평가하고 결과를 공유한다.</div>
+<div class="grid">
+<div class="card"><b>지식·이해</b><br>기능 평가, 사용자 평가, 개인정보 보호, 공정성, 저작권, 투명성의 의미를 설명한다.</div>
+<div class="card"><b>과정·기능</b><br>평가 기준표를 작성하고 산출물의 정확성·효율성·사용성·윤리성을 근거로 평가한다.</div>
+<div class="card"><b>가치·태도</b><br>한계와 오류를 숨기지 않고 출처와 윤리적 고려 사항을 밝혀 책임 있게 결과를 공유한다.</div>
+</div>
+<p><b>성공 기준:</b> 기능적 기준과 윤리적 기준을 구분해 평가하고, 근거 자료와 개선 방향을 포함한 결과 보고서를 작성한다.</p>
+</section>
+
+<section id="s2">
+<h2>2. 학습할 개념</h2>
+<p><span class="tag">기능 평가</span><span class="tag">정확성</span><span class="tag">효율성</span><span class="tag">사용성</span><span class="tag">공정성</span><span class="tag">개인정보 보호</span><span class="tag">저작권</span><span class="tag">투명성</span><span class="tag">결과 공유</span></p>
+<table>
+<tr><th>개념</th><th>핵심 의미</th></tr>
+<tr><td>기능 평가</td><td>프로그램이 요구사항을 충족하고 정확하고 안정적으로 동작하는지 확인하는 과정</td></tr>
+<tr><td>사용성</td><td>사용자가 기능을 쉽게 이해하고 편리하게 사용할 수 있는 정도</td></tr>
+<tr><td>윤리 평가</td><td>개인정보 침해, 편향, 차별, 저작권, 안전 문제를 검토하는 과정</td></tr>
+<tr><td>투명성</td><td>데이터 출처, 알고리즘 기준, 한계, 오류 가능성을 설명하는 태도</td></tr>
+<tr><td>책임 있는 공유</td><td>결과뿐 아니라 제한점, 출처, 윤리적 고려 사항, 개선 방향까지 함께 공개하는 것</td></tr>
+</table>
+</section>
+
+<section>
+<h2>3. 수업 시작 멘트</h2>
+<div class="quote">“아리스토텔레스는 좋은 행위가 목적뿐 아니라 과정에서도 드러난다고 보았고, 칸트는 사람을 수단이 아니라 목적으로 대해야 한다고 말했습니다. 과학자는 결과가 기대와 달라도 숨기지 않고 보고하며, 수학자는 답만 제시하지 않고 근거를 증명합니다. 오늘 우리는 프로그램이 ‘작동한다’는 사실을 넘어 ‘옳게 작동하고 책임 있게 사용되는가’를 평가합니다. 발표 자료에서 오류를 지우는 것은 편집이지만, 한계를 지우는 것은 윤리적 휴지통 비우기입니다.”</div>
+</section>
+
+<section id="s3">
+<h2>4. 학습 내용</h2>
+<table>
+<tr><th>단계</th><th>활동</th></tr>
+<tr><td>도입 5분</td><td>기능은 우수하지만 개인정보 침해 우려가 있는 사례 분석</td></tr>
+<tr><td>개념 10분</td><td>정확성·효율성·사용성·안정성과 개인정보·공정성·저작권·투명성 학습</td></tr>
+<tr><td>탐구 10분</td><td>프로젝트 산출물 평가 기준표를 기능 영역과 윤리 영역으로 작성</td></tr>
+<tr><td>코딩 15분</td><td>평가 항목별 점수를 계산하고 개선이 필요한 항목을 자동 제시하는 프로그램 작성</td></tr>
+<tr><td>공유 5분</td><td>결과, 근거, 한계, 개선 방향을 포함한 발표문 작성</td></tr>
+<tr><td>평가 5분</td><td>OX, 복수 정답, 코드 단답형 평가</td></tr>
+</table>
+</section>
+
+<section id="s4">
+<h2>5. 학습 관련 소논문 주제 예시 5개</h2>
+<ol>
+<li>학교 정보 시스템 산출물의 기능성과 개인정보 보호 수준 평가</li>
+<li>인공지능 예측 프로그램의 정확도와 공정성 사이의 관계 분석</li>
+<li>사용자 인터페이스 개선이 프로그램 사용성 평가에 미치는 영향</li>
+<li>프로젝트 결과 공유에서 데이터 출처 표시가 신뢰도에 미치는 효과</li>
+<li>학생 개발 프로그램의 기능 평가와 윤리 평가 기준 비교 연구</li>
+</ol>
+</section>
+
+<section id="s5">
+<h2>6. 학습할 코드 1개</h2>
+<pre><code>evaluation = {
+    "정확성": 4,
+    "효율성": 3,
+    "사용성": 4,
+    "안정성": 3,
+    "개인정보 보호": 2,
+    "공정성": 3,
+    "저작권 준수": 5,
+    "투명성": 2
+}
+
+functional_items = ["정확성", "효율성", "사용성", "안정성"]
+ethical_items = ["개인정보 보호", "공정성", "저작권 준수", "투명성"]
+
+
+def average_score(items):
+    total = sum(evaluation[item] for item in items)
+    return total / len(items)
+
+
+def find_improvements(limit=3):
+    return [
+        item for item, score in evaluation.items()
+        if score &lt; limit
+    ]
+
+
+functional_score = average_score(functional_items)
+ethical_score = average_score(ethical_items)
+improvements = find_improvements()
+
+print("기능 평가 평균:", round(functional_score, 2))
+print("윤리 평가 평균:", round(ethical_score, 2))
+
+print("개선 필요 항목")
+for item in improvements:
+    print("-", item, ":", evaluation[item], "점")</code></pre>
+<table>
+<tr><th>코드 요소</th><th>상세 설명</th></tr>
+<tr><td><code>evaluation</code></td><td>기능적·윤리적 평가 항목과 1~5점의 점수를 저장한 딕셔너리이다.</td></tr>
+<tr><td><code>functional_items</code></td><td>정확성, 효율성, 사용성, 안정성처럼 기능 품질과 관련된 항목 목록이다.</td></tr>
+<tr><td><code>ethical_items</code></td><td>개인정보 보호, 공정성, 저작권 준수, 투명성 항목 목록이다.</td></tr>
+<tr><td><code>average_score</code></td><td>선택된 평가 항목들의 점수를 합해 평균을 계산한다.</td></tr>
+<tr><td><code>find_improvements</code></td><td>기준 점수보다 낮은 항목을 찾아 개선 목록으로 반환한다.</td></tr>
+<tr><td><code>limit=3</code></td><td>개선 필요 여부를 판단하는 기본 기준값이다.</td></tr>
+<tr><td><code>round(..., 2)</code></td><td>평균 점수를 소수 둘째 자리까지 표시한다.</td></tr>
+</table>
+<p><b>해석:</b> 이 예에서는 개인정보 보호와 투명성이 3점 미만이므로 결과 공유 전에 데이터 비식별화, 수집 동의, 알고리즘 기준과 한계 설명을 보완해야 한다.</p>
+</section>
+
+<section>
+<h2>7. 수업 끝 멘트</h2>
+<div class="quote">“시는 아름다운 말만 남기는 것이 아니라 진실한 마음을 드러내고, 소설은 주인공의 성공뿐 아니라 상처와 한계까지 보여 줄 때 깊어집니다. 희곡은 무대 앞의 박수와 무대 뒤의 책임이 함께 작품을 만들고, 음악은 큰 소리보다 정확한 화음으로 오래 기억됩니다. 여러분의 산출물도 완벽한 척할 때보다 한계와 개선 방향을 솔직히 밝힐 때 더 큰 신뢰를 얻습니다. 단, ‘윤리 점수는 마음속으로 5점’이라고 쓰는 것은 자기평가가 아니라 자기최면입니다!”</div>
+</section>
+
+<section id="s6">
+<h2>8. 형성·진단·코드 평가</h2>
+<div class="card"><b>배점:</b> OX 20점 · 진단평가 60점 · 단답형 20점</div>
+<div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="name" type="text" placeholder="예: 홍길동"></label></div>
+<div class="progress"><span id="bar"></span></div>
+<form id="quiz">
+<h3>Ⅰ. 형성평가 OX 10개</h3><div id="ox"></div>
+<h3>Ⅱ. 옳은 것 3개 고르기 10개</h3><div id="multi"></div>
+<h3>Ⅲ. 코드 평가 단답형 5개</h3><div id="short"></div>
+</form>
+<div class="actions"><button type="button" class="primary" onclick="grade()">채점하고 TXT 저장</button><button type="button" class="secondary" onclick="print()">인쇄·PDF</button><button type="button" class="danger" onclick="resetAll()">다시 풀기</button></div>
+<div id="result"></div>
+</section>
+</main>
+
+<script>
+const O=[
+["기능 평가는 프로그램이 요구사항대로 동작하는지 확인한다.","O"],
+["윤리 평가는 프로그램의 실행 속도만 확인하는 과정이다.","X"],
+["개인정보 보호는 필요한 정보만 최소한으로 수집하는 원칙과 관련된다.","O"],
+["공정성 평가는 특정 집단에 불리한 결과가 나타나는지 살펴볼 수 있다.","O"],
+["저작권이 있는 자료는 출처만 지우면 자유롭게 사용할 수 있다.","X"],
+["투명성은 데이터 출처와 알고리즘의 한계를 설명하는 태도이다.","O"],
+["프로젝트 결과를 공유할 때 실패 사례는 모두 숨겨야 한다.","X"],
+["사용성은 사용자가 기능을 쉽게 이해하고 이용할 수 있는 정도이다.","O"],
+["평가 기준은 산출물을 만든 뒤 임의로 바꾸는 것이 가장 공정하다.","X"],
+["기능 점수가 높아도 윤리적 문제가 있으면 개선이 필요하다.","O"]
+];
+const M=[
+["기능 평가 항목",["정확성","효율성","사용성","개인정보 동의만","저작자 이름만"],[0,1,2]],
+["윤리 평가 항목",["개인정보 보호","공정성","저작권 준수","처리 속도만","화면 크기"],[0,1,2]],
+["책임 있는 결과 공유",["데이터 출처 표시","한계와 오류 가능성 설명","개선 방향 제시","실패 결과 삭제","저작자 정보 제거"],[0,1,2]],
+["evaluation 딕셔너리 설명",["항목별 점수 저장","기능·윤리 항목 포함","1~5점 평가 가능","모든 값은 문자열","항목 이름 삭제"],[0,1,2]],
+["average_score 함수",["점수 합 계산","항목 수로 나눔","평균 반환","항목 모두 삭제","항상 5 반환"],[0,1,2]],
+["find_improvements 함수",["기준 미만 항목 탐색","리스트로 반환","기본 기준은 3","최고점 항목만 반환","점수를 무작위 변경"],[0,1,2]],
+["공정성 검토 방법",["집단별 결과 비교","편향된 데이터 확인","차별 가능성 분석","정확도만 확인","특정 집단 제외"],[0,1,2]],
+["개인정보 보호 방법",["최소 수집","비식별화","수집 목적 안내","민감정보 공개","동의 없는 재사용"],[0,1,2]],
+["좋은 평가 기준",["구체적이다","사전에 공유된다","근거 자료로 판단한다","발표 후 임의 변경","친한 팀에 유리하게 적용"],[0,1,2]],
+["성취기준에 맞는 활동",["기능·윤리 관점 평가","평가 근거와 개선점 공유","사회적 영향 검토","결과만 자랑","한계 은폐"],[0,1,2]]
+];
+const S=[
+["기능 평가 항목 목록 변수",["functional_items"]],
+["윤리 평가 항목 목록 변수",["ethical_items"]],
+["평균을 계산하는 함수",["average_score","average_score()"]],
+["개선 항목을 찾는 함수",["find_improvements","find_improvements()"]],
+["개선 필요 항목 결과 변수",["improvements"]]
+];
+function norm(v){return (v||"").toLowerCase().replace(/\s/g,"")}
+function render(){
+ox.innerHTML=O.map((x,i)=>`<div class=q id=o${i}><b>${i+1}. ${x[0]}</b><div class=opts><label><input type=radio name=o${i} value=O> O</label><label><input type=radio name=o${i} value=X> X</label></div><div class=exp id=oe${i}></div></div>`).join("");
+multi.innerHTML=M.map((x,i)=>`<div class=q id=m${i}><b>${i+1}. ${x[0]}에서 옳은 것 3개를 고르시오.</b><div class=opts>${x[1].map((v,j)=>`<label><input type=checkbox name=m${i} value=${j}> ${j+1}) ${v}</label>`).join("")}</div><div class=exp id=me${i}></div></div>`).join("");
+short.innerHTML=S.map((x,i)=>`<div class=q id=s${i}><b>${i+1}. ${x[0]}</b><input type=text name=s${i}><div class=exp id=se${i}></div></div>`).join("");
+document.querySelectorAll("input").forEach(x=>x.addEventListener("input",progress))
+}
+function progress(){let a=0;for(let i=0;i<10;i++)if(document.querySelector(`input[name=o${i}]:checked`))a++;for(let i=0;i<10;i++)if(document.querySelectorAll(`input[name=m${i}]:checked`).length)a++;for(let i=0;i<5;i++)if(document.querySelector(`input[name=s${i}]`).value.trim())a++;bar.style.width=(a/25*100)+"%"}
+function mark(id,eid,ok,text){let q=document.getElementById(id);q.className="q "+(ok?"good":"bad");let e=document.getElementById(eid);e.style.display="block";e.textContent=text}
+function grade(){
+let id=sid.value.trim(),nm=name.value.trim();if(!id||!nm){alert("학번과 이름을 입력하세요.");return}
+let score=0,lines=[];
+O.forEach((x,i)=>{let e=document.querySelector(`input[name=o${i}]:checked`),v=e?e.value:"미응답",ok=v===x[1];if(ok)score+=2;mark("o"+i,"oe"+i,ok,"정답: "+x[1]);lines.push(`[OX ${i+1}] ${v} / ${x[1]} / ${ok?"정답":"오답"}`)});
+M.forEach((x,i)=>{let v=[...document.querySelectorAll(`input[name=m${i}]:checked`)].map(z=>+z.value).sort(),ok=JSON.stringify(v)===JSON.stringify(x[2]);if(ok)score+=6;mark("m"+i,"me"+i,ok,"정답: "+x[2].map(z=>z+1).join(",")+"번");lines.push(`[진단 ${i+1}] ${v.map(z=>z+1).join(",")||"미응답"} / ${x[2].map(z=>z+1).join(",")} / ${ok?"정답":"오답"}`)});
+S.forEach((x,i)=>{let v=document.querySelector(`input[name=s${i}]`).value,ok=x[1].some(a=>norm(a)===norm(v));if(ok)score+=4;mark("s"+i,"se"+i,ok,"정답: "+x[1][0]);lines.push(`[단답 ${i+1}] ${v||"미응답"} / ${x[1][0]} / ${ok?"정답":"오답"}`)});
+let d=new Date(),p=n=>String(n).padStart(2,"0"),t=`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`,ft=`${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+result.style.display="block";result.innerHTML=`<h3>${score}점 / 100점</h3><p>${id} ${nm} · ${t}</p>`;
+let txt=["정보과학 15차시 평가 결과",`학번: ${id}`,`이름: ${nm}`,`점수: ${score}/100`,`응시시각: ${t}`,"",...lines].join("\r\n");
+let u=URL.createObjectURL(new Blob(["\ufeff"+txt],{type:"text/plain;charset=utf-8"})),a=document.createElement("a");a.href=u;a.download=`${id}_${nm}_${score}점_15차시_${ft}.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(u),500)
+}
+function resetAll(){if(confirm("모든 답을 지울까요?"))location.reload()}
+render();
+</script>
+</body>
+</html>

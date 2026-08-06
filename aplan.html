@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>정보융합과제</title>
+
+<style>
+html, body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial, sans-serif;
+}
+
+/* 상단 메뉴 */
+#top{
+    height:32px;
+    padding:2px 5px;
+    border-bottom:1px solid #ccc;
+    background:#f5f5f5;
+}
+
+/* 아주 작은 드롭다운 */
+#fileSelect{
+    width:220px;
+    height:24px;
+    font-size:12px;
+}
+
+/* 본문 */
+#main{
+    width:100%;
+    height:calc(100vh - 32px);
+    border:none;
+}
+</style>
+</head>
+
+<body>
+
+<div id="top">
+    <select id="fileSelect"
+            onchange="loadPage(this.value)">
+
+<option value="as01.html">01. 과목 안내와 융합 탐구의 이해</option>
+<option value="as02.html">02. 문제 발견과 탐구 주제 구체화</option>
+<option value="as03.html">03. 연구 질문과 가설 설정</option>
+<option value="as04.html">04. 자료 출처와 수집 계획</option>
+<option value="as05.html">05. 데이터 윤리와 개인정보 보호</option>
+<option value="as06.html">06. 데이터 구조화와 전처리 설계</option>
+<option value="as07.html">07. 데이터 수집과 품질 검증</option>
+<option value="as08.html">08. 기초 통계와 탐색적 분석</option>
+<option value="as09.html">09. 시각화 설계와 정보 전달</option>
+<option value="as10.html">10. 알고리즘적 문제 해결 설계</option>
+<option value="as11.html">11. 프로토타입 구현 Ⅰ</option>
+<option value="as12.html">12. 프로토타입 구현 Ⅱ</option>
+<option value="as13.html">13. 검증 계획과 테스트</option>
+<option value="as14.html">14. 분석 결과 해석과 개선</option>
+<option value="as15.html">15. 융합적 확장과 사회적 영향</option>
+<option value="as16.html">16. 성과 공유와 동료 평가</option>
+<option value="as17.html">17. 최종 성찰과 데이터베이스 프로젝트</option>
+
+    </select>
+</div>
+
+<iframe
+    id="main"
+    src="as01.html">
+</iframe>
+
+<script>
+function loadPage(file){
+    document.getElementById("main").src = file;
+}
+</script>
+
+</body>
+</html>

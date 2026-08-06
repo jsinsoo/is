@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보융합탐구과제 3차시 | 연구 질문과 가설 설정</title>
+<style>
+:root{
+  --navy:#17345f; --blue:#2d70b3; --sky:#eaf5ff; --mint:#e9f8f3;
+  --gold:#f0ad31; --red:#d9534f; --green:#2f8b69; --ink:#1f2937;
+  --muted:#667085; --paper:#fff; --line:#d8e2ee; --bg:#f5f8fc;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--ink);background:
+  radial-gradient(circle at 8% 0%,#e8f4ff 0,transparent 31%),
+  radial-gradient(circle at 92% 8%,#eefbf6 0,transparent 28%),var(--bg);
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.72;
+}
+header{
+  color:#fff;padding:58px 24px 46px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#112c52,#2769aa 58%,#4a8ed1);
+}
+header:before,header:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.08)}
+header:before{width:240px;height:240px;left:-90px;bottom:-130px}
+header:after{width:330px;height:330px;right:-100px;top:-140px}
+.header-inner{max-width:1180px;margin:auto;position:relative;z-index:2}
+.eyebrow{font-weight:900;letter-spacing:.08em;color:#d4ebff}
+h1{font-size:clamp(31px,5vw,54px);line-height:1.18;margin:10px 0 14px}
+.subtitle{font-size:18px;max-width:930px;color:#edf6ff}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.badge{padding:8px 13px;border:1px solid rgba(255,255,255,.34);border-radius:999px;background:rgba(255,255,255,.1);font-size:14px}
+nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1180px;margin:auto;padding:10px 16px;display:flex;gap:8px;overflow:auto}
+.nav-inner a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:8px 12px;border-radius:9px}
+.nav-inner a:hover{background:var(--sky)}
+main{max-width:1180px;margin:auto;padding:28px 18px 80px}
+section{scroll-margin-top:74px;margin:28px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 10px 30px rgba(23,52,95,.06)}
+h2{font-size:28px;color:var(--navy);margin:0 0 18px;display:flex;gap:10px;align-items:center}
+h3{color:var(--blue);margin:22px 0 10px}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media(max-width:820px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.label{display:inline-block;font-size:13px;font-weight:900;color:#fff;background:var(--blue);padding:4px 9px;border-radius:999px}
+.highlight{background:linear-gradient(90deg,#fff7df,#fff);border-left:5px solid var(--gold)}
+.quote{font-size:18px;font-weight:800;color:#294766}
+.timeline{display:grid;grid-template-columns:120px 1fr;gap:12px 18px}
+.timeline .time{font-weight:900;color:var(--blue)}
+.concept{margin:22px 0;border-top:5px solid var(--blue)}
+.concept-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.num{width:38px;height:38px;display:inline-grid;place-items:center;border-radius:12px;background:var(--navy);color:#fff;font-weight:900}
+pre{background:#111827;color:#e5eefb;padding:18px;border-radius:13px;overflow:auto;font-size:14px;line-height:1.55}
+code{font-family:Consolas,"Courier New",monospace}
+.explain{background:#f8fbff;border:1px dashed #aac6e4;border-radius:12px;padding:15px}
+.question{background:#fbfcfe;border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0}
+.question-title{font-weight:900;color:var(--navy);margin-bottom:10px}
+.option{display:block;margin:8px 0;padding:8px 10px;border-radius:8px}
+.option:hover{background:#eef6ff}
+input[type=checkbox],input[type=radio]{transform:scale(1.12);margin-right:8px}
+.answer-box{display:none;margin-top:12px;padding:12px;border-radius:10px;background:#eefaf5;border-left:4px solid var(--green)}
+.topic-card{border-top:4px solid var(--gold)}
+table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:12px}
+th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}
+th{background:#eaf3fc;color:var(--navy)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+input[type=text]{width:100%;padding:13px;border:1px solid #b9c8d8;border-radius:10px;font-size:16px}
+button{border:0;border-radius:11px;padding:12px 18px;font-weight:900;font-size:15px;cursor:pointer;background:var(--blue);color:#fff;box-shadow:0 5px 14px rgba(45,112,179,.2)}
+button.secondary{background:#64748b}button.green{background:var(--green)}button.gold{background:#b97800}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.score-panel{display:none;margin-top:18px;padding:18px;border-radius:14px;background:#eff8ff;border:2px solid #8bc0ef}
+.correct{background:#eaf9f1!important}.wrong{background:#fff0ef!important}
+.small{font-size:13px;color:var(--muted)}
+.footer{padding:26px;text-align:center;color:#6b7280}
+.activity{background:#f8fbff;border:1px solid #c8dced;border-radius:14px;padding:18px}
+@media print{
+  nav,.actions,button{display:none!important}
+  body{background:#fff}.card{box-shadow:none;break-inside:avoid}.answer-box{display:block}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="header-inner">
+<div class="eyebrow">2022 개정 교육과정 · 정보융합탐구과제</div>
+<h1>3차시 목표지향 개념기반 수업지도안</h1>
+<div class="subtitle">연구 질문과 가설 설정 — 측정 가능하고 검증 가능한 연구 질문을 만들고, 독립변인·종속변인·통제변인의 관계를 설명하며 조작적 정의를 통해 추상적인 개념을 실제 측정값으로 바꾼다.</div>
+<div class="badges">
+<span class="badge">연구 질문</span><span class="badge">가설 설정</span>
+<span class="badge">독립·종속·통제 변인</span><span class="badge">조작적 정의</span>
+<span class="badge">개념별 코드와 평가</span><span class="badge">자동 채점 · TXT 저장</span>
+</div>
+</div>
+</header>
+
+<nav><div class="nav-inner">
+<a href="#overview">수업 개요</a><a href="#standards">성취기준</a><a href="#opening">시작 멘트</a>
+<a href="#activity">핵심 활동</a><a href="#concepts">핵심 개념</a><a href="#papers">탐구 주제</a>
+<a href="#closing">끝 멘트</a><a href="#formative">형성평가</a><a href="#diagnostic">진단평가</a><a href="#submit">제출</a>
+</div></nav>
+
+<main>
+<section id="overview" class="card">
+<h2>🧭 수업 개요</h2>
+<div class="grid-2">
+<div>
+<span class="label">학습 주제</span>
+<h3>연구 질문과 가설 설정</h3>
+<p>탐구 주제를 측정 가능하고 검증 가능한 연구 질문으로 바꾸고, 예상되는 변인 관계를 가설로 표현한다. 독립변인·종속변인·통제변인을 구분하고 추상적인 개념을 조작적 정의로 구체화한다.</p>
+</div>
+<div>
+<span class="label">핵심 산출물</span>
+<ul>
+<li>측정 가능한 연구 질문 2개</li>
+<li>방향이 드러나는 연구 가설 2개</li>
+<li>독립·종속·통제 변인표</li>
+<li>핵심 개념의 조작적 정의 문장</li>
+</ul>
+</div>
+</div>
+<h3>차시 운영 예시</h3>
+<div class="timeline">
+<div class="time">도입 8분</div><div>좋은 질문과 나쁜 질문을 비교하고, 측정 가능성과 검증 가능성의 차이를 찾는다.</div>
+<div class="time">개념 17분</div><div>연구 질문, 가설, 독립변인, 종속변인, 통제변인, 조작적 정의, 관계 방향, 반증 가능성, 측정 척도, 질문-가설 정합성을 학습한다.</div>
+<div class="time">활동 20분</div><div>주제 문장 → 연구 질문 → 가설 → 변인표 → 조작적 정의 순서로 탐구 설계를 구체화한다.</div>
+<div class="time">정리 5분</div><div>형성평가 OX, 짝과 질문 점검, 다음 차시 자료 수집 계획 예고</div>
+</div>
+</section>
+
+<section id="standards" class="card">
+<h2>🎯 성취기준과 학습 목표</h2>
+<h3>성취기준</h3>
+<table>
+<tr><th>영역</th><th>수업에 적용한 성취기준</th></tr>
+<tr><td>질문 설계</td><td>탐구 주제를 대상·조건·변수·관계가 드러나는 측정 가능하고 검증 가능한 연구 질문으로 표현한다.</td></tr>
+<tr><td>가설 설정</td><td>연구 질문에 근거하여 독립변인과 종속변인의 예상 관계를 반증 가능한 문장으로 제시한다.</td></tr>
+<tr><td>변인 통제</td><td>독립변인, 종속변인, 통제변인을 구분하고 공정한 비교를 위한 통제의 필요성을 설명한다.</td></tr>
+<tr><td>측정 설계</td><td>추상적 개념을 실제로 관찰하거나 수치화할 수 있도록 조작적 정의를 작성한다.</td></tr>
+</table>
+<h3>학습 목표</h3>
+<ol>
+<li>측정 가능하고 검증 가능한 연구 질문의 조건을 설명할 수 있다.</li>
+<li>연구 질문과 일치하는 방향성 가설과 비방향성 가설을 작성할 수 있다.</li>
+<li>독립변인, 종속변인, 통제변인을 구분하여 표로 정리할 수 있다.</li>
+<li>집중도, 만족도, 안전성 같은 추상적 개념을 조작적으로 정의할 수 있다.</li>
+<li>질문·가설·변인·측정 방법의 정합성을 점검하고 수정할 수 있다.</li>
+</ol>
+</section>
+
+<section id="opening" class="card highlight">
+<h2>🌅 수업 시작 멘트</h2>
+<p class="quote">“베이컨은 지식이 경험에서 출발한다고 보았고, 칼 포퍼는 좋은 과학적 생각은 틀릴 가능성까지 열어 두어야 한다고 말했습니다. 갈릴레이는 ‘어떻게 느끼는가’에서 멈추지 않고 길이와 시간으로 바꾸어 측정했습니다. 수학자 가우스가 모호한 패턴을 수로 정리했듯, 오늘 우리는 ‘궁금하다’는 마음을 질문으로, 예상은 가설로, 생각은 변인과 측정값으로 바꾸어 보겠습니다.”</p>
+</section>
+
+<section id="activity" class="card">
+<h2>🔬 핵심 활동</h2>
+<div class="grid-3">
+<div class="activity"><h3>1. 질문 구체화</h3><p>대상, 조건, 독립변인, 종속변인이 드러나도록 연구 질문을 다시 쓴다.</p></div>
+<div class="activity"><h3>2. 가설 설정</h3><p>“독립변인이 변하면 종속변인이 어떻게 달라질 것이다”의 형태로 예상 관계를 표현한다.</p></div>
+<div class="activity"><h3>3. 조작적 정의</h3><p>집중도, 만족도, 효율성 같은 개념을 관찰 횟수, 점수, 시간, 비율 등으로 측정 가능하게 바꾼다.</p></div>
+</div>
+</section>
+
+<section id="concepts">
+<h2>🧩 학습할 핵심 개념 10개</h2>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">1</span> 연구 질문</h3><span class="label">탐구의 방향</span></div>
+<p><b>개념 상세 설명:</b> 연구 질문은 무엇을 어떤 조건에서 어떤 자료로 확인할지 드러나는 문장이다. “교실 환경은 어떤가?”보다 “환기 전후 교실 CO2 농도는 얼마나 달라지는가?”가 측정과 비교에 적합하다.</p>
+<pre><code>target = "교실"
+condition = "환기 전후"
+variable = "CO2 농도"
+question = f"{condition} {target}의 {variable}는 얼마나 달라지는가?"
+print(question)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 대상, 조건, 측정 변수를 문자열로 조합하여 구체적인 연구 질문을 만든다. 질문만 읽어도 비교 대상과 측정값이 보이도록 하는 것이 중요하다.</div>
+<div class="question" data-answer="0,2,4">
+<div class="question-title">[개념 1] 좋은 연구 질문의 조건으로 옳은 것 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c1" value="0">① 대상과 조건이 비교적 분명하다.</label>
+<label class="option"><input type="checkbox" name="c1" value="1">② 답이 이미 정해져 있어 자료가 필요 없다.</label>
+<label class="option"><input type="checkbox" name="c1" value="2">③ 관찰하거나 측정한 자료로 확인할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c1" value="3">④ 한 문장에 가능한 모든 변수를 넣는다.</label>
+<label class="option"><input type="checkbox" name="c1" value="4">⑤ 한 학기 안에 검증 가능한 범위를 가진다.</label>
+<div class="answer-box">정답: ①, ③, ⑤ — 연구 질문은 구체적이고 측정 가능하며 실행 가능한 범위여야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">2</span> 가설</h3><span class="label">검증 가능한 예상</span></div>
+<p><b>개념 상세 설명:</b> 가설은 연구 질문에 대한 잠정적이고 검증 가능한 예상이다. 단순한 희망이나 확신이 아니라 자료에 의해 지지되거나 반박될 수 있어야 한다.</p>
+<pre><code>independent = "환기 시간"
+dependent = "CO2 농도"
+hypothesis = f"{independent}이 길어질수록 {dependent}는 낮아질 것이다."
+print(hypothesis)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 독립변인과 종속변인을 문장에 넣어 예상 관계를 표현한다. “낮아질 것이다”처럼 변화 방향을 넣으면 방향성 가설이 된다.</div>
+<div class="question" data-answer="0,1,3">
+<div class="question-title">[개념 2] 가설에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c2" value="0">① 연구 질문에 대한 잠정적 예상이다.</label>
+<label class="option"><input type="checkbox" name="c2" value="1">② 자료를 통해 지지되거나 반박될 수 있어야 한다.</label>
+<label class="option"><input type="checkbox" name="c2" value="2">③ 연구자의 믿음이 강하면 검증할 필요가 없다.</label>
+<label class="option"><input type="checkbox" name="c2" value="3">④ 변인 사이의 예상 관계를 포함할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c2" value="4">⑤ 결과와 다르면 자료를 삭제해야 한다.</label>
+<div class="answer-box">정답: ①, ②, ④ — 가설은 잠정적이며 검증과 반증 가능성을 가진다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">3</span> 독립변인</h3><span class="label">원인 후보</span></div>
+<p><b>개념 상세 설명:</b> 독립변인은 연구자가 변화시키거나 집단을 나누는 기준으로 삼는 변인이다. 환기 시간, 학습 방법, 조도 수준 등이 독립변인이 될 수 있다.</p>
+<pre><code>ventilation_minutes = [0, 5, 10, 15]
+for minute in ventilation_minutes:
+    print("독립변인 값:", minute, "분")</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 환기 시간을 여러 수준으로 설정했다. 독립변인은 연구 질문에 따라 직접 조작하거나 이미 존재하는 조건을 비교할 수 있다.</div>
+<div class="question" data-answer="1,2,4">
+<div class="question-title">[개념 3] 독립변인에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c3" value="0">① 연구 결과로 측정되는 값만을 뜻한다.</label>
+<label class="option"><input type="checkbox" name="c3" value="1">② 연구자가 변화시키거나 비교 기준으로 삼을 수 있다.</label>
+<label class="option"><input type="checkbox" name="c3" value="2">③ 종속변인에 영향을 줄 것으로 예상되는 변인이다.</label>
+<label class="option"><input type="checkbox" name="c3" value="3">④ 모든 연구에서 반드시 시간이어야 한다.</label>
+<label class="option"><input type="checkbox" name="c3" value="4">⑤ 여러 수준이나 집단으로 설정할 수 있다.</label>
+<div class="answer-box">정답: ②, ③, ⑤ — 독립변인은 원인 후보이며 비교하거나 조작하는 기준이다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">4</span> 종속변인</h3><span class="label">관찰되는 결과</span></div>
+<p><b>개념 상세 설명:</b> 종속변인은 독립변인의 변화에 따라 달라질 것으로 예상되어 측정하는 결과 변인이다. CO2 농도, 반응 시간, 정확도, 만족도 점수 등이 종속변인이 될 수 있다.</p>
+<pre><code>co2_values = [1350, 1100, 850, 720]
+for i, value in enumerate(co2_values):
+    print(i, "단계 종속변인:", value, "ppm")</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 각 조건에서 측정한 CO2 농도를 결과값으로 출력한다. 종속변인은 단위와 측정 방법이 명확해야 비교할 수 있다.</div>
+<div class="question" data-answer="0,2,3">
+<div class="question-title">[개념 4] 종속변인에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c4" value="0">① 연구에서 결과로 측정하는 변인이다.</label>
+<label class="option"><input type="checkbox" name="c4" value="1">② 연구자가 항상 일정하게 유지해야 하는 변인이다.</label>
+<label class="option"><input type="checkbox" name="c4" value="2">③ 독립변인의 변화와 관련하여 관찰한다.</label>
+<label class="option"><input type="checkbox" name="c4" value="3">④ 측정 단위와 도구를 정할 필요가 있다.</label>
+<label class="option"><input type="checkbox" name="c4" value="4">⑤ 연구 질문과 관계없이 임의로 선택한다.</label>
+<div class="answer-box">정답: ①, ③, ④ — 종속변인은 결과로 측정하며 방법과 단위가 필요하다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">5</span> 통제변인</h3><span class="label">공정한 비교</span></div>
+<p><b>개념 상세 설명:</b> 통제변인은 독립변인 외에 종속변인에 영향을 줄 수 있어 가능한 한 같게 유지하는 조건이다. 교실 크기, 측정 위치, 학생 수, 측정 시간대 등을 통제하면 비교의 타당성이 높아진다.</p>
+<pre><code>controls = {
+    "교실 크기": "동일",
+    "측정 위치": "교실 중앙",
+    "측정 시간": "수업 시작 10분 후"
+}
+for item, rule in controls.items():
+    print(item, ":", rule)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 통제할 조건과 유지 방법을 딕셔너리로 정리한다. 모든 변인을 완벽히 통제하기 어려운 경우에는 차이를 기록하고 한계로 설명해야 한다.</div>
+<div class="question" data-answer="0,1,4">
+<div class="question-title">[개념 5] 통제변인에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c5" value="0">① 공정한 비교를 위해 가능한 한 일정하게 유지한다.</label>
+<label class="option"><input type="checkbox" name="c5" value="1">② 종속변인에 영향을 줄 수 있는 다른 조건을 포함한다.</label>
+<label class="option"><input type="checkbox" name="c5" value="2">③ 모든 연구에서 통제변인은 필요 없다.</label>
+<label class="option"><input type="checkbox" name="c5" value="3">④ 통제하지 못한 조건은 기록하지 않아도 된다.</label>
+<label class="option"><input type="checkbox" name="c5" value="4">⑤ 통제 방법을 사전에 계획하는 것이 좋다.</label>
+<div class="answer-box">정답: ①, ②, ⑤ — 통제변인은 다른 영향을 줄여 비교의 타당성을 높인다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">6</span> 조작적 정의</h3><span class="label">개념을 측정값으로</span></div>
+<p><b>개념 상세 설명:</b> 조작적 정의는 집중도, 만족도, 효율성처럼 추상적인 개념을 실제 측정 가능한 기준으로 바꾸는 것이다. 예를 들어 집중도를 ‘10분 동안 과제 화면을 벗어난 횟수’로 정의할 수 있다.</p>
+<pre><code>concept = "집중도"
+operational_definition = "10분 동안 과제 화면을 벗어난 횟수"
+print(concept, "=", operational_definition)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 추상적 개념과 측정 기준을 연결했다. 조작적 정의는 연구자가 무엇을 어떻게 측정했는지 다른 사람이 이해하도록 돕는다.</div>
+<div class="question" data-answer="1,2,3">
+<div class="question-title">[개념 6] 조작적 정의에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c6" value="0">① 사전의 뜻을 그대로 옮기기만 하면 된다.</label>
+<label class="option"><input type="checkbox" name="c6" value="1">② 추상적 개념을 관찰하거나 측정 가능한 기준으로 바꾼다.</label>
+<label class="option"><input type="checkbox" name="c6" value="2">③ 측정 도구와 단위를 명확히 하는 데 도움이 된다.</label>
+<label class="option"><input type="checkbox" name="c6" value="3">④ 연구의 재현성을 높일 수 있다.</label>
+<label class="option"><input type="checkbox" name="c6" value="4">⑤ 연구자마다 정의가 달라도 설명할 필요가 없다.</label>
+<div class="answer-box">정답: ②, ③, ④ — 조작적 정의는 측정 기준을 구체화하고 재현성을 높인다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">7</span> 방향성 가설</h3><span class="label">변화 방향 예상</span></div>
+<p><b>개념 상세 설명:</b> 방향성 가설은 독립변인이 증가하거나 감소할 때 종속변인이 어느 방향으로 변할지 예상한다. “조도가 높아질수록 독서 정확도가 증가할 것이다”처럼 관계의 방향을 제시한다.</p>
+<pre><code>light = [100, 300, 500]
+predicted_accuracy = [72, 84, 91]
+for x, y in zip(light, predicted_accuracy):
+    print(f"조도 {x}lx → 예상 정확도 {y}%")</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 조도 증가에 따라 예상 정확도가 증가하는 방향을 자료 형태로 표현한다. 실제 결과는 예상과 다를 수 있으며 그 차이도 중요한 탐구 결과이다.</div>
+<div class="question" data-answer="0,2,4">
+<div class="question-title">[개념 7] 방향성 가설에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c7" value="0">① 변인 관계의 증가·감소 방향을 제시한다.</label>
+<label class="option"><input type="checkbox" name="c7" value="1">② 결과와 다르면 연구가 실패한 것이다.</label>
+<label class="option"><input type="checkbox" name="c7" value="2">③ 기존 이론이나 관찰 근거를 바탕으로 세울 수 있다.</label>
+<label class="option"><input type="checkbox" name="c7" value="3">④ 연구 질문과 무관하게 작성해도 된다.</label>
+<label class="option"><input type="checkbox" name="c7" value="4">⑤ 자료로 관계 방향을 검증할 수 있어야 한다.</label>
+<div class="answer-box">정답: ①, ③, ⑤ — 방향성 가설은 근거를 바탕으로 변화 방향을 예상하고 검증한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">8</span> 반증 가능성</h3><span class="label">틀릴 수 있어야 검증 가능</span></div>
+<p><b>개념 상세 설명:</b> 반증 가능성은 어떤 결과가 나오면 가설이 지지되지 않는다고 판단할 수 있는 조건이 존재한다는 뜻이다. “좋은 기술은 언제나 좋다”처럼 어떤 결과도 설명할 수 있는 문장은 과학적 검증이 어렵다.</p>
+<pre><code>hypothesis = "환기 시간이 길수록 CO2 농도는 낮아진다"
+result = "환기 시간과 CO2 농도 사이에 일관된 감소가 없음"
+supported = "감소" in result and "없음" not in result
+print("가설 지지 여부:", supported)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 실제 결과가 예상 방향과 일치하는지 단순하게 점검한다. 연구에서는 통계 분석과 반복 측정으로 더 신중하게 판단해야 한다.</div>
+<div class="question" data-answer="1,3,4">
+<div class="question-title">[개념 8] 반증 가능성에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c8" value="0">① 어떤 결과가 나와도 참이라고 할 수 있는 가설이 가장 좋다.</label>
+<label class="option"><input type="checkbox" name="c8" value="1">② 가설이 지지되지 않을 수 있는 조건이 존재해야 한다.</label>
+<label class="option"><input type="checkbox" name="c8" value="2">③ 가설과 다른 결과는 모두 측정 오류이다.</label>
+<label class="option"><input type="checkbox" name="c8" value="3">④ 예상과 다른 결과도 새로운 설명을 찾는 근거가 된다.</label>
+<label class="option"><input type="checkbox" name="c8" value="4">⑤ 자료에 따라 가설을 수정하거나 기각할 수 있다.</label>
+<div class="answer-box">정답: ②, ④, ⑤ — 과학적 가설은 틀릴 가능성이 열려 있어야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">9</span> 측정 척도와 단위</h3><span class="label">자료의 언어</span></div>
+<p><b>개념 상세 설명:</b> 측정 척도와 단위는 변인을 어떤 값으로 표현할지 정하는 기준이다. 온도는 ℃, CO2는 ppm, 만족도는 1~5점, 반응 시간은 초처럼 명확히 정해야 자료를 비교할 수 있다.</p>
+<pre><code>measurements = {
+    "온도": "℃",
+    "CO2 농도": "ppm",
+    "만족도": "1~5점",
+    "반응 시간": "초"
+}
+for variable, unit in measurements.items():
+    print(variable, "단위:", unit)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 변인과 측정 단위를 연결해 기록한다. 단위가 다르면 변환 방법을 명시하고, 설문 척도는 각 점수의 의미를 분명히 해야 한다.</div>
+<div class="question" data-answer="0,1,3">
+<div class="question-title">[개념 9] 측정 척도와 단위에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c9" value="0">① 변수별 단위를 명확히 정한다.</label>
+<label class="option"><input type="checkbox" name="c9" value="1">② 설문 점수의 의미와 범위를 설명한다.</label>
+<label class="option"><input type="checkbox" name="c9" value="2">③ 단위가 달라도 그대로 비교해도 된다.</label>
+<label class="option"><input type="checkbox" name="c9" value="3">④ 측정 도구의 정밀도와 한계를 확인한다.</label>
+<label class="option"><input type="checkbox" name="c9" value="4">⑤ 숫자로 표현하면 언제나 객관성이 완벽해진다.</label>
+<div class="answer-box">정답: ①, ②, ④ — 단위, 척도 의미, 측정 도구의 한계를 함께 확인해야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">10</span> 질문·가설·변인의 정합성</h3><span class="label">설계의 연결</span></div>
+<p><b>개념 상세 설명:</b> 정합성은 연구 질문, 가설, 변인, 측정 방법이 서로 같은 관계를 가리키는 상태이다. 질문에는 환기 시간과 CO2가 있는데 가설은 온도와 집중도를 다루면 설계가 어긋난다.</p>
+<pre><code>question_vars = {"환기 시간", "CO2 농도"}
+hypothesis_vars = {"환기 시간", "CO2 농도"}
+print("정합성:", question_vars == hypothesis_vars)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 질문과 가설에 포함된 변인 집합이 같은지 비교한다. 실제 점검에서는 방향, 대상, 조건, 측정 방법까지 함께 확인한다.</div>
+<div class="question" data-answer="1,2,4">
+<div class="question-title">[개념 10] 질문·가설·변인의 정합성에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c10" value="0">① 질문과 가설이 서로 다른 변인을 다루어도 문제가 없다.</label>
+<label class="option"><input type="checkbox" name="c10" value="1">② 질문에 포함된 핵심 변인이 가설에도 나타나야 한다.</label>
+<label class="option"><input type="checkbox" name="c10" value="2">③ 종속변인의 측정 방법이 질문에 답할 수 있어야 한다.</label>
+<label class="option"><input type="checkbox" name="c10" value="3">④ 통제변인은 연구 결과와 상관없이 정하지 않아도 된다.</label>
+<label class="option"><input type="checkbox" name="c10" value="4">⑤ 대상과 조건도 질문과 가설에서 일관되게 유지해야 한다.</label>
+<div class="answer-box">정답: ②, ③, ⑤ — 질문, 가설, 변인, 측정 방법이 같은 탐구 관계를 가리켜야 한다.</div>
+</div></div>
+</section>
+
+<section id="papers" class="card">
+<h2>📚 학습과 관련한 탐구 보고서 주제 예시 5개</h2>
+<div class="grid-2">
+<div class="card topic-card"><h3>1. 환기 시간에 따른 교실 이산화탄소 농도 변화</h3><p><b>연구 질문:</b> 환기 시간이 길어질수록 교실 CO2 농도는 얼마나 감소하는가?</p><p><b>가설:</b> 환기 시간이 길어질수록 CO2 농도는 낮아질 것이다.</p></div>
+<div class="card topic-card"><h3>2. 화면 밝기가 글 읽기 정확도에 미치는 영향</h3><p><b>연구 질문:</b> 화면 밝기 수준에 따라 글 읽기 정확도와 반응 시간은 달라지는가?</p><p><b>가설:</b> 지나치게 낮거나 높은 밝기보다 중간 밝기에서 정확도가 높을 것이다.</p></div>
+<div class="card topic-card"><h3>3. 학습 자료 시각화 방식과 정보 이해도의 관계</h3><p><b>연구 질문:</b> 표, 막대그래프, 인포그래픽 중 어떤 방식이 정보 이해도 점수를 높이는가?</p><p><b>가설:</b> 비교 정보는 막대그래프로 제시할 때 이해도 점수가 높을 것이다.</p></div>
+<div class="card topic-card"><h3>4. 기온과 학교 전력 사용량의 관계 분석</h3><p><b>연구 질문:</b> 일평균 기온 변화에 따라 학교 전력 사용량은 어떻게 달라지는가?</p><p><b>가설:</b> 매우 낮거나 높은 기온에서 전력 사용량이 증가할 것이다.</p></div>
+<div class="card topic-card"><h3>5. 생성형 인공지능 답변 길이와 사실 오류율의 관계</h3><p><b>연구 질문:</b> 답변 길이가 길어질수록 검증 가능한 사실 오류의 비율은 달라지는가?</p><p><b>가설:</b> 답변 길이가 길어질수록 검증이 필요한 주장 수와 오류 가능성이 증가할 것이다.</p></div>
+</div>
+</section>
+
+<section id="closing" class="card highlight">
+<h2>🌙 수업 끝 멘트</h2>
+<p class="quote">“시는 한 단어를 고르기 위해 오래 망설이고, 소설은 인물의 행동에 이유를 붙이며, 희곡은 대사와 무대가 서로 어긋나지 않도록 다듬습니다. 음악도 음표와 박자가 맞아야 멜로디가 됩니다. 오늘 만든 질문과 가설도 아직 초안이어도 괜찮습니다. 변인이 서로 엇박자를 내면 다시 맞추면 됩니다. 연구는 정답을 맞히는 게임이 아니라, 틀릴 수도 있는 생각을 정직하게 시험하는 멋진 연습이니까요.”</p>
+</section>
+
+<section id="formative" class="card">
+<h2>✅ 형성평가 OX 퀴즈 10개</h2>
+<div id="oxQuestions"></div>
+</section>
+
+<section id="diagnostic" class="card">
+<h2>📝 진단평가 5지선다형 10개</h2>
+<p>각 문항은 옳은 것 3개와 틀린 것 2개로 구성되어 있습니다. 옳은 것 3개를 모두 선택하세요.</p>
+<div id="diagQuestions"></div>
+</section>
+
+<section id="submit" class="card">
+<h2>📤 학번·이름 입력 및 결과 저장</h2>
+<div class="form-row">
+<label>학번<input type="text" id="studentId" placeholder="예: 1101"></label>
+<label>이름<input type="text" id="studentName" placeholder="예: 홍길동"></label>
+</div>
+<div class="actions">
+<button onclick="gradeAll()">전체 채점</button>
+<button class="green" onclick="downloadResult()">TXT 결과 저장</button>
+<button class="secondary" onclick="showAnswers()">정답·풀이 보기</button>
+<button class="gold" onclick="window.print()">인쇄</button>
+</div>
+<div id="scorePanel" class="score-panel"></div>
+<p class="small">저장 파일명: 학번_이름_점수_3차시_응시시각.txt</p>
+</section>
+</main>
+
+<div class="footer">정보융합탐구과제 3차시 · 목표지향 개념기반 수업지도안</div>
+
+<script>
+const oxData = [
+["좋은 연구 질문은 대상과 조건, 측정할 변인이 비교적 분명해야 한다.","O","연구 질문은 무엇을 어떤 조건에서 확인할지 드러나야 한다."],
+["가설은 연구자의 확신이므로 자료와 다르게 나와도 바꿀 필요가 없다.","X","가설은 잠정적이며 자료에 따라 수정하거나 기각할 수 있다."],
+["독립변인은 종속변인에 영향을 줄 것으로 예상하여 변화시키거나 비교하는 기준이다.","O","독립변인은 원인 후보 또는 비교 기준이 된다."],
+["종속변인은 연구자가 항상 일정하게 유지하는 변인이다.","X","종속변인은 결과로 측정하는 변인이다."],
+["통제변인은 독립변인 외의 영향을 줄이기 위해 가능한 한 일정하게 유지한다.","O","공정한 비교와 타당성을 높인다."],
+["조작적 정의는 추상적 개념을 측정 가능한 기준으로 바꾸는 것이다.","O","다른 사람이 같은 기준으로 측정할 수 있게 한다."],
+["방향성 가설은 변인 관계의 증가나 감소 방향을 제시할 수 있다.","O","예상 변화의 방향이 드러난다."],
+["어떤 결과가 나와도 참인 가설은 반증 가능성이 높다.","X","어떤 결과로도 틀렸다고 할 수 없다면 검증이 어렵다."],
+["측정 단위와 도구의 한계는 연구 설계에서 확인할 필요가 있다.","O","자료 비교와 해석의 정확성에 영향을 준다."],
+["연구 질문과 가설이 서로 다른 변인을 다루어도 정합성에는 문제가 없다.","X","질문과 가설은 같은 핵심 변인과 관계를 다루어야 한다."]
+];
+
+const diagData = [
+{q:"측정 가능한 연구 질문의 조건 3개는?",o:["관찰하거나 수치화할 변인이 있다.","대상과 조건이 드러난다.","자료를 통해 확인할 수 있다.","답이 이미 확정되어 있다.","범위가 무한히 넓다."],a:[0,1,2],e:"변인, 대상·조건, 자료 확인 가능성이 핵심이다."},
+{q:"가설의 특징으로 옳은 것 3개는?",o:["연구 질문에 대한 잠정적 예상이다.","변인 관계를 포함할 수 있다.","자료로 검증할 수 있다.","반드시 참이어야 한다.","결과와 다르면 자료를 삭제한다."],a:[0,1,2],e:"가설은 잠정적이고 검증 가능한 예상이다."},
+{q:"독립변인의 예로 적절한 것 3개는?",o:["환기 시간","조도 수준","학습 방법","측정된 CO2 농도","실험 후 정확도"],a:[0,1,2],e:"독립변인은 조작하거나 비교 기준으로 삼는 변인이다."},
+{q:"종속변인의 예로 적절한 것 3개는?",o:["CO2 농도","정확도 점수","반응 시간","교실 크기","측정 위치"],a:[0,1,2],e:"종속변인은 결과로 측정하는 값이다."},
+{q:"통제변인을 설정하는 이유 3개는?",o:["독립변인 외의 영향을 줄인다.","공정한 비교를 돕는다.","결과 해석의 타당성을 높인다.","모든 변인을 자유롭게 바꾼다.","측정값을 원하는 방향으로 만든다."],a:[0,1,2],e:"통제변인은 다른 영향 요인을 줄여 비교를 명확히 한다."},
+{q:"조작적 정의의 좋은 사례 3개는?",o:["집중도 = 10분 동안 화면 이탈 횟수","만족도 = 1~5점 설문 평균","효율성 = 처리 시간당 완료 과제 수","안전성 = 좋은 느낌","흥미 = 연구자가 임의로 판단"],a:[0,1,2],e:"관찰·측정 가능한 수치나 기준으로 정의해야 한다."},
+{q:"방향성 가설의 예로 적절한 것 3개는?",o:["환기 시간이 길수록 CO2 농도는 낮아질 것이다.","조도가 높아질수록 읽기 정확도는 증가할 것이다.","기온이 매우 높아지면 전력 사용량은 증가할 것이다.","두 변인은 관련이 있을 수도 없을 수도 있다.","결과는 좋을 것이다."],a:[0,1,2],e:"변화 방향이 구체적으로 드러나야 한다."},
+{q:"반증 가능성이 있는 가설의 특징 3개는?",o:["틀렸다고 판단할 결과 조건이 있다.","자료에 따라 수정될 수 있다.","예상과 다른 결과도 의미가 있다.","어떤 결과든 참이라고 설명한다.","검증 없이 신념으로 유지한다."],a:[0,1,2],e:"가설은 틀릴 가능성이 열려 있어야 과학적으로 검증할 수 있다."},
+{q:"측정 척도와 단위를 정할 때 고려할 점 3개는?",o:["변수에 맞는 단위를 사용한다.","설문 점수의 의미를 설명한다.","도구의 정밀도와 한계를 확인한다.","단위가 달라도 그대로 합친다.","숫자는 언제나 완벽히 객관적이다."],a:[0,1,2],e:"단위, 척도 의미, 측정 도구의 한계를 확인한다."},
+{q:"질문·가설·변인의 정합성을 높이는 방법 3개는?",o:["질문의 핵심 변인을 가설에도 포함한다.","종속변인의 측정 방법이 질문에 답하도록 한다.","대상과 조건을 일관되게 유지한다.","가설에서 전혀 다른 변인을 사용한다.","통제변인은 기록하지 않는다."],a:[0,1,2],e:"질문, 가설, 변인, 측정 방법이 같은 탐구 관계를 가리켜야 한다."}
+];
+
+function renderOX(){
+ const wrap=document.getElementById("oxQuestions");
+ oxData.forEach((d,i)=>{
+  wrap.insertAdjacentHTML("beforeend",`
+  <div class="question" data-ox="${d[1]}">
+   <div class="question-title">${i+1}. ${d[0]}</div>
+   <label class="option"><input type="radio" name="ox${i}" value="O">O</label>
+   <label class="option"><input type="radio" name="ox${i}" value="X">X</label>
+   <div class="answer-box">정답: ${d[1]} — ${d[2]}</div>
+  </div>`);
+ });
+}
+function renderDiag(){
+ const wrap=document.getElementById("diagQuestions");
+ diagData.forEach((d,i)=>{
+  const ops=d.o.map((x,j)=>`<label class="option"><input type="checkbox" name="d${i}" value="${j}">${j+1}. ${x}</label>`).join("");
+  wrap.insertAdjacentHTML("beforeend",`<div class="question" data-answer="${d.a.join(",")}"><div class="question-title">${i+1}. ${d.q}</div>${ops}<div class="answer-box">정답: ${d.a.map(x=>x+1).join(", ")} — ${d.e}</div></div>`);
+ });
+}
+renderOX();renderDiag();
+
+function sameSet(a,b){return a.length===b.length&&a.every((v,i)=>v===b[i]);}
+function getChecks(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>Number(x.value)).sort((a,b)=>a-b);}
+function mark(q,ok){q.classList.remove("correct","wrong");q.classList.add(ok?"correct":"wrong");}
+let lastResult=null;
+
+function gradeAll(){
+ let concept=0,ox=0,diag=0,details=[];
+ for(let i=1;i<=10;i++){
+   const q=document.querySelector(`input[name="c${i}"]`).closest(".question");
+   const ans=q.dataset.answer.split(",").map(Number).sort((a,b)=>a-b);
+   const sel=getChecks(`c${i}`);const ok=sameSet(ans,sel);if(ok)concept++;
+   mark(q,ok);details.push(`개념 ${i}: ${ok?"정답":"오답"} / 응답 ${sel.map(x=>x+1).join(",")||"미응답"} / 정답 ${ans.map(x=>x+1).join(",")}`);
+ }
+ oxData.forEach((d,i)=>{
+   const q=document.querySelector(`input[name="ox${i}"]`).closest(".question");
+   const s=document.querySelector(`input[name="ox${i}"]:checked`)?.value||"미응답";
+   const ok=s===d[1];if(ok)ox++;mark(q,ok);
+   details.push(`형성 OX ${i+1}: ${ok?"정답":"오답"} / 응답 ${s} / 정답 ${d[1]} / ${d[2]}`);
+ });
+ diagData.forEach((d,i)=>{
+   const q=document.querySelector(`input[name="d${i}"]`).closest(".question");
+   const s=getChecks(`d${i}`);const ok=sameSet(d.a,s);if(ok)diag++;mark(q,ok);
+   details.push(`진단 ${i+1}: ${ok?"정답":"오답"} / 응답 ${s.map(x=>x+1).join(",")||"미응답"} / 정답 ${d.a.map(x=>x+1).join(",")} / ${d.e}`);
+ });
+ const totalCorrect=concept+ox+diag;
+ const score=Math.round(totalCorrect/30*100);
+ lastResult={concept,ox,diag,totalCorrect,score,details,time:new Date()};
+ const p=document.getElementById("scorePanel");
+ p.style.display="block";
+ p.innerHTML=`<b>총점 ${score}점</b> (30문항 중 ${totalCorrect}문항 정답)<br>개념별 평가 ${concept}/10 · 형성평가 ${ox}/10 · 진단평가 ${diag}/10`;
+ p.scrollIntoView({behavior:"smooth",block:"center"});
+ return lastResult;
+}
+function showAnswers(){document.querySelectorAll(".answer-box").forEach(x=>x.style.display="block");}
+function safeName(s){return(s||"미입력").replace(/[\\/:*?"<>|]/g,"_").trim()||"미입력";}
+function pad(n){return String(n).padStart(2,"0")}
+function downloadResult(){
+ const id=safeName(document.getElementById("studentId").value);
+ const name=safeName(document.getElementById("studentName").value);
+ if(id==="미입력"||name==="미입력"){alert("학번과 이름을 입력하세요.");return;}
+ const r=gradeAll(),d=r.time;
+ const stamp=`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+ const text=[
+ "정보융합탐구과제 3차시 평가 결과",
+ "학습 주제: 연구 질문과 가설 설정",
+ `학번: ${id}`,`이름: ${name}`,`점수: ${r.score}점`,
+ `개념별 평가: ${r.concept}/10`,`형성평가 OX: ${r.ox}/10`,`진단평가: ${r.diag}/10`,
+ `응시시각: ${d.toLocaleString("ko-KR")}`,"","[문항별 결과]",...r.details
+ ].join("\r\n");
+ const blob=new Blob(["\ufeff"+text],{type:"text/plain;charset=utf-8"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+ a.download=`${id}_${name}_${r.score}점_3차시_${stamp}.txt`;a.click();URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>

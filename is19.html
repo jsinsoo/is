@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>정보과학 19차시 정리학습 목표지향 개념기반 수업지도안</title>
+<style>
+:root{
+  --navy:#17324d;--blue:#2f6fa3;--gold:#f2b84b;--line:#d7e3ec;
+  --bg:#f3f7fa;--paper:#fff;--ink:#26333f;--sky:#eaf4fb;
+  --mint:#edf9f4;--ok:#eaf8ef;--no:#fff0f0;--red:#c94d4d
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;padding:38px 20px}
+header .wrap,main,nav .wrap{max-width:1180px;margin:auto}
+h1{margin:0 0 8px;font-size:clamp(28px,4vw,44px)}
+header p{margin:0;opacity:.94}
+nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(0,0,0,.06)}
+nav .wrap{display:flex;gap:7px;overflow:auto;padding:10px}
+nav a{white-space:nowrap;color:var(--navy);font-weight:800;text-decoration:none;padding:7px 11px;border-radius:16px}
+nav a:hover{background:var(--sky)}
+main{padding:20px 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:25px;margin:17px 0;box-shadow:0 8px 22px rgba(30,70,100,.06)}
+h2{color:var(--navy);border-left:7px solid var(--gold);padding-left:11px;margin-top:0}
+h3{color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:13px}
+.card{border:1px solid var(--line);background:#f9fcfe;border-radius:13px;padding:16px}
+.tag{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;border-radius:15px;padding:3px 9px;margin:2px}
+.quote{background:linear-gradient(135deg,#fff8e8,#eef8ff);border-left:6px solid var(--gold);padding:19px;border-radius:12px}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid var(--line);padding:9px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+pre{background:#17212b;color:#edf5fa;padding:19px;border-radius:13px;overflow:auto;line-height:1.57}
+code{font-family:Consolas,"D2Coding",monospace}
+.callout{background:var(--mint);border:1px solid #bfe5d2;border-radius:12px;padding:15px}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+input[type=text]{width:100%;padding:10px;border:1px solid #aebdca;border-radius:8px;font-size:1rem}
+.q{border:1px solid var(--line);border-radius:12px;padding:14px;margin:11px 0;background:#fcfeff}
+.q.good{background:var(--ok);border-color:#58a675}
+.q.bad{background:var(--no);border-color:#d86b6b}
+.opts label{display:block;padding:6px;border-radius:8px;cursor:pointer}
+.opts label:hover{background:var(--sky)}
+.exp{display:none;background:#fff;padding:8px;margin-top:7px;border-left:4px solid var(--gold)}
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:800;cursor:pointer;font-size:1rem}
+.primary{background:var(--blue);color:#fff}.secondary{background:#e7eef4;color:var(--navy)}.danger{background:var(--red);color:#fff}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+#result{display:none;background:#eef8ff;border:2px solid var(--blue);border-radius:12px;padding:16px;margin-top:15px}
+.progress{height:11px;background:#e5edf3;border-radius:8px;overflow:hidden;margin:12px 0}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--gold))}
+.small{font-size:.92rem;color:#5e6b76}
+@media(max-width:650px){.student{grid-template-columns:1fr}}
+@media print{nav,.actions{display:none}body{background:#fff}section{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<h1>정보과학 19차시 목표지향 개념기반 수업지도안</h1>
+<p>[12정과01-01]부터 [12정과03-05]까지 함수·재귀·자료구조·알고리즘을 연결하는 종합 정리학습</p>
+</div>
+</header>
+
+<nav><div class="wrap">
+<a href="#standard">성취기준</a><a href="#goals">학습목표</a><a href="#concept">개념</a>
+<a href="#lesson">학습내용</a><a href="#paper">소논문</a><a href="#code">코드</a><a href="#assessment">평가</a>
+</div></nav>
+
+<main>
+<section id="standard">
+<h2>1. 성취기준 정리</h2>
+<table>
+<tr><th>성취기준</th><th>정리 내용</th></tr>
+<tr><td>[12정과01-01]</td><td>함수의 정의와 호출을 이해하고 매개변수와 반환값을 활용하여 프로그램을 작성한다.</td></tr>
+<tr><td>[12정과01-02]</td><td>프로그램의 수행 과정을 추적하고 변수의 값과 프로그램 상태 변화를 분석한다.</td></tr>
+<tr><td>[12정과01-03]</td><td>반복 구조와 재귀 구조를 활용하여 문제를 해결하고 두 방식을 비교·분석한다.</td></tr>
+<tr><td>[12정과02-01]</td><td>스택과 큐의 원리를 이해하고 순차적인 데이터 구조를 이용하여 구현한다.</td></tr>
+<tr><td>[12정과02-02]</td><td>스택과 큐를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</td></tr>
+<tr><td>[12정과03-01]</td><td>문제를 상태 공간으로 구조화하고 상태 공간을 모두 탐색하는 알고리즘을 설계한다.</td></tr>
+<tr><td>[12정과03-02]</td><td>상태 공간 일부를 배제하는 알고리즘을 설계하고 완전 탐색과 비교·분석한다.</td></tr>
+<tr><td>[12정과03-03]</td><td>전체 문제를 부분 문제로 분해하고 전체 문제와 부분 문제의 관계를 발견한다.</td></tr>
+<tr><td>[12정과03-04]</td><td>부분 문제의 해결 결과를 이용하여 전체 문제를 해결하는 알고리즘을 설계한다.</td></tr>
+<tr><td>[12정과03-05]</td><td>부분 문제의 중복 계산을 줄이는 알고리즘을 설계하고 기존 관계 기반 알고리즘과 비교·분석한다.</td></tr>
+</table>
+<div class="callout"><b>정리학습 핵심:</b> 함수로 기능을 나누고, 실행 상태를 추적하며, 자료구조와 탐색 전략을 선택하고, 부분 문제의 관계와 중복을 분석하여 더 효율적인 알고리즘으로 발전시킨다.</div>
+</section>
+
+<section id="goals">
+<h2>2. 학습 목표</h2>
+<div class="grid">
+<div class="card"><b>지식·이해</b><br>함수, 재귀, 스택, 큐, 상태 공간, 완전 탐색, 가지치기, 분할정복, 동적계획법의 원리와 관계를 설명한다.</div>
+<div class="card"><b>과정·기능</b><br>주어진 문제를 기능과 상태, 부분 문제로 구조화하고 적절한 자료구조와 알고리즘을 선택하여 프로그램을 작성한다.</div>
+<div class="card"><b>비교·분석</b><br>반복과 재귀, 완전 탐색과 가지치기, 단순 재귀와 동적계획법의 결과와 효율성을 근거로 비교한다.</div>
+<div class="card"><b>가치·태도</b><br>정답뿐 아니라 코드의 명료성, 정확성, 효율성, 재사용성을 함께 고려하며 검증 가능한 해결 과정을 만든다.</div>
+</div>
+<p><b>성공 기준:</b> 하나의 종합 문제에서 함수 분해, 상태 추적, 자료구조 선택, 탐색·가지치기·동적계획법을 연결하고 각 선택의 근거를 설명한다.</p>
+</section>
+
+<section id="concept">
+<h2>3. 학습할 개념</h2>
+<p>
+<span class="tag">함수</span><span class="tag">매개변수</span><span class="tag">반환값</span>
+<span class="tag">실행 추적</span><span class="tag">반복</span><span class="tag">재귀</span>
+<span class="tag">스택</span><span class="tag">큐</span><span class="tag">상태 공간</span>
+<span class="tag">완전 탐색</span><span class="tag">가지치기</span><span class="tag">부분 문제</span>
+<span class="tag">분할정복</span><span class="tag">중복 부분 문제</span><span class="tag">동적계획법</span>
+</p>
+<table>
+<tr><th>개념 축</th><th>핵심 질문</th><th>대표 방법</th></tr>
+<tr><td>프로그램 구조</td><td>기능을 어떤 함수로 나눌 것인가?</td><td>함수, 매개변수, 반환값, 모듈화</td></tr>
+<tr><td>실행 과정</td><td>변수와 호출 상태가 어떻게 변하는가?</td><td>추적표, 호출 스택, 기저 조건</td></tr>
+<tr><td>자료 처리 순서</td><td>최근 데이터와 먼저 온 데이터 중 무엇을 먼저 처리할 것인가?</td><td>스택, 큐</td></tr>
+<tr><td>상태 탐색</td><td>가능한 모든 상태를 어떻게 생성하고 검사할 것인가?</td><td>완전 탐색, 재귀 탐색</td></tr>
+<tr><td>탐색 효율화</td><td>답이 될 수 없는 상태를 언제 배제할 것인가?</td><td>가지치기, 유망성 판단</td></tr>
+<tr><td>부분 문제 활용</td><td>작은 문제의 답을 어떻게 결합하고 재사용할 것인가?</td><td>분할정복, 메모이제이션, 상향식 동적계획법</td></tr>
+</table>
+</section>
+
+<section>
+<h2>4. 수업 시작 멘트</h2>
+<div class="quote">
+“소크라테스는 좋은 질문이 지식의 문을 연다고 했고, 데카르트는 복잡한 문제를 작은 부분으로 나누라고 했습니다.
+뉴턴은 앞선 지식 위에서 더 멀리 보았고, 가우스는 계산의 구조를 바꾸어 복잡함을 단순하게 만들었습니다.
+오늘 우리는 함수, 자료구조, 탐색, 부분 문제를 따로 복습하지 않습니다. 서로 연결해 하나의 문제 해결 지도로 만들 것입니다.
+알고리즘은 외운 기술 목록이 아니라 상황에 맞는 생각의 선택입니다.
+단, 모든 문제에 삼중 반복문을 쓰는 것은 ‘열심히’가 아니라 컴퓨터에게 야근을 시키는 일입니다.”
+</div>
+</section>
+
+<section id="lesson">
+<h2>5. 학습 내용</h2>
+<table>
+<tr><th>단계</th><th>활동</th><th>정리 개념</th></tr>
+<tr><td>도입 5분</td><td>한 문제를 서로 다른 알고리즘으로 해결한 코드를 비교한다.</td><td>정확성과 효율성</td></tr>
+<tr><td>개념 연결 10분</td><td>함수–재귀–스택, 큐–상태 탐색, 부분 문제–동적계획법의 관계 지도를 작성한다.</td><td>개념 간 연결</td></tr>
+<tr><td>탐구 10분</td><td>목표합 문제를 상태 공간으로 나타내고 완전 탐색과 가지치기 조건을 설계한다.</td><td>상태 공간, 가지치기</td></tr>
+<tr><td>코딩 15분</td><td>목표합 조합 탐색과 계단 경우의 수 계산을 함수로 구성한 종합 프로그램을 작성한다.</td><td>함수, 재귀, 스택, 동적계획법</td></tr>
+<tr><td>비교 5분</td><td>단순 재귀와 메모이제이션의 호출 수, 완전 탐색과 가지치기의 검사 수를 비교한다.</td><td>효율성 분석</td></tr>
+<tr><td>평가 5분</td><td>OX, 복수 정답, 코드 단답형 평가를 실시한다.</td><td>종합 정리</td></tr>
+</table>
+</section>
+
+<section id="paper">
+<h2>6. 학습 관련 소논문 주제 예시 5개</h2>
+<ol>
+<li><b>반복·재귀·메모이제이션 방식에 따른 피보나치 계산 성능 비교</b></li>
+<li><b>목표합 문제에서 완전 탐색과 가지치기의 상태 검사 횟수 분석</b></li>
+<li><b>스택과 큐 선택이 문제 해결 코드의 구조와 효율성에 미치는 영향</b></li>
+<li><b>분할정복과 동적계획법의 부분 문제 처리 방식 비교 연구</b></li>
+<li><b>함수 모듈화가 알고리즘 테스트와 오류 수정 시간에 미치는 효과</b></li>
+</ol>
+</section>
+
+<section id="code">
+<h2>7. 학습할 코드 1개</h2>
+<h3>함수·재귀·가지치기·동적계획법을 연결한 종합 코드</h3>
+<pre><code>search_calls = 0
+memo_calls = 0
+
+
+def find_target_combinations(numbers, target):
+    solutions = []
+
+    def search(index, selected, current_sum):
+        global search_calls
+        search_calls += 1
+
+        if current_sum &gt; target:
+            return
+
+        if index == len(numbers):
+            if current_sum == target:
+                solutions.append(selected[:])
+            return
+
+        search(index + 1, selected, current_sum)
+
+        selected.append(numbers[index])
+        search(
+            index + 1,
+            selected,
+            current_sum + numbers[index]
+        )
+        selected.pop()
+
+    search(0, [], 0)
+    return solutions
+
+
+def count_stair_ways(n, memo):
+    global memo_calls
+    memo_calls += 1
+
+    if n in memo:
+        return memo[n]
+
+    memo[n] = (
+        count_stair_ways(n - 1, memo)
+        + count_stair_ways(n - 2, memo)
+    )
+    return memo[n]
+
+
+numbers = [2, 3, 5, 7, 9]
+target = 12
+
+combinations = find_target_combinations(numbers, target)
+
+memo = {1: 1, 2: 2}
+stairs = 10
+ways = count_stair_ways(stairs, memo)
+
+print("목표합 조합:", combinations)
+print("탐색 호출 수:", search_calls)
+print("계단 방법 수:", ways)
+print("메모이제이션 호출 수:", memo_calls)</code></pre>
+
+<h3>상세 설명</h3>
+<table>
+<tr><th>코드 요소</th><th>상세 설명</th></tr>
+<tr><td><code>find_target_combinations</code></td><td>숫자 목록과 목표값을 매개변수로 받아 목표합을 만드는 모든 조합을 반환하는 함수이다.</td></tr>
+<tr><td>내부 함수 <code>search</code></td><td>현재 위치, 선택 목록, 현재 합을 상태로 사용하여 재귀적으로 상태 공간을 탐색한다.</td></tr>
+<tr><td><code>selected.append()</code> / <code>pop()</code></td><td>현재 숫자를 선택한 상태로 이동한 뒤 재귀 호출이 끝나면 이전 상태로 복원한다. 재귀 호출 스택과 연결된다.</td></tr>
+<tr><td><code>current_sum &gt; target</code></td><td>모든 숫자가 양수이므로 목표를 넘은 상태는 해가 될 수 없어 해당 분기를 가지치기한다.</td></tr>
+<tr><td><code>solutions.append(selected[:])</code></td><td>정답 상태의 복사본을 저장하여 이후 상태 변경의 영향을 막는다.</td></tr>
+<tr><td><code>count_stair_ways</code></td><td>계단 문제를 n-1과 n-2의 부분 문제로 분해하고 결과를 더해 전체 문제를 해결한다.</td></tr>
+<tr><td><code>memo</code></td><td>이미 계산한 부분 문제의 결과를 저장해 같은 n을 다시 계산하지 않도록 한다.</td></tr>
+<tr><td><code>search_calls</code>, <code>memo_calls</code></td><td>알고리즘이 실제로 몇 번 호출되었는지 기록하여 효율성을 비교하는 근거가 된다.</td></tr>
+</table>
+<p class="small"><b>주의:</b> 목표합 가지치기는 숫자가 모두 양수일 때 안전하다. 음수가 포함되면 현재 합이 목표를 넘더라도 이후 음수를 더해 목표에 도달할 수 있으므로 같은 조건을 그대로 적용하면 안 된다.</p>
+</section>
+
+<section>
+<h2>8. 수업 끝 멘트</h2>
+<div class="quote">
+“시는 흩어진 단어를 하나의 마음으로 연결하고, 소설은 여러 사건을 하나의 주제로 엮습니다.
+희곡은 장면마다 다른 갈등을 품지만 마지막 막에서 의미를 만들고, 음악은 서로 다른 음이 관계를 맺을 때 화음이 됩니다.
+오늘 배운 함수, 자료구조, 탐색, 부분 문제도 따로 있을 때는 기술이지만 연결할 때 문제 해결의 힘이 됩니다.
+여러분의 꿈도 한 번의 큰 정답보다 작은 선택과 반복된 개선이 모여 완성됩니다.
+단, 복습을 재귀 호출할 때는 반드시 기저 조건을 정하세요. 안 그러면 시험 전날 밤이 무한 재귀에 빠집니다!”
+</div>
+</section>
+
+<section id="assessment">
+<h2>9. 형성·진단·코드 평가</h2>
+<div class="card"><b>배점:</b> OX 10문항×2점=20점 · 진단평가 10문항×6점=60점 · 단답형 5문항×4점=20점</div>
+<div class="student">
+<label>학번<input id="sid" type="text" placeholder="예: 1101"></label>
+<label>이름<input id="name" type="text" placeholder="예: 홍길동"></label>
+</div>
+<div class="progress"><span id="bar"></span></div>
+<form id="quiz">
+<h3>Ⅰ. 형성평가 OX 10개</h3><div id="ox"></div>
+<h3>Ⅱ. 옳은 것 3개 고르기 10개</h3><div id="multi"></div>
+<h3>Ⅲ. 코드 평가 단답형 5개</h3><div id="short"></div>
+</form>
+<div class="actions">
+<button type="button" class="primary" onclick="grade()">채점하고 TXT 저장</button>
+<button type="button" class="secondary" onclick="window.print()">인쇄·PDF</button>
+<button type="button" class="danger" onclick="resetAll()">다시 풀기</button>
+</div>
+<div id="result"></div>
+</section>
+</main>
+
+<script>
+const O=[
+["함수는 특정 기능을 묶어 재사용할 수 있게 한다.","O"],
+["재귀 함수는 기저 조건 없이도 항상 안전하게 종료된다.","X"],
+["스택은 후입선출, 큐는 선입선출 구조이다.","O"],
+["상태 공간은 목표 상태 하나만을 의미한다.","X"],
+["완전 탐색은 가능한 후보를 빠짐없이 조사한다.","O"],
+["가지치기 조건이 잘못되면 올바른 해를 누락할 수 있다.","O"],
+["분할정복은 부분 문제를 해결한 뒤 결과를 결합한다.","O"],
+["동적계획법은 같은 부분 문제를 반복 계산하도록 설계한다.","X"],
+["메모이제이션은 계산 결과를 저장해 재사용한다.","O"],
+["효율성 비교에는 호출 횟수와 검사 상태 수를 활용할 수 있다.","O"]
+];
+
+const M=[
+["함수 설계의 장점",["재사용성","기능별 테스트","가독성 향상","모든 변수 전역화","오류 자동 제거"],[0,1,2]],
+["재귀 구조의 핵심",["기저 조건","작아지는 문제","재귀 호출","무한히 커지는 입력","반환값 불필요"],[0,1,2]],
+["스택 활용 사례",["실행 취소","괄호 검사","함수 호출 관리","급식 대기열","프린터 선입선출"],[0,1,2]],
+["큐 활용 사례",["인쇄 대기열","급식 줄","작업 요청 순차 처리","최근 작업 되돌리기","괄호 중첩 검사"],[0,1,2]],
+["상태 공간 탐색 요소",["상태 정의","전이 규칙","목표 조건","글꼴 크기","배경색"],[0,1,2]],
+["가지치기의 특징",["유망하지 않은 상태 배제","검사 수 감소 가능","조건 안전성 검증","항상 모든 상태 탐색","정답 누락 검토 불필요"],[0,1,2]],
+["분할정복의 단계",["분할","정복","결합","무작위 삭제","결과 은폐"],[0,1,2]],
+["동적계획법 적용 조건",["중복 부분 문제","부분 문제 관계","결과 저장 가능","부분 문제가 완전히 무관","재귀관계 없음"],[0,1,2]],
+["종합 코드의 search 함수",["현재 위치 저장","선택 목록 관리","현재 합 추적","메모 딕셔너리 삭제","항상 첫 숫자만 선택"],[0,1,2]],
+["성취기준 종합 활동",["문제 구조화","적절한 자료구조·알고리즘 선택","결과와 효율성 비교","코드 암기만","근거 없이 방법 결정"],[0,1,2]]
+];
+
+const S=[
+["목표합 조합을 찾는 함수 이름",["find_target_combinations","find_target_combinations()"]],
+["계단 방법 수를 계산하는 함수 이름",["count_stair_ways","count_stair_ways()"]],
+["현재까지 선택한 숫자 목록 변수",["selected"]],
+["계산한 부분 문제 결과를 저장하는 변수",["memo"]],
+["목표합 탐색 호출 횟수 변수",["search_calls"]]
+];
+
+function norm(v){return (v||"").toLowerCase().replace(/\\s/g,"")}
+function render(){
+  ox.innerHTML=O.map((x,i)=>`<div class="q" id="o${i}"><b>${i+1}. ${x[0]}</b><div class="opts"><label><input type="radio" name="o${i}" value="O"> O</label><label><input type="radio" name="o${i}" value="X"> X</label></div><div class="exp" id="oe${i}"></div></div>`).join("");
+  multi.innerHTML=M.map((x,i)=>`<div class="q" id="m${i}"><b>${i+1}. ${x[0]}에서 옳은 것 3개를 고르시오.</b><div class="opts">${x[1].map((v,j)=>`<label><input type="checkbox" name="m${i}" value="${j}"> ${j+1}) ${v}</label>`).join("")}</div><div class="exp" id="me${i}"></div></div>`).join("");
+  short.innerHTML=S.map((x,i)=>`<div class="q" id="s${i}"><b>${i+1}. ${x[0]}</b><input type="text" name="s${i}"><div class="exp" id="se${i}"></div></div>`).join("");
+  document.querySelectorAll("input").forEach(x=>x.addEventListener("input",progress))
+}
+function progress(){
+  let a=0;
+  for(let i=0;i<10;i++)if(document.querySelector(`input[name=o${i}]:checked`))a++;
+  for(let i=0;i<10;i++)if(document.querySelectorAll(`input[name=m${i}]:checked`).length)a++;
+  for(let i=0;i<5;i++)if(document.querySelector(`input[name=s${i}]`).value.trim())a++;
+  bar.style.width=(a/25*100)+"%"
+}
+function mark(id,eid,ok,text){
+  let q=document.getElementById(id);q.className="q "+(ok?"good":"bad");
+  let e=document.getElementById(eid);e.style.display="block";e.textContent=text
+}
+function grade(){
+  let id=sid.value.trim(),nm=name.value.trim();
+  if(!id||!nm){alert("학번과 이름을 입력하세요.");return}
+  let score=0,lines=[];
+  O.forEach((x,i)=>{
+    let e=document.querySelector(`input[name=o${i}]:checked`);
+    let v=e?e.value:"미응답",ok=v===x[1];
+    if(ok)score+=2;
+    mark("o"+i,"oe"+i,ok,"정답: "+x[1]);
+    lines.push(`[OX ${i+1}] 응답: ${v} / 정답: ${x[1]} / ${ok?"정답":"오답"}`)
+  });
+  M.forEach((x,i)=>{
+    let v=[...document.querySelectorAll(`input[name=m${i}]:checked`)].map(z=>+z.value).sort();
+    let ok=JSON.stringify(v)===JSON.stringify(x[2]);
+    if(ok)score+=6;
+    mark("m"+i,"me"+i,ok,"정답: "+x[2].map(z=>z+1).join(",")+"번");
+    lines.push(`[진단 ${i+1}] 응답: ${v.map(z=>z+1).join(",")||"미응답"} / 정답: ${x[2].map(z=>z+1).join(",")} / ${ok?"정답":"오답"}`)
+  });
+  S.forEach((x,i)=>{
+    let v=document.querySelector(`input[name=s${i}]`).value;
+    let ok=x[1].some(a=>norm(a)===norm(v));
+    if(ok)score+=4;
+    mark("s"+i,"se"+i,ok,"정답: "+x[1][0]);
+    lines.push(`[단답 ${i+1}] 응답: ${v||"미응답"} / 정답: ${x[1][0]} / ${ok?"정답":"오답"}`)
+  });
+  let d=new Date(),p=n=>String(n).padStart(2,"0");
+  let t=`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+  let ft=`${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+  let safe=s=>s.replace(/[\\/:*?"<>|]/g,"_");
+  result.style.display="block";
+  result.innerHTML=`<h3>${score}점 / 100점</h3><p>${id} ${nm} · ${t}</p>`;
+  let txt=[
+    "정보과학 19차시 정리학습 평가 결과",
+    "성취기준: [12정과01-01] ~ [12정과03-05]",
+    `학번: ${id}`,`이름: ${nm}`,`점수: ${score}/100`,`응시시각: ${t}`,"",...lines
+  ].join("\\r\\n");
+  let u=URL.createObjectURL(new Blob(["\\ufeff"+txt],{type:"text/plain;charset=utf-8"}));
+  let a=document.createElement("a");
+  a.href=u;
+  a.download=`${safe(id)}_${safe(nm)}_${score}점_19차시_${ft}.txt`;
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u),500)
+}
+function resetAll(){if(confirm("모든 답을 지울까요?"))location.reload()}
+render();
+</script>
+</body>
+</html>

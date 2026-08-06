@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>정보과학 18차시 목표지향 개념기반 수업지도안</title>
+<style>
+:root{--n:#17324d;--b:#2f6fa3;--g:#f2b84b;--l:#d7e3ec;--bg:#f3f7fa;--ok:#eaf8ef;--no:#fff0f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:"Malgun Gothic",sans-serif;color:#26333f;line-height:1.7}
+header{background:linear-gradient(135deg,var(--n),var(--b));color:#fff;padding:36px 20px}
+header div,main,nav div{max-width:1150px;margin:auto}h1{margin:0 0 8px}nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--l);z-index:5}
+nav div{display:flex;gap:8px;overflow:auto;padding:9px}nav a{white-space:nowrap;color:var(--n);font-weight:700;text-decoration:none;padding:7px 10px}
+main{padding:18px 15px 70px}section{background:#fff;border:1px solid var(--l);border-radius:16px;padding:24px;margin:16px 0}
+h2{color:var(--n);border-left:7px solid var(--g);padding-left:11px}h3{color:var(--b)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.card{border:1px solid var(--l);background:#f9fcfe;border-radius:12px;padding:15px}
+.tag{display:inline-block;background:#eaf4fb;color:var(--b);font-weight:700;border-radius:15px;padding:3px 9px;margin:2px}
+.quote{background:#fff8e8;border-left:6px solid var(--g);padding:18px;border-radius:12px}
+table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--l);padding:9px;vertical-align:top}th{background:var(--n);color:#fff}
+pre{background:#17212b;color:#edf5fa;padding:18px;border-radius:12px;overflow:auto;line-height:1.55}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:10px}input[type=text]{width:100%;padding:10px;border:1px solid #aebdca;border-radius:8px}
+.q{border:1px solid var(--l);border-radius:12px;padding:14px;margin:11px 0}.q.good{background:var(--ok);border-color:#58a675}.q.bad{background:var(--no);border-color:#d86b6b}
+.opts label{display:block;padding:6px}.exp{display:none;background:#fff;padding:8px;margin-top:7px;border-left:4px solid var(--g)}
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:800;cursor:pointer}.primary{background:var(--b);color:#fff}.secondary{background:#e7eef4}.danger{background:#c94d4d;color:#fff}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}#result{display:none;background:#eef8ff;border:2px solid var(--b);border-radius:12px;padding:16px;margin-top:15px}
+.progress{height:11px;background:#e5edf3;border-radius:8px;overflow:hidden;margin:12px 0}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--b),var(--g))}
+@media(max-width:650px){.student{grid-template-columns:1fr}}@media print{nav,.actions{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header><div><h1>정보과학 18차시 목표지향 개념기반 수업지도안</h1><p>프로젝트 전 과정을 성찰하고 포트폴리오로 정리하여 성장과 개선 방향을 공유하기</p></div></header>
+<nav><div><a href="#s1">성취기준</a><a href="#s2">개념</a><a href="#s3">학습내용</a><a href="#s4">소논문</a><a href="#s5">코드</a><a href="#s6">평가</a></div></nav>
+<main>
+<section id="s1">
+<h2>1. 성취기준과 학습 목표</h2>
+<div class="card"><b>[12정과04-05]</b> 프로젝트의 산출물을 기능적·윤리적 관점에서 평가하고 결과를 공유한다.</div>
+<div class="grid">
+<div class="card"><b>지식·이해</b><br>포트폴리오, 자기평가, 성찰, 근거 자료, 성장 기록, 개선 계획의 의미를 설명한다.</div>
+<div class="card"><b>과정·기능</b><br>문제 발견부터 결과 공유까지의 과정을 정리하고, 증거 자료를 바탕으로 강점·한계·성장 내용을 분석한다.</div>
+<div class="card"><b>가치·태도</b><br>성공과 실패를 균형 있게 돌아보며, 동료의 기여와 출처를 존중하고 다음 학습 목표를 스스로 설정한다.</div>
+</div>
+<p><b>성공 기준:</b> 프로젝트 과정과 산출물, 평가 근거, 윤리적 고려, 성장 내용, 다음 개선 계획을 포함한 포트폴리오를 완성한다.</p>
+</section>
+
+<section id="s2">
+<h2>2. 학습할 개념</h2>
+<p><span class="tag">포트폴리오</span><span class="tag">자기평가</span><span class="tag">성찰</span><span class="tag">근거 자료</span><span class="tag">과정 기록</span><span class="tag">성장</span><span class="tag">한계</span><span class="tag">개선 계획</span><span class="tag">메타인지</span></p>
+<table>
+<tr><th>개념</th><th>핵심 의미</th></tr>
+<tr><td>포트폴리오</td><td>프로젝트의 과정, 산출물, 피드백, 평가, 성찰을 체계적으로 모은 성장 기록</td></tr>
+<tr><td>자기평가</td><td>기준에 따라 자신의 수행을 근거와 함께 판단하는 과정</td></tr>
+<tr><td>성찰</td><td>무엇을 했는지뿐 아니라 왜 그렇게 했고 무엇을 배웠는지 돌아보는 사고</td></tr>
+<tr><td>근거 자료</td><td>코드, 테스트 결과, 그래프, 피드백, 변경 기록처럼 판단을 뒷받침하는 자료</td></tr>
+<tr><td>개선 계획</td><td>한계를 바탕으로 다음에 무엇을 어떻게 바꿀지 구체적으로 정한 계획</td></tr>
+</table>
+</section>
+
+<section>
+<h2>3. 수업 시작 멘트</h2>
+<div class="quote">“소크라테스는 자신을 아는 일이 지혜의 시작이라고 보았고, 존 듀이는 경험을 성찰할 때 배움이 완성된다고 말했습니다. 과학자는 성공한 실험만이 아니라 실패한 기록에서도 지식을 얻고, 수학자는 틀린 풀이를 분석하며 더 정확한 사고를 배웁니다. 오늘은 결과물만 보는 시간이 아니라 그 결과에 이르기까지의 생각과 변화, 성장의 흔적을 읽는 시간입니다. 포트폴리오는 잘한 일만 모은 자랑 상자가 아니라, 다음 도전을 위한 디버깅 로그입니다.”</div>
+</section>
+
+<section id="s3">
+<h2>4. 학습 내용</h2>
+<table>
+<tr><th>단계</th><th>활동</th></tr>
+<tr><td>도입 5분</td><td>결과 중심 기록과 과정 중심 포트폴리오를 비교한다.</td></tr>
+<tr><td>개념 10분</td><td>포트폴리오 구성 요소, 자기평가 기준, 성찰 질문을 학습한다.</td></tr>
+<tr><td>탐구 10분</td><td>문제 발견–설계–구현–테스트–개선–공유의 증거 자료를 선별한다.</td></tr>
+<tr><td>코딩 15분</td><td>프로젝트 정보를 입력해 포트폴리오 요약문과 자기평가 보고서를 생성한다.</td></tr>
+<tr><td>성찰 5분</td><td>가장 크게 성장한 점, 남은 한계, 다음 목표를 작성한다.</td></tr>
+<tr><td>평가 5분</td><td>OX, 복수 정답, 단답형 평가를 실시한다.</td></tr>
+</table>
+</section>
+
+<section id="s4">
+<h2>5. 학습 관련 소논문 주제 예시 5개</h2>
+<ol>
+<li>과정 중심 포트폴리오 작성이 학생의 자기평가 정확성에 미치는 영향</li>
+<li>프로젝트 성찰 기록과 디버깅 능력 향상의 관계 분석</li>
+<li>동료 피드백 반영률과 산출물 완성도의 관계 연구</li>
+<li>기능 평가와 윤리 평가를 포함한 포트폴리오의 교육적 효과</li>
+<li>프로젝트 전후 자기효능감 변화와 학습 성장 분석</li>
+</ol>
+</section>
+
+<section id="s5">
+<h2>6. 학습할 코드 1개</h2>
+<pre><code>portfolio = {
+    "title": "교실 공기질 알림 시스템",
+    "problem": "이산화탄소 농도 상승을 즉시 알기 어려웠다.",
+    "achievement": "센서 데이터를 분석해 환기 필요 상태를 표시했다.",
+    "evidence": [
+        "분석 코드",
+        "테스트 결과",
+        "사용자 피드백",
+        "개선 전후 비교표"
+    ],
+    "strength": "문제를 데이터와 알고리즘으로 구조화했다.",
+    "limitation": "한 교실의 짧은 기간 자료만 사용했다.",
+    "next_goal": "여러 교실과 계절 자료로 분석 범위를 넓힌다."
+}
+
+
+def create_portfolio_report(data):
+    report = []
+
+    report.append(f'프로젝트: {data["title"]}')
+    report.append(f'문제: {data["problem"]}')
+    report.append(f'주요 성과: {data["achievement"]}')
+
+    report.append("근거 자료")
+    for index, item in enumerate(data["evidence"], start=1):
+        report.append(f'{index}. {item}')
+
+    report.append(f'강점: {data["strength"]}')
+    report.append(f'한계: {data["limitation"]}')
+    report.append(f'다음 목표: {data["next_goal"]}')
+
+    return "\n".join(report)
+
+
+result = create_portfolio_report(portfolio)
+print(result)</code></pre>
+<table>
+<tr><th>코드 요소</th><th>상세 설명</th></tr>
+<tr><td><code>portfolio</code></td><td>프로젝트 주제, 문제, 성과, 근거, 강점, 한계, 다음 목표를 저장한 딕셔너리이다.</td></tr>
+<tr><td><code>evidence</code></td><td>자기평가를 뒷받침하는 코드, 테스트, 피드백, 비교표 등의 목록이다.</td></tr>
+<tr><td><code>create_portfolio_report</code></td><td>포트폴리오 데이터를 읽어 구조화된 성찰 보고서를 생성한다.</td></tr>
+<tr><td><code>report</code></td><td>보고서에 포함할 문장을 순서대로 저장하는 리스트이다.</td></tr>
+<tr><td><code>enumerate(..., start=1)</code></td><td>근거 자료에 1번부터 번호를 붙인다.</td></tr>
+<tr><td><code>"\n".join(report)</code></td><td>여러 문장을 줄바꿈으로 연결하여 하나의 보고서 문자열로 만든다.</td></tr>
+</table>
+<p><b>확장 활동:</b> 담당 역할, 사용한 오픈소스, 윤리적 고려, 피드백 반영 내용, 버전별 변경 기록을 추가해 완전한 학습 포트폴리오로 발전시킨다.</p>
+</section>
+
+<section>
+<h2>7. 수업 끝 멘트</h2>
+<div class="quote">“시는 지나간 하루를 한 줄의 의미로 남기고, 소설은 인물의 변화가 있을 때 비로소 이야기가 됩니다. 희곡은 막이 내려간 뒤에도 배우에게 새로운 해석을 남기고, 음악은 마지막 음이 끝난 뒤 마음속에서 다시 시작됩니다. 여러분의 프로젝트도 오늘 끝나는 것이 아니라 성찰을 통해 다음 도전의 첫 장이 됩니다. 잘한 것은 자신감으로 저장하고, 아쉬운 것은 다음 버전의 기능 목록에 넣어 두세요. 단, ‘다음에는 더 열심히’만 쓰면 개선 계획이 아니라 상투 문장 자동완성입니다!”</div>
+</section>
+
+<section id="s6">
+<h2>8. 형성·진단·코드 평가</h2>
+<div class="card"><b>배점:</b> OX 20점 · 진단평가 60점 · 단답형 20점</div>
+<div class="student"><label>학번<input id="sid" type="text" placeholder="예: 1101"></label><label>이름<input id="name" type="text" placeholder="예: 홍길동"></label></div>
+<div class="progress"><span id="bar"></span></div>
+<form id="quiz">
+<h3>Ⅰ. 형성평가 OX 10개</h3><div id="ox"></div>
+<h3>Ⅱ. 옳은 것 3개 고르기 10개</h3><div id="multi"></div>
+<h3>Ⅲ. 코드 평가 단답형 5개</h3><div id="short"></div>
+</form>
+<div class="actions"><button type="button" class="primary" onclick="grade()">채점하고 TXT 저장</button><button type="button" class="secondary" onclick="print()">인쇄·PDF</button><button type="button" class="danger" onclick="resetAll()">다시 풀기</button></div>
+<div id="result"></div>
+</section>
+</main>
+
+<script>
+const O=[
+["포트폴리오는 프로젝트 결과물만 모아 둔 자료이다.","X"],
+["자기평가는 기준과 근거를 바탕으로 이루어져야 한다.","O"],
+["성찰은 무엇을 했는지뿐 아니라 무엇을 배웠는지 돌아보는 과정이다.","O"],
+["실패한 과정은 포트폴리오에서 모두 제외하는 것이 좋다.","X"],
+["테스트 결과와 피드백은 성장의 근거 자료가 될 수 있다.","O"],
+["개선 계획은 구체적인 다음 행동을 포함하는 것이 좋다.","O"],
+["포트폴리오에는 윤리적 고려 사항을 포함할 수 있다.","O"],
+["자기평가는 항상 최고 점수를 주는 과정이다.","X"],
+["한계를 밝히면 프로젝트의 신뢰도가 반드시 낮아진다.","X"],
+["과정 기록은 다음 프로젝트의 계획을 세우는 데 도움이 된다.","O"]
+];
+const M=[
+["좋은 포트폴리오 요소",["과정 기록","근거 자료","성찰과 개선 계획","결과 자랑만","출처 삭제"],[0,1,2]],
+["자기평가 기준",["구체성","근거성","균형성","기분만 반영","친구 점수 모방"],[0,1,2]],
+["근거 자료 사례",["코드","테스트 결과","사용자 피드백","근거 없는 주장","출처 없는 복사물"],[0,1,2]],
+["성찰 질문",["무엇을 배웠는가","어떤 어려움이 있었는가","다음에 무엇을 개선할 것인가","누가 가장 잘했는가만","점수만 몇 점인가"],[0,1,2]],
+["portfolio 딕셔너리 설명",["프로젝트 제목 저장","성과와 한계 저장","다음 목표 저장","모든 값은 숫자","근거 자료 삭제"],[0,1,2]],
+["create_portfolio_report 함수",["보고서 문장 생성","근거 자료 번호 표시","문장 줄바꿈 연결","항상 빈 문자열 반환","딕셔너리 삭제"],[0,1,2]],
+["책임 있는 성장 기록",["동료 기여 인정","출처 기록","윤리적 한계 공개","실패 숨김","결과 과장"],[0,1,2]],
+["구체적인 개선 계획",["대상 명확화","실행 방법 제시","확인 기준 설정","더 열심히만 작성","언젠가 개선만 작성"],[0,1,2]],
+["메타인지 활동",["자신의 이해 점검","전략의 효과 분석","다음 학습 목표 설정","정답만 암기","오류 원인 무시"],[0,1,2]],
+["성취기준에 맞는 활동",["산출물 기능 평가","윤리적 영향 성찰","결과와 성장 공유","한계 은폐","근거 자료 미제시"],[0,1,2]]
+];
+const S=[
+["프로젝트 정보를 저장하는 변수",["portfolio"]],
+["근거 자료 목록의 키",["evidence"]],
+["포트폴리오 보고서 생성 함수",["create_portfolio_report","create_portfolio_report()"]],
+["보고서 문장 목록 변수",["report"]],
+["생성된 최종 보고서 변수",["result"]]
+];
+function norm(v){return (v||"").toLowerCase().replace(/\s/g,"")}
+function render(){
+ox.innerHTML=O.map((x,i)=>`<div class=q id=o${i}><b>${i+1}. ${x[0]}</b><div class=opts><label><input type=radio name=o${i} value=O> O</label><label><input type=radio name=o${i} value=X> X</label></div><div class=exp id=oe${i}></div></div>`).join("");
+multi.innerHTML=M.map((x,i)=>`<div class=q id=m${i}><b>${i+1}. ${x[0]}에서 옳은 것 3개를 고르시오.</b><div class=opts>${x[1].map((v,j)=>`<label><input type=checkbox name=m${i} value=${j}> ${j+1}) ${v}</label>`).join("")}</div><div class=exp id=me${i}></div></div>`).join("");
+short.innerHTML=S.map((x,i)=>`<div class=q id=s${i}><b>${i+1}. ${x[0]}</b><input type=text name=s${i}><div class=exp id=se${i}></div></div>`).join("");
+document.querySelectorAll("input").forEach(x=>x.addEventListener("input",progress))
+}
+function progress(){let a=0;for(let i=0;i<10;i++)if(document.querySelector(`input[name=o${i}]:checked`))a++;for(let i=0;i<10;i++)if(document.querySelectorAll(`input[name=m${i}]:checked`).length)a++;for(let i=0;i<5;i++)if(document.querySelector(`input[name=s${i}]`).value.trim())a++;bar.style.width=(a/25*100)+"%"}
+function mark(id,eid,ok,text){let q=document.getElementById(id);q.className="q "+(ok?"good":"bad");let e=document.getElementById(eid);e.style.display="block";e.textContent=text}
+function grade(){
+let id=sid.value.trim(),nm=name.value.trim();if(!id||!nm){alert("학번과 이름을 입력하세요.");return}
+let score=0,lines=[];
+O.forEach((x,i)=>{let e=document.querySelector(`input[name=o${i}]:checked`),v=e?e.value:"미응답",ok=v===x[1];if(ok)score+=2;mark("o"+i,"oe"+i,ok,"정답: "+x[1]);lines.push(`[OX ${i+1}] ${v} / ${x[1]} / ${ok?"정답":"오답"}`)});
+M.forEach((x,i)=>{let v=[...document.querySelectorAll(`input[name=m${i}]:checked`)].map(z=>+z.value).sort(),ok=JSON.stringify(v)===JSON.stringify(x[2]);if(ok)score+=6;mark("m"+i,"me"+i,ok,"정답: "+x[2].map(z=>z+1).join(",")+"번");lines.push(`[진단 ${i+1}] ${v.map(z=>z+1).join(",")||"미응답"} / ${x[2].map(z=>z+1).join(",")} / ${ok?"정답":"오답"}`)});
+S.forEach((x,i)=>{let v=document.querySelector(`input[name=s${i}]`).value,ok=x[1].some(a=>norm(a)===norm(v));if(ok)score+=4;mark("s"+i,"se"+i,ok,"정답: "+x[1][0]);lines.push(`[단답 ${i+1}] ${v||"미응답"} / ${x[1][0]} / ${ok?"정답":"오답"}`)});
+let d=new Date(),p=n=>String(n).padStart(2,"0"),t=`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`,ft=`${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+result.style.display="block";result.innerHTML=`<h3>${score}점 / 100점</h3><p>${id} ${nm} · ${t}</p>`;
+let txt=["정보과학 18차시 평가 결과",`학번: ${id}`,`이름: ${nm}`,`점수: ${score}/100`,`응시시각: ${t}`,"",...lines].join("\r\n");
+let u=URL.createObjectURL(new Blob(["\ufeff"+txt],{type:"text/plain;charset=utf-8"})),a=document.createElement("a");a.href=u;a.download=`${id}_${nm}_${score}점_18차시_${ft}.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(u),500)
+}
+function resetAll(){if(confirm("모든 답을 지울까요?"))location.reload()}
+render();
+</script>
+</body>
+</html>

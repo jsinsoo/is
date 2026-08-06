@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>정보융합탐구과제 16차시 | 성과 공유와 동료 평가</title>
+  <style>
+    :root{
+      --navy:#16324f; --blue:#247ba0; --sky:#eaf6fb; --mint:#eaf8f1;
+      --gold:#f4b942; --rose:#fcecef; --ink:#263238; --muted:#607d8b;
+      --paper:#ffffff; --line:#d9e5eb; --good:#167d4c; --bad:#b42318;
+      --shadow:0 10px 28px rgba(22,50,79,.10);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; color:var(--ink);
+      font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(36,123,160,.12), transparent 28%),
+        radial-gradient(circle at 100% 20%, rgba(244,185,66,.14), transparent 25%),
+        #f5f8fa;
+      line-height:1.7;
+    }
+    .mini-menu{
+      position:fixed; top:8px; left:8px; z-index:1000;
+      width:26px; height:26px; border:none; border-radius:8px;
+      background:rgba(22,50,79,.92); color:#fff; font-size:13px; cursor:pointer;
+      box-shadow:0 4px 12px rgba(0,0,0,.18);
+    }
+    .nav-panel{
+      position:fixed; top:40px; left:8px; z-index:999; width:250px;
+      max-height:75vh; overflow:auto; padding:12px;
+      background:rgba(255,255,255,.98); border:1px solid var(--line);
+      border-radius:14px; box-shadow:var(--shadow); display:none;
+    }
+    .nav-panel.open{display:block}
+    .nav-panel a{
+      display:block; padding:7px 9px; margin:3px 0; color:var(--navy);
+      text-decoration:none; border-radius:8px; font-size:13px;
+    }
+    .nav-panel a:hover{background:var(--sky)}
+    header{
+      background:linear-gradient(135deg,#102a43 0%,#247ba0 58%,#49a6c4 100%);
+      color:#fff; padding:64px 22px 54px; text-align:center;
+    }
+    header .badge{
+      display:inline-block; padding:7px 14px; border-radius:999px;
+      background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28);
+      font-weight:700; letter-spacing:.04em;
+    }
+    header h1{margin:18px 0 8px; font-size:clamp(30px,5vw,52px); line-height:1.2}
+    header p{max-width:920px; margin:0 auto; font-size:18px; opacity:.95}
+    .container{width:min(1180px,94%); margin:-28px auto 70px}
+    .card{
+      background:var(--paper); border:1px solid var(--line); border-radius:20px;
+      box-shadow:var(--shadow); padding:28px; margin:22px 0;
+    }
+    h2{color:var(--navy); margin:0 0 18px; font-size:28px}
+    h3{color:var(--blue); margin:18px 0 10px}
+    .section-kicker{font-size:13px; font-weight:800; color:var(--blue); letter-spacing:.12em}
+    .grid-2{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px}
+    .grid-3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px}
+    .info-box{
+      padding:18px; border-radius:16px; background:var(--sky);
+      border-left:5px solid var(--blue);
+    }
+    .quote{
+      position:relative; padding:24px 25px 22px 30px; border-radius:18px;
+      background:linear-gradient(135deg,#fff8df,#fff); border:1px solid #f2d987;
+    }
+    .quote::before{content:"“"; position:absolute; left:10px; top:-8px; font-size:52px; color:#d89a11}
+    .flow{display:flex; flex-wrap:wrap; gap:9px; align-items:center}
+    .flow span{padding:9px 13px; border-radius:999px; background:var(--mint); border:1px solid #b9e2cf; font-weight:700}
+    .flow b{color:var(--blue)}
+    .concept{
+      border:1px solid var(--line); border-radius:18px; overflow:hidden; margin:22px 0;
+      background:#fff;
+    }
+    .concept-head{padding:20px 22px; background:linear-gradient(90deg,#edf8fc,#fff)}
+    .concept-head h3{margin:0; color:var(--navy)}
+    .concept-body{padding:22px}
+    pre{
+      margin:14px 0; padding:18px; overflow:auto; border-radius:14px;
+      background:#101820; color:#e6edf3; border:1px solid #273746;
+      font-family:Consolas,"Courier New",monospace; font-size:14px; line-height:1.55;
+    }
+    code{font-family:Consolas,"Courier New",monospace}
+    .explain{
+      background:#f7fafc; border:1px solid var(--line); border-radius:14px; padding:16px;
+    }
+    .question{
+      margin-top:18px; padding:18px; border-radius:15px; background:#fcfdfe;
+      border:1px solid var(--line);
+    }
+    .question-title{font-weight:800; color:var(--navy); margin-bottom:10px}
+    label.option{
+      display:block; margin:8px 0; padding:10px 12px; border-radius:10px;
+      background:#fff; border:1px solid #dce8ee; cursor:pointer;
+    }
+    label.option:hover{background:#f1f8fb}
+    input[type="checkbox"],input[type="radio"]{transform:scale(1.15); margin-right:8px}
+    .rubric{width:100%; border-collapse:collapse; font-size:14px}
+    .rubric th,.rubric td{border:1px solid var(--line); padding:11px; vertical-align:top}
+    .rubric th{background:var(--navy); color:#fff}
+    .rubric tr:nth-child(even) td{background:#f8fbfc}
+    .paper-topic{padding:16px; border-radius:14px; background:#fff; border:1px solid var(--line)}
+    .student-box{
+      display:grid; grid-template-columns:1fr 1fr auto; gap:12px; align-items:end;
+    }
+    .field label{display:block; font-weight:800; margin-bottom:5px}
+    .field input{
+      width:100%; padding:12px 13px; border:1px solid #b9cbd4; border-radius:10px;
+      font-size:16px;
+    }
+    button.action{
+      border:none; border-radius:12px; padding:13px 18px; font-weight:800; cursor:pointer;
+      background:var(--navy); color:#fff;
+    }
+    button.action.secondary{background:var(--blue)}
+    button.action.gold{background:#d69300}
+    .score-panel{
+      display:none; margin-top:20px; padding:20px; border-radius:16px;
+      background:linear-gradient(135deg,#eefaf4,#fff); border:2px solid #9fd6b8;
+    }
+    .result-item{padding:14px; margin:10px 0; border-radius:12px; border:1px solid var(--line)}
+    .correct{background:#eefaf4; border-color:#a9ddbf}
+    .wrong{background:#fff1f0; border-color:#f2b8b5}
+    .answer-key{font-weight:800}
+    .footer-quote{background:linear-gradient(135deg,#fcecf3,#fff8df)}
+    .small{font-size:13px; color:var(--muted)}
+    .pill{display:inline-block;padding:5px 10px;border-radius:999px;background:#eaf6fb;color:#135d7a;font-weight:700;margin:2px}
+    @media(max-width:800px){
+      .grid-2,.grid-3,.student-box{grid-template-columns:1fr}
+      .card{padding:20px}
+      .rubric{font-size:12px}
+    }
+    @media print{
+      .mini-menu,.nav-panel,.no-print{display:none!important}
+      body{background:#fff}
+      .container{width:100%; margin:0}
+      .card,.concept{box-shadow:none; break-inside:avoid}
+      header{padding:30px}
+    }
+  </style>
+</head>
+<body>
+  <button class="mini-menu" onclick="toggleNav()" aria-label="목차 열기">☰</button>
+  <nav class="nav-panel" id="navPanel">
+    <a href="#overview">수업 개요</a>
+    <a href="#standards">성취기준·학습 목표</a>
+    <a href="#opening">수업 시작 멘트</a>
+    <a href="#concepts">학습 개념·코드·문항</a>
+    <a href="#papers">소논문 주제 예시</a>
+    <a href="#rubric">동료 평가 루브릭</a>
+    <a href="#closing">수업 끝 멘트</a>
+    <a href="#formative">형성평가 OX</a>
+    <a href="#diagnostic">진단평가</a>
+    <a href="#submit">응시·채점·저장</a>
+  </nav>
+
+  <header>
+    <div class="badge">정보융합탐구과제 · 16차시</div>
+    <h1>성과 공유와 동료 평가</h1>
+    <p>근거 중심으로 탐구 과정과 결과를 발표하고, 질의응답과 루브릭 기반 동료 피드백을 통해 산출물을 한 단계 더 성장시키는 목표지향 개념기반 수업</p>
+  </header>
+
+  <main class="container">
+    <section class="card" id="overview">
+      <div class="section-kicker">LESSON OVERVIEW</div>
+      <h2>수업 개요</h2>
+      <div class="grid-3">
+        <div class="info-box"><b>학습 주제</b><br>성과 공유와 동료 평가</div>
+        <div class="info-box"><b>핵심 활동</b><br>발표 · 질의응답 · 동료 피드백</div>
+        <div class="info-box"><b>핵심 수행</b><br>근거 중심 발표와 루브릭 기반 평가</div>
+      </div>
+      <h3>수업의 큰 흐름</h3>
+      <div class="flow">
+        <span>탐구 맥락 정리</span><b>→</b><span>근거 선별</span><b>→</b><span>발표 구조화</span><b>→</b>
+        <span>질의응답</span><b>→</b><span>동료 평가</span><b>→</b><span>피드백 반영</span><b>→</b><span>성찰</span>
+      </div>
+    </section>
+
+    <section class="card" id="standards">
+      <div class="section-kicker">GOAL & STANDARD</div>
+      <h2>성취기준과 학습 목표</h2>
+      <div class="grid-2">
+        <div>
+          <h3>성취기준</h3>
+          <ul>
+            <li>탐구 문제, 자료 수집, 분석 과정, 결과 및 한계를 논리적 구조로 조직하여 발표한다.</li>
+            <li>자료와 분석 결과를 근거로 주장하고, 질문에 타당한 근거를 들어 응답한다.</li>
+            <li>공동으로 합의한 루브릭을 활용하여 동료 산출물의 강점과 개선점을 공정하게 평가한다.</li>
+            <li>동료 피드백을 비판적으로 검토하고, 수용 가능한 의견을 산출물 개선에 반영한다.</li>
+            <li>저작권, 개인정보 보호, 자료의 신뢰성 등 정보윤리 원칙을 발표와 평가 과정에서 실천한다.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>학습 목표</h3>
+          <ol>
+            <li>탐구의 핵심 질문과 결론을 1분 안에 명확하게 설명할 수 있다.</li>
+            <li>주장·근거·해석의 관계를 구분하여 발표 자료를 구성할 수 있다.</li>
+            <li>예상 질문과 실제 질문에 근거를 들어 응답할 수 있다.</li>
+            <li>루브릭의 평가 요소와 수준 기술어를 적용하여 동료 산출물을 평가할 수 있다.</li>
+            <li>구체적이고 실행 가능한 피드백을 작성하고 개선 계획을 세울 수 있다.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="opening">
+      <div class="section-kicker">OPENING MESSAGE</div>
+      <h2>수업 시작 멘트</h2>
+      <div class="quote">
+        소크라테스는 질문을 통해 생각을 깊게 했고, 베이컨은 지식을 힘이라 보았으며, 갈릴레이는 관찰한 사실을 근거로 말했습니다.
+        수학자 폴리아는 문제 해결 뒤에 풀이를 되돌아보는 일이 중요하다고 강조했습니다.
+        오늘 여러분의 발표는 단순히 ‘내가 무엇을 했는가’를 소개하는 시간이 아닙니다.
+        <b>어떤 질문에서 출발했고, 어떤 자료를 믿었으며, 어떤 논리로 결론에 도달했는지</b>를 다른 사람에게 검증받는 시간입니다.
+        좋은 질문은 발표자를 곤란하게 만드는 질문이 아니라 탐구를 더 단단하게 만드는 질문입니다.
+        오늘 우리는 서로의 심사위원이면서 동시에 서로의 연구를 성장시키는 공동 연구자가 되어 봅시다.
+      </div>
+    </section>
+
+    <section class="card" id="concepts">
+      <div class="section-kicker">10 CORE CONCEPTS</div>
+      <h2>학습할 개념 10개 · 코드 · 개념별 평가</h2>
+      <p class="small">각 문항은 보기 5개 중 옳은 것 3개를 모두 선택합니다. 일부만 선택하거나 틀린 보기를 함께 선택하면 오답으로 처리됩니다.</p>
+      <div id="conceptContainer"></div>
+    </section>
+
+    <section class="card" id="papers">
+      <div class="section-kicker">MINI RESEARCH IDEAS</div>
+      <h2>학습과 관련한 소논문 주제 예시 5개</h2>
+      <div class="grid-2">
+        <div class="paper-topic"><b>1. 발표 자료의 시각화 방식이 이해도에 미치는 영향</b><br>동일한 탐구 결과를 표, 막대그래프, 산점도, 이야기식 인포그래픽으로 제시하고 청중의 이해도와 기억 정도를 비교한다.</div>
+        <div class="paper-topic"><b>2. 질문 유형에 따른 발표자의 답변 품질 분석</b><br>사실 확인형, 근거 요구형, 대안 탐색형, 한계 검토형 질문이 답변의 구체성과 논리성에 미치는 영향을 분석한다.</div>
+        <div class="paper-topic"><b>3. 익명 동료 평가와 실명 동료 평가의 차이</b><br>평가 점수의 분포, 피드백의 구체성, 긍정·비판 표현의 비율을 비교하여 공정성과 심리적 안전성을 탐구한다.</div>
+        <div class="paper-topic"><b>4. 루브릭 제공 시점이 산출물 품질에 미치는 영향</b><br>탐구 시작 전 루브릭을 받은 집단과 발표 직전 루브릭을 받은 집단의 산출물 완성도와 자기점검 행동을 비교한다.</div>
+        <div class="paper-topic"><b>5. 동료 피드백 반영률과 최종 산출물 향상도의 관계</b><br>피드백을 수용·부분 수용·보류·거절로 분류하고, 수정 전후 루브릭 점수 변화를 분석한다.</div>
+      </div>
+    </section>
+
+    <section class="card" id="rubric">
+      <div class="section-kicker">PEER ASSESSMENT</div>
+      <h2>동료 평가 루브릭</h2>
+      <table class="rubric">
+        <thead><tr><th>평가 요소</th><th>4점: 매우 우수</th><th>3점: 우수</th><th>2점: 보통</th><th>1점: 개선 필요</th></tr></thead>
+        <tbody>
+          <tr><td><b>탐구 문제</b></td><td>문제의 필요성과 범위가 명확하다.</td><td>문제가 대체로 명확하다.</td><td>문제의 범위가 다소 넓거나 모호하다.</td><td>무엇을 탐구했는지 파악하기 어렵다.</td></tr>
+          <tr><td><b>근거의 신뢰성</b></td><td>출처·수집 방법·한계를 함께 제시한다.</td><td>신뢰할 만한 근거와 출처를 제시한다.</td><td>근거는 있으나 출처나 설명이 부족하다.</td><td>주장과 근거의 연결이 약하다.</td></tr>
+          <tr><td><b>분석과 해석</b></td><td>자료를 정확히 분석하고 대안 해석도 검토한다.</td><td>분석 결과와 결론이 논리적으로 연결된다.</td><td>분석과 결론 사이 일부 비약이 있다.</td><td>결론이 자료와 맞지 않거나 분석이 부족하다.</td></tr>
+          <tr><td><b>발표 구성</b></td><td>도입·과정·결과·한계·제안이 유기적이다.</td><td>발표 순서가 명확하고 이해하기 쉽다.</td><td>일부 내용이 반복되거나 연결이 약하다.</td><td>핵심 내용을 찾기 어렵다.</td></tr>
+          <tr><td><b>질의응답</b></td><td>질문 의도를 확인하고 근거와 한계를 함께 답한다.</td><td>질문에 적절한 근거를 들어 답한다.</td><td>답변은 관련 있으나 근거가 부족하다.</td><td>질문과 다른 답을 하거나 회피한다.</td></tr>
+          <tr><td><b>정보윤리</b></td><td>출처, 개인정보, 저작권, 편향을 모두 점검한다.</td><td>출처와 개인정보 보호를 적절히 지킨다.</td><td>일부 출처 표시나 윤리 점검이 부족하다.</td><td>무단 사용 또는 개인정보 노출 위험이 있다.</td></tr>
+          <tr><td><b>피드백 품질</b></td><td>근거가 구체적이고 실행 가능한 개선안을 제시한다.</td><td>강점과 개선점을 균형 있게 제시한다.</td><td>평가가 다소 추상적이다.</td><td>감상이나 단정에 머문다.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card footer-quote" id="closing">
+      <div class="section-kicker">CLOSING MESSAGE</div>
+      <h2>수업 끝 멘트</h2>
+      <div class="quote">
+        시인은 한 줄을 고치며 마음을 다듬고, 소설가는 퇴고로 인물의 길을 밝혀 주며, 극작가는 관객의 반응 속에서 장면을 완성합니다.
+        연극은 혼자서는 막이 오르지 않고, 음악도 서로의 소리를 들어야 화음이 됩니다.
+        오늘 받은 피드백이 조금 따끔했다면 연구가 ‘성장 알림’을 보낸 것입니다.
+        발표 중 말이 잠시 꼬였더라도 걱정하지 마세요. 위대한 연주에도 쉼표가 있고, 멋진 연극에도 막간이 있습니다.
+        여러분의 탐구는 오늘 끝난 작품이 아니라 더 좋은 다음 장면을 기다리는 초연입니다.
+        <b>질문을 두려워하지 말고, 근거를 사랑하며, 서로의 가능성에 박수를 보내는 연구자</b>가 됩시다.
+      </div>
+    </section>
+
+    <section class="card" id="formative">
+      <div class="section-kicker">FORMATIVE ASSESSMENT</div>
+      <h2>형성평가 OX 퀴즈 10개</h2>
+      <div id="oxContainer"></div>
+    </section>
+
+    <section class="card" id="diagnostic">
+      <div class="section-kicker">DIAGNOSTIC ASSESSMENT</div>
+      <h2>진단평가 5지선다형 10개</h2>
+      <p class="small">각 문항에서 옳은 보기 3개를 모두 선택하세요.</p>
+      <div id="diagContainer"></div>
+    </section>
+
+    <section class="card" id="submit">
+      <div class="section-kicker">SUBMIT & SAVE</div>
+      <h2>학번·이름 입력, 자동 채점, TXT 저장</h2>
+      <div class="student-box">
+        <div class="field"><label for="studentId">학번</label><input id="studentId" placeholder="예: 1101" /></div>
+        <div class="field"><label for="studentName">이름</label><input id="studentName" placeholder="예: 홍길동" /></div>
+        <button class="action gold" onclick="gradeAll()">제출·채점</button>
+      </div>
+      <div class="no-print" style="margin-top:12px">
+        <button class="action secondary" onclick="window.print()">인쇄</button>
+        <button class="action" onclick="downloadResult()" id="downloadBtn" disabled>결과 TXT 저장</button>
+      </div>
+      <div class="score-panel" id="scorePanel"></div>
+    </section>
+  </main>
+
+<script>
+const concepts = [
+{
+ title:"1. 근거 중심 주장",
+ detail:"발표의 핵심 주장은 개인적 느낌이 아니라 자료, 관찰, 실험, 계산 또는 문헌에 의해 지지되어야 한다. 좋은 발표는 ‘무엇을 알게 되었는가’뿐 아니라 ‘왜 그렇게 판단했는가’를 함께 보여 준다.",
+ code:`claim = "환기 후 교실의 이산화탄소 농도가 감소했다."
+before = 1450
+after = 820
+change = after - before
+
+print("주장:", claim)
+print("변화량:", change, "ppm")`,
+ explain:"변수 claim에는 발표할 주장을 저장하고, before와 after에는 관찰 전후 값을 저장한다. change가 음수이면 농도가 감소했음을 뜻한다. 수치가 주장을 직접 뒷받침하도록 구성한 예이다.",
+ q:["주장과 수치 근거가 함께 제시되어 있다.","change 값은 -630이다.","after가 before보다 작으므로 감소를 해석할 수 있다.","change가 음수이므로 농도가 증가했다.","이 코드는 측정값의 출처와 신뢰성까지 자동 검증한다."], a:[0,1,2]
+},
+{
+ title:"2. 발표 구조화",
+ detail:"발표는 문제 제기, 탐구 방법, 결과, 해석, 한계, 제안이 연결되어야 한다. 구조가 분명하면 청중은 핵심을 놓치지 않고 발표자의 사고 과정을 따라갈 수 있다.",
+ code:`sections = ["문제", "방법", "결과", "해석", "한계", "제안"]
+
+for order, section in enumerate(sections, start=1):
+    print(f"{order}. {section}")`,
+ explain:"sections 리스트에 발표 순서를 저장하고 enumerate로 순번을 붙인다. start=1을 사용하므로 번호는 1부터 시작한다. 발표 목차 자동 생성에 활용할 수 있다.",
+ q:["출력은 1번부터 시작한다.","발표 내용의 논리적 순서를 목록으로 관리한다.","enumerate는 순번과 항목을 함께 제공한다.","sections는 집합 자료형이다.","반복문은 마지막 항목을 출력하지 않는다."], a:[0,1,2]
+},
+{
+ title:"3. 핵심 메시지",
+ detail:"핵심 메시지는 청중이 발표 뒤에도 기억해야 할 한 문장이다. 지나치게 많은 내용을 나열하기보다 탐구 질문, 가장 중요한 결과, 의미를 압축하여 전달해야 한다.",
+ code:`question = "동료 피드백은 산출물 개선에 도움이 되는가?"
+result = "구체적 피드백을 반영한 산출물의 평균 점수가 높아졌다."
+meaning = "피드백의 구체성이 개선 행동을 촉진할 수 있다."
+
+message = f"{question} {result} 따라서 {meaning}"
+print(message)`,
+ explain:"질문, 결과, 의미를 각각 저장한 뒤 f-string으로 연결한다. 발표자는 핵심 메시지를 한 문장으로 만들어 도입이나 결론에서 반복할 수 있다.",
+ q:["question, result, meaning이 핵심 메시지에 포함된다.","f-string을 사용해 문자열을 결합한다.","핵심 질문과 해석의 연결을 보여 준다.","message는 숫자형 자료이다.","print는 세 문장을 자동으로 통계 분석한다."], a:[0,1,2]
+},
+{
+ title:"4. 시각 자료의 정확성",
+ detail:"그래프는 자료를 빠르게 이해하게 하지만 축, 단위, 범례, 표본 수가 부정확하면 오해를 만든다. 시각 자료는 보기 좋음보다 정확성과 해석 가능성이 우선이다.",
+ code:`scores = [72, 78, 81, 85, 89]
+average = sum(scores) / len(scores)
+
+print("표본 수:", len(scores))
+print("평균 점수:", round(average, 1))
+print("최솟값:", min(scores))
+print("최댓값:", max(scores))`,
+ explain:"리스트의 자료 수, 평균, 최솟값, 최댓값을 계산한다. 그래프를 제시하기 전에 자료의 범위와 대표값을 확인하는 기초 점검 코드이다.",
+ q:["표본 수는 5이다.","평균은 81.0이다.","최솟값과 최댓값을 확인할 수 있다.","round(average, 1)은 평균을 정수로만 만든다.","max(scores)의 결과는 72이다."], a:[0,1,2]
+},
+{
+ title:"5. 질의응답 전략",
+ detail:"좋은 답변은 질문의 의도를 확인하고, 핵심 답을 먼저 말한 뒤, 근거와 한계를 덧붙인다. 모르는 내용을 억지로 단정하지 않고 추가 확인이 필요함을 밝히는 태도도 중요하다.",
+ code:`question_type = "한계"
+responses = {
+    "근거": "자료와 분석 결과를 근거로 설명하겠습니다.",
+    "한계": "표본 수가 적어 일반화에는 주의가 필요합니다.",
+    "대안": "다른 분석 방법과 비교하는 후속 탐구가 가능합니다."
+}
+
+print(responses.get(question_type, "질문 의도를 다시 확인하겠습니다."))`,
+ explain:"질문 유형별 답변 틀을 딕셔너리에 저장한다. get 메서드는 해당 키의 답변을 반환하고, 키가 없으면 기본 문장을 출력한다.",
+ q:["question_type이 '한계'이므로 표본 수 관련 문장이 출력된다.","get은 키가 없을 때 기본값을 사용할 수 있다.","질문 유형별 답변을 딕셔너리로 구조화했다.","존재하지 않는 키를 조회하면 반드시 프로그램이 종료된다.","responses는 순서가 없는 숫자 집합이다."], a:[0,1,2]
+},
+{
+ title:"6. 루브릭 기반 평가",
+ detail:"루브릭은 평가 요소, 수준, 수준별 설명을 미리 제시한다. 평가자의 막연한 인상보다 관찰 가능한 증거에 따라 판단하도록 돕고, 발표자에게도 개선 방향을 알려 준다.",
+ code:`rubric = {
+    "근거": 4,
+    "분석": 3,
+    "발표": 4,
+    "질의응답": 3
+}
+
+total = sum(rubric.values())
+average = total / len(rubric)
+
+print("총점:", total)
+print("평균:", average)`,
+ explain:"평가 요소별 점수를 딕셔너리에 저장한다. values()로 점수만 가져와 합계와 평균을 계산한다. 실제 평가에서는 점수와 함께 구체적인 근거를 기록해야 한다.",
+ q:["총점은 14점이다.","평균은 3.5점이다.","평가 요소별 점수가 딕셔너리에 저장되어 있다.","len(rubric)은 모든 점수의 합을 반환한다.","values()는 평가 요소 이름만 반환한다."], a:[0,1,2]
+},
+{
+ title:"7. 피드백의 구체성",
+ detail:"효과적인 피드백은 ‘좋았다’ 또는 ‘부족했다’에 머물지 않는다. 관찰한 사실, 그 영향, 실행 가능한 개선 제안을 포함하면 상대가 다음 행동을 선택할 수 있다.",
+ code:`observation = "그래프의 세로축 단위가 표시되지 않았다."
+impact = "수치의 크기를 정확히 해석하기 어렵다."
+suggestion = "세로축 제목에 단위(ppm)를 추가해 보세요."
+
+feedback = {
+    "관찰": observation,
+    "영향": impact,
+    "제안": suggestion
+}
+
+for key, value in feedback.items():
+    print(f"[{key}] {value}")`,
+ explain:"피드백을 관찰·영향·제안으로 나누어 딕셔너리에 저장하고 반복 출력한다. 사람에 대한 평가가 아니라 산출물에서 확인한 구체적 증거에 초점을 맞춘다.",
+ q:["피드백이 관찰·영향·제안으로 구분된다.","items()는 키와 값을 함께 제공한다.","개선 제안이 실행 가능한 행동으로 표현되어 있다.","이 코드는 발표자의 성격을 평가한다.","feedback에는 숫자 점수만 저장된다."], a:[0,1,2]
+},
+{
+ title:"8. 평가의 공정성과 일관성",
+ detail:"같은 수준의 산출물에 유사한 판단을 내리려면 평가 기준을 공동으로 이해해야 한다. 여러 평가자의 점수 차이를 확인하고, 큰 차이가 있을 때 근거를 다시 논의하는 과정이 필요하다.",
+ code:`rater_a = [4, 3, 4, 3]
+rater_b = [3, 3, 4, 2]
+
+differences = [abs(a-b) for a, b in zip(rater_a, rater_b)]
+print("항목별 점수 차이:", differences)
+print("평균 차이:", sum(differences) / len(differences))`,
+ explain:"zip으로 두 평가자의 같은 위치 점수를 묶고 절댓값 차이를 계산한다. 차이가 크면 루브릭 해석이 달랐는지 확인할 수 있다.",
+ q:["항목별 차이는 [1, 0, 0, 1]이다.","평균 차이는 0.5이다.","zip은 같은 순서의 점수를 짝지어 준다.","abs는 점수 차이를 음수로 만든다.","이 코드만으로 평가자의 편향 원인이 자동 확정된다."], a:[0,1,2]
+},
+{
+ title:"9. 정보윤리와 출처 표시",
+ detail:"발표 자료에는 자료 출처, 그림과 코드의 저작권, 개인정보 처리 방식이 명시되어야 한다. 출처 표시와 익명화는 탐구의 신뢰성과 참여자의 권리를 함께 지킨다.",
+ code:`record = {
+    "자료출처": "공공데이터포털",
+    "수집일": "2026-07-20",
+    "개인정보": "학번과 이름을 익명 코드로 변환",
+    "라이선스": "출처 표시 조건 확인"
+}
+
+for item, note in record.items():
+    print(item, ":", note)`,
+ explain:"발표 전 윤리 점검 항목을 딕셔너리로 기록한 예이다. 자료 출처와 수집일은 재현성을 높이고, 개인정보 처리와 라이선스 확인은 책임 있는 활용을 돕는다.",
+ q:["자료 출처와 수집일이 기록되어 있다.","개인정보 익명화 방법이 포함되어 있다.","라이선스 확인 내용이 포함되어 있다.","공공데이터는 출처를 표시할 필요가 없다.","익명화하면 모든 재식별 위험이 자동으로 사라진다."], a:[0,1,2]
+},
+{
+ title:"10. 피드백 반영과 성찰",
+ detail:"모든 피드백을 무조건 수용하는 것이 좋은 태도는 아니다. 근거와 목적에 따라 수용, 부분 수용, 보류, 거절을 결정하고 그 이유와 수정 결과를 기록해야 한다.",
+ code:`feedback_log = [
+    {"내용":"그래프 단위 추가", "결정":"수용", "조치":"세로축에 ppm 표시"},
+    {"내용":"모든 원자료 공개", "결정":"부분 수용", "조치":"개인정보 제거 후 요약 자료 공개"},
+    {"내용":"표본 확대", "결정":"후속 연구", "조치":"이번 연구의 한계로 기록"}
+]
+
+for item in feedback_log:
+    print(item["결정"], "-", item["내용"], ":", item["조치"])`,
+ explain:"피드백별 결정과 조치를 리스트 안의 딕셔너리로 기록한다. 무엇을 어떻게 반영했는지 추적할 수 있어 수정 과정과 연구자의 판단을 투명하게 보여 준다.",
+ q:["피드백마다 결정과 조치가 기록되어 있다.","개인정보 보호를 고려한 부분 수용 사례가 있다.","표본 확대 의견을 후속 연구 과제로 남겼다.","모든 피드백을 동일하게 수용했다.","feedback_log는 문자열 하나만 저장한다."], a:[0,1,2]
+}
+];
+
+const ox = [
+["발표에서 결론만 제시해도 탐구 과정의 타당성을 충분히 검증할 수 있다.", false, "결론뿐 아니라 문제, 자료, 분석 과정, 한계가 함께 제시되어야 타당성을 검토할 수 있다."],
+["주장과 근거 사이의 연결을 설명하면 청중이 결론의 타당성을 판단하기 쉽다.", true, "주장-근거-해석의 연결은 근거 중심 발표의 핵심이다."],
+["질문에 답을 모를 때는 확인이 필요한 부분임을 밝히고 후속 확인 계획을 말할 수 있다.", true, "불확실성을 솔직히 밝히는 것은 신뢰를 높이는 태도이다."],
+["루브릭은 평가가 시작된 뒤 평가자가 자유롭게 바꾸는 것이 공정하다.", false, "평가 기준은 사전에 공유하고 일관되게 적용해야 한다."],
+["좋은 동료 피드백은 관찰한 사실과 실행 가능한 개선 제안을 포함한다.", true, "구체적 증거와 행동 제안이 피드백의 활용도를 높인다."],
+["그래프의 축을 임의로 잘라 차이를 크게 보이게 해도 수치가 맞으면 윤리적으로 문제가 없다.", false, "시각적 과장은 해석을 왜곡할 수 있으므로 축 범위와 표시 방식을 정직하게 구성해야 한다."],
+["동료 평가에서는 발표자의 성격보다 산출물과 수행에서 확인한 증거를 평가해야 한다.", true, "평가 대상은 사람의 인격이 아니라 관찰 가능한 수행과 산출물이다."],
+["여러 평가자의 점수 차이가 크면 루브릭의 의미와 판단 근거를 다시 논의할 필요가 있다.", true, "평가자 간 조정은 일관성과 신뢰도를 높인다."],
+["피드백은 많을수록 좋으므로 근거가 약한 의견도 모두 산출물에 반영해야 한다.", false, "피드백은 목적과 근거를 검토하여 선택적으로 반영해야 한다."],
+["출처 표시와 개인정보 보호는 탐구 발표의 신뢰성과 윤리성을 높인다.", true, "출처와 보호 조치는 재현성과 참여자 권리를 함께 지킨다."]
+];
+
+const diagnostic = [
+{
+ q:"근거 중심 발표에 대한 설명으로 옳은 것을 모두 고르시오.",
+ o:["주장은 자료나 분석 결과와 연결되어야 한다.","자료의 출처와 수집 방법을 밝히는 것이 좋다.","결론과 다른 자료도 한계로 검토할 수 있다.","발표자의 확신이 강하면 근거가 없어도 된다.","불리한 결과는 청중에게 숨기는 것이 바람직하다."], a:[0,1,2],
+ e:"근거 중심 발표는 주장, 출처, 분석, 반대 증거와 한계를 투명하게 제시한다."
+},
+{
+ q:"발표 자료의 시각화 원칙으로 옳은 것을 모두 고르시오.",
+ o:["축 제목과 단위를 표시한다.","표본 수와 자료 범위를 확인한다.","그래프 유형을 전달 목적에 맞게 선택한다.","차이를 강조하기 위해 축을 아무 설명 없이 잘라도 된다.","장식이 많을수록 자료 해석이 정확해진다."], a:[0,1,2],
+ e:"정확한 축·단위, 자료 범위, 목적에 맞는 그래프 선택이 중요하다."
+},
+{
+ q:"질의응답 태도로 옳은 것을 모두 고르시오.",
+ o:["질문의 핵심을 확인한 뒤 답한다.","답변의 근거와 한계를 함께 말할 수 있다.","모르는 내용은 추가 확인이 필요함을 밝힌다.","질문자를 이기기 위해 말을 빠르게 한다.","질문이 비판적이면 대답하지 않는다."], a:[0,1,2],
+ e:"질의응답은 경쟁이 아니라 탐구의 타당성을 함께 점검하는 과정이다."
+},
+{
+ q:"루브릭의 기능으로 옳은 것을 모두 고르시오.",
+ o:["평가 요소와 수준을 명확히 한다.","평가자 간 판단의 일관성을 높인다.","학습자에게 개선 방향을 제공한다.","발표자의 인기도를 점수에 반영한다.","평가 기준을 숨겨 긴장감을 높인다."], a:[0,1,2],
+ e:"루브릭은 기준의 투명성, 일관성, 피드백 가능성을 높인다."
+},
+{
+ q:"구체적인 동료 피드백의 특징으로 옳은 것을 모두 고르시오.",
+ o:["관찰한 사실을 제시한다.","그 사실이 이해에 미친 영향을 설명한다.","실행 가능한 개선 방법을 제안한다.","‘별로다’처럼 짧게 단정한다.","발표자의 성격을 평가한다."], a:[0,1,2],
+ e:"좋은 피드백은 관찰-영향-제안 구조를 갖고 사람보다 산출물에 초점을 둔다."
+},
+{
+ q:"공정한 동료 평가를 위해 필요한 것을 모두 고르시오.",
+ o:["동일한 루브릭을 적용한다.","점수와 함께 판단 근거를 기록한다.","점수 차이가 큰 경우 기준을 다시 논의한다.","친한 친구에게는 가산점을 준다.","첫인상만으로 모든 항목을 채점한다."], a:[0,1,2],
+ e:"공정성은 공통 기준, 증거 기록, 평가자 조정을 통해 높일 수 있다."
+},
+{
+ q:"정보윤리를 지키는 발표 방법으로 옳은 것을 모두 고르시오.",
+ o:["자료와 이미지의 출처를 표시한다.","개인정보는 필요 최소한으로 사용하고 익명화한다.","라이선스 조건을 확인한다.","인터넷 자료는 모두 자유롭게 복사할 수 있다.","익명화했으므로 원자료를 제한 없이 공개한다."], a:[0,1,2],
+ e:"출처, 개인정보, 저작권과 라이선스를 함께 점검해야 한다."
+},
+{
+ q:"피드백 반영 과정에 대한 설명으로 옳은 것을 모두 고르시오.",
+ o:["피드백의 근거를 검토한다.","수용 여부와 이유를 기록한다.","수정 전후 변화를 비교한다.","모든 의견을 무조건 반영한다.","비판적 피드백은 읽지 않고 삭제한다."], a:[0,1,2],
+ e:"피드백은 비판적으로 검토하고 결정과 수정 결과를 투명하게 기록한다."
+},
+{
+ q:"탐구 발표의 한계를 다루는 태도로 옳은 것을 모두 고르시오.",
+ o:["표본 수와 자료 범위의 제한을 밝힌다.","결과를 일반화할 수 있는 범위를 구분한다.","후속 탐구 방향을 제안한다.","한계를 말하면 점수가 낮아지므로 숨긴다.","오차 가능성을 모두 실패로 간주한다."], a:[0,1,2],
+ e:"한계 제시는 연구의 약점 고백이 아니라 결과의 적용 범위를 정직하게 설명하는 과정이다."
+},
+{
+ q:"발표 후 성찰에 포함할 내용으로 옳은 것을 모두 고르시오.",
+ o:["가장 설득력 있었던 근거를 돌아본다.","답변이 부족했던 질문을 기록한다.","다음 탐구에서 개선할 행동을 정한다.","좋은 점수만 확인하고 과정을 잊는다.","다른 모둠과 점수만 비교한다."], a:[0,1,2],
+ e:"성찰은 강점, 부족했던 지점, 다음 행동을 구체화하는 과정이다."
+}
+];
+
+function esc(s){return s.replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+function toggleNav(){document.getElementById("navPanel").classList.toggle("open");}
+
+function renderConcepts(){
+  const root=document.getElementById("conceptContainer");
+  concepts.forEach((c,idx)=>{
+    const div=document.createElement("article");
+    div.className="concept";
+    div.innerHTML=`
+      <div class="concept-head"><h3>${c.title}</h3></div>
+      <div class="concept-body">
+        <p>${c.detail}</p>
+        <h3>예시 코드</h3><pre><code>${esc(c.code)}</code></pre>
+        <div class="explain"><b>코드 상세 설명</b><br>${c.explain}</div>
+        <div class="question" data-type="multi" data-group="concept" data-index="${idx}">
+          <div class="question-title">개념 ${idx+1} 평가 — 옳은 것 3개를 모두 고르시오.</div>
+          ${c.q.map((x,i)=>`<label class="option"><input type="checkbox" name="cq${idx}" value="${i}"> ${i+1}. ${x}</label>`).join("")}
+        </div>
+      </div>`;
+    root.appendChild(div);
+  });
+}
+
+function renderOX(){
+  const root=document.getElementById("oxContainer");
+  ox.forEach((item,idx)=>{
+    const div=document.createElement("div");
+    div.className="question";
+    div.dataset.type="ox"; div.dataset.index=idx;
+    div.innerHTML=`
+      <div class="question-title">${idx+1}. ${item[0]}</div>
+      <label class="option"><input type="radio" name="ox${idx}" value="true"> O</label>
+      <label class="option"><input type="radio" name="ox${idx}" value="false"> X</label>`;
+    root.appendChild(div);
+  });
+}
+
+function renderDiag(){
+  const root=document.getElementById("diagContainer");
+  diagnostic.forEach((d,idx)=>{
+    const div=document.createElement("div");
+    div.className="question"; div.dataset.type="multi"; div.dataset.group="diag"; div.dataset.index=idx;
+    div.innerHTML=`
+      <div class="question-title">${idx+1}. ${d.q}</div>
+      ${d.o.map((x,i)=>`<label class="option"><input type="checkbox" name="dq${idx}" value="${i}"> ${i+1}. ${x}</label>`).join("")}`;
+    root.appendChild(div);
+  });
+}
+
+let lastReport = "";
+let graded = false;
+
+function sameSet(a,b){
+  if(a.length!==b.length) return false;
+  const aa=[...a].sort((x,y)=>x-y), bb=[...b].sort((x,y)=>x-y);
+  return aa.every((v,i)=>v===bb[i]);
+}
+function selectedCheckboxes(name){
+  return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>Number(x.value));
+}
+function cleanFilename(s){return s.replace(/[\\/:*?"<>|]/g,"_").trim() || "미입력";}
+function nowParts(){
+  const d=new Date(), p=n=>String(n).padStart(2,"0");
+  return {
+    display:`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`,
+    file:`${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`
+  };
+}
+
+function gradeAll(){
+  const sid=document.getElementById("studentId").value.trim();
+  const name=document.getElementById("studentName").value.trim();
+  if(!sid || !name){alert("학번과 이름을 모두 입력해 주세요."); return;}
+
+  let score=0, total=30, details=[];
+  concepts.forEach((c,i)=>{
+    const sel=selectedCheckboxes(`cq${i}`);
+    const ok=sameSet(sel,c.a); if(ok) score++;
+    details.push({section:"개념별 평가", num:i+1, ok, response:sel.map(x=>x+1).join(", ")||"미응답", answer:c.a.map(x=>x+1).join(", "), explain:c.explain});
+  });
+  ox.forEach((item,i)=>{
+    const checked=document.querySelector(`input[name="ox${i}"]:checked`);
+    const response=checked ? checked.value==="true" : null;
+    const ok=response===item[1]; if(ok) score++;
+    details.push({section:"형성평가 OX", num:i+1, ok, response:response===null?"미응답":response?"O":"X", answer:item[1]?"O":"X", explain:item[2]});
+  });
+  diagnostic.forEach((d,i)=>{
+    const sel=selectedCheckboxes(`dq${i}`);
+    const ok=sameSet(sel,d.a); if(ok) score++;
+    details.push({section:"진단평가", num:i+1, ok, response:sel.map(x=>x+1).join(", ")||"미응답", answer:d.a.map(x=>x+1).join(", "), explain:d.e});
+  });
+
+  const percent=Math.round(score/total*100);
+  const np=nowParts();
+  const panel=document.getElementById("scorePanel");
+  panel.style.display="block";
+  panel.innerHTML=`
+    <h3>채점 결과: ${score} / ${total}점 (${percent}점 환산)</h3>
+    <p><b>학번:</b> ${esc(sid)} &nbsp; <b>이름:</b> ${esc(name)} &nbsp; <b>제출 시각:</b> ${np.display}</p>
+    ${details.map(d=>`
+      <div class="result-item ${d.ok?"correct":"wrong"}">
+        <b>${d.section} ${d.num}번 — ${d.ok?"정답":"오답"}</b><br>
+        응답: ${d.response} / 정답: <span class="answer-key">${d.answer}</span><br>
+        <span class="small">풀이: ${d.explain}</span>
+      </div>`).join("")}
+  `;
+
+  lastReport =
+`정보융합탐구과제 16차시 평가 결과
+==================================================
+학번: ${sid}
+이름: ${name}
+점수: ${score}/${total}점
+100점 환산: ${percent}점
+응시시각: ${np.display}
+학습주제: 성과 공유와 동료 평가
+==================================================
+
+` + details.map(d =>
+`[${d.section} ${d.num}번] ${d.ok?"정답":"오답"}
+- 응답: ${d.response}
+- 정답: ${d.answer}
+- 상세 풀이: ${d.explain}
+`).join("\n");
+
+  graded=true;
+  document.getElementById("downloadBtn").disabled=false;
+  panel.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function downloadResult(){
+  if(!graded){alert("먼저 제출·채점을 실행해 주세요."); return;}
+  const sid=cleanFilename(document.getElementById("studentId").value);
+  const name=cleanFilename(document.getElementById("studentName").value);
+  const np=nowParts();
+  const filename=`${sid}_${name}_점수_16차시_${np.file}.txt`;
+  const blob=new Blob(["\ufeff"+lastReport],{type:"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+
+renderConcepts();
+renderOX();
+renderDiag();
+</script>
+</body>
+</html>

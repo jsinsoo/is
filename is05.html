@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보과학 5차시 목표지향 개념기반 수업지도안</title>
+<style>
+:root{
+  --navy:#17324d; --blue:#2d6f9f; --sky:#eaf5fb; --mint:#eaf8f2;
+  --gold:#efb544; --red:#c84f4f; --green:#3f9561; --ink:#24313c;
+  --line:#d7e3ec; --paper:#fff; --bg:#f3f7fa;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;padding:36px 20px}
+.wrap{max-width:1180px;margin:auto}
+header h1{margin:0 0 8px;font-size:clamp(27px,4vw,43px)}
+header p{margin:0;opacity:.94}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(0,0,0,.06)}
+nav .wrap{display:flex;gap:7px;overflow-x:auto;padding:10px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:8px 12px;border-radius:18px}
+nav a:hover{background:var(--sky)}
+main{max-width:1180px;margin:24px auto;padding:0 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 23px rgba(30,70,100,.06)}
+h2{color:var(--navy);margin-top:0;border-left:7px solid var(--gold);padding-left:12px}
+h3{color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:14px}
+.card{background:#f9fcfe;border:1px solid var(--line);border-radius:14px;padding:17px}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 10px;border-radius:16px;margin:2px}
+.quote{background:linear-gradient(135deg,#fff8e7,#eef8ff);border-left:6px solid var(--gold);padding:20px;border-radius:12px;font-size:1.06rem}
+.timeline{display:grid;grid-template-columns:100px 1fr;gap:10px 16px}
+.timeline .time{font-weight:900;color:var(--blue)}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+code,pre{font-family:Consolas,"D2Coding",monospace}
+pre{background:#17212b;color:#edf5fa;padding:20px;border-radius:14px;overflow:auto;line-height:1.6}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:13px 0;background:#fcfeff}
+.question.correct{border-color:var(--green);background:#f0fbf4}
+.question.wrong{border-color:#d86b6b;background:#fff3f3}
+.options label{display:block;padding:7px 9px;margin:4px 0;border-radius:9px;cursor:pointer}
+.options label:hover{background:var(--sky)}
+input[type=text]{width:100%;padding:11px;border:1px solid #aebdca;border-radius:9px;font-size:1rem}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{border:0;border-radius:10px;padding:12px 18px;font-weight:900;cursor:pointer;font-size:1rem}
+.primary{background:var(--blue);color:#fff}.secondary{background:#e7eef4;color:var(--navy)}.danger{background:var(--red);color:#fff}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+#result{display:none;margin-top:18px;padding:20px;border-radius:14px;background:#eef8ff;border:2px solid var(--blue)}
+.explanation{display:none;margin-top:8px;padding:10px;background:#fff;border-radius:9px;border-left:4px solid var(--gold)}
+.small{font-size:.92rem;color:#5d6b77}
+.progress{height:12px;background:#e5edf3;border-radius:8px;overflow:hidden;margin:14px 0}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--gold))}
+.callout{background:var(--mint);border:1px solid #bfe5d2;border-radius:12px;padding:15px}
+@media(max-width:650px){.student{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}.timeline .time{margin-top:10px}}
+@media print{nav,.actions,#examGuide{display:none!important}body{background:#fff}section{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<h1>정보과학 5차시 목표지향 개념기반 수업지도안</h1>
+<p>스택과 큐를 실제 문제에 적용하여 효율적인 프로그램을 설계하고 구현하기</p>
+</div>
+</header>
+
+<nav><div class="wrap">
+<a href="#standard">성취기준</a><a href="#concept">핵심 개념</a><a href="#lesson">학습 내용</a>
+<a href="#paper">소논문</a><a href="#code">학습 코드</a><a href="#assessment">평가</a>
+</div></nav>
+
+<main>
+<section id="standard">
+<h2>1. 성취기준과 학습 목표</h2>
+<div class="card">
+<h3>성취기준</h3>
+<p><strong>[12정과02-02]</strong> 스택, 큐를 활용하여 문제를 효율적으로 해결하는 프로그램을 작성한다.</p>
+</div>
+<h3>목표지향 학습 목표</h3>
+<div class="grid">
+<div class="card"><strong>지식·이해</strong><br>문제의 처리 순서를 분석하여 스택과 큐 중 적합한 자료구조를 설명할 수 있다.</div>
+<div class="card"><strong>과정·기능</strong><br>스택과 큐의 기본 연산을 활용해 괄호 검사와 작업 대기열 프로그램을 구현할 수 있다.</div>
+<div class="card"><strong>가치·태도</strong><br>자료구조 선택이 프로그램의 정확성·효율성·가독성에 미치는 영향을 근거 있게 판단한다.</div>
+</div>
+<div class="callout"><strong>성공 기준:</strong> 자료 처리 순서를 정확히 설명하고, 알맞은 자료구조를 선택하며, 예외 상황까지 처리한 프로그램을 완성한다.</div>
+</section>
+
+<section id="concept">
+<h2>2. 학습할 개념</h2>
+<p>
+<span class="badge">문제 구조화</span><span class="badge">후입선출</span><span class="badge">선입선출</span>
+<span class="badge">스택 활용</span><span class="badge">큐 활용</span><span class="badge">괄호 짝 검사</span>
+<span class="badge">작업 대기열</span><span class="badge">예외 처리</span><span class="badge">효율성</span>
+</p>
+<table>
+<tr><th>개념</th><th>핵심 의미</th><th>판단 질문</th></tr>
+<tr><td>문제 구조화</td><td>문제에서 데이터가 들어오고 처리되는 순서를 명확하게 나타내는 과정</td><td>먼저 들어온 것과 나중에 들어온 것 중 무엇을 먼저 처리해야 하는가?</td></tr>
+<tr><td>스택 활용</td><td>최근 데이터부터 되돌아가거나 짝을 맞추는 문제에 후입선출을 적용</td><td>가장 최근 상태를 먼저 확인해야 하는가?</td></tr>
+<tr><td>큐 활용</td><td>도착 순서대로 공정하게 처리하는 문제에 선입선출을 적용</td><td>먼저 도착한 작업을 먼저 처리해야 하는가?</td></tr>
+<tr><td>효율성</td><td>정확성뿐 아니라 실행 시간, 메모리, 코드 명료성을 함께 고려</td><td>자료구조 선택으로 불필요한 탐색이나 이동을 줄일 수 있는가?</td></tr>
+<tr><td>예외 처리</td><td>빈 구조 삭제, 잘못된 입력, 짝이 맞지 않는 괄호 등을 안전하게 처리</td><td>예상하지 못한 입력에서도 프로그램이 안정적으로 동작하는가?</td></tr>
+</table>
+</section>
+
+<section>
+<h2>3. 수업 시작 멘트</h2>
+<div class="quote">
+“공자는 배운 것을 때때로 익히는 즐거움을 말했고, 소크라테스는 좋은 질문이 생각의 문을 연다고 보았습니다.
+갈릴레이는 복잡한 자연 현상을 관찰 가능한 순서로 나누었고, 가우스는 문제의 구조를 바꾸어 계산을 단순하게 만들었습니다.
+오늘 우리도 문제를 무작정 코딩하지 않고, 데이터가 어떤 순서로 들어오고 나가야 하는지부터 생각해 봅시다.
+스택은 ‘방금 한 일을 먼저 되돌리는 기억력 좋은 친구’이고, 큐는 ‘먼저 온 사람부터 챙기는 공정한 반장’입니다.
+컴퓨터에게 순서를 잘 가르치면 효율적인 프로그램이 되고, 순서를 잘못 가르치면 급식 줄에서 프린터가 밥을 먼저 먹을 수도 있습니다.”
+</div>
+</section>
+
+<section id="lesson">
+<h2>4. 학습 내용과 수업 흐름</h2>
+<div class="timeline">
+<div class="time">도입 5분</div><div>실행 취소, 괄호 짝 검사, 인쇄 대기열 사례에서 데이터 처리 순서를 발견한다.</div>
+<div class="time">개념 10분</div><div>문제의 입력·처리·출력을 분석하고 후입선출과 선입선출의 적용 조건을 비교한다.</div>
+<div class="time">탐구 10분</div><div>여러 문제 상황에 알맞은 자료구조를 선택하고 선택 근거를 모둠별로 설명한다.</div>
+<div class="time">코딩 15분</div><div>스택을 이용한 괄호 검사와 큐를 이용한 작업 처리 기능이 결합된 프로그램을 작성한다.</div>
+<div class="time">검증 5분</div><div>정상 입력, 짝이 맞지 않는 입력, 빈 대기열 등 경계 상황을 시험한다.</div>
+<div class="time">평가 5분</div><div>OX·복수 정답·단답형 평가로 개념 이해와 코드 분석 능력을 점검한다.</div>
+</div>
+
+<h3>문제 유형별 자료구조 선택</h3>
+<table>
+<tr><th>문제 상황</th><th>적합한 구조</th><th>선택 근거</th></tr>
+<tr><td>괄호 짝 검사</td><td>스택</td><td>가장 최근에 열린 괄호와 현재 닫는 괄호를 먼저 비교해야 한다.</td></tr>
+<tr><td>실행 취소</td><td>스택</td><td>가장 최근 작업부터 역순으로 되돌려야 한다.</td></tr>
+<tr><td>프린터 작업 처리</td><td>큐</td><td>먼저 들어온 작업을 먼저 처리해야 한다.</td></tr>
+<tr><td>학교 급식 대기</td><td>큐</td><td>도착 순서에 따른 공정한 처리가 필요하다.</td></tr>
+</table>
+</section>
+
+<section id="paper">
+<h2>5. 학습 관련 소논문 주제 예시 5개</h2>
+<ol>
+<li><strong>스택 기반 괄호 검사 알고리즘의 입력 길이에 따른 실행 시간 분석</strong></li>
+<li><strong>학교 프린터 작업 대기열에서 선입선출 방식의 공정성과 평균 대기시간 연구</strong></li>
+<li><strong>브라우저 방문 기록에서 스택을 활용한 뒤로 가기 기능 구현 및 오류 분석</strong></li>
+<li><strong>파이썬 리스트와 collections.deque를 이용한 큐 처리 성능 비교</strong></li>
+<li><strong>급식 대기 문제에서 일반 큐와 우선순위 큐 적용 결과 비교</strong></li>
+</ol>
+</section>
+
+<section id="code">
+<h2>6. 학습할 코드 1개</h2>
+<h3>스택으로 괄호를 검사하고 큐로 작업을 처리하는 통합 프로그램</h3>
+<pre><code>from collections import deque
+
+
+def is_balanced(expression):
+    """스택을 이용해 괄호의 짝과 순서를 검사한다."""
+    stack = []
+    pairs = {")": "(", "]": "[", "}": "{"}
+
+    for char in expression:
+        if char in "([{":
+            stack.append(char)
+        elif char in ")]}":
+            if not stack:
+                return False
+            if stack.pop() != pairs[char]:
+                return False
+
+    return len(stack) == 0
+
+
+def process_jobs(jobs):
+    """큐를 이용해 입력된 순서대로 작업을 처리한다."""
+    queue = deque(jobs)
+    completed = []
+
+    while queue:
+        current_job = queue.popleft()
+        completed.append(current_job)
+        print("처리 완료:", current_job)
+
+    return completed
+
+
+expression = input("검사할 괄호식을 입력하세요: ")
+jobs = ["보고서 출력", "그래프 출력", "평가표 출력"]
+
+if is_balanced(expression):
+    print("괄호가 올바릅니다.")
+else:
+    print("괄호의 짝이나 순서가 올바르지 않습니다.")
+
+result = process_jobs(jobs)
+print("전체 처리 순서:", result)</code></pre>
+
+<h3>상세 설명</h3>
+<table>
+<tr><th>코드 요소</th><th>설명</th></tr>
+<tr><td><code>stack = []</code></td><td>여는 괄호를 저장한다. 가장 최근에 들어온 여는 괄호를 먼저 비교해야 하므로 스택이 적합하다.</td></tr>
+<tr><td><code>pairs</code></td><td>닫는 괄호를 키로, 대응하는 여는 괄호를 값으로 저장해 짝을 빠르게 확인한다.</td></tr>
+<tr><td><code>stack.append(char)</code></td><td>여는 괄호를 스택의 맨 위에 추가한다.</td></tr>
+<tr><td><code>stack.pop()</code></td><td>가장 최근 여는 괄호를 꺼내 현재 닫는 괄호와 짝이 맞는지 검사한다.</td></tr>
+<tr><td><code>return len(stack) == 0</code></td><td>모든 문자를 확인한 뒤 스택이 비어 있어야 닫히지 않은 괄호가 없다는 뜻이다.</td></tr>
+<tr><td><code>deque(jobs)</code></td><td>작업 목록을 큐로 만든다. 리스트의 앞 원소 삭제보다 효율적으로 처리할 수 있다.</td></tr>
+<tr><td><code>popleft()</code></td><td>큐의 맨 앞 작업을 제거하고 반환하여 선입선출을 구현한다.</td></tr>
+<tr><td><code>while queue</code></td><td>큐에 작업이 남아 있는 동안 모든 작업을 순서대로 처리한다.</td></tr>
+</table>
+<p class="small"><strong>실행 예:</strong> 입력이 <code>{[()]}</code>이면 괄호가 올바르다고 출력하며, 작업은 ‘보고서 출력 → 그래프 출력 → 평가표 출력’ 순서로 처리된다.</p>
+</section>
+
+<section>
+<h2>7. 수업 끝 멘트</h2>
+<div class="quote">
+“시는 마음에 쌓인 말 중 가장 마지막 한 줄을 꺼내 세상을 울리고, 소설은 사건을 차례로 줄 세워 결말에 도착합니다.
+희곡의 배우는 자신의 등장을 기다리고, 연극의 막은 정해진 순서로 오르며, 음악의 음표도 먼저 온 박자를 함부로 새치기하지 않습니다.
+여러분의 꿈이 아직 큐의 맨 뒤에 있는 것처럼 보여도 괜찮습니다. 꾸준히 기다리고 준비하면 반드시 여러분의 차례가 옵니다.
+실수는 스택에 잠시 쌓아 두었다가 하나씩 꺼내 배우면 됩니다.
+다만 숙제는 스택에 쌓아만 두지 마세요. 선생님의 채점 큐가 갑자기 우선순위 큐로 바뀔 수 있습니다!”
+</div>
+</section>
+
+<section id="assessment">
+<h2>8. 형성·진단·코드 평가</h2>
+<div id="examGuide" class="card">
+<strong>배점:</strong> OX 10문항 × 2점 = 20점 · 진단평가 10문항 × 6점 = 60점 · 단답형 5문항 × 4점 = 20점
+<br><strong>진단평가:</strong> 각 문항에는 옳은 진술 3개와 틀린 진술 2개가 있습니다. 옳은 것 3개를 모두 선택해야 정답입니다.
+</div>
+
+<h3>학생 정보</h3>
+<div class="student">
+<label>학번<input type="text" id="studentId" placeholder="예: 1101" maxlength="12"></label>
+<label>이름<input type="text" id="studentName" placeholder="예: 홍길동" maxlength="20"></label>
+</div>
+<div class="progress"><span id="progressBar"></span></div>
+
+<form id="quizForm">
+<h3>Ⅰ. 형성평가 OX 퀴즈 10개</h3>
+<div id="oxArea"></div>
+<h3>Ⅱ. 진단평가: 옳은 것 3개 고르기 10개</h3>
+<div id="multiArea"></div>
+<h3>Ⅲ. 학습할 코드 평가 단답형 5개</h3>
+<div id="shortArea"></div>
+</form>
+
+<div class="actions">
+<button class="primary" type="button" onclick="gradeQuiz()">채점하고 TXT 저장</button>
+<button class="secondary" type="button" onclick="window.print()">인쇄·PDF 저장</button>
+<button class="danger" type="button" onclick="resetQuiz()">다시 풀기</button>
+</div>
+<div id="result"></div>
+</section>
+</main>
+
+<script>
+const oxQuestions = [
+ {q:"괄호 짝 검사에서는 가장 최근에 열린 괄호를 먼저 확인하므로 스택이 적합하다.",a:"O",e:"중첩 괄호는 후입선출 방식으로 짝을 확인한다."},
+ {q:"프린터 작업 대기열은 가장 나중에 들어온 작업부터 처리하는 것이 기본이다.",a:"X",e:"일반적인 프린터 대기열은 먼저 들어온 작업부터 처리한다."},
+ {q:"deque의 popleft()는 큐의 맨 앞 데이터를 제거하고 반환한다.",a:"O",e:"popleft()는 선입선출 처리에 적합하다."},
+ {q:"괄호 검사 중 닫는 괄호를 만났을 때 스택이 비어 있다면 올바른 식이다.",a:"X",e:"대응하는 여는 괄호가 없으므로 올바르지 않다."},
+ {q:"모든 문자를 확인한 뒤 스택에 여는 괄호가 남아 있으면 올바르지 않은 식이다.",a:"O",e:"닫히지 않은 여는 괄호가 존재하기 때문이다."},
+ {q:"스택과 큐를 선택할 때 데이터 처리 순서는 중요하지 않다.",a:"X",e:"처리 순서가 자료구조 선택의 핵심 기준이다."},
+ {q:"실행 취소 기능은 최근 작업부터 되돌리므로 스택을 활용할 수 있다.",a:"O",e:"최근 작업이 먼저 제거되는 후입선출 원리이다."},
+ {q:"queue.popleft()는 큐의 가장 마지막 원소를 제거한다.",a:"X",e:"popleft()는 맨 왼쪽, 즉 가장 앞 원소를 제거한다."},
+ {q:"빈 스택이나 빈 큐를 다룰 때 예외 상황을 검사하면 프로그램의 안정성이 높아진다.",a:"O",e:"삭제 전 빈 상태 검사 등은 오류를 예방한다."},
+ {q:"효율적인 프로그램은 정답만 나오면 되며 실행 시간과 가독성은 고려하지 않아도 된다.",a:"X",e:"정확성, 시간, 메모리, 가독성을 함께 고려해야 한다."}
+];
+
+const multiQuestions = [
+ {q:"스택이 적합한 문제의 특징으로 옳은 것을 3개 고르시오.",o:["최근 데이터부터 처리한다.","중첩 구조의 짝을 검사한다.","작업을 역순으로 되돌린다.","도착 순서대로 공정하게 처리한다.","항상 첫 번째 데이터만 확인한다."],a:[0,1,2]},
+ {q:"큐가 적합한 문제의 특징으로 옳은 것을 3개 고르시오.",o:["먼저 들어온 데이터를 먼저 처리한다.","대기 순서를 유지한다.","작업 요청을 순차적으로 처리한다.","가장 최근 작업부터 되돌린다.","중첩 괄호를 역순으로 맞춘다."],a:[0,1,2]},
+ {q:"is_balanced 함수에 대한 옳은 설명을 3개 고르시오.",o:["여는 괄호는 stack에 저장한다.","닫는 괄호는 가장 최근 여는 괄호와 비교한다.","모든 검사 후 stack이 비어 있어야 올바르다.","닫는 괄호는 모두 무시한다.","여는 괄호가 많을수록 언제나 올바르다."],a:[0,1,2]},
+ {q:"pairs 딕셔너리에 대한 옳은 설명을 3개 고르시오.",o:["닫는 괄호가 키이다.","대응하는 여는 괄호가 값이다.","괄호의 짝을 검사하는 데 사용한다.","작업 대기 순서를 저장한다.","큐의 길이를 계산하는 데만 사용한다."],a:[0,1,2]},
+ {q:"process_jobs 함수에 대한 옳은 설명을 3개 고르시오.",o:["jobs를 deque로 변환한다.","popleft로 앞 작업을 꺼낸다.","completed에 처리 결과를 저장한다.","마지막 작업부터 처리한다.","큐가 비어 있어도 while문이 계속된다."],a:[0,1,2]},
+ {q:"자료구조 선택 시 고려할 요소로 옳은 것을 3개 고르시오.",o:["데이터 처리 순서","삽입·삭제 위치","시간과 메모리 효율","코드 글자 색만","컴퓨터 바탕화면"],a:[0,1,2]},
+ {q:"괄호식이 올바르지 않은 경우를 3개 고르시오.",o:["닫는 괄호가 먼저 나온다.","여는 괄호와 닫는 괄호 종류가 다르다.","검사 후 여는 괄호가 스택에 남는다.","모든 괄호가 정확히 짝을 이룬다.","빈 문자열을 검사한 뒤 스택이 비어 있다."],a:[0,1,2]},
+ {q:"deque를 큐 구현에 사용하는 장점과 특징으로 옳은 것을 3개 고르시오.",o:["앞쪽 원소 삭제를 효율적으로 처리한다.","popleft 메서드를 제공한다.","양쪽 끝에서 삽입과 삭제가 가능하다.","항상 스택으로만 사용할 수 있다.","첫 원소 삭제를 위해 모든 원소를 수동 이동해야 한다."],a:[0,1,2]},
+ {q:"프로그램 검증 방법으로 옳은 것을 3개 고르시오.",o:["정상 괄호식을 시험한다.","짝이 틀린 괄호식을 시험한다.","빈 대기열과 여러 작업을 시험한다.","한 번 성공하면 모든 입력이 정확하다고 판단한다.","오류가 나면 원인을 분석하지 않는다."],a:[0,1,2]},
+ {q:"성취기준에 부합하는 활동을 3개 고르시오.",o:["문제에 적합한 스택 또는 큐를 선택한다.","자료구조를 활용해 프로그램을 작성한다.","효율성과 정확성을 근거로 결과를 설명한다.","코드를 실행하지 않고 외우기만 한다.","처리 순서를 분석하지 않는다."],a:[0,1,2]}
+];
+
+const shortQuestions = [
+ {q:"큐의 맨 앞 데이터를 제거하는 deque 메서드 이름을 쓰시오.",a:["popleft","popleft()"],e:"정답: popleft"},
+ {q:"제시된 코드에서 여는 괄호를 저장하는 변수 이름은 무엇인가?",a:["stack"],e:"정답: stack"},
+ {q:"괄호의 짝을 저장한 딕셔너리 변수 이름은 무엇인가?",a:["pairs"],e:"정답: pairs"},
+ {q:"작업 목록을 큐로 만들 때 사용한 자료형 또는 클래스 이름을 쓰시오.",a:["deque"],e:"정답: deque"},
+ {q:"모든 문자 검사 후 괄호식이 올바르려면 stack의 길이는 몇이어야 하는가?",a:["0","영","0개"],e:"정답: 0"}
+];
+
+function render(){
+ document.getElementById("oxArea").innerHTML=oxQuestions.map((x,i)=>`<div class="question" id="oxq${i}"><strong>${i+1}. ${x.q}</strong><div class="options"><label><input type="radio" name="ox${i}" value="O"> O</label><label><input type="radio" name="ox${i}" value="X"> X</label></div><div class="explanation" id="oxe${i}"></div></div>`).join("");
+ document.getElementById("multiArea").innerHTML=multiQuestions.map((x,i)=>`<div class="question" id="mq${i}"><strong>${i+1}. ${x.q}</strong><div class="options">${x.o.map((v,j)=>`<label><input type="checkbox" name="m${i}" value="${j}"> ${j+1}) ${v}</label>`).join("")}</div><div class="explanation" id="me${i}"></div></div>`).join("");
+ document.getElementById("shortArea").innerHTML=shortQuestions.map((x,i)=>`<div class="question" id="sq${i}"><strong>${i+1}. ${x.q}</strong><input type="text" name="s${i}" autocomplete="off"><div class="explanation" id="se${i}"></div></div>`).join("");
+ document.querySelectorAll("input").forEach(el=>el.addEventListener("input",updateProgress));
+}
+function norm(s){return (s||"").toLowerCase().replace(/\s+/g,"").trim();}
+function updateProgress(){
+ let answered=0,total=25;
+ for(let i=0;i<10;i++)if(document.querySelector(`input[name=ox${i}]:checked`))answered++;
+ for(let i=0;i<10;i++)if(document.querySelectorAll(`input[name=m${i}]:checked`).length)answered++;
+ for(let i=0;i<5;i++)if(document.querySelector(`input[name=s${i}]`).value.trim())answered++;
+ document.getElementById("progressBar").style.width=(answered/total*100)+"%";
+}
+function mark(qid,ok,eid,text){
+ const q=document.getElementById(qid); q.classList.remove("correct","wrong"); q.classList.add(ok?"correct":"wrong");
+ const e=document.getElementById(eid); e.style.display="block"; e.textContent=text;
+}
+function gradeQuiz(){
+ const sid=document.getElementById("studentId").value.trim();
+ const name=document.getElementById("studentName").value.trim();
+ if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+ let score=0,oxScore=0,mScore=0,sScore=0,lines=[];
+ oxQuestions.forEach((x,i)=>{
+   const el=document.querySelector(`input[name=ox${i}]:checked`), ans=el?el.value:"미응답", ok=ans===x.a;
+   if(ok){score+=2;oxScore+=2;} mark(`oxq${i}`,ok,`oxe${i}`,`정답 ${x.a} · ${x.e}`);
+   lines.push(`[OX ${i+1}] 응답: ${ans} / 정답: ${x.a} / ${ok?"정답":"오답"}`);
+ });
+ multiQuestions.forEach((x,i)=>{
+   const selected=[...document.querySelectorAll(`input[name=m${i}]:checked`)].map(e=>Number(e.value)).sort((a,b)=>a-b);
+   const ok=JSON.stringify(selected)===JSON.stringify(x.a), ans=selected.length?selected.map(v=>v+1).join(","):"미응답", right=x.a.map(v=>v+1).join(",");
+   if(ok){score+=6;mScore+=6;} mark(`mq${i}`,ok,`me${i}`,`정답: ${right}번`);
+   lines.push(`[진단 ${i+1}] 응답: ${ans} / 정답: ${right} / ${ok?"정답":"오답"}`);
+ });
+ shortQuestions.forEach((x,i)=>{
+   const val=document.querySelector(`input[name=s${i}]`).value.trim(), ok=x.a.some(a=>norm(a)===norm(val));
+   if(ok){score+=4;sScore+=4;} mark(`sq${i}`,ok,`se${i}`,x.e);
+   lines.push(`[단답 ${i+1}] 응답: ${val||"미응답"} / ${x.e} / ${ok?"정답":"오답"}`);
+ });
+ const now=new Date(), pad=n=>String(n).padStart(2,"0");
+ const displayTime=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+ const fileTime=`${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+ const safe=s=>s.replace(/[\\/:*?"<>|]/g,"_");
+ const result=document.getElementById("result"); result.style.display="block";
+ result.innerHTML=`<h3>채점 결과: ${score}점 / 100점</h3><p>OX ${oxScore}/20 · 진단평가 ${mScore}/60 · 단답형 ${sScore}/20</p><p>${sid} ${name} · ${displayTime}</p>`;
+ const text=["정보과학 5차시 평가 결과","========================",`학번: ${sid}`,`이름: ${name}`,`점수: ${score}/100`,`OX: ${oxScore}/20`,`진단평가: ${mScore}/60`,`단답형: ${sScore}/20`,`응시시각: ${displayTime}`,"",...lines].join("\r\n");
+ const blob=new Blob(["\ufeff"+text],{type:"text/plain;charset=utf-8"});
+ const url=URL.createObjectURL(blob), a=document.createElement("a");
+ a.href=url; a.download=`${safe(sid)}_${safe(name)}_${score}점_5차시_${fileTime}.txt`;
+ document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+ result.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function resetQuiz(){
+ if(!confirm("입력한 답과 채점 결과를 모두 지울까요?"))return;
+ document.getElementById("quizForm").reset();
+ document.querySelectorAll(".question").forEach(q=>q.classList.remove("correct","wrong"));
+ document.querySelectorAll(".explanation").forEach(e=>{e.style.display="none";e.textContent="";});
+ document.getElementById("result").style.display="none";
+ document.getElementById("progressBar").style.width="0";
+}
+render();
+</script>
+</body>
+</html>

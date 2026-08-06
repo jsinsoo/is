@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보과학 12차시 목표지향 개념기반 수업지도안</title>
+<style>
+:root{
+  --navy:#17324d; --blue:#2f6fa3; --sky:#eaf4fb; --mint:#edf9f4;
+  --gold:#f2b84b; --red:#c94d4d; --green:#3f9562; --ink:#26333f;
+  --line:#d7e3ec; --paper:#fff; --bg:#f3f7fa;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue));color:white;padding:36px 20px}
+.wrap{max-width:1180px;margin:auto}
+header h1{margin:0 0 8px;font-size:clamp(27px,4vw,43px)}
+header p{margin:0;opacity:.94}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(0,0,0,.06)}
+nav .wrap{display:flex;gap:7px;overflow-x:auto;padding:10px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:8px 12px;border-radius:18px}
+nav a:hover{background:var(--sky)}
+main{max-width:1180px;margin:24px auto;padding:0 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 23px rgba(30,70,100,.06)}
+h2{color:var(--navy);margin-top:0;border-left:7px solid var(--gold);padding-left:12px}
+h3{color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:14px}
+.card{background:#f9fcfe;border:1px solid var(--line);border-radius:14px;padding:17px}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 10px;border-radius:16px;margin:2px}
+.quote{background:linear-gradient(135deg,#fff8e7,#eef8ff);border-left:6px solid var(--gold);padding:20px;border-radius:12px;font-size:1.06rem}
+.timeline{display:grid;grid-template-columns:100px 1fr;gap:10px 16px}
+.timeline .time{font-weight:900;color:var(--blue)}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:white}
+code,pre{font-family:Consolas,"D2Coding",monospace}
+pre{background:#17212b;color:#edf5fa;padding:20px;border-radius:14px;overflow:auto;line-height:1.6}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:13px 0;background:#fcfeff}
+.question.correct{border-color:var(--green);background:#f0fbf4}
+.question.wrong{border-color:#d86b6b;background:#fff3f3}
+.options label{display:block;padding:7px 9px;margin:4px 0;border-radius:9px;cursor:pointer}
+.options label:hover{background:var(--sky)}
+input[type=text]{width:100%;padding:11px;border:1px solid #aebdca;border-radius:9px;font-size:1rem}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{border:0;border-radius:10px;padding:12px 18px;font-weight:900;cursor:pointer;font-size:1rem}
+.primary{background:var(--blue);color:white}.secondary{background:#e7eef4;color:var(--navy)}.danger{background:var(--red);color:white}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+#result{display:none;margin-top:18px;padding:20px;border-radius:14px;background:#eef8ff;border:2px solid var(--blue)}
+.explanation{display:none;margin-top:8px;padding:10px;background:white;border-radius:9px;border-left:4px solid var(--gold)}
+.small{font-size:.92rem;color:#5d6b77}
+.progress{height:12px;background:#e5edf3;border-radius:8px;overflow:hidden;margin:14px 0}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--gold))}
+.callout{background:var(--mint);border:1px solid #bfe5d2;border-radius:12px;padding:15px}
+@media(max-width:650px){.student{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}.timeline .time{margin-top:10px}}
+@media print{nav,.actions,#examGuide{display:none!important}body{background:#fff}section{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<h1>정보과학 12차시 목표지향 개념기반 수업지도안</h1>
+<p>발견한 문제를 분석하고, 해결을 위한 정보과학 프로젝트 수행 과정을 체계적으로 설계하기</p>
+</div>
+</header>
+
+<nav><div class="wrap">
+<a href="#standard">성취기준</a><a href="#concept">핵심 개념</a><a href="#lesson">학습 내용</a>
+<a href="#paper">소논문</a><a href="#code">학습 코드</a><a href="#assessment">평가</a>
+</div></nav>
+
+<main>
+<section id="standard">
+<h2>1. 성취기준과 학습 목표</h2>
+<div class="card">
+<h3>성취기준</h3>
+<p><strong>[12정과04-02]</strong> 발견한 문제를 분석하고, 문제를 해결하기 위한 프로젝트 수행 과정을 설계한다.</p>
+</div>
+<h3>목표지향 학습 목표</h3>
+<div class="grid">
+<div class="card"><strong>지식·이해</strong><br>문제 분석, 요구사항, 입력·처리·출력, 제한 조건, 프로젝트 단계의 의미를 설명할 수 있다.</div>
+<div class="card"><strong>과정·기능</strong><br>발견한 문제를 해결 가능한 형태로 구조화하고 목표·자료·알고리즘·일정·역할을 포함한 프로젝트 계획을 작성할 수 있다.</div>
+<div class="card"><strong>가치·태도</strong><br>실현 가능성, 협력, 개인정보 보호, 안전성과 공정성을 고려하여 책임 있게 프로젝트를 설계한다.</div>
+</div>
+<div class="callout"><strong>성공 기준:</strong> 문제의 원인과 사용자를 구체적으로 분석하고, 입력·처리·출력 및 제한 조건을 정의하며, 실행 가능한 단계와 평가 기준을 포함한 프로젝트 계획을 완성한다.</div>
+</section>
+
+<section id="concept">
+<h2>2. 학습할 개념</h2>
+<p>
+<span class="badge">문제 분석</span><span class="badge">요구사항</span><span class="badge">입력·처리·출력</span>
+<span class="badge">제한 조건</span><span class="badge">프로젝트 목표</span><span class="badge">알고리즘 설계</span>
+<span class="badge">일정 계획</span><span class="badge">역할 분담</span><span class="badge">평가 기준</span>
+</p>
+<table>
+<tr><th>개념</th><th>핵심 의미</th><th>판단 질문</th></tr>
+<tr><td>문제 분석</td><td>사용자, 원인, 현재 상태, 목표 상태, 영향을 구체적으로 밝히는 과정</td><td>누가 어떤 상황에서 왜 어려움을 겪는가?</td></tr>
+<tr><td>요구사항</td><td>프로그램이 반드시 제공해야 할 기능과 지켜야 할 조건</td><td>사용자가 기대하는 핵심 기능은 무엇인가?</td></tr>
+<tr><td>입력·처리·출력</td><td>받을 데이터, 적용할 계산 절차, 제공할 결과를 구조화한 것</td><td>무엇을 받아 어떤 규칙으로 처리해 무엇을 보여 줄 것인가?</td></tr>
+<tr><td>제한 조건</td><td>시간, 비용, 기술, 개인정보, 안전, 데이터 품질 등의 제약</td><td>설계가 지켜야 하는 현실적·윤리적 조건은 무엇인가?</td></tr>
+<tr><td>프로젝트 계획</td><td>목표, 단계, 일정, 역할, 산출물, 검증 방법을 미리 설계한 문서</td><td>누가 언제 무엇을 어떤 기준으로 완성할 것인가?</td></tr>
+</table>
+</section>
+
+<section>
+<h2>3. 수업 시작 멘트</h2>
+<div class="quote">
+“아리스토텔레스는 시작이 전체의 절반이라고 했고, 프랜시스 베이컨은 올바른 방법이 지식을 힘으로 만든다고 보았습니다.
+다빈치는 작품을 만들기 전에 수없이 관찰하고 설계했으며, 아폴로 계획의 과학자들은 달에 가기 전에 수천 개의 과정을 지상에서 계획했습니다.
+수학자는 풀이 전에 조건을 읽고, 정보과학자는 코딩 전에 문제를 구조화합니다.
+오늘은 ‘일단 만들어 보자’보다 ‘무엇을 왜 어떻게 만들 것인가’를 먼저 생각해 봅시다.
+설계 없는 코딩은 지도 없이 여행하는 것과 같습니다. 운이 좋으면 목적지에 가지만, 대개 편의점만 세 번 만납니다.”
+</div>
+</section>
+
+<section id="lesson">
+<h2>4. 학습 내용과 수업 흐름</h2>
+<div class="timeline">
+<div class="time">도입 5분</div><div>같은 문제를 다룬 두 프로젝트 계획서를 비교하여 구체적인 계획과 모호한 계획의 차이를 찾는다.</div>
+<div class="time">개념 10분</div><div>사용자·원인·현재 상태·목표 상태, 기능 요구사항, 제한 조건, 입력·처리·출력을 학습한다.</div>
+<div class="time">탐구 10분</div><div>11차시에서 선정한 실생활 문제를 문제 분석표와 요구사항 목록으로 구조화한다.</div>
+<div class="time">코딩 15분</div><div>문제 분석 결과를 바탕으로 프로젝트 단계별 소요 시간과 진행률을 계산하는 계획 도구를 작성한다.</div>
+<div class="time">설계 5분</div><div>목표, 자료 수집, 알고리즘, 구현, 테스트, 공유 단계와 역할 분담을 한 장 계획서로 정리한다.</div>
+<div class="time">평가 5분</div><div>OX·복수 정답·단답형 평가로 프로젝트 설계 요소와 코드 분석 능력을 확인한다.</div>
+</div>
+
+<h3>정보과학 프로젝트 수행 과정</h3>
+<table>
+<tr><th>단계</th><th>핵심 활동</th><th>대표 산출물</th></tr>
+<tr><td>1. 문제 분석</td><td>사용자, 원인, 현재 상태, 목표 상태, 영향 분석</td><td>문제 정의서</td></tr>
+<tr><td>2. 요구사항 정의</td><td>필수 기능, 선택 기능, 제한 조건, 윤리 기준 정리</td><td>요구사항 명세서</td></tr>
+<tr><td>3. 데이터·알고리즘 설계</td><td>입력 자료, 전처리, 자료구조, 처리 절차, 출력 결정</td><td>알고리즘·자료 설계서</td></tr>
+<tr><td>4. 일정·역할 계획</td><td>단계별 기간, 담당자, 협력 방식, 중간 점검 시점 결정</td><td>일정표·역할표</td></tr>
+<tr><td>5. 검증 계획</td><td>성공 기준, 테스트 자료, 오류 대응, 사용자 평가 방법 결정</td><td>평가·테스트 계획서</td></tr>
+</table>
+</section>
+
+<section id="paper">
+<h2>5. 학습 관련 소논문 주제 예시 5개</h2>
+<ol>
+<li><strong>교실 공기질 알림 프로젝트의 요구사항 분석과 수행 과정 설계</strong></li>
+<li><strong>학교 급식 혼잡 완화 시스템의 입력·처리·출력 구조 설계 연구</strong></li>
+<li><strong>도서관 좌석 안내 프로그램의 사용자 요구와 개인정보 보호 조건 분석</strong></li>
+<li><strong>통학로 안전 경로 추천 프로젝트의 데이터 수집 및 알고리즘 설계</strong></li>
+<li><strong>학교 에너지 절감 프로젝트의 일정·역할·평가 기준 설계 연구</strong></li>
+</ol>
+</section>
+
+<section id="code">
+<h2>6. 학습할 코드 1개</h2>
+<h3>프로젝트 단계별 일정과 진행률을 관리하는 계획 도구</h3>
+<pre><code>project = {
+    "title": "교실 공기질 알림 시스템",
+    "goal": "이산화탄소 농도를 분석해 환기 시점을 안내한다.",
+    "tasks": [
+        {"name": "문제 분석", "days": 2, "done": True},
+        {"name": "데이터 수집 계획", "days": 3, "done": True},
+        {"name": "알고리즘 설계", "days": 3, "done": False},
+        {"name": "프로그램 구현", "days": 5, "done": False},
+        {"name": "테스트와 개선", "days": 3, "done": False},
+        {"name": "결과 공유", "days": 2, "done": False}
+    ]
+}
+
+
+def summarize_plan(project):
+    total_days = sum(task["days"] for task in project["tasks"])
+
+    completed_days = sum(
+        task["days"]
+        for task in project["tasks"]
+        if task["done"]
+    )
+
+    progress = completed_days / total_days * 100
+
+    print("프로젝트:", project["title"])
+    print("목표:", project["goal"])
+    print("예상 기간:", total_days, "일")
+    print("진행률:", round(progress, 1), "%")
+
+    print("\n단계별 계획")
+    for index, task in enumerate(project["tasks"], start=1):
+        status = "완료" if task["done"] else "예정"
+        print(index, task["name"], task["days"], "일", status)
+
+
+summarize_plan(project)</code></pre>
+
+<h3>상세 설명</h3>
+<table>
+<tr><th>코드 요소</th><th>설명</th></tr>
+<tr><td><code>project</code></td><td>프로젝트 제목, 목표, 단계별 할 일을 하나의 딕셔너리로 구조화한다.</td></tr>
+<tr><td><code>tasks</code></td><td>프로젝트 수행 단계를 리스트로 저장하며 각 단계는 이름, 기간, 완료 여부를 가진다.</td></tr>
+<tr><td><code>total_days</code></td><td>모든 단계의 예상 소요 기간을 합하여 전체 프로젝트 기간을 계산한다.</td></tr>
+<tr><td><code>completed_days</code></td><td>완료된 단계의 기간만 합하여 실제 진행된 작업량을 나타낸다.</td></tr>
+<tr><td><code>if task["done"]</code></td><td>완료 여부가 참인 단계만 진행률 계산에 포함한다.</td></tr>
+<tr><td><code>progress</code></td><td>완료된 기간을 전체 기간으로 나누어 백분율 진행률을 구한다.</td></tr>
+<tr><td><code>enumerate(..., start=1)</code></td><td>각 프로젝트 단계에 1번부터 순서를 붙인다.</td></tr>
+<tr><td>조건 표현식</td><td>완료 여부에 따라 ‘완료’ 또는 ‘예정’을 출력해 계획 상태를 쉽게 확인한다.</td></tr>
+</table>
+<p class="small"><strong>확장 활동:</strong> 담당자, 시작일, 종료일, 필요한 데이터, 예상 위험, 검증 기준 항목을 딕셔너리에 추가하면 더 완성도 높은 프로젝트 관리 도구가 된다.</p>
+</section>
+
+<section>
+<h2>7. 수업 끝 멘트</h2>
+<div class="quote">
+“시는 첫 문장을 품고 끝 행을 향해 가며, 소설은 인물의 선택과 사건의 순서를 설계해 하나의 세계를 완성합니다.
+희곡은 막이 오르기 전부터 무대와 동선을 준비하고, 연극은 보이지 않는 수많은 연습이 있어야 관객 앞에서 빛납니다.
+음악도 즉흥처럼 들리는 순간 뒤에는 박자와 화성의 질서가 숨어 있습니다.
+여러분의 꿈도 계획표에 모두 담기지는 않지만, 한 걸음의 방향을 정하는 설계는 반드시 힘이 됩니다.
+단, 계획서에 ‘1단계 계획 세우기, 2단계 다시 계획 세우기’만 적으면 프로젝트가 아니라 계획의 무한 재귀입니다!”
+</div>
+</section>
+
+<section id="assessment">
+<h2>8. 형성·진단·코드 평가</h2>
+<div id="examGuide" class="card">
+<strong>배점:</strong> OX 10문항 × 2점 = 20점 · 진단평가 10문항 × 6점 = 60점 · 단답형 5문항 × 4점 = 20점
+<br><strong>진단평가:</strong> 각 문항에는 옳은 진술 3개와 틀린 진술 2개가 있습니다. 옳은 것 3개를 모두 선택해야 정답입니다.
+</div>
+
+<h3>학생 정보</h3>
+<div class="student">
+<label>학번<input type="text" id="studentId" placeholder="예: 1101" maxlength="12"></label>
+<label>이름<input type="text" id="studentName" placeholder="예: 홍길동" maxlength="20"></label>
+</div>
+<div class="progress"><span id="progressBar"></span></div>
+
+<form id="quizForm">
+<h3>Ⅰ. 형성평가 OX 퀴즈 10개</h3><div id="oxArea"></div>
+<h3>Ⅱ. 진단평가: 옳은 것 3개 고르기 10개</h3><div id="multiArea"></div>
+<h3>Ⅲ. 학습할 코드 평가 단답형 5개</h3><div id="shortArea"></div>
+</form>
+
+<div class="actions">
+<button class="primary" type="button" onclick="gradeQuiz()">채점하고 TXT 저장</button>
+<button class="secondary" type="button" onclick="window.print()">인쇄·PDF 저장</button>
+<button class="danger" type="button" onclick="resetQuiz()">다시 풀기</button>
+</div>
+<div id="result"></div>
+</section>
+</main>
+
+<script>
+const oxQuestions = [
+ {q:"프로젝트 설계는 코딩을 시작한 뒤 필요할 때만 생각하는 과정이다.",a:"X",e:"구현 전에 문제, 요구사항, 일정, 검증 방법을 구조화해야 한다."},
+ {q:"문제 분석에는 사용자와 현재 상태, 목표 상태를 포함할 수 있다.",a:"O",e:"누가 어떤 문제를 겪고 어떤 상태로 개선할지 분석한다."},
+ {q:"입력·처리·출력 구조는 프로그램의 데이터 흐름을 설명하는 데 도움이 된다.",a:"O",e:"무엇을 받아 어떻게 처리하고 무엇을 제공할지 명확해진다."},
+ {q:"제한 조건에는 개인정보 보호와 시간, 비용이 포함될 수 있다.",a:"O",e:"현실적·윤리적 제약을 설계에 반영해야 한다."},
+ {q:"요구사항은 사용자가 필요로 하는 기능과 관계가 없다.",a:"X",e:"요구사항은 사용자 요구와 문제 해결 목표에서 도출한다."},
+ {q:"프로젝트 일정에는 단계별 예상 기간과 점검 시점을 포함할 수 있다.",a:"O",e:"진행 상황과 지연 위험을 관리하는 데 필요하다."},
+ {q:"제시된 코드의 total_days는 모든 단계의 days를 합한 값이다.",a:"O",e:"sum과 생성식을 이용해 전체 예상 기간을 구한다."},
+ {q:"완료되지 않은 단계도 completed_days에 항상 포함된다.",a:"X",e:"done이 참인 단계만 포함된다."},
+ {q:"프로젝트의 성공 기준은 결과를 평가하고 테스트하는 근거가 된다.",a:"O",e:"목표 달성 여부를 객관적으로 확인할 수 있다."},
+ {q:"역할 분담은 협력 프로젝트에서 책임과 작업 범위를 명확히 하는 데 도움이 된다.",a:"O",e:"중복과 누락을 줄이고 협업을 촉진한다."}
+];
+
+const multiQuestions = [
+ {q:"문제 분석에 포함할 내용으로 옳은 것을 3개 고르시오.",o:["문제를 겪는 사용자","현재 상태와 원인","개선하려는 목표 상태","프로그램 색상만","개발자의 취미"],a:[0,1,2]},
+ {q:"요구사항 정의에 대한 옳은 설명을 3개 고르시오.",o:["필수 기능을 정한다.","제한 조건을 정리한다.","사용자 요구를 반영한다.","구현 후에만 작성한다.","기능과 무관한 문장만 적는다."],a:[0,1,2]},
+ {q:"입력·처리·출력 구조에 대한 옳은 설명을 3개 고르시오.",o:["입력은 받을 데이터이다.","처리는 적용할 계산 절차이다.","출력은 사용자에게 제공할 결과이다.","입력은 항상 키보드만 사용한다.","출력은 프로그램 내부에만 숨겨야 한다."],a:[0,1,2]},
+ {q:"프로젝트 제한 조건으로 옳은 것을 3개 고르시오.",o:["개인정보 보호","개발 기간","사용 가능한 장비와 비용","발표자의 키","교실 벽 색상"],a:[0,1,2]},
+ {q:"프로젝트 수행 과정에 포함할 단계로 옳은 것을 3개 고르시오.",o:["문제 분석","알고리즘 설계","테스트와 개선","근거 없는 결과 발표","데이터 무단 공개"],a:[0,1,2]},
+ {q:"제시된 project 딕셔너리에 대한 옳은 설명을 3개 고르시오.",o:["title은 프로젝트 제목이다.","goal은 프로젝트 목표이다.","tasks는 단계 목록이다.","모든 단계는 문자열 하나이다.","진행률이 처음부터 문자열로 저장된다."],a:[0,1,2]},
+ {q:"summarize_plan 함수에 대한 옳은 설명을 3개 고르시오.",o:["전체 예상 기간을 계산한다.","완료된 기간을 계산한다.","진행률을 백분율로 출력한다.","프로젝트 제목을 삭제한다.","모든 단계를 완료로 바꾼다."],a:[0,1,2]},
+ {q:"진행률 계산에 대한 옳은 설명을 3개 고르시오.",o:["완료된 기간을 사용한다.","전체 기간으로 나눈다.","100을 곱해 백분율로 나타낸다.","단계 이름의 글자 수로 계산한다.","완료 여부를 전혀 사용하지 않는다."],a:[0,1,2]},
+ {q:"좋은 프로젝트 설계의 특징으로 옳은 것을 3개 고르시오.",o:["단계와 일정이 구체적이다.","역할과 산출물이 명확하다.","검증 방법과 윤리 기준이 포함된다.","목표가 계속 바뀌어도 기록하지 않는다.","모든 위험을 무시한다."],a:[0,1,2]},
+ {q:"성취기준에 부합하는 활동을 3개 고르시오.",o:["발견한 문제를 해결 가능한 형태로 분석한다.","효율적인 알고리즘을 설계한다.","프로젝트 수행 과정을 체계적으로 계획한다.","문제 분석 없이 구현부터 한다.","평가 기준을 정하지 않는다."],a:[0,1,2]}
+];
+
+const shortQuestions = [
+ {q:"프로젝트의 모든 단계 목록을 저장하는 키 이름은 무엇인가?",a:["tasks"],e:"정답: tasks"},
+ {q:"각 단계의 예상 기간을 저장하는 키 이름은 무엇인가?",a:["days"],e:"정답: days"},
+ {q:"각 단계의 완료 여부를 저장하는 키 이름은 무엇인가?",a:["done"],e:"정답: done"},
+ {q:"프로젝트 계획을 요약하여 출력하는 함수 이름은 무엇인가?",a:["summarize_plan","summarize_plan()"],e:"정답: summarize_plan"},
+ {q:"진행률을 소수 첫째 자리까지 표시할 때 사용한 함수 이름은 무엇인가?",a:["round","round()"],e:"정답: round"}
+];
+
+function render(){
+ document.getElementById("oxArea").innerHTML=oxQuestions.map((x,i)=>`<div class="question" id="oxq${i}"><strong>${i+1}. ${x.q}</strong><div class="options"><label><input type="radio" name="ox${i}" value="O"> O</label><label><input type="radio" name="ox${i}" value="X"> X</label></div><div class="explanation" id="oxe${i}"></div></div>`).join("");
+ document.getElementById("multiArea").innerHTML=multiQuestions.map((x,i)=>`<div class="question" id="mq${i}"><strong>${i+1}. ${x.q}</strong><div class="options">${x.o.map((v,j)=>`<label><input type="checkbox" name="m${i}" value="${j}"> ${j+1}) ${v}</label>`).join("")}</div><div class="explanation" id="me${i}"></div></div>`).join("");
+ document.getElementById("shortArea").innerHTML=shortQuestions.map((x,i)=>`<div class="question" id="sq${i}"><strong>${i+1}. ${x.q}</strong><input type="text" name="s${i}" autocomplete="off"><div class="explanation" id="se${i}"></div></div>`).join("");
+ document.querySelectorAll("input").forEach(el=>el.addEventListener("input",updateProgress));
+}
+function norm(s){return (s||"").toLowerCase().replace(/\s+/g,"").trim();}
+function updateProgress(){
+ let answered=0,total=25;
+ for(let i=0;i<10;i++)if(document.querySelector(`input[name=ox${i}]:checked`))answered++;
+ for(let i=0;i<10;i++)if(document.querySelectorAll(`input[name=m${i}]:checked`).length)answered++;
+ for(let i=0;i<5;i++)if(document.querySelector(`input[name=s${i}]`).value.trim())answered++;
+ document.getElementById("progressBar").style.width=(answered/total*100)+"%";
+}
+function mark(qid,ok,eid,text){
+ const q=document.getElementById(qid);q.classList.remove("correct","wrong");q.classList.add(ok?"correct":"wrong");
+ const e=document.getElementById(eid);e.style.display="block";e.textContent=text;
+}
+function gradeQuiz(){
+ const sid=document.getElementById("studentId").value.trim();
+ const name=document.getElementById("studentName").value.trim();
+ if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+ let score=0,oxScore=0,mScore=0,sScore=0,lines=[];
+ oxQuestions.forEach((x,i)=>{
+   const el=document.querySelector(`input[name=ox${i}]:checked`),ans=el?el.value:"미응답",ok=ans===x.a;
+   if(ok){score+=2;oxScore+=2;}mark(`oxq${i}`,ok,`oxe${i}`,`정답 ${x.a} · ${x.e}`);
+   lines.push(`[OX ${i+1}] 응답: ${ans} / 정답: ${x.a} / ${ok?"정답":"오답"}`);
+ });
+ multiQuestions.forEach((x,i)=>{
+   const selected=[...document.querySelectorAll(`input[name=m${i}]:checked`)].map(e=>Number(e.value)).sort((a,b)=>a-b);
+   const ok=JSON.stringify(selected)===JSON.stringify(x.a),ans=selected.length?selected.map(v=>v+1).join(","):"미응답",right=x.a.map(v=>v+1).join(",");
+   if(ok){score+=6;mScore+=6;}mark(`mq${i}`,ok,`me${i}`,`정답: ${right}번`);
+   lines.push(`[진단 ${i+1}] 응답: ${ans} / 정답: ${right} / ${ok?"정답":"오답"}`);
+ });
+ shortQuestions.forEach((x,i)=>{
+   const val=document.querySelector(`input[name=s${i}]`).value.trim(),ok=x.a.some(a=>norm(a)===norm(val));
+   if(ok){score+=4;sScore+=4;}mark(`sq${i}`,ok,`se${i}`,x.e);
+   lines.push(`[단답 ${i+1}] 응답: ${val||"미응답"} / ${x.e} / ${ok?"정답":"오답"}`);
+ });
+ const now=new Date(),pad=n=>String(n).padStart(2,"0");
+ const displayTime=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+ const fileTime=`${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+ const safe=s=>s.replace(/[\\/:*?"<>|]/g,"_");
+ const result=document.getElementById("result");result.style.display="block";
+ result.innerHTML=`<h3>채점 결과: ${score}점 / 100점</h3><p>OX ${oxScore}/20 · 진단평가 ${mScore}/60 · 단답형 ${sScore}/20</p><p>${sid} ${name} · ${displayTime}</p>`;
+ const text=["정보과학 12차시 평가 결과","========================",`학번: ${sid}`,`이름: ${name}`,`점수: ${score}/100`,`OX: ${oxScore}/20`,`진단평가: ${mScore}/60`,`단답형: ${sScore}/20`,`응시시각: ${displayTime}`,"",...lines].join("\r\n");
+ const blob=new Blob(["\ufeff"+text],{type:"text/plain;charset=utf-8"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download=`${safe(sid)}_${safe(name)}_${score}점_12차시_${fileTime}.txt`;
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ result.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function resetQuiz(){
+ if(!confirm("입력한 답과 채점 결과를 모두 지울까요?"))return;
+ document.getElementById("quizForm").reset();
+ document.querySelectorAll(".question").forEach(q=>q.classList.remove("correct","wrong"));
+ document.querySelectorAll(".explanation").forEach(e=>{e.style.display="none";e.textContent="";});
+ document.getElementById("result").style.display="none";
+ document.getElementById("progressBar").style.width="0";
+}
+render();
+</script>
+</body>
+</html>

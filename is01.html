@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보과학 1차시 목표지향 개념기반 수업지도안</title>
+<style>
+:root{
+  --navy:#102a43; --blue:#2563eb; --sky:#eaf4ff; --mint:#eafaf4;
+  --gold:#f59e0b; --rose:#e11d48; --ink:#172033; --muted:#65758b;
+  --line:#d8e1ec; --paper:#fff; --bg:#f3f7fb; --green:#15803d;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;color:var(--ink);background:var(--bg);line-height:1.68}
+.hero{background:linear-gradient(135deg,#0f2742 0%,#173d68 55%,#2563eb 100%);color:#fff;padding:56px 24px 44px;position:relative;overflow:hidden}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.08)}
+.hero:before{width:300px;height:300px;right:-90px;top:-120px}.hero:after{width:180px;height:180px;left:-50px;bottom:-100px}
+.hero-inner{max-width:1200px;margin:auto;position:relative;z-index:1}
+.kicker{display:inline-block;padding:7px 13px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(255,255,255,.1);font-weight:800;font-size:14px}
+h1{font-size:clamp(30px,5vw,50px);line-height:1.2;margin:18px 0 10px;letter-spacing:-1.5px}
+.subtitle{max-width:900px;color:#dbeafe;font-size:18px;margin:0}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.meta span{padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);font-size:14px;font-weight:700}
+.sticky{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.toolbar{max-width:1200px;margin:auto;padding:9px 18px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+button,.btn{border:0;border-radius:10px;padding:9px 13px;font-weight:800;cursor:pointer;background:#e8eef7;color:#26384f;text-decoration:none;font-size:14px}
+button:hover,.btn:hover{filter:brightness(.97);transform:translateY(-1px)}
+.primary{background:var(--blue);color:#fff}.dark{background:var(--navy);color:#fff}.green{background:var(--green);color:#fff}.rose{background:var(--rose);color:#fff}
+.spacer{flex:1}.progress-text{font-size:13px;color:var(--muted);font-weight:800}
+main{max-width:1200px;margin:26px auto 70px;padding:0 20px}
+.section{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;margin-top:20px;box-shadow:0 8px 28px rgba(31,55,82,.055)}
+.section h2{margin:0 0 15px;color:var(--navy);font-size:26px;letter-spacing:-.6px}.section h3{color:#173d68;margin:22px 0 10px}.section h4{margin:16px 0 7px;color:#1e4f83}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{border:1px solid var(--line);border-radius:15px;padding:17px;background:#fbfdff}.card strong{color:#174ea6}.card.mint{background:#f2fcf7;border-color:#ccefdc}.card.gold{background:#fff9e9;border-color:#f6df9c}.card.rose{background:#fff3f5;border-color:#f3c5cf;color:var(--ink)}
+.goal{display:flex;gap:12px;align-items:flex-start}.goal .num{width:34px;height:34px;border-radius:50%;background:#eaf2ff;color:#174ea6;display:flex;align-items:center;justify-content:center;font-weight:900;flex:0 0 auto}
+.quote{font-size:19px;line-height:1.8;padding:22px;border-radius:16px;background:linear-gradient(135deg,#fff9e9,#f8fbff);border:1px solid #f3ddb0;position:relative}
+.quote:before{content:"“";font-size:58px;position:absolute;left:14px;top:-7px;color:#f59e0b55}.quote p{margin:0 0 0 34px}.quote small{display:block;margin:10px 0 0 34px;color:var(--muted)}
+.concept-map{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.concept{border-radius:16px;padding:18px;text-align:center;background:#eef6ff;border:1px solid #cfe2ff}.concept b{display:block;font-size:18px;color:#174ea6;margin-bottom:5px}.concept:nth-child(2){background:#eefbf5;border-color:#ccefdc}.concept:nth-child(2) b{color:#087a55}.concept:nth-child(3){background:#fff8e7;border-color:#f4dda0}.concept:nth-child(3) b{color:#945c00}.concept:nth-child(4){background:#fff0f3;border-color:#f3c8d2}.concept:nth-child(4) b{color:#a5163b}
+.timeline{display:grid;gap:11px}.step{display:grid;grid-template-columns:100px 1fr;gap:14px;padding:14px;border:1px solid var(--line);border-radius:14px}.step .time{font-weight:900;color:#174ea6}.step b{color:#173d68}
+.paper-list{counter-reset:item;display:grid;gap:10px}.paper{counter-increment:item;border:1px solid var(--line);border-radius:13px;padding:14px 16px;background:#fcfdff}.paper:before{content:counter(item);display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;border-radius:50%;background:#173d68;color:#fff;font-weight:900;margin-right:9px}
+.code-wrap{border-radius:16px;overflow:hidden;border:1px solid #263b56}.code-head{background:#172033;color:#dbeafe;padding:11px 15px;font-weight:800;display:flex;justify-content:space-between}.code-wrap pre{margin:0;padding:20px;overflow:auto;background:#0f172a;color:#e5edf8;font:14px/1.7 Consolas,"Courier New",monospace}.kw{color:#93c5fd}.fn{color:#fcd34d}.st{color:#86efac}.cm{color:#94a3b8}
+.explain-table{width:100%;border-collapse:collapse;margin-top:14px}.explain-table th,.explain-table td{border:1px solid var(--line);padding:10px;vertical-align:top}.explain-table th{background:#173d68;color:#fff}.explain-table tr:nth-child(even) td{background:#f8fbff}
+.student-box{display:grid;grid-template-columns:1fr 1fr;gap:12px}.student-box label{font-weight:800;color:#173d68}.student-box input{width:100%;margin-top:6px;border:1px solid var(--line);border-radius:10px;padding:11px;background:#fff;font-size:15px}
+.quiz-card{border:1px solid var(--line);border-radius:15px;padding:17px;margin-top:13px;background:#fff}.quiz-card h4{margin:0 0 11px;color:#172033}.options{display:grid;gap:8px}.option{display:flex;gap:9px;align-items:flex-start;padding:10px 12px;border:1px solid #dfe7f0;border-radius:10px;background:#fbfdff;cursor:pointer}.option:hover{background:#eef6ff}.option input{margin-top:4px}.short-input{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px;font-size:15px}
+.feedback{display:none;margin-top:9px;padding:10px 12px;border-radius:9px;font-size:14px}.feedback.ok{display:block;background:#eafaf4;color:#087a55;border:1px solid #bde8d2}.feedback.no{display:block;background:#fff0f3;color:#a5163b;border:1px solid #f0c6d0}
+.score-panel{display:none;margin-top:18px;padding:22px;border-radius:16px;background:linear-gradient(135deg,#102a43,#2563eb);color:white}.score-panel .big{font-size:45px;font-weight:900;line-height:1}.score-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:15px}.score-grid div{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:12px;text-align:center}.score-grid b{display:block;font-size:20px}
+.notice{border-left:5px solid var(--gold);background:#fff9e9;padding:14px 16px;border-radius:10px}.ending{font-size:18px;padding:20px;border-radius:16px;background:linear-gradient(135deg,#eef6ff,#fff4e7);border:1px solid #d7e5f7}
+.footer{text-align:center;color:var(--muted);font-size:13px;padding:10px 20px 50px}
+@media(max-width:850px){.grid2,.grid3,.concept-map,.score-grid,.student-box{grid-template-columns:1fr}.step{grid-template-columns:1fr}.spacer{display:none}}
+@media print{body{background:#fff;font-size:10pt}.hero{background:#fff!important;color:#111;padding:20px;border-bottom:2px solid #111}.subtitle{color:#333}.sticky,.quiz-actions,.score-panel{display:none!important}main{max-width:none;margin:0;padding:10px}.section{box-shadow:none;break-inside:avoid;padding:14px}.concept-map{grid-template-columns:repeat(4,1fr)}h1{font-size:24pt}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <span class="kicker">2022 개정 교육과정 · 고등학교 정보과학</span>
+    <h1>1차시 목표지향 개념기반 수업지도안</h1>
+    <p class="subtitle">함수의 정의와 호출 원리를 이해하고, 매개변수를 활용하여 반복되는 문제 해결 절차를 의미 있는 기능 단위로 구조화합니다.</p>
+    <div class="meta"><span>영역: 프로그래밍</span><span>차시: 1/34</span><span>주제: 함수 정의·호출·매개변수</span><span>평가: 형성·진단·코드 단답형</span></div>
+  </div>
+</header>
+<nav class="sticky">
+  <div class="toolbar">
+    <a class="btn" href="#plan">수업 설계</a><a class="btn" href="#code">학습 코드</a><a class="btn" href="#assessment">평가</a>
+    <button onclick="window.print()" class="dark">인쇄·PDF</button>
+    <div class="spacer"></div><span class="progress-text" id="progressText">평가 응답 0 / 25</span>
+  </div>
+</nav>
+<main>
+<section class="section" id="plan">
+  <h2>1. 수업의 방향</h2>
+  <div class="grid2">
+    <div class="card"><strong>성취기준</strong><p><b>[12정과01-01]</b> 함수 정의와 호출의 원리를 이해하고, 매개변수를 활용한 함수 프로그램을 작성한다.</p></div>
+    <div class="card mint"><strong>도달 목표</strong><p>함수를 단순한 문법이 아니라 <b>반복되는 절차를 이름 붙여 재사용하는 추상화 도구</b>로 이해하고, 입력값에 따라 다른 결과를 만드는 함수를 작성한다.</p></div>
+  </div>
+  <h3>학습 목표</h3>
+  <div class="grid3">
+    <div class="goal card"><span class="num">1</span><div><b>개념 이해</b><br>함수 정의와 호출의 관계를 자신의 말로 설명한다.</div></div>
+    <div class="goal card"><span class="num">2</span><div><b>기능 적용</b><br>매개변수와 반환값을 사용하여 함수를 작성한다.</div></div>
+    <div class="goal card"><span class="num">3</span><div><b>가치 판단</b><br>함수화가 코드의 재사용성·가독성·유지보수성에 미치는 효과를 판단한다.</div></div>
+  </div>
+  <h3>학습할 핵심 개념</h3>
+  <div class="concept-map">
+    <div class="concept"><b>추상화</b>복잡한 절차에서 핵심 기능만 분리하여 이름 붙이기</div>
+    <div class="concept"><b>함수 정의</b>실행할 명령과 입력·출력 구조를 미리 설계하기</div>
+    <div class="concept"><b>함수 호출</b>필요한 순간에 함수 이름과 인수를 사용해 실행하기</div>
+    <div class="concept"><b>매개변수·반환값</b>함수 안팎으로 데이터를 전달하여 재사용성 높이기</div>
+  </div>
+  <h3>수업 시작 멘트</h3>
+  <div class="quote"><p>소크라테스는 질문으로 생각의 문을 열었고, 아리스토텔레스는 복잡한 세계를 개념으로 정리했으며, 퀴리는 보이지 않는 현상을 끈기 있게 탐구했고, 가우스는 복잡한 계산 속에서 간결한 질서를 찾았습니다. 오늘 우리는 이 네 가지 태도를 코드에 담아 봅니다. <b>질문하고, 구조화하고, 실험하고, 더 간결하게 만드는 것</b>—그 출발점이 바로 함수입니다.</p><small>※ 여러 학문적 태도를 수업 맥락에 맞게 재구성한 창작 수업 멘트</small></div>
+
+  <h3>학습 내용과 수업 흐름</h3>
+  <div class="timeline">
+    <div class="step"><div class="time">도입 5분</div><div><b>문제 상황 제시</b><br>같은 계산을 여러 번 복사해 작성한 코드와 함수로 만든 코드를 비교하고, “어느 코드가 수정하기 쉬운가?”를 질문한다.</div></div>
+    <div class="step"><div class="time">개념 10분</div><div><b>정의·호출·입력·출력의 관계</b><br><code>def</code>, 함수 이름, 매개변수, 인수, <code>return</code>을 데이터 흐름 관점에서 연결한다.</div></div>
+    <div class="step"><div class="time">탐구 15분</div><div><b>코드 추적과 실행 예측</b><br>함수 호출 순서와 지역 변수의 값을 표로 추적한 뒤 실행 결과를 예측한다.</div></div>
+    <div class="step"><div class="time">실습 15분</div><div><b>학생 성적 분석 함수 구현</b><br>점수 목록을 받아 평균과 등급을 반환하는 함수를 작성하고 입력값을 바꾸어 재사용한다.</div></div>
+    <div class="step"><div class="time">정리 5분</div><div><b>개념 전이</b><br>“함수는 코드를 줄이는 도구인가, 생각을 구조화하는 도구인가?”를 한 문장으로 정리한다.</div></div>
+  </div>
+
+  <h3>학습과 관련한 정보과학 소논문 주제 예시 5개</h3>
+  <div class="paper-list">
+    <div class="paper"><b>함수 분할 수준이 프로그램 가독성과 오류 수정 시간에 미치는 영향</b><br>같은 문제를 하나의 긴 코드와 여러 함수로 분리한 코드로 구현하여 비교한다.</div>
+    <div class="paper"><b>매개변수 설계 방식에 따른 코드 재사용성 비교 연구</b><br>고정값 중심 함수와 범용 매개변수 함수를 다양한 입력에서 실험한다.</div>
+    <div class="paper"><b>반환값을 사용하는 함수와 출력만 수행하는 함수의 활용 차이 분석</b><br>후속 계산, 테스트 가능성, 데이터 흐름 측면에서 비교한다.</div>
+    <div class="paper"><b>초보 학습자의 함수 호출 오류 유형과 개선 전략 탐구</b><br>인수 개수, 자료형, 반환값 미저장 등의 오류 사례를 분류한다.</div>
+    <div class="paper"><b>함수 이름의 의미성이 프로그램 이해 속도에 미치는 영향</b><br>의미 있는 이름과 모호한 이름을 사용한 코드의 해석 정확도와 시간을 비교한다.</div>
+  </div>
+</section>
+
+<section class="section" id="code">
+  <h2>2. 학습할 코드</h2>
+  <p class="notice">점수 목록과 기준 점수를 입력받아 평균, 통과 여부, 요약 문장을 반환하는 예제입니다. 함수 정의·호출·매개변수·반환값을 한 번에 학습하도록 설계했습니다.</p>
+  <div class="code-wrap">
+    <div class="code-head"><span>student_score_analyzer.py</span><button onclick="copyCode()">코드 복사</button></div>
+<pre id="codeText"><span class="kw">def</span> <span class="fn">analyze_scores</span>(scores, pass_score=60):
+    <span class="st">"""점수 목록을 분석하여 평균, 통과 여부, 요약 문장을 반환한다."""</span>
+    <span class="kw">if</span> <span class="kw">not</span> scores:
+        <span class="kw">return</span> 0, <span class="kw">False</span>, <span class="st">"점수 데이터가 없습니다."</span>
+
+    average = sum(scores) / len(scores)
+    passed = average &gt;= pass_score
+
+    <span class="kw">if</span> average &gt;= 90:
+        level = <span class="st">"매우 우수"</span>
+    <span class="kw">elif</span> average &gt;= 80:
+        level = <span class="st">"우수"</span>
+    <span class="kw">elif</span> average &gt;= 70:
+        level = <span class="st">"보통"</span>
+    <span class="kw">else</span>:
+        level = <span class="st">"보완 필요"</span>
+
+    message = <span class="st">f"평균 {average:.1f}점, 성취 수준: {level}"</span>
+    <span class="kw">return</span> average, passed, message
+
+
+student_scores = [88, 92, 76, 95]
+avg, is_passed, summary = analyze_scores(student_scores, 80)
+
+print(<span class="st">f"평균: {avg:.1f}"</span>)
+print(<span class="st">f"기준 통과: {is_passed}"</span>)
+print(summary)</pre>
+  </div>
+  <table class="explain-table">
+    <thead><tr><th>코드 요소</th><th>상세 설명</th><th>개념적 의미</th></tr></thead>
+    <tbody>
+      <tr><td><code>def analyze_scores(...)</code></td><td>함수의 이름과 입력 구조를 정의한다. <code>scores</code>는 점수 목록, <code>pass_score</code>는 기준 점수다.</td><td>반복되는 분석 절차를 하나의 기능 단위로 추상화한다.</td></tr>
+      <tr><td><code>pass_score=60</code></td><td>호출할 때 기준 점수를 생략하면 60을 사용하는 기본 매개변수다.</td><td>기본값을 제공하면서도 필요할 때 동작을 변경할 수 있다.</td></tr>
+      <tr><td><code>if not scores</code></td><td>빈 목록이 들어왔을 때 0으로 나누는 오류를 막는다.</td><td>입력의 경계 조건을 고려하는 안전한 프로그램 설계다.</td></tr>
+      <tr><td><code>return average, passed, message</code></td><td>평균, 통과 여부, 요약 문장을 호출한 위치로 돌려준다.</td><td>함수의 결과를 다른 계산과 판단에 다시 사용할 수 있게 한다.</td></tr>
+      <tr><td><code>avg, is_passed, summary = ...</code></td><td>함수가 반환한 세 값을 각각의 변수에 나누어 저장한다.</td><td>함수 호출 결과가 프로그램의 다음 단계로 이어지는 데이터 흐름을 보여 준다.</td></tr>
+    </tbody>
+  </table>
+  <div class="card gold" style="margin-top:14px"><strong>예상 실행 결과</strong><pre style="white-space:pre-wrap;margin:8px 0 0">평균: 87.8
+기준 통과: True
+평균 87.8점, 성취 수준: 우수</pre></div>
+
+  <h3>수업 끝 멘트</h3>
+  <div class="ending">시는 짧은 문장으로 마음을 움직이고, 소설은 인물에게 삶을 맡기며, 희곡과 연극은 대사 하나를 무대 위 행동으로 바꾸고, 음악은 반복되는 주제를 변주합니다. 함수도 같습니다. 짧은 이름 하나에 긴 행동을 담고, 필요할 때 다시 불러 새로운 장면을 만듭니다. 오늘 오류가 났다면 실패가 아니라 <b>코드가 앙코르를 외친 것</b>입니다. 내일의 여러분은 오늘 만든 함수를 호출해 한 단계 더 멀리 갈 것입니다.</div>
+</section>
+
+<section class="section" id="assessment">
+  <h2>3. 형성·진단·코드 평가</h2>
+  <div class="student-box">
+    <label>학번<input id="studentId" type="text" maxlength="20" placeholder="예: 1101" oninput="updateProgress()"></label>
+    <label>이름<input id="studentName" type="text" maxlength="20" placeholder="예: 홍길동" oninput="updateProgress()"></label>
+  </div>
+  <p class="notice">총 25문항, 100점입니다. OX 20점, 진단평가 50점, 단답형 30점으로 채점됩니다. 진단평가는 각 문항에서 <b>옳은 선택지 3개를 모두 고르고 틀린 선택지를 고르지 않아야</b> 정답입니다.</p>
+
+  <h3>가. 형성평가 OX 퀴즈 10개 <small>(문항당 2점)</small></h3>
+  <div id="oxArea"></div>
+
+  <h3>나. 진단평가 5지 선택형 10개 <small>(옳은 것 3개 선택, 문항당 5점)</small></h3>
+  <div id="multiArea"></div>
+
+  <h3>다. 학습 코드 평가 단답형 5개 <small>(문항당 6점)</small></h3>
+  <div id="shortArea"></div>
+
+  <div class="quiz-actions" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
+    <button class="primary" onclick="gradeQuiz()">제출 및 자동 채점</button>
+    <button class="green" onclick="downloadResult()">TXT 결과 저장</button>
+    <button onclick="resetQuiz()">응답 초기화</button>
+  </div>
+  <div class="score-panel" id="scorePanel">
+    <div>최종 점수</div><div class="big"><span id="totalScore">0</span>점</div>
+    <div class="score-grid"><div>OX<b id="oxScore">0/20</b></div><div>진단평가<b id="multiScore">0/50</b></div><div>단답형<b id="shortScore">0/30</b></div><div>정답 문항<b id="correctCount">0/25</b></div></div>
+    <p id="levelMessage" style="margin-bottom:0"></p>
+  </div>
+</section>
+</main>
+<div class="footer">정보과학 1차시 · 함수 정의와 호출 · 목표지향 개념기반 수업지도안</div>
+<script>
+const oxQuestions = [
+  {q:'함수는 반복되는 명령을 하나의 기능 단위로 묶어 재사용할 수 있게 한다.',a:'O',e:'함수는 코드 재사용과 추상화를 돕는다.'},
+  {q:'파이썬에서 함수를 정의할 때 사용하는 키워드는 call이다.',a:'X',e:'함수 정의에는 def를 사용한다.'},
+  {q:'매개변수는 함수를 정의할 때 입력값을 받을 자리를 나타낸다.',a:'O',e:'호출 시 전달한 인수가 매개변수에 대응된다.'},
+  {q:'return이 실행되면 함수는 값을 돌려주고 해당 함수의 실행을 마친다.',a:'O',e:'return은 결과 반환과 함수 종료의 역할을 한다.'},
+  {q:'함수를 한 번 정의하면 매개변수 값을 바꾸어 여러 번 호출할 수 없다.',a:'X',e:'서로 다른 인수로 반복 호출할 수 있다.'},
+  {q:'기본 매개변수는 호출할 때 해당 인수를 생략한 경우 사용할 값을 미리 정한다.',a:'O',e:'예: pass_score=60'},
+  {q:'print와 return은 언제나 완전히 같은 역할을 한다.',a:'X',e:'print는 화면 출력, return은 호출한 곳으로 값 전달이다.'},
+  {q:'빈 목록을 검사하는 코드는 경계 조건에서 발생할 수 있는 오류를 줄인다.',a:'O',e:'빈 데이터의 평균 계산 등에서 오류를 예방한다.'},
+  {q:'함수 이름은 기능을 짐작할 수 있도록 의미 있게 작성하는 것이 좋다.',a:'O',e:'가독성과 유지보수성이 높아진다.'},
+  {q:'지역 변수는 함수 밖의 모든 위치에서 항상 직접 사용할 수 있다.',a:'X',e:'지역 변수는 일반적으로 함수 내부 범위에서 사용된다.'}
+];
+
+const multiQuestions = [
+ {q:'함수의 장점으로 옳은 것을 3개 고르시오.',opts:['반복 코드 감소','기능 단위 구조화','재사용성 향상','모든 오류 자동 제거','프로그램 실행 속도 항상 증가'],ans:[0,1,2]},
+ {q:'함수 정의에 포함될 수 있는 요소로 옳은 것을 3개 고르시오.',opts:['함수 이름','매개변수','실행할 명령 블록','브라우저 주소','파일 확장자만'],ans:[0,1,2]},
+ {q:'매개변수와 인수에 대한 설명으로 옳은 것을 3개 고르시오.',opts:['매개변수는 정의 시 입력 자리다','인수는 호출 시 전달하는 실제 값이다','하나의 함수는 서로 다른 인수로 호출할 수 있다','매개변수와 인수는 반드시 문자열이어야 한다','매개변수는 함수 밖에서만 사용한다'],ans:[0,1,2]},
+ {q:'return에 대한 설명으로 옳은 것을 3개 고르시오.',opts:['호출한 곳으로 값을 돌려줄 수 있다','실행되면 해당 함수의 실행이 끝난다','여러 값을 묶어 반환할 수 있다','반드시 화면에 값을 출력한다','함수 밖에서만 쓸 수 있다'],ans:[0,1,2]},
+ {q:'예제 코드의 analyze_scores 함수에 대한 설명으로 옳은 것을 3개 고르시오.',opts:['scores와 pass_score를 입력으로 받는다','평균을 계산한다','평균과 통과 여부와 문장을 반환한다','점수 목록을 무조건 정렬한다','학생 이름을 자동 생성한다'],ans:[0,1,2]},
+ {q:'안전한 함수 설계 방법으로 옳은 것을 3개 고르시오.',opts:['빈 입력을 검사한다','자료형과 값의 범위를 고려한다','의미 있는 함수 이름을 사용한다','오류 가능성을 무시한다','모든 기능을 한 함수에 끝없이 넣는다'],ans:[0,1,2]},
+ {q:'함수 호출 analyze_scores([70,80], 75)에 대한 설명으로 옳은 것을 3개 고르시오.',opts:['첫 번째 인수는 점수 목록이다','두 번째 인수는 기준 점수다','함수 정의 내부의 명령이 실행된다','함수 이름이 새로 정의된다','기본값 60만 사용할 수 있다'],ans:[0,1,2]},
+ {q:'좋은 함수 분할의 특징으로 옳은 것을 3개 고르시오.',opts:['하나의 분명한 책임을 갖는다','입력과 출력이 이해하기 쉽다','이름만 보고 역할을 짐작할 수 있다','서로 무관한 기능을 모두 합친다','중복을 늘린다'],ans:[0,1,2]},
+ {q:'예제 코드에서 평균이 85점일 때 옳은 것을 3개 고르시오.',opts:['level은 우수이다','기준 점수가 80이면 passed는 True이다','message에 평균과 성취 수준이 포함된다','level은 매우 우수이다','average는 정수로만 저장된다'],ans:[0,1,2]},
+ {q:'함수 학습과 추상화의 관계로 옳은 것을 3개 고르시오.',opts:['세부 절차를 기능 이름으로 표현한다','복잡한 문제를 작은 기능으로 나눈다','필요한 입력과 결과에 집중한다','모든 내부 과정을 항상 외부에 노출한다','코드의 의미를 없앤다'],ans:[0,1,2]}
+];
+
+const shortQuestions = [
+ {q:'파이썬에서 함수를 정의할 때 사용하는 키워드를 쓰시오.',ans:['def']},
+ {q:'함수 정의에서 입력값을 받을 자리를 무엇이라고 하는가?',ans:['매개변수','parameter','파라미터']},
+ {q:'함수를 호출한 곳으로 결과를 돌려주는 키워드를 쓰시오.',ans:['return']},
+ {q:'예제 코드에서 점수 목록을 저장한 변수 이름을 쓰시오.',ans:['student_scores']},
+ {q:'예제 코드에서 평균이 87.8점일 때 저장되는 성취 수준 문자열을 쓰시오.',ans:['우수']}
+];
+
+let lastResult=null;
+function render(){
+ document.getElementById('oxArea').innerHTML=oxQuestions.map((x,i)=>`<div class="quiz-card"><h4>${i+1}. ${x.q}</h4><div class="options"><label class="option"><input type="radio" name="ox${i}" value="O"> O</label><label class="option"><input type="radio" name="ox${i}" value="X"> X</label></div><div class="feedback" id="fb-ox-${i}"></div></div>`).join('');
+ document.getElementById('multiArea').innerHTML=multiQuestions.map((x,i)=>`<div class="quiz-card"><h4>${i+1}. ${x.q}</h4><div class="options">${x.opts.map((o,j)=>`<label class="option"><input type="checkbox" name="m${i}" value="${j}"> ${j+1}. ${o}</label>`).join('')}</div><div class="feedback" id="fb-m-${i}"></div></div>`).join('');
+ document.getElementById('shortArea').innerHTML=shortQuestions.map((x,i)=>`<div class="quiz-card"><h4>${i+1}. ${x.q}</h4><input class="short-input" id="s${i}" type="text" placeholder="정답 입력"><div class="feedback" id="fb-s-${i}"></div></div>`).join('');
+ document.querySelectorAll('input').forEach(el=>el.addEventListener('change',updateProgress));
+}
+function norm(v){return (v||'').trim().toLowerCase().replace(/\s+/g,'');}
+function setFeedback(id,ok,text){const el=document.getElementById(id);el.className='feedback '+(ok?'ok':'no');el.textContent=(ok?'정답: ':'오답: ')+text;}
+function gradeQuiz(){
+ const sid=document.getElementById('studentId').value.trim(), name=document.getElementById('studentName').value.trim();
+ if(!sid||!name){alert('학번과 이름을 먼저 입력하세요.');return;}
+ let oxC=0,mC=0,sC=0; const details=[];
+ oxQuestions.forEach((x,i)=>{const sel=document.querySelector(`input[name="ox${i}"]:checked`);const val=sel?sel.value:'';const ok=val===x.a;if(ok)oxC++;setFeedback(`fb-ox-${i}`,ok,`${x.a} — ${x.e}`);details.push(`OX ${i+1}: ${val||'미응답'} / 정답 ${x.a} / ${ok?'정답':'오답'}`)});
+ multiQuestions.forEach((x,i)=>{const vals=[...document.querySelectorAll(`input[name="m${i}"]:checked`)].map(e=>Number(e.value)).sort((a,b)=>a-b);const ok=JSON.stringify(vals)===JSON.stringify(x.ans);if(ok)mC++;setFeedback(`fb-m-${i}`,ok,`정답 ${x.ans.map(v=>v+1).join(', ')}번`);details.push(`진단 ${i+1}: ${vals.length?vals.map(v=>v+1).join(','):'미응답'} / 정답 ${x.ans.map(v=>v+1).join(',')} / ${ok?'정답':'오답'}`)});
+ shortQuestions.forEach((x,i)=>{const val=document.getElementById(`s${i}`).value;const ok=x.ans.map(norm).includes(norm(val));if(ok)sC++;setFeedback(`fb-s-${i}`,ok,`정답 ${x.ans[0]}`);details.push(`단답 ${i+1}: ${val||'미응답'} / 정답 ${x.ans[0]} / ${ok?'정답':'오답'}`)});
+ const oxScore=oxC*2,mScore=mC*5,sScore=sC*6,total=oxScore+mScore+sScore,correct=oxC+mC+sC;
+ document.getElementById('oxScore').textContent=`${oxScore}/20`;document.getElementById('multiScore').textContent=`${mScore}/50`;document.getElementById('shortScore').textContent=`${sScore}/30`;document.getElementById('totalScore').textContent=total;document.getElementById('correctCount').textContent=`${correct}/25`;
+ const msg=total>=90?'함수의 개념과 코드 적용이 매우 탄탄합니다.':total>=80?'핵심 개념을 잘 이해했습니다. 틀린 문항을 코드와 연결해 확인해 보세요.':total>=70?'기본 개념은 형성되었습니다. 매개변수와 반환값을 다시 연습해 보세요.':total>=60?'함수 정의와 호출 흐름을 예제 코드로 다시 추적해 보세요.':'기초 개념부터 천천히 다시 학습하고 교사의 피드백을 받으세요.';
+ document.getElementById('levelMessage').textContent=msg;document.getElementById('scorePanel').style.display='block';
+ const now=new Date();lastResult={sid,name,oxScore,mScore,sScore,total,correct,details,time:formatDate(now)};updateProgress();document.getElementById('scorePanel').scrollIntoView({behavior:'smooth',block:'center'});
+}
+function formatDate(d){const p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`}
+function safeFile(s){return s.replace(/[\\/:*?"<>|\s]+/g,'_')}
+function downloadResult(){if(!lastResult){gradeQuiz();if(!lastResult)return;}const r=lastResult;const text=[`정보과학 1차시 평가 결과`,`학번: ${r.sid}`,`이름: ${r.name}`,`응시시각: ${r.time}`,`총점: ${r.total}/100`,`OX: ${r.oxScore}/20`,`진단평가: ${r.mScore}/50`,`단답형: ${r.sScore}/30`,`정답 문항 수: ${r.correct}/25`,``,`[문항별 결과]`,...r.details].join('\r\n');const blob=new Blob(['\ufeff'+text],{type:'text/plain;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${safeFile(r.sid)}_${safeFile(r.name)}_${r.total}_1차시_${r.time.replace(/[-: ]/g,'')}.txt`;a.click();URL.revokeObjectURL(a.href)}
+function updateProgress(){let answered=0;oxQuestions.forEach((_,i)=>{if(document.querySelector(`input[name="ox${i}"]:checked`))answered++});multiQuestions.forEach((_,i)=>{if(document.querySelectorAll(`input[name="m${i}"]:checked`).length)answered++});shortQuestions.forEach((_,i)=>{if((document.getElementById(`s${i}`)?.value||'').trim())answered++});document.getElementById('progressText').textContent=`평가 응답 ${answered} / 25`}
+function resetQuiz(){if(!confirm('모든 응답과 채점 결과를 초기화할까요?'))return;document.querySelectorAll('#assessment input').forEach(e=>{if(e.type==='radio'||e.type==='checkbox')e.checked=false;else if(e.id!=='studentId'&&e.id!=='studentName')e.value=''});document.querySelectorAll('.feedback').forEach(e=>{e.className='feedback';e.textContent=''});document.getElementById('scorePanel').style.display='none';lastResult=null;updateProgress()}
+function copyCode(){const text=`def analyze_scores(scores, pass_score=60):\n    \"\"\"점수 목록을 분석하여 평균, 통과 여부, 요약 문장을 반환한다.\"\"\"\n    if not scores:\n        return 0, False, \"점수 데이터가 없습니다.\"\n\n    average = sum(scores) / len(scores)\n    passed = average >= pass_score\n\n    if average >= 90:\n        level = \"매우 우수\"\n    elif average >= 80:\n        level = \"우수\"\n    elif average >= 70:\n        level = \"보통\"\n    else:\n        level = \"보완 필요\"\n\n    message = f\"평균 {average:.1f}점, 성취 수준: {level}\"\n    return average, passed, message\n\nstudent_scores = [88, 92, 76, 95]\navg, is_passed, summary = analyze_scores(student_scores, 80)\nprint(f\"평균: {avg:.1f}\")\nprint(f\"기준 통과: {is_passed}\")\nprint(summary)`;navigator.clipboard.writeText(text).then(()=>alert('코드를 복사했습니다.'))}
+render();
+</script>
+</body>
+</html>

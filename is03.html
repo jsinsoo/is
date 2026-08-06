@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보과학 3차시 목표지향 개념기반 수업지도안</title>
+<style>
+:root{
+  --navy:#17324d; --blue:#2f6fa3; --sky:#eaf4fb; --mint:#eaf8f3;
+  --gold:#f4b942; --red:#c94b4b; --ink:#24313d; --line:#d8e3ec; --paper:#ffffff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#f3f7fa;color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue));color:white;padding:34px 20px}
+header .wrap{max-width:1180px;margin:auto}
+header h1{margin:0 0 8px;font-size:clamp(26px,4vw,42px)}
+header p{margin:0;opacity:.92}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(0,0,0,.06)}
+nav .wrap{max-width:1180px;margin:auto;display:flex;gap:8px;overflow-x:auto;padding:10px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:700;padding:8px 12px;border-radius:18px}
+nav a:hover{background:var(--sky)}
+main{max-width:1180px;margin:24px auto;padding:0 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 22px rgba(30,70,100,.06)}
+h2{color:var(--navy);margin-top:0;border-left:7px solid var(--gold);padding-left:12px}
+h3{color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:#f9fcfe;border:1px solid var(--line);border-radius:14px;padding:17px}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:700;padding:4px 10px;border-radius:16px;margin:2px}
+.quote{background:linear-gradient(135deg,#fff8e7,#eef8ff);border-left:6px solid var(--gold);padding:20px;border-radius:12px;font-size:1.06rem}
+.timeline{display:grid;grid-template-columns:95px 1fr;gap:10px 16px}
+.timeline .time{font-weight:800;color:var(--blue)}
+code,pre{font-family:Consolas,"D2Coding",monospace}
+pre{background:#17212b;color:#e8f1f8;padding:20px;border-radius:14px;overflow:auto;line-height:1.6}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:white}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:13px 0;background:#fcfeff}
+.question.correct{border-color:#4aa36b;background:#f0fbf4}
+.question.wrong{border-color:#d86b6b;background:#fff3f3}
+.options label{display:block;padding:7px 9px;margin:4px 0;border-radius:9px;cursor:pointer}
+.options label:hover{background:var(--sky)}
+input[type=text]{width:100%;padding:11px;border:1px solid #aebdca;border-radius:9px;font-size:1rem}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{border:0;border-radius:10px;padding:12px 18px;font-weight:800;cursor:pointer;font-size:1rem}
+.primary{background:var(--blue);color:white}
+.secondary{background:#e7eef4;color:var(--navy)}
+.danger{background:var(--red);color:white}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+#result{display:none;margin-top:18px;padding:20px;border-radius:14px;background:#eef8ff;border:2px solid var(--blue)}
+.explanation{display:none;margin-top:8px;padding:10px;background:white;border-radius:9px;border-left:4px solid var(--gold)}
+.small{font-size:.92rem;color:#5d6b77}
+.progress{height:12px;background:#e5edf3;border-radius:8px;overflow:hidden}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--gold));width:0}
+@media(max-width:650px){.student{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}.timeline .time{margin-top:10px}}
+@media print{nav,.actions,#examGuide{display:none!important}body{background:white}section{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<h1>정보과학 3차시 목표지향 개념기반 수업지도안</h1>
+<p>반복구조와 재귀구조로 같은 문제를 해결하고, 두 접근의 차이를 비교·분석하기</p>
+</div>
+</header>
+
+<nav><div class="wrap">
+<a href="#standard">성취기준</a><a href="#concept">핵심 개념</a><a href="#lesson">수업 내용</a>
+<a href="#paper">소논문</a><a href="#code">코드</a><a href="#assessment">평가</a>
+</div></nav>
+
+<main>
+<section id="standard">
+<h2>1. 성취기준과 학습 목표</h2>
+<div class="card">
+<h3>성취기준</h3>
+<p><strong>[12정과01-03]</strong> 반복구조와 재귀구조를 활용하여 문제를 해결하고, 두 방식의 차이를 비교·분석한다.</p>
+</div>
+<h3>학습 목표</h3>
+<div class="grid">
+<div class="card"><strong>지식·이해</strong><br>반복구조와 재귀구조의 원리, 종료 조건, 호출 과정의 차이를 설명할 수 있다.</div>
+<div class="card"><strong>과정·기능</strong><br>같은 문제를 반복문과 재귀함수로 각각 구현하고 실행 결과를 검증할 수 있다.</div>
+<div class="card"><strong>가치·태도</strong><br>문제의 크기와 상황에 맞는 구조를 근거 있게 선택하고 새로운 해결 방법을 탐색한다.</div>
+</div>
+</section>
+
+<section id="concept">
+<h2>2. 학습할 개념</h2>
+<p>
+<span class="badge">반복구조</span><span class="badge">재귀구조</span><span class="badge">기저 조건</span>
+<span class="badge">재귀관계</span><span class="badge">호출 스택</span><span class="badge">시간 복잡도</span>
+<span class="badge">공간 복잡도</span><span class="badge">알고리즘 선택</span>
+</p>
+<table>
+<tr><th>개념</th><th>핵심 의미</th><th>판단 질문</th></tr>
+<tr><td>반복구조</td><td>조건이 참인 동안 같은 명령을 되풀이하는 구조</td><td>반복 횟수와 상태 변화가 명확한가?</td></tr>
+<tr><td>재귀구조</td><td>함수가 더 작은 같은 문제를 해결하도록 자기 자신을 호출하는 구조</td><td>문제를 같은 형태의 작은 문제로 줄일 수 있는가?</td></tr>
+<tr><td>기저 조건</td><td>재귀 호출을 멈추게 하는 조건</td><td>반드시 도달하며 호출을 종료하는가?</td></tr>
+<tr><td>호출 스택</td><td>함수 호출 정보가 쌓였다가 역순으로 처리되는 메모리 구조</td><td>문제 크기가 커질 때 메모리 부담은 어떠한가?</td></tr>
+<tr><td>비교·분석</td><td>정확성뿐 아니라 가독성, 실행 시간, 메모리 사용량까지 근거로 판단</td><td>이 문제에서 어느 방식이 더 적합하며 그 이유는 무엇인가?</td></tr>
+</table>
+</section>
+
+<section>
+<h2>3. 수업 시작 멘트</h2>
+<div class="quote">
+“소크라테스는 질문으로 생각을 깨웠고, 데카르트는 의심으로 확실함을 찾았으며,
+뉴턴은 반복되는 자연의 질서에서 법칙을 발견했습니다. 수학자는 큰 문제를 작은 문제로 나누고,
+프로그래머는 그 작은 문제를 다시 부릅니다. 오늘은 반복문에게 ‘계속 해!’라고 말하고,
+재귀함수에게는 ‘나보다 작은 나를 불러!’라고 말해 봅시다. 단, 둘 다 퇴근 시간은 정해 줘야 합니다.
+반복문에는 종료 조건을, 재귀함수에는 기저 조건을 선물합시다.”
+</div>
+</section>
+
+<section id="lesson">
+<h2>4. 학습 내용과 수업 흐름</h2>
+<div class="timeline">
+<div class="time">도입 5분</div><div>계단 오르기, 러시아 인형, 거울 속 거울 사례로 반복과 재귀를 직관적으로 구분한다.</div>
+<div class="time">개념 10분</div><div>반복 변수, 누적값, 기저 조건, 재귀관계, 호출 스택을 시각적으로 설명한다.</div>
+<div class="time">탐구 10분</div><div>1부터 n까지의 합을 반복문과 재귀함수로 추적표에 기록하고 실행 순서를 비교한다.</div>
+<div class="time">코딩 15분</div><div>팩토리얼을 두 방식으로 작성하고 입력값 검증, 실행 시간, 호출 깊이를 확인한다.</div>
+<div class="time">정리 5분</div><div>“어떤 문제에 어떤 구조가 적합한가?”를 정확성·가독성·효율성의 관점에서 주장한다.</div>
+<div class="time">평가 5분</div><div>핵심 개념 OX, 복수 정답 진단평가, 코드 단답형으로 도달 정도를 점검한다.</div>
+</div>
+<h3>핵심 비교</h3>
+<table>
+<tr><th>비교 요소</th><th>반복구조</th><th>재귀구조</th></tr>
+<tr><td>종료 방식</td><td>반복 조건이 거짓이 되면 종료</td><td>기저 조건을 만족하면 종료</td></tr>
+<tr><td>메모리</td><td>일반적으로 추가 메모리 사용이 적음</td><td>호출마다 스택 프레임이 쌓임</td></tr>
+<tr><td>표현력</td><td>단순 누적·순차 처리에 직관적</td><td>트리·분할 정복·재귀적 정의에 자연스러움</td></tr>
+<tr><td>위험</td><td>조건 오류 시 무한 반복</td><td>기저 조건 오류 시 무한 재귀 또는 깊이 초과</td></tr>
+</table>
+</section>
+
+<section id="paper">
+<h2>5. 학습 관련 소논문 주제 예시 5개</h2>
+<ol>
+<li><strong>입력 크기에 따른 반복 팩토리얼과 재귀 팩토리얼의 실행 시간 비교</strong></li>
+<li><strong>피보나치 수열에서 단순 재귀와 메모이제이션의 성능 차이 분석</strong></li>
+<li><strong>하노이 탑 문제를 통한 재귀 호출 횟수와 문제 크기의 관계 탐구</strong></li>
+<li><strong>깊이 우선 탐색에서 반복형 스택 구현과 재귀형 구현의 메모리 사용량 비교</strong></li>
+<li><strong>학습자의 코드 이해도에 미치는 반복구조와 재귀구조 표현 방식의 영향</strong></li>
+</ol>
+</section>
+
+<section id="code">
+<h2>6. 학습할 코드 1개</h2>
+<h3>팩토리얼을 반복구조와 재귀구조로 비교하기</h3>
+<pre><code>def factorial_iterative(n):
+    """반복구조를 이용해 n!을 계산한다."""
+    result = 1
+    for number in range(2, n + 1):
+        result *= number
+    return result
+
+
+def factorial_recursive(n):
+    """재귀구조를 이용해 n!을 계산한다."""
+    if n &lt;= 1:                 # 기저 조건
+        return 1
+    return n * factorial_recursive(n - 1)  # 재귀관계
+
+
+n = int(input("0 이상의 정수를 입력하세요: "))
+
+if n &lt; 0:
+    print("음수의 팩토리얼은 이 프로그램에서 계산하지 않습니다.")
+else:
+    iterative_result = factorial_iterative(n)
+    recursive_result = factorial_recursive(n)
+
+    print("반복 결과:", iterative_result)
+    print("재귀 결과:", recursive_result)
+    print("두 결과가 같은가?", iterative_result == recursive_result)</code></pre>
+
+<h3>상세 설명</h3>
+<table>
+<tr><th>코드 요소</th><th>설명</th></tr>
+<tr><td><code>result = 1</code></td><td>곱셈의 항등원 1에서 누적을 시작한다. 0!도 1이므로 초기값으로 적절하다.</td></tr>
+<tr><td><code>range(2, n + 1)</code></td><td>2부터 n까지 차례로 순회한다. 끝값 n을 포함하기 위해 n+1을 사용한다.</td></tr>
+<tr><td><code>result *= number</code></td><td>현재 누적값에 number를 곱해 상태를 갱신한다.</td></tr>
+<tr><td><code>if n &lt;= 1</code></td><td>재귀 호출을 멈추는 기저 조건이다. 이것이 없으면 호출이 계속된다.</td></tr>
+<tr><td><code>n * factorial_recursive(n - 1)</code></td><td>n! = n × (n-1)!이라는 재귀관계를 코드로 표현한다.</td></tr>
+<tr><td>결과 비교식</td><td>서로 다른 구현이 같은 결과를 내는지 확인하여 정확성을 검증한다.</td></tr>
+</table>
+<p class="small">예: n=5이면 반복형은 1→2→6→24→120으로 누적하고, 재귀형은 5×4!→5×4×3!→…→120으로 되돌아오며 계산한다.</p>
+</section>
+
+<section>
+<h2>7. 수업 끝 멘트</h2>
+<div class="quote">
+“시는 한 줄이 마음속에서 오래 반복될 때 노래가 되고, 소설은 작은 사건이 다음 장을 재귀적으로 불러 긴 이야기가 됩니다.
+희곡의 막이 내려가도 배우의 꿈은 종료 조건을 만나지 않고, 음악의 후렴은 반복될수록 힘이 생깁니다.
+오늘 코드가 오류를 내도 괜찮습니다. 주인공은 첫 장에서 완성되지 않고, 오케스트라도 첫 음부터 앙코르를 받지는 않으니까요.
+다만 무한 반복에 빠졌다면 희망까지 반복하지 말고, 조건문부터 확인합시다!”
+</div>
+</section>
+
+<section id="assessment">
+<h2>8. 형성·진단·코드 평가</h2>
+<div id="examGuide" class="card">
+<strong>배점:</strong> OX 10문항 × 2점 = 20점 · 진단평가 10문항 × 6점 = 60점 · 단답형 5문항 × 4점 = 20점
+<br><strong>진단평가:</strong> 각 문항에는 옳은 진술 3개와 틀린 진술 2개가 있으며, 옳은 것 3개를 모두 선택해야 정답입니다.
+</div>
+
+<h3>학생 정보</h3>
+<div class="student">
+<label>학번<input type="text" id="studentId" placeholder="예: 1101" maxlength="12"></label>
+<label>이름<input type="text" id="studentName" placeholder="예: 홍길동" maxlength="20"></label>
+</div>
+<div class="progress"><span id="progressBar"></span></div>
+
+<form id="quizForm">
+<h3>Ⅰ. 형성평가 OX 퀴즈 10개</h3>
+<div id="oxArea"></div>
+<h3>Ⅱ. 진단평가: 옳은 것 3개 고르기 10개</h3>
+<div id="multiArea"></div>
+<h3>Ⅲ. 학습 코드 평가 단답형 5개</h3>
+<div id="shortArea"></div>
+</form>
+
+<div class="actions">
+<button class="primary" type="button" onclick="gradeQuiz()">채점하고 TXT 저장</button>
+<button class="secondary" type="button" onclick="window.print()">인쇄·PDF 저장</button>
+<button class="danger" type="button" onclick="resetQuiz()">다시 풀기</button>
+</div>
+<div id="result"></div>
+</section>
+</main>
+
+<script>
+const oxQuestions = [
+ {q:"반복구조는 조건이 참인 동안 같은 명령을 되풀이할 수 있다.",a:"O",e:"반복문은 조건과 상태 갱신을 이용해 명령을 반복한다."},
+ {q:"재귀함수에는 반드시 자기 자신을 두 번 이상 호출하는 문장이 있어야 한다.",a:"X",e:"한 번 호출하거나 조건에 따라 호출하지 않을 수도 있다."},
+ {q:"기저 조건은 재귀 호출을 종료시키는 역할을 한다.",a:"O",e:"기저 조건이 없거나 도달하지 못하면 무한 재귀가 발생할 수 있다."},
+ {q:"반복문과 재귀함수로 같은 문제를 해결하면 언제나 실행 시간과 메모리 사용량도 같다.",a:"X",e:"결과가 같아도 호출 비용과 메모리 사용량은 달라질 수 있다."},
+ {q:"팩토리얼은 n! = n×(n-1)!로 재귀적으로 정의할 수 있다.",a:"O",e:"0!=1 또는 1!=1을 기저 조건으로 둔다."},
+ {q:"재귀 호출이 발생하면 호출 정보는 일반적으로 호출 스택에 저장된다.",a:"O",e:"매개변수, 지역 변수, 복귀 위치 등이 스택 프레임에 저장된다."},
+ {q:"반복 조건이 영원히 참이면 무한 반복이 발생할 수 있다.",a:"O",e:"상태 갱신이나 종료 조건을 점검해야 한다."},
+ {q:"재귀구조는 어떤 문제에서든 반복구조보다 항상 더 효율적이다.",a:"X",e:"문제 특성과 입력 크기에 따라 적합한 방식이 다르다."},
+ {q:"트리 탐색처럼 구조 자체가 재귀적인 문제는 재귀함수로 자연스럽게 표현할 수 있다.",a:"O",e:"하위 트리도 같은 구조를 갖기 때문이다."},
+ {q:"두 알고리즘을 비교할 때는 정답 일치 여부만 확인하면 충분하다.",a:"X",e:"시간, 메모리, 가독성, 확장성도 함께 비교해야 한다."}
+];
+
+const multiQuestions = [
+ {q:"반복구조에 대한 옳은 설명을 3개 고르시오.",o:["반복 조건이 필요할 수 있다.","상태를 갱신하며 수행할 수 있다.","기저 조건이라는 이름의 종료 규칙만 사용한다.","조건 오류로 무한 반복이 생길 수 있다.","항상 호출 스택이 입력 크기만큼 쌓인다."],a:[0,1,3]},
+ {q:"재귀구조에 대한 옳은 설명을 3개 고르시오.",o:["함수가 자기 자신을 호출할 수 있다.","기저 조건이 중요하다.","호출마다 스택 프레임이 생성될 수 있다.","반복문을 절대로 대신할 수 없다.","입력 크기와 무관하게 메모리 사용량이 항상 일정하다."],a:[0,1,2]},
+ {q:"팩토리얼 코드에 대한 옳은 설명을 3개 고르시오.",o:["0!의 값은 1이다.","반복형에서 result는 누적값이다.","재귀형의 n<=1은 기저 조건이다.","range(2,n+1)은 n을 제외한다.","음수 입력도 같은 정의로 바로 계산한다."],a:[0,1,2]},
+ {q:"반복형과 재귀형을 비교할 때 고려할 요소로 옳은 것을 3개 고르시오.",o:["실행 시간","메모리 사용량","코드 가독성","변수 이름의 글자 수만","모니터 화면 크기"],a:[0,1,2]},
+ {q:"재귀함수 설계 원칙으로 옳은 것을 3개 고르시오.",o:["기저 조건을 정한다.","문제 크기가 줄어들도록 호출한다.","기저 조건에 도달하는지 확인한다.","호출할 때마다 문제 크기를 반드시 키운다.","모든 함수는 재귀함수로 작성한다."],a:[0,1,2]},
+ {q:"무한 재귀의 원인이 될 수 있는 것과 예방 방법에 관한 옳은 설명을 3개 고르시오.",o:["기저 조건 누락은 원인이 될 수 있다.","문제 크기가 줄지 않으면 원인이 될 수 있다.","작은 입력으로 호출 과정을 추적하면 예방에 도움이 된다.","return을 사용하면 기저 조건 없이도 항상 안전하다.","재귀 호출 횟수는 언제나 한 번이다."],a:[0,1,2]},
+ {q:"반복구조가 특히 적합할 수 있는 상황을 3개 고르시오.",o:["정해진 횟수만큼 누적 계산","순차적으로 배열 원소 처리","메모리 사용을 줄여야 하는 단순 반복","트리 구조는 절대로 처리할 수 없음","반복 횟수를 알 수 없으면 반복문 사용 불가"],a:[0,1,2]},
+ {q:"재귀구조가 자연스럽게 적용될 수 있는 문제를 3개 고르시오.",o:["하노이 탑","트리 순회","분할 정복","단순 출력은 재귀로만 가능","모든 입력 문제"],a:[0,1,2]},
+ {q:"코드 검증 방법으로 옳은 것을 3개 고르시오.",o:["여러 입력에서 두 결과를 비교한다.","경계값 0과 1을 시험한다.","음수 입력 처리도 확인한다.","한 번 실행되면 모든 입력에서 정확하다고 결론 내린다.","결과가 다르면 무조건 재귀형만 옳다고 본다."],a:[0,1,2]},
+ {q:"성취기준에 부합하는 활동을 3개 고르시오.",o:["같은 문제를 반복형과 재귀형으로 구현한다.","두 방식의 차이를 근거로 설명한다.","문제 상황에 적합한 방식을 선택한다.","코드를 실행하지 않고 외우기만 한다.","결과가 달라도 원인을 분석하지 않는다."],a:[0,1,2]}
+];
+
+const shortQuestions = [
+ {q:"재귀 호출을 멈추게 하는 조건을 무엇이라고 하는가?",a:["기저조건","기저 조건","base case"],e:"정답: 기저 조건"},
+ {q:"함수 호출 정보가 쌓이는 메모리 구조는 무엇인가?",a:["호출스택","호출 스택","콜스택","콜 스택","call stack"],e:"정답: 호출 스택"},
+ {q:"반복형 팩토리얼 코드에서 곱셈 누적값을 저장하는 변수 이름은 무엇인가?",a:["result"],e:"정답: result"},
+ {q:"factorial_recursive(5)가 직접 호출하는 다음 함수 호출을 쓰시오.",a:["factorial_recursive(4)","factorial_recursive (4)"],e:"정답: factorial_recursive(4)"},
+ {q:"두 구현의 결과가 같은지 확인할 때 사용하는 비교 연산자를 쓰시오.",a:["=="],e:"정답: =="}
+];
+
+function esc(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function render(){
+ const ox=document.getElementById("oxArea");
+ ox.innerHTML=oxQuestions.map((x,i)=>`<div class="question" id="oxq${i}"><strong>${i+1}. ${x.q}</strong>
+ <div class="options"><label><input type="radio" name="ox${i}" value="O"> O</label>
+ <label><input type="radio" name="ox${i}" value="X"> X</label></div><div class="explanation" id="oxe${i}"></div></div>`).join("");
+ const multi=document.getElementById("multiArea");
+ multi.innerHTML=multiQuestions.map((x,i)=>`<div class="question" id="mq${i}"><strong>${i+1}. ${x.q}</strong>
+ <div class="options">${x.o.map((v,j)=>`<label><input type="checkbox" name="m${i}" value="${j}"> ${j+1}) ${v}</label>`).join("")}</div>
+ <div class="explanation" id="me${i}"></div></div>`).join("");
+ const sh=document.getElementById("shortArea");
+ sh.innerHTML=shortQuestions.map((x,i)=>`<div class="question" id="sq${i}"><strong>${i+1}. ${x.q}</strong>
+ <input type="text" name="s${i}" autocomplete="off"><div class="explanation" id="se${i}"></div></div>`).join("");
+ document.querySelectorAll("input").forEach(el=>el.addEventListener("input",updateProgress));
+}
+function norm(s){return (s||"").toLowerCase().replace(/\s+/g,"").trim();}
+function updateProgress(){
+ let answered=0,total=25;
+ for(let i=0;i<10;i++)if(document.querySelector(`input[name=ox${i}]:checked`))answered++;
+ for(let i=0;i<10;i++)if(document.querySelectorAll(`input[name=m${i}]:checked`).length)answered++;
+ for(let i=0;i<5;i++)if(document.querySelector(`input[name=s${i}]`).value.trim())answered++;
+ document.getElementById("progressBar").style.width=(answered/total*100)+"%";
+}
+function mark(id,ok,expId,text){
+ const q=document.getElementById(id);q.classList.remove("correct","wrong");q.classList.add(ok?"correct":"wrong");
+ const e=document.getElementById(expId);e.style.display="block";e.textContent=text;
+}
+function gradeQuiz(){
+ const sid=document.getElementById("studentId").value.trim();
+ const name=document.getElementById("studentName").value.trim();
+ if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+ let score=0, lines=[], oxScore=0,mScore=0,sScore=0;
+ oxQuestions.forEach((x,i)=>{
+   const el=document.querySelector(`input[name=ox${i}]:checked`); const ans=el?el.value:"미응답"; const ok=ans===x.a;
+   if(ok){score+=2;oxScore+=2;} mark(`oxq${i}`,ok,`oxe${i}`,`정답 ${x.a} · ${x.e}`);
+   lines.push(`[OX ${i+1}] 응답: ${ans} / 정답: ${x.a} / ${ok?"정답":"오답"}`);
+ });
+ multiQuestions.forEach((x,i)=>{
+   const selected=[...document.querySelectorAll(`input[name=m${i}]:checked`)].map(e=>Number(e.value)).sort((a,b)=>a-b);
+   const ok=JSON.stringify(selected)===JSON.stringify(x.a);
+   if(ok){score+=6;mScore+=6;}
+   const ansText=selected.length?selected.map(v=>v+1).join(","):"미응답"; const right=x.a.map(v=>v+1).join(",");
+   mark(`mq${i}`,ok,`me${i}`,`정답: ${right}번`);
+   lines.push(`[진단 ${i+1}] 응답: ${ansText} / 정답: ${right} / ${ok?"정답":"오답"}`);
+ });
+ shortQuestions.forEach((x,i)=>{
+   const val=document.querySelector(`input[name=s${i}]`).value.trim(); const ok=x.a.some(a=>norm(a)===norm(val));
+   if(ok){score+=4;sScore+=4;} mark(`sq${i}`,ok,`se${i}`,x.e);
+   lines.push(`[단답 ${i+1}] 응답: ${val||"미응답"} / ${x.e} / ${ok?"정답":"오답"}`);
+ });
+ const now=new Date();
+ const stamp=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0")+" "+String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0")+":"+String(now.getSeconds()).padStart(2,"0");
+ const safe=s=>s.replace(/[\\/:*?"<>|]/g,"_");
+ const result=document.getElementById("result");result.style.display="block";
+ result.innerHTML=`<h3>채점 결과: ${score}점 / 100점</h3><p>OX ${oxScore}/20 · 진단평가 ${mScore}/60 · 단답형 ${sScore}/20</p><p>${sid} ${name} · ${stamp}</p>`;
+ const text=[
+ "정보과학 3차시 평가 결과",
+ "========================",
+ `학번: ${sid}`,`이름: ${name}`,`점수: ${score}/100`,
+ `OX: ${oxScore}/20`,`진단평가: ${mScore}/60`,`단답형: ${sScore}/20`,
+ `응시시각: ${stamp}`,"",...lines
+ ].join("\r\n");
+ const blob=new Blob(["\ufeff"+text],{type:"text/plain;charset=utf-8"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+ a.download=`${safe(sid)}_${safe(name)}_${score}점_3차시_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,"0")}${String(now.getDate()).padStart(2,"0")}_${String(now.getHours()).padStart(2,"0")}${String(now.getMinutes()).padStart(2,"0")}${String(now.getSeconds()).padStart(2,"0")}.txt`;
+ document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href);
+ result.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function resetQuiz(){
+ if(!confirm("입력한 답과 채점 결과를 모두 지울까요?"))return;
+ document.getElementById("quizForm").reset();
+ document.querySelectorAll(".question").forEach(q=>q.classList.remove("correct","wrong"));
+ document.querySelectorAll(".explanation").forEach(e=>{e.style.display="none";e.textContent="";});
+ document.getElementById("result").style.display="none";document.getElementById("progressBar").style.width="0";
+}
+render();
+</script>
+</body>
+</html>

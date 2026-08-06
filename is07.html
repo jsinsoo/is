@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보과학 7차시 목표지향 개념기반 수업지도안</title>
+<style>
+:root{
+  --navy:#17324d; --blue:#2f6fa3; --sky:#eaf4fb; --mint:#edf9f4;
+  --gold:#f2b84b; --red:#c94d4d; --green:#3f9562; --ink:#26333f;
+  --line:#d7e3ec; --paper:#fff; --bg:#f3f7fa;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue));color:white;padding:36px 20px}
+.wrap{max-width:1180px;margin:auto}
+header h1{margin:0 0 8px;font-size:clamp(27px,4vw,43px)}
+header p{margin:0;opacity:.94}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(0,0,0,.06)}
+nav .wrap{display:flex;gap:7px;overflow-x:auto;padding:10px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:8px 12px;border-radius:18px}
+nav a:hover{background:var(--sky)}
+main{max-width:1180px;margin:24px auto;padding:0 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 23px rgba(30,70,100,.06)}
+h2{color:var(--navy);margin-top:0;border-left:7px solid var(--gold);padding-left:12px}
+h3{color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:14px}
+.card{background:#f9fcfe;border:1px solid var(--line);border-radius:14px;padding:17px}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 10px;border-radius:16px;margin:2px}
+.quote{background:linear-gradient(135deg,#fff8e7,#eef8ff);border-left:6px solid var(--gold);padding:20px;border-radius:12px;font-size:1.06rem}
+.timeline{display:grid;grid-template-columns:100px 1fr;gap:10px 16px}
+.timeline .time{font-weight:900;color:var(--blue)}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:white}
+code,pre{font-family:Consolas,"D2Coding",monospace}
+pre{background:#17212b;color:#edf5fa;padding:20px;border-radius:14px;overflow:auto;line-height:1.6}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:13px 0;background:#fcfeff}
+.question.correct{border-color:var(--green);background:#f0fbf4}
+.question.wrong{border-color:#d86b6b;background:#fff3f3}
+.options label{display:block;padding:7px 9px;margin:4px 0;border-radius:9px;cursor:pointer}
+.options label:hover{background:var(--sky)}
+input[type=text]{width:100%;padding:11px;border:1px solid #aebdca;border-radius:9px;font-size:1rem}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{border:0;border-radius:10px;padding:12px 18px;font-weight:900;cursor:pointer;font-size:1rem}
+.primary{background:var(--blue);color:white}.secondary{background:#e7eef4;color:var(--navy)}.danger{background:var(--red);color:white}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+#result{display:none;margin-top:18px;padding:20px;border-radius:14px;background:#eef8ff;border:2px solid var(--blue)}
+.explanation{display:none;margin-top:8px;padding:10px;background:white;border-radius:9px;border-left:4px solid var(--gold)}
+.small{font-size:.92rem;color:#5d6b77}
+.progress{height:12px;background:#e5edf3;border-radius:8px;overflow:hidden;margin:14px 0}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--gold))}
+.callout{background:var(--mint);border:1px solid #bfe5d2;border-radius:12px;padding:15px}
+@media(max-width:650px){.student{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}.timeline .time{margin-top:10px}}
+@media print{nav,.actions,#examGuide{display:none!important}body{background:#fff}section{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<h1>정보과학 7차시 목표지향 개념기반 수업지도안</h1>
+<p>상태 공간의 일부를 배제하여 더 효율적으로 해를 찾는 탐색 전략 익히기</p>
+</div>
+</header>
+
+<nav><div class="wrap">
+<a href="#standard">성취기준</a><a href="#concept">핵심 개념</a><a href="#lesson">학습 내용</a>
+<a href="#paper">소논문</a><a href="#code">학습 코드</a><a href="#assessment">평가</a>
+</div></nav>
+
+<main>
+<section id="standard">
+<h2>1. 성취기준과 학습 목표</h2>
+<div class="card">
+<h3>성취기준</h3>
+<p><strong>[12정과03-02]</strong> 문제의 상태 공간 일부를 배제하는 알고리즘을 설계하고, 기존의 탐색기반 알고리즘과 비교·분석한다.</p>
+</div>
+<h3>목표지향 학습 목표</h3>
+<div class="grid">
+<div class="card"><strong>지식·이해</strong><br>가지치기, 분기한정법, 탐욕법의 의미와 완전 탐색과의 차이를 설명할 수 있다.</div>
+<div class="card"><strong>과정·기능</strong><br>조건을 만족할 가능성이 없는 상태를 조기에 제외하는 알고리즘을 설계하고 구현할 수 있다.</div>
+<div class="card"><strong>가치·태도</strong><br>문제 상황에 따라 정확성과 효율성을 함께 고려하여 적절한 탐색 전략을 선택한다.</div>
+</div>
+<div class="callout"><strong>성공 기준:</strong> 배제 조건을 논리적으로 설명하고, 완전 탐색과 가지치기 탐색의 검사 횟수 및 결과를 비교하여 효율성을 판단한다.</div>
+</section>
+
+<section id="concept">
+<h2>2. 학습할 개념</h2>
+<p>
+<span class="badge">상태 공간</span><span class="badge">가지치기</span><span class="badge">유망성</span>
+<span class="badge">분기한정법</span><span class="badge">탐욕법</span><span class="badge">완전 탐색</span>
+<span class="badge">배제 조건</span><span class="badge">최적해</span><span class="badge">효율성 비교</span>
+</p>
+<table>
+<tr><th>개념</th><th>핵심 의미</th><th>판단 질문</th></tr>
+<tr><td>가지치기</td><td>해가 될 가능성이 없는 상태를 더 이상 탐색하지 않는 방법</td><td>이 상태에서 계속 탐색해도 조건을 만족할 수 있는가?</td></tr>
+<tr><td>유망성</td><td>현재 상태가 최종 해로 이어질 가능성이 있는지 판단하는 성질</td><td>남은 선택으로 목표에 도달할 수 있는가?</td></tr>
+<tr><td>분기한정법</td><td>상태를 분기하고 상한·하한을 이용해 불필요한 부분을 배제하는 최적화 기법</td><td>현재 부분해가 기존 최선보다 좋아질 가능성이 있는가?</td></tr>
+<tr><td>탐욕법</td><td>각 단계에서 현재 가장 좋아 보이는 선택을 하는 방법</td><td>현재의 최선 선택이 전체 최선으로 이어지는가?</td></tr>
+<tr><td>효율성 비교</td><td>정답뿐 아니라 검사 상태 수, 실행 시간, 메모리 사용량을 비교</td><td>같은 해를 더 적은 탐색으로 찾았는가?</td></tr>
+</table>
+</section>
+
+<section>
+<h2>3. 수업 시작 멘트</h2>
+<div class="quote">
+“베이컨은 지식의 힘을 말했고, 데카르트는 복잡한 문제에서 불필요한 것을 덜어 내는 사고를 강조했습니다.
+케플러는 수많은 관측값 속에서 행성 운동의 핵심 규칙을 찾아냈고, 오컴은 설명에 필요하지 않은 가정을 줄이라고 했습니다.
+오늘의 알고리즘도 모든 길을 끝까지 걷지 않습니다. 답이 될 수 없는 길은 일찍 돌아섭니다.
+가지치기는 나무를 미워해서 자르는 것이 아니라, 더 잘 자라게 하려고 정리하는 것입니다.
+단, 시험 문제에서 어려운 선택지를 가지치기할 때는 근거가 있어야 합니다. ‘왠지 4번’은 알고리즘이 아니라 감입니다.”
+</div>
+</section>
+
+<section id="lesson">
+<h2>4. 학습 내용과 수업 흐름</h2>
+<div class="timeline">
+<div class="time">도입 5분</div><div>미로에서 막힌 길, 예산을 초과한 장바구니, 목표합을 넘은 숫자 조합 사례로 배제의 필요성을 찾는다.</div>
+<div class="time">개념 10분</div><div>완전 탐색, 가지치기, 분기한정법, 탐욕법의 공통점과 차이점을 비교한다.</div>
+<div class="time">탐구 10분</div><div>부분합이 목표값을 초과하면 이후 상태를 탐색하지 않아도 되는 이유를 상태 공간 트리로 설명한다.</div>
+<div class="time">코딩 15분</div><div>목표합 조합 찾기 프로그램에 가지치기를 적용하고 완전 탐색과 검사 횟수를 비교한다.</div>
+<div class="time">검증 5분</div><div>가지치기 조건이 해를 누락하지 않는지 여러 입력으로 확인한다.</div>
+<div class="time">평가 5분</div><div>OX·복수 정답·단답형 평가로 핵심 개념과 코드 분석 능력을 점검한다.</div>
+</div>
+
+<h3>완전 탐색과 상태 공간 배제 비교</h3>
+<table>
+<tr><th>비교 요소</th><th>완전 탐색</th><th>가지치기 탐색</th></tr>
+<tr><td>탐색 범위</td><td>가능한 모든 상태</td><td>유망한 상태만 계속 탐색</td></tr>
+<tr><td>장점</td><td>구현이 단순하고 해 누락 가능성이 낮음</td><td>불필요한 탐색을 줄여 효율 향상</td></tr>
+<tr><td>주의점</td><td>상태 공간이 크면 실행 시간이 증가</td><td>잘못된 배제 조건은 정답을 누락시킬 수 있음</td></tr>
+<tr><td>핵심 질문</td><td>모든 후보를 확인했는가?</td><td>이 상태는 계속 탐색할 가치가 있는가?</td></tr>
+</table>
+</section>
+
+<section id="paper">
+<h2>5. 학습 관련 소논문 주제 예시 5개</h2>
+<ol>
+<li><strong>목표합 문제에서 완전 탐색과 가지치기 탐색의 검사 횟수 비교</strong></li>
+<li><strong>배낭 문제에서 탐욕법과 완전 탐색의 해 품질 및 실행 시간 분석</strong></li>
+<li><strong>미로 탐색에서 막힌 경로 조기 배제가 탐색 효율에 미치는 영향</strong></li>
+<li><strong>교실 좌석 배치 최적화에서 분기한정법의 적용 가능성 연구</strong></li>
+<li><strong>가지치기 조건의 강도에 따른 해 누락 위험과 실행 속도 변화 분석</strong></li>
+</ol>
+</section>
+
+<section id="code">
+<h2>6. 학습할 코드 1개</h2>
+<h3>목표합 조합 찾기: 완전 탐색과 가지치기 비교</h3>
+<pre><code>numbers = [2, 3, 5, 7, 9]
+target = 12
+
+complete_checked = 0
+pruned_checked = 0
+complete_solutions = []
+pruned_solutions = []
+
+
+def complete_search(index, selected):
+    global complete_checked
+    complete_checked += 1
+
+    if index == len(numbers):
+        if sum(selected) == target:
+            complete_solutions.append(selected[:])
+        return
+
+    complete_search(index + 1, selected)
+    selected.append(numbers[index])
+    complete_search(index + 1, selected)
+    selected.pop()
+
+
+def pruning_search(index, selected, current_sum):
+    global pruned_checked
+    pruned_checked += 1
+
+    if current_sum > target:
+        return
+
+    if index == len(numbers):
+        if current_sum == target:
+            pruned_solutions.append(selected[:])
+        return
+
+    pruning_search(index + 1, selected, current_sum)
+
+    selected.append(numbers[index])
+    pruning_search(
+        index + 1,
+        selected,
+        current_sum + numbers[index]
+    )
+    selected.pop()
+
+
+complete_search(0, [])
+pruning_search(0, [], 0)
+
+print("완전 탐색 해:", complete_solutions)
+print("가지치기 해:", pruned_solutions)
+print("완전 탐색 검사 수:", complete_checked)
+print("가지치기 검사 수:", pruned_checked)</code></pre>
+
+<h3>상세 설명</h3>
+<table>
+<tr><th>코드 요소</th><th>설명</th></tr>
+<tr><td><code>index</code></td><td>현재 선택 여부를 결정할 숫자의 위치를 나타낸다.</td></tr>
+<tr><td><code>selected</code></td><td>현재까지 선택한 숫자들의 목록으로 부분 상태를 표현한다.</td></tr>
+<tr><td><code>current_sum</code></td><td>현재까지 선택한 숫자의 합이다. 매번 sum을 다시 계산하지 않아 효율적이다.</td></tr>
+<tr><td>선택하지 않는 호출</td><td>현재 숫자를 제외하고 다음 상태로 이동한다.</td></tr>
+<tr><td>선택하는 호출</td><td>현재 숫자를 selected에 추가하고 합을 갱신한 뒤 다음 상태로 이동한다.</td></tr>
+<tr><td><code>if current_sum &gt; target</code></td><td>모든 수가 양수이므로 이미 목표값을 넘었다면 이후 어떤 수를 더해도 목표값이 될 수 없다. 이 분기를 배제한다.</td></tr>
+<tr><td><code>selected[:]</code></td><td>현재 해의 복사본을 저장하여 이후 리스트 변경의 영향을 막는다.</td></tr>
+<tr><td>검사 수 비교</td><td>두 알고리즘이 같은 해를 찾는지와 가지치기가 탐색 상태 수를 얼마나 줄였는지 확인한다.</td></tr>
+</table>
+<p class="small"><strong>주의:</strong> 이 가지치기 조건은 모든 수가 양수일 때 안전하다. 음수가 포함되면 현재 합이 목표를 넘더라도 이후 음수를 더해 목표에 도달할 수 있으므로 같은 조건을 그대로 쓰면 해를 누락할 수 있다.</p>
+</section>
+
+<section>
+<h2>7. 수업 끝 멘트</h2>
+<div class="quote">
+“시는 불필요한 말을 덜어 낼수록 한 줄이 더 깊어지고, 소설은 수많은 사건 중 꼭 필요한 장면을 남겨 독자를 결말로 이끕니다.
+희곡은 무대에 오르지 않는 장면까지 상상하지만, 공연에서는 가장 빛나는 순간을 선택합니다.
+음악도 쉼표가 있기에 멜로디가 더 선명해집니다.
+여러분의 꿈에서도 모든 길을 다 걸을 필요는 없습니다. 가능성이 없는 길을 놓아주는 것도 훌륭한 선택입니다.
+다만 공부 시간을 가지치기할 때는 조심하세요. 선생님은 그 분기를 다시 확장할 수 있습니다!”
+</div>
+</section>
+
+<section id="assessment">
+<h2>8. 형성·진단·코드 평가</h2>
+<div id="examGuide" class="card">
+<strong>배점:</strong> OX 10문항 × 2점 = 20점 · 진단평가 10문항 × 6점 = 60점 · 단답형 5문항 × 4점 = 20점
+<br><strong>진단평가:</strong> 각 문항에는 옳은 진술 3개와 틀린 진술 2개가 있습니다. 옳은 것 3개를 모두 선택해야 정답입니다.
+</div>
+
+<h3>학생 정보</h3>
+<div class="student">
+<label>학번<input type="text" id="studentId" placeholder="예: 1101" maxlength="12"></label>
+<label>이름<input type="text" id="studentName" placeholder="예: 홍길동" maxlength="20"></label>
+</div>
+<div class="progress"><span id="progressBar"></span></div>
+
+<form id="quizForm">
+<h3>Ⅰ. 형성평가 OX 퀴즈 10개</h3><div id="oxArea"></div>
+<h3>Ⅱ. 진단평가: 옳은 것 3개 고르기 10개</h3><div id="multiArea"></div>
+<h3>Ⅲ. 학습할 코드 평가 단답형 5개</h3><div id="shortArea"></div>
+</form>
+
+<div class="actions">
+<button class="primary" type="button" onclick="gradeQuiz()">채점하고 TXT 저장</button>
+<button class="secondary" type="button" onclick="window.print()">인쇄·PDF 저장</button>
+<button class="danger" type="button" onclick="resetQuiz()">다시 풀기</button>
+</div>
+<div id="result"></div>
+</section>
+</main>
+
+<script>
+const oxQuestions = [
+ {q:"가지치기는 해가 될 가능성이 없는 상태를 더 이상 탐색하지 않는 방법이다.",a:"O",e:"불필요한 상태 공간을 조기에 배제한다."},
+ {q:"가지치기 조건은 어떤 문제에나 동일하게 적용할 수 있다.",a:"X",e:"문제의 값 범위와 조건에 따라 안전한 배제 기준이 달라진다."},
+ {q:"분기한정법은 상한이나 하한을 이용해 일부 상태를 배제할 수 있다.",a:"O",e:"현재 부분해가 최적해로 이어질 가능성을 한계값으로 판단한다."},
+ {q:"탐욕법은 각 단계에서 현재 가장 좋아 보이는 선택을 한다.",a:"O",e:"국소적으로 최선인 선택을 반복한다."},
+ {q:"가지치기를 적용하면 언제나 정답이 달라져야 한다.",a:"X",e:"안전한 가지치기는 정답은 유지하면서 탐색량을 줄인다."},
+ {q:"제시된 코드에서 current_sum이 target보다 크면 해당 분기를 중단한다.",a:"O",e:"모든 수가 양수이므로 이후 합은 더 커질 뿐이다."},
+ {q:"음수가 포함되어도 current_sum > target 조건은 언제나 안전하다.",a:"X",e:"이후 음수를 더해 목표에 도달할 가능성이 있다."},
+ {q:"selected[:]는 현재 선택 목록의 복사본을 만든다.",a:"O",e:"이후 재귀 과정의 리스트 변경 영향을 막는다."},
+ {q:"완전 탐색과 가지치기 탐색을 비교할 때 검사 상태 수를 활용할 수 있다.",a:"O",e:"효율성 비교의 한 지표가 된다."},
+ {q:"배제 조건이 너무 강하면 올바른 해를 누락할 수 있다.",a:"O",e:"가지치기 조건의 논리적 안전성을 검증해야 한다."}
+];
+
+const multiQuestions = [
+ {q:"가지치기에 대한 옳은 설명을 3개 고르시오.",o:["유망하지 않은 상태를 배제한다.","탐색 상태 수를 줄일 수 있다.","배제 조건의 안전성을 검증해야 한다.","모든 상태를 끝까지 탐색한다.","정답 누락 여부는 고려하지 않는다."],a:[0,1,2]},
+ {q:"분기한정법에 대한 옳은 설명을 3개 고르시오.",o:["상태 공간을 여러 분기로 나눈다.","상한이나 하한을 이용할 수 있다.","최적화 문제에 활용할 수 있다.","항상 무작위로 한 경로만 고른다.","한계값과 무관하게 모든 분기를 탐색한다."],a:[0,1,2]},
+ {q:"탐욕법에 대한 옳은 설명을 3개 고르시오.",o:["각 단계에서 현재 최선의 선택을 한다.","문제에 따라 빠르고 단순할 수 있다.","항상 전체 최적해를 보장하는 것은 아니다.","모든 후보 조합을 반드시 생성한다.","이전 선택을 언제나 모두 취소한다."],a:[0,1,2]},
+ {q:"제시된 코드의 상태 표현에 대한 옳은 설명을 3개 고르시오.",o:["index는 현재 숫자 위치이다.","selected는 선택한 숫자 목록이다.","current_sum은 현재 부분합이다.","target은 검사한 상태 수이다.","numbers는 해의 개수이다."],a:[0,1,2]},
+ {q:"pruning_search의 동작에 대한 옳은 설명을 3개 고르시오.",o:["현재 숫자를 선택하지 않는 분기를 탐색한다.","현재 숫자를 선택하는 분기를 탐색한다.","부분합이 목표를 넘으면 반환한다.","매번 첫 번째 숫자만 선택한다.","해를 발견해도 저장하지 않는다."],a:[0,1,2]},
+ {q:"안전한 가지치기 조건에 관한 옳은 설명을 3개 고르시오.",o:["배제된 상태에서 해가 나올 수 없어야 한다.","입력 값의 성질을 고려해야 한다.","여러 경계값으로 검증해야 한다.","조건이 강할수록 무조건 안전하다.","음수 포함 여부는 중요하지 않다."],a:[0,1,2]},
+ {q:"완전 탐색과 가지치기 탐색 비교 기준으로 옳은 것을 3개 고르시오.",o:["찾은 해의 동일성","검사한 상태 수","실행 시간","코드 배경색","출력 글꼴"],a:[0,1,2]},
+ {q:"selected.append와 selected.pop에 대한 옳은 설명을 3개 고르시오.",o:["append는 현재 숫자를 선택한다.","pop은 재귀 호출 후 선택을 되돌린다.","두 연산은 다른 분기를 탐색하기 위한 상태 복원에 쓰인다.","pop은 항상 첫 원소를 삭제한다.","append는 목표값을 변경한다."],a:[0,1,2]},
+ {q:"모든 numbers가 양수인 목표합 문제에 대한 옳은 설명을 3개 고르시오.",o:["부분합이 목표를 넘으면 이후 더 커질 수 있다.","current_sum > target에서 가지치기할 수 있다.","가지치기로 일부 상태 검사를 줄일 수 있다.","부분합이 목표를 넘은 뒤 음수를 더할 수 있다.","배제된 분기에서 목표합이 반드시 나온다."],a:[0,1,2]},
+ {q:"성취기준에 부합하는 활동을 3개 고르시오.",o:["상태 공간 일부를 배제하는 알고리즘을 설계한다.","완전 탐색과 검사 횟수를 비교한다.","문제 상황에 적합한 알고리즘을 선택한다.","배제 조건의 타당성을 설명하지 않는다.","정답이 달라도 효율적이면 옳다고 판단한다."],a:[0,1,2]}
+];
+
+const shortQuestions = [
+ {q:"해가 될 가능성이 없는 상태를 더 이상 탐색하지 않는 기법을 무엇이라고 하는가?",a:["가지치기"],e:"정답: 가지치기"},
+ {q:"제시된 코드에서 현재까지 선택한 숫자의 합을 저장하는 변수 이름은 무엇인가?",a:["current_sum"],e:"정답: current_sum"},
+ {q:"완전 탐색의 검사 횟수를 저장하는 변수 이름은 무엇인가?",a:["complete_checked"],e:"정답: complete_checked"},
+ {q:"가지치기 탐색의 해를 저장하는 리스트 변수 이름은 무엇인가?",a:["pruned_solutions"],e:"정답: pruned_solutions"},
+ {q:"현재 선택 목록의 복사본을 만드는 표현을 쓰시오.",a:["selected[:]","selected [:]"],e:"정답: selected[:]"}
+];
+
+function render(){
+ document.getElementById("oxArea").innerHTML=oxQuestions.map((x,i)=>`<div class="question" id="oxq${i}"><strong>${i+1}. ${x.q}</strong><div class="options"><label><input type="radio" name="ox${i}" value="O"> O</label><label><input type="radio" name="ox${i}" value="X"> X</label></div><div class="explanation" id="oxe${i}"></div></div>`).join("");
+ document.getElementById("multiArea").innerHTML=multiQuestions.map((x,i)=>`<div class="question" id="mq${i}"><strong>${i+1}. ${x.q}</strong><div class="options">${x.o.map((v,j)=>`<label><input type="checkbox" name="m${i}" value="${j}"> ${j+1}) ${v}</label>`).join("")}</div><div class="explanation" id="me${i}"></div></div>`).join("");
+ document.getElementById("shortArea").innerHTML=shortQuestions.map((x,i)=>`<div class="question" id="sq${i}"><strong>${i+1}. ${x.q}</strong><input type="text" name="s${i}" autocomplete="off"><div class="explanation" id="se${i}"></div></div>`).join("");
+ document.querySelectorAll("input").forEach(el=>el.addEventListener("input",updateProgress));
+}
+function norm(s){return (s||"").toLowerCase().replace(/\s+/g,"").trim();}
+function updateProgress(){
+ let answered=0,total=25;
+ for(let i=0;i<10;i++)if(document.querySelector(`input[name=ox${i}]:checked`))answered++;
+ for(let i=0;i<10;i++)if(document.querySelectorAll(`input[name=m${i}]:checked`).length)answered++;
+ for(let i=0;i<5;i++)if(document.querySelector(`input[name=s${i}]`).value.trim())answered++;
+ document.getElementById("progressBar").style.width=(answered/total*100)+"%";
+}
+function mark(qid,ok,eid,text){
+ const q=document.getElementById(qid);q.classList.remove("correct","wrong");q.classList.add(ok?"correct":"wrong");
+ const e=document.getElementById(eid);e.style.display="block";e.textContent=text;
+}
+function gradeQuiz(){
+ const sid=document.getElementById("studentId").value.trim();
+ const name=document.getElementById("studentName").value.trim();
+ if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+ let score=0,oxScore=0,mScore=0,sScore=0,lines=[];
+ oxQuestions.forEach((x,i)=>{
+   const el=document.querySelector(`input[name=ox${i}]:checked`),ans=el?el.value:"미응답",ok=ans===x.a;
+   if(ok){score+=2;oxScore+=2;}mark(`oxq${i}`,ok,`oxe${i}`,`정답 ${x.a} · ${x.e}`);
+   lines.push(`[OX ${i+1}] 응답: ${ans} / 정답: ${x.a} / ${ok?"정답":"오답"}`);
+ });
+ multiQuestions.forEach((x,i)=>{
+   const selected=[...document.querySelectorAll(`input[name=m${i}]:checked`)].map(e=>Number(e.value)).sort((a,b)=>a-b);
+   const ok=JSON.stringify(selected)===JSON.stringify(x.a),ans=selected.length?selected.map(v=>v+1).join(","):"미응답",right=x.a.map(v=>v+1).join(",");
+   if(ok){score+=6;mScore+=6;}mark(`mq${i}`,ok,`me${i}`,`정답: ${right}번`);
+   lines.push(`[진단 ${i+1}] 응답: ${ans} / 정답: ${right} / ${ok?"정답":"오답"}`);
+ });
+ shortQuestions.forEach((x,i)=>{
+   const val=document.querySelector(`input[name=s${i}]`).value.trim(),ok=x.a.some(a=>norm(a)===norm(val));
+   if(ok){score+=4;sScore+=4;}mark(`sq${i}`,ok,`se${i}`,x.e);
+   lines.push(`[단답 ${i+1}] 응답: ${val||"미응답"} / ${x.e} / ${ok?"정답":"오답"}`);
+ });
+ const now=new Date(),pad=n=>String(n).padStart(2,"0");
+ const displayTime=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+ const fileTime=`${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+ const safe=s=>s.replace(/[\\/:*?"<>|]/g,"_");
+ const result=document.getElementById("result");result.style.display="block";
+ result.innerHTML=`<h3>채점 결과: ${score}점 / 100점</h3><p>OX ${oxScore}/20 · 진단평가 ${mScore}/60 · 단답형 ${sScore}/20</p><p>${sid} ${name} · ${displayTime}</p>`;
+ const text=["정보과학 7차시 평가 결과","========================",`학번: ${sid}`,`이름: ${name}`,`점수: ${score}/100`,`OX: ${oxScore}/20`,`진단평가: ${mScore}/60`,`단답형: ${sScore}/20`,`응시시각: ${displayTime}`,"",...lines].join("\r\n");
+ const blob=new Blob(["\ufeff"+text],{type:"text/plain;charset=utf-8"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download=`${safe(sid)}_${safe(name)}_${score}점_7차시_${fileTime}.txt`;
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ result.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function resetQuiz(){
+ if(!confirm("입력한 답과 채점 결과를 모두 지울까요?"))return;
+ document.getElementById("quizForm").reset();
+ document.querySelectorAll(".question").forEach(q=>q.classList.remove("correct","wrong"));
+ document.querySelectorAll(".explanation").forEach(e=>{e.style.display="none";e.textContent="";});
+ document.getElementById("result").style.display="none";
+ document.getElementById("progressBar").style.width="0";
+}
+render();
+</script>
+</body>
+</html>

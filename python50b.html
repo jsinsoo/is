@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파이썬 완전 문법 51~100예제</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f7fb;color:#1f2937;font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;line-height:1.75}
+header{padding:45px 20px;text-align:center;background:linear-gradient(135deg,#065f46,#0f766e);color:#fff}
+header h1{margin:0 0 10px;font-size:2.1rem}
+header p{margin:0;opacity:.92}
+main{max-width:1120px;margin:0 auto;padding:25px 18px 60px}
+.notice,section{background:#fff;border-radius:14px;padding:24px;margin:22px 0;box-shadow:0 4px 14px rgba(31,41,55,.08)}
+h2{color:#065f46;border-bottom:3px solid #99f6e4;padding-bottom:9px}
+h3{color:#0f766e;margin-top:34px}
+.tag{display:inline-block;padding:3px 10px;margin-right:7px;border-radius:20px;background:#ccfbf1;color:#115e59;font-size:.85rem;font-weight:bold}
+pre{background:#111827;color:#f9fafb;padding:17px;border-radius:10px;overflow-x:auto;line-height:1.55}
+code{font-family:Consolas,"Courier New",monospace}
+.output{background:#ecfdf5;border-left:5px solid #10b981;padding:12px 15px;border-radius:6px;margin:12px 0}
+.explain{background:#eff6ff;border-left:5px solid #3b82f6;padding:12px 15px;border-radius:6px;margin:12px 0}
+.warning{background:#fff7ed;border-left:5px solid #f97316;padding:12px 15px;border-radius:6px;margin:12px 0}
+.summary{background:#f0fdfa;border-left:5px solid #14b8a6;padding:15px;border-radius:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0}
+th,td{border:1px solid #cbd5e1;padding:10px;text-align:left}
+th{background:#ccfbf1}
+footer{text-align:center;padding:25px;color:#64748b}
+</style>
+</head>
+<body>
+<header>
+<h1>파이썬 완전 문법 300예제</h1>
+<p>2편 · 자료구조 기초 51~100예제 — 리스트, 튜플, 딕셔너리, 집합</p>
+</header>
+
+<main>
+<div class="notice">
+<h2>2편 학습 범위</h2>
+<table>
+<tr><th>예제 범위</th><th>학습 주제</th></tr>
+<tr><td>51~65</td><td>리스트 생성, 인덱싱, 슬라이싱, 추가, 삭제</td></tr>
+<tr><td>66~75</td><td>리스트 정렬, 반복, 복사, 컴프리헨션</td></tr>
+<tr><td>76~82</td><td>튜플 생성, 인덱싱, 언패킹</td></tr>
+<tr><td>83~93</td><td>딕셔너리 생성, 추가, 수정, 삭제, 반복</td></tr>
+<tr><td>94~100</td><td>집합 생성, 연산, 중복 제거</td></tr>
+</table>
+</div>
+
+<section>
+<h2>1. 리스트 — 예제 51~75</h2>
+
+<h3>예제 51. 리스트 만들기</h3>
+<span class="tag">list</span><span class="tag">기초</span>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+print(fruits)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>['사과', '바나나', '포도']</div>
+<div class="explain"><strong>설명</strong><br>리스트는 대괄호 <code>[]</code> 안에 여러 값을 쉼표로 구분하여 저장하는 자료형입니다.</div>
+
+<h3>예제 52. 리스트 인덱싱</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+
+print(fruits[0])
+print(fruits[1])
+print(fruits[-1])</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>사과<br>바나나<br>포도</div>
+<div class="explain"><strong>설명</strong><br>리스트의 첫 번째 요소는 인덱스 0입니다. <code>-1</code>은 마지막 요소를 의미합니다.</div>
+
+<h3>예제 53. 리스트 값 수정</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+fruits[1] = "딸기"
+
+print(fruits)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['사과', '딸기', '포도']</div>
+<div class="explain"><strong>설명</strong><br>리스트는 변경 가능한 자료형이므로 특정 위치의 값을 수정할 수 있습니다.</div>
+
+<h3>예제 54. 리스트 슬라이싱</h3>
+<pre><code>numbers = [10, 20, 30, 40, 50]
+
+print(numbers[1:4])
+print(numbers[:3])
+print(numbers[3:])</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[20, 30, 40]<br>[10, 20, 30]<br>[40, 50]</div>
+<div class="explain"><strong>설명</strong><br><code>[시작:끝]</code> 범위에서 끝 인덱스는 포함하지 않습니다.</div>
+
+<h3>예제 55. append로 요소 추가</h3>
+<pre><code>animals = ["고양이", "강아지"]
+animals.append("토끼")
+
+print(animals)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['고양이', '강아지', '토끼']</div>
+<div class="explain"><strong>설명</strong><br><code>append()</code>는 리스트의 맨 뒤에 요소 하나를 추가합니다.</div>
+
+<h3>예제 56. insert로 원하는 위치에 추가</h3>
+<pre><code>colors = ["빨강", "파랑"]
+colors.insert(1, "노랑")
+
+print(colors)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['빨강', '노랑', '파랑']</div>
+<div class="explain"><strong>설명</strong><br><code>insert(위치, 값)</code>은 원하는 인덱스에 값을 삽입합니다.</div>
+
+<h3>예제 57. extend로 여러 요소 추가</h3>
+<pre><code>list1 = [1, 2, 3]
+list1.extend([4, 5, 6])
+
+print(list1)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 2, 3, 4, 5, 6]</div>
+<div class="explain"><strong>설명</strong><br><code>extend()</code>는 다른 리스트의 모든 요소를 현재 리스트 뒤에 추가합니다.</div>
+
+<h3>예제 58. remove로 값 삭제</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+fruits.remove("바나나")
+
+print(fruits)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['사과', '포도']</div>
+<div class="explain"><strong>설명</strong><br><code>remove(값)</code>은 리스트에서 처음 발견한 해당 값을 삭제합니다.</div>
+
+<h3>예제 59. pop으로 마지막 값 삭제</h3>
+<pre><code>numbers = [10, 20, 30]
+removed = numbers.pop()
+
+print(removed)
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>30<br>[10, 20]</div>
+<div class="explain"><strong>설명</strong><br><code>pop()</code>은 마지막 요소를 삭제하고, 삭제한 값을 반환합니다.</div>
+
+<h3>예제 60. pop으로 특정 위치 삭제</h3>
+<pre><code>numbers = [10, 20, 30, 40]
+removed = numbers.pop(1)
+
+print(removed)
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>20<br>[10, 30, 40]</div>
+<div class="explain"><strong>설명</strong><br><code>pop(인덱스)</code>는 해당 위치의 값을 삭제하고 반환합니다.</div>
+
+<h3>예제 61. del로 요소 삭제</h3>
+<pre><code>cities = ["광주", "서울", "부산"]
+del cities[1]
+
+print(cities)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>['광주', '부산']</div>
+<div class="explain"><strong>설명</strong><br><code>del</code>은 인덱스를 이용해 요소를 삭제합니다.</div>
+
+<h3>예제 62. 리스트 길이 확인</h3>
+<pre><code>scores = [90, 85, 100, 78]
+print(len(scores))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>4</div>
+<div class="explain"><strong>설명</strong><br><code>len()</code>은 리스트에 들어 있는 요소의 개수를 반환합니다.</div>
+
+<h3>예제 63. 리스트에 값이 있는지 확인</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+
+print("사과" in fruits)
+print("수박" in fruits)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True<br>False</div>
+<div class="explain"><strong>설명</strong><br><code>in</code> 연산자는 특정 값이 리스트에 포함되어 있는지 확인합니다.</div>
+
+<h3>예제 64. 리스트 합계와 최댓값</h3>
+<pre><code>scores = [80, 95, 72, 100]
+
+print(sum(scores))
+print(max(scores))
+print(min(scores))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>347<br>100<br>72</div>
+<div class="explain"><strong>설명</strong><br><code>sum()</code>은 합계, <code>max()</code>는 최댓값, <code>min()</code>은 최솟값을 구합니다.</div>
+
+<h3>예제 65. 리스트 평균 구하기</h3>
+<pre><code>scores = [80, 90, 100]
+average = sum(scores) / len(scores)
+
+print(average)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>90.0</div>
+<div class="explain"><strong>설명</strong><br>평균은 전체 합계를 요소 개수로 나누어 구합니다.</div>
+
+<h3>예제 66. sort로 오름차순 정렬</h3>
+<pre><code>numbers = [5, 2, 9, 1, 7]
+numbers.sort()
+
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 2, 5, 7, 9]</div>
+<div class="explain"><strong>설명</strong><br><code>sort()</code>는 원래 리스트 자체를 오름차순으로 정렬합니다.</div>
+
+<h3>예제 67. 내림차순 정렬</h3>
+<pre><code>numbers = [5, 2, 9, 1, 7]
+numbers.sort(reverse=True)
+
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[9, 7, 5, 2, 1]</div>
+<div class="explain"><strong>설명</strong><br><code>reverse=True</code>를 사용하면 내림차순으로 정렬합니다.</div>
+
+<h3>예제 68. sorted 함수</h3>
+<pre><code>numbers = [5, 2, 9, 1, 7]
+new_numbers = sorted(numbers)
+
+print(numbers)
+print(new_numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[5, 2, 9, 1, 7]<br>[1, 2, 5, 7, 9]</div>
+<div class="explain"><strong>설명</strong><br><code>sorted()</code>는 원본을 바꾸지 않고 정렬된 새 리스트를 반환합니다.</div>
+
+<h3>예제 69. reverse로 순서 뒤집기</h3>
+<pre><code>numbers = [1, 2, 3, 4, 5]
+numbers.reverse()
+
+print(numbers)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[5, 4, 3, 2, 1]</div>
+<div class="explain"><strong>설명</strong><br><code>reverse()</code>는 현재 리스트의 순서를 반대로 뒤집습니다.</div>
+
+<h3>예제 70. 리스트 반복 출력</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+
+for fruit in fruits:
+print(fruit)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>사과<br>바나나<br>포도</div>
+<div class="explain"><strong>설명</strong><br><code>for</code>문을 사용하면 리스트의 요소를 하나씩 꺼내어 반복할 수 있습니다.</div>
+
+<h3>예제 71. enumerate로 번호와 함께 출력</h3>
+<pre><code>fruits = ["사과", "바나나", "포도"]
+
+for index, fruit in enumerate(fruits, start=1):
+print(index, fruit)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>1 사과<br>2 바나나<br>3 포도</div>
+<div class="explain"><strong>설명</strong><br><code>enumerate()</code>는 인덱스와 값을 함께 가져옵니다. <code>start=1</code>은 번호를 1부터 시작하게 합니다.</div>
+
+<h3>예제 72. 리스트 복사</h3>
+<pre><code>original = [1, 2, 3]
+copied = original.copy()
+
+copied.append(4)
+
+print(original)
+print(copied)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 2, 3]<br>[1, 2, 3, 4]</div>
+<div class="explain"><strong>설명</strong><br><code>copy()</code>를 사용하면 원본과 별개의 새 리스트를 만들 수 있습니다.</div>
+
+<h3>예제 73. 얕은 복사 주의</h3>
+<pre><code>original = [1, 2, 3]
+copied = original
+
+copied.append(4)
+
+print(original)
+print(copied)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>[1, 2, 3, 4]<br>[1, 2, 3, 4]</div>
+<div class="warning"><strong>주의</strong><br><code>copied = original</code>은 복사가 아니라 같은 리스트를 함께 가리키는 것입니다.</div>
+
+<h3>예제 74. 리스트 컴프리헨션</h3>
+<pre><code>squares = [number ** 2 for number in range(1, 6)]
+print(squares)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>[1, 4, 9, 16, 25]</div>
+<div class="explain"><strong>설명</strong><br>리스트 컴프리헨션은 반복문으로 리스트를 만드는 짧고 편리한 문법입니다.</div>
+
+<h3>예제 75. 조건이 있는 리스트 컴프리헨션</h3>
+<pre><code>even_numbers = [number for number in range(1, 11) if number % 2 == 0]
+print(even_numbers)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>[2, 4, 6, 8, 10]</div>
+<div class="explain"><strong>설명</strong><br><code>if</code> 조건을 추가하면 조건을 만족하는 값만 리스트에 넣을 수 있습니다.</div>
+</section>
+
+<section>
+<h2>2. 튜플 — 예제 76~82</h2>
+
+<h3>예제 76. 튜플 만들기</h3>
+<pre><code>colors = ("빨강", "노랑", "파랑")
+print(colors)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>('빨강', '노랑', '파랑')</div>
+<div class="explain"><strong>설명</strong><br>튜플은 소괄호 <code>()</code>로 여러 값을 저장합니다. 기본적으로 값을 수정할 수 없습니다.</div>
+
+<h3>예제 77. 튜플 인덱싱</h3>
+<pre><code>colors = ("빨강", "노랑", "파랑")
+
+print(colors[0])
+print(colors[-1])</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>빨강<br>파랑</div>
+<div class="explain"><strong>설명</strong><br>튜플도 리스트처럼 인덱싱과 슬라이싱이 가능합니다.</div>
+
+<h3>예제 78. 튜플 슬라이싱</h3>
+<pre><code>numbers = (10, 20, 30, 40, 50)
+print(numbers[1:4])</code></pre>
+<div class="output"><strong>실행 결과</strong><br>(20, 30, 40)</div>
+<div class="explain"><strong>설명</strong><br>튜플 슬라이싱의 결과도 튜플입니다.</div>
+
+<h3>예제 79. 튜플은 수정할 수 없음</h3>
+<pre><code>colors = ("빨강", "노랑", "파랑")
+
+# colors[0] = "초록"
+
+print(colors)</code></pre>
+
+<div class="warning"><strong>주의</strong><br>튜플 요소를 수정하려 하면 <code>TypeError</code>가 발생합니다. 변경하지 않을 데이터를 저장할 때 사용합니다.</div>
+
+<h3>예제 80. 요소가 하나인 튜플</h3>
+<pre><code>number = (10,)
+print(number)
+print(type(number))</code></pre>
+<div class="output"><strong>실행 결과</strong><br>(10,)<br>&lt;class 'tuple'&gt;</div>
+<div class="explain"><strong>설명</strong><br>요소가 하나인 튜플은 값 뒤에 쉼표를 반드시 붙여야 합니다.</div>
+
+<h3>예제 81. 튜플 언패킹</h3>
+<pre><code>student = ("민지", 16, "광주")
+
+name, age, city = student
+
+print(name)
+print(age)
+print(city)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>민지<br>16<br>광주</div>
+<div class="explain"><strong>설명</strong><br>튜플의 여러 값을 각각 다른 변수에 나누어 저장하는 것을 언패킹이라고 합니다.</div>
+
+<h3>예제 82. 변수 값 교환</h3>
+<pre><code>a = 10
+b = 20
+
+a, b = b, a
+
+print(a, b)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>20 10</div>
+<div class="explain"><strong>설명</strong><br>파이썬에서는 튜플 언패킹을 이용해 임시 변수 없이 두 변수의 값을 바꿀 수 있습니다.</div>
+</section>
+
+<section>
+<h2>3. 딕셔너리 — 예제 83~93</h2>
+
+<h3>예제 83. 딕셔너리 만들기</h3>
+<pre><code>student = {
+    "이름": "지민",
+    "학년": 2,
+    "점수": 95
+}
+
+print(student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>{'이름': '지민', '학년': 2, '점수': 95}</div>
+<div class="explain"><strong>설명</strong><br>딕셔너리는 <code>키: 값</code> 형태로 데이터를 저장합니다. 중괄호 <code>{}</code>를 사용합니다.</div>
+
+<h3>예제 84. 딕셔너리 값 가져오기</h3>
+<pre><code>student = {"이름": "지민", "점수": 95}
+
+print(student["이름"])
+print(student["점수"])</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민<br>95</div>
+<div class="explain"><strong>설명</strong><br>딕셔너리는 인덱스가 아니라 키를 이용해 값을 가져옵니다.</div>
+
+<h3>예제 85. get으로 안전하게 값 가져오기</h3>
+<pre><code>student = {"이름": "지민", "점수": 95}
+
+print(student.get("이름"))
+print(student.get("주소"))
+print(student.get("주소", "정보 없음"))</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>지민<br>None<br>정보 없음</div>
+<div class="explain"><strong>설명</strong><br><code>get()</code>은 없는 키를 조회해도 오류가 발생하지 않습니다.</div>
+
+<h3>예제 86. 딕셔너리 값 수정</h3>
+<pre><code>student = {"이름": "지민", "점수": 95}
+student["점수"] = 100
+
+print(student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>{'이름': '지민', '점수': 100}</div>
+<div class="explain"><strong>설명</strong><br>이미 존재하는 키에 새 값을 대입하면 해당 값이 수정됩니다.</div>
+
+<h3>예제 87. 딕셔너리에 새 항목 추가</h3>
+<pre><code>student = {"이름": "지민", "점수": 95}
+student["학년"] = 2
+
+print(student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>{'이름': '지민', '점수': 95, '학년': 2}</div>
+<div class="explain"><strong>설명</strong><br>존재하지 않는 키에 값을 대입하면 새로운 항목이 추가됩니다.</div>
+
+<h3>예제 88. del로 항목 삭제</h3>
+<pre><code>student = {"이름": "지민", "점수": 95, "학년": 2}
+del student["학년"]
+
+print(student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>{'이름': '지민', '점수': 95}</div>
+<div class="explain"><strong>설명</strong><br><code>del 딕셔너리[키]</code>로 특정 키와 값을 함께 삭제합니다.</div>
+
+<h3>예제 89. pop으로 항목 삭제하기</h3>
+<pre><code>student = {"이름": "지민", "점수": 95}
+score = student.pop("점수")
+
+print(score)
+print(student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>95<br>{'이름': '지민'}</div>
+<div class="explain"><strong>설명</strong><br><code>pop(키)</code>는 항목을 삭제하면서 삭제한 값을 반환합니다.</div>
+
+<h3>예제 90. keys, values, items</h3>
+<pre><code>student = {"이름": "지민", "점수": 95, "학년": 2}
+
+print(student.keys())
+print(student.values())
+print(student.items())</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>keys()</code>는 키 목록, <code>values()</code>는 값 목록, <code>items()</code>는 키와 값의 쌍을 제공합니다.</div>
+
+<h3>예제 91. 딕셔너리 반복하기</h3>
+<pre><code>student = {"이름": "지민", "점수": 95, "학년": 2}
+
+for key, value in student.items():
+print(key, ":", value)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>이름 : 지민<br>점수 : 95<br>학년 : 2</div>
+<div class="explain"><strong>설명</strong><br><code>items()</code>와 반복문을 사용하면 키와 값을 함께 처리할 수 있습니다.</div>
+
+<h3>예제 92. 딕셔너리에 키가 있는지 확인</h3>
+<pre><code>student = {"이름": "지민", "점수": 95}
+
+print("이름" in student)
+print("주소" in student)</code></pre>
+
+<div class="output"><strong>실행 결과</strong><br>True<br>False</div>
+<div class="explain"><strong>설명</strong><br>딕셔너리에서 <code>in</code>은 키가 존재하는지 확인합니다.</div>
+
+<h3>예제 93. 딕셔너리 컴프리헨션</h3>
+<pre><code>squares = {number: number ** 2 for number in range(1, 6)}
+print(squares)</code></pre>
+<div class="output"><strong>실행 결과</strong><br>{1: 1, 2: 4, 3: 9, 4: 16, 5: 25}</div>
+<div class="explain"><strong>설명</strong><br>딕셔너리 컴프리헨션은 반복문을 이용해 키와 값을 한 줄로 생성하는 문법입니다.</div>
+</section>
+
+<section>
+<h2>4. 집합 — 예제 94~100</h2>
+
+<h3>예제 94. 집합 만들기</h3>
+<pre><code>numbers = {1, 2, 3, 4, 5}
+print(numbers)</code></pre>
+<div class="explain"><strong>설명</strong><br>집합은 중괄호를 사용하지만, 딕셔너리처럼 키와 값의 쌍이 아닌 값만 저장합니다.</div>
+
+<h3>예제 95. 집합의 중복 제거</h3>
+<pre><code>numbers = {1, 2, 2, 3, 3, 3, 4}
+print(numbers)</code></pre>
+<div class="output"><strong>실행 결과 예시</strong><br>{1, 2, 3, 4}</div>
+<div class="explain"><strong>설명</strong><br>집합은 같은 값을 한 번만 저장합니다. 출력 순서는 일정하지 않을 수 있습니다.</div>
+
+<h3>예제 96. add로 요소 추가</h3>
+<pre><code>animals = {"고양이", "강아지"}
+animals.add("토끼")
+
+print(animals)</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>add()</code>는 집합에 요소 하나를 추가합니다.</div>
+
+<h3>예제 97. update로 여러 요소 추가</h3>
+<pre><code>animals = {"고양이", "강아지"}
+animals.update(["토끼", "햄스터"])
+
+print(animals)</code></pre>
+
+<div class="explain"><strong>설명</strong><br><code>update()</code>는 리스트, 튜플, 집합 등에 있는 여러 요소를 한 번에 추가합니다.</div>
+
+<h3>예제 98. remove와 discard</h3>
+<pre><code>animals = {"고양이", "강아지", "토끼"}
+
+animals.remove("토끼")
+animals.discard("햄스터")
+
+print(animals)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>{'고양이', '강아지'}</div>
+<div class="warning"><strong>주의</strong><br><code>remove()</code>는 없는 값을 삭제하면 오류가 나지만, <code>discard()</code>는 오류 없이 지나갑니다.</div>
+
+<h3>예제 99. 합집합</h3>
+<pre><code>class_a = {"민수", "지민", "서연"}
+class_b = {"지민", "도윤", "하늘"}
+
+print(class_a | class_b)
+print(class_a.union(class_b))</code></pre>
+
+<div class="explain"><strong>설명</strong><br>합집합은 두 집합의 모든 요소를 중복 없이 합친 결과입니다.</div>
+
+<h3>예제 100. 교집합과 차집합</h3>
+<pre><code>class_a = {"민수", "지민", "서연"}
+class_b = {"지민", "도윤", "하늘"}
+
+print(class_a & class_b)
+print(class_a - class_b)</code></pre>
+
+<div class="output"><strong>실행 결과 예시</strong><br>{'지민'}<br>{'민수', '서연'}</div>
+<div class="explain"><strong>설명</strong><br><code>&</code>는 교집합, <code>-</code>는 차집합을 구합니다.</div>
+
+<div class="summary">
+<h3>2편 핵심 요약</h3>
+<ul>
+<li>리스트는 순서가 있고 수정할 수 있는 자료형입니다.</li>
+<li>튜플은 순서가 있지만 수정할 수 없는 자료형입니다.</li>
+<li>딕셔너리는 키와 값의 쌍으로 데이터를 저장합니다.</li>
+<li>집합은 중복을 허용하지 않으며 합집합·교집합·차집합 연산에 유용합니다.</li>
+<li>자료구조를 적절히 선택하면 데이터를 더 효율적으로 저장하고 처리할 수 있습니다.</li>
+</ul>
+</div>
+</section>
+</main>
+
+<footer>파이썬 완전 문법 300예제 · 2편 자료구조 기초 51~100</footer>
+</body>
+</html>

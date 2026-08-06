@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보융합탐구과제 5차시 | 데이터 윤리와 개인정보 보호</title>
+<style>
+:root{
+ --navy:#18365f;--blue:#2d72b3;--sky:#eaf5ff;--green:#2f8b69;--mint:#eaf8f3;
+ --gold:#e5a52d;--red:#cf5149;--purple:#7157a5;--ink:#1f2937;--muted:#667085;
+ --line:#d8e3ee;--paper:#fff;--bg:#f5f8fc;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.72;
+background:radial-gradient(circle at 8% 0,#e6f3ff 0,transparent 30%),radial-gradient(circle at 94% 5%,#eaf9f3 0,transparent 28%),var(--bg)}
+header{position:relative;overflow:hidden;color:#fff;padding:58px 24px 46px;background:linear-gradient(135deg,#102b50,#2b6eaa 58%,#4d90cf)}
+header:before,header:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.08)}
+header:before{width:250px;height:250px;left:-100px;bottom:-145px}header:after{width:340px;height:340px;right:-100px;top:-155px}
+.header-inner{max-width:1180px;margin:auto;position:relative;z-index:1}.eyebrow{font-weight:900;letter-spacing:.08em;color:#d7ecff}
+h1{font-size:clamp(31px,5vw,54px);line-height:1.17;margin:10px 0 14px}.subtitle{font-size:18px;max-width:960px;color:#eef7ff}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.badge{padding:8px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.34);background:rgba(255,255,255,.1);font-size:14px}
+nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1180px;margin:auto;padding:10px 16px;display:flex;gap:8px;overflow:auto}.nav-inner a{text-decoration:none;white-space:nowrap;color:var(--navy);font-weight:900;padding:8px 12px;border-radius:9px}.nav-inner a:hover{background:var(--sky)}
+main{max-width:1180px;margin:auto;padding:28px 18px 80px}section{scroll-margin-top:76px;margin:28px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 10px 30px rgba(22,53,95,.06)}
+h2{font-size:28px;color:var(--navy);margin:0 0 18px;display:flex;align-items:center;gap:10px}h3{color:var(--blue);margin:22px 0 10px}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media(max-width:820px){.grid-2,.grid-3{grid-template-columns:1fr}}
+.label{display:inline-block;background:var(--blue);color:#fff;border-radius:999px;padding:4px 10px;font-size:13px;font-weight:900}
+.highlight{background:linear-gradient(90deg,#fff7df,#fff);border-left:5px solid var(--gold)}.quote{font-size:18px;font-weight:800;color:#294766}
+.timeline{display:grid;grid-template-columns:120px 1fr;gap:12px 18px}.time{font-weight:900;color:var(--blue)}
+.activity{background:#f8fbff;border:1px solid #c9ddec;border-radius:14px;padding:18px}.activity h3{margin-top:0}
+.concept{margin:22px 0;border-top:5px solid var(--blue)}.concept-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.num{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--navy);color:#fff;font-weight:900}
+pre{background:#111827;color:#e5eefb;padding:18px;border-radius:13px;overflow:auto;font-size:14px;line-height:1.55}code{font-family:Consolas,"Courier New",monospace}
+.explain{background:#f8fbff;border:1px dashed #aac6e4;border-radius:12px;padding:15px}
+.question{background:#fbfcfe;border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0}.question-title{font-weight:900;color:var(--navy);margin-bottom:10px}
+.option{display:block;margin:8px 0;padding:8px 10px;border-radius:8px}.option:hover{background:#eef6ff}
+input[type=checkbox],input[type=radio]{transform:scale(1.12);margin-right:8px}.answer-box{display:none;margin-top:12px;padding:12px;border-radius:10px;background:#eefaf5;border-left:4px solid var(--green)}
+.topic-card{border-top:4px solid var(--gold)}table{width:100%;border-collapse:collapse}th,td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}th{background:#eaf3fc;color:var(--navy)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+input[type=text]{width:100%;padding:13px;border:1px solid #b9c8d8;border-radius:10px;font-size:16px}
+button{border:0;border-radius:11px;padding:12px 18px;font-size:15px;font-weight:900;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 5px 14px rgba(43,111,174,.2)}
+button.green{background:var(--green)}button.secondary{background:#64748b}button.gold{background:#b97800}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.score-panel{display:none;margin-top:18px;padding:18px;border:2px solid #8bc0ef;border-radius:14px;background:#eff8ff}
+.correct{background:#eaf9f1!important}.wrong{background:#fff0ef!important}.small{font-size:13px;color:var(--muted)}.footer{text-align:center;padding:25px;color:#6b7280}
+.notice{padding:14px;border-radius:12px;background:#fff8e7;border:1px solid #f0d08c}
+@media print{nav,.actions,button{display:none!important}body{background:#fff}.card{box-shadow:none;break-inside:avoid}.answer-box{display:block}}
+</style>
+</head>
+<body>
+<header><div class="header-inner">
+<div class="eyebrow">2022 개정 교육과정 · 정보융합탐구과제</div>
+<h1>5차시 목표지향 개념기반 수업지도안</h1>
+<div class="subtitle">데이터 윤리와 개인정보 보호 — 개인정보, 저작권, 편향, 데이터 최소 수집 원칙을 탐구 설계에 반영하고, 비식별화·동의·출처 표시·CCL을 활용하여 책임 있는 연구 계획을 세운다.</div>
+<div class="badges"><span class="badge">개인정보 보호</span><span class="badge">데이터 최소 수집</span><span class="badge">비식별화</span><span class="badge">동의</span><span class="badge">편향 점검</span><span class="badge">저작권·CCL</span></div>
+</div></header>
+
+<nav><div class="nav-inner">
+<a href="#overview">수업 개요</a><a href="#standards">성취기준</a><a href="#opening">시작 멘트</a><a href="#activity">핵심 활동</a>
+<a href="#concepts">핵심 개념</a><a href="#papers">탐구 주제</a><a href="#closing">끝 멘트</a><a href="#formative">형성평가</a><a href="#diagnostic">진단평가</a><a href="#submit">제출</a>
+</div></nav>
+
+<main>
+<section id="overview" class="card">
+<h2>🧭 수업 개요</h2>
+<div class="grid-2">
+<div><span class="label">학습 주제</span><h3>데이터 윤리와 개인정보 보호</h3>
+<p>탐구 과정에서 수집·저장·분석·공유하는 데이터가 개인과 사회에 미칠 영향을 살펴본다. 개인정보 최소 수집, 참여 동의, 비식별화, 편향 점검, 출처 표시, 저작권과 CCL 조건을 실제 탐구 설계표에 반영한다.</p></div>
+<div><span class="label">핵심 산출물</span><ul>
+<li>개인정보 최소 수집 점검표</li><li>참여 동의 안내문 초안</li><li>가명화·범주화 적용 예시</li><li>편향 및 공정성 점검표</li><li>출처·저작자·CCL 표시 문장</li>
+</ul></div></div>
+<div class="notice"><b>수업 유의:</b> 이 자료는 교육용 윤리 원칙을 다룹니다. 실제 연구에서는 학교 지침, 자료 제공기관의 이용 조건, 적용되는 법과 절차를 함께 확인해야 합니다.</div>
+<h3>차시 운영 예시</h3>
+<div class="timeline">
+<div class="time">도입 8분</div><div>“분석에 유용한 정보”와 “수집해도 되는 정보”가 항상 같은지 사례를 통해 토의한다.</div>
+<div class="time">개념 17분</div><div>개인정보, 최소 수집, 동의, 비식별화, 재식별 위험, 보안, 편향, 저작권, 출처 표시, CCL을 학습한다.</div>
+<div class="time">활동 20분</div><div>기존 수집 계획에서 불필요한 개인정보를 제거하고, 동의·보관·출처·라이선스 항목을 추가한다.</div>
+<div class="time">정리 5분</div><div>형성평가와 윤리 선언문 작성, 다음 차시 데이터 형식과 전처리 예고</div>
+</div>
+</section>
+
+<section id="standards" class="card">
+<h2>🎯 성취기준과 학습 목표</h2>
+<h3>성취기준</h3>
+<table>
+<tr><th>영역</th><th>수업에 적용한 성취기준</th></tr>
+<tr><td>개인정보 보호</td><td>탐구 목적에 필요한 최소한의 개인정보만 수집하고, 동의·비식별화·접근 통제·보관 기간을 반영한 계획을 세운다.</td></tr>
+<tr><td>데이터 공정성</td><td>표본과 데이터 처리 과정에서 발생할 수 있는 편향을 발견하고, 집단별 영향과 한계를 점검한다.</td></tr>
+<tr><td>저작권과 출처</td><td>데이터, 그림, 글, 코드의 저작자와 출처를 표시하고 이용 허락 및 라이선스 조건을 확인한다.</td></tr>
+<tr><td>책임 있는 공유</td><td>데이터 공개의 이익과 재식별·오용 위험을 비교하여 안전한 공유 범위와 방법을 제안한다.</td></tr>
+</table>
+<h3>학습 목표</h3>
+<ol>
+<li>개인정보와 민감할 수 있는 정보의 차이를 사례로 설명할 수 있다.</li>
+<li>데이터 최소 수집 원칙에 따라 불필요한 항목을 제거할 수 있다.</li>
+<li>연구 참여 동의에 포함할 핵심 내용을 작성할 수 있다.</li>
+<li>가명화, 범주화, 삭제 등 비식별화 방법과 재식별 위험을 설명할 수 있다.</li>
+<li>표본·측정·알고리즘의 편향을 점검하고 개선 방법을 제안할 수 있다.</li>
+<li>저작권, 출처 표시, CCL 조건을 탐구 산출물에 적용할 수 있다.</li>
+</ol>
+</section>
+
+<section id="opening" class="card highlight">
+<h2>🌅 수업 시작 멘트</h2>
+<p class="quote">“칸트는 사람을 목적 그 자체로 대해야 한다고 말했습니다. 데이터 속 한 줄도 사실은 한 사람의 삶과 연결될 수 있습니다. 과학자 마리 퀴리는 발견의 힘만큼 책임도 중요하다는 태도를 보여 주었고, 수학자 라플라스는 자료가 많아질수록 판단의 힘도 커진다는 사실을 알려 주었습니다. 오늘 우리는 ‘할 수 있는 분석’보다 한 걸음 더 나아가 ‘해도 되는 분석인가’를 질문하겠습니다. 좋은 연구자는 데이터를 많이 가진 사람이 아니라, 사람을 잃지 않고 데이터를 다루는 사람입니다.”</p>
+</section>
+
+<section id="activity" class="card">
+<h2>🛡️ 핵심 활동</h2>
+<div class="grid-3">
+<div class="activity"><h3>1. 최소 수집</h3><p>연구 질문에 꼭 필요한 항목과 편의를 위해 넣은 항목을 구분하고 불필요한 개인정보를 제거한다.</p></div>
+<div class="activity"><h3>2. 위험 줄이기</h3><p>이름 삭제, 참여자 ID 사용, 연령 범주화, 접근 권한 설정, 보관 기간 지정으로 위험을 줄인다.</p></div>
+<div class="activity"><h3>3. 권리 존중</h3><p>자발적 동의, 철회 가능성, 저작자 표시, 라이선스 조건과 공정성 점검을 계획서에 기록한다.</p></div>
+</div>
+</section>
+
+<section id="concepts">
+<h2>🧩 학습할 핵심 개념 10개</h2>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">1</span> 개인정보와 데이터 책임</h3><span class="label">사람과 연결되는 정보</span></div>
+<p><b>개념 상세 설명:</b> 개인정보는 개인을 직접 알아볼 수 있거나 다른 정보와 결합하여 개인을 알아볼 가능성이 있는 정보이다. 이름뿐 아니라 학번, 연락처, 위치, 정밀한 시간 기록, 희귀한 특성의 조합도 개인과 연결될 수 있다.</p>
+<pre><code>fields = ["이름", "학번", "학년", "교실 온도", "정확한 위치"]
+personal = [x for x in fields if x in ["이름", "학번", "정확한 위치"]]
+print("개인 식별 위험 항목:", personal)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 자료 항목 중 개인을 알아볼 위험이 큰 항목을 목록에서 골라낸다. 실제 판단에서는 여러 항목이 결합될 가능성도 함께 살펴야 한다.</div>
+<div class="question" data-answer="0,2,4">
+<div class="question-title">[개념 1] 개인정보와 데이터 책임에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c1" value="0">① 이름이 없어도 정보 조합으로 개인을 알아볼 수 있다.</label>
+<label class="option"><input type="checkbox" name="c1" value="1">② 공개된 정보는 어떤 목적으로든 자유롭게 사용할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c1" value="2">③ 정확한 위치와 시간 기록은 개인 식별 위험을 높일 수 있다.</label>
+<label class="option"><input type="checkbox" name="c1" value="3">④ 연구 목적이 좋으면 개인정보 보호는 고려하지 않아도 된다.</label>
+<label class="option"><input type="checkbox" name="c1" value="4">⑤ 개인에게 미칠 영향을 탐구 설계 단계부터 고려해야 한다.</label>
+<div class="answer-box">정답: ①, ③, ⑤ — 직접 식별자뿐 아니라 정보 결합과 개인 영향도 고려해야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">2</span> 데이터 최소 수집</h3><span class="label">필요한 만큼만</span></div>
+<p><b>개념 상세 설명:</b> 데이터 최소 수집은 연구 목적을 달성하는 데 꼭 필요한 정보만 수집하는 원칙이다. “나중에 쓸 수도 있다”는 이유로 항목을 늘리면 유출과 오용 위험도 함께 커진다.</p>
+<pre><code>requested = ["학년", "만족도", "이름", "전화번호"]
+needed = ["학년", "만족도"]
+final_fields = [x for x in requested if x in needed]
+print("최종 수집 항목:", final_fields)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 요청한 항목 중 연구에 꼭 필요한 항목만 남긴다. 최소 수집은 수집 단계뿐 아니라 저장 기간과 공유 범위에도 적용된다.</div>
+<div class="question" data-answer="0,1,3">
+<div class="question-title">[개념 2] 데이터 최소 수집 원칙에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c2" value="0">① 연구 질문에 필요한 항목만 수집한다.</label>
+<label class="option"><input type="checkbox" name="c2" value="1">② 불필요한 직접 식별자는 제거한다.</label>
+<label class="option"><input type="checkbox" name="c2" value="2">③ 미래에 쓸 가능성만 있으면 모든 정보를 모은다.</label>
+<label class="option"><input type="checkbox" name="c2" value="3">④ 수집 목적이 끝난 자료의 보관 필요성을 다시 검토한다.</label>
+<label class="option"><input type="checkbox" name="c2" value="4">⑤ 자료가 많을수록 윤리적 위험은 항상 줄어든다.</label>
+<div class="answer-box">정답: ①, ②, ④ — 필요한 범위, 기간, 공유 수준을 최소화해야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">3</span> 참여 동의</h3><span class="label">알고 선택할 권리</span></div>
+<p><b>개념 상세 설명:</b> 참여 동의는 연구 목적, 수집 항목, 이용 방법, 보관 기간, 예상 위험, 참여 철회 방법 등을 이해하기 쉬운 말로 안내한 뒤 자발적으로 참여하도록 하는 절차이다. 강요나 불이익이 없어야 한다.</p>
+<pre><code>consent = {
+    "연구목적": "수업 만족도 분석",
+    "수집항목": ["학년", "만족도"],
+    "보관기간": "학기 종료 후 삭제",
+    "철회가능": True
+}
+for key, value in consent.items():
+    print(key, ":", value)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 동의 안내문에 포함할 핵심 내용을 딕셔너리로 정리한다. 동의는 단순한 체크 표시가 아니라 충분한 설명과 자발적인 선택을 전제로 한다.</div>
+<div class="question" data-answer="1,2,4">
+<div class="question-title">[개념 3] 참여 동의에 포함할 내용 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c3" value="0">① 참여하지 않으면 불이익을 준다는 안내</label>
+<label class="option"><input type="checkbox" name="c3" value="1">② 연구 목적과 수집 항목</label>
+<label class="option"><input type="checkbox" name="c3" value="2">③ 자료 이용·보관 방법과 예상 위험</label>
+<label class="option"><input type="checkbox" name="c3" value="3">④ 이해하기 어려운 전문 용어만 사용한 설명</label>
+<label class="option"><input type="checkbox" name="c3" value="4">⑤ 자발적 참여와 철회 방법</label>
+<div class="answer-box">정답: ②, ③, ⑤ — 충분한 설명, 자발성, 철회 가능성이 중요하다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">4</span> 비식별화와 가명화</h3><span class="label">식별 위험 줄이기</span></div>
+<p><b>개념 상세 설명:</b> 비식별화는 개인을 알아볼 위험을 줄이기 위한 처리의 넓은 개념이다. 이름 삭제, 가명 ID 부여, 연령 범주화, 위치 범위 확대, 일부 값 숨김 등의 방법이 있다. 가명화된 자료도 추가 정보와 결합하면 다시 식별될 수 있다.</p>
+<pre><code>record = {"이름":"김하늘", "나이":17, "지역":"전주시 완산구"}
+safe = {
+    "참여자ID":"P014",
+    "연령대":"10대",
+    "지역":"전주시"
+}
+print(safe)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 이름은 참여자 ID로 바꾸고, 나이와 지역은 더 넓은 범주로 변환했다. 정보 손실과 보호 수준 사이의 균형을 고려해야 한다.</div>
+<div class="question" data-answer="0,2,3">
+<div class="question-title">[개념 4] 비식별화에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c4" value="0">① 직접 식별자를 삭제하거나 가명으로 바꿀 수 있다.</label>
+<label class="option"><input type="checkbox" name="c4" value="1">② 이름만 지우면 어떤 자료도 완전히 안전하다.</label>
+<label class="option"><input type="checkbox" name="c4" value="2">③ 나이와 위치를 범주화하여 식별 위험을 줄일 수 있다.</label>
+<label class="option"><input type="checkbox" name="c4" value="3">④ 가명 자료도 다른 정보와 결합될 가능성을 점검해야 한다.</label>
+<label class="option"><input type="checkbox" name="c4" value="4">⑤ 비식별화하면 보안과 접근 통제가 필요 없다.</label>
+<div class="answer-box">정답: ①, ③, ④ — 비식별화 이후에도 재식별 가능성과 보안 위험을 관리해야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">5</span> 재식별 위험과 결합 정보</h3><span class="label">익명처럼 보여도</span></div>
+<p><b>개념 상세 설명:</b> 재식별은 익명 또는 가명처럼 보이는 자료를 다른 자료와 결합하여 개인을 다시 알아보는 것이다. 희귀한 조합, 정밀한 위치, 작은 집단, 정확한 시간 기록은 위험을 높인다.</p>
+<pre><code>records = [
+    {"학년":1, "동아리":"천문", "지역":"A"},
+    {"학년":1, "동아리":"천문", "지역":"A"},
+    {"학년":3, "동아리":"희귀동아리", "지역":"B"}
+]
+for r in records:
+    if r["동아리"] == "희귀동아리":
+        print("재식별 위험이 큰 희귀 조합:", r)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 표본에서 매우 드문 특성 조합을 찾아 재식별 위험을 점검한다. 실제 분석에서는 빈도 기준과 공개 범위를 더 체계적으로 검토한다.</div>
+<div class="question" data-answer="0,1,4">
+<div class="question-title">[개념 5] 재식별 위험을 높일 수 있는 조건 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c5" value="0">① 매우 작은 집단의 희귀한 특성 조합</label>
+<label class="option"><input type="checkbox" name="c5" value="1">② 정밀한 위치와 시간 정보</label>
+<label class="option"><input type="checkbox" name="c5" value="2">③ 넓은 지역 단위와 충분히 큰 범주</label>
+<label class="option"><input type="checkbox" name="c5" value="3">④ 불필요한 항목을 삭제한 집계 통계</label>
+<label class="option"><input type="checkbox" name="c5" value="4">⑤ 외부 공개 자료와 쉽게 결합되는 정보</label>
+<div class="answer-box">정답: ①, ②, ⑤ — 희귀성, 정밀성, 외부 결합 가능성이 위험을 높인다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">6</span> 안전한 저장과 접근 통제</h3><span class="label">보호는 수집 후에도</span></div>
+<p><b>개념 상세 설명:</b> 개인정보 보호는 수집 단계에서 끝나지 않는다. 파일 접근 권한, 비밀번호, 암호화, 백업, 전송 방법, 보관 기간과 삭제 절차를 정해야 한다. 분석에 필요한 사람만 접근하도록 제한한다.</p>
+<pre><code>access = {
+    "연구담당자": "읽기·수정",
+    "분석학생": "비식별 자료 읽기",
+    "외부공개": "집계 결과만"
+}
+for role, permission in access.items():
+    print(role, ":", permission)</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 역할에 따라 접근 권한을 다르게 정한다. 원자료, 비식별 자료, 공개 결과를 분리하면 불필요한 노출을 줄일 수 있다.</div>
+<div class="question" data-answer="1,3,4">
+<div class="question-title">[개념 6] 안전한 데이터 관리 방법 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c6" value="0">① 모든 참여자에게 원자료 수정 권한을 준다.</label>
+<label class="option"><input type="checkbox" name="c6" value="1">② 역할에 따라 접근 권한을 제한한다.</label>
+<label class="option"><input type="checkbox" name="c6" value="2">③ 비밀번호를 파일 이름에 함께 적는다.</label>
+<label class="option"><input type="checkbox" name="c6" value="3">④ 원자료와 공개용 집계 자료를 분리한다.</label>
+<label class="option"><input type="checkbox" name="c6" value="4">⑤ 보관 기간과 안전한 삭제 절차를 정한다.</label>
+<div class="answer-box">정답: ②, ④, ⑤ — 최소 권한, 자료 분리, 보관·삭제 관리가 필요하다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">7</span> 데이터 편향과 공정성</h3><span class="label">누가 빠졌는가</span></div>
+<p><b>개념 상세 설명:</b> 편향은 표본 선정, 측정 도구, 라벨링, 분석 방법에서 특정 집단에 불리한 왜곡이 생기는 현상이다. 전체 정확도만 보지 말고 집단별 포함 비율과 오류율을 비교해야 한다.</p>
+<pre><code>accuracy = {"집단A": 0.91, "집단B": 0.72, "집단C": 0.89}
+gap = max(accuracy.values()) - min(accuracy.values())
+print("집단별 정확도:", accuracy)
+print("최대 격차:", round(gap, 2))</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 집단별 정확도를 비교하고 최대 격차를 계산한다. 격차가 발견되면 표본 수, 측정 조건, 라벨 기준과 모델 특징을 점검한다.</div>
+<div class="question" data-answer="0,2,4">
+<div class="question-title">[개념 7] 데이터 편향을 점검하는 방법 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c7" value="0">① 집단별 표본 수와 포함 비율을 비교한다.</label>
+<label class="option"><input type="checkbox" name="c7" value="1">② 전체 평균이 높으면 집단별 결과는 볼 필요가 없다.</label>
+<label class="option"><input type="checkbox" name="c7" value="2">③ 집단별 오류율과 결과 차이를 확인한다.</label>
+<label class="option"><input type="checkbox" name="c7" value="3">④ 불리한 결과가 나온 집단을 분석에서 제외한다.</label>
+<label class="option"><input type="checkbox" name="c7" value="4">⑤ 표본 선정과 측정·라벨링 과정을 함께 점검한다.</label>
+<div class="answer-box">정답: ①, ③, ⑤ — 대표성, 집단별 결과, 데이터 생성 과정을 함께 살펴야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">8</span> 저작권과 이용 허락</h3><span class="label">공개와 자유 이용은 다르다</span></div>
+<p><b>개념 상세 설명:</b> 인터넷에서 찾을 수 있다는 사실은 자유롭게 복사·수정·배포해도 된다는 뜻이 아니다. 글, 사진, 그림, 코드, 데이터의 저작자와 이용 조건을 확인하고 필요한 허락을 받아야 한다.</p>
+<pre><code>resources = [
+    {"title":"공공 통계표", "license":"출처 표시 후 이용"},
+    {"title":"개인 블로그 사진", "license":"이용 조건 확인 필요"}
+]
+for item in resources:
+    print(item["title"], "-", item["license"])</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 자료마다 제목과 이용 조건을 함께 기록한다. 출처 표시와 이용 허락은 서로 다른 문제이므로 둘 다 확인해야 한다.</div>
+<div class="question" data-answer="0,1,3">
+<div class="question-title">[개념 8] 저작권과 이용 허락에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c8" value="0">① 인터넷에 공개된 자료도 이용 조건을 확인해야 한다.</label>
+<label class="option"><input type="checkbox" name="c8" value="1">② 글·사진·코드·데이터도 권리와 조건이 있을 수 있다.</label>
+<label class="option"><input type="checkbox" name="c8" value="2">③ 출처만 쓰면 어떤 자료든 자유롭게 수정·판매할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c8" value="3">④ 필요한 경우 저작자나 제공기관의 허락을 받아야 한다.</label>
+<label class="option"><input type="checkbox" name="c8" value="4">⑤ 학교 과제에서는 저작권이 적용되지 않는다.</label>
+<div class="answer-box">정답: ①, ②, ④ — 공개 여부, 출처 표시, 이용 허락을 구분해야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">9</span> 출처 표시</h3><span class="label">누가·무엇을·어디서</span></div>
+<p><b>개념 상세 설명:</b> 출처 표시는 저작자 또는 기관, 자료 제목, 게시 또는 갱신 시점, 자료 위치, 이용일, 라이선스를 가능한 범위에서 기록하는 것이다. 독자가 자료를 다시 확인할 수 있어야 한다.</p>
+<pre><code>citation = {
+    "기관": "공공데이터 제공기관",
+    "자료명": "지역별 대기질 자료",
+    "갱신일": "2026-06-30",
+    "라이선스": "이용 조건 확인"
+}
+print(" / ".join(f"{k}: {v}" for k, v in citation.items()))</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> 출처 표시의 핵심 항목을 일정한 형식으로 출력한다. 보고서 전체에서 같은 인용 형식을 유지하면 확인이 쉽다.</div>
+<div class="question" data-answer="1,2,4">
+<div class="question-title">[개념 9] 바람직한 출처 표시에 포함할 내용 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c9" value="0">① 검색 엔진 이름만 기록한다.</label>
+<label class="option"><input type="checkbox" name="c9" value="1">② 저작자 또는 제공기관과 자료명</label>
+<label class="option"><input type="checkbox" name="c9" value="2">③ 게시·갱신 시점과 자료 위치 또는 확인 정보</label>
+<label class="option"><input type="checkbox" name="c9" value="3">④ 출처를 찾을 수 없도록 링크를 생략한다.</label>
+<label class="option"><input type="checkbox" name="c9" value="4">⑤ 적용되는 라이선스나 이용 조건</label>
+<div class="answer-box">정답: ②, ③, ⑤ — 자료를 다시 확인하고 이용 조건을 파악할 수 있어야 한다.</div>
+</div></div>
+
+<div class="card concept">
+<div class="concept-head"><h3><span class="num">10</span> CCL 이해와 적용</h3><span class="label">조건을 조합한 이용 허락</span></div>
+<p><b>개념 상세 설명:</b> CCL은 저작자가 일정한 조건 아래 이용을 허락하는 표시 체계이다. BY는 저작자 표시, NC는 비영리, ND는 변경 금지, SA는 동일조건변경허락을 뜻한다. 구체적인 이용 가능 범위는 표시된 조건을 함께 읽어야 한다.</p>
+<pre><code>license_terms = {
+    "BY": "저작자 표시",
+    "NC": "비영리",
+    "ND": "변경 금지",
+    "SA": "동일조건변경허락"
+}
+selected = ["BY", "NC", "SA"]
+print("적용 조건:", [license_terms[x] for x in selected])</code></pre>
+<div class="explain"><b>코드 상세 설명:</b> CCL 기호를 의미와 연결하고 선택한 조건을 출력한다. 여러 조건이 함께 표시되면 모두 지켜야 한다.</div>
+<div class="question" data-answer="0,2,3">
+<div class="question-title">[개념 10] CCL에 대한 옳은 설명 3개를 고르시오.</div>
+<label class="option"><input type="checkbox" name="c10" value="0">① BY는 저작자 표시 조건이다.</label>
+<label class="option"><input type="checkbox" name="c10" value="1">② NC는 반드시 내용을 변경해야 한다는 뜻이다.</label>
+<label class="option"><input type="checkbox" name="c10" value="2">③ ND는 변경하지 않고 이용해야 하는 조건이다.</label>
+<label class="option"><input type="checkbox" name="c10" value="3">④ SA는 변경물을 같은 조건으로 공유하도록 요구할 수 있다.</label>
+<label class="option"><input type="checkbox" name="c10" value="4">⑤ CCL이 붙으면 저작자 표시 없이 무엇이든 할 수 있다.</label>
+<div class="answer-box">정답: ①, ③, ④ — 표시된 CCL 조건을 모두 확인하고 지켜야 한다.</div>
+</div></div>
+</section>
+
+<section id="papers" class="card">
+<h2>📚 학습과 관련한 탐구 보고서 주제 예시 5개</h2>
+<div class="grid-2">
+<div class="card topic-card"><h3>1. 익명 설문에서 개인정보 최소 수집이 응답 신뢰도에 미치는 영향</h3><p><b>핵심 윤리:</b> 이름·연락처를 수집하지 않고 참여 목적과 철회 방법을 안내한다.</p><p><b>탐구 관점:</b> 개인정보 요구 수준에 따른 응답률과 무응답률을 비교한다.</p></div>
+<div class="card topic-card"><h3>2. 가명화 수준에 따른 데이터 분석 가능성과 재식별 위험 비교</h3><p><b>핵심 윤리:</b> 이름 삭제, 연령 범주화, 지역 범위 확대를 단계별로 적용한다.</p><p><b>탐구 관점:</b> 보호 수준이 높아질 때 분석 정보가 얼마나 줄어드는지 살펴본다.</p></div>
+<div class="card topic-card"><h3>3. 학년별 표본 불균형이 인공지능 분류 결과에 미치는 영향</h3><p><b>핵심 윤리:</b> 집단별 표본 수와 오류율을 공개하고 불리한 영향을 점검한다.</p><p><b>탐구 관점:</b> 균형 표본과 불균형 표본의 성능 차이를 비교한다.</p></div>
+<div class="card topic-card"><h3>4. 공공데이터 출처 표시 방식에 따른 자료 재현 가능성 연구</h3><p><b>핵심 윤리:</b> 제공기관, 자료명, 갱신일, 이용일, 라이선스를 기록한다.</p><p><b>탐구 관점:</b> 출처 정보의 구체성이 자료 재확인 성공률에 미치는 영향을 분석한다.</p></div>
+<div class="card topic-card"><h3>5. CCL 조건별 디지털 학습 자료 재사용 가능 범위 비교</h3><p><b>핵심 윤리:</b> BY, NC, ND, SA의 의미를 구분하고 조건을 지킨다.</p><p><b>탐구 관점:</b> 수정·배포·상업적 이용 가능 범위를 사례별로 비교한다.</p></div>
+</div>
+</section>
+
+<section id="closing" class="card highlight">
+<h2>🌙 수업 끝 멘트</h2>
+<p class="quote">“시는 남의 한 구절을 빌릴 때 따옴표를 잊지 않고, 소설은 인물의 비밀을 아무 장면에서나 폭로하지 않습니다. 희곡은 무대 뒤의 약속을 지켜야 공연이 이어지고, 음악은 다른 사람의 선율을 존중할 때 더 멋진 합주가 됩니다. 데이터도 마찬가지입니다. 이름을 지우고, 동의를 받고, 출처를 쓰고, 편향을 살피는 일은 연구를 느리게 만드는 장애물이 아닙니다. 오히려 연구가 넘어지지 않도록 묶어 주는 안전벨트입니다. 안전벨트가 조금 귀찮아도, 연구가 과속 딱지를 받는 것보다는 낫겠지요.”</p>
+</section>
+
+<section id="formative" class="card">
+<h2>✅ 형성평가 OX 퀴즈 10개</h2><div id="oxQuestions"></div>
+</section>
+
+<section id="diagnostic" class="card">
+<h2>📝 진단평가 5지선다형 10개</h2>
+<p>각 문항은 옳은 것 3개와 틀린 것 2개로 구성되어 있습니다. 옳은 것 3개를 모두 선택하세요.</p>
+<div id="diagQuestions"></div>
+</section>
+
+<section id="submit" class="card">
+<h2>📤 학번·이름 입력 및 결과 저장</h2>
+<div class="form-row">
+<label>학번<input type="text" id="studentId" placeholder="예: 1101"></label>
+<label>이름<input type="text" id="studentName" placeholder="예: 홍길동"></label>
+</div>
+<div class="actions">
+<button onclick="gradeAll()">전체 채점</button>
+<button class="green" onclick="downloadResult()">TXT 결과 저장</button>
+<button class="secondary" onclick="showAnswers()">정답·풀이 보기</button>
+<button class="gold" onclick="window.print()">인쇄</button>
+</div>
+<div id="scorePanel" class="score-panel"></div>
+<p class="small">저장 파일명: 학번_이름_점수_5차시_응시시각.txt</p>
+</section>
+</main>
+<div class="footer">정보융합탐구과제 5차시 · 목표지향 개념기반 수업지도안</div>
+
+<script>
+const oxData=[
+["이름이 없더라도 위치, 시간, 희귀한 특성이 결합되면 개인을 알아볼 수 있다.","O","간접 식별자 조합도 재식별 가능성을 만들 수 있다."],
+["연구 목적이 좋으면 필요한 범위를 넘어 개인정보를 수집해도 된다.","X","좋은 목적이라도 최소 수집과 적절한 절차를 지켜야 한다."],
+["참여 동의는 연구 목적, 수집 항목, 이용 방법과 철회 가능성을 이해하기 쉽게 알려야 한다.","O","동의는 충분한 설명과 자발적 선택을 전제로 한다."],
+["이름을 참여자 ID로 바꾸면 재식별 위험이 완전히 사라진다.","X","다른 정보와 결합하면 다시 식별될 수 있다."],
+["원자료와 공개용 집계 자료를 분리하면 불필요한 노출을 줄일 수 있다.","O","자료 유형별 접근 권한을 구분하는 것이 안전하다."],
+["전체 정확도가 높으면 집단별 오류율은 확인하지 않아도 된다.","X","전체 평균이 집단별 불리한 결과를 가릴 수 있다."],
+["인터넷에 공개된 이미지도 저작권과 이용 조건을 확인해야 한다.","O","공개와 자유 이용은 같은 의미가 아니다."],
+["출처를 표시하면 모든 저작물을 원하는 방식으로 수정하고 판매할 수 있다.","X","출처 표시 외에도 이용 허락과 라이선스 조건을 지켜야 한다."],
+["CCL의 BY는 저작자 표시를 뜻한다.","O","저작자 또는 출처를 적절히 표시해야 한다."],
+["데이터 윤리는 수집뿐 아니라 저장, 분석, 공유, 삭제 과정에도 적용된다.","O","데이터 생애주기 전체에서 책임을 고려해야 한다."]
+];
+
+const diagData=[
+{q:"데이터 최소 수집 원칙에 해당하는 것 3개는?",o:["연구 질문에 필요한 항목만 모은다.","불필요한 직접 식별자를 제거한다.","목적 종료 후 보관 필요성을 다시 검토한다.","미래를 위해 가능한 모든 정보를 저장한다.","자료가 많을수록 위험이 자동으로 줄어든다."],a:[0,1,2],e:"항목, 기간, 공유 범위를 필요한 수준으로 제한한다."},
+{q:"참여 동의 안내문에 포함할 내용 3개는?",o:["연구 목적과 수집 항목","자료 이용 방법과 보관 기간","자발적 참여와 철회 방법","참여하지 않을 때의 불이익","이해하기 어려운 전문 용어만 사용한 설명"],a:[0,1,2],e:"충분한 설명과 자발성, 철회 가능성이 핵심이다."},
+{q:"비식별화 방법으로 적절한 것 3개는?",o:["이름을 참여자 ID로 바꾼다.","나이를 연령대로 범주화한다.","정밀한 위치를 넓은 지역 단위로 바꾼다.","원래 이름을 파일명에 남긴다.","모든 식별 정보를 공개한다."],a:[0,1,2],e:"삭제, 가명화, 범주화로 식별 가능성을 줄인다."},
+{q:"재식별 위험을 높일 수 있는 조건 3개는?",o:["희귀한 특성 조합","정확한 시간과 위치","외부 자료와의 결합 가능성","충분히 큰 집단의 집계 통계","불필요한 항목을 삭제한 공개 자료"],a:[0,1,2],e:"희귀성, 정밀성, 결합 가능성이 주요 위험 요인이다."},
+{q:"안전한 데이터 관리 방법 3개는?",o:["역할별 접근 권한을 제한한다.","원자료와 공개 자료를 분리한다.","보관 기간과 삭제 절차를 정한다.","비밀번호를 공개 게시판에 올린다.","모든 사람에게 수정 권한을 준다."],a:[0,1,2],e:"최소 권한, 자료 분리, 안전한 보관·삭제가 필요하다."},
+{q:"데이터 편향을 점검하는 방법 3개는?",o:["집단별 표본 수를 비교한다.","집단별 오류율과 결과 차이를 확인한다.","표본 선정과 라벨링 과정을 검토한다.","전체 평균만 확인한다.","불리한 집단을 제외한다."],a:[0,1,2],e:"대표성과 집단별 영향, 데이터 생성 과정을 함께 본다."},
+{q:"저작권을 존중하는 이용 방법 3개는?",o:["저작자와 출처를 표시한다.","이용 허락과 라이선스 조건을 확인한다.","필요한 경우 저작자의 허락을 받는다.","검색 결과에 나오면 자유롭게 사용한다.","학교 과제는 저작권과 무관하다."],a:[0,1,2],e:"출처, 허락, 이용 조건을 모두 확인해야 한다."},
+{q:"바람직한 출처 표시 항목 3개는?",o:["저작자 또는 제공기관","자료명과 게시·갱신 시점","자료 위치와 라이선스","검색 엔진 이름만 기록","확인할 수 없는 축약 표기"],a:[0,1,2],e:"자료를 다시 확인하고 조건을 알 수 있도록 기록한다."},
+{q:"CCL 조건에 대한 옳은 설명 3개는?",o:["BY는 저작자 표시이다.","NC는 비영리 조건이다.","ND는 변경 금지 조건이다.","SA는 출처 삭제 조건이다.","CCL이면 모든 조건 없이 이용 가능하다."],a:[0,1,2],e:"각 기호의 의미를 구분하고 함께 표시된 조건을 모두 지킨다."},
+{q:"책임 있는 탐구 설계의 특징 3개는?",o:["개인정보 최소 수집과 동의를 반영한다.","편향과 집단별 영향을 점검한다.","출처·저작권·공유 범위를 기록한다.","결과가 좋으면 윤리 절차를 생략한다.","자료를 무기한 보관한다."],a:[0,1,2],e:"개인 권리, 공정성, 저작권과 안전한 관리를 함께 반영한다."}
+];
+
+function renderOX(){
+ const wrap=document.getElementById("oxQuestions");
+ oxData.forEach((d,i)=>wrap.insertAdjacentHTML("beforeend",`
+ <div class="question" data-ox="${d[1]}">
+ <div class="question-title">${i+1}. ${d[0]}</div>
+ <label class="option"><input type="radio" name="ox${i}" value="O">O</label>
+ <label class="option"><input type="radio" name="ox${i}" value="X">X</label>
+ <div class="answer-box">정답: ${d[1]} — ${d[2]}</div></div>`));
+}
+function renderDiag(){
+ const wrap=document.getElementById("diagQuestions");
+ diagData.forEach((d,i)=>{
+  const ops=d.o.map((x,j)=>`<label class="option"><input type="checkbox" name="d${i}" value="${j}">${j+1}. ${x}</label>`).join("");
+  wrap.insertAdjacentHTML("beforeend",`<div class="question" data-answer="${d.a.join(",")}"><div class="question-title">${i+1}. ${d.q}</div>${ops}<div class="answer-box">정답: ${d.a.map(x=>x+1).join(", ")} — ${d.e}</div></div>`);
+ });
+}
+renderOX();renderDiag();
+
+function sameSet(a,b){return a.length===b.length&&a.every((v,i)=>v===b[i]);}
+function getChecks(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>Number(x.value)).sort((a,b)=>a-b);}
+function mark(q,ok){q.classList.remove("correct","wrong");q.classList.add(ok?"correct":"wrong");}
+let lastResult=null;
+function gradeAll(){
+ let concept=0,ox=0,diag=0,details=[];
+ for(let i=1;i<=10;i++){
+  const q=document.querySelector(`input[name="c${i}"]`).closest(".question");
+  const ans=q.dataset.answer.split(",").map(Number).sort((a,b)=>a-b),sel=getChecks(`c${i}`);
+  const ok=sameSet(ans,sel);if(ok)concept++;mark(q,ok);
+  details.push(`개념 ${i}: ${ok?"정답":"오답"} / 응답 ${sel.map(x=>x+1).join(",")||"미응답"} / 정답 ${ans.map(x=>x+1).join(",")}`);
+ }
+ oxData.forEach((d,i)=>{
+  const q=document.querySelector(`input[name="ox${i}"]`).closest(".question");
+  const sel=document.querySelector(`input[name="ox${i}"]:checked`)?.value||"미응답";
+  const ok=sel===d[1];if(ok)ox++;mark(q,ok);
+  details.push(`형성 OX ${i+1}: ${ok?"정답":"오답"} / 응답 ${sel} / 정답 ${d[1]} / ${d[2]}`);
+ });
+ diagData.forEach((d,i)=>{
+  const q=document.querySelector(`input[name="d${i}"]`).closest(".question"),sel=getChecks(`d${i}`);
+  const ok=sameSet(d.a,sel);if(ok)diag++;mark(q,ok);
+  details.push(`진단 ${i+1}: ${ok?"정답":"오답"} / 응답 ${sel.map(x=>x+1).join(",")||"미응답"} / 정답 ${d.a.map(x=>x+1).join(",")} / ${d.e}`);
+ });
+ const totalCorrect=concept+ox+diag,score=Math.round(totalCorrect/30*100);
+ lastResult={concept,ox,diag,totalCorrect,score,details,time:new Date()};
+ const panel=document.getElementById("scorePanel");panel.style.display="block";
+ panel.innerHTML=`<b>총점 ${score}점</b> (30문항 중 ${totalCorrect}문항 정답)<br>개념별 평가 ${concept}/10 · 형성평가 ${ox}/10 · 진단평가 ${diag}/10`;
+ panel.scrollIntoView({behavior:"smooth",block:"center"});return lastResult;
+}
+function showAnswers(){document.querySelectorAll(".answer-box").forEach(x=>x.style.display="block");}
+function safeName(s){return(s||"미입력").replace(/[\\/:*?"<>|]/g,"_").trim()||"미입력";}
+function pad(n){return String(n).padStart(2,"0")}
+function downloadResult(){
+ const id=safeName(document.getElementById("studentId").value),name=safeName(document.getElementById("studentName").value);
+ if(id==="미입력"||name==="미입력"){alert("학번과 이름을 입력하세요.");return;}
+ const r=gradeAll(),d=r.time;
+ const stamp=`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+ const text=["정보융합탐구과제 5차시 평가 결과","학습 주제: 데이터 윤리와 개인정보 보호",`학번: ${id}`,`이름: ${name}`,`점수: ${r.score}점`,
+ `개념별 평가: ${r.concept}/10`,`형성평가 OX: ${r.ox}/10`,`진단평가: ${r.diag}/10`,`응시시각: ${d.toLocaleString("ko-KR")}`,"","[문항별 결과]",...r.details].join("\r\n");
+ const blob=new Blob(["\ufeff"+text],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);a.download=`${id}_${name}_${r.score}점_5차시_${stamp}.txt`;a.click();URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>

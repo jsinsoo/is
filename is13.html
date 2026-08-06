@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보과학 13차시 목표지향 개념기반 수업지도안</title>
+<style>
+:root{
+  --navy:#17324d; --blue:#2f6fa3; --sky:#eaf4fb; --mint:#edf9f4;
+  --gold:#f2b84b; --red:#c94d4d; --green:#3f9562; --ink:#26333f;
+  --line:#d7e3ec; --paper:#fff; --bg:#f3f7fa;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.72}
+header{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;padding:36px 20px}
+.wrap{max-width:1180px;margin:auto}
+header h1{margin:0 0 8px;font-size:clamp(27px,4vw,43px)}
+header p{margin:0;opacity:.94}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(0,0,0,.06)}
+nav .wrap{display:flex;gap:7px;overflow-x:auto;padding:10px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:800;padding:8px 12px;border-radius:18px}
+nav a:hover{background:var(--sky)}
+main{max-width:1180px;margin:24px auto;padding:0 16px 80px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 23px rgba(30,70,100,.06)}
+h2{color:var(--navy);margin-top:0;border-left:7px solid var(--gold);padding-left:12px}
+h3{color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:14px}
+.card{background:#f9fcfe;border:1px solid var(--line);border-radius:14px;padding:17px}
+.badge{display:inline-block;background:var(--sky);color:var(--blue);font-weight:800;padding:4px 10px;border-radius:16px;margin:2px}
+.quote{background:linear-gradient(135deg,#fff8e7,#eef8ff);border-left:6px solid var(--gold);padding:20px;border-radius:12px;font-size:1.06rem}
+.timeline{display:grid;grid-template-columns:100px 1fr;gap:10px 16px}
+.timeline .time{font-weight:900;color:var(--blue)}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:var(--navy);color:#fff}
+code,pre{font-family:Consolas,"D2Coding",monospace}
+pre{background:#17212b;color:#edf5fa;padding:20px;border-radius:14px;overflow:auto;line-height:1.6}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:13px 0;background:#fcfeff}
+.question.correct{border-color:var(--green);background:#f0fbf4}
+.question.wrong{border-color:#d86b6b;background:#fff3f3}
+.options label{display:block;padding:7px 9px;margin:4px 0;border-radius:9px;cursor:pointer}
+.options label:hover{background:var(--sky)}
+input[type=text]{width:100%;padding:11px;border:1px solid #aebdca;border-radius:9px;font-size:1rem}
+.student{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{border:0;border-radius:10px;padding:12px 18px;font-weight:900;cursor:pointer;font-size:1rem}
+.primary{background:var(--blue);color:#fff}.secondary{background:#e7eef4;color:var(--navy)}.danger{background:var(--red);color:#fff}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+#result{display:none;margin-top:18px;padding:20px;border-radius:14px;background:#eef8ff;border:2px solid var(--blue)}
+.explanation{display:none;margin-top:8px;padding:10px;background:#fff;border-radius:9px;border-left:4px solid var(--gold)}
+.small{font-size:.92rem;color:#5d6b77}
+.progress{height:12px;background:#e5edf3;border-radius:8px;overflow:hidden;margin:14px 0}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--gold))}
+.callout{background:var(--mint);border:1px solid #bfe5d2;border-radius:12px;padding:15px}
+@media(max-width:650px){.student{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}.timeline .time{margin-top:10px}}
+@media print{nav,.actions,#examGuide{display:none!important}body{background:#fff}section{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<h1>정보과학 13차시 목표지향 개념기반 수업지도안</h1>
+<p>오픈소스와 라이브러리를 활용하여 협력적으로 문제 해결 프로그램 작성하기</p>
+</div>
+</header>
+
+<nav><div class="wrap">
+<a href="#standard">성취기준</a><a href="#concept">핵심 개념</a><a href="#lesson">학습 내용</a>
+<a href="#paper">소논문</a><a href="#code">학습 코드</a><a href="#assessment">평가</a>
+</div></nav>
+
+<main>
+<section id="standard">
+<h2>1. 성취기준과 학습 목표</h2>
+<div class="card">
+<h3>성취기준</h3>
+<p><strong>[12정과04-03]</strong> 다양한 오픈소스 및 라이브러리를 활용하여 협력적으로 문제를 해결하기 위한 프로그램을 작성한다.</p>
+</div>
+<h3>목표지향 학습 목표</h3>
+<div class="grid">
+<div class="card"><strong>지식·이해</strong><br>오픈소스, 라이브러리, 모듈, 라이선스, 협업의 의미와 필요성을 설명할 수 있다.</div>
+<div class="card"><strong>과정·기능</strong><br>적절한 라이브러리를 선택하고 제공 기능을 조합하여 제한 조건을 만족하는 프로그램을 작성할 수 있다.</div>
+<div class="card"><strong>가치·태도</strong><br>출처와 라이선스를 확인하고 역할 분담·코드 공유·상호 검토를 통해 책임 있게 협력한다.</div>
+</div>
+<div class="callout"><strong>성공 기준:</strong> 문제에 적합한 라이브러리 기능을 선택하고, 팀원이 작성한 기능을 명확한 인터페이스로 결합하며, 출처·라이선스·변경 내용을 기록한 실행 가능한 프로그램을 완성한다.</div>
+</section>
+
+<section id="concept">
+<h2>2. 학습할 개념</h2>
+<p>
+<span class="badge">오픈소스</span><span class="badge">라이브러리</span><span class="badge">모듈</span>
+<span class="badge">함수 인터페이스</span><span class="badge">재사용</span><span class="badge">라이선스</span>
+<span class="badge">버전 관리</span><span class="badge">역할 분담</span><span class="badge">코드 리뷰</span>
+</p>
+<table>
+<tr><th>개념</th><th>핵심 의미</th><th>판단 질문</th></tr>
+<tr><td>오픈소스</td><td>소스 코드가 공개되고 정해진 라이선스에 따라 사용·수정·배포할 수 있는 소프트웨어</td><td>사용·수정·재배포 조건은 무엇인가?</td></tr>
+<tr><td>라이브러리</td><td>자주 사용하는 기능을 재사용할 수 있도록 모아 둔 코드 집합</td><td>직접 구현하는 것보다 검증된 기능을 활용하는 편이 적절한가?</td></tr>
+<tr><td>모듈</td><td>관련 변수·함수·클래스를 하나의 단위로 구성한 프로그램 파일 또는 기능 단위</td><td>기능을 독립적으로 나누고 불러올 수 있는가?</td></tr>
+<tr><td>협력적 개발</td><td>역할 분담, 공통 규칙, 코드 공유, 검토와 통합을 통해 함께 프로그램을 완성하는 과정</td><td>팀원의 코드가 서로 충돌하지 않도록 약속했는가?</td></tr>
+<tr><td>라이선스 준수</td><td>저작자 표시, 동일 조건 배포, 변경 사항 공개 등 사용 조건을 지키는 태도</td><td>출처와 사용 조건을 기록했는가?</td></tr>
+</table>
+</section>
+
+<section>
+<h2>3. 수업 시작 멘트</h2>
+<div class="quote">
+“아리스토텔레스는 인간을 공동체적 존재로 보았고, 뉴턴은 자신이 더 멀리 본 것은 거인의 어깨 위에 섰기 때문이라고 표현했습니다.
+과학은 앞선 연구를 검증하고 확장하며 발전하고, 수학은 이미 증명된 정리를 활용해 더 새로운 세계로 나아갑니다.
+프로그래밍도 혼자 모든 것을 처음부터 만들 필요는 없습니다. 좋은 라이브러리를 바르게 활용하고, 서로의 코드를 연결하면 더 큰 문제를 해결할 수 있습니다.
+오늘은 ‘남의 코드니까 그냥 복사’가 아니라 ‘공유된 지식을 존중하며 재사용’하는 법을 배웁니다.
+출처 없는 복사는 협업이 아니라 코드의 기억상실증입니다.”
+</div>
+</section>
+
+<section id="lesson">
+<h2>4. 학습 내용과 수업 흐름</h2>
+<div class="timeline">
+<div class="time">도입 5분</div><div>직접 평균·중앙값을 구현한 코드와 표준 라이브러리를 활용한 코드를 비교한다.</div>
+<div class="time">개념 10분</div><div>오픈소스와 무료 소프트웨어의 차이, 라이브러리·모듈·API, 대표 라이선스의 기본 조건을 학습한다.</div>
+<div class="time">협업 설계 10분</div><div>데이터 검증, 통계 분석, 결과 표현 기능을 팀원별 모듈로 나누고 함수 입력·출력 규칙을 합의한다.</div>
+<div class="time">코딩 15분</div><div>파이썬의 statistics와 collections 라이브러리를 활용하여 교실 환경 자료 분석 프로그램을 작성한다.</div>
+<div class="time">공유 5분</div><div>팀별 코드 출처, 역할, 변경 내용, 통합 과정과 개선점을 기록하고 상호 코드 리뷰를 실시한다.</div>
+<div class="time">평가 5분</div><div>OX·복수 정답·단답형 평가로 라이브러리 활용과 협력적 개발 능력을 확인한다.</div>
+</div>
+
+<h3>협력적 프로그램 개발 절차</h3>
+<table>
+<tr><th>단계</th><th>핵심 활동</th><th>대표 산출물</th></tr>
+<tr><td>1. 기능 분해</td><td>문제를 입력 검증·분석·출력 등 독립 기능으로 나눈다.</td><td>기능 분담표</td></tr>
+<tr><td>2. 도구 조사</td><td>활용할 오픈소스와 라이브러리의 기능·문서·라이선스를 확인한다.</td><td>도구 조사표</td></tr>
+<tr><td>3. 인터페이스 합의</td><td>함수 이름, 매개변수, 반환값, 데이터 형식을 정한다.</td><td>함수 명세서</td></tr>
+<tr><td>4. 구현·통합</td><td>각자 기능을 작성한 후 공통 프로그램으로 결합한다.</td><td>통합 코드</td></tr>
+<tr><td>5. 검토·공유</td><td>코드 리뷰, 출처 표시, 라이선스 확인, 변경 이력을 기록한다.</td><td>README·검토 기록</td></tr>
+</table>
+</section>
+
+<section id="paper">
+<h2>5. 학습 관련 소논문 주제 예시 5개</h2>
+<ol>
+<li><strong>표준 라이브러리 활용이 통계 분석 코드의 길이와 오류율에 미치는 영향</strong></li>
+<li><strong>오픈소스 라이선스 유형에 따른 교육용 프로그램 공유 조건 비교</strong></li>
+<li><strong>협력 프로그래밍에서 함수 인터페이스 합의가 통합 오류에 미치는 영향</strong></li>
+<li><strong>코드 리뷰 활동이 학생 프로그램의 가독성과 정확성에 미치는 효과</strong></li>
+<li><strong>직접 구현과 라이브러리 활용 방식의 실행 결과·개발 시간 비교</strong></li>
+</ol>
+</section>
+
+<section id="code">
+<h2>6. 학습할 코드 1개</h2>
+<h3>라이브러리를 활용한 교실 환경 데이터 분석 프로그램</h3>
+<pre><code>from statistics import mean, median
+from collections import Counter
+
+
+def validate_readings(readings):
+    """0 이상인 수치 데이터만 반환한다."""
+    return [
+        value for value in readings
+        if isinstance(value, (int, float)) and value &gt;= 0
+    ]
+
+
+def analyze_readings(readings):
+    """statistics 라이브러리로 핵심 통계값을 계산한다."""
+    valid = validate_readings(readings)
+
+    if not valid:
+        return None
+
+    levels = [
+        "좋음" if value &lt; 800
+        else "주의" if value &lt; 1000
+        else "환기 필요"
+        for value in valid
+    ]
+
+    return {
+        "count": len(valid),
+        "mean": round(mean(valid), 1),
+        "median": median(valid),
+        "maximum": max(valid),
+        "level_counts": Counter(levels)
+    }
+
+
+def print_report(result):
+    """분석 결과를 사용자가 이해하기 쉽게 출력한다."""
+    if result is None:
+        print("분석할 수 있는 데이터가 없습니다.")
+        return
+
+    print("유효 측정 수:", result["count"])
+    print("평균 농도:", result["mean"], "ppm")
+    print("중앙값:", result["median"], "ppm")
+    print("최댓값:", result["maximum"], "ppm")
+
+    for level, count in result["level_counts"].items():
+        print(level, ":", count, "회")
+
+
+co2_readings = [620, 710, 850, 930, 1080, 1250, -1, "오류"]
+
+analysis = analyze_readings(co2_readings)
+print_report(analysis)</code></pre>
+
+<h3>상세 설명</h3>
+<table>
+<tr><th>코드 요소</th><th>설명</th></tr>
+<tr><td><code>statistics</code></td><td>평균과 중앙값 등 통계 계산 기능을 제공하는 파이썬 표준 라이브러리 모듈이다.</td></tr>
+<tr><td><code>Counter</code></td><td>각 공기 상태가 몇 번 나타났는지 간단하게 집계한다.</td></tr>
+<tr><td><code>validate_readings</code></td><td>팀원 A가 담당할 수 있는 입력 검증 기능으로, 음수와 문자열 오류값을 제외한다.</td></tr>
+<tr><td><code>analyze_readings</code></td><td>팀원 B가 담당할 수 있는 분석 기능으로, 검증된 데이터를 받아 통계와 상태 횟수를 반환한다.</td></tr>
+<tr><td>조건 표현식</td><td>이산화탄소 농도에 따라 좋음·주의·환기 필요 상태로 분류한다.</td></tr>
+<tr><td><code>Counter(levels)</code></td><td>분류 결과별 빈도를 딕셔너리와 유사한 형태로 계산한다.</td></tr>
+<tr><td><code>print_report</code></td><td>팀원 C가 담당할 수 있는 출력 기능으로, 분석 결과를 사용자에게 전달한다.</td></tr>
+<tr><td>함수 인터페이스</td><td>각 함수의 매개변수와 반환 형식을 약속하면 팀원이 독립적으로 개발한 코드를 쉽게 통합할 수 있다.</td></tr>
+</table>
+<p class="small"><strong>협력 기록 예:</strong> 입력 검증–김○○, 분석 기능–이○○, 출력 기능–박○○. 사용 모듈은 Python 표준 라이브러리 문서를 참고했으며, 팀 코드의 변경 내용과 출처를 README에 기록한다.</p>
+</section>
+
+<section>
+<h2>7. 수업 끝 멘트</h2>
+<div class="quote">
+“시는 한 사람의 목소리로 쓰이지만 수많은 독자의 마음에서 새롭게 완성되고, 소설은 여러 인물의 시선이 모여 하나의 세계를 만듭니다.
+희곡은 작가·배우·연출·무대가 협력할 때 비로소 살아나고, 음악은 서로 다른 악기가 자기 소리를 지키면서도 화음을 이룰 때 아름답습니다.
+여러분의 코드도 혼자 빛나는 한 줄보다 서로 연결되어 문제를 해결할 때 더 큰 힘을 가집니다.
+좋은 협력은 내 코드를 줄이는 일이 아니라 우리 가능성을 늘리는 일입니다.
+단, 팀원의 코드를 전부 가져와 작성자 이름만 바꾸면 협업이 아니라 이름표 라이브러리입니다!”
+</div>
+</section>
+
+<section id="assessment">
+<h2>8. 형성·진단·코드 평가</h2>
+<div id="examGuide" class="card">
+<strong>배점:</strong> OX 10문항 × 2점 = 20점 · 진단평가 10문항 × 6점 = 60점 · 단답형 5문항 × 4점 = 20점
+<br><strong>진단평가:</strong> 각 문항에는 옳은 진술 3개와 틀린 진술 2개가 있습니다. 옳은 것 3개를 모두 선택해야 정답입니다.
+</div>
+
+<h3>학생 정보</h3>
+<div class="student">
+<label>학번<input type="text" id="studentId" placeholder="예: 1101" maxlength="12"></label>
+<label>이름<input type="text" id="studentName" placeholder="예: 홍길동" maxlength="20"></label>
+</div>
+<div class="progress"><span id="progressBar"></span></div>
+
+<form id="quizForm">
+<h3>Ⅰ. 형성평가 OX 퀴즈 10개</h3><div id="oxArea"></div>
+<h3>Ⅱ. 진단평가: 옳은 것 3개 고르기 10개</h3><div id="multiArea"></div>
+<h3>Ⅲ. 학습할 코드 평가 단답형 5개</h3><div id="shortArea"></div>
+</form>
+
+<div class="actions">
+<button class="primary" type="button" onclick="gradeQuiz()">채점하고 TXT 저장</button>
+<button class="secondary" type="button" onclick="window.print()">인쇄·PDF 저장</button>
+<button class="danger" type="button" onclick="resetQuiz()">다시 풀기</button>
+</div>
+<div id="result"></div>
+</section>
+</main>
+
+<script>
+const oxQuestions = [
+ {q:"오픈소스는 아무 조건 없이 마음대로 사용할 수 있는 소프트웨어만을 의미한다.",a:"X",e:"오픈소스도 라이선스에 따른 사용·수정·배포 조건을 지켜야 한다."},
+ {q:"라이브러리는 자주 사용하는 기능을 재사용할 수 있도록 모아 둔 코드 집합이다.",a:"O",e:"검증된 기능을 활용해 개발 시간과 오류를 줄일 수 있다."},
+ {q:"협력 개발에서는 함수의 매개변수와 반환값을 미리 합의하는 것이 도움이 된다.",a:"O",e:"명확한 인터페이스는 코드 통합 오류를 줄인다."},
+ {q:"오픈소스 코드를 수정해 사용하면 출처와 라이선스를 확인할 필요가 없다.",a:"X",e:"수정 여부와 관계없이 해당 라이선스 조건을 확인해야 한다."},
+ {q:"statistics 모듈은 mean과 median 기능을 제공한다.",a:"O",e:"평균과 중앙값을 직접 구현하지 않고 계산할 수 있다."},
+ {q:"Counter는 항목별 출현 횟수를 집계하는 데 활용할 수 있다.",a:"O",e:"상태별 빈도 계산에 적합하다."},
+ {q:"협력 프로그래밍은 한 사람이 모든 코드를 작성하고 다른 사람은 이름만 올리는 방식이다.",a:"X",e:"역할 분담, 소통, 검토, 공동 책임이 필요하다."},
+ {q:"validate_readings 함수는 음수와 문자열 오류값을 제외한다.",a:"O",e:"수치형이면서 0 이상인 값만 남긴다."},
+ {q:"라이브러리를 사용하면 프로그램의 동작을 이해할 필요가 없다.",a:"X",e:"입력·출력·예외·제한 조건을 이해하고 적절히 사용해야 한다."},
+ {q:"코드 리뷰는 오류 발견과 가독성 개선에 도움이 될 수 있다.",a:"O",e:"팀원이 서로의 코드를 검토하고 개선 의견을 공유한다."}
+];
+
+const multiQuestions = [
+ {q:"오픈소스 활용에 대한 옳은 설명을 3개 고르시오.",o:["소스 코드를 확인할 수 있다.","라이선스 조건을 확인해야 한다.","허용 범위에서 수정과 공유가 가능하다.","저작자 표시는 언제나 금지된다.","출처 기록은 필요하지 않다."],a:[0,1,2]},
+ {q:"라이브러리 활용의 장점으로 옳은 것을 3개 고르시오.",o:["검증된 기능을 재사용할 수 있다.","개발 시간을 줄일 수 있다.","복잡한 기능을 간결하게 구현할 수 있다.","모든 라이브러리는 오류가 절대 없다.","문서를 읽지 않아도 항상 정확히 사용할 수 있다."],a:[0,1,2]},
+ {q:"협력적 개발에 필요한 활동으로 옳은 것을 3개 고르시오.",o:["역할을 구체적으로 나눈다.","함수 인터페이스를 합의한다.","코드 리뷰와 변경 기록을 남긴다.","팀원의 코드를 몰래 삭제한다.","서로 다른 데이터 형식을 끝까지 유지한다."],a:[0,1,2]},
+ {q:"제시된 코드의 라이브러리에 대한 옳은 설명을 3개 고르시오.",o:["mean은 평균을 계산한다.","median은 중앙값을 계산한다.","Counter는 항목별 빈도를 센다.","Counter는 그래프만 그린다.","statistics는 문자열 번역 전용이다."],a:[0,1,2]},
+ {q:"validate_readings 함수에 대한 옳은 설명을 3개 고르시오.",o:["리스트 내포를 사용한다.","int 또는 float인지 확인한다.","0 이상인 값만 반환한다.","모든 문자열을 수치로 자동 변환한다.","음수만 남긴다."],a:[0,1,2]},
+ {q:"analyze_readings 함수에 대한 옳은 설명을 3개 고르시오.",o:["먼저 데이터를 검증한다.","유효 데이터가 없으면 None을 반환한다.","통계값과 상태 횟수를 딕셔너리로 반환한다.","원본 데이터의 모든 오류를 그대로 출력한다.","항상 빈 리스트만 반환한다."],a:[0,1,2]},
+ {q:"공기 상태 분류에 대한 옳은 설명을 3개 고르시오.",o:["800 미만은 좋음이다.","800 이상 1000 미만은 주의이다.","1000 이상은 환기 필요이다.","모든 값은 좋음이다.","음수는 환기 필요로 분류한다."],a:[0,1,2]},
+ {q:"print_report 함수에 대한 옳은 설명을 3개 고르시오.",o:["결과가 None인지 확인한다.","평균·중앙값·최댓값을 출력한다.","상태별 횟수를 반복문으로 출력한다.","분석 데이터를 무조건 삭제한다.","입력값을 수집하는 기능만 담당한다."],a:[0,1,2]},
+ {q:"라이선스와 출처 표시에 관한 옳은 설명을 3개 고르시오.",o:["사용한 코드와 자료의 출처를 기록한다.","라이선스의 재배포 조건을 확인한다.","수정한 내용과 범위를 기록할 수 있다.","인터넷에 공개된 코드는 모두 저작권이 없다.","출처를 지우면 내 코드가 된다."],a:[0,1,2]},
+ {q:"성취기준에 부합하는 활동을 3개 고르시오.",o:["문제에 적합한 라이브러리를 활용한다.","팀원과 기능을 나누어 프로그램을 통합한다.","출처와 공유 규칙을 지키며 결과를 공유한다.","라이선스를 확인하지 않고 코드를 복사한다.","팀원의 의견을 무시하고 혼자만 개발한다."],a:[0,1,2]}
+];
+
+const shortQuestions = [
+ {q:"평균을 계산하기 위해 statistics 모듈에서 불러온 함수 이름은 무엇인가?",a:["mean","mean()"],e:"정답: mean"},
+ {q:"항목별 출현 횟수를 계산하기 위해 사용한 클래스 이름은 무엇인가?",a:["Counter","counter"],e:"정답: Counter"},
+ {q:"유효한 측정값만 남기는 함수 이름은 무엇인가?",a:["validate_readings","validate_readings()"],e:"정답: validate_readings"},
+ {q:"분석 결과를 저장한 변수 이름은 무엇인가?",a:["analysis"],e:"정답: analysis"},
+ {q:"이산화탄소 상태별 횟수를 저장하는 결과 딕셔너리의 키 이름은 무엇인가?",a:["level_counts"],e:"정답: level_counts"}
+];
+
+function render(){
+ document.getElementById("oxArea").innerHTML=oxQuestions.map((x,i)=>`<div class="question" id="oxq${i}"><strong>${i+1}. ${x.q}</strong><div class="options"><label><input type="radio" name="ox${i}" value="O"> O</label><label><input type="radio" name="ox${i}" value="X"> X</label></div><div class="explanation" id="oxe${i}"></div></div>`).join("");
+ document.getElementById("multiArea").innerHTML=multiQuestions.map((x,i)=>`<div class="question" id="mq${i}"><strong>${i+1}. ${x.q}</strong><div class="options">${x.o.map((v,j)=>`<label><input type="checkbox" name="m${i}" value="${j}"> ${j+1}) ${v}</label>`).join("")}</div><div class="explanation" id="me${i}"></div></div>`).join("");
+ document.getElementById("shortArea").innerHTML=shortQuestions.map((x,i)=>`<div class="question" id="sq${i}"><strong>${i+1}. ${x.q}</strong><input type="text" name="s${i}" autocomplete="off"><div class="explanation" id="se${i}"></div></div>`).join("");
+ document.querySelectorAll("input").forEach(el=>el.addEventListener("input",updateProgress));
+}
+function norm(s){return (s||"").toLowerCase().replace(/\s+/g,"").trim();}
+function updateProgress(){
+ let answered=0,total=25;
+ for(let i=0;i<10;i++)if(document.querySelector(`input[name=ox${i}]:checked`))answered++;
+ for(let i=0;i<10;i++)if(document.querySelectorAll(`input[name=m${i}]:checked`).length)answered++;
+ for(let i=0;i<5;i++)if(document.querySelector(`input[name=s${i}]`).value.trim())answered++;
+ document.getElementById("progressBar").style.width=(answered/total*100)+"%";
+}
+function mark(qid,ok,eid,text){
+ const q=document.getElementById(qid);q.classList.remove("correct","wrong");q.classList.add(ok?"correct":"wrong");
+ const e=document.getElementById(eid);e.style.display="block";e.textContent=text;
+}
+function gradeQuiz(){
+ const sid=document.getElementById("studentId").value.trim();
+ const name=document.getElementById("studentName").value.trim();
+ if(!sid||!name){alert("학번과 이름을 입력하세요.");return;}
+ let score=0,oxScore=0,mScore=0,sScore=0,lines=[];
+ oxQuestions.forEach((x,i)=>{
+   const el=document.querySelector(`input[name=ox${i}]:checked`),ans=el?el.value:"미응답",ok=ans===x.a;
+   if(ok){score+=2;oxScore+=2;}mark(`oxq${i}`,ok,`oxe${i}`,`정답 ${x.a} · ${x.e}`);
+   lines.push(`[OX ${i+1}] 응답: ${ans} / 정답: ${x.a} / ${ok?"정답":"오답"}`);
+ });
+ multiQuestions.forEach((x,i)=>{
+   const selected=[...document.querySelectorAll(`input[name=m${i}]:checked`)].map(e=>Number(e.value)).sort((a,b)=>a-b);
+   const ok=JSON.stringify(selected)===JSON.stringify(x.a),ans=selected.length?selected.map(v=>v+1).join(","):"미응답",right=x.a.map(v=>v+1).join(",");
+   if(ok){score+=6;mScore+=6;}mark(`mq${i}`,ok,`me${i}`,`정답: ${right}번`);
+   lines.push(`[진단 ${i+1}] 응답: ${ans} / 정답: ${right} / ${ok?"정답":"오답"}`);
+ });
+ shortQuestions.forEach((x,i)=>{
+   const val=document.querySelector(`input[name=s${i}]`).value.trim(),ok=x.a.some(a=>norm(a)===norm(val));
+   if(ok){score+=4;sScore+=4;}mark(`sq${i}`,ok,`se${i}`,x.e);
+   lines.push(`[단답 ${i+1}] 응답: ${val||"미응답"} / ${x.e} / ${ok?"정답":"오답"}`);
+ });
+ const now=new Date(),pad=n=>String(n).padStart(2,"0");
+ const displayTime=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+ const fileTime=`${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+ const safe=s=>s.replace(/[\\/:*?"<>|]/g,"_");
+ const result=document.getElementById("result");result.style.display="block";
+ result.innerHTML=`<h3>채점 결과: ${score}점 / 100점</h3><p>OX ${oxScore}/20 · 진단평가 ${mScore}/60 · 단답형 ${sScore}/20</p><p>${sid} ${name} · ${displayTime}</p>`;
+ const text=["정보과학 13차시 평가 결과","========================",`학번: ${sid}`,`이름: ${name}`,`점수: ${score}/100`,`OX: ${oxScore}/20`,`진단평가: ${mScore}/60`,`단답형: ${sScore}/20`,`응시시각: ${displayTime}`,"",...lines].join("\r\n");
+ const blob=new Blob(["\ufeff"+text],{type:"text/plain;charset=utf-8"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download=`${safe(sid)}_${safe(name)}_${score}점_13차시_${fileTime}.txt`;
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ result.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function resetQuiz(){
+ if(!confirm("입력한 답과 채점 결과를 모두 지울까요?"))return;
+ document.getElementById("quizForm").reset();
+ document.querySelectorAll(".question").forEach(q=>q.classList.remove("correct","wrong"));
+ document.querySelectorAll(".explanation").forEach(e=>{e.style.display="none";e.textContent="";});
+ document.getElementById("result").style.display="none";
+ document.getElementById("progressBar").style.width="0";
+}
+render();
+</script>
+</body>
+</html>
