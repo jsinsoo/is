@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>인접행렬 n제곱 상세 설명</title>
+
+<style>
+:root{
+  --navy:#16324f;
+  --blue:#356fa8;
+  --blue-soft:#edf5fc;
+  --green:#20856f;
+  --green-soft:#edf9f5;
+  --orange:#e89a22;
+  --orange-soft:#fff7e8;
+  --red:#bd4c5c;
+  --purple:#7457a6;
+  --ink:#18232e;
+  --muted:#667482;
+  --line:#d9e4ee;
+  --bg:#f3f7fb;
+  --paper:#ffffff;
+  --code:#0f1b26;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top left,#eaf3fb 0,transparent 28rem),
+    linear-gradient(#f7f9fc,#f3f7fb);
+  color:var(--ink);
+  font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  line-height:1.72;
+}
+header{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,#10273c 0%,#2f6ba4 58%,#23816d 100%);
+  color:#fff;
+  padding:58px 22px 52px;
+}
+header::after{
+  content:"";
+  position:absolute;
+  right:-90px;
+  top:-80px;
+  width:320px;
+  height:320px;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+}
+.wrap,main{max-width:1360px;margin:auto}
+h1{
+  margin:.25rem 0 .8rem;
+  font-size:clamp(2rem,4vw,3.55rem);
+  line-height:1.16;
+  letter-spacing:-.035em;
+}
+header p{
+  max-width:1080px;
+  margin:0;
+  color:#eef6ff;
+  font-size:1.06rem;
+}
+nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  box-shadow:0 3px 16px rgba(18,48,74,.08);
+}
+nav .wrap{
+  display:flex;
+  gap:6px;
+  padding:9px 12px;
+  overflow-x:auto;
+}
+nav a{
+  color:var(--navy);
+  text-decoration:none;
+  font-weight:800;
+  white-space:nowrap;
+  padding:8px 11px;
+  border-radius:9px;
+  transition:.18s ease;
+}
+nav a:hover{background:var(--blue-soft);transform:translateY(-1px)}
+main{padding:24px 16px 90px}
+section{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:26px;
+  margin:20px 0;
+  box-shadow:0 12px 32px rgba(25,55,84,.06);
+}
+h2{
+  color:var(--navy);
+  margin:0 0 18px;
+  padding:0 0 10px 14px;
+  border-left:7px solid var(--blue);
+  border-bottom:1px solid #e7eef5;
+  font-size:1.72rem;
+  letter-spacing:-.02em;
+}
+h3{color:#244b70;margin-top:1.65rem}
+code{
+  font-family:Consolas,"D2Coding","Courier New",monospace;
+}
+pre{
+  background:var(--code);
+  color:#edf5fa;
+  border-radius:14px;
+  padding:17px 19px;
+  overflow:auto;
+  white-space:pre;
+  line-height:1.62;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+}
+.graph-diagram{
+  max-width:360px;
+  margin:18px auto;
+  text-align:center;
+  font-size:1.2rem;
+  line-height:1.5;
+  background:linear-gradient(180deg,#122433,#0d1822);
+  border:1px solid #22394b;
+}
+.info,.warn{
+  padding:14px 16px;
+  border-radius:12px;
+  margin:14px 0;
+}
+.info{
+  background:var(--green-soft);
+  border-left:6px solid var(--green);
+}
+.warn{
+  background:var(--orange-soft);
+  border-left:6px solid var(--orange);
+}
+table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:12px;
+  font-size:.94rem;
+}
+th,td{
+  padding:11px 12px;
+  border-right:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  vertical-align:top;
+}
+th{
+  background:linear-gradient(#eff6fc,#e7f0f8);
+  color:var(--navy);
+  font-weight:900;
+}
+tr:last-child td{border-bottom:0}
+th:last-child,td:last-child{border-right:0}
+button{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:60;
+  border:0;
+  border-radius:999px;
+  background:linear-gradient(135deg,#17324d,#2f6fb3);
+  color:#fff;
+  padding:12px 18px;
+  font-weight:900;
+  box-shadow:0 10px 24px rgba(23,50,77,.22);
+  cursor:pointer;
+}
+button:hover{transform:translateY(-1px)}
+@media(max-width:760px){
+  header{padding:42px 18px 38px}
+  section{padding:18px;border-radius:15px}
+  h2{font-size:1.45rem}
+  pre{font-size:.88rem}
+}
+@media print{
+  nav,button{display:none!important}
+  body{background:#fff}
+  header{background:#fff;color:#111;padding:20px 0}
+  header p{color:#333}
+  section{box-shadow:none;break-inside:avoid}
+  pre{white-space:pre-wrap}
+}
+</style>
+
+</head>
+<body>
+<header><div class="wrap">
+<div>고등학교 정보과학 · 인접행렬 · 행렬 거듭제곱</div>
+<h1>인접행렬의 n제곱을 반복해서 계산하기</h1>
+<p>0을 입력할 때까지 반복하여 n을 입력받고, 인접행렬의 n제곱을 계산하는 과정을 코드와 그래프 의미까지 단계적으로 설명합니다.</p>
+</div></header>
+
+<main>
+<section>
+<h2>1. 전체 코드</h2>
+<pre><code>matrix = [
+    [0, 1, 1],
+    [1, 0, 1],
+    [1, 1, 0]
+]
+
+size = len(matrix)
+
+def multiply(a, b):
+    result = [[0] * size for _ in range(size)]
+
+    for i in range(size):
+        for j in range(size):
+            for k in range(size):
+                result[i][j] += a[i][k] * b[k][j]
+
+    return result
+
+while True:
+    n = int(input(&quot;양의 정수 n 입력(종료: 0) : &quot;))
+
+    if n == 0:
+        print(&quot;프로그램을 종료합니다.&quot;)
+        break
+
+    if n &lt; 0:
+        print(&quot;1 이상의 정수를 입력하세요.\n&quot;)
+        continue
+
+    power = [row[:] for row in matrix]
+
+    for _ in range(n - 1):
+        power = multiply(power, matrix)
+
+    print(f&quot;\nmatrix의 {n}제곱&quot;)
+
+    for row in power:
+        print(row)
+
+    print()
+</code></pre>
+</section>
+
+<section>
+<h2>2. 인접행렬</h2>
+<p><code>matrix</code>는 정점 0, 1, 2가 서로 연결된 무방향 그래프의 인접행렬입니다.</p>
+<pre class="graph-diagram">        0
+       ／ ＼
+       1──2</pre>
+<table>
+<tr><th>행</th><th>의미</th></tr>
+<tr><td>[0,1,1]</td><td>정점 0은 1, 2와 연결</td></tr>
+<tr><td>[1,0,1]</td><td>정점 1은 0, 2와 연결</td></tr>
+<tr><td>[1,1,0]</td><td>정점 2는 0, 1과 연결</td></tr>
+</table>
+</section>
+
+<section>
+<h2>3. 행렬 크기</h2>
+<pre><code>size = len(matrix)</code></pre>
+<p>행의 개수가 3이므로 <code>size = 3</code>입니다. 숫자 3을 직접 쓰지 않아 다른 크기의 정사각행렬에도 재사용할 수 있습니다.</p>
+</section>
+
+<section>
+<h2>4. multiply(a, b) 함수</h2>
+<pre><code>def multiply(a, b):
+    result = [[0] * size for _ in range(size)]
+
+    for i in range(size):
+        for j in range(size):
+            for k in range(size):
+                result[i][j] += a[i][k] * b[k][j]
+
+    return result</code></pre>
+<table>
+<tr><th>변수</th><th>역할</th></tr>
+<tr><td>i</td><td>결과 행렬의 행 번호, 그래프에서는 출발 정점</td></tr>
+<tr><td>j</td><td>결과 행렬의 열 번호, 그래프에서는 도착 정점</td></tr>
+<tr><td>k</td><td>중간 위치 또는 중간 정점</td></tr>
+</table>
+<p>핵심 식은 <code>result[i][j] += a[i][k] * b[k][j]</code>입니다. 한 행과 한 열의 곱을 누적하여 행렬 곱셈을 수행합니다.</p>
+</section>
+
+<section>
+<h2>5. 0을 입력할 때까지 반복</h2>
+<pre><code>while True:</code></pre>
+<p>조건이 항상 참이므로 계속 반복합니다. 종료는 내부의 <code>break</code>가 담당합니다.</p>
+
+<h3>0 입력</h3>
+<pre><code>if n == 0:
+    print("프로그램을 종료합니다.")
+    break</code></pre>
+<p><code>break</code>가 while 반복문을 즉시 끝냅니다.</p>
+
+<h3>음수 입력</h3>
+<pre><code>if n &lt; 0:
+    print("1 이상의 정수를 입력하세요.")
+    continue</code></pre>
+<p><code>continue</code>는 아래 계산을 건너뛰고 다시 n을 입력받게 합니다.</p>
+</section>
+
+<section>
+<h2>6. 원래 행렬 복사</h2>
+<pre><code>power = [row[:] for row in matrix]</code></pre>
+<p><code>power</code>를 처음에는 matrix¹로 설정합니다. 각 행을 새 리스트로 복사하여 원래 행렬과 분리합니다.</p>
+<div class="warn"><b>주의:</b> 이것은 2차원 숫자 리스트에서 충분한 행 단위 복사입니다. 일반적인 중첩 객체 전체를 재귀적으로 복사하는 완전한 deep copy와는 다릅니다.</div>
+</section>
+
+<section>
+<h2>7. n제곱 계산</h2>
+<pre><code>for _ in range(n - 1):
+    power = multiply(power, matrix)</code></pre>
+<table>
+<tr><th>입력 n</th><th>추가 곱셈 횟수</th><th>결과</th></tr>
+<tr><td>1</td><td>0회</td><td>matrix¹</td></tr>
+<tr><td>2</td><td>1회</td><td>matrix²</td></tr>
+<tr><td>3</td><td>2회</td><td>matrix³</td></tr>
+<tr><td>4</td><td>3회</td><td>matrix⁴</td></tr>
+</table>
+<div class="info">처음부터 power가 matrix¹이므로 n제곱을 만들려면 matrix를 추가로 n-1번 곱하면 됩니다.</div>
+</section>
+
+<section>
+<h2>8. 실행 예</h2>
+<h3>n = 2</h3>
+<pre>matrix의 2제곱
+[2, 1, 1]
+[1, 2, 1]
+[1, 1, 2]</pre>
+
+<h3>n = 3</h3>
+<pre>matrix의 3제곱
+[2, 3, 3]
+[3, 2, 3]
+[3, 3, 2]</pre>
+
+<h3>n = 4</h3>
+<pre>matrix의 4제곱
+[6, 5, 5]
+[5, 6, 5]
+[5, 5, 6]</pre>
+
+<h3>n = 0</h3>
+<pre>프로그램을 종료합니다.</pre>
+</section>
+
+<section>
+<h2>9. 그래프에서 matrixⁿ의 의미</h2>
+<table>
+<tr><th>행렬</th><th>의미</th></tr>
+<tr><td>A</td><td>길이가 1인 이동 관계</td></tr>
+<tr><td>A²</td><td>길이가 정확히 2인 보행 수</td></tr>
+<tr><td>A³</td><td>길이가 정확히 3인 보행 수</td></tr>
+<tr><td>Aⁿ</td><td>길이가 정확히 n인 보행 수</td></tr>
+</table>
+<p><code>Aⁿ[i][j]</code>는 정점 i에서 정점 j까지 간선을 정확히 n번 사용하는 <b>보행(walk)의 수</b>를 나타냅니다.</p>
+<div class="warn">같은 정점이나 간선을 다시 사용할 수 있으므로 엄밀히는 단순 경로(path)가 아니라 보행(walk)의 수입니다.</div>
+</section>
+
+<section>
+<h2>10. 시간 복잡도</h2>
+<p>행렬 곱셈 1회는 3중 반복문이므로 행렬 크기를 V라 할 때 <b>O(V³)</b>입니다. 이를 n-1회 반복하므로 전체는 대략 <b>O(n·V³)</b>입니다.</p>
+<p>학습에는 이해하기 쉬운 방식이지만, n이 매우 크면 분할 정복을 이용한 빠른 거듭제곱으로 개선할 수 있습니다.</p>
+</section>
+
+<section>
+<h2>11. 핵심 정리</h2>
+<table>
+<tr><th>코드</th><th>역할</th></tr>
+<tr><td><code>while True</code></td><td>계속 입력받기</td></tr>
+<tr><td><code>if n == 0: break</code></td><td>0이면 종료</td></tr>
+<tr><td><code>continue</code></td><td>잘못된 입력이면 다시 입력</td></tr>
+<tr><td><code>multiply(a,b)</code></td><td>행렬 곱셈</td></tr>
+<tr><td><code>power</code></td><td>현재까지 계산한 거듭제곱 행렬</td></tr>
+<tr><td><code>range(n-1)</code></td><td>필요한 추가 곱셈 횟수</td></tr>
+<tr><td><code>power[i][j]</code></td><td>길이 n인 보행의 수</td></tr>
+</table>
+</section>
+</main>
+
+<button onclick="window.print()">인쇄 / PDF</button>
+</body>
+</html>
