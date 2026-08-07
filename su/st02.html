@@ -1,0 +1,511 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>인접행렬 기초·응용·심화 예시 코드</title>
+<style>
+:root{
+  --navy:#17324d;--blue:#2f6fb3;--green:#1f8a70;--red:#c43c4f;
+  --orange:#f59e0b;--ink:#17212b;--line:#d8e2ec;--bg:#f4f7fb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#17324d,#2f6fb3 60%,#1f8a70);color:#fff;padding:48px 20px}
+.wrap,main{max-width:1420px;margin:auto}
+h1{font-size:clamp(2rem,4vw,3.5rem);margin:.3rem 0 .8rem}
+header p{max-width:1100px;font-size:1.06rem}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.badge{border:1px solid #ffffff55;background:#ffffff18;border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:8px;padding:9px 14px;overflow-x:auto}
+nav a{text-decoration:none;color:var(--navy);font-weight:900;padding:8px 11px;white-space:nowrap}
+main{padding:20px 15px 80px}
+section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;margin:20px 0;box-shadow:0 7px 22px #17324d0e}
+h2{color:var(--navy);border-left:7px solid var(--blue);padding-left:12px}
+.example{border:1px solid var(--line);border-left:7px solid;border-radius:15px;padding:18px;margin:17px 0}
+.example.basic{border-left-color:var(--green)}
+.example.apply{border-left-color:var(--blue)}
+.example.advanced{border-left-color:var(--red)}
+.tag{display:inline-block;background:var(--navy);color:#fff;border-radius:999px;padding:4px 9px;font-size:.8rem;font-weight:900}
+pre{background:#101b26;color:#edf5fa;border-radius:13px;padding:16px;overflow:auto;white-space:pre;font-family:Consolas,"D2Coding",monospace;line-height:1.56}
+.explain{background:#eef8f3;border-left:5px solid var(--green);padding:13px;border-radius:9px}
+details{margin-top:11px;background:#fff8e8;border-left:5px solid var(--orange);padding:11px;border-radius:9px}
+summary{font-weight:900;cursor:pointer}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy)}
+.print{position:fixed;right:18px;bottom:18px;background:var(--navy);color:#fff;border:0;border-radius:10px;padding:11px 15px;font-weight:900;cursor:pointer}
+@media(max-width:800px){section{padding:17px}}
+@media print{nav,.print{display:none}body{background:#fff}section{box-shadow:none}.example{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+  <div>고등학교 정보과학 · 데이터 구조 · 그래프 표현</div>
+  <h1>인접행렬을 예시 코드로 쉽게 배우기</h1>
+  <p>기초 5개, 응용 5개, 심화 5개의 서로 다른 예시를 통해 인접행렬 생성, 연결 확인, 차수, 간선 수, BFS·DFS, 경로 수, 도달 가능성, 가중 그래프와 연결 요소까지 단계적으로 학습합니다.</p>
+  <div class="badges">
+    <span class="badge">기초 5개</span>
+    <span class="badge">응용 5개</span>
+    <span class="badge">심화 5개</span>
+    <span class="badge">총 15개 코드</span>
+    <span class="badge">상세 설명</span>
+    <span class="badge">예상 결과</span>
+  </div>
+</div>
+</header>
+
+<nav>
+<div class="wrap">
+  <a href="#개념">핵심 개념</a>
+  <a href="#기초">기초 5개</a>
+  <a href="#응용">응용 5개</a>
+  <a href="#심화">심화 5개</a>
+  <a href="#비교">인접리스트 비교</a>
+</div>
+</nav>
+
+<main>
+<section id="개념">
+<h2>인접행렬 핵심 개념</h2>
+<table>
+<tr><th>구성</th><th>의미</th></tr>
+<tr><td>행 번호</td><td>출발 정점 또는 기준 정점</td></tr>
+<tr><td>열 번호</td><td>도착 정점 또는 비교 정점</td></tr>
+<tr><td>값 1</td><td>두 정점이 직접 연결됨</td></tr>
+<tr><td>값 0</td><td>두 정점이 직접 연결되지 않음</td></tr>
+<tr><td>무방향 그래프</td><td>행렬이 주대각선을 기준으로 대칭</td></tr>
+<tr><td>공간 복잡도</td><td>정점 수가 V일 때 O(V²)</td></tr>
+</table>
+</section>
+
+<section id="기초"><h2>기초 예시 코드 5개</h2>
+<article class="example basic">
+  <span class="tag">기초 1</span>
+  <h3>인접행렬 직접 만들기</h3>
+  <pre><code>matrix = [
+    [0, 1, 1, 0],
+    [1, 0, 0, 1],
+    [1, 0, 0, 1],
+    [0, 1, 1, 0]
+]
+
+for row in matrix:
+    print(row)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>정점 4개의 무방향 그래프를 4×4 인접행렬로 표현합니다. 행 번호는 출발 정점, 열 번호는 도착 정점입니다. 값이 1이면 두 정점이 연결되어 있고 0이면 연결되지 않았습니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>matrix[0][2]가 1이므로 정점 0과 정점 2는 직접 연결되어 있습니다.</p>
+  </details>
+</article>
+
+<article class="example basic">
+  <span class="tag">기초 2</span>
+  <h3>간선 목록으로 인접행렬 생성</h3>
+  <pre><code>n = 5
+edges = [(0, 1), (0, 3), (1, 2), (3, 4)]
+matrix = [[0] * n for _ in range(n)]
+
+for a, b in edges:
+    matrix[a][b] = 1
+    matrix[b][a] = 1
+
+for row in matrix:
+    print(row)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>정점 수 n과 간선 목록 edges를 이용하여 빈 행렬을 만든 뒤, 연결된 두 위치에 1을 저장합니다. 무방향 그래프이므로 matrix[a][b]와 matrix[b][a]를 모두 1로 설정합니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>무방향 그래프의 인접행렬은 주대각선을 기준으로 대칭입니다.</p>
+  </details>
+</article>
+
+<article class="example basic">
+  <span class="tag">기초 3</span>
+  <h3>두 정점의 연결 여부 확인</h3>
+  <pre><code>matrix = [
+    [0, 1, 0, 1],
+    [1, 0, 1, 0],
+    [0, 1, 0, 0],
+    [1, 0, 0, 0]
+]
+
+a = 1
+b = 2
+
+if matrix[a][b] == 1:
+    print(&quot;직접 연결&quot;)
+else:
+    print(&quot;연결되지 않음&quot;)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>인접행렬은 특정 두 정점의 직접 연결 여부를 한 번의 인덱스 접근으로 확인할 수 있습니다. matrix[a][b]가 1이면 직접 간선이 있습니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>정점 1과 2는 직접 연결되어 있으므로 &#x27;직접 연결&#x27;이 출력됩니다.</p>
+  </details>
+</article>
+
+<article class="example basic">
+  <span class="tag">기초 4</span>
+  <h3>정점의 차수 계산</h3>
+  <pre><code>matrix = [
+    [0, 1, 1, 0],
+    [1, 0, 1, 1],
+    [1, 1, 0, 0],
+    [0, 1, 0, 0]
+]
+
+degrees = []
+
+for row in matrix:
+    degrees.append(sum(row))
+
+print(degrees)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>무방향 그래프에서 한 행의 1의 개수는 해당 정점의 차수입니다. 각 행의 합을 계산하면 모든 정점의 차수를 구할 수 있습니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>차수 배열은 [2, 3, 2, 1]입니다.</p>
+  </details>
+</article>
+
+<article class="example basic">
+  <span class="tag">기초 5</span>
+  <h3>모든 간선 출력</h3>
+  <pre><code>matrix = [
+    [0, 1, 1, 0],
+    [1, 0, 0, 1],
+    [1, 0, 0, 1],
+    [0, 1, 1, 0]
+]
+
+n = len(matrix)
+
+for i in range(n):
+    for j in range(i + 1, n):
+        if matrix[i][j] == 1:
+            print(i, &quot;-&quot;, j)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>무방향 그래프에서는 같은 간선이 행렬에 두 번 저장됩니다. i&lt;j인 위쪽 삼각형만 확인하면 각 간선을 한 번만 출력할 수 있습니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>간선은 0-1, 0-2, 1-3, 2-3입니다.</p>
+  </details>
+</article>
+</section><section id="응용"><h2>응용 예시 코드 5개</h2>
+<article class="example apply">
+  <span class="tag">응용 1</span>
+  <h3>간선 수 계산</h3>
+  <pre><code>matrix = [
+    [0, 1, 1, 0],
+    [1, 0, 1, 1],
+    [1, 1, 0, 0],
+    [0, 1, 0, 0]
+]
+
+degree_sum = 0
+
+for row in matrix:
+    degree_sum += sum(row)
+
+edge_count = degree_sum // 2
+
+print(edge_count)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>무방향 그래프에서는 하나의 간선이 두 정점의 차수에 각각 포함됩니다. 따라서 모든 행의 합은 간선 수의 2배이며, 2로 나누면 실제 간선 수를 구할 수 있습니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>차수 합은 8이므로 간선 수는 4입니다.</p>
+  </details>
+</article>
+
+<article class="example apply">
+  <span class="tag">응용 2</span>
+  <h3>인접행렬의 대칭성 검사</h3>
+  <pre><code>matrix = [
+    [0, 1, 1],
+    [1, 0, 0],
+    [1, 0, 0]
+]
+
+n = len(matrix)
+symmetric = True
+
+for i in range(n):
+    for j in range(n):
+        if matrix[i][j] != matrix[j][i]:
+            symmetric = False
+
+print(symmetric)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>무방향 그래프의 인접행렬은 matrix[i][j]와 matrix[j][i]가 항상 같아야 합니다. 모든 위치를 비교하여 대칭 여부를 검사합니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>이 행렬은 대칭이므로 True가 출력됩니다.</p>
+  </details>
+</article>
+
+<article class="example apply">
+  <span class="tag">응용 3</span>
+  <h3>방향 그래프의 진입 차수와 진출 차수</h3>
+  <pre><code>matrix = [
+    [0, 1, 1, 0],
+    [0, 0, 1, 0],
+    [0, 0, 0, 1],
+    [1, 0, 0, 0]
+]
+
+out_degree = [sum(row) for row in matrix]
+in_degree = []
+
+for col in range(len(matrix)):
+    total = 0
+    for row in range(len(matrix)):
+        total += matrix[row][col]
+    in_degree.append(total)
+
+print(out_degree)
+print(in_degree)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>방향 그래프에서 행의 합은 정점에서 나가는 간선 수인 진출 차수이고, 열의 합은 정점으로 들어오는 간선 수인 진입 차수입니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>진출 차수는 [2,1,1,1], 진입 차수는 [1,1,2,1]입니다.</p>
+  </details>
+</article>
+
+<article class="example apply">
+  <span class="tag">응용 4</span>
+  <h3>BFS를 인접행렬로 구현</h3>
+  <pre><code>from collections import deque
+
+matrix = [
+    [0, 1, 1, 0, 0],
+    [1, 0, 0, 1, 0],
+    [1, 0, 0, 0, 1],
+    [0, 1, 0, 0, 0],
+    [0, 0, 1, 0, 0]
+]
+
+visited = [False] * len(matrix)
+queue = deque([0])
+visited[0] = True
+order = []
+
+while queue:
+    current = queue.popleft()
+    order.append(current)
+
+    for nxt in range(len(matrix)):
+        if matrix[current][nxt] == 1 and not visited[nxt]:
+            visited[nxt] = True
+            queue.append(nxt)
+
+print(order)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>현재 정점의 행 전체를 확인하여 값이 1인 열 번호를 이웃 정점으로 판단합니다. 큐를 사용하므로 시작점에서 가까운 정점부터 탐색합니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>대표 탐색 순서는 [0,1,2,3,4]입니다.</p>
+  </details>
+</article>
+
+<article class="example apply">
+  <span class="tag">응용 5</span>
+  <h3>DFS를 인접행렬로 구현</h3>
+  <pre><code>matrix = [
+    [0, 1, 1, 0, 0],
+    [1, 0, 0, 1, 0],
+    [1, 0, 0, 0, 1],
+    [0, 1, 0, 0, 0],
+    [0, 0, 1, 0, 0]
+]
+
+visited = [False] * len(matrix)
+order = []
+
+def dfs(current):
+    visited[current] = True
+    order.append(current)
+
+    for nxt in range(len(matrix)):
+        if matrix[current][nxt] == 1 and not visited[nxt]:
+            dfs(nxt)
+
+dfs(0)
+print(order)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>인접행렬의 현재 행을 왼쪽부터 검사하면서 연결된 미방문 정점을 재귀 호출합니다. 한 경로를 깊게 탐색한 뒤 되돌아옵니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>대표 탐색 순서는 [0,1,3,2,4]입니다.</p>
+  </details>
+</article>
+</section><section id="심화"><h2>심화 예시 코드 5개</h2>
+<article class="example advanced">
+  <span class="tag">심화 1</span>
+  <h3>2단계 경로 수 계산</h3>
+  <pre><code>matrix = [
+    [0, 1, 1, 0],
+    [1, 0, 0, 1],
+    [1, 0, 0, 1],
+    [0, 1, 1, 0]
+]
+
+start = 0
+target = 3
+path_count = 0
+
+for middle in range(len(matrix)):
+    if matrix[start][middle] == 1:
+        if matrix[middle][target] == 1:
+            path_count += 1
+
+print(path_count)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>시작 정점에서 중간 정점을 거쳐 목표 정점으로 가는 길이가 2인 경로의 수를 계산합니다. 0→1→3과 0→2→3의 두 경로가 있습니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>길이가 정확히 2인 경로 수는 2입니다.</p>
+  </details>
+</article>
+
+<article class="example advanced">
+  <span class="tag">심화 2</span>
+  <h3>인접행렬 제곱으로 경로 수 구하기</h3>
+  <pre><code>matrix = [
+    [0, 1, 1],
+    [1, 0, 1],
+    [1, 1, 0]
+]
+
+n = len(matrix)
+square = [[0] * n for _ in range(n)]
+
+for i in range(n):
+    for j in range(n):
+        for k in range(n):
+            square[i][j] += matrix[i][k] * matrix[k][j]
+
+for row in square:
+    print(row)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>행렬의 제곱에서 square[i][j]는 정점 i에서 정점 j까지 길이가 정확히 2인 보행의 수를 나타냅니다. 행과 열을 곱하는 행렬 곱셈 원리가 그래프 경로 계산에 사용됩니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>대각 원소는 해당 정점에서 출발해 두 단계 후 다시 돌아오는 보행 수입니다.</p>
+  </details>
+</article>
+
+<article class="example advanced">
+  <span class="tag">심화 3</span>
+  <h3>플로이드-워셜로 모든 정점 간 도달 가능성</h3>
+  <pre><code>matrix = [
+    [0, 1, 0, 0],
+    [0, 0, 1, 0],
+    [0, 0, 0, 1],
+    [0, 0, 0, 0]
+]
+
+n = len(matrix)
+reach = [row[:] for row in matrix]
+
+for i in range(n):
+    reach[i][i] = 1
+
+for k in range(n):
+    for i in range(n):
+        for j in range(n):
+            if reach[i][k] and reach[k][j]:
+                reach[i][j] = 1
+
+for row in reach:
+    print(row)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>중간 정점 k를 하나씩 허용하면서 i에서 k로 갈 수 있고 k에서 j로 갈 수 있으면 i에서 j로도 갈 수 있다고 표시합니다. 모든 정점 쌍의 도달 가능성을 구할 수 있습니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>정점 0에서는 0,1,2,3 모두 도달할 수 있습니다.</p>
+  </details>
+</article>
+
+<article class="example advanced">
+  <span class="tag">심화 4</span>
+  <h3>가중 인접행렬과 최단 간선 선택</h3>
+  <pre><code>INF = 10**9
+
+matrix = [
+    [0, 4, 2, INF],
+    [4, 0, 1, 5],
+    [2, 1, 0, 8],
+    [INF, 5, 8, 0]
+]
+
+start = 0
+nearest = -1
+minimum = INF
+
+for vertex in range(1, len(matrix)):
+    weight = matrix[start][vertex]
+    if weight &lt; minimum:
+        minimum = weight
+        nearest = vertex
+
+print(nearest, minimum)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>가중 인접행렬에서는 1 대신 간선의 가중치를 저장합니다. 연결되지 않은 정점은 매우 큰 값 INF로 표시할 수 있습니다. 시작 정점 0과 직접 연결된 간선 중 가장 작은 가중치를 찾습니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>정점 0에서 가장 가까운 직접 이웃은 정점 2이고 가중치는 2입니다.</p>
+  </details>
+</article>
+
+<article class="example advanced">
+  <span class="tag">심화 5</span>
+  <h3>인접행렬로 연결 요소 구하기</h3>
+  <pre><code>matrix = [
+    [0, 1, 0, 0, 0, 0],
+    [1, 0, 1, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0],
+    [0, 0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0]
+]
+
+visited = [False] * len(matrix)
+component_sizes = []
+
+for start in range(len(matrix)):
+    if visited[start]:
+        continue
+
+    stack = [start]
+    visited[start] = True
+    size = 0
+
+    while stack:
+        current = stack.pop()
+        size += 1
+
+        for nxt in range(len(matrix)):
+            if matrix[current][nxt] == 1 and not visited[nxt]:
+                visited[nxt] = True
+                stack.append(nxt)
+
+    component_sizes.append(size)
+
+print(component_sizes)</code></pre>
+  <div class="explain"><b>상세 설명</b><br>방문하지 않은 정점에서 새 DFS를 시작할 때마다 새로운 연결 요소가 발견됩니다. 인접행렬의 행을 검사해 연결된 미방문 정점을 스택에 넣습니다.</div>
+  <details>
+    <summary>예상 결과·핵심 확인</summary>
+    <p>연결 요소의 크기는 [3,2,1]입니다.</p>
+  </details>
+</article>
+</section>
+
+<section id="비교">
+<h2>인접행렬과 인접리스트 비교</h2>
+<table>
+<tr><th>항목</th><th>인접행렬</th><th>인접리스트</th></tr>
+<tr><td>연결 여부 확인</td><td>matrix[a][b]로 빠르게 확인</td><td>이웃 목록에서 찾아야 함</td></tr>
+<tr><td>공간 사용</td><td>항상 O(V²)</td><td>보통 O(V+E)</td></tr>
+<tr><td>희소 그래프</td><td>불필요한 0이 많아질 수 있음</td><td>실제 간선만 저장하므로 유리</td></tr>
+<tr><td>밀집 그래프</td><td>구현과 연결 확인이 간단</td><td>이웃 목록이 매우 길어질 수 있음</td></tr>
+</table>
+</section>
+</main>
+
+<button class="print" onclick="window.print()">인쇄 / PDF</button>
+</body>
+</html>

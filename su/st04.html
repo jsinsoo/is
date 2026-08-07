@@ -1,0 +1,605 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BFS·DFS 심화 상세 설명</title>
+<style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --green:#1f8a70; --orange:#f59e0b;
+  --purple:#7656a7; --red:#c43c4f; --ink:#17212b; --muted:#5d6976;
+  --line:#d8e2ec; --bg:#f4f7fb; --paper:#ffffff; --code:#101b26;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  line-height:1.72;
+}
+header{
+  background:linear-gradient(135deg,#12283e,#2f6fb3 58%,#1f8a70);
+  color:#fff; padding:48px 20px;
+}
+.wrap{max-width:1420px;margin:auto}
+h1{font-size:clamp(2.1rem,4vw,3.7rem);line-height:1.15;margin:.35rem 0 .9rem}
+.subtitle{max-width:1150px;font-size:1.08rem;opacity:.96}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{padding:6px 11px;border:1px solid rgba(255,255,255,.3);border-radius:999px;background:rgba(255,255,255,.12);font-size:.86rem}
+nav{
+  position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);
+  box-shadow:0 3px 12px rgba(23,50,77,.08)
+}
+nav .wrap{display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:900;padding:8px 10px;border-radius:8px;font-size:.88rem}
+nav a:hover{background:#eaf4ff}
+main{max-width:1420px;margin:auto;padding:22px 16px 90px}
+section{
+  background:var(--paper);border:1px solid var(--line);border-radius:18px;
+  padding:25px;margin:19px 0;box-shadow:0 7px 22px rgba(23,50,77,.055)
+}
+h2{color:var(--navy);font-size:1.72rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}
+h3{color:var(--navy);margin-top:1.5rem}
+h4{color:#274f75}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card strong{color:var(--navy)}
+.info{background:#eaf8f3;border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.warning{background:#fff1f3;border-left:6px solid var(--red);padding:14px 16px;border-radius:10px}
+.purple{background:#f4efff;border-left:6px solid var(--purple);padding:14px 16px;border-radius:10px}
+.code{
+  background:var(--code);color:#eaf2f8;border-radius:13px;padding:16px 18px;
+  overflow:auto;white-space:pre;font-family:Consolas,"D2Coding",monospace;
+  font-size:.92rem;line-height:1.6;margin:12px 0
+}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy)}
+.step{counter-reset:item}
+.step li{margin:.55rem 0}
+.small{font-size:.87rem;color:var(--muted)}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer}
+.option:hover{background:#f5f9fd}
+.feedback{display:none;margin-top:10px;padding:12px;border-radius:9px;background:#f6f8fb}
+.feedback.show{display:block}
+.correct{border-left:5px solid var(--green)}
+.wrong{border-left:5px solid var(--red)}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+button{border:0;border-radius:10px;padding:10px 14px;font-weight:900;cursor:pointer}
+.primary{background:var(--blue);color:#fff}
+.secondary{background:#eaf0f6;color:var(--navy)}
+.print{position:fixed;right:18px;bottom:18px;background:var(--navy);color:white;box-shadow:0 7px 22px rgba(0,0,0,.2)}
+.diagram{
+  border:1px dashed #9cb2c7;border-radius:14px;padding:18px;background:#fbfdff;
+  font-family:Consolas,"D2Coding",monospace;white-space:pre;overflow:auto
+}
+@media(max-width:800px){
+  .grid{grid-template-columns:1fr}
+}
+@media print{
+  nav,.print,.controls{display:none!important}
+  body{background:#fff}
+  section{box-shadow:none}
+  .question{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div>고등학교 정보과학 · 데이터 구조 · 그래프 탐색</div>
+    <h1>BFS·DFS 심화 상세 설명</h1>
+    <div class="subtitle">
+      그래프와 트리의 표현부터 큐·스택·재귀 호출, 방문 배열, 탐색 순서,
+      최단 거리, 경로 복원, 연결 요소, 사이클 탐지, 시간 복잡도까지 단계적으로 학습합니다.
+    </div>
+    <div class="badges">
+      <span class="badge">그래프 표현</span>
+      <span class="badge">BFS</span>
+      <span class="badge">DFS</span>
+      <span class="badge">방문 배열</span>
+      <span class="badge">최단 경로</span>
+      <span class="badge">연결 요소</span>
+      <span class="badge">사이클 탐지</span>
+      <span class="badge">상세 코드 해설</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#overview">개요</a>
+    <a href="#graph">그래프 표현</a>
+    <a href="#bfs">BFS</a>
+    <a href="#dfs">DFS</a>
+    <a href="#compare">비교</a>
+    <a href="#path">경로 복원</a>
+    <a href="#components">연결 요소</a>
+    <a href="#cycle">사이클 탐지</a>
+    <a href="#mistakes">오류 분석</a>
+    <a href="#quiz">확인 문제</a>
+  </div>
+</nav>
+
+<main>
+<section id="overview">
+  <h2>1. BFS와 DFS의 핵심 개요</h2>
+  <div class="grid">
+    <div class="card">
+      <strong>BFS: 너비 우선 탐색</strong><br>
+      시작 정점에서 가까운 정점부터 층별로 탐색합니다.
+      큐의 선입선출 구조를 사용합니다.
+    </div>
+    <div class="card">
+      <strong>DFS: 깊이 우선 탐색</strong><br>
+      한 경로를 가능한 깊게 탐색한 뒤 더 이상 갈 수 없으면 되돌아옵니다.
+      재귀 호출 또는 스택을 사용합니다.
+    </div>
+    <div class="card">
+      <strong>공통 핵심</strong><br>
+      그래프에서는 이미 방문한 정점을 다시 방문하지 않도록 방문 배열 또는 집합을 사용해야 합니다.
+    </div>
+  </div>
+
+  <div class="diagram">
+그래프 예시
+
+        0
+      /   \
+     1     2
+     |     |
+     3     4
+
+인접리스트
+0: [1, 2]
+1: [0, 3]
+2: [0, 4]
+3: [1]
+4: [2]
+  </div>
+
+  <table>
+    <tr><th>구분</th><th>BFS</th><th>DFS</th></tr>
+    <tr><td>탐색 원리</td><td>가까운 정점부터 층별 탐색</td><td>한 경로를 끝까지 깊게 탐색</td></tr>
+    <tr><td>주요 자료구조</td><td>큐</td><td>스택 또는 재귀 호출</td></tr>
+    <tr><td>대표 활용</td><td>비가중 최단 거리, 최소 이동 횟수</td><td>연결 요소, 사이클, 경로 존재 여부, 백트래킹</td></tr>
+  </table>
+</section>
+
+<section id="graph">
+  <h2>2. 그래프의 표현</h2>
+
+  <h3>2-1. 인접리스트</h3>
+  <div class="code">graph = [
+    [1, 2],  # 정점 0의 이웃
+    [0, 3],  # 정점 1의 이웃
+    [0, 4],  # 정점 2의 이웃
+    [1],     # 정점 3의 이웃
+    [2]      # 정점 4의 이웃
+]</div>
+  <div class="info">
+    인접리스트는 각 정점마다 실제로 연결된 이웃만 저장합니다.
+    간선 수가 정점 수보다 훨씬 적은 희소 그래프에서 공간 효율이 좋습니다.
+  </div>
+
+  <h3>2-2. 인접행렬</h3>
+  <div class="code">matrix = [
+    [0, 1, 1, 0, 0],
+    [1, 0, 0, 1, 0],
+    [1, 0, 0, 0, 1],
+    [0, 1, 0, 0, 0],
+    [0, 0, 1, 0, 0]
+]</div>
+  <div class="purple">
+    인접행렬은 두 정점의 직접 연결 여부를 빠르게 확인할 수 있지만,
+    정점 수가 V이면 V×V 공간이 필요합니다.
+  </div>
+
+  <table>
+    <tr><th>표현</th><th>장점</th><th>단점</th></tr>
+    <tr><td>인접리스트</td><td>실제 간선만 저장, 이웃 순회 효율적</td><td>두 정점의 직접 연결 확인은 이웃 검색 필요</td></tr>
+    <tr><td>인접행렬</td><td>연결 여부를 바로 확인 가능</td><td>정점이 많으면 공간 사용량 큼</td></tr>
+  </table>
+</section>
+
+<section id="bfs">
+  <h2>3. BFS 상세 설명</h2>
+
+  <h3>3-1. BFS 실행 원리</h3>
+  <ol class="step">
+    <li>시작 정점을 큐에 넣습니다.</li>
+    <li>시작 정점을 방문했다고 표시합니다.</li>
+    <li>큐의 앞에서 정점을 하나 꺼냅니다.</li>
+    <li>꺼낸 정점의 이웃 중 아직 방문하지 않은 정점을 큐에 넣습니다.</li>
+    <li>큐가 빌 때까지 반복합니다.</li>
+  </ol>
+
+  <div class="warning">
+    방문 표시는 큐에서 꺼낼 때가 아니라 큐에 넣을 때 하는 것이 안전합니다.
+    그래야 같은 정점이 여러 번 큐에 들어가는 것을 방지할 수 있습니다.
+  </div>
+
+  <h3>3-2. 기본 BFS 코드</h3>
+  <div class="code">from collections import deque
+
+graph = [
+    [1, 2],
+    [0, 3],
+    [0, 4],
+    [1],
+    [2]
+]
+
+def bfs(start):
+    visited = [False] * len(graph)
+    queue = deque([start])
+    visited[start] = True
+    order = []
+
+    while queue:
+        current = queue.popleft()
+        order.append(current)
+
+        for nxt in graph[current]:
+            if not visited[nxt]:
+                visited[nxt] = True
+                queue.append(nxt)
+
+    return order
+
+print(bfs(0))</div>
+
+  <h3>3-3. 코드 상세 설명</h3>
+  <table>
+    <tr><th>코드</th><th>설명</th></tr>
+    <tr><td><code>deque([start])</code></td><td>시작 정점을 큐에 넣습니다.</td></tr>
+    <tr><td><code>visited[start] = True</code></td><td>시작 정점의 중복 삽입을 막습니다.</td></tr>
+    <tr><td><code>popleft()</code></td><td>큐의 앞쪽 정점을 꺼냅니다.</td></tr>
+    <tr><td><code>for nxt in graph[current]</code></td><td>현재 정점의 모든 이웃을 확인합니다.</td></tr>
+    <tr><td><code>queue.append(nxt)</code></td><td>방문하지 않은 이웃을 큐 뒤에 넣습니다.</td></tr>
+  </table>
+
+  <h3>3-4. BFS 탐색 순서</h3>
+  <div class="diagram">
+초기 상태
+queue = [0]
+
+0 처리
+queue = [1, 2]
+
+1 처리
+queue = [2, 3]
+
+2 처리
+queue = [3, 4]
+
+3 처리
+queue = [4]
+
+4 처리
+queue = []
+
+탐색 순서: 0 → 1 → 2 → 3 → 4
+  </div>
+</section>
+
+<section id="dfs">
+  <h2>4. DFS 상세 설명</h2>
+
+  <h3>4-1. 재귀 DFS</h3>
+  <div class="code">graph = [
+    [1, 2],
+    [0, 3],
+    [0, 4],
+    [1],
+    [2]
+]
+
+def dfs(current, visited, order):
+    visited[current] = True
+    order.append(current)
+
+    for nxt in graph[current]:
+        if not visited[nxt]:
+            dfs(nxt, visited, order)
+
+visited = [False] * len(graph)
+order = []
+dfs(0, visited, order)
+
+print(order)</div>
+
+  <div class="info">
+    재귀 DFS는 함수 호출 스택을 사용합니다.
+    현재 정점에서 방문하지 않은 이웃을 만나면 새 함수 호출이 쌓이고,
+    더 이상 갈 곳이 없으면 호출이 종료되면서 이전 정점으로 되돌아갑니다.
+  </div>
+
+  <h3>4-2. 반복형 DFS</h3>
+  <div class="code">graph = [
+    [1, 2],
+    [0, 3],
+    [0, 4],
+    [1],
+    [2]
+]
+
+def dfs_iterative(start):
+    visited = [False] * len(graph)
+    stack = [start]
+    order = []
+
+    while stack:
+        current = stack.pop()
+
+        if visited[current]:
+            continue
+
+        visited[current] = True
+        order.append(current)
+
+        for nxt in reversed(graph[current]):
+            if not visited[nxt]:
+                stack.append(nxt)
+
+    return order
+
+print(dfs_iterative(0))</div>
+
+  <div class="notice">
+    반복형 DFS에서는 이웃을 스택에 넣는 순서에 따라 방문 순서가 달라질 수 있습니다.
+    재귀 DFS와 같은 순서를 원하면 인접리스트를 역순으로 스택에 넣는 방법을 사용할 수 있습니다.
+  </div>
+
+  <h3>4-3. 호출 스택의 흐름</h3>
+  <div class="diagram">
+dfs(0)
+ ├─ dfs(1)
+ │   └─ dfs(3)
+ └─ dfs(2)
+     └─ dfs(4)
+
+탐색 순서: 0 → 1 → 3 → 2 → 4
+복귀 순서: 3 → 1 → 4 → 2 → 0
+  </div>
+</section>
+
+<section id="compare">
+  <h2>5. BFS와 DFS 비교</h2>
+  <table>
+    <tr><th>항목</th><th>BFS</th><th>DFS</th></tr>
+    <tr><td>탐색 방식</td><td>층별 확장</td><td>한 경로를 깊게 진행</td></tr>
+    <tr><td>자료구조</td><td>큐</td><td>스택 또는 재귀</td></tr>
+    <tr><td>최단 거리</td><td>비가중 그래프에서 보장</td><td>일반적으로 보장하지 않음</td></tr>
+    <tr><td>메모리</td><td>같은 층의 정점이 많으면 큐가 커질 수 있음</td><td>그래프 깊이가 크면 호출 스택 또는 명시적 스택이 커질 수 있음</td></tr>
+    <tr><td>주요 활용</td><td>최소 이동, 감염 확산, 미로 최단 거리</td><td>사이클, 연결 요소, 백트래킹, 위상 구조 분석</td></tr>
+  </table>
+
+  <h3>시간 복잡도</h3>
+  <div class="purple">
+    인접리스트를 사용하면 BFS와 DFS 모두 각 정점과 각 간선을 한 번씩 확인하므로
+    시간 복잡도는 일반적으로 O(V+E)입니다.
+  </div>
+</section>
+
+<section id="path">
+  <h2>6. BFS를 이용한 최단 거리와 경로 복원</h2>
+
+  <div class="code">from collections import deque
+
+graph = [
+    [1, 2],
+    [0, 3],
+    [0, 4],
+    [1, 5],
+    [2, 5],
+    [3, 4]
+]
+
+def bfs_path(start, target):
+    distance = [-1] * len(graph)
+    parent = [-1] * len(graph)
+    queue = deque([start])
+    distance[start] = 0
+
+    while queue:
+        current = queue.popleft()
+
+        for nxt in graph[current]:
+            if distance[nxt] == -1:
+                distance[nxt] = distance[current] + 1
+                parent[nxt] = current
+                queue.append(nxt)
+
+    path = []
+    current = target
+
+    while current != -1:
+        path.append(current)
+        current = parent[current]
+
+    path.reverse()
+    return distance[target], path
+
+print(bfs_path(0, 5))</div>
+
+  <h3>핵심 원리</h3>
+  <ol>
+    <li><code>distance[nxt]</code>에는 시작점에서 다음 정점까지의 최소 간선 수를 저장합니다.</li>
+    <li><code>parent[nxt]</code>에는 다음 정점을 처음 발견한 이전 정점을 저장합니다.</li>
+    <li>목표 정점에서 부모를 따라가면 경로가 역순으로 만들어집니다.</li>
+    <li><code>reverse()</code>로 시작점부터 목표점 순서로 바꿉니다.</li>
+  </ol>
+</section>
+
+<section id="components">
+  <h2>7. 연결 요소 찾기</h2>
+  <div class="code">graph = [
+    [1],
+    [0, 2],
+    [1],
+    [4],
+    [3],
+    []
+]
+
+visited = [False] * len(graph)
+component_sizes = []
+
+for start in range(len(graph)):
+    if visited[start]:
+        continue
+
+    stack = [start]
+    visited[start] = True
+    size = 0
+
+    while stack:
+        current = stack.pop()
+        size += 1
+
+        for nxt in graph[current]:
+            if not visited[nxt]:
+                visited[nxt] = True
+                stack.append(nxt)
+
+    component_sizes.append(size)
+
+print(component_sizes)</div>
+
+  <div class="info">
+    방문하지 않은 정점에서 새 탐색을 시작할 때마다 새로운 연결 요소가 발견됩니다.
+    위 그래프의 연결 요소 크기는 [3, 2, 1]입니다.
+  </div>
+</section>
+
+<section id="cycle">
+  <h2>8. 무방향 그래프의 사이클 탐지</h2>
+  <div class="code">graph = [
+    [1, 2],
+    [0, 2],
+    [0, 1, 3],
+    [2]
+]
+
+def has_cycle(current, parent, visited):
+    visited[current] = True
+
+    for nxt in graph[current]:
+        if not visited[nxt]:
+            if has_cycle(nxt, current, visited):
+                return True
+        elif nxt != parent:
+            return True
+
+    return False
+
+visited = [False] * len(graph)
+print(has_cycle(0, -1, visited))</div>
+
+  <div class="warning">
+    무방향 그래프에서는 현재 정점의 부모 정점으로 돌아가는 간선은 정상적인 역방향 간선입니다.
+    이미 방문한 이웃이 부모가 아닐 때 사이클로 판단합니다.
+  </div>
+</section>
+
+<section id="mistakes">
+  <h2>9. 자주 발생하는 오류</h2>
+  <div class="grid">
+    <div class="card">
+      <strong>방문 표시 시점 오류</strong><br>
+      BFS에서 큐에 넣을 때 방문 표시하지 않으면 같은 정점이 여러 번 큐에 들어갈 수 있습니다.
+    </div>
+    <div class="card">
+      <strong>방문 배열 누락</strong><br>
+      무방향 그래프에서는 서로를 다시 참조하므로 무한 반복 또는 무한 재귀가 발생할 수 있습니다.
+    </div>
+    <div class="card">
+      <strong>DFS 순서 혼동</strong><br>
+      스택에 이웃을 넣는 순서에 따라 실제 방문 순서가 달라집니다.
+    </div>
+    <div class="card">
+      <strong>경로 복원 역순</strong><br>
+      parent를 따라가면 목표에서 시작점 방향으로 수집되므로 마지막에 뒤집어야 합니다.
+    </div>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>10. BFS·DFS 확인 문제</h2>
+
+  <div class="question" data-answer="1,2,3">
+    <h3>1. BFS에 관한 설명으로 옳은 것을 모두 고르시오.</h3>
+    <label class="option"><input type="checkbox" value="1"> ① 큐를 사용한다.</label>
+    <label class="option"><input type="checkbox" value="2"> ② 비가중 그래프의 최소 간선 수 거리에 활용할 수 있다.</label>
+    <label class="option"><input type="checkbox" value="3"> ③ 정점을 큐에 넣을 때 방문 표시할 수 있다.</label>
+    <label class="option"><input type="checkbox" value="4"> ④ 항상 재귀 호출만 사용한다.</label>
+    <label class="option"><input type="checkbox" value="5"> ⑤ 후입선출 구조를 핵심으로 사용한다.</label>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="question" data-answer="1,2,3">
+    <h3>2. DFS에 관한 설명으로 옳은 것을 모두 고르시오.</h3>
+    <label class="option"><input type="checkbox" value="1"> ① 재귀 함수로 구현할 수 있다.</label>
+    <label class="option"><input type="checkbox" value="2"> ② 명시적 스택으로 구현할 수 있다.</label>
+    <label class="option"><input type="checkbox" value="3"> ③ 연결 요소와 사이클 탐지에 활용할 수 있다.</label>
+    <label class="option"><input type="checkbox" value="4"> ④ 모든 비가중 그래프에서 최단 경로를 보장한다.</label>
+    <label class="option"><input type="checkbox" value="5"> ⑤ 방문 배열이 필요하지 않다.</label>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="question" data-answer="1,2,3">
+    <h3>3. BFS와 DFS의 공통점으로 옳은 것을 모두 고르시오.</h3>
+    <label class="option"><input type="checkbox" value="1"> ① 그래프의 정점을 탐색한다.</label>
+    <label class="option"><input type="checkbox" value="2"> ② 방문 배열로 중복 방문을 막을 수 있다.</label>
+    <label class="option"><input type="checkbox" value="3"> ③ 인접리스트를 사용하면 일반적으로 O(V+E)에 수행된다.</label>
+    <label class="option"><input type="checkbox" value="4"> ④ 항상 같은 방문 순서를 만든다.</label>
+    <label class="option"><input type="checkbox" value="5"> ⑤ 항상 큐만 사용한다.</label>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="controls">
+    <button class="primary" onclick="gradeQuiz()">확인 문제 채점</button>
+    <button class="secondary" onclick="resetQuiz()">초기화</button>
+    <button class="secondary" onclick="window.print()">인쇄 / PDF</button>
+  </div>
+</section>
+</main>
+
+<button class="print" onclick="window.print()">인쇄 / PDF</button>
+
+<script>
+function gradeQuiz(){
+  document.querySelectorAll('.question').forEach((question, index)=>{
+    const answer = question.dataset.answer.split(',').sort();
+    const selected = [...question.querySelectorAll('input:checked')].map(x=>x.value).sort();
+    const correct = JSON.stringify(answer) === JSON.stringify(selected);
+    const feedback = question.querySelector('.feedback');
+    feedback.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+
+    const explanations = [
+      'BFS는 큐를 사용하고, 비가중 그래프의 최소 간선 수 거리 계산에 활용할 수 있으며, 큐에 넣는 시점에 방문 표시하면 중복 삽입을 방지할 수 있습니다.',
+      'DFS는 재귀 또는 스택으로 구현할 수 있고, 연결 요소·사이클·경로 존재 여부 탐색에 활용할 수 있습니다.',
+      'BFS와 DFS는 모두 그래프 탐색 방법이며, 방문 배열을 사용할 수 있고 인접리스트 기준 시간 복잡도는 일반적으로 O(V+E)입니다.'
+    ];
+
+    feedback.innerHTML =
+      '<b>' + (correct ? '정답' : '오답') + '</b><br>' +
+      '<b>정답:</b> ①, ②, ③<br>' +
+      '<b>상세 풀이:</b> ' + explanations[index];
+  });
+}
+
+function resetQuiz(){
+  document.querySelectorAll('#quiz input[type=checkbox]').forEach(x=>x.checked=false);
+  document.querySelectorAll('#quiz .feedback').forEach(x=>{
+    x.className='feedback';
+    x.innerHTML='';
+  });
+}
+</script>
+</body>
+</html>

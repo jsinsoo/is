@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BFS·DFS 기초·응용·심화 예시 코드</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:#f4f7fb;color:#17212b;font-family:"Malgun Gothic",sans-serif;line-height:1.7}
+header{padding:46px 20px;background:linear-gradient(135deg,#17324d,#2f6fb3,#1f8a70);color:white}
+.wrap,main{max-width:1380px;margin:auto}h1{font-size:clamp(2rem,4vw,3.5rem);margin:.3rem 0}
+header p{max-width:1050px;font-size:1.05rem}
+nav{position:sticky;top:0;background:white;border-bottom:1px solid #d8e2ec;z-index:10}
+nav div{max-width:1380px;margin:auto;display:flex;gap:8px;padding:9px 14px;overflow:auto}
+nav a{text-decoration:none;color:#17324d;font-weight:900;padding:8px 11px;white-space:nowrap}
+main{padding:20px 15px 80px}
+section{background:white;border:1px solid #d8e2ec;border-radius:18px;padding:24px;margin:20px 0}
+h2{border-left:7px solid #2f6fb3;padding-left:12px;color:#17324d}
+.example{border:1px solid #d8e2ec;border-left:7px solid;border-radius:15px;padding:18px;margin:17px 0}
+.example.basic{border-left-color:#1f8a70}.example.apply{border-left-color:#2f6fb3}.example.advanced{border-left-color:#c43c4f}
+.tag{display:inline-block;padding:4px 9px;border-radius:999px;background:#17324d;color:white;font-size:.8rem;font-weight:900}
+pre{background:#101b26;color:#edf5fa;border-radius:13px;padding:16px;overflow:auto;font-family:Consolas,"D2Coding",monospace;line-height:1.55}
+.explain{background:#eef8f3;border-left:5px solid #1f8a70;padding:13px;border-radius:9px}
+details{margin-top:11px;background:#fff8e8;border-left:5px solid #f59e0b;padding:11px;border-radius:9px}
+summary{font-weight:900;cursor:pointer}
+table{width:100%;border-collapse:collapse}th,td{border:1px solid #d8e2ec;padding:10px}th{background:#edf4fb}
+button{position:fixed;right:18px;bottom:18px;background:#17324d;color:white;border:0;border-radius:10px;padding:11px 15px;font-weight:900}
+@media print{nav,button{display:none}body{background:white}section{break-inside:auto}.example{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div>고등학교 정보과학 · 데이터 구조</div>
+<h1>BFS·DFS를 예시 코드로 쉽게 배우기</h1>
+<p>기초 5개, 응용 5개, 심화 5개의 서로 다른 예시를 통해 그래프 표현, 큐·스택, 방문 배열, 최단 거리, 연결 요소, 경로 복원, 사이클, 서브트리를 단계적으로 학습합니다.</p></div></header>
+<nav><div><a href="#개요">핵심 개념</a><a href="#기초">기초 5개</a><a href="#응용">응용 5개</a><a href="#심화">심화 5개</a><a href="#비교">비교 정리</a></div></nav>
+<main>
+<section id="개요"><h2>BFS·DFS 핵심 개념</h2>
+<table><tr><th>구분</th><th>BFS</th><th>DFS</th></tr>
+<tr><td>탐색 방식</td><td>가까운 정점부터 층별 탐색</td><td>한 경로를 가능한 깊게 탐색</td></tr>
+<tr><td>자료구조</td><td>큐</td><td>재귀 호출 또는 스택</td></tr>
+<tr><td>대표 활용</td><td>비가중 최단 거리, 미로, 확산</td><td>연결 요소, 사이클, 트리 순회</td></tr>
+<tr><td>시간 복잡도</td><td>인접리스트 기준 O(V+E)</td><td>인접리스트 기준 O(V+E)</td></tr></table></section>
+<section id="기초"><h2>기초 예시 5개</h2>
+    <article class="example basic">
+      <div class="tag">기초 1</div>
+      <h3>인접리스트 만들기</h3>
+      <pre><code>graph = [
+    [1, 2],
+    [0, 3],
+    [0, 4],
+    [1],
+    [2]
+]
+
+for vertex, neighbors in enumerate(graph):
+    print(vertex, &quot;:&quot;, neighbors)</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>정점 번호와 그 정점에 직접 연결된 이웃 목록을 함께 출력합니다.</div>
+      <details><summary>핵심 확인</summary><p>정점 2의 이웃은 0과 4입니다.</p></details>
+    </article>
+    <article class="example basic">
+      <div class="tag">기초 2</div>
+      <h3>큐의 선입선출 확인</h3>
+      <pre><code>from collections import deque
+
+queue = deque()
+queue.append(&quot;A&quot;)
+queue.append(&quot;B&quot;)
+queue.append(&quot;C&quot;)
+
+first = queue.popleft()
+second = queue.popleft()
+
+print(first, second)
+print(list(queue))</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>먼저 들어온 A와 B가 차례로 나오고 C만 남습니다. BFS는 이 선입선출 구조를 사용합니다.</div>
+      <details><summary>핵심 확인</summary><p>출력은 A B와 [&#x27;C&#x27;]입니다.</p></details>
+    </article>
+    <article class="example basic">
+      <div class="tag">기초 3</div>
+      <h3>기본 BFS 탐색</h3>
+      <pre><code>from collections import deque
+
+graph = [[1, 2], [0, 3], [0, 4], [1], [2]]
+visited = [False] * len(graph)
+queue = deque([0])
+visited[0] = True
+order = []
+
+while queue:
+    current = queue.popleft()
+    order.append(current)
+    for nxt in graph[current]:
+        if not visited[nxt]:
+            visited[nxt] = True
+            queue.append(nxt)
+
+print(order)</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>시작점 0에서 가까운 정점부터 0, 1, 2, 3, 4 순서로 탐색합니다.</div>
+      <details><summary>핵심 확인</summary><p>방문 표시는 큐에 넣을 때 하는 것이 중복 삽입을 막는 데 안전합니다.</p></details>
+    </article>
+    <article class="example basic">
+      <div class="tag">기초 4</div>
+      <h3>재귀 DFS 탐색</h3>
+      <pre><code>graph = [[1, 2], [0, 3], [0, 4], [1], [2]]
+visited = [False] * len(graph)
+order = []
+
+def dfs(current):
+    visited[current] = True
+    order.append(current)
+    for nxt in graph[current]:
+        if not visited[nxt]:
+            dfs(nxt)
+
+dfs(0)
+print(order)</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>0에서 1, 3으로 깊게 들어갔다가 되돌아온 뒤 2, 4를 탐색합니다.</div>
+      <details><summary>핵심 확인</summary><p>대표 방문 순서는 [0, 1, 3, 2, 4]입니다.</p></details>
+    </article>
+    <article class="example basic">
+      <div class="tag">기초 5</div>
+      <h3>반복형 DFS 탐색</h3>
+      <pre><code>graph = [[1, 2], [0, 3], [0, 4], [1], [2]]
+visited = [False] * len(graph)
+stack = [0]
+order = []
+
+while stack:
+    current = stack.pop()
+    if visited[current]:
+        continue
+    visited[current] = True
+    order.append(current)
+    for nxt in reversed(graph[current]):
+        if not visited[nxt]:
+            stack.append(nxt)
+
+print(order)</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>재귀 호출 대신 리스트를 스택으로 사용합니다. 이웃을 역순으로 넣으면 재귀 DFS와 비슷한 순서가 됩니다.</div>
+      <details><summary>핵심 확인</summary><p>스택은 후입선출 구조입니다.</p></details>
+    </article></section><section id="응용"><h2>응용 예시 5개</h2>
+    <article class="example apply">
+      <div class="tag">응용 1</div>
+      <h3>BFS 최단 거리</h3>
+      <pre><code>from collections import deque
+
+graph = [[1, 2], [0, 3], [0, 4], [1], [2]]
+distance = [-1] * len(graph)
+queue = deque([0])
+distance[0] = 0
+
+while queue:
+    current = queue.popleft()
+    for nxt in graph[current]:
+        if distance[nxt] == -1:
+            distance[nxt] = distance[current] + 1
+            queue.append(nxt)
+
+print(distance)</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>비가중 그래프에서 처음 기록된 거리가 시작점으로부터의 최소 간선 수 거리입니다.</div>
+      <details><summary>핵심 확인</summary><p>결과는 [0, 1, 1, 2, 2]입니다.</p></details>
+    </article>
+    <article class="example apply">
+      <div class="tag">응용 2</div>
+      <h3>미로 최단 거리</h3>
+      <pre><code>from collections import deque
+
+maze = [[1, 1, 0], [0, 1, 1], [1, 1, 1]]
+distance = [[-1] * 3 for _ in range(3)]
+queue = deque([(0, 0)])
+distance[0][0] = 0
+directions = [(1,0), (-1,0), (0,1), (0,-1)]
+
+while queue:
+    r, c = queue.popleft()
+    for dr, dc in directions:
+        nr, nc = r + dr, c + dc
+        if 0 &lt;= nr &lt; 3 and 0 &lt;= nc &lt; 3:
+            if maze[nr][nc] == 1 and distance[nr][nc] == -1:
+                distance[nr][nc] = distance[r][c] + 1
+                queue.append((nr, nc))
+
+print(distance[2][2])</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>2차원 격자도 각 칸을 정점으로 보면 그래프입니다. 상하좌우 이동을 간선으로 해석합니다.</div>
+      <details><summary>핵심 확인</summary><p>목표 칸까지의 최소 이동 횟수는 4입니다.</p></details>
+    </article>
+    <article class="example apply">
+      <div class="tag">응용 3</div>
+      <h3>DFS 연결 요소 수</h3>
+      <pre><code>graph = [[1], [0, 2], [1], [4], [3], []]
+visited = [False] * len(graph)
+components = 0
+
+def dfs(start):
+    visited[start] = True
+    for nxt in graph[start]:
+        if not visited[nxt]:
+            dfs(nxt)
+
+for vertex in range(len(graph)):
+    if not visited[vertex]:
+        components += 1
+        dfs(vertex)
+
+print(components)</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>방문하지 않은 정점에서 새 DFS를 시작할 때마다 연결 요소 수를 1 증가시킵니다.</div>
+      <details><summary>핵심 확인</summary><p>연결 요소는 {0,1,2}, {3,4}, {5}의 3개입니다.</p></details>
+    </article>
+    <article class="example apply">
+      <div class="tag">응용 4</div>
+      <h3>감염 확산 시간</h3>
+      <pre><code>from collections import deque
+
+network = [[1, 2], [0, 3], [0, 4], [1], [2]]
+time = [-1] * len(network)
+queue = deque([0])
+time[0] = 0
+
+while queue:
+    current = queue.popleft()
+    for nxt in network[current]:
+        if time[nxt] == -1:
+            time[nxt] = time[current] + 1
+            queue.append(nxt)
+
+print(time)
+print(max(time))</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>각 정점에 처음 도달한 시간이 감염 시각입니다. BFS의 층이 시간 단계와 대응합니다.</div>
+      <details><summary>핵심 확인</summary><p>전체 감염 완료 시간은 2입니다.</p></details>
+    </article>
+    <article class="example apply">
+      <div class="tag">응용 5</div>
+      <h3>트리 깊이 계산</h3>
+      <pre><code>from collections import deque
+
+tree = [[1, 2], [0, 3, 4], [0, 5], [1], [1], [2]]
+depth = [-1] * len(tree)
+queue = deque([0])
+depth[0] = 0
+
+while queue:
+    current = queue.popleft()
+    for child in tree[current]:
+        if depth[child] == -1:
+            depth[child] = depth[current] + 1
+            queue.append(child)
+
+print(depth)</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>루트의 깊이는 0, 자식은 부모 깊이보다 1 큽니다.</div>
+      <details><summary>핵심 확인</summary><p>깊이 배열은 [0, 1, 1, 2, 2, 2]입니다.</p></details>
+    </article></section><section id="심화"><h2>심화 예시 5개</h2>
+    <article class="example advanced">
+      <div class="tag">심화 1</div>
+      <h3>BFS 최단 경로 복원</h3>
+      <pre><code>from collections import deque
+
+graph = [[1, 2], [0, 3], [0, 4], [1, 5], [2, 5], [3, 4]]
+distance = [-1] * len(graph)
+parent = [-1] * len(graph)
+queue = deque([0])
+distance[0] = 0
+
+while queue:
+    current = queue.popleft()
+    for nxt in graph[current]:
+        if distance[nxt] == -1:
+            distance[nxt] = distance[current] + 1
+            parent[nxt] = current
+            queue.append(nxt)
+
+path = []
+target = 5
+while target != -1:
+    path.append(target)
+    target = parent[target]
+path.reverse()
+print(path)</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>parent 배열에는 정점을 처음 발견한 이전 정점을 저장합니다. 목표에서 부모를 따라간 뒤 뒤집으면 경로가 됩니다.</div>
+      <details><summary>핵심 확인</summary><p>한 최단 경로는 [0, 1, 3, 5]입니다.</p></details>
+    </article>
+    <article class="example advanced">
+      <div class="tag">심화 2</div>
+      <h3>다중 시작점 BFS</h3>
+      <pre><code>from collections import deque
+
+graph = [[1], [0, 2, 4], [1, 3], [2, 4], [1, 3, 5], [4]]
+sources = [0, 5]
+distance = [-1] * len(graph)
+queue = deque(sources)
+
+for source in sources:
+    distance[source] = 0
+
+while queue:
+    current = queue.popleft()
+    for nxt in graph[current]:
+        if distance[nxt] == -1:
+            distance[nxt] = distance[current] + 1
+            queue.append(nxt)
+
+print(distance)</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>여러 시작점을 처음부터 큐에 넣으면 각 정점에서 가장 가까운 시작점까지의 거리를 구할 수 있습니다.</div>
+      <details><summary>핵심 확인</summary><p>결과는 [0, 1, 2, 2, 1, 0]입니다.</p></details>
+    </article>
+    <article class="example advanced">
+      <div class="tag">심화 3</div>
+      <h3>무방향 그래프 사이클 탐지</h3>
+      <pre><code>graph = [[1, 2], [0, 2], [0, 1, 3], [2]]
+visited = [False] * len(graph)
+
+def has_cycle(current, parent):
+    visited[current] = True
+    for nxt in graph[current]:
+        if not visited[nxt]:
+            if has_cycle(nxt, current):
+                return True
+        elif nxt != parent:
+            return True
+    return False
+
+print(has_cycle(0, -1))</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>이미 방문한 이웃이 현재 정점의 부모가 아니라면 다른 경로로 다시 만난 것이므로 사이클입니다.</div>
+      <details><summary>핵심 확인</summary><p>0-1-2-0 사이클이 있어 True입니다.</p></details>
+    </article>
+    <article class="example advanced">
+      <div class="tag">심화 4</div>
+      <h3>서브트리 크기 계산</h3>
+      <pre><code>tree = [[1, 2], [3, 4], [5], [], [], []]
+subtree = [0] * len(tree)
+
+def count_subtree(node):
+    total = 1
+    for child in tree[node]:
+        total += count_subtree(child)
+    subtree[node] = total
+    return total
+
+count_subtree(0)
+print(subtree)</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>리프에서부터 크기를 반환하고 부모가 자식들의 크기를 합합니다.</div>
+      <details><summary>핵심 확인</summary><p>결과는 [6, 3, 2, 1, 1, 1]입니다.</p></details>
+    </article>
+    <article class="example advanced">
+      <div class="tag">심화 5</div>
+      <h3>BFS와 DFS 순서 비교</h3>
+      <pre><code>from collections import deque
+
+graph = [[1, 2], [0, 3, 4], [0, 5], [1], [1], [2]]
+
+def bfs(start):
+    visited = [False] * len(graph)
+    queue = deque([start])
+    visited[start] = True
+    order = []
+    while queue:
+        current = queue.popleft()
+        order.append(current)
+        for nxt in graph[current]:
+            if not visited[nxt]:
+                visited[nxt] = True
+                queue.append(nxt)
+    return order
+
+def dfs(current, visited, order):
+    visited[current] = True
+    order.append(current)
+    for nxt in graph[current]:
+        if not visited[nxt]:
+            dfs(nxt, visited, order)
+
+dfs_order = []
+dfs(0, [False] * len(graph), dfs_order)
+print(&quot;BFS:&quot;, bfs(0))
+print(&quot;DFS:&quot;, dfs_order)</code></pre>
+      <div class="explain"><b>알기 쉬운 설명</b><br>BFS는 층별로, DFS는 한 경로를 깊게 탐색합니다. 같은 그래프라도 순서가 다릅니다.</div>
+      <details><summary>핵심 확인</summary><p>BFS는 [0,1,2,3,4,5], DFS는 [0,1,3,4,2,5]입니다.</p></details>
+    </article></section>
+<section id="비교"><h2>마무리 비교</h2>
+<p><b>BFS</b>는 최소 이동 횟수나 단계별 확산처럼 가까운 곳부터 처리해야 할 때 적합합니다.</p>
+<p><b>DFS</b>는 연결 구조, 사이클, 서브트리처럼 한 경로를 깊게 조사해야 할 때 적합합니다.</p>
+<p>두 알고리즘 모두 그래프에서는 방문 여부를 기록해야 무한 반복과 중복 탐색을 막을 수 있습니다.</p>
+</section>
+</main>
+<button onclick="window.print()">인쇄 / PDF</button>
+</body></html>
