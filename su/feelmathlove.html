@@ -1,0 +1,2523 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>사랑하게 되는 수학 · 300 Mathematical Sentences</title>
+<style>
+:root {
+  --bg:#f4f1eb; --paper:#fffdf9; --ink:#1d2433; --muted:#6f746f;
+  --line:#e6dfd3; --accent:#7a3e2e; --accent2:#1d5d57; --soft:#f5ebe3;
+  --shadow:0 10px 32px rgba(54,40,26,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;line-height:1.72}
+.hero{min-height:68vh;display:flex;align-items:center;background:
+radial-gradient(circle at 75% 20%,rgba(255,255,255,.13),transparent 24%),
+linear-gradient(135deg,#172a2a 0%,#224f4a 45%,#7a3e2e 100%);color:#fff;padding:64px 24px}
+.hero-inner{max-width:1120px;margin:auto;width:100%}
+.eyebrow{letter-spacing:.19em;text-transform:uppercase;font-size:.78rem;font-weight:800;opacity:.76}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.7rem,7vw,6.4rem);line-height:.97;margin:.3em 0 .25em;letter-spacing:-.035em;font-weight:700}
+.subtitle{font-size:clamp(1rem,2vw,1.22rem);max-width:780px;opacity:.9}
+.hero-math{font-family:Georgia,serif;font-size:1.1rem;margin-top:30px;border-left:2px solid #ffffff80;padding-left:16px;max-width:760px}
+.counts{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.counts span{border:1px solid #ffffff35;background:#ffffff13;border-radius:999px;padding:8px 13px;font-size:.84rem}
+.toolbar{position:sticky;top:0;z-index:20;background:rgba(255,253,249,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.toolbar-inner{max-width:1120px;margin:auto;padding:10px 18px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#search{flex:1;min-width:220px;border:1px solid #d4cec4;border-radius:999px;background:white;padding:10px 16px;font-size:.94rem;outline:none}
+.toolbtn{border:1px solid #d7d0c5;background:#fff;border-radius:999px;padding:8px 11px;cursor:pointer;color:#43483f}
+.layout{max-width:1120px;margin:30px auto 80px;display:grid;grid-template-columns:240px minmax(0,1fr);gap:28px;padding:0 18px}
+nav{position:sticky;top:72px;align-self:start;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:12px;box-shadow:var(--shadow)}
+nav .navtitle{font-weight:900;font-size:.76rem;letter-spacing:.12em;color:var(--muted);padding:8px 10px}
+nav a{display:flex;gap:9px;text-decoration:none;color:#343a40;padding:9px 10px;border-radius:11px;font-size:.84rem}
+nav a:hover{background:var(--soft);color:var(--accent)}
+nav a span{font-family:Georgia,serif;color:var(--accent);font-weight:bold}
+.reader-intro{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:24px 26px;box-shadow:var(--shadow);margin-bottom:26px}
+.reader-intro h2{font-family:Georgia,serif;margin:0 0 8px;font-size:1.7rem}
+.reader-intro p{margin:.4rem 0;color:#555b5b}
+.chapter{margin:0 0 42px;scroll-margin-top:75px}
+.chapter-head{margin:0 0 12px;padding:20px 5px 9px;border-bottom:1px solid #d7d0c5}
+.chapter-head span{font-size:.7rem;letter-spacing:.16em;color:var(--accent);font-weight:900}
+.chapter-head h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.45rem,3vw,2.2rem);margin:4px 0 0;line-height:1.25}
+.sentence{display:grid;grid-template-columns:52px minmax(0,1fr) 38px;gap:14px;align-items:start;background:var(--paper);border:1px solid var(--line);border-radius:17px;padding:18px 16px;margin:10px 0;box-shadow:0 3px 14px rgba(54,40,26,.035);transition:.18s}
+.sentence:hover{transform:translateY(-1px);border-color:#cab9a9;box-shadow:0 8px 22px rgba(54,40,26,.07)}
+.n{font-family:Georgia,serif;font-weight:bold;color:#a17d68;font-size:.93rem;padding-top:3px}
+.lines p{margin:0}
+.en{font-family:Georgia,"Times New Roman",serif;font-size:1.11rem;color:#1d2939;letter-spacing:.005em}
+.ko{margin-top:6px!important;color:#4f5758;font-size:.97rem}
+.speak{border:0;width:34px;height:34px;border-radius:50%;background:#f1ebe3;color:var(--accent);cursor:pointer;font-size:.72rem}
+.speak:hover{background:#e8d9cb}
+.hidden{display:none!important}
+body.hide-ko .ko{display:none}
+body.hide-en .en{display:none}
+body.large .en{font-size:1.28rem} body.large .ko{font-size:1.1rem}
+footer{background:#172a2a;color:#dbe5e2;padding:40px 24px}
+footer .inner{max-width:1120px;margin:auto} footer p{max-width:800px;color:#b9c7c4}
+@media(max-width:820px){.layout{grid-template-columns:1fr}nav{position:relative;top:auto;display:grid;grid-template-columns:repeat(2,1fr)}nav .navtitle{grid-column:1/-1}}
+@media(max-width:560px){.hero{min-height:58vh;padding:42px 18px}.layout{padding:0 10px}.sentence{grid-template-columns:40px minmax(0,1fr) 34px;padding:15px 12px;gap:8px}.en{font-size:1.02rem}.ko{font-size:.91rem}nav{grid-template-columns:1fr}}
+@media print{.hero{min-height:auto;background:white;color:black;padding:20px 0}.toolbar,nav,.speak{display:none!important}.layout{display:block;margin:0 auto;padding:0}.reader-intro{box-shadow:none}.sentence{break-inside:avoid;box-shadow:none;padding:10px 8px;margin:5px 0}.chapter{break-before:page}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="hero-inner">
+  <div class="eyebrow">Mathematics · Wonder · Theorem · Proof</div>
+  <h1>사랑하게 되는<br>수학</h1>
+  <p class="subtitle">수학에 사랑을 느끼고, 정리와 증명에 감동하고, 무한과 구조의 아름다움에 흠씬 빠져들기 위한 영어·한국어 300문장.</p>
+  <p class="hero-math">“A proof does not merely tell us that something is true; it shows us why truth could not have been otherwise.”<br>증명은 어떤 것이 참이라고 말해 주는 데 그치지 않고, 왜 그것이 달리 될 수 없었는지를 보여 준다.</p>
+  <div class="counts"><span>300 Sentences</span><span>10 Chapters</span><span>English + Korean</span><span>Theorems & Proofs</span></div>
+</div></header>
+
+<div class="toolbar"><div class="toolbar-inner">
+  <input id="search" type="search" placeholder="개념 검색 · prime, proof, topology, 확률, 콤팩트성…">
+  <button class="toolbtn" onclick="toggleLang('ko')">한글 숨기기</button>
+  <button class="toolbtn" onclick="toggleLang('en')">영어 숨기기</button>
+  <button class="toolbtn" onclick="document.body.classList.toggle('large')">글자 확대</button>
+  <button class="toolbtn" onclick="window.print()">인쇄/PDF</button>
+</div></div>
+
+<div class="layout">
+<nav>
+  <div class="navtitle">TABLE OF CONTENTS</div>
+  <a href="#s1"><span>01</span>Ⅰ. 수학에 마음을 여는 순간</a><a href="#s2"><span>02</span>Ⅱ. 수와 무한의 경이</a><a href="#s3"><span>03</span>Ⅲ. 증명이 주는 감동</a><a href="#s4"><span>04</span>Ⅳ. 기하와 공간의 아름다움</a><a href="#s5"><span>05</span>Ⅴ. 미적분과 변화의 음악</a><a href="#s6"><span>06</span>Ⅵ. 대수와 구조의 힘</a><a href="#s7"><span>07</span>Ⅶ. 확률과 불확실성의 지혜</a><a href="#s8"><span>08</span>Ⅷ. 조합론</a><a href="#s9"><span>09</span>Ⅸ. 위상</a><a href="#s10"><span>10</span>Ⅹ. 수학을 사랑하게 되는 결말</a>
+</nav>
+<main>
+  <section class="reader-intro">
+    <h2>How to read this book</h2>
+    <p>한 문장을 빨리 넘기기보다, 영어 문장을 먼저 읽고 그 수학적 장면을 머릿속에 떠올린 뒤 한국어 문장으로 의미를 확인해 보세요.</p>
+    <p><b>수 → 증명 → 기하 → 미적분 → 대수 → 확률 → 이산수학 → 현대수학 → 수학을 사랑하는 태도</b>의 흐름으로 점차 깊어집니다.</p>
+  </section>
+  <section class="chapter" id="s1"><div class="chapter-head"><span>CHAPTER 01</span><h2>Ⅰ. 수학에 마음을 여는 순간 · Falling in Love with Mathematics</h2></div>
+<article class="sentence" data-num="1" data-text="mathematics begins when we look at an ordinary pattern and suddenly wonder why it must be so. 수학은 평범한 패턴을 바라보다가 문득 왜 반드시 그렇게 되어야 하는지 궁금해지는 순간 시작된다.">
+  <div class="n">001</div>
+  <div class="lines">
+    <p class="en" lang="en">Mathematics begins when we look at an ordinary pattern and suddenly wonder why it must be so.</p>
+    <p class="ko" lang="ko">수학은 평범한 패턴을 바라보다가 문득 왜 반드시 그렇게 되어야 하는지 궁금해지는 순간 시작된다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="1번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="2" data-text="a good mathematical question turns curiosity into a path that the mind can actually walk. 좋은 수학적 질문은 호기심을 마음이 실제로 걸어갈 수 있는 길로 바꾸어 준다.">
+  <div class="n">002</div>
+  <div class="lines">
+    <p class="en" lang="en">A good mathematical question turns curiosity into a path that the mind can actually walk.</p>
+    <p class="ko" lang="ko">좋은 수학적 질문은 호기심을 마음이 실제로 걸어갈 수 있는 길로 바꾸어 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="2번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="3" data-text="numbers are not merely marks on paper; they are a language for relationships that remain true wherever we go. 수는 종이 위의 표시가 아니라 어디에서나 참으로 남는 관계를 표현하는 언어이다.">
+  <div class="n">003</div>
+  <div class="lines">
+    <p class="en" lang="en">Numbers are not merely marks on paper; they are a language for relationships that remain true wherever we go.</p>
+    <p class="ko" lang="ko">수는 종이 위의 표시가 아니라 어디에서나 참으로 남는 관계를 표현하는 언어이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="3번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="4" data-text="the pleasure of mathematics often comes before the answer, in the quiet moment when a structure begins to reveal itself. 수학의 즐거움은 종종 정답보다 먼저, 구조가 조용히 모습을 드러내기 시작하는 순간에 찾아온다.">
+  <div class="n">004</div>
+  <div class="lines">
+    <p class="en" lang="en">The pleasure of mathematics often comes before the answer, in the quiet moment when a structure begins to reveal itself.</p>
+    <p class="ko" lang="ko">수학의 즐거움은 종종 정답보다 먼저, 구조가 조용히 모습을 드러내기 시작하는 순간에 찾아온다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="4번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="5" data-text="to understand a theorem is to see many scattered facts suddenly gather around one clear idea. 정리를 이해한다는 것은 흩어져 있던 많은 사실들이 하나의 선명한 생각 주위로 모이는 것을 보는 일이다.">
+  <div class="n">005</div>
+  <div class="lines">
+    <p class="en" lang="en">To understand a theorem is to see many scattered facts suddenly gather around one clear idea.</p>
+    <p class="ko" lang="ko">정리를 이해한다는 것은 흩어져 있던 많은 사실들이 하나의 선명한 생각 주위로 모이는 것을 보는 일이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="5번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="6" data-text="a simple equation can hold a surprising amount of thought, just as a short poem can hold an entire landscape. 간단한 방정식 하나에도 짧은 시가 하나의 풍경 전체를 품듯 놀라울 만큼 많은 생각이 담길 수 있다.">
+  <div class="n">006</div>
+  <div class="lines">
+    <p class="en" lang="en">A simple equation can hold a surprising amount of thought, just as a short poem can hold an entire landscape.</p>
+    <p class="ko" lang="ko">간단한 방정식 하나에도 짧은 시가 하나의 풍경 전체를 품듯 놀라울 만큼 많은 생각이 담길 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="6번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="7" data-text="mathematics rewards patience because its deepest beauty is rarely visible at the first glance. 수학은 가장 깊은 아름다움이 첫눈에 드러나는 경우가 드물기에 인내에 보답한다.">
+  <div class="n">007</div>
+  <div class="lines">
+    <p class="en" lang="en">Mathematics rewards patience because its deepest beauty is rarely visible at the first glance.</p>
+    <p class="ko" lang="ko">수학은 가장 깊은 아름다움이 첫눈에 드러나는 경우가 드물기에 인내에 보답한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="7번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="8" data-text="when a difficult idea finally becomes clear, the feeling is less like memorizing and more like opening a window. 어려운 생각이 마침내 선명해질 때의 느낌은 암기라기보다 창문을 여는 일에 가깝다.">
+  <div class="n">008</div>
+  <div class="lines">
+    <p class="en" lang="en">When a difficult idea finally becomes clear, the feeling is less like memorizing and more like opening a window.</p>
+    <p class="ko" lang="ko">어려운 생각이 마침내 선명해질 때의 느낌은 암기라기보다 창문을 여는 일에 가깝다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="8번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="9" data-text="a definition is not a cage around an idea but a lens that allows us to see it sharply. 정의는 생각을 가두는 우리라기보다 그것을 선명하게 바라보게 하는 렌즈이다.">
+  <div class="n">009</div>
+  <div class="lines">
+    <p class="en" lang="en">A definition is not a cage around an idea but a lens that allows us to see it sharply.</p>
+    <p class="ko" lang="ko">정의는 생각을 가두는 우리라기보다 그것을 선명하게 바라보게 하는 렌즈이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="9번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="10" data-text="the more carefully we define an object, the more freely we can reason about it. 대상을 더 정확히 정의할수록 우리는 그것에 대해 더 자유롭게 추론할 수 있다.">
+  <div class="n">010</div>
+  <div class="lines">
+    <p class="en" lang="en">The more carefully we define an object, the more freely we can reason about it.</p>
+    <p class="ko" lang="ko">대상을 더 정확히 정의할수록 우리는 그것에 대해 더 자유롭게 추론할 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="10번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="11" data-text="mathematics teaches us that precision and imagination are not enemies but partners. 수학은 정확성과 상상력이 서로의 적이 아니라 동반자임을 가르쳐 준다.">
+  <div class="n">011</div>
+  <div class="lines">
+    <p class="en" lang="en">Mathematics teaches us that precision and imagination are not enemies but partners.</p>
+    <p class="ko" lang="ko">수학은 정확성과 상상력이 서로의 적이 아니라 동반자임을 가르쳐 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="11번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="12" data-text="an elegant solution makes us feel that the problem had been waiting for exactly that idea. 우아한 풀이는 마치 그 문제가 바로 그 생각을 기다리고 있었던 것 같은 느낌을 준다.">
+  <div class="n">012</div>
+  <div class="lines">
+    <p class="en" lang="en">An elegant solution makes us feel that the problem had been waiting for exactly that idea.</p>
+    <p class="ko" lang="ko">우아한 풀이는 마치 그 문제가 바로 그 생각을 기다리고 있었던 것 같은 느낌을 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="12번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="13" data-text="there is a special joy in discovering that two problems that looked unrelated are secretly the same. 서로 관계없어 보이던 두 문제가 사실은 같은 문제였음을 발견할 때 특별한 기쁨이 있다.">
+  <div class="n">013</div>
+  <div class="lines">
+    <p class="en" lang="en">There is a special joy in discovering that two problems that looked unrelated are secretly the same.</p>
+    <p class="ko" lang="ko">서로 관계없어 보이던 두 문제가 사실은 같은 문제였음을 발견할 때 특별한 기쁨이 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="13번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="14" data-text="mathematical beauty often appears when complexity collapses into a simple invariant. 수학의 아름다움은 복잡함이 하나의 단순한 불변량으로 무너져 내릴 때 자주 나타난다.">
+  <div class="n">014</div>
+  <div class="lines">
+    <p class="en" lang="en">Mathematical beauty often appears when complexity collapses into a simple invariant.</p>
+    <p class="ko" lang="ko">수학의 아름다움은 복잡함이 하나의 단순한 불변량으로 무너져 내릴 때 자주 나타난다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="14번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="15" data-text="we begin to love mathematics when formulas stop looking like commands and start looking like stories. 공식이 명령처럼 보이기를 멈추고 이야기처럼 보이기 시작할 때 우리는 수학을 사랑하기 시작한다.">
+  <div class="n">015</div>
+  <div class="lines">
+    <p class="en" lang="en">We begin to love mathematics when formulas stop looking like commands and start looking like stories.</p>
+    <p class="ko" lang="ko">공식이 명령처럼 보이기를 멈추고 이야기처럼 보이기 시작할 때 우리는 수학을 사랑하기 시작한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="15번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="16" data-text="every symbol in mathematics is an invitation to compress a long thought into a small space. 수학의 모든 기호는 긴 생각을 작은 공간에 압축해 보라는 초대이다.">
+  <div class="n">016</div>
+  <div class="lines">
+    <p class="en" lang="en">Every symbol in mathematics is an invitation to compress a long thought into a small space.</p>
+    <p class="ko" lang="ko">수학의 모든 기호는 긴 생각을 작은 공간에 압축해 보라는 초대이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="16번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="17" data-text="a proof does not merely tell us that something is true; it shows us why truth could not have been otherwise. 증명은 어떤 것이 참이라고 말해 주는 데 그치지 않고 왜 그것이 달리 될 수 없었는지를 보여 준다.">
+  <div class="n">017</div>
+  <div class="lines">
+    <p class="en" lang="en">A proof does not merely tell us that something is true; it shows us why truth could not have been otherwise.</p>
+    <p class="ko" lang="ko">증명은 어떤 것이 참이라고 말해 주는 데 그치지 않고 왜 그것이 달리 될 수 없었는지를 보여 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="17번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="18" data-text="mathematics is one of the rare places where wonder can be followed all the way to certainty. 수학은 경이로움을 끝까지 따라가 확실성에 도달할 수 있는 드문 세계 중 하나이다.">
+  <div class="n">018</div>
+  <div class="lines">
+    <p class="en" lang="en">Mathematics is one of the rare places where wonder can be followed all the way to certainty.</p>
+    <p class="ko" lang="ko">수학은 경이로움을 끝까지 따라가 확실성에 도달할 수 있는 드문 세계 중 하나이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="18번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="19" data-text="even a mistake can become beautiful when it reveals the exact point where our intuition went astray. 실수조차 우리의 직관이 어디에서 빗나갔는지를 정확히 보여 줄 때 아름다워질 수 있다.">
+  <div class="n">019</div>
+  <div class="lines">
+    <p class="en" lang="en">Even a mistake can become beautiful when it reveals the exact point where our intuition went astray.</p>
+    <p class="ko" lang="ko">실수조차 우리의 직관이 어디에서 빗나갔는지를 정확히 보여 줄 때 아름다워질 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="19번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="20" data-text="the habit of asking &#x27;what if&#x27; is one of the doors through which new mathematics enters. ‘만약 그렇다면?’이라고 묻는 습관은 새로운 수학이 들어오는 문 중 하나이다.">
+  <div class="n">020</div>
+  <div class="lines">
+    <p class="en" lang="en">The habit of asking &#x27;what if&#x27; is one of the doors through which new mathematics enters.</p>
+    <p class="ko" lang="ko">‘만약 그렇다면?’이라고 묻는 습관은 새로운 수학이 들어오는 문 중 하나이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="20번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="21" data-text="a counterexample can destroy a false belief with a single, unforgettable object. 반례 하나는 잘못된 믿음을 단 하나의 잊기 어려운 대상으로 무너뜨릴 수 있다.">
+  <div class="n">021</div>
+  <div class="lines">
+    <p class="en" lang="en">A counterexample can destroy a false belief with a single, unforgettable object.</p>
+    <p class="ko" lang="ko">반례 하나는 잘못된 믿음을 단 하나의 잊기 어려운 대상으로 무너뜨릴 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="21번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="22" data-text="the smallest examples often carry the seeds of the largest generalizations. 가장 작은 예들이 가장 큰 일반화의 씨앗을 품고 있는 경우가 많다.">
+  <div class="n">022</div>
+  <div class="lines">
+    <p class="en" lang="en">The smallest examples often carry the seeds of the largest generalizations.</p>
+    <p class="ko" lang="ko">가장 작은 예들이 가장 큰 일반화의 씨앗을 품고 있는 경우가 많다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="22번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="23" data-text="mathematics invites us to look beyond what happens and ask what must happen. 수학은 무엇이 일어나는지를 넘어 무엇이 반드시 일어나야 하는지를 묻게 한다.">
+  <div class="n">023</div>
+  <div class="lines">
+    <p class="en" lang="en">Mathematics invites us to look beyond what happens and ask what must happen.</p>
+    <p class="ko" lang="ko">수학은 무엇이 일어나는지를 넘어 무엇이 반드시 일어나야 하는지를 묻게 한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="23번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="24" data-text="a pattern becomes mathematics when we can explain not only that it appears, but why it continues. 패턴은 단지 나타난다는 사실뿐 아니라 왜 계속되는지 설명할 수 있을 때 수학이 된다.">
+  <div class="n">024</div>
+  <div class="lines">
+    <p class="en" lang="en">A pattern becomes mathematics when we can explain not only that it appears, but why it continues.</p>
+    <p class="ko" lang="ko">패턴은 단지 나타난다는 사실뿐 아니라 왜 계속되는지 설명할 수 있을 때 수학이 된다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="24번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="25" data-text="the first glimpse of a deep connection can feel like recognizing a familiar face in an unexpected place. 깊은 연결을 처음 발견하는 순간은 뜻밖의 장소에서 익숙한 얼굴을 알아보는 것처럼 느껴질 수 있다.">
+  <div class="n">025</div>
+  <div class="lines">
+    <p class="en" lang="en">The first glimpse of a deep connection can feel like recognizing a familiar face in an unexpected place.</p>
+    <p class="ko" lang="ko">깊은 연결을 처음 발견하는 순간은 뜻밖의 장소에서 익숙한 얼굴을 알아보는 것처럼 느껴질 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="25번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="26" data-text="mathematics has room for both playful experiments and uncompromising proof. 수학에는 장난스러운 실험과 타협 없는 증명이 함께 자리할 공간이 있다.">
+  <div class="n">026</div>
+  <div class="lines">
+    <p class="en" lang="en">Mathematics has room for both playful experiments and uncompromising proof.</p>
+    <p class="ko" lang="ko">수학에는 장난스러운 실험과 타협 없는 증명이 함께 자리할 공간이 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="26번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="27" data-text="we often solve a problem only after learning to see it from a completely different angle. 우리는 종종 문제를 완전히 다른 각도에서 바라보는 법을 배운 뒤에야 그것을 해결한다.">
+  <div class="n">027</div>
+  <div class="lines">
+    <p class="en" lang="en">We often solve a problem only after learning to see it from a completely different angle.</p>
+    <p class="ko" lang="ko">우리는 종종 문제를 완전히 다른 각도에서 바라보는 법을 배운 뒤에야 그것을 해결한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="27번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="28" data-text="the language of mathematics grows powerful because every statement must carry its exact meaning. 수학의 언어가 강력한 것은 모든 문장이 정확한 의미를 지녀야 하기 때문이다.">
+  <div class="n">028</div>
+  <div class="lines">
+    <p class="en" lang="en">The language of mathematics grows powerful because every statement must carry its exact meaning.</p>
+    <p class="ko" lang="ko">수학의 언어가 강력한 것은 모든 문장이 정확한 의미를 지녀야 하기 때문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="28번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="29" data-text="a theorem is a promise: if its hypotheses hold, its conclusion will never betray us. 정리는 하나의 약속이다. 가정이 성립하면 그 결론은 결코 우리를 배신하지 않는다.">
+  <div class="n">029</div>
+  <div class="lines">
+    <p class="en" lang="en">A theorem is a promise: if its hypotheses hold, its conclusion will never betray us.</p>
+    <p class="ko" lang="ko">정리는 하나의 약속이다. 가정이 성립하면 그 결론은 결코 우리를 배신하지 않는다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="29번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="30" data-text="the longer we study mathematics, the more we discover that rigor can deepen rather than diminish wonder. 수학을 오래 공부할수록 엄밀함이 경이로움을 줄이는 것이 아니라 오히려 더 깊게 한다는 사실을 발견한다.">
+  <div class="n">030</div>
+  <div class="lines">
+    <p class="en" lang="en">The longer we study mathematics, the more we discover that rigor can deepen rather than diminish wonder.</p>
+    <p class="ko" lang="ko">수학을 오래 공부할수록 엄밀함이 경이로움을 줄이는 것이 아니라 오히려 더 깊게 한다는 사실을 발견한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="30번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article></section><section class="chapter" id="s2"><div class="chapter-head"><span>CHAPTER 02</span><h2>Ⅱ. 수와 무한의 경이 · Numbers and Infinity</h2></div>
+<article class="sentence" data-num="31" data-text="the natural numbers seem simple, yet they contain patterns deep enough to occupy mathematicians for centuries. 자연수는 단순해 보이지만 수학자들이 수세기 동안 탐구할 만큼 깊은 패턴을 품고 있다.">
+  <div class="n">031</div>
+  <div class="lines">
+    <p class="en" lang="en">The natural numbers seem simple, yet they contain patterns deep enough to occupy mathematicians for centuries.</p>
+    <p class="ko" lang="ko">자연수는 단순해 보이지만 수학자들이 수세기 동안 탐구할 만큼 깊은 패턴을 품고 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="31번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="32" data-text="prime numbers are the indivisible atoms of arithmetic, and every positive integer is built from them. 소수는 산술의 더 이상 쪼갤 수 없는 원자이며 모든 양의 정수는 소수들로 이루어진다.">
+  <div class="n">032</div>
+  <div class="lines">
+    <p class="en" lang="en">Prime numbers are the indivisible atoms of arithmetic, and every positive integer is built from them.</p>
+    <p class="ko" lang="ko">소수는 산술의 더 이상 쪼갤 수 없는 원자이며 모든 양의 정수는 소수들로 이루어진다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="32번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="33" data-text="the fundamental theorem of arithmetic says that every integer greater than one has a unique prime factorization. 산술의 기본정리는 1보다 큰 모든 정수가 소인수분해를 유일하게 가진다고 말한다.">
+  <div class="n">033</div>
+  <div class="lines">
+    <p class="en" lang="en">The fundamental theorem of arithmetic says that every integer greater than one has a unique prime factorization.</p>
+    <p class="ko" lang="ko">산술의 기본정리는 1보다 큰 모든 정수가 소인수분해를 유일하게 가진다고 말한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="33번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="34" data-text="unique factorization turns the apparent chaos of integers into a hidden architecture. 유일한 소인수분해는 정수의 겉보기 혼돈을 숨겨진 건축물로 바꾸어 준다.">
+  <div class="n">034</div>
+  <div class="lines">
+    <p class="en" lang="en">Unique factorization turns the apparent chaos of integers into a hidden architecture.</p>
+    <p class="ko" lang="ko">유일한 소인수분해는 정수의 겉보기 혼돈을 숨겨진 건축물로 바꾸어 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="34번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="35" data-text="euclid&#x27;s proof that there are infinitely many primes remains astonishing because its idea is so short and so inexhaustible. 소수가 무한히 많다는 유클리드의 증명은 발상이 너무도 짧으면서도 끝없이 깊기에 여전히 놀랍다.">
+  <div class="n">035</div>
+  <div class="lines">
+    <p class="en" lang="en">Euclid&#x27;s proof that there are infinitely many primes remains astonishing because its idea is so short and so inexhaustible.</p>
+    <p class="ko" lang="ko">소수가 무한히 많다는 유클리드의 증명은 발상이 너무도 짧으면서도 끝없이 깊기에 여전히 놀랍다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="35번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="36" data-text="if we multiply any finite list of primes and add one, the new number forces us beyond the list. 어떤 유한한 소수 목록을 모두 곱한 뒤 1을 더하면 새 수는 우리를 그 목록 너머로 밀어낸다.">
+  <div class="n">036</div>
+  <div class="lines">
+    <p class="en" lang="en">If we multiply any finite list of primes and add one, the new number forces us beyond the list.</p>
+    <p class="ko" lang="ko">어떤 유한한 소수 목록을 모두 곱한 뒤 1을 더하면 새 수는 우리를 그 목록 너머로 밀어낸다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="36번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="37" data-text="infinity enters mathematics not as a vague dream but as something we can compare, classify, and prove things about. 무한은 막연한 꿈이 아니라 비교하고 분류하며 정리를 증명할 수 있는 대상으로 수학에 들어온다.">
+  <div class="n">037</div>
+  <div class="lines">
+    <p class="en" lang="en">Infinity enters mathematics not as a vague dream but as something we can compare, classify, and prove things about.</p>
+    <p class="ko" lang="ko">무한은 막연한 꿈이 아니라 비교하고 분류하며 정리를 증명할 수 있는 대상으로 수학에 들어온다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="37번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="38" data-text="cantor showed that some infinities are strictly larger than others. 칸토어는 어떤 무한이 다른 무한보다 엄밀하게 더 크다는 사실을 보여 주었다.">
+  <div class="n">038</div>
+  <div class="lines">
+    <p class="en" lang="en">Cantor showed that some infinities are strictly larger than others.</p>
+    <p class="ko" lang="ko">칸토어는 어떤 무한이 다른 무한보다 엄밀하게 더 크다는 사실을 보여 주었다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="38번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="39" data-text="the set of rational numbers is countable, even though between any two rational numbers there is another rational number. 유리수는 어떤 두 유리수 사이에도 또 다른 유리수가 있음에도 불구하고 가산집합이다.">
+  <div class="n">039</div>
+  <div class="lines">
+    <p class="en" lang="en">The set of rational numbers is countable, even though between any two rational numbers there is another rational number.</p>
+    <p class="ko" lang="ko">유리수는 어떤 두 유리수 사이에도 또 다른 유리수가 있음에도 불구하고 가산집합이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="39번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="40" data-text="the real numbers are uncountable, and cantor&#x27;s diagonal argument proves that no complete list can contain them all. 실수는 비가산이며 칸토어의 대각선 논법은 어떤 완전한 목록도 모든 실수를 담을 수 없음을 증명한다.">
+  <div class="n">040</div>
+  <div class="lines">
+    <p class="en" lang="en">The real numbers are uncountable, and Cantor&#x27;s diagonal argument proves that no complete list can contain them all.</p>
+    <p class="ko" lang="ko">실수는 비가산이며 칸토어의 대각선 논법은 어떤 완전한 목록도 모든 실수를 담을 수 없음을 증명한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="40번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="41" data-text="the diagonal argument is beautiful because it defeats every possible list at once. 대각선 논법이 아름다운 이유는 가능한 모든 목록을 한꺼번에 무너뜨리기 때문이다.">
+  <div class="n">041</div>
+  <div class="lines">
+    <p class="en" lang="en">The diagonal argument is beautiful because it defeats every possible list at once.</p>
+    <p class="ko" lang="ko">대각선 논법이 아름다운 이유는 가능한 모든 목록을 한꺼번에 무너뜨리기 때문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="41번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="42" data-text="the power set of any set has strictly greater cardinality than the set itself. 어떤 집합의 멱집합도 원래 집합보다 엄밀히 더 큰 기수를 가진다.">
+  <div class="n">042</div>
+  <div class="lines">
+    <p class="en" lang="en">The power set of any set has strictly greater cardinality than the set itself.</p>
+    <p class="ko" lang="ko">어떤 집합의 멱집합도 원래 집합보다 엄밀히 더 큰 기수를 가진다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="42번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="43" data-text="cantor&#x27;s theorem creates an endless ladder of larger and larger infinities. 칸토어의 정리는 더 크고 더 큰 무한이 이어지는 끝없는 사다리를 만든다.">
+  <div class="n">043</div>
+  <div class="lines">
+    <p class="en" lang="en">Cantor&#x27;s theorem creates an endless ladder of larger and larger infinities.</p>
+    <p class="ko" lang="ko">칸토어의 정리는 더 크고 더 큰 무한이 이어지는 끝없는 사다리를 만든다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="43번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="44" data-text="zero is one of mathematics&#x27; quiet revolutions: a symbol for nothing that makes positional notation powerful. 0은 아무것도 없음을 나타내는 기호이면서 위치적 기수법을 강력하게 만든 수학의 조용한 혁명이다.">
+  <div class="n">044</div>
+  <div class="lines">
+    <p class="en" lang="en">Zero is one of mathematics&#x27; quiet revolutions: a symbol for nothing that makes positional notation powerful.</p>
+    <p class="ko" lang="ko">0은 아무것도 없음을 나타내는 기호이면서 위치적 기수법을 강력하게 만든 수학의 조용한 혁명이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="44번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="45" data-text="negative numbers show that extending a number system can turn impossible equations into ordinary ones. 음수는 수 체계를 확장하면 불가능해 보이던 방정식이 평범한 문제가 될 수 있음을 보여 준다.">
+  <div class="n">045</div>
+  <div class="lines">
+    <p class="en" lang="en">Negative numbers show that extending a number system can turn impossible equations into ordinary ones.</p>
+    <p class="ko" lang="ko">음수는 수 체계를 확장하면 불가능해 보이던 방정식이 평범한 문제가 될 수 있음을 보여 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="45번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="46" data-text="irrational numbers reveal that a perfectly simple geometric length may refuse every rational description. 무리수는 완벽하게 단순한 기하학적 길이가 어떤 유리수 표현도 거부할 수 있음을 보여 준다.">
+  <div class="n">046</div>
+  <div class="lines">
+    <p class="en" lang="en">Irrational numbers reveal that a perfectly simple geometric length may refuse every rational description.</p>
+    <p class="ko" lang="ko">무리수는 완벽하게 단순한 기하학적 길이가 어떤 유리수 표현도 거부할 수 있음을 보여 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="46번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="47" data-text="the square root of two is irrational, and its proof by contradiction is a model of mathematical clarity. 2의 제곱근은 무리수이며 그 귀류법 증명은 수학적 명료함의 모범이다.">
+  <div class="n">047</div>
+  <div class="lines">
+    <p class="en" lang="en">The square root of two is irrational, and its proof by contradiction is a model of mathematical clarity.</p>
+    <p class="ko" lang="ko">2의 제곱근은 무리수이며 그 귀류법 증명은 수학적 명료함의 모범이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="47번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="48" data-text="assuming that √2 is a reduced fraction eventually forces both numerator and denominator to be even. √2가 기약분수라고 가정하면 결국 분자와 분모가 모두 짝수여야 한다는 결론에 이른다.">
+  <div class="n">048</div>
+  <div class="lines">
+    <p class="en" lang="en">Assuming that √2 is a reduced fraction eventually forces both numerator and denominator to be even.</p>
+    <p class="ko" lang="ko">√2가 기약분수라고 가정하면 결국 분자와 분모가 모두 짝수여야 한다는 결론에 이른다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="48번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="49" data-text="the contradiction does more than reject an assumption; it reveals the structural impossibility behind it. 그 모순은 가정을 단순히 거부하는 데 그치지 않고 그 배후의 구조적 불가능성을 드러낸다.">
+  <div class="n">049</div>
+  <div class="lines">
+    <p class="en" lang="en">The contradiction does more than reject an assumption; it reveals the structural impossibility behind it.</p>
+    <p class="ko" lang="ko">그 모순은 가정을 단순히 거부하는 데 그치지 않고 그 배후의 구조적 불가능성을 드러낸다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="49번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="50" data-text="complex numbers teach us that enlarging the world can make previously broken algebra whole again. 복소수는 세계를 확장함으로써 이전에는 끊겨 있던 대수를 다시 완전하게 만들 수 있음을 가르친다.">
+  <div class="n">050</div>
+  <div class="lines">
+    <p class="en" lang="en">Complex numbers teach us that enlarging the world can make previously broken algebra whole again.</p>
+    <p class="ko" lang="ko">복소수는 세계를 확장함으로써 이전에는 끊겨 있던 대수를 다시 완전하게 만들 수 있음을 가르친다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="50번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="51" data-text="the imaginary unit i begins as a solution to x² + 1 = 0 and grows into a language for waves, rotations, and quantum theory. 허수단위 i는 x² + 1 = 0의 해로 출발해 파동, 회전, 양자이론을 표현하는 언어로 성장한다.">
+  <div class="n">051</div>
+  <div class="lines">
+    <p class="en" lang="en">The imaginary unit i begins as a solution to x² + 1 = 0 and grows into a language for waves, rotations, and quantum theory.</p>
+    <p class="ko" lang="ko">허수단위 i는 x² + 1 = 0의 해로 출발해 파동, 회전, 양자이론을 표현하는 언어로 성장한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="51번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="52" data-text="euler&#x27;s identity, e^{iπ} + 1 = 0, joins five fundamental constants in one astonishing line. 오일러 항등식 e^{iπ} + 1 = 0은 다섯 개의 기본 상수를 놀라운 한 줄에 결합한다.">
+  <div class="n">052</div>
+  <div class="lines">
+    <p class="en" lang="en">Euler&#x27;s identity, e^{iπ} + 1 = 0, joins five fundamental constants in one astonishing line.</p>
+    <p class="ko" lang="ko">오일러 항등식 e^{iπ} + 1 = 0은 다섯 개의 기본 상수를 놀라운 한 줄에 결합한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="52번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="53" data-text="that identity feels magical until we see that exponentials and rotations are two faces of the same structure. 그 항등식은 지수함수와 회전이 같은 구조의 두 얼굴임을 보기 전까지 마법처럼 느껴진다.">
+  <div class="n">053</div>
+  <div class="lines">
+    <p class="en" lang="en">That identity feels magical until we see that exponentials and rotations are two faces of the same structure.</p>
+    <p class="ko" lang="ko">그 항등식은 지수함수와 회전이 같은 구조의 두 얼굴임을 보기 전까지 마법처럼 느껴진다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="53번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="54" data-text="continued fractions turn real numbers into endlessly unfolding arithmetic patterns. 연분수는 실수를 끝없이 펼쳐지는 산술적 패턴으로 바꾸어 준다.">
+  <div class="n">054</div>
+  <div class="lines">
+    <p class="en" lang="en">Continued fractions turn real numbers into endlessly unfolding arithmetic patterns.</p>
+    <p class="ko" lang="ko">연분수는 실수를 끝없이 펼쳐지는 산술적 패턴으로 바꾸어 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="54번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="55" data-text="the golden ratio appears when a whole relates to its larger part as the larger part relates to the smaller. 황금비는 전체와 큰 부분의 비가 큰 부분과 작은 부분의 비와 같을 때 나타난다.">
+  <div class="n">055</div>
+  <div class="lines">
+    <p class="en" lang="en">The golden ratio appears when a whole relates to its larger part as the larger part relates to the smaller.</p>
+    <p class="ko" lang="ko">황금비는 전체와 큰 부분의 비가 큰 부분과 작은 부분의 비와 같을 때 나타난다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="55번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="56" data-text="fibonacci numbers show how a simple recurrence can generate unexpectedly rich behavior. 피보나치 수는 단순한 점화식이 뜻밖에 풍부한 행동을 만들어 낼 수 있음을 보여 준다.">
+  <div class="n">056</div>
+  <div class="lines">
+    <p class="en" lang="en">Fibonacci numbers show how a simple recurrence can generate unexpectedly rich behavior.</p>
+    <p class="ko" lang="ko">피보나치 수는 단순한 점화식이 뜻밖에 풍부한 행동을 만들어 낼 수 있음을 보여 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="56번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="57" data-text="modular arithmetic lets numbers wrap around, turning clocks into algebra. 모듈러 산술은 수가 되돌아 순환하게 하여 시계를 대수로 바꾸어 준다.">
+  <div class="n">057</div>
+  <div class="lines">
+    <p class="en" lang="en">Modular arithmetic lets numbers wrap around, turning clocks into algebra.</p>
+    <p class="ko" lang="ko">모듈러 산술은 수가 되돌아 순환하게 하여 시계를 대수로 바꾸어 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="57번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="58" data-text="congruences reveal patterns that ordinary equality hides. 합동식은 보통의 등식이 숨기고 있는 패턴을 드러낸다.">
+  <div class="n">058</div>
+  <div class="lines">
+    <p class="en" lang="en">Congruences reveal patterns that ordinary equality hides.</p>
+    <p class="ko" lang="ko">합동식은 보통의 등식이 숨기고 있는 패턴을 드러낸다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="58번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="59" data-text="fermat&#x27;s little theorem links powers, primes, and modular arithmetic with remarkable economy. 페르마의 소정리는 거듭제곱, 소수, 모듈러 산술을 놀라울 만큼 간결하게 연결한다.">
+  <div class="n">059</div>
+  <div class="lines">
+    <p class="en" lang="en">Fermat&#x27;s little theorem links powers, primes, and modular arithmetic with remarkable economy.</p>
+    <p class="ko" lang="ko">페르마의 소정리는 거듭제곱, 소수, 모듈러 산술을 놀라울 만큼 간결하게 연결한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="59번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="60" data-text="number theory is enchanting because questions a child can understand may resist the strongest mathematics for centuries. 정수론이 매혹적인 이유는 아이도 이해할 수 있는 질문이 가장 강력한 수학을 수세기 동안 버틸 수 있기 때문이다.">
+  <div class="n">060</div>
+  <div class="lines">
+    <p class="en" lang="en">Number theory is enchanting because questions a child can understand may resist the strongest mathematics for centuries.</p>
+    <p class="ko" lang="ko">정수론이 매혹적인 이유는 아이도 이해할 수 있는 질문이 가장 강력한 수학을 수세기 동안 버틸 수 있기 때문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="60번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article></section><section class="chapter" id="s3"><div class="chapter-head"><span>CHAPTER 03</span><h2>Ⅲ. 증명이 주는 감동 · The Beauty of Proof</h2></div>
+<article class="sentence" data-num="61" data-text="a proof is a journey from assumptions to necessity, with every step open to inspection. 증명은 가정에서 필연으로 나아가는 여정이며 모든 걸음이 검토를 위해 열려 있다.">
+  <div class="n">061</div>
+  <div class="lines">
+    <p class="en" lang="en">A proof is a journey from assumptions to necessity, with every step open to inspection.</p>
+    <p class="ko" lang="ko">증명은 가정에서 필연으로 나아가는 여정이며 모든 걸음이 검토를 위해 열려 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="61번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="62" data-text="direct proof is beautiful when the conclusion grows naturally from the definitions. 직접증명은 결론이 정의에서 자연스럽게 자라날 때 아름답다.">
+  <div class="n">062</div>
+  <div class="lines">
+    <p class="en" lang="en">Direct proof is beautiful when the conclusion grows naturally from the definitions.</p>
+    <p class="ko" lang="ko">직접증명은 결론이 정의에서 자연스럽게 자라날 때 아름답다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="62번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="63" data-text="proof by contradiction is dramatic because it lets an impossible assumption destroy itself. 귀류법은 불가능한 가정이 스스로를 무너뜨리게 한다는 점에서 극적이다.">
+  <div class="n">063</div>
+  <div class="lines">
+    <p class="en" lang="en">Proof by contradiction is dramatic because it lets an impossible assumption destroy itself.</p>
+    <p class="ko" lang="ko">귀류법은 불가능한 가정이 스스로를 무너뜨리게 한다는 점에서 극적이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="63번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="64" data-text="proof by contrapositive often reveals a path that the original statement hides. 대우를 이용한 증명은 원래 명제가 숨기고 있던 길을 자주 드러낸다.">
+  <div class="n">064</div>
+  <div class="lines">
+    <p class="en" lang="en">Proof by contrapositive often reveals a path that the original statement hides.</p>
+    <p class="ko" lang="ko">대우를 이용한 증명은 원래 명제가 숨기고 있던 길을 자주 드러낸다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="64번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="65" data-text="mathematical induction turns an infinite chain of claims into two finite obligations. 수학적 귀납법은 무한한 명제의 사슬을 두 개의 유한한 의무로 바꾸어 준다.">
+  <div class="n">065</div>
+  <div class="lines">
+    <p class="en" lang="en">Mathematical induction turns an infinite chain of claims into two finite obligations.</p>
+    <p class="ko" lang="ko">수학적 귀납법은 무한한 명제의 사슬을 두 개의 유한한 의무로 바꾸어 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="65번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="66" data-text="the base case plants the first domino, and the inductive step guarantees that each falling domino knocks down the next. 기초 단계는 첫 도미노를 세우고 귀납 단계는 각 도미노가 다음 도미노를 쓰러뜨림을 보장한다.">
+  <div class="n">066</div>
+  <div class="lines">
+    <p class="en" lang="en">The base case plants the first domino, and the inductive step guarantees that each falling domino knocks down the next.</p>
+    <p class="ko" lang="ko">기초 단계는 첫 도미노를 세우고 귀납 단계는 각 도미노가 다음 도미노를 쓰러뜨림을 보장한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="66번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="67" data-text="strong induction reminds us that the past can support the next step all at once. 강한 귀납법은 이전의 모든 단계가 다음 한 걸음을 함께 떠받칠 수 있음을 보여 준다.">
+  <div class="n">067</div>
+  <div class="lines">
+    <p class="en" lang="en">Strong induction reminds us that the past can support the next step all at once.</p>
+    <p class="ko" lang="ko">강한 귀납법은 이전의 모든 단계가 다음 한 걸음을 함께 떠받칠 수 있음을 보여 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="67번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="68" data-text="a bijective proof can be breathtaking because it proves equality by pairing objects rather than calculating. 전단사 증명은 계산하지 않고 대상을 짝지어 같음을 증명한다는 점에서 숨이 멎을 만큼 아름다울 수 있다.">
+  <div class="n">068</div>
+  <div class="lines">
+    <p class="en" lang="en">A bijective proof can be breathtaking because it proves equality by pairing objects rather than calculating.</p>
+    <p class="ko" lang="ko">전단사 증명은 계산하지 않고 대상을 짝지어 같음을 증명한다는 점에서 숨이 멎을 만큼 아름다울 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="68번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="69" data-text="when two sets can be put in perfect one-to-one correspondence, counting becomes a matter of structure. 두 집합이 완벽한 일대일 대응을 이룰 수 있다면 세는 일은 구조의 문제가 된다.">
+  <div class="n">069</div>
+  <div class="lines">
+    <p class="en" lang="en">When two sets can be put in perfect one-to-one correspondence, counting becomes a matter of structure.</p>
+    <p class="ko" lang="ko">두 집합이 완벽한 일대일 대응을 이룰 수 있다면 세는 일은 구조의 문제가 된다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="69번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="70" data-text="the pigeonhole principle looks obvious, yet it can force surprisingly strong conclusions. 비둘기집 원리는 너무 자명해 보이지만 놀라울 정도로 강력한 결론을 강제할 수 있다.">
+  <div class="n">070</div>
+  <div class="lines">
+    <p class="en" lang="en">The pigeonhole principle looks obvious, yet it can force surprisingly strong conclusions.</p>
+    <p class="ko" lang="ko">비둘기집 원리는 너무 자명해 보이지만 놀라울 정도로 강력한 결론을 강제할 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="70번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="71" data-text="if more pigeons than holes are placed into the holes, at least one hole must contain two pigeons. 구멍보다 더 많은 비둘기를 구멍에 넣으면 적어도 한 구멍에는 두 마리 이상의 비둘기가 들어가야 한다.">
+  <div class="n">071</div>
+  <div class="lines">
+    <p class="en" lang="en">If more pigeons than holes are placed into the holes, at least one hole must contain two pigeons.</p>
+    <p class="ko" lang="ko">구멍보다 더 많은 비둘기를 구멍에 넣으면 적어도 한 구멍에는 두 마리 이상의 비둘기가 들어가야 한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="71번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="72" data-text="a clever proof often succeeds by inventing the right quantity to count in two different ways. 기발한 증명은 같은 대상을 두 가지 방식으로 세기 위한 적절한 양을 만들어 내며 성공하는 경우가 많다.">
+  <div class="n">072</div>
+  <div class="lines">
+    <p class="en" lang="en">A clever proof often succeeds by inventing the right quantity to count in two different ways.</p>
+    <p class="ko" lang="ko">기발한 증명은 같은 대상을 두 가지 방식으로 세기 위한 적절한 양을 만들어 내며 성공하는 경우가 많다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="72번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="73" data-text="double counting turns agreement between two perspectives into an identity. 이중계수는 두 관점의 일치를 하나의 항등식으로 바꾸어 준다.">
+  <div class="n">073</div>
+  <div class="lines">
+    <p class="en" lang="en">Double counting turns agreement between two perspectives into an identity.</p>
+    <p class="ko" lang="ko">이중계수는 두 관점의 일치를 하나의 항등식으로 바꾸어 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="73번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="74" data-text="invariant arguments are powerful because they ignore irrelevant motion and track what can never change. 불변량 논증은 중요하지 않은 변화를 무시하고 결코 변하지 않는 것을 추적하기 때문에 강력하다.">
+  <div class="n">074</div>
+  <div class="lines">
+    <p class="en" lang="en">Invariant arguments are powerful because they ignore irrelevant motion and track what can never change.</p>
+    <p class="ko" lang="ko">불변량 논증은 중요하지 않은 변화를 무시하고 결코 변하지 않는 것을 추적하기 때문에 강력하다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="74번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="75" data-text="parity is one of the simplest invariants and one of the most surprisingly useful. 짝홀성은 가장 단순한 불변량 중 하나이면서도 놀랄 만큼 유용하다.">
+  <div class="n">075</div>
+  <div class="lines">
+    <p class="en" lang="en">Parity is one of the simplest invariants and one of the most surprisingly useful.</p>
+    <p class="ko" lang="ko">짝홀성은 가장 단순한 불변량 중 하나이면서도 놀랄 만큼 유용하다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="75번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="76" data-text="extremal arguments solve problems by focusing attention on the largest, smallest, earliest, or latest object. 극단 원리는 가장 크거나 작거나 빠르거나 늦은 대상에 주의를 집중함으로써 문제를 해결한다.">
+  <div class="n">076</div>
+  <div class="lines">
+    <p class="en" lang="en">Extremal arguments solve problems by focusing attention on the largest, smallest, earliest, or latest object.</p>
+    <p class="ko" lang="ko">극단 원리는 가장 크거나 작거나 빠르거나 늦은 대상에 주의를 집중함으로써 문제를 해결한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="76번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="77" data-text="the extremal principle often turns a global puzzle into a local contradiction. 극단 원리는 전체적인 퍼즐을 국소적인 모순으로 바꾸는 경우가 많다.">
+  <div class="n">077</div>
+  <div class="lines">
+    <p class="en" lang="en">The extremal principle often turns a global puzzle into a local contradiction.</p>
+    <p class="ko" lang="ko">극단 원리는 전체적인 퍼즐을 국소적인 모순으로 바꾸는 경우가 많다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="77번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="78" data-text="a minimal counterexample is a strange ally: assume failure exists, then choose the smallest possible failure. 최소 반례는 묘한 동맹이다. 실패가 존재한다고 가정한 뒤 가능한 가장 작은 실패를 선택한다.">
+  <div class="n">078</div>
+  <div class="lines">
+    <p class="en" lang="en">A minimal counterexample is a strange ally: assume failure exists, then choose the smallest possible failure.</p>
+    <p class="ko" lang="ko">최소 반례는 묘한 동맹이다. 실패가 존재한다고 가정한 뒤 가능한 가장 작은 실패를 선택한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="78번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="79" data-text="minimality frequently leaves so little room that the counterexample cannot survive. 최소성은 종종 반례가 살아남을 공간을 거의 남기지 않는다.">
+  <div class="n">079</div>
+  <div class="lines">
+    <p class="en" lang="en">Minimality frequently leaves so little room that the counterexample cannot survive.</p>
+    <p class="ko" lang="ko">최소성은 종종 반례가 살아남을 공간을 거의 남기지 않는다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="79번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="80" data-text="a probabilistic proof can establish that an object exists without ever constructing it explicitly. 확률적 증명은 대상을 직접 구성하지 않고도 그것이 존재함을 확립할 수 있다.">
+  <div class="n">080</div>
+  <div class="lines">
+    <p class="en" lang="en">A probabilistic proof can establish that an object exists without ever constructing it explicitly.</p>
+    <p class="ko" lang="ko">확률적 증명은 대상을 직접 구성하지 않고도 그것이 존재함을 확립할 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="80번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="81" data-text="the probabilistic method feels mysterious because randomness becomes a tool for certainty. 확률적 방법이 신비롭게 느껴지는 것은 무작위성이 확실성을 위한 도구가 되기 때문이다.">
+  <div class="n">081</div>
+  <div class="lines">
+    <p class="en" lang="en">The probabilistic method feels mysterious because randomness becomes a tool for certainty.</p>
+    <p class="ko" lang="ko">확률적 방법이 신비롭게 느껴지는 것은 무작위성이 확실성을 위한 도구가 되기 때문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="81번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="82" data-text="a constructive proof gives not only existence but a recipe. 구성적 증명은 존재뿐 아니라 그것을 만드는 방법까지 준다.">
+  <div class="n">082</div>
+  <div class="lines">
+    <p class="en" lang="en">A constructive proof gives not only existence but a recipe.</p>
+    <p class="ko" lang="ko">구성적 증명은 존재뿐 아니라 그것을 만드는 방법까지 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="82번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="83" data-text="a nonconstructive proof may leave the object unseen while proving beyond doubt that it must be there. 비구성적 증명은 대상을 보이지 않은 채로 남겨 두면서도 그것이 반드시 존재함을 의심할 수 없게 증명한다.">
+  <div class="n">083</div>
+  <div class="lines">
+    <p class="en" lang="en">A nonconstructive proof may leave the object unseen while proving beyond doubt that it must be there.</p>
+    <p class="ko" lang="ko">비구성적 증명은 대상을 보이지 않은 채로 남겨 두면서도 그것이 반드시 존재함을 의심할 수 없게 증명한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="83번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="84" data-text="a proof can be short because it stands on definitions that have compressed centuries of thought. 증명이 짧을 수 있는 것은 그 바탕의 정의들이 수세기의 생각을 압축하고 있기 때문이다.">
+  <div class="n">084</div>
+  <div class="lines">
+    <p class="en" lang="en">A proof can be short because it stands on definitions that have compressed centuries of thought.</p>
+    <p class="ko" lang="ko">증명이 짧을 수 있는 것은 그 바탕의 정의들이 수세기의 생각을 압축하고 있기 때문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="84번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="85" data-text="the best proofs often make the theorem feel inevitable after it had seemed mysterious. 가장 좋은 증명은 신비롭게 보였던 정리를 나중에는 필연적으로 느끼게 한다.">
+  <div class="n">085</div>
+  <div class="lines">
+    <p class="en" lang="en">The best proofs often make the theorem feel inevitable after it had seemed mysterious.</p>
+    <p class="ko" lang="ko">가장 좋은 증명은 신비롭게 보였던 정리를 나중에는 필연적으로 느끼게 한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="85번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="86" data-text="a proof worth remembering usually has an idea worth naming. 기억할 만한 증명에는 대개 이름 붙일 만한 생각이 들어 있다.">
+  <div class="n">086</div>
+  <div class="lines">
+    <p class="en" lang="en">A proof worth remembering usually has an idea worth naming.</p>
+    <p class="ko" lang="ko">기억할 만한 증명에는 대개 이름 붙일 만한 생각이 들어 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="86번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="87" data-text="the elegance of a proof lies not in avoiding effort but in finding the effort that matters. 증명의 우아함은 노력을 피하는 데 있지 않고 중요한 노력만을 찾아내는 데 있다.">
+  <div class="n">087</div>
+  <div class="lines">
+    <p class="en" lang="en">The elegance of a proof lies not in avoiding effort but in finding the effort that matters.</p>
+    <p class="ko" lang="ko">증명의 우아함은 노력을 피하는 데 있지 않고 중요한 노력만을 찾아내는 데 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="87번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="88" data-text="when a proof uses exactly the hypotheses it needs, nothing more and nothing less, it has a special balance. 증명이 필요한 가정만 정확히 사용하고 더도 덜도 없을 때 특별한 균형미가 생긴다.">
+  <div class="n">088</div>
+  <div class="lines">
+    <p class="en" lang="en">When a proof uses exactly the hypotheses it needs, nothing more and nothing less, it has a special balance.</p>
+    <p class="ko" lang="ko">증명이 필요한 가정만 정확히 사용하고 더도 덜도 없을 때 특별한 균형미가 생긴다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="88번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="89" data-text="a theorem becomes ours when we can reconstruct its proof from the central idea rather than memorize its lines. 정리의 문장을 암기하는 대신 핵심 아이디어에서 증명을 다시 만들어 낼 수 있을 때 그 정리는 비로소 우리의 것이 된다.">
+  <div class="n">089</div>
+  <div class="lines">
+    <p class="en" lang="en">A theorem becomes ours when we can reconstruct its proof from the central idea rather than memorize its lines.</p>
+    <p class="ko" lang="ko">정리의 문장을 암기하는 대신 핵심 아이디어에서 증명을 다시 만들어 낼 수 있을 때 그 정리는 비로소 우리의 것이 된다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="89번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="90" data-text="to read a proof slowly is to listen to the logic breathe. 증명을 천천히 읽는 것은 논리가 숨 쉬는 소리를 듣는 일이다.">
+  <div class="n">090</div>
+  <div class="lines">
+    <p class="en" lang="en">To read a proof slowly is to listen to the logic breathe.</p>
+    <p class="ko" lang="ko">증명을 천천히 읽는 것은 논리가 숨 쉬는 소리를 듣는 일이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="90번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article></section><section class="chapter" id="s4"><div class="chapter-head"><span>CHAPTER 04</span><h2>Ⅳ. 기하와 공간의 아름다움 · Geometry and Space</h2></div>
+<article class="sentence" data-num="91" data-text="geometry begins with the radical idea that shape can be reasoned about with absolute precision. 기하는 모양에 대해 절대적인 정확성으로 추론할 수 있다는 대담한 생각에서 시작한다.">
+  <div class="n">091</div>
+  <div class="lines">
+    <p class="en" lang="en">Geometry begins with the radical idea that shape can be reasoned about with absolute precision.</p>
+    <p class="ko" lang="ko">기하는 모양에 대해 절대적인 정확성으로 추론할 수 있다는 대담한 생각에서 시작한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="91번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="92" data-text="euclid built a vast mathematical world from a small collection of definitions, postulates, and common notions. 유클리드는 소수의 정의와 공준, 공통개념에서 거대한 수학 세계를 세웠다.">
+  <div class="n">092</div>
+  <div class="lines">
+    <p class="en" lang="en">Euclid built a vast mathematical world from a small collection of definitions, postulates, and common notions.</p>
+    <p class="ko" lang="ko">유클리드는 소수의 정의와 공준, 공통개념에서 거대한 수학 세계를 세웠다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="92번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="93" data-text="the pythagorean theorem turns a right triangle into an exact relation among areas. 피타고라스 정리는 직각삼각형을 넓이 사이의 정확한 관계로 바꾸어 준다.">
+  <div class="n">093</div>
+  <div class="lines">
+    <p class="en" lang="en">The Pythagorean theorem turns a right triangle into an exact relation among areas.</p>
+    <p class="ko" lang="ko">피타고라스 정리는 직각삼각형을 넓이 사이의 정확한 관계로 바꾸어 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="93번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="94" data-text="its equation a² + b² = c² is simple enough for a child to remember and deep enough to echo throughout mathematics. a² + b² = c²라는 식은 아이도 기억할 만큼 단순하면서 수학 전체에 울려 퍼질 만큼 깊다.">
+  <div class="n">094</div>
+  <div class="lines">
+    <p class="en" lang="en">Its equation a² + b² = c² is simple enough for a child to remember and deep enough to echo throughout mathematics.</p>
+    <p class="ko" lang="ko">a² + b² = c²라는 식은 아이도 기억할 만큼 단순하면서 수학 전체에 울려 퍼질 만큼 깊다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="94번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="95" data-text="similar triangles let us measure what we cannot reach by comparing what we can. 닮은삼각형은 우리가 닿을 수 있는 것을 비교하여 닿을 수 없는 것을 측정하게 해 준다.">
+  <div class="n">095</div>
+  <div class="lines">
+    <p class="en" lang="en">Similar triangles let us measure what we cannot reach by comparing what we can.</p>
+    <p class="ko" lang="ko">닮은삼각형은 우리가 닿을 수 있는 것을 비교하여 닿을 수 없는 것을 측정하게 해 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="95번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="96" data-text="the area of a circle, πr², hides an ancient story of approximation becoming exact. 원의 넓이 πr²에는 근사가 정확성으로 변해 온 오래된 이야기가 숨어 있다.">
+  <div class="n">096</div>
+  <div class="lines">
+    <p class="en" lang="en">The area of a circle, πr², hides an ancient story of approximation becoming exact.</p>
+    <p class="ko" lang="ko">원의 넓이 πr²에는 근사가 정확성으로 변해 온 오래된 이야기가 숨어 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="96번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="97" data-text="pi appears whenever circular geometry asks how length and area scale. 원주율 π는 원의 기하가 길이와 넓이가 어떻게 변하는지 물을 때마다 나타난다.">
+  <div class="n">097</div>
+  <div class="lines">
+    <p class="en" lang="en">Pi appears whenever circular geometry asks how length and area scale.</p>
+    <p class="ko" lang="ko">원주율 π는 원의 기하가 길이와 넓이가 어떻게 변하는지 물을 때마다 나타난다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="97번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="98" data-text="the fact that π is irrational means no repeating or terminating decimal can ever capture it completely. π가 무리수라는 사실은 어떤 유한소수나 순환소수도 그것을 완전히 담아낼 수 없다는 뜻이다.">
+  <div class="n">098</div>
+  <div class="lines">
+    <p class="en" lang="en">The fact that π is irrational means no repeating or terminating decimal can ever capture it completely.</p>
+    <p class="ko" lang="ko">π가 무리수라는 사실은 어떤 유한소수나 순환소수도 그것을 완전히 담아낼 수 없다는 뜻이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="98번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="99" data-text="coordinate geometry united algebra and shape by giving every point an address. 좌표기하는 모든 점에 주소를 부여함으로써 대수와 도형을 하나로 결합했다.">
+  <div class="n">099</div>
+  <div class="lines">
+    <p class="en" lang="en">Coordinate geometry united algebra and shape by giving every point an address.</p>
+    <p class="ko" lang="ko">좌표기하는 모든 점에 주소를 부여함으로써 대수와 도형을 하나로 결합했다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="99번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="100" data-text="a curve becomes an equation, and an equation becomes a shape. 곡선은 방정식이 되고 방정식은 도형이 된다.">
+  <div class="n">100</div>
+  <div class="lines">
+    <p class="en" lang="en">A curve becomes an equation, and an equation becomes a shape.</p>
+    <p class="ko" lang="ko">곡선은 방정식이 되고 방정식은 도형이 된다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="100번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="101" data-text="the conic sections show how one simple surface can generate circles, ellipses, parabolas, and hyperbolas. 원뿔곡선은 하나의 단순한 곡면에서 원, 타원, 포물선, 쌍곡선이 모두 생겨날 수 있음을 보여 준다.">
+  <div class="n">101</div>
+  <div class="lines">
+    <p class="en" lang="en">The conic sections show how one simple surface can generate circles, ellipses, parabolas, and hyperbolas.</p>
+    <p class="ko" lang="ko">원뿔곡선은 하나의 단순한 곡면에서 원, 타원, 포물선, 쌍곡선이 모두 생겨날 수 있음을 보여 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="101번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="102" data-text="a parabola reflects parallel rays to a single focus, turning pure geometry into telescope and antenna design. 포물선은 평행한 빛을 하나의 초점으로 모아 순수기하를 망원경과 안테나 설계로 이어 준다.">
+  <div class="n">102</div>
+  <div class="lines">
+    <p class="en" lang="en">A parabola reflects parallel rays to a single focus, turning pure geometry into telescope and antenna design.</p>
+    <p class="ko" lang="ko">포물선은 평행한 빛을 하나의 초점으로 모아 순수기하를 망원경과 안테나 설계로 이어 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="102번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="103" data-text="projective geometry teaches that perspective has its own invariant truths. 사영기하는 원근법에도 고유한 불변의 진리가 있음을 가르친다.">
+  <div class="n">103</div>
+  <div class="lines">
+    <p class="en" lang="en">Projective geometry teaches that perspective has its own invariant truths.</p>
+    <p class="ko" lang="ko">사영기하는 원근법에도 고유한 불변의 진리가 있음을 가르친다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="103번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="104" data-text="topology asks us to ignore lengths and angles and notice only the structure that survives continuous deformation. 위상수학은 길이와 각도를 무시하고 연속적인 변형에도 살아남는 구조만을 보라고 한다.">
+  <div class="n">104</div>
+  <div class="lines">
+    <p class="en" lang="en">Topology asks us to ignore lengths and angles and notice only the structure that survives continuous deformation.</p>
+    <p class="ko" lang="ko">위상수학은 길이와 각도를 무시하고 연속적인 변형에도 살아남는 구조만을 보라고 한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="104번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="105" data-text="in topology, a coffee mug and a torus can be the same kind of object because each has one hole. 위상수학에서는 커피잔과 토러스가 각각 하나의 구멍을 가지므로 같은 종류의 대상일 수 있다.">
+  <div class="n">105</div>
+  <div class="lines">
+    <p class="en" lang="en">In topology, a coffee mug and a torus can be the same kind of object because each has one hole.</p>
+    <p class="ko" lang="ko">위상수학에서는 커피잔과 토러스가 각각 하나의 구멍을 가지므로 같은 종류의 대상일 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="105번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="106" data-text="the euler characteristic v − e + f remains unchanged across every convex polyhedron. 오일러 지표 v − e + f는 모든 볼록 다면체에서 변하지 않는다.">
+  <div class="n">106</div>
+  <div class="lines">
+    <p class="en" lang="en">The Euler characteristic V − E + F remains unchanged across every convex polyhedron.</p>
+    <p class="ko" lang="ko">오일러 지표 V − E + F는 모든 볼록 다면체에서 변하지 않는다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="106번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="107" data-text="for convex polyhedra, v − e + f = 2 is a small equation with an enormous geometric reach. 볼록다면체에서 v − e + f = 2는 짧은 식이지만 엄청난 기하학적 범위를 가진다.">
+  <div class="n">107</div>
+  <div class="lines">
+    <p class="en" lang="en">For convex polyhedra, V − E + F = 2 is a small equation with an enormous geometric reach.</p>
+    <p class="ko" lang="ko">볼록다면체에서 V − E + F = 2는 짧은 식이지만 엄청난 기하학적 범위를 가진다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="107번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="108" data-text="non-euclidean geometry begins when we dare to change the parallel postulate. 비유클리드 기하는 평행선 공준을 바꿔 볼 용기를 낼 때 시작한다.">
+  <div class="n">108</div>
+  <div class="lines">
+    <p class="en" lang="en">Non-Euclidean geometry begins when we dare to change the parallel postulate.</p>
+    <p class="ko" lang="ko">비유클리드 기하는 평행선 공준을 바꿔 볼 용기를 낼 때 시작한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="108번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="109" data-text="on a sphere, triangles can have angle sums greater than 180 degrees. 구면에서는 삼각형의 내각의 합이 180도보다 클 수 있다.">
+  <div class="n">109</div>
+  <div class="lines">
+    <p class="en" lang="en">On a sphere, triangles can have angle sums greater than 180 degrees.</p>
+    <p class="ko" lang="ko">구면에서는 삼각형의 내각의 합이 180도보다 클 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="109번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="110" data-text="hyperbolic geometry opens a world where there are infinitely many parallels through a point outside a line. 쌍곡기하는 한 직선 밖의 한 점을 지나는 평행선이 무한히 많은 세계를 연다.">
+  <div class="n">110</div>
+  <div class="lines">
+    <p class="en" lang="en">Hyperbolic geometry opens a world where there are infinitely many parallels through a point outside a line.</p>
+    <p class="ko" lang="ko">쌍곡기하는 한 직선 밖의 한 점을 지나는 평행선이 무한히 많은 세계를 연다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="110번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="111" data-text="riemannian geometry turned curvature into a language powerful enough for einstein&#x27;s theory of gravitation. 리만기하는 곡률을 아인슈타인의 중력이론을 표현할 만큼 강력한 언어로 바꾸었다.">
+  <div class="n">111</div>
+  <div class="lines">
+    <p class="en" lang="en">Riemannian geometry turned curvature into a language powerful enough for Einstein&#x27;s theory of gravitation.</p>
+    <p class="ko" lang="ko">리만기하는 곡률을 아인슈타인의 중력이론을 표현할 만큼 강력한 언어로 바꾸었다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="111번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="112" data-text="a geodesic is the straightest possible path in a curved world. 측지선은 휘어진 세계에서 가능한 한 가장 곧은 길이다.">
+  <div class="n">112</div>
+  <div class="lines">
+    <p class="en" lang="en">A geodesic is the straightest possible path in a curved world.</p>
+    <p class="ko" lang="ko">측지선은 휘어진 세계에서 가능한 한 가장 곧은 길이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="112번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="113" data-text="symmetry is geometry&#x27;s way of telling us that some transformations change appearance without changing essence. 대칭은 어떤 변환이 겉모습은 바꾸어도 본질은 바꾸지 않는다는 것을 말하는 기하의 방식이다.">
+  <div class="n">113</div>
+  <div class="lines">
+    <p class="en" lang="en">Symmetry is geometry&#x27;s way of telling us that some transformations change appearance without changing essence.</p>
+    <p class="ko" lang="ko">대칭은 어떤 변환이 겉모습은 바꾸어도 본질은 바꾸지 않는다는 것을 말하는 기하의 방식이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="113번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="114" data-text="reflection, rotation, translation, and scaling reveal families of transformations rather than isolated shapes. 반사, 회전, 평행이동, 확대축소는 고립된 도형보다 변환의 가족을 보여 준다.">
+  <div class="n">114</div>
+  <div class="lines">
+    <p class="en" lang="en">Reflection, rotation, translation, and scaling reveal families of transformations rather than isolated shapes.</p>
+    <p class="ko" lang="ko">반사, 회전, 평행이동, 확대축소는 고립된 도형보다 변환의 가족을 보여 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="114번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="115" data-text="fractals reveal shapes whose complexity repeats at smaller and smaller scales. 프랙털은 점점 더 작은 규모에서도 복잡성이 반복되는 도형을 보여 준다.">
+  <div class="n">115</div>
+  <div class="lines">
+    <p class="en" lang="en">Fractals reveal shapes whose complexity repeats at smaller and smaller scales.</p>
+    <p class="ko" lang="ko">프랙털은 점점 더 작은 규모에서도 복잡성이 반복되는 도형을 보여 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="115번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="116" data-text="the mandelbrot set grows from a tiny iterative rule into a boundary of inexhaustible detail. 망델브로 집합은 아주 작은 반복 규칙에서 출발해 끝없이 세밀한 경계를 만들어 낸다.">
+  <div class="n">116</div>
+  <div class="lines">
+    <p class="en" lang="en">The Mandelbrot set grows from a tiny iterative rule into a boundary of inexhaustible detail.</p>
+    <p class="ko" lang="ko">망델브로 집합은 아주 작은 반복 규칙에서 출발해 끝없이 세밀한 경계를 만들어 낸다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="116번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="117" data-text="dimension, once thought to be only 1, 2, or 3, becomes subtler when fractals enter the story. 한때 1, 2, 3뿐이라고 여겨졌던 차원은 프랙털이 등장하면서 훨씬 미묘해진다.">
+  <div class="n">117</div>
+  <div class="lines">
+    <p class="en" lang="en">Dimension, once thought to be only 1, 2, or 3, becomes subtler when fractals enter the story.</p>
+    <p class="ko" lang="ko">한때 1, 2, 3뿐이라고 여겨졌던 차원은 프랙털이 등장하면서 훨씬 미묘해진다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="117번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="118" data-text="geometry is beautiful because it lets the eye suggest a truth and the proof decide it. 기하가 아름다운 이유는 눈이 진리를 암시하고 증명이 그것을 결정하게 하기 때문이다.">
+  <div class="n">118</div>
+  <div class="lines">
+    <p class="en" lang="en">Geometry is beautiful because it lets the eye suggest a truth and the proof decide it.</p>
+    <p class="ko" lang="ko">기하가 아름다운 이유는 눈이 진리를 암시하고 증명이 그것을 결정하게 하기 때문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="118번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="119" data-text="a diagram can inspire a theorem, but only reasoning can tell us whether the picture has deceived us. 그림은 정리를 떠올리게 할 수 있지만 그 그림이 우리를 속였는지는 오직 추론만이 알려 줄 수 있다.">
+  <div class="n">119</div>
+  <div class="lines">
+    <p class="en" lang="en">A diagram can inspire a theorem, but only reasoning can tell us whether the picture has deceived us.</p>
+    <p class="ko" lang="ko">그림은 정리를 떠올리게 할 수 있지만 그 그림이 우리를 속였는지는 오직 추론만이 알려 줄 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="119번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="120" data-text="to study space mathematically is to discover that even shape has hidden laws. 공간을 수학적으로 공부한다는 것은 모양조차 숨은 법칙을 가진다는 사실을 발견하는 일이다.">
+  <div class="n">120</div>
+  <div class="lines">
+    <p class="en" lang="en">To study space mathematically is to discover that even shape has hidden laws.</p>
+    <p class="ko" lang="ko">공간을 수학적으로 공부한다는 것은 모양조차 숨은 법칙을 가진다는 사실을 발견하는 일이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="120번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article></section><section class="chapter" id="s5"><div class="chapter-head"><span>CHAPTER 05</span><h2>Ⅴ. 미적분과 변화의 음악 · Calculus and Change</h2></div>
+<article class="sentence" data-num="121" data-text="calculus was born from the desire to understand motion, accumulation, and change with exactness. 미적분은 운동, 누적, 변화를 정확하게 이해하려는 열망에서 태어났다.">
+  <div class="n">121</div>
+  <div class="lines">
+    <p class="en" lang="en">Calculus was born from the desire to understand motion, accumulation, and change with exactness.</p>
+    <p class="ko" lang="ko">미적분은 운동, 누적, 변화를 정확하게 이해하려는 열망에서 태어났다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="121번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="122" data-text="a derivative measures how a quantity is changing at an instant. 미분계수는 어떤 양이 한 순간에 어떻게 변하고 있는지를 측정한다.">
+  <div class="n">122</div>
+  <div class="lines">
+    <p class="en" lang="en">A derivative measures how a quantity is changing at an instant.</p>
+    <p class="ko" lang="ko">미분계수는 어떤 양이 한 순간에 어떻게 변하고 있는지를 측정한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="122번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="123" data-text="the tangent line captures local behavior by replacing a curve with its best nearby linear approximation. 접선은 곡선을 가장 가까운 선형근사로 바꾸어 국소적인 행동을 포착한다.">
+  <div class="n">123</div>
+  <div class="lines">
+    <p class="en" lang="en">The tangent line captures local behavior by replacing a curve with its best nearby linear approximation.</p>
+    <p class="ko" lang="ko">접선은 곡선을 가장 가까운 선형근사로 바꾸어 국소적인 행동을 포착한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="123번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="124" data-text="the limit makes instantaneous change mathematically meaningful without requiring an actual smallest interval. 극한은 실제로 가장 작은 간격을 요구하지 않으면서 순간변화를 수학적으로 의미 있게 만든다.">
+  <div class="n">124</div>
+  <div class="lines">
+    <p class="en" lang="en">The limit makes instantaneous change mathematically meaningful without requiring an actual smallest interval.</p>
+    <p class="ko" lang="ko">극한은 실제로 가장 작은 간격을 요구하지 않으면서 순간변화를 수학적으로 의미 있게 만든다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="124번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="125" data-text="epsilon-delta definitions turn the intuitive phrase &#x27;arbitrarily close&#x27; into rigorous logic. 엡실론-델타 정의는 ‘마음대로 가깝게’라는 직관적 표현을 엄밀한 논리로 바꾼다.">
+  <div class="n">125</div>
+  <div class="lines">
+    <p class="en" lang="en">Epsilon-delta definitions turn the intuitive phrase &#x27;arbitrarily close&#x27; into rigorous logic.</p>
+    <p class="ko" lang="ko">엡실론-델타 정의는 ‘마음대로 가깝게’라는 직관적 표현을 엄밀한 논리로 바꾼다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="125번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="126" data-text="continuity formalizes the idea that small changes in input produce small changes in output. 연속성은 입력의 작은 변화가 출력의 작은 변화를 만든다는 생각을 엄밀하게 표현한다.">
+  <div class="n">126</div>
+  <div class="lines">
+    <p class="en" lang="en">Continuity formalizes the idea that small changes in input produce small changes in output.</p>
+    <p class="ko" lang="ko">연속성은 입력의 작은 변화가 출력의 작은 변화를 만든다는 생각을 엄밀하게 표현한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="126번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="127" data-text="the intermediate value theorem guarantees that a continuous function cannot jump over a value. 중간값 정리는 연속함수가 어떤 값을 건너뛸 수 없음을 보장한다.">
+  <div class="n">127</div>
+  <div class="lines">
+    <p class="en" lang="en">The intermediate value theorem guarantees that a continuous function cannot jump over a value.</p>
+    <p class="ko" lang="ko">중간값 정리는 연속함수가 어떤 값을 건너뛸 수 없음을 보장한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="127번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="128" data-text="the extreme value theorem says that a continuous function on a closed bounded interval must attain a maximum and a minimum. 최대최소정리는 닫힌 유계구간에서 연속함수가 반드시 최댓값과 최솟값을 가진다고 말한다.">
+  <div class="n">128</div>
+  <div class="lines">
+    <p class="en" lang="en">The extreme value theorem says that a continuous function on a closed bounded interval must attain a maximum and a minimum.</p>
+    <p class="ko" lang="ko">최대최소정리는 닫힌 유계구간에서 연속함수가 반드시 최댓값과 최솟값을 가진다고 말한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="128번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="129" data-text="the mean value theorem finds a point where instantaneous change matches average change. 평균값 정리는 순간변화율이 평균변화율과 일치하는 점을 찾아낸다.">
+  <div class="n">129</div>
+  <div class="lines">
+    <p class="en" lang="en">The mean value theorem finds a point where instantaneous change matches average change.</p>
+    <p class="ko" lang="ko">평균값 정리는 순간변화율이 평균변화율과 일치하는 점을 찾아낸다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="129번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="130" data-text="the fundamental theorem of calculus reveals that differentiation and integration are inverse processes. 미적분학의 기본정리는 미분과 적분이 서로 역과정임을 드러낸다.">
+  <div class="n">130</div>
+  <div class="lines">
+    <p class="en" lang="en">The fundamental theorem of calculus reveals that differentiation and integration are inverse processes.</p>
+    <p class="ko" lang="ko">미적분학의 기본정리는 미분과 적분이 서로 역과정임을 드러낸다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="130번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="131" data-text="this theorem is one of mathematics&#x27; great reunions: local change and global accumulation become two sides of one idea. 이 정리는 수학의 위대한 재회 중 하나로 국소적 변화와 전체적 누적을 하나의 생각의 두 얼굴로 만든다.">
+  <div class="n">131</div>
+  <div class="lines">
+    <p class="en" lang="en">This theorem is one of mathematics&#x27; great reunions: local change and global accumulation become two sides of one idea.</p>
+    <p class="ko" lang="ko">이 정리는 수학의 위대한 재회 중 하나로 국소적 변화와 전체적 누적을 하나의 생각의 두 얼굴로 만든다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="131번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="132" data-text="an integral adds infinitely many infinitesimal contributions without ever losing rigor. 적분은 무한히 많은 미소한 기여를 더하면서도 엄밀함을 잃지 않는다.">
+  <div class="n">132</div>
+  <div class="lines">
+    <p class="en" lang="en">An integral adds infinitely many infinitesimal contributions without ever losing rigor.</p>
+    <p class="ko" lang="ko">적분은 무한히 많은 미소한 기여를 더하면서도 엄밀함을 잃지 않는다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="132번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="133" data-text="riemann sums show how rectangles can approach an exact area through refinement. 리만합은 직사각형을 점점 더 잘게 나누어 정확한 넓이에 접근하는 과정을 보여 준다.">
+  <div class="n">133</div>
+  <div class="lines">
+    <p class="en" lang="en">Riemann sums show how rectangles can approach an exact area through refinement.</p>
+    <p class="ko" lang="ko">리만합은 직사각형을 점점 더 잘게 나누어 정확한 넓이에 접근하는 과정을 보여 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="133번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="134" data-text="a differential equation does not merely ask for a number; it asks for an entire function whose change obeys a law. 미분방정식은 단지 수 하나를 구하는 것이 아니라 변화가 어떤 법칙을 따르는 함수 전체를 구한다.">
+  <div class="n">134</div>
+  <div class="lines">
+    <p class="en" lang="en">A differential equation does not merely ask for a number; it asks for an entire function whose change obeys a law.</p>
+    <p class="ko" lang="ko">미분방정식은 단지 수 하나를 구하는 것이 아니라 변화가 어떤 법칙을 따르는 함수 전체를 구한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="134번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="135" data-text="exponential growth is the mathematical signature of a quantity whose rate of change is proportional to itself. 지수성장은 변화율이 자기 자신에 비례하는 양이 남기는 수학적 특징이다.">
+  <div class="n">135</div>
+  <div class="lines">
+    <p class="en" lang="en">Exponential growth is the mathematical signature of a quantity whose rate of change is proportional to itself.</p>
+    <p class="ko" lang="ko">지수성장은 변화율이 자기 자신에 비례하는 양이 남기는 수학적 특징이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="135번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="136" data-text="the equation y&#x27; = ky produces a family of curves whose future is encoded in their present value. 방정식 y&#x27; = ky는 현재 값 안에 미래가 암호처럼 들어 있는 곡선의 가족을 만들어 낸다.">
+  <div class="n">136</div>
+  <div class="lines">
+    <p class="en" lang="en">The equation y&#x27; = ky produces a family of curves whose future is encoded in their present value.</p>
+    <p class="ko" lang="ko">방정식 y&#x27; = ky는 현재 값 안에 미래가 암호처럼 들어 있는 곡선의 가족을 만들어 낸다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="136번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="137" data-text="logarithms reverse exponentials and turn multiplication into addition. 로그는 지수함수의 역이며 곱셈을 덧셈으로 바꾼다.">
+  <div class="n">137</div>
+  <div class="lines">
+    <p class="en" lang="en">Logarithms reverse exponentials and turn multiplication into addition.</p>
+    <p class="ko" lang="ko">로그는 지수함수의 역이며 곱셈을 덧셈으로 바꾼다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="137번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="138" data-text="the constant e emerges naturally whenever continuous growth is pushed to its limit. 상수 e는 연속적인 성장을 극한까지 밀어붙일 때 자연스럽게 나타난다.">
+  <div class="n">138</div>
+  <div class="lines">
+    <p class="en" lang="en">The constant e emerges naturally whenever continuous growth is pushed to its limit.</p>
+    <p class="ko" lang="ko">상수 e는 연속적인 성장을 극한까지 밀어붙일 때 자연스럽게 나타난다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="138번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="139" data-text="taylor series allow a smooth function to reveal itself through an infinite polynomial portrait. 테일러 급수는 매끄러운 함수가 무한한 다항식의 초상화를 통해 자신을 드러내게 한다.">
+  <div class="n">139</div>
+  <div class="lines">
+    <p class="en" lang="en">Taylor series allow a smooth function to reveal itself through an infinite polynomial portrait.</p>
+    <p class="ko" lang="ko">테일러 급수는 매끄러운 함수가 무한한 다항식의 초상화를 통해 자신을 드러내게 한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="139번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="140" data-text="the series for e^x is astonishing because every derivative of e^x is again e^x. e^x의 급수가 놀라운 것은 e^x의 모든 미분이 다시 e^x이기 때문이다.">
+  <div class="n">140</div>
+  <div class="lines">
+    <p class="en" lang="en">The series for e^x is astonishing because every derivative of e^x is again e^x.</p>
+    <p class="ko" lang="ko">e^x의 급수가 놀라운 것은 e^x의 모든 미분이 다시 e^x이기 때문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="140번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="141" data-text="sine and cosine can be understood not only as triangle ratios but as solutions to differential equations. 사인과 코사인은 삼각비일 뿐 아니라 미분방정식의 해로도 이해할 수 있다.">
+  <div class="n">141</div>
+  <div class="lines">
+    <p class="en" lang="en">Sine and cosine can be understood not only as triangle ratios but as solutions to differential equations.</p>
+    <p class="ko" lang="ko">사인과 코사인은 삼각비일 뿐 아니라 미분방정식의 해로도 이해할 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="141번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="142" data-text="fourier analysis says that complicated waves can be built from simple sine and cosine waves. 푸리에 해석은 복잡한 파동이 단순한 사인과 코사인 파동들의 합으로 만들어질 수 있다고 말한다.">
+  <div class="n">142</div>
+  <div class="lines">
+    <p class="en" lang="en">Fourier analysis says that complicated waves can be built from simple sine and cosine waves.</p>
+    <p class="ko" lang="ko">푸리에 해석은 복잡한 파동이 단순한 사인과 코사인 파동들의 합으로 만들어질 수 있다고 말한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="142번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="143" data-text="a sharp edge in a signal can be reconstructed from infinitely many smooth oscillations. 신호의 날카로운 모서리도 무한히 많은 매끄러운 진동으로 재구성될 수 있다.">
+  <div class="n">143</div>
+  <div class="lines">
+    <p class="en" lang="en">A sharp edge in a signal can be reconstructed from infinitely many smooth oscillations.</p>
+    <p class="ko" lang="ko">신호의 날카로운 모서리도 무한히 많은 매끄러운 진동으로 재구성될 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="143번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="144" data-text="infinite series teach us that adding endlessly does not always mean growing without bound. 무한급수는 끝없이 더한다고 해서 항상 무한히 커지는 것은 아님을 가르친다.">
+  <div class="n">144</div>
+  <div class="lines">
+    <p class="en" lang="en">Infinite series teach us that adding endlessly does not always mean growing without bound.</p>
+    <p class="ko" lang="ko">무한급수는 끝없이 더한다고 해서 항상 무한히 커지는 것은 아님을 가르친다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="144번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="145" data-text="the geometric series 1 + r + r² + ··· converges when |r| &lt; 1. 등비급수 1 + r + r² + ···는 |r| &lt; 1일 때 수렴한다.">
+  <div class="n">145</div>
+  <div class="lines">
+    <p class="en" lang="en">The geometric series 1 + r + r² + ··· converges when |r| &lt; 1.</p>
+    <p class="ko" lang="ko">등비급수 1 + r + r² + ···는 |r| &lt; 1일 때 수렴한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="145번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="146" data-text="zeno&#x27;s paradox becomes less mysterious once infinitely many shrinking distances can have a finite sum. 점점 작아지는 무한히 많은 거리가 유한한 합을 가질 수 있음을 알면 제논의 역설은 덜 신비롭게 느껴진다.">
+  <div class="n">146</div>
+  <div class="lines">
+    <p class="en" lang="en">Zeno&#x27;s paradox becomes less mysterious once infinitely many shrinking distances can have a finite sum.</p>
+    <p class="ko" lang="ko">점점 작아지는 무한히 많은 거리가 유한한 합을 가질 수 있음을 알면 제논의 역설은 덜 신비롭게 느껴진다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="146번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="147" data-text="improper integrals extend accumulation beyond finite intervals and bounded functions. 이상적분은 누적의 개념을 유한구간과 유계함수 너머로 확장한다.">
+  <div class="n">147</div>
+  <div class="lines">
+    <p class="en" lang="en">Improper integrals extend accumulation beyond finite intervals and bounded functions.</p>
+    <p class="ko" lang="ko">이상적분은 누적의 개념을 유한구간과 유계함수 너머로 확장한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="147번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="148" data-text="calculus is powerful because it lets us study change without sacrificing exactness. 미적분이 강력한 이유는 정확성을 희생하지 않고 변화를 연구하게 해 주기 때문이다.">
+  <div class="n">148</div>
+  <div class="lines">
+    <p class="en" lang="en">Calculus is powerful because it lets us study change without sacrificing exactness.</p>
+    <p class="ko" lang="ko">미적분이 강력한 이유는 정확성을 희생하지 않고 변화를 연구하게 해 주기 때문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="148번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="149" data-text="once we learn to see derivatives and integrals, motion, growth, and area begin to speak the same language. 미분과 적분을 볼 줄 알게 되면 운동, 성장, 넓이가 같은 언어를 말하기 시작한다.">
+  <div class="n">149</div>
+  <div class="lines">
+    <p class="en" lang="en">Once we learn to see derivatives and integrals, motion, growth, and area begin to speak the same language.</p>
+    <p class="ko" lang="ko">미분과 적분을 볼 줄 알게 되면 운동, 성장, 넓이가 같은 언어를 말하기 시작한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="149번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="150" data-text="the beauty of calculus lies in its promise that the infinitely small can illuminate the whole. 미적분의 아름다움은 무한히 작은 것이 전체를 밝혀 줄 수 있다는 약속에 있다.">
+  <div class="n">150</div>
+  <div class="lines">
+    <p class="en" lang="en">The beauty of calculus lies in its promise that the infinitely small can illuminate the whole.</p>
+    <p class="ko" lang="ko">미적분의 아름다움은 무한히 작은 것이 전체를 밝혀 줄 수 있다는 약속에 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="150번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article></section><section class="chapter" id="s6"><div class="chapter-head"><span>CHAPTER 06</span><h2>Ⅵ. 대수와 구조의 힘 · Algebra and Structure</h2></div>
+<article class="sentence" data-num="151" data-text="algebra begins when we stop asking for one number and start studying the rules that all numbers obey. 대수는 수 하나를 구하는 일을 넘어 모든 수가 따르는 규칙을 연구하기 시작할 때 태어난다.">
+  <div class="n">151</div>
+  <div class="lines">
+    <p class="en" lang="en">Algebra begins when we stop asking for one number and start studying the rules that all numbers obey.</p>
+    <p class="ko" lang="ko">대수는 수 하나를 구하는 일을 넘어 모든 수가 따르는 규칙을 연구하기 시작할 때 태어난다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="151번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="152" data-text="a variable is a doorway from a particular problem to an entire family of problems. 변수는 하나의 구체적 문제에서 문제들의 전체 가족으로 들어가는 문이다.">
+  <div class="n">152</div>
+  <div class="lines">
+    <p class="en" lang="en">A variable is a doorway from a particular problem to an entire family of problems.</p>
+    <p class="ko" lang="ko">변수는 하나의 구체적 문제에서 문제들의 전체 가족으로 들어가는 문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="152번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="153" data-text="factoring is beautiful because it reveals multiplicative structure hidden inside addition. 인수분해가 아름다운 이유는 덧셈 속에 숨은 곱셈 구조를 드러내기 때문이다.">
+  <div class="n">153</div>
+  <div class="lines">
+    <p class="en" lang="en">Factoring is beautiful because it reveals multiplicative structure hidden inside addition.</p>
+    <p class="ko" lang="ko">인수분해가 아름다운 이유는 덧셈 속에 숨은 곱셈 구조를 드러내기 때문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="153번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="154" data-text="the quadratic formula guarantees that every quadratic equation can be solved in one unified language. 근의 공식은 모든 이차방정식을 하나의 통일된 언어로 풀 수 있음을 보장한다.">
+  <div class="n">154</div>
+  <div class="lines">
+    <p class="en" lang="en">The quadratic formula guarantees that every quadratic equation can be solved in one unified language.</p>
+    <p class="ko" lang="ko">근의 공식은 모든 이차방정식을 하나의 통일된 언어로 풀 수 있음을 보장한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="154번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="155" data-text="the discriminant tells us the nature of the roots before we calculate them. 판별식은 근을 실제로 계산하기 전에 그 성격을 알려 준다.">
+  <div class="n">155</div>
+  <div class="lines">
+    <p class="en" lang="en">The discriminant tells us the nature of the roots before we calculate them.</p>
+    <p class="ko" lang="ko">판별식은 근을 실제로 계산하기 전에 그 성격을 알려 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="155번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="156" data-text="polynomial equations led mathematicians from real numbers to complex numbers and from formulas to symmetry. 다항방정식은 수학자들을 실수에서 복소수로, 공식에서 대칭으로 이끌었다.">
+  <div class="n">156</div>
+  <div class="lines">
+    <p class="en" lang="en">Polynomial equations led mathematicians from real numbers to complex numbers and from formulas to symmetry.</p>
+    <p class="ko" lang="ko">다항방정식은 수학자들을 실수에서 복소수로, 공식에서 대칭으로 이끌었다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="156번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="157" data-text="the fundamental theorem of algebra says every nonconstant complex polynomial has a complex root. 대수학의 기본정리는 모든 상수가 아닌 복소다항식이 복소수 근을 가진다고 말한다.">
+  <div class="n">157</div>
+  <div class="lines">
+    <p class="en" lang="en">The fundamental theorem of algebra says every nonconstant complex polynomial has a complex root.</p>
+    <p class="ko" lang="ko">대수학의 기본정리는 모든 상수가 아닌 복소다항식이 복소수 근을 가진다고 말한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="157번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="158" data-text="because of that theorem, the complex numbers form an algebraically complete world for polynomial equations. 그 정리 덕분에 복소수는 다항방정식에 대해 대수적으로 완결된 세계를 이룬다.">
+  <div class="n">158</div>
+  <div class="lines">
+    <p class="en" lang="en">Because of that theorem, the complex numbers form an algebraically complete world for polynomial equations.</p>
+    <p class="ko" lang="ko">그 정리 덕분에 복소수는 다항방정식에 대해 대수적으로 완결된 세계를 이룬다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="158번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="159" data-text="linear algebra studies the geometry hidden inside systems of linear equations. 선형대수는 연립일차방정식 속에 숨은 기하를 연구한다.">
+  <div class="n">159</div>
+  <div class="lines">
+    <p class="en" lang="en">Linear algebra studies the geometry hidden inside systems of linear equations.</p>
+    <p class="ko" lang="ko">선형대수는 연립일차방정식 속에 숨은 기하를 연구한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="159번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="160" data-text="a vector is more than an arrow; it is an object that can encode position, force, data, or state. 벡터는 화살표 이상으로 위치, 힘, 데이터, 상태를 담을 수 있는 대상이다.">
+  <div class="n">160</div>
+  <div class="lines">
+    <p class="en" lang="en">A vector is more than an arrow; it is an object that can encode position, force, data, or state.</p>
+    <p class="ko" lang="ko">벡터는 화살표 이상으로 위치, 힘, 데이터, 상태를 담을 수 있는 대상이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="160번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="161" data-text="a matrix can represent a system of equations, a transformation, a network, or a dataset. 행렬은 연립방정식, 변환, 네트워크, 데이터셋을 표현할 수 있다.">
+  <div class="n">161</div>
+  <div class="lines">
+    <p class="en" lang="en">A matrix can represent a system of equations, a transformation, a network, or a dataset.</p>
+    <p class="ko" lang="ko">행렬은 연립방정식, 변환, 네트워크, 데이터셋을 표현할 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="161번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="162" data-text="matrix multiplication is composition written in coordinates. 행렬곱은 합성이라는 개념을 좌표로 적은 것이다.">
+  <div class="n">162</div>
+  <div class="lines">
+    <p class="en" lang="en">Matrix multiplication is composition written in coordinates.</p>
+    <p class="ko" lang="ko">행렬곱은 합성이라는 개념을 좌표로 적은 것이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="162번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="163" data-text="the determinant measures how a linear transformation scales oriented volume. 행렬식은 선형변환이 방향을 가진 부피를 얼마나 확대하거나 축소하는지 측정한다.">
+  <div class="n">163</div>
+  <div class="lines">
+    <p class="en" lang="en">The determinant measures how a linear transformation scales oriented volume.</p>
+    <p class="ko" lang="ko">행렬식은 선형변환이 방향을 가진 부피를 얼마나 확대하거나 축소하는지 측정한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="163번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="164" data-text="a zero determinant announces that some dimension has collapsed. 행렬식이 0이라는 것은 어떤 차원이 무너졌음을 알린다.">
+  <div class="n">164</div>
+  <div class="lines">
+    <p class="en" lang="en">A zero determinant announces that some dimension has collapsed.</p>
+    <p class="ko" lang="ko">행렬식이 0이라는 것은 어떤 차원이 무너졌음을 알린다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="164번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="165" data-text="eigenvectors are directions that a linear transformation does not turn away from themselves. 고유벡터는 선형변환을 받아도 자신의 방향에서 벗어나지 않는 특별한 방향이다.">
+  <div class="n">165</div>
+  <div class="lines">
+    <p class="en" lang="en">Eigenvectors are directions that a linear transformation does not turn away from themselves.</p>
+    <p class="ko" lang="ko">고유벡터는 선형변환을 받아도 자신의 방향에서 벗어나지 않는 특별한 방향이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="165번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="166" data-text="eigenvalues tell how much those special directions are stretched or reversed. 고윳값은 그 특별한 방향이 얼마나 늘어나거나 뒤집히는지를 알려 준다.">
+  <div class="n">166</div>
+  <div class="lines">
+    <p class="en" lang="en">Eigenvalues tell how much those special directions are stretched or reversed.</p>
+    <p class="ko" lang="ko">고윳값은 그 특별한 방향이 얼마나 늘어나거나 뒤집히는지를 알려 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="166번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="167" data-text="diagonalization can turn repeated complicated transformations into simple powers. 대각화는 반복되는 복잡한 변환을 단순한 거듭제곱으로 바꾸어 줄 수 있다.">
+  <div class="n">167</div>
+  <div class="lines">
+    <p class="en" lang="en">Diagonalization can turn repeated complicated transformations into simple powers.</p>
+    <p class="ko" lang="ko">대각화는 반복되는 복잡한 변환을 단순한 거듭제곱으로 바꾸어 줄 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="167번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="168" data-text="abstract algebra asks which rules matter after the familiar numbers are removed. 추상대수는 익숙한 수들을 치운 뒤에도 어떤 규칙이 본질적인지를 묻는다.">
+  <div class="n">168</div>
+  <div class="lines">
+    <p class="en" lang="en">Abstract algebra asks which rules matter after the familiar numbers are removed.</p>
+    <p class="ko" lang="ko">추상대수는 익숙한 수들을 치운 뒤에도 어떤 규칙이 본질적인지를 묻는다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="168번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="169" data-text="a group captures the essence of symmetry through an operation, identity, inverses, and associativity. 군은 연산, 항등원, 역원, 결합법칙을 통해 대칭의 본질을 포착한다.">
+  <div class="n">169</div>
+  <div class="lines">
+    <p class="en" lang="en">A group captures the essence of symmetry through an operation, identity, inverses, and associativity.</p>
+    <p class="ko" lang="ko">군은 연산, 항등원, 역원, 결합법칙을 통해 대칭의 본질을 포착한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="169번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="170" data-text="the symmetries of a square form a group because combining symmetries creates another symmetry. 정사각형의 대칭들은 두 대칭을 합성해도 다시 대칭이 되므로 군을 이룬다.">
+  <div class="n">170</div>
+  <div class="lines">
+    <p class="en" lang="en">The symmetries of a square form a group because combining symmetries creates another symmetry.</p>
+    <p class="ko" lang="ko">정사각형의 대칭들은 두 대칭을 합성해도 다시 대칭이 되므로 군을 이룬다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="170번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="171" data-text="group theory transformed symmetry from a visual idea into an algebraic object. 군론은 대칭을 시각적 아이디어에서 대수적 대상으로 바꾸었다.">
+  <div class="n">171</div>
+  <div class="lines">
+    <p class="en" lang="en">Group theory transformed symmetry from a visual idea into an algebraic object.</p>
+    <p class="ko" lang="ko">군론은 대칭을 시각적 아이디어에서 대수적 대상으로 바꾸었다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="171번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="172" data-text="lagrange&#x27;s theorem says the order of a subgroup divides the order of a finite group. 라그랑주 정리는 부분군의 원소 수가 유한군의 원소 수를 나눈다고 말한다.">
+  <div class="n">172</div>
+  <div class="lines">
+    <p class="en" lang="en">Lagrange&#x27;s theorem says the order of a subgroup divides the order of a finite group.</p>
+    <p class="ko" lang="ko">라그랑주 정리는 부분군의 원소 수가 유한군의 원소 수를 나눈다고 말한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="172번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="173" data-text="rings generalize the arithmetic of integers by keeping addition and multiplication while loosening other demands. 환은 덧셈과 곱셈을 유지하면서 다른 조건들을 완화해 정수의 산술을 일반화한다.">
+  <div class="n">173</div>
+  <div class="lines">
+    <p class="en" lang="en">Rings generalize the arithmetic of integers by keeping addition and multiplication while loosening other demands.</p>
+    <p class="ko" lang="ko">환은 덧셈과 곱셈을 유지하면서 다른 조건들을 완화해 정수의 산술을 일반화한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="173번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="174" data-text="fields create settings where addition, subtraction, multiplication, and division behave cleanly. 체는 덧셈, 뺄셈, 곱셈, 나눗셈이 깔끔하게 작동하는 세계를 만든다.">
+  <div class="n">174</div>
+  <div class="lines">
+    <p class="en" lang="en">Fields create settings where addition, subtraction, multiplication, and division behave cleanly.</p>
+    <p class="ko" lang="ko">체는 덧셈, 뺄셈, 곱셈, 나눗셈이 깔끔하게 작동하는 세계를 만든다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="174번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="175" data-text="galois theory connects polynomial equations with groups of symmetries among their roots. 갈루아 이론은 다항방정식을 그 근들 사이의 대칭군과 연결한다.">
+  <div class="n">175</div>
+  <div class="lines">
+    <p class="en" lang="en">Galois theory connects polynomial equations with groups of symmetries among their roots.</p>
+    <p class="ko" lang="ko">갈루아 이론은 다항방정식을 그 근들 사이의 대칭군과 연결한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="175번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="176" data-text="the impossibility of a general formula for quintic equations becomes a theorem about symmetry. 일반적인 5차방정식의 근의 공식이 존재하지 않는다는 사실은 대칭에 관한 정리로 바뀐다.">
+  <div class="n">176</div>
+  <div class="lines">
+    <p class="en" lang="en">The impossibility of a general formula for quintic equations becomes a theorem about symmetry.</p>
+    <p class="ko" lang="ko">일반적인 5차방정식의 근의 공식이 존재하지 않는다는 사실은 대칭에 관한 정리로 바뀐다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="176번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="177" data-text="homomorphisms let algebraic structures communicate while preserving the operations that matter. 준동형사상은 중요한 연산을 보존하면서 서로 다른 대수구조가 소통하게 해 준다.">
+  <div class="n">177</div>
+  <div class="lines">
+    <p class="en" lang="en">Homomorphisms let algebraic structures communicate while preserving the operations that matter.</p>
+    <p class="ko" lang="ko">준동형사상은 중요한 연산을 보존하면서 서로 다른 대수구조가 소통하게 해 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="177번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="178" data-text="isomorphism means two structures may look different while being mathematically the same. 동형은 두 구조가 겉보기에는 달라도 수학적으로는 같을 수 있음을 뜻한다.">
+  <div class="n">178</div>
+  <div class="lines">
+    <p class="en" lang="en">Isomorphism means two structures may look different while being mathematically the same.</p>
+    <p class="ko" lang="ko">동형은 두 구조가 겉보기에는 달라도 수학적으로는 같을 수 있음을 뜻한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="178번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="179" data-text="algebra is the art of discovering what remains true when the names of the objects no longer matter. 대수는 대상의 이름이 더 이상 중요하지 않을 때에도 무엇이 참으로 남는지를 발견하는 예술이다.">
+  <div class="n">179</div>
+  <div class="lines">
+    <p class="en" lang="en">Algebra is the art of discovering what remains true when the names of the objects no longer matter.</p>
+    <p class="ko" lang="ko">대수는 대상의 이름이 더 이상 중요하지 않을 때에도 무엇이 참으로 남는지를 발견하는 예술이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="179번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="180" data-text="the deeper algebra becomes, the more it feels like a study of relationships rather than calculations. 대수가 깊어질수록 계산보다 관계를 연구하는 학문처럼 느껴진다.">
+  <div class="n">180</div>
+  <div class="lines">
+    <p class="en" lang="en">The deeper algebra becomes, the more it feels like a study of relationships rather than calculations.</p>
+    <p class="ko" lang="ko">대수가 깊어질수록 계산보다 관계를 연구하는 학문처럼 느껴진다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="180번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article></section><section class="chapter" id="s7"><div class="chapter-head"><span>CHAPTER 07</span><h2>Ⅶ. 확률과 불확실성의 지혜 · Probability and Uncertainty</h2></div>
+<article class="sentence" data-num="181" data-text="probability gives mathematics a way to speak honestly about uncertainty. 확률은 수학이 불확실성에 대해 정직하게 말할 수 있는 방법을 제공한다.">
+  <div class="n">181</div>
+  <div class="lines">
+    <p class="en" lang="en">Probability gives mathematics a way to speak honestly about uncertainty.</p>
+    <p class="ko" lang="ko">확률은 수학이 불확실성에 대해 정직하게 말할 수 있는 방법을 제공한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="181번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="182" data-text="a probability between zero and one measures not certainty itself but the structure of our uncertainty. 0과 1 사이의 확률은 확실성 자체가 아니라 불확실성의 구조를 측정한다.">
+  <div class="n">182</div>
+  <div class="lines">
+    <p class="en" lang="en">A probability between zero and one measures not certainty itself but the structure of our uncertainty.</p>
+    <p class="ko" lang="ko">0과 1 사이의 확률은 확실성 자체가 아니라 불확실성의 구조를 측정한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="182번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="183" data-text="the law of large numbers explains why stable frequencies can emerge from random trials. 큰수의 법칙은 무작위 시행에서 안정적인 빈도가 어떻게 나타날 수 있는지 설명한다.">
+  <div class="n">183</div>
+  <div class="lines">
+    <p class="en" lang="en">The law of large numbers explains why stable frequencies can emerge from random trials.</p>
+    <p class="ko" lang="ko">큰수의 법칙은 무작위 시행에서 안정적인 빈도가 어떻게 나타날 수 있는지 설명한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="183번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="184" data-text="randomness in each trial can coexist with remarkable regularity in the long run. 각 시행의 무작위성은 장기적으로 놀라운 규칙성과 공존할 수 있다.">
+  <div class="n">184</div>
+  <div class="lines">
+    <p class="en" lang="en">Randomness in each trial can coexist with remarkable regularity in the long run.</p>
+    <p class="ko" lang="ko">각 시행의 무작위성은 장기적으로 놀라운 규칙성과 공존할 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="184번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="185" data-text="expected value compresses many possible outcomes into a single weighted average. 기댓값은 많은 가능한 결과를 하나의 가중평균으로 압축한다.">
+  <div class="n">185</div>
+  <div class="lines">
+    <p class="en" lang="en">Expected value compresses many possible outcomes into a single weighted average.</p>
+    <p class="ko" lang="ko">기댓값은 많은 가능한 결과를 하나의 가중평균으로 압축한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="185번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="186" data-text="variance measures how widely outcomes spread around their mean. 분산은 결과들이 평균 주위에 얼마나 넓게 퍼져 있는지를 측정한다.">
+  <div class="n">186</div>
+  <div class="lines">
+    <p class="en" lang="en">Variance measures how widely outcomes spread around their mean.</p>
+    <p class="ko" lang="ko">분산은 결과들이 평균 주위에 얼마나 넓게 퍼져 있는지를 측정한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="186번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="187" data-text="the normal distribution appears repeatedly because many small independent effects add together. 정규분포는 많은 작은 독립 효과가 합쳐질 때 반복해서 나타난다.">
+  <div class="n">187</div>
+  <div class="lines">
+    <p class="en" lang="en">The normal distribution appears repeatedly because many small independent effects add together.</p>
+    <p class="ko" lang="ko">정규분포는 많은 작은 독립 효과가 합쳐질 때 반복해서 나타난다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="187번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="188" data-text="the central limit theorem explains why sums and averages often look normal even when the original data do not. 중심극한정리는 원래 자료가 정규분포가 아니어도 합과 평균이 왜 자주 정규분포에 가까워지는지 설명한다.">
+  <div class="n">188</div>
+  <div class="lines">
+    <p class="en" lang="en">The central limit theorem explains why sums and averages often look normal even when the original data do not.</p>
+    <p class="ko" lang="ko">중심극한정리는 원래 자료가 정규분포가 아니어도 합과 평균이 왜 자주 정규분포에 가까워지는지 설명한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="188번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="189" data-text="conditional probability reminds us that probabilities change when information changes. 조건부확률은 정보가 바뀌면 확률도 바뀐다는 사실을 일깨운다.">
+  <div class="n">189</div>
+  <div class="lines">
+    <p class="en" lang="en">Conditional probability reminds us that probabilities change when information changes.</p>
+    <p class="ko" lang="ko">조건부확률은 정보가 바뀌면 확률도 바뀐다는 사실을 일깨운다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="189번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="190" data-text="bayes&#x27; theorem is a precise rule for revising belief in the light of evidence. 베이즈 정리는 증거를 바탕으로 믿음을 수정하는 정확한 규칙이다.">
+  <div class="n">190</div>
+  <div class="lines">
+    <p class="en" lang="en">Bayes&#x27; theorem is a precise rule for revising belief in the light of evidence.</p>
+    <p class="ko" lang="ko">베이즈 정리는 증거를 바탕으로 믿음을 수정하는 정확한 규칙이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="190번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="191" data-text="bayesian reasoning turns learning into arithmetic: prior belief meets evidence and becomes posterior belief. 베이즈 추론은 학습을 산술로 바꾼다. 사전 믿음이 증거를 만나 사후 믿음이 된다.">
+  <div class="n">191</div>
+  <div class="lines">
+    <p class="en" lang="en">Bayesian reasoning turns learning into arithmetic: prior belief meets evidence and becomes posterior belief.</p>
+    <p class="ko" lang="ko">베이즈 추론은 학습을 산술로 바꾼다. 사전 믿음이 증거를 만나 사후 믿음이 된다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="191번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="192" data-text="independence is subtle because events can look unrelated without being mathematically independent. 독립성은 사건들이 겉보기에는 무관해 보여도 수학적으로 독립이 아닐 수 있기에 미묘하다.">
+  <div class="n">192</div>
+  <div class="lines">
+    <p class="en" lang="en">Independence is subtle because events can look unrelated without being mathematically independent.</p>
+    <p class="ko" lang="ko">독립성은 사건들이 겉보기에는 무관해 보여도 수학적으로 독립이 아닐 수 있기에 미묘하다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="192번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="193" data-text="the birthday paradox surprises us because our intuition underestimates how quickly pairs multiply. 생일 역설이 놀라운 이유는 우리의 직관이 쌍의 수가 얼마나 빠르게 늘어나는지 과소평가하기 때문이다.">
+  <div class="n">193</div>
+  <div class="lines">
+    <p class="en" lang="en">The birthday paradox surprises us because our intuition underestimates how quickly pairs multiply.</p>
+    <p class="ko" lang="ko">생일 역설이 놀라운 이유는 우리의 직관이 쌍의 수가 얼마나 빠르게 늘어나는지 과소평가하기 때문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="193번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="194" data-text="the monty hall problem teaches that receiving information can change the probability space itself. 몬티 홀 문제는 정보를 얻는 일이 확률공간 자체를 바꿀 수 있음을 가르친다.">
+  <div class="n">194</div>
+  <div class="lines">
+    <p class="en" lang="en">The Monty Hall problem teaches that receiving information can change the probability space itself.</p>
+    <p class="ko" lang="ko">몬티 홀 문제는 정보를 얻는 일이 확률공간 자체를 바꿀 수 있음을 가르친다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="194번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="195" data-text="markov chains model systems whose next step depends on the present state rather than the full past. 마르코프 연쇄는 다음 단계가 전체 과거보다 현재 상태에 의존하는 시스템을 모델링한다.">
+  <div class="n">195</div>
+  <div class="lines">
+    <p class="en" lang="en">Markov chains model systems whose next step depends on the present state rather than the full past.</p>
+    <p class="ko" lang="ko">마르코프 연쇄는 다음 단계가 전체 과거보다 현재 상태에 의존하는 시스템을 모델링한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="195번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="196" data-text="a random walk can look directionless step by step while revealing precise statistical laws in aggregate. 확률보행은 한 걸음씩 보면 방향이 없어 보이지만 전체적으로는 정확한 통계 법칙을 드러낸다.">
+  <div class="n">196</div>
+  <div class="lines">
+    <p class="en" lang="en">A random walk can look directionless step by step while revealing precise statistical laws in aggregate.</p>
+    <p class="ko" lang="ko">확률보행은 한 걸음씩 보면 방향이 없어 보이지만 전체적으로는 정확한 통계 법칙을 드러낸다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="196번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="197" data-text="martingales formalize the idea of a fair game where the expected future value equals the present value. 마팅게일은 미래의 기댓값이 현재 값과 같은 공정한 게임의 생각을 엄밀히 표현한다.">
+  <div class="n">197</div>
+  <div class="lines">
+    <p class="en" lang="en">Martingales formalize the idea of a fair game where the expected future value equals the present value.</p>
+    <p class="ko" lang="ko">마팅게일은 미래의 기댓값이 현재 값과 같은 공정한 게임의 생각을 엄밀히 표현한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="197번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="198" data-text="entropy measures uncertainty and connects probability to information. 엔트로피는 불확실성을 측정하며 확률을 정보와 연결한다.">
+  <div class="n">198</div>
+  <div class="lines">
+    <p class="en" lang="en">Entropy measures uncertainty and connects probability to information.</p>
+    <p class="ko" lang="ko">엔트로피는 불확실성을 측정하며 확률을 정보와 연결한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="198번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="199" data-text="shannon showed that information can be quantified in bits. 섀넌은 정보를 비트라는 단위로 정량화할 수 있음을 보여 주었다.">
+  <div class="n">199</div>
+  <div class="lines">
+    <p class="en" lang="en">Shannon showed that information can be quantified in bits.</p>
+    <p class="ko" lang="ko">섀넌은 정보를 비트라는 단위로 정량화할 수 있음을 보여 주었다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="199번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="200" data-text="a rare event carries more information precisely because it was less expected. 드문 사건이 더 많은 정보를 전달하는 것은 바로 그것이 덜 예상되었기 때문이다.">
+  <div class="n">200</div>
+  <div class="lines">
+    <p class="en" lang="en">A rare event carries more information precisely because it was less expected.</p>
+    <p class="ko" lang="ko">드문 사건이 더 많은 정보를 전달하는 것은 바로 그것이 덜 예상되었기 때문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="200번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="201" data-text="statistics asks how confidently we can learn about a population from limited data. 통계학은 제한된 자료로 모집단에 대해 얼마나 자신 있게 배울 수 있는지를 묻는다.">
+  <div class="n">201</div>
+  <div class="lines">
+    <p class="en" lang="en">Statistics asks how confidently we can learn about a population from limited data.</p>
+    <p class="ko" lang="ko">통계학은 제한된 자료로 모집단에 대해 얼마나 자신 있게 배울 수 있는지를 묻는다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="201번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="202" data-text="a sample is powerful only when we understand how it was produced. 표본은 그것이 어떻게 만들어졌는지를 이해할 때에만 힘을 가진다.">
+  <div class="n">202</div>
+  <div class="lines">
+    <p class="en" lang="en">A sample is powerful only when we understand how it was produced.</p>
+    <p class="ko" lang="ko">표본은 그것이 어떻게 만들어졌는지를 이해할 때에만 힘을 가진다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="202번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="203" data-text="correlation can reveal association, but it cannot by itself decide causation. 상관관계는 연관성을 보여 줄 수 있지만 그것만으로 인과관계를 결정할 수는 없다.">
+  <div class="n">203</div>
+  <div class="lines">
+    <p class="en" lang="en">Correlation can reveal association, but it cannot by itself decide causation.</p>
+    <p class="ko" lang="ko">상관관계는 연관성을 보여 줄 수 있지만 그것만으로 인과관계를 결정할 수는 없다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="203번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="204" data-text="a confidence interval expresses uncertainty rather than pretending it does not exist. 신뢰구간은 불확실성이 없는 척하지 않고 그것을 표현한다.">
+  <div class="n">204</div>
+  <div class="lines">
+    <p class="en" lang="en">A confidence interval expresses uncertainty rather than pretending it does not exist.</p>
+    <p class="ko" lang="ko">신뢰구간은 불확실성이 없는 척하지 않고 그것을 표현한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="204번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="205" data-text="hypothesis testing is a disciplined way to ask whether data would be surprising under a proposed model. 가설검정은 제안된 모형 아래에서 자료가 얼마나 놀라운지를 체계적으로 묻는 방법이다.">
+  <div class="n">205</div>
+  <div class="lines">
+    <p class="en" lang="en">Hypothesis testing is a disciplined way to ask whether data would be surprising under a proposed model.</p>
+    <p class="ko" lang="ko">가설검정은 제안된 모형 아래에서 자료가 얼마나 놀라운지를 체계적으로 묻는 방법이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="205번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="206" data-text="a p-value is not the probability that the null hypothesis is true. p값은 귀무가설이 참일 확률이 아니다.">
+  <div class="n">206</div>
+  <div class="lines">
+    <p class="en" lang="en">A p-value is not the probability that the null hypothesis is true.</p>
+    <p class="ko" lang="ko">p값은 귀무가설이 참일 확률이 아니다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="206번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="207" data-text="statistical significance and practical importance are different questions. 통계적 유의성과 실제적 중요성은 서로 다른 질문이다.">
+  <div class="n">207</div>
+  <div class="lines">
+    <p class="en" lang="en">Statistical significance and practical importance are different questions.</p>
+    <p class="ko" lang="ko">통계적 유의성과 실제적 중요성은 서로 다른 질문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="207번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="208" data-text="probability is humbling because it teaches us to separate what we know from what we merely expect. 확률은 우리가 아는 것과 단지 예상하는 것을 구분하게 하므로 겸손을 가르친다.">
+  <div class="n">208</div>
+  <div class="lines">
+    <p class="en" lang="en">Probability is humbling because it teaches us to separate what we know from what we merely expect.</p>
+    <p class="ko" lang="ko">확률은 우리가 아는 것과 단지 예상하는 것을 구분하게 하므로 겸손을 가르친다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="208번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="209" data-text="the mathematics of uncertainty does not eliminate surprise; it teaches us how to reason when surprise is possible. 불확실성의 수학은 놀라움을 없애지 않고 놀라움이 가능한 상황에서 어떻게 추론할지를 가르친다.">
+  <div class="n">209</div>
+  <div class="lines">
+    <p class="en" lang="en">The mathematics of uncertainty does not eliminate surprise; it teaches us how to reason when surprise is possible.</p>
+    <p class="ko" lang="ko">불확실성의 수학은 놀라움을 없애지 않고 놀라움이 가능한 상황에서 어떻게 추론할지를 가르친다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="209번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="210" data-text="to understand probability deeply is to become more comfortable with the boundary between order and chance. 확률을 깊이 이해한다는 것은 질서와 우연의 경계에 더 편안하게 서게 되는 일이다.">
+  <div class="n">210</div>
+  <div class="lines">
+    <p class="en" lang="en">To understand probability deeply is to become more comfortable with the boundary between order and chance.</p>
+    <p class="ko" lang="ko">확률을 깊이 이해한다는 것은 질서와 우연의 경계에 더 편안하게 서게 되는 일이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="210번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article></section><section class="chapter" id="s8"><div class="chapter-head"><span>CHAPTER 08</span><h2>Ⅷ. 조합론·그래프·알고리즘의 즐거움 · Discrete Mathematics</h2></div>
+<article class="sentence" data-num="211" data-text="combinatorics asks a deceptively simple question: how many ways can this happen? 조합론은 겉보기에는 단순한 질문을 던진다. ‘이 일이 몇 가지 방식으로 일어날 수 있는가?’">
+  <div class="n">211</div>
+  <div class="lines">
+    <p class="en" lang="en">Combinatorics asks a deceptively simple question: how many ways can this happen?</p>
+    <p class="ko" lang="ko">조합론은 겉보기에는 단순한 질문을 던진다. ‘이 일이 몇 가지 방식으로 일어날 수 있는가?’</p>
+  </div>
+  <button class="speak" type="button" aria-label="211번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="212" data-text="the multiplication principle turns a sequence of choices into a product. 곱의 법칙은 연속된 선택들을 하나의 곱으로 바꾼다.">
+  <div class="n">212</div>
+  <div class="lines">
+    <p class="en" lang="en">The multiplication principle turns a sequence of choices into a product.</p>
+    <p class="ko" lang="ko">곱의 법칙은 연속된 선택들을 하나의 곱으로 바꾼다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="212번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="213" data-text="binomial coefficients count subsets and simultaneously appear in algebraic expansions. 이항계수는 부분집합의 수를 세면서 동시에 대수적 전개에도 나타난다.">
+  <div class="n">213</div>
+  <div class="lines">
+    <p class="en" lang="en">Binomial coefficients count subsets and simultaneously appear in algebraic expansions.</p>
+    <p class="ko" lang="ko">이항계수는 부분집합의 수를 세면서 동시에 대수적 전개에도 나타난다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="213번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="214" data-text="pascal&#x27;s triangle is a small numerical object with connections to combinations, probability, recursion, and fractals. 파스칼 삼각형은 조합, 확률, 재귀, 프랙털과 연결되는 작은 수 배열이다.">
+  <div class="n">214</div>
+  <div class="lines">
+    <p class="en" lang="en">Pascal&#x27;s triangle is a small numerical object with connections to combinations, probability, recursion, and fractals.</p>
+    <p class="ko" lang="ko">파스칼 삼각형은 조합, 확률, 재귀, 프랙털과 연결되는 작은 수 배열이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="214번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="215" data-text="the binomial theorem explains how combinatorial counting hides inside algebra. 이항정리는 조합적 세기가 대수 속에 어떻게 숨어 있는지를 보여 준다.">
+  <div class="n">215</div>
+  <div class="lines">
+    <p class="en" lang="en">The binomial theorem explains how combinatorial counting hides inside algebra.</p>
+    <p class="ko" lang="ko">이항정리는 조합적 세기가 대수 속에 어떻게 숨어 있는지를 보여 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="215번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="216" data-text="generating functions turn sequences into algebraic objects that can be manipulated and solved. 생성함수는 수열을 조작하고 풀 수 있는 대수적 대상으로 바꾸어 준다.">
+  <div class="n">216</div>
+  <div class="lines">
+    <p class="en" lang="en">Generating functions turn sequences into algebraic objects that can be manipulated and solved.</p>
+    <p class="ko" lang="ko">생성함수는 수열을 조작하고 풀 수 있는 대수적 대상으로 바꾸어 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="216번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="217" data-text="a recurrence relation describes the future of a sequence using its past. 점화식은 수열의 과거를 이용해 미래를 설명한다.">
+  <div class="n">217</div>
+  <div class="lines">
+    <p class="en" lang="en">A recurrence relation describes the future of a sequence using its past.</p>
+    <p class="ko" lang="ko">점화식은 수열의 과거를 이용해 미래를 설명한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="217번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="218" data-text="dynamic programming succeeds by remembering solutions to overlapping subproblems. 동적 계획법은 서로 겹치는 부분문제의 해를 기억함으로써 성공한다.">
+  <div class="n">218</div>
+  <div class="lines">
+    <p class="en" lang="en">Dynamic programming succeeds by remembering solutions to overlapping subproblems.</p>
+    <p class="ko" lang="ko">동적 계획법은 서로 겹치는 부분문제의 해를 기억함으로써 성공한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="218번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="219" data-text="graph theory begins by reducing a world to vertices and edges, then discovers how much structure survives the reduction. 그래프 이론은 세계를 정점과 간선으로 줄이는 데서 시작하고 그 축약 뒤에도 얼마나 많은 구조가 남는지 발견한다.">
+  <div class="n">219</div>
+  <div class="lines">
+    <p class="en" lang="en">Graph theory begins by reducing a world to vertices and edges, then discovers how much structure survives the reduction.</p>
+    <p class="ko" lang="ko">그래프 이론은 세계를 정점과 간선으로 줄이는 데서 시작하고 그 축약 뒤에도 얼마나 많은 구조가 남는지 발견한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="219번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="220" data-text="euler&#x27;s königsberg bridge problem showed that connectivity can matter more than distance. 오일러의 쾨니히스베르크 다리 문제는 거리보다 연결성이 더 중요할 수 있음을 보여 주었다.">
+  <div class="n">220</div>
+  <div class="lines">
+    <p class="en" lang="en">Euler&#x27;s Königsberg bridge problem showed that connectivity can matter more than distance.</p>
+    <p class="ko" lang="ko">오일러의 쾨니히스베르크 다리 문제는 거리보다 연결성이 더 중요할 수 있음을 보여 주었다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="220번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="221" data-text="an euler trail asks us to use every edge exactly once. 오일러 경로는 모든 간선을 정확히 한 번씩 사용하라고 요구한다.">
+  <div class="n">221</div>
+  <div class="lines">
+    <p class="en" lang="en">An Euler trail asks us to use every edge exactly once.</p>
+    <p class="ko" lang="ko">오일러 경로는 모든 간선을 정확히 한 번씩 사용하라고 요구한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="221번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="222" data-text="a hamiltonian path asks for every vertex exactly once, and that small change creates a very different problem. 해밀턴 경로는 모든 정점을 정확히 한 번씩 지나도록 요구하며 이 작은 변화가 전혀 다른 문제를 만든다.">
+  <div class="n">222</div>
+  <div class="lines">
+    <p class="en" lang="en">A Hamiltonian path asks for every vertex exactly once, and that small change creates a very different problem.</p>
+    <p class="ko" lang="ko">해밀턴 경로는 모든 정점을 정확히 한 번씩 지나도록 요구하며 이 작은 변화가 전혀 다른 문제를 만든다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="222번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="223" data-text="trees are graphs with just enough edges to stay connected and no cycles at all. 트리는 연결을 유지하기에 딱 충분한 간선만 가지며 순환이 전혀 없는 그래프이다.">
+  <div class="n">223</div>
+  <div class="lines">
+    <p class="en" lang="en">Trees are graphs with just enough edges to stay connected and no cycles at all.</p>
+    <p class="ko" lang="ko">트리는 연결을 유지하기에 딱 충분한 간선만 가지며 순환이 전혀 없는 그래프이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="223번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="224" data-text="every tree with n vertices has exactly n − 1 edges. 정점이 n개인 모든 트리는 정확히 n − 1개의 간선을 가진다.">
+  <div class="n">224</div>
+  <div class="lines">
+    <p class="en" lang="en">Every tree with n vertices has exactly n − 1 edges.</p>
+    <p class="ko" lang="ko">정점이 n개인 모든 트리는 정확히 n − 1개의 간선을 가진다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="224번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="225" data-text="breadth-first search explores a graph layer by layer and naturally finds shortest paths in unweighted graphs. 너비 우선 탐색은 그래프를 층별로 탐색하며 가중치가 없는 그래프에서 자연스럽게 최단경로를 찾는다.">
+  <div class="n">225</div>
+  <div class="lines">
+    <p class="en" lang="en">Breadth-first search explores a graph layer by layer and naturally finds shortest paths in unweighted graphs.</p>
+    <p class="ko" lang="ko">너비 우선 탐색은 그래프를 층별로 탐색하며 가중치가 없는 그래프에서 자연스럽게 최단경로를 찾는다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="225번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="226" data-text="depth-first search dives along a path before returning to explore alternatives. 깊이 우선 탐색은 한 경로를 깊이 따라간 뒤 돌아와 다른 가능성을 탐색한다.">
+  <div class="n">226</div>
+  <div class="lines">
+    <p class="en" lang="en">Depth-first search dives along a path before returning to explore alternatives.</p>
+    <p class="ko" lang="ko">깊이 우선 탐색은 한 경로를 깊이 따라간 뒤 돌아와 다른 가능성을 탐색한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="226번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="227" data-text="dijkstra&#x27;s algorithm turns local choices into globally shortest paths when edge weights are nonnegative. 다익스트라 알고리즘은 간선 가중치가 음이 아닐 때 국소적 선택을 전체 최단경로로 연결한다.">
+  <div class="n">227</div>
+  <div class="lines">
+    <p class="en" lang="en">Dijkstra&#x27;s algorithm turns local choices into globally shortest paths when edge weights are nonnegative.</p>
+    <p class="ko" lang="ko">다익스트라 알고리즘은 간선 가중치가 음이 아닐 때 국소적 선택을 전체 최단경로로 연결한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="227번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="228" data-text="a minimum spanning tree connects every vertex with the smallest possible total edge weight and no cycles. 최소신장트리는 모든 정점을 연결하면서 총 간선 가중치를 최소로 하고 순환을 만들지 않는다.">
+  <div class="n">228</div>
+  <div class="lines">
+    <p class="en" lang="en">A minimum spanning tree connects every vertex with the smallest possible total edge weight and no cycles.</p>
+    <p class="ko" lang="ko">최소신장트리는 모든 정점을 연결하면서 총 간선 가중치를 최소로 하고 순환을 만들지 않는다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="228번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="229" data-text="greedy algorithms are beautiful when a sequence of locally best choices can be proven globally optimal. 그리디 알고리즘은 매 순간의 최선 선택이 전체 최적임을 증명할 수 있을 때 아름답다.">
+  <div class="n">229</div>
+  <div class="lines">
+    <p class="en" lang="en">Greedy algorithms are beautiful when a sequence of locally best choices can be proven globally optimal.</p>
+    <p class="ko" lang="ko">그리디 알고리즘은 매 순간의 최선 선택이 전체 최적임을 증명할 수 있을 때 아름답다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="229번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="230" data-text="the challenge of algorithm design is not merely to find an answer but to find it efficiently. 알고리즘 설계의 도전은 답을 찾는 데 그치지 않고 효율적으로 찾는 데 있다.">
+  <div class="n">230</div>
+  <div class="lines">
+    <p class="en" lang="en">The challenge of algorithm design is not merely to find an answer but to find it efficiently.</p>
+    <p class="ko" lang="ko">알고리즘 설계의 도전은 답을 찾는 데 그치지 않고 효율적으로 찾는 데 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="230번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="231" data-text="big-o notation lets us ignore machine details and compare how resource demands grow. 빅오 표기법은 기계의 세부 차이를 무시하고 자원 요구량이 어떻게 증가하는지 비교하게 한다.">
+  <div class="n">231</div>
+  <div class="lines">
+    <p class="en" lang="en">Big-O notation lets us ignore machine details and compare how resource demands grow.</p>
+    <p class="ko" lang="ko">빅오 표기법은 기계의 세부 차이를 무시하고 자원 요구량이 어떻게 증가하는지 비교하게 한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="231번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="232" data-text="binary search turns a sorted list into a logarithmic search space by repeatedly halving uncertainty. 이진탐색은 불확실성을 반복해서 절반으로 줄여 정렬된 목록을 로그 규모의 탐색공간으로 바꾼다.">
+  <div class="n">232</div>
+  <div class="lines">
+    <p class="en" lang="en">Binary search turns a sorted list into a logarithmic search space by repeatedly halving uncertainty.</p>
+    <p class="ko" lang="ko">이진탐색은 불확실성을 반복해서 절반으로 줄여 정렬된 목록을 로그 규모의 탐색공간으로 바꾼다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="232번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="233" data-text="the difference between o(n) and o(log n) can become enormous long before n becomes astronomical. o(n)과 o(log n)의 차이는 n이 천문학적으로 커지기 훨씬 전부터 엄청나게 벌어질 수 있다.">
+  <div class="n">233</div>
+  <div class="lines">
+    <p class="en" lang="en">The difference between O(n) and O(log n) can become enormous long before n becomes astronomical.</p>
+    <p class="ko" lang="ko">O(n)과 O(log n)의 차이는 n이 천문학적으로 커지기 훨씬 전부터 엄청나게 벌어질 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="233번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="234" data-text="np-completeness teaches us that some problems are linked not by appearance but by computational difficulty. np-완전성은 어떤 문제들이 겉모습이 아니라 계산적 난이도로 연결되어 있음을 가르친다.">
+  <div class="n">234</div>
+  <div class="lines">
+    <p class="en" lang="en">NP-completeness teaches us that some problems are linked not by appearance but by computational difficulty.</p>
+    <p class="ko" lang="ko">NP-완전성은 어떤 문제들이 겉모습이 아니라 계산적 난이도로 연결되어 있음을 가르친다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="234번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="235" data-text="a reduction is an intellectual bridge showing that solving one problem would solve another. 환원은 한 문제를 풀면 다른 문제도 풀 수 있음을 보여 주는 지적 다리이다.">
+  <div class="n">235</div>
+  <div class="lines">
+    <p class="en" lang="en">A reduction is an intellectual bridge showing that solving one problem would solve another.</p>
+    <p class="ko" lang="ko">환원은 한 문제를 풀면 다른 문제도 풀 수 있음을 보여 주는 지적 다리이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="235번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="236" data-text="ramsey theory says complete disorder is impossible: enough structure inevitably forces some pattern. 램지 이론은 완전한 무질서는 불가능하며 충분히 큰 구조에서는 어떤 패턴이 반드시 나타난다고 말한다.">
+  <div class="n">236</div>
+  <div class="lines">
+    <p class="en" lang="en">Ramsey theory says complete disorder is impossible: enough structure inevitably forces some pattern.</p>
+    <p class="ko" lang="ko">램지 이론은 완전한 무질서는 불가능하며 충분히 큰 구조에서는 어떤 패턴이 반드시 나타난다고 말한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="236번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="237" data-text="combinatorial proofs often feel playful because counting can turn logic into a puzzle. 조합적 증명은 세기가 논리를 퍼즐로 바꾸기 때문에 장난스럽고 즐겁게 느껴진다.">
+  <div class="n">237</div>
+  <div class="lines">
+    <p class="en" lang="en">Combinatorial proofs often feel playful because counting can turn logic into a puzzle.</p>
+    <p class="ko" lang="ko">조합적 증명은 세기가 논리를 퍼즐로 바꾸기 때문에 장난스럽고 즐겁게 느껴진다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="237번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="238" data-text="discrete mathematics reveals that finite objects can contain enormous depth. 이산수학은 유한한 대상도 엄청난 깊이를 품을 수 있음을 보여 준다.">
+  <div class="n">238</div>
+  <div class="lines">
+    <p class="en" lang="en">Discrete mathematics reveals that finite objects can contain enormous depth.</p>
+    <p class="ko" lang="ko">이산수학은 유한한 대상도 엄청난 깊이를 품을 수 있음을 보여 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="238번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="239" data-text="an algorithm is a proof in motion: a sequence of steps whose correctness must be justified. 알고리즘은 움직이는 증명이다. 각 단계의 정당성이 설명되어야 하는 절차의 연속이다.">
+  <div class="n">239</div>
+  <div class="lines">
+    <p class="en" lang="en">An algorithm is a proof in motion: a sequence of steps whose correctness must be justified.</p>
+    <p class="ko" lang="ko">알고리즘은 움직이는 증명이다. 각 단계의 정당성이 설명되어야 하는 절차의 연속이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="239번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="240" data-text="the joy of discrete mathematics comes from seeing enormous possibility spaces yield to one precise idea. 이산수학의 즐거움은 엄청난 가능성의 공간이 하나의 정확한 아이디어에 굴복하는 모습을 보는 데 있다.">
+  <div class="n">240</div>
+  <div class="lines">
+    <p class="en" lang="en">The joy of discrete mathematics comes from seeing enormous possibility spaces yield to one precise idea.</p>
+    <p class="ko" lang="ko">이산수학의 즐거움은 엄청난 가능성의 공간이 하나의 정확한 아이디어에 굴복하는 모습을 보는 데 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="240번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article></section><section class="chapter" id="s9"><div class="chapter-head"><span>CHAPTER 09</span><h2>Ⅸ. 위상·해석·현대수학의 깊이 · Modern Mathematical Horizons</h2></div>
+<article class="sentence" data-num="241" data-text="real analysis asks us to rebuild calculus on foundations strong enough to support every subtle limit. 실해석학은 모든 미묘한 극한을 지탱할 만큼 강한 기초 위에서 미적분을 다시 세우라고 요구한다.">
+  <div class="n">241</div>
+  <div class="lines">
+    <p class="en" lang="en">Real analysis asks us to rebuild calculus on foundations strong enough to support every subtle limit.</p>
+    <p class="ko" lang="ko">실해석학은 모든 미묘한 극한을 지탱할 만큼 강한 기초 위에서 미적분을 다시 세우라고 요구한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="241번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="242" data-text="completeness of the real numbers means that certain bounded processes cannot wander forever without approaching a limit. 실수의 완비성은 어떤 유계 과정이 극한에 접근하지 않은 채 영원히 헤맬 수 없음을 뜻한다.">
+  <div class="n">242</div>
+  <div class="lines">
+    <p class="en" lang="en">Completeness of the real numbers means that certain bounded processes cannot wander forever without approaching a limit.</p>
+    <p class="ko" lang="ko">실수의 완비성은 어떤 유계 과정이 극한에 접근하지 않은 채 영원히 헤맬 수 없음을 뜻한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="242번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="243" data-text="every cauchy sequence of real numbers converges to a real number. 모든 실수 코시 수열은 어떤 실수로 수렴한다.">
+  <div class="n">243</div>
+  <div class="lines">
+    <p class="en" lang="en">Every Cauchy sequence of real numbers converges to a real number.</p>
+    <p class="ko" lang="ko">모든 실수 코시 수열은 어떤 실수로 수렴한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="243번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="244" data-text="compactness is one of analysis&#x27; great compression principles: infinitely many local facts can often be reduced to finitely many. 콤팩트성은 해석학의 위대한 압축 원리 중 하나로 무한히 많은 국소적 사실을 종종 유한개로 줄여 준다.">
+  <div class="n">244</div>
+  <div class="lines">
+    <p class="en" lang="en">Compactness is one of analysis&#x27; great compression principles: infinitely many local facts can often be reduced to finitely many.</p>
+    <p class="ko" lang="ko">콤팩트성은 해석학의 위대한 압축 원리 중 하나로 무한히 많은 국소적 사실을 종종 유한개로 줄여 준다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="244번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="245" data-text="the heine-borel theorem characterizes compact subsets of euclidean space as exactly the closed and bounded ones. 하이네-보렐 정리는 유클리드 공간의 콤팩트 집합이 정확히 닫히고 유계인 집합임을 말한다.">
+  <div class="n">245</div>
+  <div class="lines">
+    <p class="en" lang="en">The Heine-Borel theorem characterizes compact subsets of Euclidean space as exactly the closed and bounded ones.</p>
+    <p class="ko" lang="ko">하이네-보렐 정리는 유클리드 공간의 콤팩트 집합이 정확히 닫히고 유계인 집합임을 말한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="245번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="246" data-text="sequential compactness says that every sequence has a convergent subsequence whose limit stays inside the set. 수열 콤팩트성은 모든 수열이 그 집합 안의 점으로 수렴하는 부분수열을 가진다고 말한다.">
+  <div class="n">246</div>
+  <div class="lines">
+    <p class="en" lang="en">Sequential compactness says that every sequence has a convergent subsequence whose limit stays inside the set.</p>
+    <p class="ko" lang="ko">수열 콤팩트성은 모든 수열이 그 집합 안의 점으로 수렴하는 부분수열을 가진다고 말한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="246번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="247" data-text="uniform continuity is stronger than ordinary continuity because one scale of closeness works everywhere at once. 균등연속은 하나의 가까움의 척도가 모든 곳에서 동시에 작동하므로 보통의 연속보다 강하다.">
+  <div class="n">247</div>
+  <div class="lines">
+    <p class="en" lang="en">Uniform continuity is stronger than ordinary continuity because one scale of closeness works everywhere at once.</p>
+    <p class="ko" lang="ko">균등연속은 하나의 가까움의 척도가 모든 곳에서 동시에 작동하므로 보통의 연속보다 강하다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="247번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="248" data-text="the bolzano-weierstrass theorem guarantees accumulation inside every bounded infinite subset of euclidean space. 볼차노-바이어슈트라스 정리는 유클리드 공간의 모든 유계 무한집합이 적어도 하나의 집적점을 가짐을 보장한다.">
+  <div class="n">248</div>
+  <div class="lines">
+    <p class="en" lang="en">The Bolzano-Weierstrass theorem guarantees accumulation inside every bounded infinite subset of Euclidean space.</p>
+    <p class="ko" lang="ko">볼차노-바이어슈트라스 정리는 유클리드 공간의 모든 유계 무한집합이 적어도 하나의 집적점을 가짐을 보장한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="248번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="249" data-text="measure theory asks how to assign size consistently even to extremely complicated sets. 측도론은 매우 복잡한 집합에도 일관되게 크기를 부여하는 방법을 묻는다.">
+  <div class="n">249</div>
+  <div class="lines">
+    <p class="en" lang="en">Measure theory asks how to assign size consistently even to extremely complicated sets.</p>
+    <p class="ko" lang="ko">측도론은 매우 복잡한 집합에도 일관되게 크기를 부여하는 방법을 묻는다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="249번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="250" data-text="lebesgue integration succeeds by organizing values rather than merely slicing the domain into intervals. 르베그 적분은 정의역을 구간으로만 자르는 대신 함수값을 조직함으로써 성공한다.">
+  <div class="n">250</div>
+  <div class="lines">
+    <p class="en" lang="en">Lebesgue integration succeeds by organizing values rather than merely slicing the domain into intervals.</p>
+    <p class="ko" lang="ko">르베그 적분은 정의역을 구간으로만 자르는 대신 함수값을 조직함으로써 성공한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="250번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="251" data-text="sets of measure zero can be infinite, even uncountable, yet still occupy no length in the measure-theoretic sense. 측도 0인 집합은 무한할 뿐 아니라 비가산일 수도 있지만 측도론적 의미에서는 길이를 차지하지 않을 수 있다.">
+  <div class="n">251</div>
+  <div class="lines">
+    <p class="en" lang="en">Sets of measure zero can be infinite, even uncountable, yet still occupy no length in the measure-theoretic sense.</p>
+    <p class="ko" lang="ko">측도 0인 집합은 무한할 뿐 아니라 비가산일 수도 있지만 측도론적 의미에서는 길이를 차지하지 않을 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="251번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="252" data-text="functional analysis studies spaces whose points are themselves functions. 함수해석학은 점 자체가 함수인 공간을 연구한다.">
+  <div class="n">252</div>
+  <div class="lines">
+    <p class="en" lang="en">Functional analysis studies spaces whose points are themselves functions.</p>
+    <p class="ko" lang="ko">함수해석학은 점 자체가 함수인 공간을 연구한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="252번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="253" data-text="a norm measures size in an abstract vector space, while an inner product adds the geometry of angles. 노름은 추상 벡터공간에서 크기를 측정하고 내적은 거기에 각도의 기하를 더한다.">
+  <div class="n">253</div>
+  <div class="lines">
+    <p class="en" lang="en">A norm measures size in an abstract vector space, while an inner product adds the geometry of angles.</p>
+    <p class="ko" lang="ko">노름은 추상 벡터공간에서 크기를 측정하고 내적은 거기에 각도의 기하를 더한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="253번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="254" data-text="hilbert spaces allow the geometry of euclidean space to survive in infinitely many dimensions. 힐베르트 공간은 유클리드 공간의 기하가 무한차원에서도 살아남게 한다.">
+  <div class="n">254</div>
+  <div class="lines">
+    <p class="en" lang="en">Hilbert spaces allow the geometry of Euclidean space to survive in infinitely many dimensions.</p>
+    <p class="ko" lang="ko">힐베르트 공간은 유클리드 공간의 기하가 무한차원에서도 살아남게 한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="254번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="255" data-text="topology studies continuity before distance, asking what survives when exact measurement is forgotten. 위상수학은 거리보다 연속성을 먼저 연구하며 정확한 측정을 잊어도 무엇이 남는지를 묻는다.">
+  <div class="n">255</div>
+  <div class="lines">
+    <p class="en" lang="en">Topology studies continuity before distance, asking what survives when exact measurement is forgotten.</p>
+    <p class="ko" lang="ko">위상수학은 거리보다 연속성을 먼저 연구하며 정확한 측정을 잊어도 무엇이 남는지를 묻는다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="255번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="256" data-text="open sets provide topology with a language for talking about neighborhoods without coordinates. 열린집합은 위상수학이 좌표 없이도 근방을 이야기할 수 있는 언어를 제공한다.">
+  <div class="n">256</div>
+  <div class="lines">
+    <p class="en" lang="en">Open sets provide topology with a language for talking about neighborhoods without coordinates.</p>
+    <p class="ko" lang="ko">열린집합은 위상수학이 좌표 없이도 근방을 이야기할 수 있는 언어를 제공한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="256번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="257" data-text="a homeomorphism declares two spaces topologically identical when each can be continuously deformed into the other. 위상동형은 두 공간이 서로 연속적으로 변형될 수 있을 때 위상적으로 같다고 선언한다.">
+  <div class="n">257</div>
+  <div class="lines">
+    <p class="en" lang="en">A homeomorphism declares two spaces topologically identical when each can be continuously deformed into the other.</p>
+    <p class="ko" lang="ko">위상동형은 두 공간이 서로 연속적으로 변형될 수 있을 때 위상적으로 같다고 선언한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="257번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="258" data-text="connectedness formalizes the idea that a space cannot be split into two separated open pieces. 연결성은 공간을 서로 분리된 두 열린 부분으로 나눌 수 없다는 생각을 엄밀히 표현한다.">
+  <div class="n">258</div>
+  <div class="lines">
+    <p class="en" lang="en">Connectedness formalizes the idea that a space cannot be split into two separated open pieces.</p>
+    <p class="ko" lang="ko">연결성은 공간을 서로 분리된 두 열린 부분으로 나눌 수 없다는 생각을 엄밀히 표현한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="258번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="259" data-text="the fundamental group records how loops can wind around holes. 기본군은 폐곡선이 구멍 주위를 어떻게 감쌀 수 있는지를 기록한다.">
+  <div class="n">259</div>
+  <div class="lines">
+    <p class="en" lang="en">The fundamental group records how loops can wind around holes.</p>
+    <p class="ko" lang="ko">기본군은 폐곡선이 구멍 주위를 어떻게 감쌀 수 있는지를 기록한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="259번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="260" data-text="algebraic topology turns holes and deformations into algebraic invariants. 대수적 위상수학은 구멍과 변형을 대수적 불변량으로 바꾼다.">
+  <div class="n">260</div>
+  <div class="lines">
+    <p class="en" lang="en">Algebraic topology turns holes and deformations into algebraic invariants.</p>
+    <p class="ko" lang="ko">대수적 위상수학은 구멍과 변형을 대수적 불변량으로 바꾼다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="260번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="261" data-text="homology assigns algebraic data to spaces so that geometric holes become computable. 호몰로지는 공간에 대수적 자료를 부여하여 기하학적 구멍을 계산 가능한 대상으로 만든다.">
+  <div class="n">261</div>
+  <div class="lines">
+    <p class="en" lang="en">Homology assigns algebraic data to spaces so that geometric holes become computable.</p>
+    <p class="ko" lang="ko">호몰로지는 공간에 대수적 자료를 부여하여 기하학적 구멍을 계산 가능한 대상으로 만든다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="261번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="262" data-text="category theory studies mathematical structures through their relationships and mappings. 범주론은 수학적 구조를 그들 사이의 관계와 사상을 통해 연구한다.">
+  <div class="n">262</div>
+  <div class="lines">
+    <p class="en" lang="en">Category theory studies mathematical structures through their relationships and mappings.</p>
+    <p class="ko" lang="ko">범주론은 수학적 구조를 그들 사이의 관계와 사상을 통해 연구한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="262번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="263" data-text="a functor carries objects and morphisms from one category to another while preserving composition. 함자는 합성을 보존하면서 한 범주의 대상과 사상을 다른 범주로 옮긴다.">
+  <div class="n">263</div>
+  <div class="lines">
+    <p class="en" lang="en">A functor carries objects and morphisms from one category to another while preserving composition.</p>
+    <p class="ko" lang="ko">함자는 합성을 보존하면서 한 범주의 대상과 사상을 다른 범주로 옮긴다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="263번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="264" data-text="natural transformations compare functors in a way that respects every object at once. 자연변환은 모든 대상을 동시에 존중하는 방식으로 함자들을 비교한다.">
+  <div class="n">264</div>
+  <div class="lines">
+    <p class="en" lang="en">Natural transformations compare functors in a way that respects every object at once.</p>
+    <p class="ko" lang="ko">자연변환은 모든 대상을 동시에 존중하는 방식으로 함자들을 비교한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="264번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="265" data-text="set theory provides a foundational language in which most modern mathematics can be formulated. 집합론은 현대수학의 대부분을 표현할 수 있는 기초 언어를 제공한다.">
+  <div class="n">265</div>
+  <div class="lines">
+    <p class="en" lang="en">Set theory provides a foundational language in which most modern mathematics can be formulated.</p>
+    <p class="ko" lang="ko">집합론은 현대수학의 대부분을 표현할 수 있는 기초 언어를 제공한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="265번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="266" data-text="the axiom of choice is powerful because it asserts the existence of selections even when no explicit rule is available. 선택공리는 명시적인 규칙이 없어도 선택의 존재를 주장한다는 점에서 강력하다.">
+  <div class="n">266</div>
+  <div class="lines">
+    <p class="en" lang="en">The axiom of choice is powerful because it asserts the existence of selections even when no explicit rule is available.</p>
+    <p class="ko" lang="ko">선택공리는 명시적인 규칙이 없어도 선택의 존재를 주장한다는 점에서 강력하다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="266번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="267" data-text="zorn&#x27;s lemma converts local extendability into the existence of maximal objects. 조른의 보조정리는 국소적인 확장 가능성을 극대 원소의 존재로 바꾼다.">
+  <div class="n">267</div>
+  <div class="lines">
+    <p class="en" lang="en">Zorn&#x27;s lemma converts local extendability into the existence of maximal objects.</p>
+    <p class="ko" lang="ko">조른의 보조정리는 국소적인 확장 가능성을 극대 원소의 존재로 바꾼다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="267번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="268" data-text="the well-ordering theorem says every set can be arranged so that every nonempty subset has a least element. 정렬정리는 모든 집합을 각 비공집합이 최소원소를 갖도록 잘 정렬할 수 있다고 말한다.">
+  <div class="n">268</div>
+  <div class="lines">
+    <p class="en" lang="en">The well-ordering theorem says every set can be arranged so that every nonempty subset has a least element.</p>
+    <p class="ko" lang="ko">정렬정리는 모든 집합을 각 비공집합이 최소원소를 갖도록 잘 정렬할 수 있다고 말한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="268번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="269" data-text="modern mathematics is breathtaking because ideas invented in one field often reappear unexpectedly in another. 현대수학이 숨 막히게 아름다운 이유는 한 분야에서 만들어진 생각이 다른 분야에서 뜻밖에 다시 나타나기 때문이다.">
+  <div class="n">269</div>
+  <div class="lines">
+    <p class="en" lang="en">Modern mathematics is breathtaking because ideas invented in one field often reappear unexpectedly in another.</p>
+    <p class="ko" lang="ko">현대수학이 숨 막히게 아름다운 이유는 한 분야에서 만들어진 생각이 다른 분야에서 뜻밖에 다시 나타나기 때문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="269번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="270" data-text="at sufficient depth, mathematics stops looking like separate subjects and begins to look like one interconnected landscape. 충분히 깊이 들어가면 수학은 서로 분리된 과목처럼 보이기를 멈추고 하나의 연결된 풍경처럼 보이기 시작한다.">
+  <div class="n">270</div>
+  <div class="lines">
+    <p class="en" lang="en">At sufficient depth, mathematics stops looking like separate subjects and begins to look like one interconnected landscape.</p>
+    <p class="ko" lang="ko">충분히 깊이 들어가면 수학은 서로 분리된 과목처럼 보이기를 멈추고 하나의 연결된 풍경처럼 보이기 시작한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="270번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article></section><section class="chapter" id="s10"><div class="chapter-head"><span>CHAPTER 10</span><h2>Ⅹ. 수학을 사랑하게 되는 결말 · A Life with Mathematics</h2></div>
+<article class="sentence" data-num="271" data-text="mathematics does not ask us to admire difficulty; it asks us to discover clarity hidden inside difficulty. 수학은 어려움 자체를 숭배하라고 하지 않고 어려움 속에 숨은 명료함을 발견하라고 한다.">
+  <div class="n">271</div>
+  <div class="lines">
+    <p class="en" lang="en">Mathematics does not ask us to admire difficulty; it asks us to discover clarity hidden inside difficulty.</p>
+    <p class="ko" lang="ko">수학은 어려움 자체를 숭배하라고 하지 않고 어려움 속에 숨은 명료함을 발견하라고 한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="271번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="272" data-text="a hard problem can become a companion when we return to it with a new idea each day. 어려운 문제는 날마다 새로운 생각을 가지고 다시 찾아갈 때 하나의 동반자가 될 수 있다.">
+  <div class="n">272</div>
+  <div class="lines">
+    <p class="en" lang="en">A hard problem can become a companion when we return to it with a new idea each day.</p>
+    <p class="ko" lang="ko">어려운 문제는 날마다 새로운 생각을 가지고 다시 찾아갈 때 하나의 동반자가 될 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="272번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="273" data-text="some problems teach us more by resisting us than easy problems teach us by yielding. 어떤 문제는 쉽게 풀리는 문제보다 오래 버티며 우리에게 더 많은 것을 가르친다.">
+  <div class="n">273</div>
+  <div class="lines">
+    <p class="en" lang="en">Some problems teach us more by resisting us than easy problems teach us by yielding.</p>
+    <p class="ko" lang="ko">어떤 문제는 쉽게 풀리는 문제보다 오래 버티며 우리에게 더 많은 것을 가르친다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="273번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="274" data-text="mathematical maturity grows when we stop fearing confusion and begin using it as information. 수학적 성숙은 혼란을 두려워하지 않고 그것을 정보로 사용하기 시작할 때 자란다.">
+  <div class="n">274</div>
+  <div class="lines">
+    <p class="en" lang="en">Mathematical maturity grows when we stop fearing confusion and begin using it as information.</p>
+    <p class="ko" lang="ko">수학적 성숙은 혼란을 두려워하지 않고 그것을 정보로 사용하기 시작할 때 자란다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="274번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="275" data-text="not understanding yet is not failure; it is the exact place from which deeper understanding can begin. 아직 이해하지 못했다는 것은 실패가 아니라 더 깊은 이해가 시작될 수 있는 정확한 자리이다.">
+  <div class="n">275</div>
+  <div class="lines">
+    <p class="en" lang="en">Not understanding yet is not failure; it is the exact place from which deeper understanding can begin.</p>
+    <p class="ko" lang="ko">아직 이해하지 못했다는 것은 실패가 아니라 더 깊은 이해가 시작될 수 있는 정확한 자리이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="275번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="276" data-text="a theorem that once looked impossible can become obvious after the right definitions have entered our mind. 한때 불가능해 보이던 정리도 올바른 정의들이 마음속에 들어온 뒤에는 자명해질 수 있다.">
+  <div class="n">276</div>
+  <div class="lines">
+    <p class="en" lang="en">A theorem that once looked impossible can become obvious after the right definitions have entered our mind.</p>
+    <p class="ko" lang="ko">한때 불가능해 보이던 정리도 올바른 정의들이 마음속에 들어온 뒤에는 자명해질 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="276번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="277" data-text="the joy of mathematics is often delayed, but that delay makes insight feel earned rather than accidental. 수학의 기쁨은 종종 늦게 찾아오지만 그 지연이 통찰을 우연이 아니라 스스로 얻은 것으로 느끼게 한다.">
+  <div class="n">277</div>
+  <div class="lines">
+    <p class="en" lang="en">The joy of mathematics is often delayed, but that delay makes insight feel earned rather than accidental.</p>
+    <p class="ko" lang="ko">수학의 기쁨은 종종 늦게 찾아오지만 그 지연이 통찰을 우연이 아니라 스스로 얻은 것으로 느끼게 한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="277번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="278" data-text="we learn mathematics twice: first when someone explains it, and again when we can explain it ourselves. 우리는 수학을 두 번 배운다. 처음은 누군가에게 설명을 들을 때이고 두 번째는 스스로 설명할 수 있을 때이다.">
+  <div class="n">278</div>
+  <div class="lines">
+    <p class="en" lang="en">We learn mathematics twice: first when someone explains it, and again when we can explain it ourselves.</p>
+    <p class="ko" lang="ko">우리는 수학을 두 번 배운다. 처음은 누군가에게 설명을 들을 때이고 두 번째는 스스로 설명할 수 있을 때이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="278번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="279" data-text="teaching a proof is one of the best ways to discover which parts we truly understand. 증명을 가르치는 일은 우리가 어느 부분을 진정으로 이해했는지 발견하는 가장 좋은 방법 중 하나이다.">
+  <div class="n">279</div>
+  <div class="lines">
+    <p class="en" lang="en">Teaching a proof is one of the best ways to discover which parts we truly understand.</p>
+    <p class="ko" lang="ko">증명을 가르치는 일은 우리가 어느 부분을 진정으로 이해했는지 발견하는 가장 좋은 방법 중 하나이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="279번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="280" data-text="a beautiful problem changes us because after solving it we can never again see the underlying idea as invisible. 아름다운 문제는 우리를 변화시킨다. 한 번 풀고 나면 그 밑의 생각을 다시는 보이지 않는 것으로 만들 수 없기 때문이다.">
+  <div class="n">280</div>
+  <div class="lines">
+    <p class="en" lang="en">A beautiful problem changes us because after solving it we can never again see the underlying idea as invisible.</p>
+    <p class="ko" lang="ko">아름다운 문제는 우리를 변화시킨다. 한 번 풀고 나면 그 밑의 생각을 다시는 보이지 않는 것으로 만들 수 없기 때문이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="280번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="281" data-text="mathematics gives us a disciplined form of imagination: dream freely, then prove carefully. 수학은 우리에게 훈련된 형태의 상상력을 준다. 자유롭게 꿈꾸되 세심하게 증명하라고 한다.">
+  <div class="n">281</div>
+  <div class="lines">
+    <p class="en" lang="en">Mathematics gives us a disciplined form of imagination: dream freely, then prove carefully.</p>
+    <p class="ko" lang="ko">수학은 우리에게 훈련된 형태의 상상력을 준다. 자유롭게 꿈꾸되 세심하게 증명하라고 한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="281번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="282" data-text="the deepest mathematical creativity often begins with a childlike refusal to accept that things must stay as they are. 가장 깊은 수학적 창의성은 사물이 반드시 지금 그대로여야 한다는 생각을 어린아이처럼 거부하는 데서 시작하곤 한다.">
+  <div class="n">282</div>
+  <div class="lines">
+    <p class="en" lang="en">The deepest mathematical creativity often begins with a childlike refusal to accept that things must stay as they are.</p>
+    <p class="ko" lang="ko">가장 깊은 수학적 창의성은 사물이 반드시 지금 그대로여야 한다는 생각을 어린아이처럼 거부하는 데서 시작하곤 한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="282번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="283" data-text="we can change an axiom, weaken a hypothesis, strengthen a conclusion, or ask whether the converse holds. 우리는 공리를 바꾸고, 가정을 약화하고, 결론을 강화하며, 역이 성립하는지를 물을 수 있다.">
+  <div class="n">283</div>
+  <div class="lines">
+    <p class="en" lang="en">We can change an axiom, weaken a hypothesis, strengthen a conclusion, or ask whether the converse holds.</p>
+    <p class="ko" lang="ko">우리는 공리를 바꾸고, 가정을 약화하고, 결론을 강화하며, 역이 성립하는지를 물을 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="283번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="284" data-text="each such question opens a new branch of possibility. 그런 질문 하나하나가 새로운 가능성의 가지를 연다.">
+  <div class="n">284</div>
+  <div class="lines">
+    <p class="en" lang="en">Each such question opens a new branch of possibility.</p>
+    <p class="ko" lang="ko">그런 질문 하나하나가 새로운 가능성의 가지를 연다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="284번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="285" data-text="mathematics is generous: one solved problem often produces several better questions. 수학은 관대하다. 하나의 문제가 풀리면 종종 더 좋은 여러 질문이 생겨난다.">
+  <div class="n">285</div>
+  <div class="lines">
+    <p class="en" lang="en">Mathematics is generous: one solved problem often produces several better questions.</p>
+    <p class="ko" lang="ko">수학은 관대하다. 하나의 문제가 풀리면 종종 더 좋은 여러 질문이 생겨난다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="285번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="286" data-text="the history of mathematics is a history of people daring to ask questions that sounded unreasonable at first. 수학의 역사는 처음에는 터무니없어 보였던 질문을 감히 던진 사람들의 역사이다.">
+  <div class="n">286</div>
+  <div class="lines">
+    <p class="en" lang="en">The history of mathematics is a history of people daring to ask questions that sounded unreasonable at first.</p>
+    <p class="ko" lang="ko">수학의 역사는 처음에는 터무니없어 보였던 질문을 감히 던진 사람들의 역사이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="286번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="287" data-text="negative numbers, irrational numbers, complex numbers, non-euclidean spaces, and infinite dimensions were all once strange. 음수, 무리수, 복소수, 비유클리드 공간, 무한차원은 모두 한때 낯선 생각이었다.">
+  <div class="n">287</div>
+  <div class="lines">
+    <p class="en" lang="en">Negative numbers, irrational numbers, complex numbers, non-Euclidean spaces, and infinite dimensions were all once strange.</p>
+    <p class="ko" lang="ko">음수, 무리수, 복소수, 비유클리드 공간, 무한차원은 모두 한때 낯선 생각이었다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="287번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="288" data-text="today&#x27;s strange idea may become tomorrow&#x27;s indispensable language. 오늘의 낯선 생각이 내일의 필수 언어가 될 수 있다.">
+  <div class="n">288</div>
+  <div class="lines">
+    <p class="en" lang="en">Today&#x27;s strange idea may become tomorrow&#x27;s indispensable language.</p>
+    <p class="ko" lang="ko">오늘의 낯선 생각이 내일의 필수 언어가 될 수 있다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="288번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="289" data-text="a mathematician&#x27;s courage is often the courage to take an abstract idea seriously. 수학자의 용기는 종종 추상적인 생각을 진지하게 받아들이는 용기이다.">
+  <div class="n">289</div>
+  <div class="lines">
+    <p class="en" lang="en">A mathematician&#x27;s courage is often the courage to take an abstract idea seriously.</p>
+    <p class="ko" lang="ko">수학자의 용기는 종종 추상적인 생각을 진지하게 받아들이는 용기이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="289번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="290" data-text="abstraction is not an escape from reality; it is a way of carrying one insight across many realities. 추상화는 현실로부터의 도피가 아니라 하나의 통찰을 여러 현실에 옮겨 가는 방법이다.">
+  <div class="n">290</div>
+  <div class="lines">
+    <p class="en" lang="en">Abstraction is not an escape from reality; it is a way of carrying one insight across many realities.</p>
+    <p class="ko" lang="ko">추상화는 현실로부터의 도피가 아니라 하나의 통찰을 여러 현실에 옮겨 가는 방법이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="290번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="291" data-text="when one theorem explains arithmetic, geometry, probability, and computation at once, abstraction feels almost miraculous. 하나의 정리가 산술, 기하, 확률, 계산을 동시에 설명할 때 추상화는 거의 기적처럼 느껴진다.">
+  <div class="n">291</div>
+  <div class="lines">
+    <p class="en" lang="en">When one theorem explains arithmetic, geometry, probability, and computation at once, abstraction feels almost miraculous.</p>
+    <p class="ko" lang="ko">하나의 정리가 산술, 기하, 확률, 계산을 동시에 설명할 때 추상화는 거의 기적처럼 느껴진다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="291번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="292" data-text="the reward for learning a difficult definition is often the ability to see many old problems as one new problem. 어려운 정의를 배우는 보상은 오래된 많은 문제를 하나의 새로운 문제로 볼 수 있게 되는 경우가 많다.">
+  <div class="n">292</div>
+  <div class="lines">
+    <p class="en" lang="en">The reward for learning a difficult definition is often the ability to see many old problems as one new problem.</p>
+    <p class="ko" lang="ko">어려운 정의를 배우는 보상은 오래된 많은 문제를 하나의 새로운 문제로 볼 수 있게 되는 경우가 많다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="292번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="293" data-text="mathematics slowly trains the mind to distinguish evidence from proof and possibility from necessity. 수학은 마음을 천천히 훈련하여 증거와 증명, 가능성과 필연을 구분하게 한다.">
+  <div class="n">293</div>
+  <div class="lines">
+    <p class="en" lang="en">Mathematics slowly trains the mind to distinguish evidence from proof and possibility from necessity.</p>
+    <p class="ko" lang="ko">수학은 마음을 천천히 훈련하여 증거와 증명, 가능성과 필연을 구분하게 한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="293번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="294" data-text="it teaches us to respect a counterexample more than a thousand confirming examples. 수학은 천 개의 확인 사례보다 하나의 반례를 더 존중하도록 가르친다.">
+  <div class="n">294</div>
+  <div class="lines">
+    <p class="en" lang="en">It teaches us to respect a counterexample more than a thousand confirming examples.</p>
+    <p class="ko" lang="ko">수학은 천 개의 확인 사례보다 하나의 반례를 더 존중하도록 가르친다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="294번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="295" data-text="it teaches us that elegance matters because a clear idea can travel farther than a complicated calculation. 수학은 명료한 생각이 복잡한 계산보다 더 멀리 갈 수 있기에 우아함이 중요하다는 것을 가르친다.">
+  <div class="n">295</div>
+  <div class="lines">
+    <p class="en" lang="en">It teaches us that elegance matters because a clear idea can travel farther than a complicated calculation.</p>
+    <p class="ko" lang="ko">수학은 명료한 생각이 복잡한 계산보다 더 멀리 갈 수 있기에 우아함이 중요하다는 것을 가르친다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="295번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="296" data-text="it teaches us that certainty is precious precisely because it is difficult to earn. 수학은 확실성이 얻기 어렵기 때문에 더욱 소중하다는 사실을 가르친다.">
+  <div class="n">296</div>
+  <div class="lines">
+    <p class="en" lang="en">It teaches us that certainty is precious precisely because it is difficult to earn.</p>
+    <p class="ko" lang="ko">수학은 확실성이 얻기 어렵기 때문에 더욱 소중하다는 사실을 가르친다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="296번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="297" data-text="the more mathematics we learn, the larger the frontier of what we do not know becomes. 수학을 더 많이 배울수록 우리가 모르는 것의 경계는 오히려 더 커진다.">
+  <div class="n">297</div>
+  <div class="lines">
+    <p class="en" lang="en">The more mathematics we learn, the larger the frontier of what we do not know becomes.</p>
+    <p class="ko" lang="ko">수학을 더 많이 배울수록 우리가 모르는 것의 경계는 오히려 더 커진다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="297번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="298" data-text="that expanding frontier is not discouraging; it is the source of endless intellectual adventure. 그 넓어지는 경계는 낙담의 이유가 아니라 끝없는 지적 모험의 원천이다.">
+  <div class="n">298</div>
+  <div class="lines">
+    <p class="en" lang="en">That expanding frontier is not discouraging; it is the source of endless intellectual adventure.</p>
+    <p class="ko" lang="ko">그 넓어지는 경계는 낙담의 이유가 아니라 끝없는 지적 모험의 원천이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="298번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="299" data-text="to fall in love with mathematics is to discover that certainty and mystery can live in the same universe. 수학을 사랑하게 된다는 것은 확실성과 신비가 같은 우주 안에 함께 살 수 있음을 발견하는 일이다.">
+  <div class="n">299</div>
+  <div class="lines">
+    <p class="en" lang="en">To fall in love with mathematics is to discover that certainty and mystery can live in the same universe.</p>
+    <p class="ko" lang="ko">수학을 사랑하게 된다는 것은 확실성과 신비가 같은 우주 안에 함께 살 수 있음을 발견하는 일이다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="299번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article>
+<article class="sentence" data-num="300" data-text="and once mathematics has shown us that hidden structure exists, the world itself begins to look richer. 그리고 수학이 숨은 구조가 존재함을 보여 준 뒤에는 세계 자체가 더 풍요롭게 보이기 시작한다.">
+  <div class="n">300</div>
+  <div class="lines">
+    <p class="en" lang="en">And once mathematics has shown us that hidden structure exists, the world itself begins to look richer.</p>
+    <p class="ko" lang="ko">그리고 수학이 숨은 구조가 존재함을 보여 준 뒤에는 세계 자체가 더 풍요롭게 보이기 시작한다.</p>
+  </div>
+  <button class="speak" type="button" aria-label="300번 영어 문장 듣기" onclick="speakEnglish(this)">▶</button>
+</article></section>
+</main>
+</div>
+
+<footer><div class="inner">
+  <strong>MATHEMATICS IS A LANDSCAPE OF NECESSARY BEAUTY.</strong>
+  <p>300개의 문장은 수학 개념·정리·증명의 핵심 의미를 바탕으로 새롭게 작성한 학습·감상용 문장입니다. 한 문장 속에서 공식보다 먼저 ‘왜 아름다운가’를 느끼고, 그 감동이 다시 공부하고 싶은 마음으로 이어지도록 구성했습니다.</p>
+</div></footer>
+<script>
+const qs = s => document.querySelector(s);
+const all = s => [...document.querySelectorAll(s)];
+qs('#search').addEventListener('input', e => {
+  const q = e.target.value.trim().toLowerCase();
+  all('.sentence').forEach(el => el.classList.toggle('hidden', q && !el.dataset.text.includes(q)));
+  all('.chapter').forEach(ch => {
+    const visible = [...ch.querySelectorAll('.sentence')].some(x => !x.classList.contains('hidden'));
+    ch.classList.toggle('hidden', !visible);
+  });
+});
+function toggleLang(which) {
+  if(which==='ko') document.body.classList.toggle('hide-ko');
+  if(which==='en') document.body.classList.toggle('hide-en');
+}
+function speakEnglish(btn) {
+  if(!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const text = btn.closest('.sentence').querySelector('.en').textContent;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 0.88;
+  speechSynthesis.speak(u);
+}
+</script>
+</body>
+</html>
