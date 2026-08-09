@@ -1,0 +1,1546 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>피보나치 · 황금비 · 프랙탈 — 실생활 30개 사례와 Python 코드</title>
+<style>
+:root{--bg:#f6f7fb;--paper:#fff;--text:#162033;--muted:#667085;--line:#e3e7ef;--nav:#101828}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:"Pretendard","Noto Sans KR","Malgun Gothic",sans-serif;background:var(--bg);color:var(--text);line-height:1.68}
+.hero{background:radial-gradient(circle at 80% 10%,#ffffff19,transparent 22%),linear-gradient(135deg,#111827,#1e3a5f 48%,#49336d);color:white;padding:70px 24px 52px}
+.wrap{max-width:1220px;margin:auto} .eyebrow{font-size:.78rem;letter-spacing:.17em;font-weight:900;opacity:.72}
+h1{font-size:clamp(2.35rem,6vw,5.2rem);line-height:1.02;margin:.35rem 0 1rem;letter-spacing:-.045em}
+.lead{max-width:860px;font-size:1.07rem;opacity:.9}
+.formulas{display:flex;flex-wrap:wrap;gap:9px;margin-top:25px} .formulas span{border:1px solid #ffffff32;background:#ffffff10;padding:8px 12px;border-radius:999px;font-family:Georgia,serif}
+.sticky{position:sticky;top:0;z-index:20;background:#ffffffec;backdrop-filter:blur(13px);border-bottom:1px solid var(--line)}
+.controls{max-width:1220px;margin:auto;display:flex;flex-wrap:wrap;gap:8px;padding:10px 16px}
+#q{flex:1;min-width:250px;border:1px solid #cfd5df;border-radius:12px;padding:11px 14px;font-size:.95rem}
+.controls button{border:1px solid #d8dde6;background:white;border-radius:999px;padding:8px 12px;font-weight:800;cursor:pointer}
+.controls button.active{background:#172033;color:#fff;border-color:#172033}
+main{max-width:1220px;margin:26px auto 70px;padding:0 16px}
+.intro{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:25px}
+.intro-card{background:white;border:1px solid var(--line);border-radius:18px;padding:17px}
+.intro-card b{font-size:1.05rem} .intro-card p{color:#596273;font-size:.9rem;margin:.4rem 0 0}
+.section-title{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:35px 0 13px;border-bottom:2px solid #d8dde6;padding-bottom:10px}
+.section-title h2{margin:0;font-size:1.7rem} .section-title p{margin:0;color:var(--muted);font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.case{background:white;border:1px solid var(--line);border-radius:22px;padding:21px;box-shadow:0 5px 20px #10182809}
+.case-top{display:flex;justify-content:space-between;align-items:center} .topic{font-size:.76rem;padding:5px 9px;border-radius:999px;font-weight:900}
+.topic.피보나치{background:#eff6ff;color:#1d4ed8} .topic.황금비{background:#fff7e5;color:#9a6700} .topic.프랙탈{background:#f5f0ff;color:#6d28d9}
+.case-no{font-family:ui-monospace,monospace;color:#98a2b3;font-weight:800}
+h3{font-size:1.33rem;margin:.7rem 0 .15rem} .field{font-size:.83rem;color:#667085;margin-bottom:15px}
+.explain{border-top:1px solid #edf0f5;padding-top:11px;margin-top:11px} h4{font-size:.92rem;margin:0 0 5px} .explain p{margin:0;font-size:.93rem;color:#3f4754}
+.mathbox{background:#f8fafc;border:0;border-radius:13px;padding:12px;margin-top:12px}
+.caution{margin:12px 0;background:#fff8e8;border-left:4px solid #e5a72e;padding:11px 12px;font-size:.87rem;color:#5e4b22;border-radius:7px}
+details{border-top:1px solid #edf0f5;margin-top:12px;padding-top:10px} summary{cursor:pointer;font-weight:900;font-size:.9rem}
+.code-wrap{position:relative;margin-top:9px} pre{background:#111827;color:#e5e7eb;border-radius:14px;padding:17px;overflow:auto;font-size:.79rem;line-height:1.55;margin:0}
+.copy{position:absolute;right:8px;top:8px;border:1px solid #ffffff2c;background:#ffffff12;color:#fff;padding:5px 8px;border-radius:8px;cursor:pointer;font-size:.72rem}
+details ol{padding-left:1.4rem;font-size:.9rem;color:#46505f} .result{background:#eefbf5;border-radius:10px;padding:10px 12px;font-size:.88rem}
+.hidden{display:none!important}
+.note{background:#101828;color:white;border-radius:22px;padding:23px;margin:25px 0} .note p{color:#d0d5dd;margin:.45rem 0}
+.sources{background:white;border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:28px;font-size:.87rem;color:#566070}
+.sources h2{color:#172033;margin-top:0}
+footer{background:#101828;color:#cbd5e1;padding:30px 18px} footer .wrap{font-size:.87rem}
+@media(max-width:820px){.grid{grid-template-columns:1fr}.intro{grid-template-columns:1fr}}
+@media print{.sticky{display:none} body{background:white} .case{box-shadow:none;break-inside:avoid} .grid{display:block} .case{margin-bottom:12px} details{display:block} details>*{display:block!important} .copy{display:none}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<div class="eyebrow">MATHEMATICS IN REAL LIFE · 30 EXAMPLES</div>
+<h1>피보나치 · 황금비 · 프랙탈</h1>
+<p class="lead">자연과 생활 속에서 실제로 관찰되는 패턴을 수학적 모델과 Python 코드로 연결합니다. 각각 10개 사례, 총 30개를 통해 “어디에 보이는가 → 왜 그런가 → 코드로 어떻게 재현하는가”를 한 번에 학습합니다.</p>
+<div class="formulas"><span>Fₙ = Fₙ₋₁ + Fₙ₋₂</span><span>φ = (1+√5)/2</span><span>golden angle ≈ 137.5°</span><span>self-similarity · recursion</span></div>
+</div></header>
+
+<div class="sticky"><div class="controls">
+<input id="q" placeholder="검색: 해바라기, 솔방울, 고사리, 기관지, 재귀, 황금각…">
+<button class="active" data-filter="전체">전체 30</button>
+<button data-filter="피보나치" style="--tcolor:#2563eb"><b>피보나치</b><span>FIBONACCI</span></button><button data-filter="황금비" style="--tcolor:#b7791f"><b>황금비</b><span>GOLDEN RATIO</span></button><button data-filter="프랙탈" style="--tcolor:#7c3aed"><b>프랙탈</b><span>FRACTAL</span></button>
+<button onclick="window.print()">🖨 인쇄/PDF</button>
+</div></div>
+
+<main>
+<div class="intro">
+<div class="intro-card"><b>① 실제 관찰과 수학 모델을 구분</b><p>자연물은 완벽한 수학 도형이 아닙니다. '정확히 같다'와 '가까운 경향을 보인다'를 분명히 구분합니다.</p></div>
+<div class="intro-card"><b>② 코드는 원리를 눈으로 확인</b><p>NumPy·Matplotlib 중심의 짧은 Python 코드로 배열, 나선, 재귀, 자기유사성을 직접 그립니다.</p></div>
+<div class="intro-card"><b>③ 황금비 신화를 피하기</b><p>인체·파르테논·앵무조개가 모두 정확한 황금비라는 식의 과장 대신 검증 가능한 기하와 모델을 사용합니다.</p></div>
+</div>
+
+<div class="note"><b>핵심 연결</b>
+<p>피보나치 수 자체가 식물에 “새겨져 있다”기보다, 식물의 성장·배치 과정에서 나타나는 나선 수와 발산각을 설명할 때 피보나치 수와 황금각이 자연스럽게 등장합니다. 프랙탈 역시 자연물이 무한 반복되는 완벽한 수학 프랙탈이라는 뜻이 아니라, 여러 크기에서 비슷한 구조가 반복되는 <b>근사 자기유사성</b>을 뜻하는 경우가 많습니다.</p>
+</div>
+
+<div class="grid">
+<article class="case" data-topic="피보나치" data-search="피보나치 해바라기 씨앗의 나선 식물 · 꽃차례 해바라기 머리의 작은 꽃과 씨앗은 중심에서 바깥쪽으로 촘촘하게 배열되며, 시계·반시계 방향으로 보이는 나선의 수가 34와 55, 55와 89처럼 서로 이웃한 피보나치 수가 되는 경우가 자주 관찰됩니다. 피보나치 수열 fₙ = fₙ₋₁ + fₙ₋₂와 황금각 약 137.5°가 함께 등장하는 대표적인 엽서배열(phyllotaxis) 사례입니다. 점을 일정한 각도로 돌리면서 반지름을 √n에 비례시켜 배치하면 해바라기와 비슷한 밀집 패턴이 생깁니다.">
+  <div class="case-top">
+    <span class="topic 피보나치">피보나치</span>
+    <span class="case-no">피-01</span>
+  </div>
+  <h3>해바라기 씨앗의 나선</h3>
+  <div class="field">식물 · 꽃차례</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>해바라기 머리의 작은 꽃과 씨앗은 중심에서 바깥쪽으로 촘촘하게 배열되며, 시계·반시계 방향으로 보이는 나선의 수가 34와 55, 55와 89처럼 서로 이웃한 피보나치 수가 되는 경우가 자주 관찰됩니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>피보나치 수열 Fₙ = Fₙ₋₁ + Fₙ₋₂와 황금각 약 137.5°가 함께 등장하는 대표적인 엽서배열(phyllotaxis) 사례입니다. 점을 일정한 각도로 돌리면서 반지름을 √n에 비례시켜 배치하면 해바라기와 비슷한 밀집 패턴이 생깁니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>실제 해바라기마다 나선 수가 반드시 같은 것은 아닙니다. 성장 조건과 품종에 따라 다른 수가 나타날 수 있으며, &#x27;항상 정확히 피보나치&#x27;라고 말하면 과장입니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+N = 800
+golden_angle = np.deg2rad(137.507764)
+
+n = np.arange(N)
+r = np.sqrt(n)
+theta = n * golden_angle
+
+x = r * np.cos(theta)
+y = r * np.sin(theta)
+
+plt.scatter(x, y, s=8)
+plt.axis(&quot;equal&quot;)
+plt.axis(&quot;off&quot;)
+plt.title(&quot;Sunflower-like Phyllotaxis&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>golden_angle은 황금각 약 137.5°를 라디안으로 바꿉니다.</li><li>r = √n은 점들이 중심에서 바깥으로 고르게 퍼지도록 합니다.</li><li>theta = n × golden_angle로 새 씨앗마다 일정한 각도를 회전시킵니다.</li><li>극좌표를 x, y로 변환해 산점도로 그립니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 점들이 서로 겹치지 않으면서 중심을 촘촘히 채우는 나선형 무늬가 나타납니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="피보나치" data-search="피보나치 솔방울 비늘의 두 방향 나선 식물 · 종자 구조 솔방울의 비늘을 보면 한 방향과 반대 방향으로 비스듬히 이어지는 나선들이 보입니다. 두 방향의 나선 수가 8과 13처럼 연속한 피보나치 수가 되는 경우가 널리 알려져 있습니다. 서로 다른 두 나선 가족(parastichy)이 교차하며 표면을 효율적으로 채웁니다. 동일한 황금각 배치 모델을 원통 또는 타원형 표면에 적용하면 솔방울과 비슷한 교차 나선을 만들 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 피보나치">피보나치</span>
+    <span class="case-no">피-02</span>
+  </div>
+  <h3>솔방울 비늘의 두 방향 나선</h3>
+  <div class="field">식물 · 종자 구조</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>솔방울의 비늘을 보면 한 방향과 반대 방향으로 비스듬히 이어지는 나선들이 보입니다. 두 방향의 나선 수가 8과 13처럼 연속한 피보나치 수가 되는 경우가 널리 알려져 있습니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>서로 다른 두 나선 가족(parastichy)이 교차하며 표면을 효율적으로 채웁니다. 동일한 황금각 배치 모델을 원통 또는 타원형 표면에 적용하면 솔방울과 비슷한 교차 나선을 만들 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>모든 솔방울이 정확히 8·13을 갖는 것은 아니며, 관찰 위치와 세는 방법에 따라 차이가 생길 수 있습니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+N = 180
+phi = (1 + np.sqrt(5)) / 2
+angle = 2 * np.pi / (phi ** 2)
+
+k = np.arange(N)
+z = k / 18
+radius = 1 + 0.03 * k
+
+x = radius * np.cos(k * angle)
+y = radius * np.sin(k * angle)
+
+ax = plt.figure().add_subplot(projection=&quot;3d&quot;)
+ax.scatter(x, y, z, s=18)
+ax.set_title(&quot;Pine-cone Spiral Model&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>phi는 황금비입니다.</li><li>2π/φ²는 황금각과 같은 회전량을 라디안으로 나타냅니다.</li><li>z를 조금씩 증가시켜 점을 원통형 나선 표면에 쌓습니다.</li><li>3차원 산점도로 비늘 배열을 단순화해 표현합니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 3차원으로 회전하며 상승하는 점 배열에서 서로 다른 방향의 나선 무늬를 관찰할 수 있습니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="피보나치" data-search="피보나치 파인애플 껍질의 대각선 배열 식물 · 과실 파인애플 겉면의 눈(과실 단위)을 따라 대각선으로 세어 보면 5, 8, 13과 같은 피보나치 수가 서로 다른 기울기의 나선으로 관찰되는 경우가 많습니다. 성장점이 비슷한 각도 간격으로 새 구조를 만들어 내면 표면에서 여러 방향의 나선 가족이 생깁니다. 이를 원통 좌표로 모델링할 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 피보나치">피보나치</span>
+    <span class="case-no">피-03</span>
+  </div>
+  <h3>파인애플 껍질의 대각선 배열</h3>
+  <div class="field">식물 · 과실</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>파인애플 겉면의 눈(과실 단위)을 따라 대각선으로 세어 보면 5, 8, 13과 같은 피보나치 수가 서로 다른 기울기의 나선으로 관찰되는 경우가 많습니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>성장점이 비슷한 각도 간격으로 새 구조를 만들어 내면 표면에서 여러 방향의 나선 가족이 생깁니다. 이를 원통 좌표로 모델링할 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>파인애플 품종과 성장 상태에 따라 실제 숫자는 달라질 수 있습니다. 피보나치 수는 반복적으로 나타나는 경향이지 모든 개체의 고정 규칙은 아닙니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+rows = 90
+angle = np.deg2rad(137.5)
+
+k = np.arange(rows)
+theta = k * angle
+z = k / 10
+r = 1.0
+
+x = r * np.cos(theta)
+y = r * np.sin(theta)
+
+ax = plt.figure().add_subplot(projection=&quot;3d&quot;)
+ax.scatter(x, y, z, s=30)
+ax.plot(x, y, z, alpha=0.35)
+ax.set_title(&quot;Pineapple Eye Arrangement&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>각 점을 파인애플의 &#x27;눈&#x27; 하나라고 생각합니다.</li><li>각 눈은 이전 눈보다 약 137.5° 회전합니다.</li><li>z는 위쪽 성장 방향을 나타냅니다.</li><li>점을 선으로 연결하면 한 계열의 나선 흐름을 확인하기 쉽습니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 원통 둘레에 점이 규칙적으로 비켜 쌓이면서 대각선 나선이 형성됩니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="피보나치" data-search="피보나치 아티초크 포엽의 겹침 식물 · 꽃봉오리 아티초크의 포엽은 중심 주위에 겹겹이 배치되어 여러 개의 나선선을 만듭니다. 이 나선 수에는 피보나치 계열이 자주 나타납니다. 새 포엽이 같은 각도로 회전하면서 점차 바깥쪽에 생기는 모델을 사용하면 겹치지 않는 포장 패턴을 설명할 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 피보나치">피보나치</span>
+    <span class="case-no">피-04</span>
+  </div>
+  <h3>아티초크 포엽의 겹침</h3>
+  <div class="field">식물 · 꽃봉오리</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>아티초크의 포엽은 중심 주위에 겹겹이 배치되어 여러 개의 나선선을 만듭니다. 이 나선 수에는 피보나치 계열이 자주 나타납니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>새 포엽이 같은 각도로 회전하면서 점차 바깥쪽에 생기는 모델을 사용하면 겹치지 않는 포장 패턴을 설명할 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>자연물은 완벽한 수학 도형이 아니므로 나선이 흐트러지거나 중간에 끊겨 보일 수 있습니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+N = 240
+ga = np.deg2rad(137.507764)
+
+for k in range(N):
+    r = 0.12 * np.sqrt(k)
+    t = k * ga
+    size = 180 * (1 - k / (N + 60))
+    plt.scatter(r*np.cos(t), r*np.sin(t), s=max(size, 12))
+
+plt.axis(&quot;equal&quot;)
+plt.axis(&quot;off&quot;)
+plt.title(&quot;Artichoke Bract Model&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>각 반복에서 포엽 하나를 배치합니다.</li><li>반지름은 √k로 증가해 면적 밀도를 조절합니다.</li><li>바깥쪽으로 갈수록 점 크기를 조금 줄여 겹겹이 쌓인 느낌을 냅니다.</li><li>황금각 회전이 여러 방향의 시각적 나선을 만듭니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 중심에서 바깥쪽으로 겹겹이 퍼지는 아티초크 같은 배열이 그려집니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="피보나치" data-search="피보나치 알로에·다육식물 로제트 식물 · 잎 배열 알로에와 여러 다육식물의 잎은 중심 성장점 주위로 회전하며 나오고, 위에서 보면 반복적인 나선 배열을 만들 수 있습니다. 잎이 이전 잎과 일정한 발산각을 유지하며 생기면 서로 겹치는 정도를 줄이고 공간을 고르게 사용할 수 있습니다. 피보나치 엽서배열은 이런 기하와 연결됩니다.">
+  <div class="case-top">
+    <span class="topic 피보나치">피보나치</span>
+    <span class="case-no">피-05</span>
+  </div>
+  <h3>알로에·다육식물 로제트</h3>
+  <div class="field">식물 · 잎 배열</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>알로에와 여러 다육식물의 잎은 중심 성장점 주위로 회전하며 나오고, 위에서 보면 반복적인 나선 배열을 만들 수 있습니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>잎이 이전 잎과 일정한 발산각을 유지하며 생기면 서로 겹치는 정도를 줄이고 공간을 고르게 사용할 수 있습니다. 피보나치 엽서배열은 이런 기하와 연결됩니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>식물 종마다 발산각이 다르고 환경에 따라 변동도 있습니다. 황금각은 중요한 이상화 모델이지 모든 식물의 보편적 고정값은 아닙니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+N = 80
+ga = np.deg2rad(137.507764)
+
+for k in range(N):
+    theta = k * ga
+    r = 0.07 * k
+    length = 0.6 + 0.012 * k
+    x0, y0 = r*np.cos(theta), r*np.sin(theta)
+    x1 = x0 + length*np.cos(theta)
+    y1 = y0 + length*np.sin(theta)
+    plt.plot([x0, x1], [y0, y1], linewidth=3)
+
+plt.axis(&quot;equal&quot;)
+plt.axis(&quot;off&quot;)
+plt.title(&quot;Succulent Rosette Model&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>각 선분은 잎 하나를 단순화한 것입니다.</li><li>잎마다 황금각만큼 방향을 바꿉니다.</li><li>중심에서의 거리와 잎 길이를 조금씩 증가시켜 성장 순서를 표현합니다.</li><li>위에서 본 로제트 형태를 모사합니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 잎들이 같은 방향에 몰리지 않고 중심 주위를 고르게 채우는 회전 패턴이 나타납니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="피보나치" data-search="피보나치 데이지류 꽃잎 수의 경향 식물 · 꽃 일부 데이지류 꽃에서는 21, 34, 55처럼 피보나치 수에 해당하는 꽃잎 수가 자주 보고됩니다. 이는 꽃 기관이 성장점에서 생성되는 과정과 관련된 패턴으로 이해할 수 있습니다. 피보나치 수를 이용해 꽃잎 수를 선택하고 원 둘레에 균등하게 배치하면 실제 꽃의 방사대칭을 단순 모델로 만들 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 피보나치">피보나치</span>
+    <span class="case-no">피-06</span>
+  </div>
+  <h3>데이지류 꽃잎 수의 경향</h3>
+  <div class="field">식물 · 꽃</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>일부 데이지류 꽃에서는 21, 34, 55처럼 피보나치 수에 해당하는 꽃잎 수가 자주 보고됩니다. 이는 꽃 기관이 성장점에서 생성되는 과정과 관련된 패턴으로 이해할 수 있습니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>피보나치 수를 이용해 꽃잎 수를 선택하고 원 둘레에 균등하게 배치하면 실제 꽃의 방사대칭을 단순 모델로 만들 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>꽃잎 수는 종과 개체에 따라 다양합니다. &#x27;모든 꽃의 꽃잎 수가 피보나치 수&#x27;라는 주장은 사실이 아닙니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+petals = 34
+angles = np.linspace(0, 2*np.pi, petals, endpoint=False)
+
+for a in angles:
+    t = np.linspace(0, 2*np.pi, 100)
+    x = np.cos(a) + 0.45*np.cos(t)*np.cos(a) - 0.12*np.sin(t)*np.sin(a)
+    y = np.sin(a) + 0.45*np.cos(t)*np.sin(a) + 0.12*np.sin(t)*np.cos(a)
+    plt.plot(x, y)
+
+plt.axis(&quot;equal&quot;)
+plt.axis(&quot;off&quot;)
+plt.title(f&quot;{petals} Petals&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>petals=34로 피보나치 수 하나를 선택합니다.</li><li>34개의 각도를 원 둘레에 균등하게 만듭니다.</li><li>각 각도마다 작은 타원을 회전시켜 꽃잎처럼 그립니다.</li><li>실제 생물 구조의 정밀 모델이 아니라 수학적 시각화입니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 34장의 꽃잎이 방사형으로 배열된 꽃 그림이 생성됩니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="피보나치" data-search="피보나치 로마네스코의 나선형 작은 봉우리 식물 · 채소 로마네스코의 표면은 작은 원뿔 모양 봉우리들이 더 큰 나선 구조를 이루며 반복되는 독특한 형태를 보입니다. 나선 수가 피보나치 계열과 연결되어 관찰되기도 합니다. 피보나치 나선과 자기유사성을 함께 생각할 수 있는 사례입니다. 여기서는 크기가 커지는 원들을 피보나치 반지름에 따라 회전 배치해 구조를 단순화합니다.">
+  <div class="case-top">
+    <span class="topic 피보나치">피보나치</span>
+    <span class="case-no">피-07</span>
+  </div>
+  <h3>로마네스코의 나선형 작은 봉우리</h3>
+  <div class="field">식물 · 채소</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>로마네스코의 표면은 작은 원뿔 모양 봉우리들이 더 큰 나선 구조를 이루며 반복되는 독특한 형태를 보입니다. 나선 수가 피보나치 계열과 연결되어 관찰되기도 합니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>피보나치 나선과 자기유사성을 함께 생각할 수 있는 사례입니다. 여기서는 크기가 커지는 원들을 피보나치 반지름에 따라 회전 배치해 구조를 단순화합니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>로마네스코는 프랙탈의 대표적 &#x27;근사 자기유사&#x27; 사례이기도 합니다. 실제 표면은 정확한 수학적 프랙탈이나 정확한 황금나선은 아닙니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+fib = [1, 1]
+for _ in range(8):
+    fib.append(fib[-1] + fib[-2])
+
+theta = 0.0
+x = y = 0.0
+
+for f in fib[2:]:
+    theta += np.deg2rad(55)
+    x += 0.08*f*np.cos(theta)
+    y += 0.08*f*np.sin(theta)
+    circle = plt.Circle((x, y), 0.025*f, fill=False)
+    plt.gca().add_patch(circle)
+
+plt.axis(&quot;equal&quot;)
+plt.title(&quot;Romanesco-inspired Fibonacci Growth&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>fib 리스트에 피보나치 수를 만듭니다.</li><li>각 단계의 크기를 피보나치 수에 비례시킵니다.</li><li>중심 위치를 조금씩 회전·이동합니다.</li><li>원 크기도 함께 키워 계층적인 성장 느낌을 냅니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 작은 구조에서 큰 구조로 회전하며 성장하는 형태를 확인할 수 있습니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="피보나치" data-search="피보나치 잎의 발산각과 줄기 배열 식물 · 엽서배열 줄기를 따라 잎이 일정한 각도로 돌아가며 생기는 엽서배열에서는 2/5, 3/8, 5/13 같은 피보나치 비율이 나타나는 종들이 있습니다. 예를 들어 2/5 배열은 줄기를 두 바퀴 도는 동안 다섯 번째 잎에서 비슷한 방향으로 돌아오는 구조입니다. 분자와 분모가 연속된 피보나치 수와 연결됩니다.">
+  <div class="case-top">
+    <span class="topic 피보나치">피보나치</span>
+    <span class="case-no">피-08</span>
+  </div>
+  <h3>잎의 발산각과 줄기 배열</h3>
+  <div class="field">식물 · 엽서배열</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>줄기를 따라 잎이 일정한 각도로 돌아가며 생기는 엽서배열에서는 2/5, 3/8, 5/13 같은 피보나치 비율이 나타나는 종들이 있습니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>예를 들어 2/5 배열은 줄기를 두 바퀴 도는 동안 다섯 번째 잎에서 비슷한 방향으로 돌아오는 구조입니다. 분자와 분모가 연속된 피보나치 수와 연결됩니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>식물마다 1/2, 1/3 등 다른 배열도 존재합니다. 엽서배열 전체를 피보나치 하나로 설명할 수는 없습니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+turns, leaves = 2, 5
+for k in range(25):
+    theta = 2*np.pi * turns * k / leaves
+    z = k * 0.25
+    x, y = np.cos(theta), np.sin(theta)
+    plt.scatter(x, z, s=60)
+    plt.plot([0, x], [z, z], alpha=0.5)
+
+plt.xlabel(&quot;horizontal position&quot;)
+plt.ylabel(&quot;height&quot;)
+plt.title(&quot;2/5 Leaf Phyllotaxis&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>turns=2, leaves=5는 2/5 엽서배열을 뜻합니다.</li><li>잎 번호 k가 증가할 때마다 각도를 2π×2/5만큼 회전시킵니다.</li><li>z는 줄기 높이를 나타냅니다.</li><li>2차원 투영으로 잎 방향과 높이의 반복을 보여 줍니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 다섯 잎마다 비슷한 방향으로 돌아오는 반복 구조를 확인할 수 있습니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="피보나치" data-search="피보나치 식물의 가지·눈 성장 모델 식물 · 성장 모델 일부 식물의 가지나 눈의 발생을 설명하는 교육용 모델에서는 &#x27;이번 단계의 새 성장량이 앞선 두 단계의 조합으로 생긴다&#x27;는 피보나치식 점화 관계를 사용할 수 있습니다. 실제 식물 생장은 훨씬 복잡하지만, 이전 상태 두 개의 합으로 다음 상태를 만드는 재귀적 성장 개념을 학습하기 좋은 모델입니다.">
+  <div class="case-top">
+    <span class="topic 피보나치">피보나치</span>
+    <span class="case-no">피-09</span>
+  </div>
+  <h3>식물의 가지·눈 성장 모델</h3>
+  <div class="field">식물 · 성장 모델</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>일부 식물의 가지나 눈의 발생을 설명하는 교육용 모델에서는 &#x27;이번 단계의 새 성장량이 앞선 두 단계의 조합으로 생긴다&#x27;는 피보나치식 점화 관계를 사용할 수 있습니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>실제 식물 생장은 훨씬 복잡하지만, 이전 상태 두 개의 합으로 다음 상태를 만드는 재귀적 성장 개념을 학습하기 좋은 모델입니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>이 사례는 실제 가지 수가 항상 피보나치라는 주장이 아니라, 생장 과정을 단순화한 수학적 모델입니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>steps = 12
+growth = [1, 1]
+
+for k in range(2, steps):
+    growth.append(growth[-1] + growth[-2])
+
+for year, buds in enumerate(growth, start=1):
+    print(f&quot;{year:2d}단계: {buds:3d}개의 성장 단위&quot;)</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>처음 두 단계의 성장 단위를 1, 1로 둡니다.</li><li>새 단계는 바로 앞 두 단계의 합으로 계산합니다.</li><li>append()로 값을 계속 저장합니다.</li><li>실제 생육 데이터와 비교하면 모델의 한계도 토론할 수 있습니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 1, 1, 2, 3, 5, 8, … 형태의 재귀적 성장량이 출력됩니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="피보나치" data-search="피보나치 꿀벌 가계도의 피보나치 구조 생물 · 유전 구조 꿀벌은 반수체-이배체 성결정 체계를 가지며, 수벌은 어미 한 마리에서, 암벌은 어미와 아비에서 유래합니다. 세대를 거슬러 올라갈 때 조상의 수를 이상화하면 피보나치 관계가 나타납니다. 수벌 조상 수와 암벌 조상 수가 서로를 재귀적으로 생성하기 때문에 전체 조상 수가 1, 2, 3, 5, 8, … 식으로 증가하는 고전적 모델이 됩니다.">
+  <div class="case-top">
+    <span class="topic 피보나치">피보나치</span>
+    <span class="case-no">피-10</span>
+  </div>
+  <h3>꿀벌 가계도의 피보나치 구조</h3>
+  <div class="field">생물 · 유전 구조</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>꿀벌은 반수체-이배체 성결정 체계를 가지며, 수벌은 어미 한 마리에서, 암벌은 어미와 아비에서 유래합니다. 세대를 거슬러 올라갈 때 조상의 수를 이상화하면 피보나치 관계가 나타납니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>수벌 조상 수와 암벌 조상 수가 서로를 재귀적으로 생성하기 때문에 전체 조상 수가 1, 2, 3, 5, 8, … 식으로 증가하는 고전적 모델이 됩니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>현실의 가계도에서는 동일 조상이 여러 경로로 중복될 수 있어 실제 &#x27;서로 다른 조상 수&#x27;가 이 모델과 정확히 같지는 않습니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>male = 1
+female = 1
+
+for generation in range(1, 11):
+    total = male + female
+    print(generation, total)
+    male, female = female, male + female</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>male과 female은 두 유형의 조상 기여를 단순화한 상태값입니다.</li><li>각 세대에서 total을 더합니다.</li><li>다음 상태를 이전 두 값으로 갱신합니다.</li><li>재귀 관계 때문에 총수가 피보나치형으로 증가합니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 세대를 거슬러 갈수록 피보나치형 조상 수열이 나타납니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="황금비" data-search="황금비 정오각형과 오각별 기하 · 디자인 정오각형과 그 대각선을 이어 만든 오각별에서는 대각선과 변의 길이 비가 정확히 황금비 φ=(1+√5)/2가 됩니다. 별 모양 로고·장식·타일에서 이 구조를 실제로 볼 수 있습니다. 정오각형의 닮음 구조 때문에 대각선/변의 비가 φ를 만족하며 φ²=φ+1이라는 관계도 자연스럽게 나타납니다.">
+  <div class="case-top">
+    <span class="topic 황금비">황금비</span>
+    <span class="case-no">황-01</span>
+  </div>
+  <h3>정오각형과 오각별</h3>
+  <div class="field">기하 · 디자인</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>정오각형과 그 대각선을 이어 만든 오각별에서는 대각선과 변의 길이 비가 정확히 황금비 φ=(1+√5)/2가 됩니다. 별 모양 로고·장식·타일에서 이 구조를 실제로 볼 수 있습니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>정오각형의 닮음 구조 때문에 대각선/변의 비가 φ를 만족하며 φ²=φ+1이라는 관계도 자연스럽게 나타납니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>이 사례는 &#x27;근사&#x27;가 아니라 이상적인 정오각형에서 성립하는 정확한 기하학적 황금비입니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+
+phi = (1 + np.sqrt(5)) / 2
+side = 2 * np.sin(np.pi / 5)
+diagonal = 2 * np.sin(2*np.pi / 5)
+
+print(&quot;황금비 φ =&quot;, phi)
+print(&quot;대각선/변 =&quot;, diagonal / side)</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>단위원 위 정오각형을 생각합니다.</li><li>현 길이 공식으로 변과 대각선의 길이를 계산합니다.</li><li>diagonal/side를 구하면 φ와 같은 값이 나옵니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 두 값 모두 약 1.6180339887로 일치합니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="황금비" data-search="황금비 황금각과 해바라기 포장 식물 · 공간 최적화 해바라기와 여러 식물의 새 기관은 약 137.5°의 발산각으로 나타나는 경우가 많습니다. 이 각은 황금비에서 유도되는 황금각입니다. 황금각은 360°/φ² ≈ 137.5077°입니다. 유리수 비율로 잘 근사되지 않는 각이라 같은 방사 방향으로 점들이 쉽게 겹쳐 쌓이지 않습니다.">
+  <div class="case-top">
+    <span class="topic 황금비">황금비</span>
+    <span class="case-no">황-02</span>
+  </div>
+  <h3>황금각과 해바라기 포장</h3>
+  <div class="field">식물 · 공간 최적화</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>해바라기와 여러 식물의 새 기관은 약 137.5°의 발산각으로 나타나는 경우가 많습니다. 이 각은 황금비에서 유도되는 황금각입니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>황금각은 360°/φ² ≈ 137.5077°입니다. 유리수 비율로 잘 근사되지 않는 각이라 같은 방사 방향으로 점들이 쉽게 겹쳐 쌓이지 않습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>식물이 &#x27;황금비를 계산해서&#x27; 배열하는 것은 아닙니다. 성장 규칙과 물리적 상호작용의 결과를 수학적으로 황금각 모델로 설명하는 것입니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import math
+
+phi = (1 + math.sqrt(5)) / 2
+golden_angle = 360 / (phi ** 2)
+
+print(&quot;φ =&quot;, phi)
+print(&quot;황금각 =&quot;, golden_angle)</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>φ를 정확한 식으로 계산합니다.</li><li>360°를 φ²로 나누면 작은 황금각을 얻습니다.</li><li>결과는 약 137.507764°입니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 황금각이 약 137.5°임을 수치로 확인합니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="황금비" data-search="황금비 알로에·다육식물의 황금각 근사 식물 · 잎 배열 일부 알로에와 다육식물의 잎 배열은 위에서 보았을 때 황금각에 가까운 발산각을 보이며 공간을 나누는 회전 패턴을 형성합니다. 각 잎을 황금각만큼 회전시키면 같은 방사선에 잎이 반복적으로 정렬되는 현상을 늦출 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 황금비">황금비</span>
+    <span class="case-no">황-03</span>
+  </div>
+  <h3>알로에·다육식물의 황금각 근사</h3>
+  <div class="field">식물 · 잎 배열</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>일부 알로에와 다육식물의 잎 배열은 위에서 보았을 때 황금각에 가까운 발산각을 보이며 공간을 나누는 회전 패턴을 형성합니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>각 잎을 황금각만큼 회전시키면 같은 방사선에 잎이 반복적으로 정렬되는 현상을 늦출 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>개별 식물의 실제 각은 137.5°에 정확히 고정되지 않으며 종·생장 단계에 따라 달라집니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+phi = (1 + np.sqrt(5)) / 2
+a = 2*np.pi / (phi**2)
+
+N = 60
+for n in range(N):
+    r = 0.08*n
+    t = n*a
+    plt.arrow(0, 0, r*np.cos(t), r*np.sin(t),
+              head_width=0.08, length_includes_head=True)
+
+plt.axis(&quot;equal&quot;)
+plt.axis(&quot;off&quot;)
+plt.title(&quot;Golden-angle Rosette&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>a가 황금각입니다.</li><li>n번째 잎은 n×a 방향을 향합니다.</li><li>잎 길이를 순서에 따라 증가시킵니다.</li><li>화살표가 중심 주위를 고르게 회전합니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 같은 방향으로 잎이 몰리는 현상이 적은 로제트 패턴이 생성됩니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="황금비" data-search="황금비 연속 피보나치 수의 비 수 · 자연 패턴의 연결 자연에서 피보나치형 나선 수가 관찰될 때, 연속한 피보나치 수의 비 13/8, 21/13, 34/21, 55/34 …는 황금비에 점점 가까워집니다. φ는 피보나치 수열의 성장률을 지배하는 상수입니다. n이 커질수록 fₙ₊₁/fₙ → φ가 됩니다.">
+  <div class="case-top">
+    <span class="topic 황금비">황금비</span>
+    <span class="case-no">황-04</span>
+  </div>
+  <h3>연속 피보나치 수의 비</h3>
+  <div class="field">수 · 자연 패턴의 연결</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>자연에서 피보나치형 나선 수가 관찰될 때, 연속한 피보나치 수의 비 13/8, 21/13, 34/21, 55/34 …는 황금비에 점점 가까워집니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>φ는 피보나치 수열의 성장률을 지배하는 상수입니다. n이 커질수록 Fₙ₊₁/Fₙ → φ가 됩니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>자연물에서 어떤 두 길이의 비가 우연히 1.618에 가깝다는 사실만으로 황금비 법칙이라고 결론 내리면 안 됩니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>fib = [1, 1]
+
+for _ in range(2, 15):
+    fib.append(fib[-1] + fib[-2])
+
+for a, b in zip(fib[:-1], fib[1:]):
+    print(f&quot;{b:4d}/{a:4d} = {b/a:.8f}&quot;)</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>피보나치 수를 15항까지 만듭니다.</li><li>연속한 두 항을 b/a로 나눕니다.</li><li>출력값이 1.618033… 주변으로 수렴하는 모습을 관찰합니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 1, 2, 1.5, 1.666…, 1.6, 1.625, …가 점차 φ에 가까워집니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="황금비" data-search="황금비 황금직사각형을 이용한 편집·포스터 설계 시각 디자인 디자이너는 가로와 세로 비가 φ인 황금직사각형이나 황금분할선을 의도적으로 레이아웃에 사용할 수 있습니다. 이는 자연의 필연 법칙이 아니라 사람이 선택하는 구성 원리입니다. 가로 w에 대해 세로를 h=w/φ로 잡으면 w/h=φ가 됩니다. 다시 정사각형과 작은 황금직사각형으로 나눌 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 황금비">황금비</span>
+    <span class="case-no">황-05</span>
+  </div>
+  <h3>황금직사각형을 이용한 편집·포스터 설계</h3>
+  <div class="field">시각 디자인</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>디자이너는 가로와 세로 비가 φ인 황금직사각형이나 황금분할선을 의도적으로 레이아웃에 사용할 수 있습니다. 이는 자연의 필연 법칙이 아니라 사람이 선택하는 구성 원리입니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>가로 W에 대해 세로를 H=W/φ로 잡으면 W/H=φ가 됩니다. 다시 정사각형과 작은 황금직사각형으로 나눌 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>황금비를 사용했다고 해서 자동으로 더 아름다운 디자인이 되는 것은 아닙니다. 미적 선호는 맥락과 문화, 구성에 따라 달라집니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
+import math
+
+phi = (1 + math.sqrt(5)) / 2
+W = 10
+H = W / phi
+
+fig, ax = plt.subplots()
+ax.add_patch(Rectangle((0, 0), W, H, fill=False, linewidth=2))
+ax.axvline(H, linestyle=&quot;--&quot;)
+ax.text(H/2, H/2, &quot;square&quot;, ha=&quot;center&quot;)
+ax.text((H+W)/2, H/2, &quot;remainder&quot;, ha=&quot;center&quot;)
+ax.set_xlim(-0.5, W+0.5)
+ax.set_ylim(-0.5, H+0.5)
+ax.set_aspect(&quot;equal&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>W/H가 황금비가 되도록 H=W/φ로 둡니다.</li><li>큰 직사각형을 그리고 한 변 H인 정사각형으로 나눕니다.</li><li>남는 직사각형도 다시 황금비 구조를 가집니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 황금직사각형이 정사각형과 더 작은 황금직사각형으로 분할됩니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="황금비" data-search="황금비 황금나선의 그래픽·로고 모델 그래픽 · 수학 모델 황금나선은 반지름이 90° 회전할 때마다 φ배가 되는 특별한 로그나선입니다. 그래픽 디자인과 수학 시각화에서 의도적으로 사용됩니다. 로그나선 r=a·e^(bθ)에서 θ가 π/2 증가할 때 반지름이 φ배가 되도록 b=2lnφ/π로 정합니다.">
+  <div class="case-top">
+    <span class="topic 황금비">황금비</span>
+    <span class="case-no">황-06</span>
+  </div>
+  <h3>황금나선의 그래픽·로고 모델</h3>
+  <div class="field">그래픽 · 수학 모델</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>황금나선은 반지름이 90° 회전할 때마다 φ배가 되는 특별한 로그나선입니다. 그래픽 디자인과 수학 시각화에서 의도적으로 사용됩니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>로그나선 r=a·e^(bθ)에서 θ가 π/2 증가할 때 반지름이 φ배가 되도록 b=2lnφ/π로 정합니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>앵무조개·태풍·은하가 모두 정확한 황금나선이라는 대중적 주장은 과장될 수 있습니다. 자연에는 로그나선이 많지만 황금나선과 정확히 일치할 필요는 없습니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+phi = (1 + np.sqrt(5)) / 2
+b = 2*np.log(phi) / np.pi
+
+theta = np.linspace(0, 6*np.pi, 1000)
+r = np.exp(b * theta)
+
+x = r*np.cos(theta)
+y = r*np.sin(theta)
+
+plt.plot(x, y)
+plt.axis(&quot;equal&quot;)
+plt.title(&quot;Golden Spiral&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>b를 황금나선 조건에 맞춰 계산합니다.</li><li>θ를 0부터 6π까지 증가시킵니다.</li><li>r=e^(bθ)로 로그나선을 만듭니다.</li><li>극좌표를 직교좌표로 변환합니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 90° 회전할 때마다 반지름이 약 φ배 증가하는 나선이 그려집니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="황금비" data-search="황금비 펜로즈 타일링의 오각 대칭 타일 · 건축 · 장식 펜로즈 타일링은 비주기적이면서도 규칙적인 패턴을 만들며, 타일의 길이 관계와 오각 대칭 속에 황금비가 나타납니다. 바닥·벽·예술 설치물에서 실제 디자인으로 사용될 수 있습니다. 두 종류의 마름모 또는 카이트·다트 타일을 일정 규칙으로 배치하면 주기적으로 반복되지 않는 질서를 만들 수 있습니다. 오각형 기하와 φ가 핵심 관계로 등장합니다.">
+  <div class="case-top">
+    <span class="topic 황금비">황금비</span>
+    <span class="case-no">황-07</span>
+  </div>
+  <h3>펜로즈 타일링의 오각 대칭</h3>
+  <div class="field">타일 · 건축 · 장식</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>펜로즈 타일링은 비주기적이면서도 규칙적인 패턴을 만들며, 타일의 길이 관계와 오각 대칭 속에 황금비가 나타납니다. 바닥·벽·예술 설치물에서 실제 디자인으로 사용될 수 있습니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>두 종류의 마름모 또는 카이트·다트 타일을 일정 규칙으로 배치하면 주기적으로 반복되지 않는 질서를 만들 수 있습니다. 오각형 기하와 φ가 핵심 관계로 등장합니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>아래 코드는 완전한 펜로즈 생성기가 아니라 황금비를 가진 두 길이 스케일을 이용한 교육용 별 패턴입니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+phi = (1 + np.sqrt(5)) / 2
+angles = np.deg2rad(np.arange(0, 360, 36))
+
+radii = np.array([phi if i % 2 == 0 else 1 for i in range(10)])
+x = radii*np.cos(angles)
+y = radii*np.sin(angles)
+
+plt.plot(np.r_[x, x[0]], np.r_[y, y[0]])
+plt.axis(&quot;equal&quot;)
+plt.axis(&quot;off&quot;)
+plt.title(&quot;Five-fold Golden-ratio Motif&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>36° 간격은 10개의 꼭짓점을 만듭니다.</li><li>반지름을 1과 φ로 번갈아 사용합니다.</li><li>5회전 대칭과 황금비 스케일이 결합된 별 무늬가 생깁니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 펜로즈 타일링에서 자주 만나는 5회전 대칭의 핵심 기하를 단순하게 확인할 수 있습니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="황금비" data-search="황금비 정이십면체·정십이면체의 좌표 3차원 기하 · 구조 설계 정이십면체와 정십이면체 같은 플라톤 다면체의 좌표 표현에는 황금비가 자연스럽게 등장합니다. 5회전 대칭을 갖는 분자·구조물·디자인을 모델링할 때 이런 기하가 활용됩니다. 정이십면체의 꼭짓점은 (0, ±1, ±φ), (±1, ±φ, 0), (±φ, 0, ±1) 꼴로 둘 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 황금비">황금비</span>
+    <span class="case-no">황-08</span>
+  </div>
+  <h3>정이십면체·정십이면체의 좌표</h3>
+  <div class="field">3차원 기하 · 구조 설계</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>정이십면체와 정십이면체 같은 플라톤 다면체의 좌표 표현에는 황금비가 자연스럽게 등장합니다. 5회전 대칭을 갖는 분자·구조물·디자인을 모델링할 때 이런 기하가 활용됩니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>정이십면체의 꼭짓점은 (0, ±1, ±φ), (±1, ±φ, 0), (±φ, 0, ±1) 꼴로 둘 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>실제 구조물이 정확한 정이십면체가 아니라면 길이 비도 정확히 φ가 아닐 수 있습니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+phi = (1 + np.sqrt(5)) / 2
+pts = []
+
+for a in [-1, 1]:
+    for b in [-phi, phi]:
+        pts += [(0,a,b), (a,b,0), (b,0,a)]
+
+pts = np.array(pts)
+
+ax = plt.figure().add_subplot(projection=&quot;3d&quot;)
+ax.scatter(pts[:,0], pts[:,1], pts[:,2], s=50)
+ax.set_title(&quot;Icosahedron Vertex Coordinates&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>φ를 이용해 12개의 꼭짓점 좌표를 만듭니다.</li><li>좌표의 순환 배치가 정이십면체의 대칭을 만듭니다.</li><li>3차원 산점도로 꼭짓점 구조를 확인합니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 황금비가 포함된 좌표들이 높은 3차원 대칭을 이루는 모습을 볼 수 있습니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="황금비" data-search="황금비 황금비 캘리퍼를 이용한 디자인 측정 제품 · 공예 황금비 캘리퍼는 한 쌍의 길이를 항상 약 1:φ로 유지하도록 연결한 측정 도구입니다. 공예·디자인 교육에서 비례를 비교하는 데 사용할 수 있습니다. 한 길이를 l이라 하면 다른 길이는 l/φ 또는 l·φ가 됩니다. 움직이는 링크 구조로 이 비율을 유지하도록 설계할 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 황금비">황금비</span>
+    <span class="case-no">황-09</span>
+  </div>
+  <h3>황금비 캘리퍼를 이용한 디자인 측정</h3>
+  <div class="field">제품 · 공예</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>황금비 캘리퍼는 한 쌍의 길이를 항상 약 1:φ로 유지하도록 연결한 측정 도구입니다. 공예·디자인 교육에서 비례를 비교하는 데 사용할 수 있습니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>한 길이를 L이라 하면 다른 길이는 L/φ 또는 L·φ가 됩니다. 움직이는 링크 구조로 이 비율을 유지하도록 설계할 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>사람 얼굴이나 신체를 황금비로 평가해 &#x27;아름다움의 절대 기준&#x27;으로 삼는 것은 과학적으로 신중해야 합니다. 여기서는 측정 도구의 기하만 다룹니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import math
+
+phi = (1 + math.sqrt(5)) / 2
+
+for long_length in [5, 8, 13, 21]:
+    short_length = long_length / phi
+    print(f&quot;{long_length:5.1f} : {short_length:6.3f} &quot;
+          f&quot;= {long_length/short_length:.6f}&quot;)</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>긴 길이를 여러 값으로 바꿉니다.</li><li>짧은 길이는 긴 길이를 φ로 나눕니다.</li><li>두 길이의 비가 항상 같은지 출력으로 확인합니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 어떤 크기로 확대·축소해도 두 길이의 비는 φ로 유지됩니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="황금비" data-search="황금비 황금각을 이용한 센서·점 샘플링 공학 · 컴퓨터 그래픽 구면이나 원판 위에 측정점·표본점을 비교적 균일하게 배치할 때 황금각을 이용한 &#x27;fibonacci sampling&#x27; 기법이 컴퓨터 그래픽·수치 계산에서 사용됩니다. 점 번호마다 황금각만큼 회전시키면 특정 경선이나 방향에 점이 심하게 겹치는 것을 피하면서 간단한 규칙으로 균일한 표본을 만들 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 황금비">황금비</span>
+    <span class="case-no">황-10</span>
+  </div>
+  <h3>황금각을 이용한 센서·점 샘플링</h3>
+  <div class="field">공학 · 컴퓨터 그래픽</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>구면이나 원판 위에 측정점·표본점을 비교적 균일하게 배치할 때 황금각을 이용한 &#x27;Fibonacci sampling&#x27; 기법이 컴퓨터 그래픽·수치 계산에서 사용됩니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>점 번호마다 황금각만큼 회전시키면 특정 경선이나 방향에 점이 심하게 겹치는 것을 피하면서 간단한 규칙으로 균일한 표본을 만들 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>이는 자연 현상이라기보다 황금비의 성질을 활용한 현대 공학·계산 기법입니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+N = 500
+phi = (1 + np.sqrt(5)) / 2
+ga = 2*np.pi / (phi**2)
+
+i = np.arange(N)
+z = 1 - 2*(i + 0.5)/N
+r = np.sqrt(1 - z*z)
+theta = i * ga
+
+x = r*np.cos(theta)
+y = r*np.sin(theta)
+
+ax = plt.figure().add_subplot(projection=&quot;3d&quot;)
+ax.scatter(x, y, z, s=8)
+ax.set_title(&quot;Golden-angle Sphere Sampling&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>z를 위에서 아래로 균일하게 배치합니다.</li><li>각 점의 경도 역할을 하는 theta를 황금각씩 이동합니다.</li><li>r=√(1-z²)로 구면 위에 점을 놓습니다.</li><li>점이 특정 방향에 줄지어 겹치는 것을 줄입니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 구면 전체에 비교적 균일한 점 분포가 나타납니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="프랙탈" data-search="프랙탈 고사리 잎의 자기유사 구조 식물 · 잎 고사리의 큰 잎은 여러 작은 잎조각으로 나뉘고, 그 작은 부분들이 전체 잎과 비슷한 형태를 반복합니다. 자연 프랙탈의 대표적인 근사 자기유사 사례입니다. 완전한 자기복제가 아니라 크기가 달라지며 비슷한 형태가 반복되는 통계적·근사 자기유사성입니다. barnsley fern은 몇 개의 아핀변환을 확률적으로 반복해 이를 모델링합니다.">
+  <div class="case-top">
+    <span class="topic 프랙탈">프랙탈</span>
+    <span class="case-no">프-01</span>
+  </div>
+  <h3>고사리 잎의 자기유사 구조</h3>
+  <div class="field">식물 · 잎</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>고사리의 큰 잎은 여러 작은 잎조각으로 나뉘고, 그 작은 부분들이 전체 잎과 비슷한 형태를 반복합니다. 자연 프랙탈의 대표적인 근사 자기유사 사례입니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>완전한 자기복제가 아니라 크기가 달라지며 비슷한 형태가 반복되는 통계적·근사 자기유사성입니다. Barnsley fern은 몇 개의 아핀변환을 확률적으로 반복해 이를 모델링합니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>실제 고사리는 수학적 Barnsley fern과 정확히 같지 않습니다. 프랙탈 모델이 형태적 특징을 압축해 보여 주는 것입니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import random
+import matplotlib.pyplot as plt
+
+x, y = 0.0, 0.0
+xs, ys = [], []
+
+for _ in range(60000):
+    r = random.random()
+    if r &lt; 0.01:
+        x, y = 0, 0.16*y
+    elif r &lt; 0.86:
+        x, y = 0.85*x + 0.04*y, -0.04*x + 0.85*y + 1.6
+    elif r &lt; 0.93:
+        x, y = 0.20*x - 0.26*y, 0.23*x + 0.22*y + 1.6
+    else:
+        x, y = -0.15*x + 0.28*y, 0.26*x + 0.24*y + 0.44
+    xs.append(x); ys.append(y)
+
+plt.scatter(xs, ys, s=0.15)
+plt.axis(&quot;off&quot;)
+plt.title(&quot;Barnsley Fern&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>네 가지 아핀변환 중 하나를 확률적으로 선택합니다.</li><li>현재 점을 변환해 다음 점을 만듭니다.</li><li>수만 번 반복하면 개별 점이 고사리 모양을 형성합니다.</li><li>작은 잎 부분이 전체와 닮은 자기유사성이 나타납니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 점의 집합만으로 놀랍도록 고사리와 비슷한 프랙탈이 나타납니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="프랙탈" data-search="프랙탈 로마네스코 브로콜리의 반복 봉우리 식물 · 채소 로마네스코는 큰 원뿔형 봉우리 위에 더 작은 원뿔형 봉우리들이 반복되어 보이는 근사 자기유사 구조를 갖습니다. 한 구조 안에 축소된 구조를 반복 배치하는 재귀 규칙으로 프랙탈적 모습을 모델링할 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 프랙탈">프랙탈</span>
+    <span class="case-no">프-02</span>
+  </div>
+  <h3>로마네스코 브로콜리의 반복 봉우리</h3>
+  <div class="field">식물 · 채소</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>로마네스코는 큰 원뿔형 봉우리 위에 더 작은 원뿔형 봉우리들이 반복되어 보이는 근사 자기유사 구조를 갖습니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>한 구조 안에 축소된 구조를 반복 배치하는 재귀 규칙으로 프랙탈적 모습을 모델링할 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>반복은 세포 크기까지 무한히 이어지지 않으므로 실제 생물은 수학적으로 무한한 프랙탈이 아닙니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import matplotlib.pyplot as plt
+from matplotlib.patches import Circle
+import numpy as np
+
+fig, ax = plt.subplots()
+
+def cluster(x, y, r, depth):
+    ax.add_patch(Circle((x, y), r, fill=False))
+    if depth == 0:
+        return
+    for a in np.linspace(0, 2*np.pi, 6, endpoint=False):
+        cluster(x + 0.72*r*np.cos(a),
+                y + 0.72*r*np.sin(a),
+                r*0.38, depth-1)
+
+cluster(0, 0, 1, 4)
+ax.set_aspect(&quot;equal&quot;)
+ax.axis(&quot;off&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>cluster()가 자기 자신을 다시 호출하는 재귀함수입니다.</li><li>큰 원 주변에 6개의 작은 원을 배치합니다.</li><li>각 작은 원에서도 같은 규칙을 반복합니다.</li><li>depth가 0이면 재귀를 종료합니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 큰 구조와 작은 구조가 반복되는 계층적 패턴이 만들어집니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="프랙탈" data-search="프랙탈 나무의 가지 분기 식물 · 구조 나무는 큰 줄기에서 가지가 갈라지고, 가지에서 더 작은 가지가 갈라지는 계층 구조를 보입니다. 작은 가지의 분기 방식이 큰 구조와 어느 정도 닮습니다. 길이를 일정 비율로 줄이고 각도를 바꾸며 재귀적으로 선분을 그리면 프랙탈 나무를 만들 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 프랙탈">프랙탈</span>
+    <span class="case-no">프-03</span>
+  </div>
+  <h3>나무의 가지 분기</h3>
+  <div class="field">식물 · 구조</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>나무는 큰 줄기에서 가지가 갈라지고, 가지에서 더 작은 가지가 갈라지는 계층 구조를 보입니다. 작은 가지의 분기 방식이 큰 구조와 어느 정도 닮습니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>길이를 일정 비율로 줄이고 각도를 바꾸며 재귀적으로 선분을 그리면 프랙탈 나무를 만들 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>실제 나무의 분기각과 길이 비율은 햇빛·바람·유전·손상 등에 따라 달라집니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+def tree(x, y, length, angle, depth):
+    if depth == 0:
+        return
+    x2 = x + length*np.cos(angle)
+    y2 = y + length*np.sin(angle)
+    plt.plot([x, x2], [y, y2])
+    tree(x2, y2, length*0.72, angle+0.45, depth-1)
+    tree(x2, y2, length*0.72, angle-0.45, depth-1)
+
+tree(0, 0, 1, np.pi/2, 10)
+plt.axis(&quot;equal&quot;)
+plt.axis(&quot;off&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>tree()는 가지 하나를 그리고 두 개의 하위 가지를 호출합니다.</li><li>하위 가지 길이를 0.72배로 줄입니다.</li><li>각도를 ±0.45라디안만큼 벌립니다.</li><li>깊이 10까지 반복해 나무 모양을 만듭니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 큰 가지와 작은 가지가 비슷한 분기 규칙을 반복하는 프랙탈 나무가 생성됩니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="프랙탈" data-search="프랙탈 하천과 지류 네트워크 지형 · 수계 큰 강에는 여러 지류가 합류하고, 각 지류에는 더 작은 지류가 연결됩니다. 배수망은 규모가 달라져도 비슷한 분기 특성을 보여 프랙탈 기하로 연구됩니다. 재귀적 분기와 무작위 각도·길이 변화를 함께 사용하면 자연스러운 하천망을 단순하게 모델링할 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 프랙탈">프랙탈</span>
+    <span class="case-no">프-04</span>
+  </div>
+  <h3>하천과 지류 네트워크</h3>
+  <div class="field">지형 · 수계</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>큰 강에는 여러 지류가 합류하고, 각 지류에는 더 작은 지류가 연결됩니다. 배수망은 규모가 달라져도 비슷한 분기 특성을 보여 프랙탈 기하로 연구됩니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>재귀적 분기와 무작위 각도·길이 변화를 함께 사용하면 자연스러운 하천망을 단순하게 모델링할 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>지질, 경사, 강수, 침식 때문에 실제 하천은 단순한 이진 트리보다 훨씬 복잡합니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import random, math
+import matplotlib.pyplot as plt
+
+def river(x, y, length, angle, depth):
+    if depth == 0 or length &lt; 0.02:
+        return
+    x2 = x + length*math.cos(angle)
+    y2 = y + length*math.sin(angle)
+    plt.plot([x, x2], [y, y2], linewidth=max(depth/2, 0.4))
+    for sign in (-1, 1):
+        river(x2, y2, length*random.uniform(0.55,0.75),
+              angle + sign*random.uniform(0.25,0.7), depth-1)
+
+river(0, 0, 1, math.pi/2, 9)
+plt.axis(&quot;equal&quot;)
+plt.axis(&quot;off&quot;)
+plt.title(&quot;River Network Model&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>나무 프랙탈과 비슷하지만 길이와 각도에 무작위성을 넣습니다.</li><li>linewidth를 깊이에 따라 바꾸어 큰 강과 작은 지류를 구분합니다.</li><li>재귀 호출이 지류의 지류를 계속 만듭니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 완전히 규칙적이지 않은 자연스러운 분기형 하천망이 나타납니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="프랙탈" data-search="프랙탈 기관지의 반복 분기 인체 · 호흡기 폐의 기관지는 굵은 기도에서 더 가는 기도로 반복 분기하여 넓은 가스교환 면적에 연결됩니다. 이런 계층적 분기 구조는 프랙탈적 관점으로 분석됩니다. 제한된 부피 안에서 많은 말단부에 도달하려면 분기 네트워크가 효율적입니다. 재귀 분기 모델로 구조적 원리를 시각화할 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 프랙탈">프랙탈</span>
+    <span class="case-no">프-05</span>
+  </div>
+  <h3>기관지의 반복 분기</h3>
+  <div class="field">인체 · 호흡기</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>폐의 기관지는 굵은 기도에서 더 가는 기도로 반복 분기하여 넓은 가스교환 면적에 연결됩니다. 이런 계층적 분기 구조는 프랙탈적 관점으로 분석됩니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>제한된 부피 안에서 많은 말단부에 도달하려면 분기 네트워크가 효율적입니다. 재귀 분기 모델로 구조적 원리를 시각화할 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>실제 기관지는 완전한 이진 분기나 일정 비율 축소가 아니며 세대별 해부학적 차이가 큽니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+def airway(x, y, L, a, depth):
+    if depth == 0:
+        return
+    x2, y2 = x + L*np.cos(a), y + L*np.sin(a)
+    plt.plot([x,x2], [y,y2], linewidth=0.7+depth*0.35)
+    spread = 0.32 + 0.02*depth
+    airway(x2,y2,L*0.76,a+spread,depth-1)
+    airway(x2,y2,L*0.76,a-spread,depth-1)
+
+airway(0,0,1,np.pi/2,9)
+plt.axis(&quot;equal&quot;)
+plt.axis(&quot;off&quot;)
+plt.title(&quot;Bronchial Branching Model&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>상위 기도는 굵게, 하위 기도는 가늘게 그립니다.</li><li>각 분기에서 길이를 0.76배로 줄입니다.</li><li>좌우 두 방향으로 계속 재귀 분기합니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 큰 기관지에서 작은 기관지로 이어지는 계층적 분기 구조가 나타납니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="프랙탈" data-search="프랙탈 혈관 네트워크 인체 · 순환계 동맥과 정맥은 큰 혈관에서 작은 혈관과 모세혈관으로 이어지는 다단계 분기 구조를 갖습니다. 조직 전체에 물질을 전달하기 위한 공간충전형 네트워크입니다. 프랙탈 차원과 분기 법칙은 혈관 구조의 복잡성을 정량화하는 데 사용될 수 있습니다. 아래에서는 가지 수와 길이 축소율을 이용해 단순 모델을 만듭니다.">
+  <div class="case-top">
+    <span class="topic 프랙탈">프랙탈</span>
+    <span class="case-no">프-06</span>
+  </div>
+  <h3>혈관 네트워크</h3>
+  <div class="field">인체 · 순환계</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>동맥과 정맥은 큰 혈관에서 작은 혈관과 모세혈관으로 이어지는 다단계 분기 구조를 갖습니다. 조직 전체에 물질을 전달하기 위한 공간충전형 네트워크입니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>프랙탈 차원과 분기 법칙은 혈관 구조의 복잡성을 정량화하는 데 사용될 수 있습니다. 아래에서는 가지 수와 길이 축소율을 이용해 단순 모델을 만듭니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>실제 혈관 구조는 장기마다 다르고 혈류역학·조직 성장의 영향을 받습니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+segments = []
+
+def vessel(p, L, ang, depth):
+    if depth == 0:
+        return
+    q = (p[0] + L*np.cos(ang), p[1] + L*np.sin(ang))
+    segments.append((p, q, depth))
+    vessel(q, L*0.68, ang+0.38, depth-1)
+    vessel(q, L*0.68, ang-0.52, depth-1)
+
+vessel((0,0), 1, np.pi/2, 8)
+
+for p,q,d in segments:
+    plt.plot([p[0],q[0]],[p[1],q[1]], linewidth=0.3+d*0.22)
+
+plt.axis(&quot;equal&quot;); plt.axis(&quot;off&quot;); plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>segments에 모든 혈관 선분을 저장합니다.</li><li>좌우 분기각을 조금 다르게 주어 완전한 대칭을 피합니다.</li><li>깊이에 따라 선 굵기를 바꿉니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 굵은 중심 혈관에서 수많은 가는 말단 혈관으로 확장되는 그림이 생성됩니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="프랙탈" data-search="프랙탈 번개의 가지치기 대기 · 전기 방전 번개는 전기장이 강한 영역을 따라 진행하며 여러 갈래로 분기하는 불규칙한 경로를 만듭니다. 이런 방전 패턴은 프랙탈 차원을 갖는 복잡한 가지 구조로 분석되기도 합니다. 결정론적 프랙탈보다 무작위 분기 프랙탈이 번개의 시각적 특징을 더 잘 흉내 냅니다.">
+  <div class="case-top">
+    <span class="topic 프랙탈">프랙탈</span>
+    <span class="case-no">프-07</span>
+  </div>
+  <h3>번개의 가지치기</h3>
+  <div class="field">대기 · 전기 방전</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>번개는 전기장이 강한 영역을 따라 진행하며 여러 갈래로 분기하는 불규칙한 경로를 만듭니다. 이런 방전 패턴은 프랙탈 차원을 갖는 복잡한 가지 구조로 분석되기도 합니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>결정론적 프랙탈보다 무작위 분기 프랙탈이 번개의 시각적 특징을 더 잘 흉내 냅니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>아래 코드는 전기장과 플라스마 물리를 계산하지 않는 단순 그래픽 모델입니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import random, math
+import matplotlib.pyplot as plt
+
+def bolt(x, y, L, angle, depth):
+    if depth == 0:
+        return
+    angle += random.uniform(-0.28, 0.28)
+    x2 = x + L*math.cos(angle)
+    y2 = y + L*math.sin(angle)
+    plt.plot([x,x2],[y,y2], linewidth=0.4+depth*0.25)
+    bolt(x2,y2,L*0.78,angle,depth-1)
+    if random.random() &lt; 0.55:
+        bolt(x2,y2,L*0.55,angle+random.uniform(-1,1),depth-2)
+
+bolt(0,1,0.24,-math.pi/2,13)
+plt.axis(&quot;equal&quot;); plt.axis(&quot;off&quot;); plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>주 경로가 매 단계 조금씩 무작위로 휘어집니다.</li><li>일정 확률로 더 짧은 옆 가지를 만듭니다.</li><li>재귀 깊이가 줄어들면서 가지가 자연스럽게 끝납니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 직선이 아닌 불규칙한 주 방전과 여러 개의 곁가지가 나타납니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="프랙탈" data-search="프랙탈 해안선의 복잡한 경계 지리 · 지형 해안선은 멀리서 보면 단순해 보여도 확대할수록 만, 곶, 바위 등 더 많은 굴곡이 드러납니다. 측정 자의 길이에 따라 측정한 총길이가 달라지는 &#x27;해안선 역설&#x27;과 연결됩니다. 프랙탈 차원은 선의 복잡성이 확대에 따라 얼마나 증가하는지를 나타냅니다. 코흐 곡선은 이 현상을 설명하는 대표적 이상화 모델입니다.">
+  <div class="case-top">
+    <span class="topic 프랙탈">프랙탈</span>
+    <span class="case-no">프-08</span>
+  </div>
+  <h3>해안선의 복잡한 경계</h3>
+  <div class="field">지리 · 지형</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>해안선은 멀리서 보면 단순해 보여도 확대할수록 만, 곶, 바위 등 더 많은 굴곡이 드러납니다. 측정 자의 길이에 따라 측정한 총길이가 달라지는 &#x27;해안선 역설&#x27;과 연결됩니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>프랙탈 차원은 선의 복잡성이 확대에 따라 얼마나 증가하는지를 나타냅니다. 코흐 곡선은 이 현상을 설명하는 대표적 이상화 모델입니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>실제 해안선은 코흐 곡선이 아니며 원자 크기까지 무한히 복잡해지는 수학적 프랙탈도 아닙니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+def koch(p1, p2, depth):
+    if depth == 0:
+        return [p1, p2]
+    p1, p2 = np.array(p1), np.array(p2)
+    v = (p2-p1)/3
+    a = p1 + v
+    c = p1 + 2*v
+    rot = np.array([[0.5,-np.sqrt(3)/2],
+                    [np.sqrt(3)/2,0.5]])
+    b = a + rot@v
+    parts = [(p1,a),(a,b),(b,c),(c,p2)]
+    out = []
+    for u,w in parts:
+        seg = koch(u,w,depth-1)
+        out += seg[:-1]
+    return out + [p2]
+
+pts = np.array(koch((0,0),(1,0),5))
+plt.plot(pts[:,0],pts[:,1])
+plt.axis(&quot;equal&quot;); plt.axis(&quot;off&quot;); plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>한 선분을 세 등분합니다.</li><li>가운데 부분 대신 정삼각형 모양의 두 선분을 추가합니다.</li><li>각 새 선분에 같은 규칙을 재귀 적용합니다.</li><li>단계가 증가할수록 경계 길이와 세부 구조가 늘어납니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 확대할수록 같은 톱니 구조가 반복되는 해안선 유사 경계가 생성됩니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="프랙탈" data-search="프랙탈 눈송이의 가지 패턴 기상 · 결정 눈 결정은 육각 대칭을 바탕으로 가지가 반복적으로 성장해 크고 작은 가지가 닮은 형태를 보일 수 있습니다. 눈송이는 자연에서 관찰되는 프랙탈 유사 패턴의 좋은 사례입니다. 코흐 눈송이는 실제 결정 성장의 물리를 그대로 재현하지는 않지만 육각 대칭과 반복적 경계 생성을 학습하기 좋은 수학 모델입니다.">
+  <div class="case-top">
+    <span class="topic 프랙탈">프랙탈</span>
+    <span class="case-no">프-09</span>
+  </div>
+  <h3>눈송이의 가지 패턴</h3>
+  <div class="field">기상 · 결정</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>눈 결정은 육각 대칭을 바탕으로 가지가 반복적으로 성장해 크고 작은 가지가 닮은 형태를 보일 수 있습니다. 눈송이는 자연에서 관찰되는 프랙탈 유사 패턴의 좋은 사례입니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>코흐 눈송이는 실제 결정 성장의 물리를 그대로 재현하지는 않지만 육각 대칭과 반복적 경계 생성을 학습하기 좋은 수학 모델입니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>실제 눈 결정의 형태는 온도와 습도에 매우 민감하며 완벽한 코흐 눈송이가 아닙니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+def koch_curve(points, depth):
+    for _ in range(depth):
+        new = []
+        for p, q in zip(points[:-1], points[1:]):
+            p, q = np.array(p), np.array(q)
+            v = (q-p)/3
+            a, c = p+v, p+2*v
+            rot = np.array([[0.5,-np.sqrt(3)/2],
+                            [np.sqrt(3)/2,0.5]])
+            b = a + rot@v
+            new += [p,a,b,c]
+        new.append(points[-1])
+        points = new
+    return np.array(points)
+
+tri = [(0,0),(1,0),(0.5,-np.sqrt(3)/2),(0,0)]
+pts = koch_curve(tri, 4)
+plt.plot(pts[:,0],pts[:,1])
+plt.axis(&quot;equal&quot;); plt.axis(&quot;off&quot;); plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>정삼각형에서 시작합니다.</li><li>각 변을 코흐 규칙으로 반복 변환합니다.</li><li>삼각형의 세 변 모두 같은 방식으로 복잡해집니다.</li><li>반복 횟수가 늘수록 눈송이 같은 경계가 생깁니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 육각 대칭을 연상시키는 복잡한 프랙탈 눈송이 윤곽이 그려집니다.</p>
+  </details>
+</article>
+
+<article class="case" data-topic="프랙탈" data-search="프랙탈 산맥과 거친 지형 지형 · 컴퓨터 그래픽 산의 윤곽은 한 가지 크기의 매끈한 곡선이 아니라 여러 규모의 능선과 골짜기가 겹쳐 있는 거친 구조입니다. 프랙탈 기반 지형 생성은 이러한 다중 스케일 거칠기를 모사합니다. 여러 주파수의 파동 또는 잡음을 크기별로 합치면 큰 산세 위에 작은 굴곡이 겹쳐지는 프랙탈형 지형을 만들 수 있습니다.">
+  <div class="case-top">
+    <span class="topic 프랙탈">프랙탈</span>
+    <span class="case-no">프-10</span>
+  </div>
+  <h3>산맥과 거친 지형</h3>
+  <div class="field">지형 · 컴퓨터 그래픽</div>
+
+  <section class="explain">
+    <h4>🌍 실생활에서 어떻게 보이나?</h4>
+    <p>산의 윤곽은 한 가지 크기의 매끈한 곡선이 아니라 여러 규모의 능선과 골짜기가 겹쳐 있는 거친 구조입니다. 프랙탈 기반 지형 생성은 이러한 다중 스케일 거칠기를 모사합니다.</p>
+  </section>
+  <section class="explain mathbox">
+    <h4>∑ 수학적으로 무엇을 보는가?</h4>
+    <p>여러 주파수의 파동 또는 잡음을 크기별로 합치면 큰 산세 위에 작은 굴곡이 겹쳐지는 프랙탈형 지형을 만들 수 있습니다.</p>
+  </section>
+  <aside class="caution"><b>정확하게 이해하기</b><br>이 코드는 실제 지질학적 융기·침식 과정을 재현하지 않는 절차적 지형 모델입니다.</aside>
+
+  <details open>
+    <summary>🐍 Python 예시 코드</summary>
+    <div class="code-wrap">
+      <button class="copy" onclick="copyCode(this)">코드 복사</button>
+      <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(2)
+x = np.linspace(0, 1, 2000)
+terrain = np.zeros_like(x)
+
+amplitude = 1.0
+for scale in [1, 2, 4, 8, 16, 32, 64]:
+    phase = np.random.uniform(0, 2*np.pi)
+    terrain += amplitude*np.sin(2*np.pi*scale*x + phase)
+    amplitude *= 0.55
+
+plt.plot(x, terrain)
+plt.fill_between(x, terrain, terrain.min()-1, alpha=0.2)
+plt.title(&quot;Multi-scale Fractal-like Terrain&quot;)
+plt.show()</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>🔎 코드 상세 설명</summary>
+    <ol><li>낮은 주파수는 큰 산세를 만듭니다.</li><li>높은 주파수는 작은 능선과 굴곡을 더합니다.</li><li>주파수가 커질수록 진폭을 0.55배로 줄입니다.</li><li>여러 규모의 구조를 합쳐 거친 지형을 만듭니다.</li></ol>
+    <p class="result"><b>실행 결과:</b> 큰 능선 위에 작은 요철이 연속적으로 겹쳐진 산맥형 윤곽이 생성됩니다.</p>
+  </details>
+</article>
+</div>
+
+<section class="sources">
+<h2>학습 자료의 사실성에 관한 참고</h2>
+<p>식물 엽서배열(phyllotaxis)에서는 해바라기 등 여러 식물에서 서로 이웃한 피보나치 수의 나선 가족이 관찰되며, 황금각은 약 137.5°입니다. 자연의 프랙탈 사례는 보통 정확한 무한 자기유사성보다 근사적·통계적 자기유사성으로 이해하는 것이 적절합니다.</p>
+<p>수업에서는 학생이 실제 사진을 직접 촬영해 나선 수, 발산각, 분기 단계, box-counting 값을 측정한 뒤 이 HTML의 이상화 모델과 비교하도록 확장할 수 있습니다.</p>
+</section>
+</main>
+
+<footer><div class="wrap">피보나치 10개 · 황금비 10개 · 프랙탈 10개 | 실생활 관찰 + 수학 원리 + 주의점 + Python 코드 + 상세 설명</div></footer>
+
+<script>
+let filter='전체';
+const cards=[...document.querySelectorAll('.case')];
+const q=document.getElementById('q');
+
+function apply(){
+  const term=q.value.trim().toLowerCase();
+  cards.forEach(c=>{
+    const okF=filter==='전체'||c.dataset.topic===filter;
+    const okQ=!term||c.dataset.search.includes(term);
+    c.classList.toggle('hidden',!(okF&&okQ));
+  });
+}
+q.addEventListener('input',apply);
+document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-filter]').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); filter=b.dataset.filter; apply();
+}));
+
+async function copyCode(btn){
+  const text=btn.parentElement.querySelector('code').innerText;
+  try{await navigator.clipboard.writeText(text);btn.textContent='복사됨 ✓';setTimeout(()=>btn.textContent='코드 복사',1200)}
+  catch(e){btn.textContent='복사 실패'}
+}
+</script>
+</body></html>
