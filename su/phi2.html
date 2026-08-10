@@ -1,0 +1,1829 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Language" content="ko-KR">
+<title>원주율 파이썬 30문항 자동평가</title>
+<style>
+:root {
+ --bg:#f5f7fb;--paper:#fff;--ink:#172033;--muted:#667085;--line:#dfe5ee;
+ --p:#4f46e5;--p2:#7c3aed;--soft:#eef2ff;--code:#111827;--ok:#067647;
+ --bad:#b42318;--gold:#a15c00;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo","Noto Sans KR",sans-serif;line-height:1.65}
+.hero{background:linear-gradient(135deg,#312e81,#5b21b6 55%,#7e22ce);color:#fff;padding:48px 20px 42px}
+.hero-inner{max-width:1180px;margin:auto}
+.kicker{font-size:13px;letter-spacing:.18em;font-weight:800;opacity:.82}
+h1{font-size:clamp(30px,5vw,54px);line-height:1.15;margin:8px 0 12px}
+.hero p{max-width:880px;margin:0;opacity:.92}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:24px}
+.stat{padding:14px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.1);border-radius:15px}
+.stat b{display:block;font-size:22px}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1180px;margin:auto;padding:10px 18px;display:flex;gap:8px;align-items:center}
+.progress-shell{height:9px;background:#e9edf5;border-radius:99px;overflow:hidden;flex:1}
+#progress{height:100%;width:0;background:linear-gradient(90deg,var(--p),var(--p2));transition:.25s}
+#progressText{font-size:12px;font-weight:800;color:var(--muted);min-width:74px;text-align:right}
+.wrap{max-width:1180px;margin:24px auto 70px;padding:0 18px;display:grid;grid-template-columns:270px minmax(0,1fr);gap:22px}
+aside{position:sticky;top:72px;align-self:start;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:16px;max-height:calc(100vh - 90px);overflow:auto}
+aside h3{font-size:15px;margin:0 0 10px}
+.student-box{display:grid;gap:10px;margin-bottom:14px}
+.student-box label{font-size:12px;font-weight:800;color:var(--muted)}
+.student-box input{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit}
+.navgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.navgrid a{height:34px;display:grid;place-items:center;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:8px;font-size:12px;font-weight:800;background:#fff}
+.navgrid a.done{background:#ecfdf3;border-color:#abefc6;color:#067647}
+.side-note{margin-top:12px;font-size:12px;color:var(--muted);background:#f8fafc;padding:10px;border-radius:10px}
+.question-card{background:var(--paper);border:1px solid var(--line);border-radius:21px;padding:24px;margin-bottom:20px;box-shadow:0 8px 24px rgba(16,24,40,.045);scroll-margin-top:76px}
+.qhead{display:flex;gap:13px;align-items:center;margin-bottom:16px}
+.qnum{width:48px;height:48px;display:grid;place-items:center;background:linear-gradient(135deg,var(--p),var(--p2));border-radius:15px;color:#fff;font-size:17px;font-weight:900;flex:none}
+.mini{font-size:11px;font-weight:900;color:var(--p);letter-spacing:.12em}
+h2{font-size:23px;margin:2px 0 0;line-height:1.35}
+.codebox{overflow:hidden;border-radius:15px;background:var(--code);margin:12px 0 18px}
+.codebar{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;background:#0b1220;color:#a5b4fc;font-size:12px;font-weight:800}
+.codebar button{border:0;background:#27324a;color:#fff;padding:6px 10px;border-radius:7px;cursor:pointer}
+pre{margin:0;padding:17px;overflow:auto;color:#e5e7eb;font:14px/1.58 Consolas,"Courier New",monospace;tab-size:4;white-space:pre}
+.prompt{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:4px 0 12px}
+.rule{font-size:12px;font-weight:800;color:var(--gold);background:#fff7ed;padding:4px 8px;border-radius:999px}
+.choices{display:grid;gap:8px}
+.choice{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);padding:11px 12px;border-radius:12px;cursor:pointer;transition:.15s;background:#fff}
+.choice:hover{border-color:#b9b5ff;background:#fafaff}
+.choice input{margin-top:5px;accent-color:var(--p)}
+.mark{font-weight:900;color:var(--p);min-width:22px}
+.choice-text{font-size:14px}
+.choice.correct-choice{background:#ecfdf3;border-color:#86efac}
+.choice.wrong-choice{background:#fef3f2;border-color:#fecdca}
+.feedback{display:none;margin-top:14px;padding:14px 16px;border-radius:14px;background:#f8fafc;border:1px solid var(--line)}
+.feedback.show{display:block}
+.result-line{font-size:16px;font-weight:900;margin-bottom:6px}
+.answer-line{font-size:13px;color:var(--muted);margin-bottom:7px}
+.explanation{font-size:13px}
+.result-panel{background:linear-gradient(135deg,#111827,#312e81);color:#fff;border-radius:22px;padding:24px;margin:30px 0 0;display:none}
+.result-panel.show{display:block}
+.score-big{font-size:46px;font-weight:900;line-height:1.1;margin:6px 0}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.btn{border:0;padding:11px 15px;border-radius:11px;font-weight:900;cursor:pointer}
+.btn.primary{background:#fff;color:#312e81}
+.btn.secondary{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.submit-wrap{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;position:sticky;bottom:12px;box-shadow:0 12px 32px rgba(16,24,40,.14);margin-top:20px;z-index:20}
+.submit-row{display:flex;gap:10px;align-items:center;justify-content:space-between}
+#submitBtn{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:0;border-radius:12px;padding:13px 20px;font-size:15px;font-weight:900;cursor:pointer}
+#warning{font-size:13px;color:var(--bad);font-weight:800}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:0 20px 45px}
+@media(max-width:900px){
+ .wrap{grid-template-columns:1fr} aside{position:relative;top:auto;max-height:none}
+ .stats{grid-template-columns:repeat(2,1fr)} .submit-wrap{position:relative;bottom:auto}
+}
+@media(max-width:560px){
+ .hero{padding:34px 14px} .wrap{padding:0 10px} .question-card{padding:16px}
+ .qhead{align-items:flex-start} h2{font-size:19px} .navgrid{grid-template-columns:repeat(6,1fr)}
+ .submit-row{display:block} #submitBtn{width:100%;margin-top:10px}
+}
+@media print{
+ .topbar,aside,.submit-wrap,.codebar button{display:none!important} body{background:#fff}
+ .hero{background:#fff!important;color:#000;padding:10px 0} .wrap{display:block;max-width:none;margin:0;padding:0}
+ .question-card{box-shadow:none;break-inside:avoid} .feedback{display:block!important}
+}
+</style>
+</head>
+<body>
+<section class="hero">
+<div class="hero-inner">
+<div class="kicker">π · PYTHON · AUTO ASSESSMENT</div>
+<h1>원주율 파이썬 예제 30문항</h1>
+<p>각 문항은 <b>파이썬 코드를 먼저 읽고</b>, 코드의 의미·수학 개념·실행 원리에 관한 5개 보기 중 <b>옳은 것 3개</b>를 선택합니다. 제출 후 문항별 정오답과 상세 풀이를 확인하고 결과를 UTF-8 TXT로 저장할 수 있습니다.</p>
+<div class="stats">
+<div class="stat"><b>30문항</b>예제별 1문항</div>
+<div class="stat"><b>5지선다</b>옳은 것 3개</div>
+<div class="stat"><b>자동채점</b>문항별 상세 풀이</div>
+<div class="stat"><b>UTF-8 TXT</b>한글 깨짐 방지</div>
+</div>
+</div>
+</section>
+
+<div class="topbar"><div class="topbar-inner">
+<div class="progress-shell"><div id="progress"></div></div>
+<div id="progressText">0 / 30</div>
+</div></div>
+
+<div class="wrap">
+<aside>
+<h3>응시자 정보</h3>
+<div class="student-box">
+<label>학번<input id="studentId" type="text" inputmode="numeric" placeholder="예: 1101"></label>
+<label>이름<input id="studentName" type="text" placeholder="예: 홍길동"></label>
+</div>
+<h3>문항 이동</h3>
+<div class="navgrid"><a href="#q1" id="nav1">1</a><a href="#q2" id="nav2">2</a><a href="#q3" id="nav3">3</a><a href="#q4" id="nav4">4</a><a href="#q5" id="nav5">5</a><a href="#q6" id="nav6">6</a><a href="#q7" id="nav7">7</a><a href="#q8" id="nav8">8</a><a href="#q9" id="nav9">9</a><a href="#q10" id="nav10">10</a><a href="#q11" id="nav11">11</a><a href="#q12" id="nav12">12</a><a href="#q13" id="nav13">13</a><a href="#q14" id="nav14">14</a><a href="#q15" id="nav15">15</a><a href="#q16" id="nav16">16</a><a href="#q17" id="nav17">17</a><a href="#q18" id="nav18">18</a><a href="#q19" id="nav19">19</a><a href="#q20" id="nav20">20</a><a href="#q21" id="nav21">21</a><a href="#q22" id="nav22">22</a><a href="#q23" id="nav23">23</a><a href="#q24" id="nav24">24</a><a href="#q25" id="nav25">25</a><a href="#q26" id="nav26">26</a><a href="#q27" id="nav27">27</a><a href="#q28" id="nav28">28</a><a href="#q29" id="nav29">29</a><a href="#q30" id="nav30">30</a></div>
+<div class="side-note">각 문항에서 정확히 3개를 선택하면 문항 번호가 완료 상태로 바뀝니다. 제출 후에는 응답이 잠기며 문항별 상세 풀이가 표시됩니다.</div>
+</aside>
+
+<main>
+
+    <section class="question-card" id="q1">
+      <div class="qhead">
+        <div class="qnum">01</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 01</div>
+          <h2>math.pi로 원주율 확인</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+print(math.pi)
+print(f&quot;{math.pi:.5f}&quot;)
+print(f&quot;{math.pi:.15f}&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q1" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`math.pi`는 파이썬 `math` 모듈이 제공하는 원주율 근삿값이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q1" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`:.5f`는 소수점 아래 5자리까지 표시하도록 형식을 지정한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q1" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">π는 무리수이므로 컴퓨터에서는 유한 정밀도의 근삿값으로 다룬다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q1" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`math.pi`의 값은 정확히 3.14로 저장된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q1" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`:.15f`를 사용하면 무한히 많은 π의 소수 자릿수를 모두 출력할 수 있다.</span>
+        </label></div>
+      <div class="feedback" id="fb1">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q2">
+      <div class="qhead">
+        <div class="qnum">02</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 02</div>
+          <h2>원의 둘레 계산</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+radius = 7
+circumference = 2 * math.pi * radius
+
+print(&quot;반지름:&quot;, radius)
+print(&quot;원의 둘레:&quot;, circumference)
+print(f&quot;원의 둘레: {circumference:.2f}&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 코드와 원의 둘레 계산에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q2" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`2 * math.pi * radius`는 원의 둘레 공식 2πr을 구현한 것이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q2" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`radius`가 2배가 되면 원의 둘레는 4배가 된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q2" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">`radius`가 2배가 되면 `circumference`도 2배가 된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q2" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`math.pi` 없이도 `circumference = radius ** 2`로 같은 값을 얻는다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q2" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`:.2f`는 출력값을 소수점 아래 2자리까지 표시한다.</span>
+        </label></div>
+      <div class="feedback" id="fb2">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q3">
+      <div class="qhead">
+        <div class="qnum">03</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 03</div>
+          <h2>원의 넓이 계산</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+radius = 5
+area = math.pi * radius ** 2
+
+print(f&quot;반지름 = {radius}&quot;)
+print(f&quot;넓이 = {area:.3f}&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q3" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`**`는 파이썬에서 나눗셈 연산자이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q3" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`radius ** 2`는 반지름의 제곱을 의미한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q3" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">원의 넓이는 반지름에 단순히 정비례하므로 반지름이 2배면 넓이도 2배이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q3" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`area`에는 πr² 공식으로 계산한 값이 저장된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q3" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">반지름이 3배가 되면 넓이는 9배가 된다.</span>
+        </label></div>
+      <div class="feedback" id="fb3">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q4">
+      <div class="qhead">
+        <div class="qnum">04</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 04</div>
+          <h2>지름으로 둘레 계산</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+diameter = 12
+circumference = math.pi * diameter
+
+print(f&quot;지름 {diameter}인 원의 둘레 = {circumference:.2f}&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 코드의 의미에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q4" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">원의 둘레는 지름 d를 사용하면 C=πd로 나타낼 수 있다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q4" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">지름과 반지름은 항상 같은 길이이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q4" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">원의 둘레를 구하려면 반드시 반지름 변수만 사용해야 한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q4" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`math.pi * diameter`는 `2 * math.pi * radius`와 같은 원리를 사용한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q4" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">지름이 2배가 되면 둘레도 2배가 된다.</span>
+        </label></div>
+      <div class="feedback" id="fb4">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q5">
+      <div class="qhead">
+        <div class="qnum">05</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 05</div>
+          <h2>둘레와 지름으로 π 추정</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>circumference = 31.42
+diameter = 10
+
+estimated_pi = circumference / diameter
+
+print(&quot;추정한 π =&quot;, estimated_pi)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q5" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`circumference / diameter`는 원의 넓이를 계산하는 식이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q5" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">원주율은 원의 둘레를 지름으로 나눈 비와 관련된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q5" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">코드에서 `estimated_pi`는 약 3.142가 된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q5" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">모든 원에서 둘레와 지름의 비는 반지름에 따라 달라진다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q5" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">측정한 둘레와 지름에 오차가 있으면 추정한 π에도 오차가 생길 수 있다.</span>
+        </label></div>
+      <div class="feedback" id="fb5">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q6">
+      <div class="qhead">
+        <div class="qnum">06</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 06</div>
+          <h2>여러 반지름의 원 넓이 표 만들기</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+for r in range(1, 11):
+    area = math.pi * r ** 2
+    print(f&quot;r={r:2d}  area={area:8.2f}&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 반복문에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q6" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`range(1, 11)`은 1부터 10까지의 정수를 생성한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q6" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`range(1, 11)`에는 11도 포함된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q6" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">반복할 때마다 서로 다른 반지름의 원 넓이를 계산한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q6" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`r`이 2배가 되면 `area`는 4배가 되는 관계를 관찰할 수 있다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q6" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`{r:2d}`는 `r`을 항상 소수로 변환한다.</span>
+        </label></div>
+      <div class="feedback" id="fb6">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q7">
+      <div class="qhead">
+        <div class="qnum">07</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 07</div>
+          <h2>반지름이 2배일 때 넓이 변화</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+r1 = 3
+r2 = 2 * r1
+
+a1 = math.pi * r1 ** 2
+a2 = math.pi * r2 ** 2
+
+print(&quot;첫 번째 넓이:&quot;, a1)
+print(&quot;두 번째 넓이:&quot;, a2)
+print(&quot;넓이의 비:&quot;, a2 / a1)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 코드의 실행 결과와 관계에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q7" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`a2`는 `a1`의 2배가 된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q7" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`r2`는 `r1`의 2배이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q7" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">`a2 / a1`은 π와 같은 값이 된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q7" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`a2 / a1`은 4에 가까운 값이 된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q7" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">원의 넓이는 반지름의 제곱에 비례한다.</span>
+        </label></div>
+      <div class="feedback" id="fb7">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q8">
+      <div class="qhead">
+        <div class="qnum">08</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 08</div>
+          <h2>구의 표면적 계산</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+r = 4
+surface_area = 4 * math.pi * r ** 2
+
+print(f&quot;구의 표면적 = {surface_area:.2f}&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q8" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">구의 표면적 공식 4πr²을 구현한 코드이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q8" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">구의 표면적은 4πr³으로 계산한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q8" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">반지름이 3배가 되면 표면적은 3배만 증가한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q8" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">반지름이 2배가 되면 표면적은 4배가 된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q8" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`r ** 2`는 반지름을 제곱한다.</span>
+        </label></div>
+      <div class="feedback" id="fb8">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q9">
+      <div class="qhead">
+        <div class="qnum">09</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 09</div>
+          <h2>구의 부피 계산</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+r = 4
+volume = (4 / 3) * math.pi * r ** 3
+
+print(f&quot;구의 부피 = {volume:.2f}&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 코드의 구의 부피 계산에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q9" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`4 / 3`은 파이썬 3에서 정수 1로만 계산된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q9" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`r ** 3`은 반지름의 세제곱을 뜻한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q9" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">구의 부피는 (4/3)πr³이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q9" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">구의 부피는 반지름의 제곱에만 비례한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q9" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">반지름이 2배가 되면 부피는 8배가 된다.</span>
+        </label></div>
+      <div class="feedback" id="fb9">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q10">
+      <div class="qhead">
+        <div class="qnum">10</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 10</div>
+          <h2>원기둥의 부피 계산</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+r = 3
+height = 10
+volume = math.pi * r ** 2 * height
+
+print(f&quot;원기둥의 부피 = {volume:.2f}&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q10" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">원기둥의 부피는 밑면의 넓이 πr²에 높이를 곱해 구한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q10" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`volume`은 원기둥의 겉넓이를 계산한 값이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q10" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">`height`가 2배가 되면 다른 값이 같을 때 부피도 2배가 된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q10" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">반지름과 높이를 서로 바꾸어도 언제나 같은 부피가 나온다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q10" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`r`이 2배가 되면 다른 값이 같을 때 부피는 4배가 된다.</span>
+        </label></div>
+      <div class="feedback" id="fb10">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q11">
+      <div class="qhead">
+        <div class="qnum">11</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 11</div>
+          <h2>원의 부채꼴 넓이</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+r = 8
+angle = 45
+
+sector_area = math.pi * r ** 2 * angle / 360
+
+print(f&quot;{angle}° 부채꼴 넓이 = {sector_area:.2f}&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 부채꼴 넓이 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q11" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`angle / 360`은 전체 원에서 중심각이 차지하는 비율이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q11" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">45° 부채꼴은 전체 원 넓이의 1/8이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q11" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">중심각이 360°이면 계산 결과는 원 전체 넓이 πr²과 같다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q11" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">중심각이 커질수록 같은 반지름에서 부채꼴 넓이는 작아진다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q11" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`angle`을 라디안으로 바꾸지 않으면 절대로 부채꼴 넓이를 계산할 수 없다.</span>
+        </label></div>
+      <div class="feedback" id="fb11">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q12">
+      <div class="qhead">
+        <div class="qnum">12</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 12</div>
+          <h2>호의 길이 계산</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+r = 10
+angle = 72
+
+arc_length = 2 * math.pi * r * angle / 360
+
+print(f&quot;호의 길이 = {arc_length:.3f}&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 호의 길이 계산에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q12" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`2 * math.pi * r`은 원 전체의 둘레이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q12" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">호의 길이는 `math.pi * r ** 2`만으로 계산한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q12" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">72°는 360°의 1/5이므로 호의 길이도 전체 둘레의 1/5이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q12" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">중심각이 0°여도 호의 길이는 원의 전체 둘레와 같다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q12" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">같은 중심각에서 반지름이 2배이면 호의 길이도 2배가 된다.</span>
+        </label></div>
+      <div class="feedback" id="fb12">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q13">
+      <div class="qhead">
+        <div class="qnum">13</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 13</div>
+          <h2>도를 라디안으로 변환</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+degrees = [0, 30, 45, 60, 90, 180, 360]
+
+for degree in degrees:
+    radian = math.radians(degree)
+    print(f&quot;{degree:3d}° = {radian:.6f} rad&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 라디안 변환 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q13" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">90°는 π 라디안과 같다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q13" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`math.radians()`는 도 단위를 라디안으로 변환한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q13" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">`math.radians(180)`의 결과는 180이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q13" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">180°는 π 라디안과 같다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q13" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">360°는 2π 라디안과 같다.</span>
+        </label></div>
+      <div class="feedback" id="fb13">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q14">
+      <div class="qhead">
+        <div class="qnum">14</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 14</div>
+          <h2>sin(π), cos(π) 확인</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+print(&quot;sin(π) =&quot;, math.sin(math.pi))
+print(&quot;cos(π) =&quot;, math.cos(math.pi))
+print(&quot;sin(π/2) =&quot;, math.sin(math.pi / 2))</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 삼각함수 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q14" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">수학적으로 sin(π)=0이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q14" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`math.sin()`의 각도 입력은 기본적으로 도(degree) 단위이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q14" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">수학적으로 sin(π/2)=0이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q14" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">수학적으로 cos(π)=-1이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q14" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`math.sin(math.pi)`가 매우 작은 0이 아닌 값으로 나올 수 있는 것은 부동소수점 오차 때문이다.</span>
+        </label></div>
+      <div class="feedback" id="fb14">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q15">
+      <div class="qhead">
+        <div class="qnum">15</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 15</div>
+          <h2>오일러 공식의 특별한 경우 확인</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import cmath
+import math
+
+value = cmath.exp(1j * math.pi)
+
+print(value)
+print(value + 1)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 복소수 코드와 오일러 공식에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q15" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`cmath.exp()`는 복소수를 처리할 수 없다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q15" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`1j`는 파이썬에서 허수 단위 i를 나타내는 표현이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q15" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">오일러 공식에 의해 e^(iπ)=-1이 성립한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q15" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">오일러 항등식은 π와 e 사이에 아무런 관련이 없음을 보여 준다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q15" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`value + 1`은 이론적으로 0이 된다.</span>
+        </label></div>
+      <div class="feedback" id="fb15">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q16">
+      <div class="qhead">
+        <div class="qnum">16</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 16</div>
+          <h2>라이프니츠 급수로 π 근사</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>terms = 100000
+total = 0.0
+
+for k in range(terms):
+    total += (-1) ** k / (2 * k + 1)
+
+estimated_pi = 4 * total
+
+print(&quot;근사 π =&quot;, estimated_pi)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 라이프니츠 급수 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q16" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">항의 부호는 `(-1) ** k`에 의해 번갈아 바뀐다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q16" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">항을 하나만 더하면 언제나 π를 정확히 얻는다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q16" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">마지막에 부분합에 4를 곱해 π를 근사한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q16" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">이 급수는 π/4 = 1 - 1/3 + 1/5 - 1/7 + … 형태와 관련된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q16" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`2 * k + 1`은 항상 짝수만 만든다.</span>
+        </label></div>
+      <div class="feedback" id="fb16">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q17">
+      <div class="qhead">
+        <div class="qnum">17</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 17</div>
+          <h2>라이프니츠 급수의 수렴 과정 관찰</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+checkpoints = [10, 100, 1000, 10000, 100000]
+total = 0.0
+
+for k in range(max(checkpoints)):
+    total += (-1) ** k / (2 * k + 1)
+
+    if k + 1 in checkpoints:
+        estimate = 4 * total
+        error = abs(math.pi - estimate)
+        print(k + 1, estimate, error)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 코드가 관찰하려는 내용으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q17" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">오차는 반드시 매 단계 정확히 10배씩 감소한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q17" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">항의 개수에 따라 π 근삿값이 어떻게 변하는지 확인한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q17" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">`max(checkpoints)`의 값은 10이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q17" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`abs(math.pi - estimate)`는 절대오차를 계산한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q17" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`checkpoints`에 지정한 여러 항 개수에서 결과를 비교한다.</span>
+        </label></div>
+      <div class="feedback" id="fb17">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q18">
+      <div class="qhead">
+        <div class="qnum">18</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 18</div>
+          <h2>닐라칸타 급수로 π 근사</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>terms = 10000
+pi_estimate = 3.0
+sign = 1
+
+for n in range(2, 2 * terms + 2, 2):
+    term = 4 / (n * (n + 1) * (n + 2))
+    pi_estimate += sign * term
+    sign *= -1
+
+print(&quot;근사 π =&quot;, pi_estimate)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 닐라칸타 급수 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q18" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`pi_estimate`는 3에서 시작한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q18" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`range(..., 2)`는 n을 1씩 증가시킨다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q18" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">이 코드는 난수를 이용하여 π를 근사한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q18" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`sign *= -1`은 더하기와 빼기를 번갈아 수행하게 한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q18" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">각 항의 분모는 연속한 세 정수의 곱 형태이다.</span>
+        </label></div>
+      <div class="feedback" id="fb18">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q19">
+      <div class="qhead">
+        <div class="qnum">19</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 19</div>
+          <h2>월리스 곱으로 π 근사</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>product = 1.0
+n = 10000
+
+for k in range(1, n + 1):
+    product *= (4 * k * k) / (4 * k * k - 1)
+
+pi_estimate = 2 * product
+print(&quot;근사 π =&quot;, pi_estimate)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 월리스 곱 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q19" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">이 방법은 무한합만을 사용하는 방법이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q19" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">반복문에서 여러 인수를 차례로 곱한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q19" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">`product *= ...`는 기존 `product`에 새 인수를 곱해 다시 저장한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q19" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`product`를 0으로 초기화해도 같은 결과가 나온다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q19" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">마지막에 곱의 결과에 2를 곱해 π를 근사한다.</span>
+        </label></div>
+      <div class="feedback" id="fb19">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q20">
+      <div class="qhead">
+        <div class="qnum">20</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 20</div>
+          <h2>마친 공식으로 π 근사</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+pi_estimate = 16 * math.atan(1 / 5) - 4 * math.atan(1 / 239)
+
+print(&quot;마친 공식:&quot;, pi_estimate)
+print(&quot;math.pi  :&quot;, math.pi)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 마친 공식 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q20" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`math.atan()`은 역탄젠트 함수를 계산한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q20" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`math.atan()`은 입력을 반드시 도 단위로 받아야 한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q20" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">계산한 근삿값을 `math.pi`와 비교할 수 있다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q20" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">식에서 두 항은 모두 더하기 연산만 사용한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q20" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">π를 역삼각함수 값들의 조합으로 표현한 예이다.</span>
+        </label></div>
+      <div class="feedback" id="fb20">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q21">
+      <div class="qhead">
+        <div class="qnum">21</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 21</div>
+          <h2>몬테카를로 방법으로 π 추정</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import random
+
+samples = 100000
+inside = 0
+
+for _ in range(samples):
+    x = random.random()
+    y = random.random()
+
+    if x * x + y * y &lt;= 1:
+        inside += 1
+
+pi_estimate = 4 * inside / samples
+
+print(&quot;원 안의 점:&quot;, inside)
+print(&quot;π 추정값:&quot;, pi_estimate)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 몬테카를로 π 추정 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q21" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`random.random()`은 0 이상 1 미만의 실수 난수를 만든다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q21" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`x*x + y*y &lt;= 1`은 점이 단위원의 1/4 영역 안에 있는지 검사한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q21" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">`4 * inside / samples`는 면적비를 이용해 π를 추정한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q21" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">모든 실행에서 정확히 같은 π 추정값이 나온다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q21" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`inside`는 원 밖에 있는 점의 개수만 센다.</span>
+        </label></div>
+      <div class="feedback" id="fb21">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q22">
+      <div class="qhead">
+        <div class="qnum">22</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 22</div>
+          <h2>몬테카를로 표본 수와 오차 비교</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import random
+import math
+
+for samples in [100, 1000, 10000, 100000]:
+    inside = 0
+
+    for _ in range(samples):
+        x = random.random()
+        y = random.random()
+        if x*x + y*y &lt;= 1:
+            inside += 1
+
+    estimate = 4 * inside / samples
+    error = abs(math.pi - estimate)
+
+    print(f&quot;{samples:6d}개 -&gt; π≈{estimate:.6f}, 오차={error:.6f}&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 코드의 실험 목적과 결과 해석으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q22" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">서로 다른 표본 수에서 π 추정값을 비교한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q22" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">표본 수가 증가하면 오차가 반드시 매번 단조롭게 감소한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q22" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">`error`는 `math.pi`와 추정값의 절대 차이이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q22" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">난수를 사용하지 않으므로 실행할 때마다 결과가 완전히 동일하다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q22" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">표본 수가 많아지면 일반적으로 추정이 더 안정되는 경향을 관찰할 수 있다.</span>
+        </label></div>
+      <div class="feedback" id="fb22">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q23">
+      <div class="qhead">
+        <div class="qnum">23</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 23</div>
+          <h2>수치적분으로 π 계산: 직사각형 방법</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+n = 100000
+dx = 1 / n
+area = 0.0
+
+for i in range(n):
+    x = (i + 0.5) * dx
+    y = 4 / (1 + x * x)
+    area += y * dx
+
+print(&quot;수치적분 π =&quot;, area)
+print(&quot;오차 =&quot;, abs(math.pi - area))</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 수치적분 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q23" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`dx`는 n이 커질수록 커진다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q23" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">[0,1] 구간을 `n`개의 작은 구간으로 나누어 계산한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q23" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">`area += y * dx`는 원의 둘레를 직접 더하는 과정이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q23" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`x = (i + 0.5) * dx`는 각 작은 구간의 중앙점에 해당한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q23" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`4/(1+x²)`를 0부터 1까지 적분하면 π와 관련된 값을 얻는다.</span>
+        </label></div>
+      <div class="feedback" id="fb23">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q24">
+      <div class="qhead">
+        <div class="qnum">24</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 24</div>
+          <h2>사다리꼴 공식으로 π 계산</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+n = 10000
+a, b = 0.0, 1.0
+h = (b - a) / n
+
+def f(x):
+    return 4 / (1 + x * x)
+
+total = (f(a) + f(b)) / 2
+
+for i in range(1, n):
+    total += f(a + i * h)
+
+pi_estimate = total * h
+
+print(&quot;π 근사 =&quot;, pi_estimate)
+print(&quot;오차 =&quot;, abs(math.pi - pi_estimate))</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 사다리꼴 수치적분 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q24" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`f(x)`는 4/(1+x²)를 반환한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q24" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`range(1, n)`에는 0과 n이 모두 포함된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q24" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">`h`는 적분 구간과 무관하게 항상 1이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q24" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">양 끝점 함수값은 `(f(a)+f(b))/2` 형태로 절반 가중치를 갖는다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q24" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">마지막에 `total * h`로 사다리꼴 넓이들의 합을 만든다.</span>
+        </label></div>
+      <div class="feedback" id="fb24">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q25">
+      <div class="qhead">
+        <div class="qnum">25</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 25</div>
+          <h2>정다각형으로 π 근사</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+for n in [6, 12, 24, 48, 96, 192]:
+    perimeter = 2 * n * math.sin(math.pi / n)
+    pi_estimate = perimeter / 2
+
+    print(f&quot;정{n:3d}각형 -&gt; π≈{pi_estimate:.10f}&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 정다각형 근사 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q25" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">n이 커질수록 다각형은 삼각형에 가까워진다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q25" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">반지름 1인 원에 내접한 정다각형의 둘레를 이용하는 아이디어이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q25" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">n이 커질수록 정다각형은 원의 모양에 더 가까워진다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q25" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`math.sin(math.pi / n)`에서 입력각은 도 단위이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q25" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">단위원의 둘레가 2π이므로 다각형 둘레의 절반으로 π를 근사한다.</span>
+        </label></div>
+      <div class="feedback" id="fb25">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q26">
+      <div class="qhead">
+        <div class="qnum">26</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 26</div>
+          <h2>회전하는 점의 좌표 계산</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+r = 5
+
+for degree in range(0, 361, 45):
+    theta = math.radians(degree)
+    x = r * math.cos(theta)
+    y = r * math.sin(theta)
+
+    print(f&quot;{degree:3d}° -&gt; ({x:6.2f}, {y:6.2f})&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 원운동 좌표 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q26" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">원 위의 점을 `x=r cosθ`, `y=r sinθ`로 표현한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q26" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`x`와 `y`는 항상 서로 같은 값이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q26" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">`math.radians(degree)`는 도를 라디안으로 바꾼다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q26" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">45° 간격으로 원 위의 여러 점 좌표를 계산한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q26" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`range(0, 361, 45)`는 0° 한 번만 처리한다.</span>
+        </label></div>
+      <div class="feedback" id="fb26">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q27">
+      <div class="qhead">
+        <div class="qnum">27</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 27</div>
+          <h2>단진동에서 π 사용</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+amplitude = 2
+frequency = 0.5
+
+for t in [0, 0.5, 1.0, 1.5, 2.0]:
+    x = amplitude * math.sin(2 * math.pi * frequency * t)
+    print(f&quot;t={t:.1f}, x={x:.3f}&quot;)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 단진동 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q27" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`frequency`가 커져도 진동의 주기는 항상 변하지 않는다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q27" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`amplitude`는 진동의 최대 크기와 관련된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q27" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">π는 원의 넓이 계산에서만 사용되고 파동 식에는 나타나지 않는다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q27" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`2 * math.pi * frequency`는 각주파수와 관련된 표현이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q27" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">사인함수를 이용해 시간에 따른 주기적 위치 변화를 계산한다.</span>
+        </label></div>
+      <div class="feedback" id="fb27">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q28">
+      <div class="qhead">
+        <div class="qnum">28</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 28</div>
+          <h2>정규분포 확률밀도에서 π 확인</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+
+mu = 0
+sigma = 1
+x = 0
+
+density = (
+    1 / (sigma * math.sqrt(2 * math.pi))
+    * math.exp(-((x - mu) ** 2) / (2 * sigma ** 2))
+)
+
+print(&quot;표준정규분포 x=0의 밀도 =&quot;, density)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 정규분포 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q28" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`mu = 0`, `sigma = 1`은 표준정규분포의 평균과 표준편차이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q28" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`density`는 반드시 0 또는 1 중 하나만 될 수 있다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q28" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">정규분포 공식에는 π가 전혀 등장하지 않는다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q28" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">정규분포 확률밀도함수에는 `sqrt(2π)`가 포함된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q28" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`math.exp()`는 자연상수 e를 밑으로 하는 지수함수를 계산한다.</span>
+        </label></div>
+      <div class="feedback" id="fb28">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q29">
+      <div class="qhead">
+        <div class="qnum">29</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 29</div>
+          <h2>Buffon의 바늘 실험으로 π 추정</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import random
+import math
+
+trials = 100000
+crossings = 0
+needle_length = 1.0
+line_gap = 1.0
+
+for _ in range(trials):
+    distance = random.uniform(0, line_gap / 2)
+    angle = random.uniform(0, math.pi / 2)
+
+    if distance &lt;= (needle_length / 2) * math.sin(angle):
+        crossings += 1
+
+pi_estimate = (
+    2 * needle_length * trials
+    / (line_gap * crossings)
+)
+
+print(&quot;교차 횟수 =&quot;, crossings)
+print(&quot;π 추정값 =&quot;, pi_estimate)</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 Buffon의 바늘 시뮬레이션에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q29" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">난수를 사용하므로 항상 정확히 π가 계산된다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q29" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">바늘의 위치와 각도를 난수로 생성한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q29" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">`crossings`는 바늘이 평행선과 교차한 횟수를 센다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q29" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`angle`은 0부터 360 사이의 정수 각도만 생성한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q29" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">기하확률의 교차 확률을 이용해 π를 추정한다.</span>
+        </label></div>
+      <div class="feedback" id="fb29">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+    <section class="question-card" id="q30">
+      <div class="qhead">
+        <div class="qnum">30</div>
+        <div>
+          <div class="mini">원주율 PYTHON · 문항 30</div>
+          <h2>matplotlib로 원 그리기</h2>
+        </div>
+      </div>
+      <div class="codebox">
+        <div class="codebar"><span>예제 코드</span><button type="button" onclick="copyCode(this)">코드 복사</button></div>
+        <pre><code>import math
+import matplotlib.pyplot as plt
+
+x_values = []
+y_values = []
+
+for degree in range(361):
+    theta = math.radians(degree)
+    x_values.append(math.cos(theta))
+    y_values.append(math.sin(theta))
+
+plt.plot(x_values, y_values)
+plt.axis(&quot;equal&quot;)
+plt.title(&quot;Unit Circle&quot;)
+plt.xlabel(&quot;x&quot;)
+plt.ylabel(&quot;y&quot;)
+plt.grid(True)
+plt.show()</code></pre>
+      </div>
+      <div class="prompt">
+        <strong>위 Matplotlib 원 시각화 코드에 대한 설명으로 옳은 것을 모두 고르시오.</strong>
+        <span class="rule">옳은 것 3개를 선택하세요.</span>
+      </div>
+      <div class="choices"><label class="choice">
+          <input type="checkbox" name="q30" value="0">
+          <span class="mark">①</span>
+          <span class="choice-text">`(cosθ, sinθ)` 좌표를 여러 개 계산하여 원을 표현한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q30" value="1">
+          <span class="mark">②</span>
+          <span class="choice-text">`plt.show()`는 그래프를 삭제하는 함수이다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q30" value="2">
+          <span class="mark">③</span>
+          <span class="choice-text">`plt.axis(&quot;equal&quot;)`은 x축과 y축의 축척 비율을 같게 하여 원이 찌그러지지 않게 한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q30" value="3">
+          <span class="mark">④</span>
+          <span class="choice-text">`range(361)`은 0부터 361까지 모두 포함한다.</span>
+        </label><label class="choice">
+          <input type="checkbox" name="q30" value="4">
+          <span class="mark">⑤</span>
+          <span class="choice-text">`plt.plot(x_values, y_values)`는 계산한 점들을 선으로 연결해 그린다.</span>
+        </label></div>
+      <div class="feedback" id="fb30">
+        <div class="result-line"></div>
+        <div class="answer-line"></div>
+        <div class="explanation"></div>
+      </div>
+    </section>
+
+<div class="submit-wrap">
+<div class="submit-row">
+<div><strong>30문항을 모두 풀었나요?</strong><div id="warning">모든 문항에서 정확히 3개씩 선택해야 제출할 수 있습니다.</div></div>
+<button id="submitBtn" type="button" onclick="gradeQuiz()">채점하고 결과 확인</button>
+</div>
+</div>
+
+<section class="result-panel" id="resultPanel">
+<div>최종 점수</div>
+<div class="score-big" id="scoreBig">0점</div>
+<div id="summaryText"></div>
+<div class="actions">
+<button class="btn primary" type="button" onclick="downloadTxt()">TXT 결과 저장</button>
+<button class="btn secondary" type="button" onclick="window.print()">인쇄 / PDF</button>
+<button class="btn secondary" type="button" onclick="showWrongOnly()">오답만 보기</button>
+<button class="btn secondary" type="button" onclick="showAll()">전체 보기</button>
+</div>
+</section>
+</main>
+</div>
+
+<footer>원주율 π 파이썬 예제 30문항 · UTF-8 한글 자동평가</footer>
+
+<script>
+const DATA = [{"title": "math.pi로 원주율 확인", "code": "import math\n\nprint(math.pi)\nprint(f\"{math.pi:.5f}\")\nprint(f\"{math.pi:.15f}\")", "question": "위 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`math.pi`는 파이썬 `math` 모듈이 제공하는 원주율 근삿값이다.", "`:.5f`는 소수점 아래 5자리까지 표시하도록 형식을 지정한다.", "π는 무리수이므로 컴퓨터에서는 유한 정밀도의 근삿값으로 다룬다.", "`math.pi`의 값은 정확히 3.14로 저장된다.", "`:.15f`를 사용하면 무한히 많은 π의 소수 자릿수를 모두 출력할 수 있다."], "answer": [0, 1, 2], "explain": "① `math.pi`는 표준 라이브러리의 원주율 상수이다. ② `:.5f`는 소수점 아래 5자리 표시 형식이다. ③ 실제 π는 무리수이므로 컴퓨터는 유한 정밀도로 근사한다. ④ 3.14로 고정 저장되지 않는다. ⑤ 출력 자릿수를 늘려도 무한 정밀도가 되는 것은 아니다."}, {"title": "원의 둘레 계산", "code": "import math\n\nradius = 7\ncircumference = 2 * math.pi * radius\n\nprint(\"반지름:\", radius)\nprint(\"원의 둘레:\", circumference)\nprint(f\"원의 둘레: {circumference:.2f}\")", "question": "위 코드와 원의 둘레 계산에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`2 * math.pi * radius`는 원의 둘레 공식 2πr을 구현한 것이다.", "`radius`가 2배가 되면 원의 둘레는 4배가 된다.", "`radius`가 2배가 되면 `circumference`도 2배가 된다.", "`math.pi` 없이도 `circumference = radius ** 2`로 같은 값을 얻는다.", "`:.2f`는 출력값을 소수점 아래 2자리까지 표시한다."], "answer": [0, 2, 4], "explain": "원의 둘레는 C=2πr이므로 반지름에 정비례한다. `:.2f`는 표시 자릿수만 바꾼다. 반지름이 2배이면 둘레는 2배이며, `radius ** 2`는 넓이와 관련된 제곱 연산이다."}, {"title": "원의 넓이 계산", "code": "import math\n\nradius = 5\narea = math.pi * radius ** 2\n\nprint(f\"반지름 = {radius}\")\nprint(f\"넓이 = {area:.3f}\")", "question": "위 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`**`는 파이썬에서 나눗셈 연산자이다.", "`radius ** 2`는 반지름의 제곱을 의미한다.", "원의 넓이는 반지름에 단순히 정비례하므로 반지름이 2배면 넓이도 2배이다.", "`area`에는 πr² 공식으로 계산한 값이 저장된다.", "반지름이 3배가 되면 넓이는 9배가 된다."], "answer": [1, 3, 4], "explain": "파이썬의 `**`는 거듭제곱 연산자이다. 원의 넓이 A=πr²이므로 반지름이 k배이면 넓이는 k²배가 된다."}, {"title": "지름으로 둘레 계산", "code": "import math\n\ndiameter = 12\ncircumference = math.pi * diameter\n\nprint(f\"지름 {diameter}인 원의 둘레 = {circumference:.2f}\")", "question": "위 코드의 의미에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["원의 둘레는 지름 d를 사용하면 C=πd로 나타낼 수 있다.", "지름과 반지름은 항상 같은 길이이다.", "원의 둘레를 구하려면 반드시 반지름 변수만 사용해야 한다.", "`math.pi * diameter`는 `2 * math.pi * radius`와 같은 원리를 사용한다.", "지름이 2배가 되면 둘레도 2배가 된다."], "answer": [0, 3, 4], "explain": "d=2r이므로 C=2πr=πd이다. 지름과 둘레는 정비례한다. 지름은 반지름의 2배이며, 지름으로도 직접 둘레를 계산할 수 있다."}, {"title": "둘레와 지름으로 π 추정", "code": "circumference = 31.42\ndiameter = 10\n\nestimated_pi = circumference / diameter\n\nprint(\"추정한 π =\", estimated_pi)", "question": "위 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`circumference / diameter`는 원의 넓이를 계산하는 식이다.", "원주율은 원의 둘레를 지름으로 나눈 비와 관련된다.", "코드에서 `estimated_pi`는 약 3.142가 된다.", "모든 원에서 둘레와 지름의 비는 반지름에 따라 달라진다.", "측정한 둘레와 지름에 오차가 있으면 추정한 π에도 오차가 생길 수 있다."], "answer": [1, 2, 4], "explain": "π는 C/d로 정의할 수 있다. 31.42/10=3.142이다. 실제 측정 자료를 사용하면 측정 오차가 결과에 반영될 수 있다. C/d는 넓이 공식이 아니며 이상적인 유클리드 평면의 모든 원에서 같은 비가 나온다."}, {"title": "여러 반지름의 원 넓이 표 만들기", "code": "import math\n\nfor r in range(1, 11):\n    area = math.pi * r ** 2\n    print(f\"r={r:2d}  area={area:8.2f}\")", "question": "위 반복문에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`range(1, 11)`은 1부터 10까지의 정수를 생성한다.", "`range(1, 11)`에는 11도 포함된다.", "반복할 때마다 서로 다른 반지름의 원 넓이를 계산한다.", "`r`이 2배가 되면 `area`는 4배가 되는 관계를 관찰할 수 있다.", "`{r:2d}`는 `r`을 항상 소수로 변환한다."], "answer": [0, 2, 3], "explain": "`range(1,11)`의 끝값 11은 포함되지 않는다. 각 r마다 πr²을 계산한다. `{r:2d}`는 정수를 폭 2칸으로 정렬해 표시하는 형식이다."}, {"title": "반지름이 2배일 때 넓이 변화", "code": "import math\n\nr1 = 3\nr2 = 2 * r1\n\na1 = math.pi * r1 ** 2\na2 = math.pi * r2 ** 2\n\nprint(\"첫 번째 넓이:\", a1)\nprint(\"두 번째 넓이:\", a2)\nprint(\"넓이의 비:\", a2 / a1)", "question": "위 코드의 실행 결과와 관계에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`a2`는 `a1`의 2배가 된다.", "`r2`는 `r1`의 2배이다.", "`a2 / a1`은 π와 같은 값이 된다.", "`a2 / a1`은 4에 가까운 값이 된다.", "원의 넓이는 반지름의 제곱에 비례한다."], "answer": [1, 3, 4], "explain": "r2=2r1이고 A=πr²이므로 a2=π(2r1)²=4a1이다. 따라서 넓이의 비는 4이다."}, {"title": "구의 표면적 계산", "code": "import math\n\nr = 4\nsurface_area = 4 * math.pi * r ** 2\n\nprint(f\"구의 표면적 = {surface_area:.2f}\")", "question": "위 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["구의 표면적 공식 4πr²을 구현한 코드이다.", "구의 표면적은 4πr³으로 계산한다.", "반지름이 3배가 되면 표면적은 3배만 증가한다.", "반지름이 2배가 되면 표면적은 4배가 된다.", "`r ** 2`는 반지름을 제곱한다."], "answer": [0, 3, 4], "explain": "구의 표면적은 4πr²이다. 따라서 반지름이 k배가 되면 표면적은 k²배가 된다. r³은 구의 부피 공식에서 나타난다."}, {"title": "구의 부피 계산", "code": "import math\n\nr = 4\nvolume = (4 / 3) * math.pi * r ** 3\n\nprint(f\"구의 부피 = {volume:.2f}\")", "question": "위 코드의 구의 부피 계산에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`4 / 3`은 파이썬 3에서 정수 1로만 계산된다.", "`r ** 3`은 반지름의 세제곱을 뜻한다.", "구의 부피는 (4/3)πr³이다.", "구의 부피는 반지름의 제곱에만 비례한다.", "반지름이 2배가 되면 부피는 8배가 된다."], "answer": [1, 2, 4], "explain": "파이썬 3의 `/`는 실수 나눗셈이다. 구의 부피는 r³에 비례하므로 반지름 2배 시 부피는 2³=8배가 된다."}, {"title": "원기둥의 부피 계산", "code": "import math\n\nr = 3\nheight = 10\nvolume = math.pi * r ** 2 * height\n\nprint(f\"원기둥의 부피 = {volume:.2f}\")", "question": "위 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["원기둥의 부피는 밑면의 넓이 πr²에 높이를 곱해 구한다.", "`volume`은 원기둥의 겉넓이를 계산한 값이다.", "`height`가 2배가 되면 다른 값이 같을 때 부피도 2배가 된다.", "반지름과 높이를 서로 바꾸어도 언제나 같은 부피가 나온다.", "`r`이 2배가 되면 다른 값이 같을 때 부피는 4배가 된다."], "answer": [0, 2, 4], "explain": "원기둥 부피는 V=πr²h이다. 높이에 정비례하고 반지름의 제곱에 비례한다. 겉넓이 공식과는 다르다."}, {"title": "원의 부채꼴 넓이", "code": "import math\n\nr = 8\nangle = 45\n\nsector_area = math.pi * r ** 2 * angle / 360\n\nprint(f\"{angle}° 부채꼴 넓이 = {sector_area:.2f}\")", "question": "위 부채꼴 넓이 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`angle / 360`은 전체 원에서 중심각이 차지하는 비율이다.", "45° 부채꼴은 전체 원 넓이의 1/8이다.", "중심각이 360°이면 계산 결과는 원 전체 넓이 πr²과 같다.", "중심각이 커질수록 같은 반지름에서 부채꼴 넓이는 작아진다.", "`angle`을 라디안으로 바꾸지 않으면 절대로 부채꼴 넓이를 계산할 수 없다."], "answer": [0, 1, 2], "explain": "도 단위를 사용하는 공식에서는 angle/360을 곱한다. 45/360=1/8이며, 360°이면 전체 원 넓이가 된다. 중심각이 커질수록 넓이도 커진다."}, {"title": "호의 길이 계산", "code": "import math\n\nr = 10\nangle = 72\n\narc_length = 2 * math.pi * r * angle / 360\n\nprint(f\"호의 길이 = {arc_length:.3f}\")", "question": "위 호의 길이 계산에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`2 * math.pi * r`은 원 전체의 둘레이다.", "호의 길이는 `math.pi * r ** 2`만으로 계산한다.", "72°는 360°의 1/5이므로 호의 길이도 전체 둘레의 1/5이다.", "중심각이 0°여도 호의 길이는 원의 전체 둘레와 같다.", "같은 중심각에서 반지름이 2배이면 호의 길이도 2배가 된다."], "answer": [0, 2, 4], "explain": "호의 길이는 전체 둘레 2πr에 중심각 비율 θ/360을 곱한다. 반지름과 중심각에 각각 정비례하며 θ=0이면 길이는 0이다."}, {"title": "도를 라디안으로 변환", "code": "import math\n\ndegrees = [0, 30, 45, 60, 90, 180, 360]\n\nfor degree in degrees:\n    radian = math.radians(degree)\n    print(f\"{degree:3d}° = {radian:.6f} rad\")", "question": "위 라디안 변환 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["90°는 π 라디안과 같다.", "`math.radians()`는 도 단위를 라디안으로 변환한다.", "`math.radians(180)`의 결과는 180이다.", "180°는 π 라디안과 같다.", "360°는 2π 라디안과 같다."], "answer": [1, 3, 4], "explain": "기본 관계는 180°=π rad, 360°=2π rad이다. 따라서 90°=π/2 rad이다. `math.radians(180)`은 약 3.14159를 반환한다."}, {"title": "sin(π), cos(π) 확인", "code": "import math\n\nprint(\"sin(π) =\", math.sin(math.pi))\nprint(\"cos(π) =\", math.cos(math.pi))\nprint(\"sin(π/2) =\", math.sin(math.pi / 2))", "question": "위 삼각함수 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["수학적으로 sin(π)=0이다.", "`math.sin()`의 각도 입력은 기본적으로 도(degree) 단위이다.", "수학적으로 sin(π/2)=0이다.", "수학적으로 cos(π)=-1이다.", "`math.sin(math.pi)`가 매우 작은 0이 아닌 값으로 나올 수 있는 것은 부동소수점 오차 때문이다."], "answer": [0, 3, 4], "explain": "파이썬 `math.sin`, `math.cos`는 라디안을 입력받는다. 이론적으로 sinπ=0, cosπ=-1, sin(π/2)=1이다. 매우 작은 오차는 부동소수점 계산 때문이다."}, {"title": "오일러 공식의 특별한 경우 확인", "code": "import cmath\nimport math\n\nvalue = cmath.exp(1j * math.pi)\n\nprint(value)\nprint(value + 1)", "question": "위 복소수 코드와 오일러 공식에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`cmath.exp()`는 복소수를 처리할 수 없다.", "`1j`는 파이썬에서 허수 단위 i를 나타내는 표현이다.", "오일러 공식에 의해 e^(iπ)=-1이 성립한다.", "오일러 항등식은 π와 e 사이에 아무런 관련이 없음을 보여 준다.", "`value + 1`은 이론적으로 0이 된다."], "answer": [1, 2, 4], "explain": "파이썬에서 `1j`는 허수 단위이다. e^(iπ)+1=0은 대표적인 오일러 항등식이다. `cmath`는 복소수 수학 함수를 제공한다."}, {"title": "라이프니츠 급수로 π 근사", "code": "terms = 100000\ntotal = 0.0\n\nfor k in range(terms):\n    total += (-1) ** k / (2 * k + 1)\n\nestimated_pi = 4 * total\n\nprint(\"근사 π =\", estimated_pi)", "question": "위 라이프니츠 급수 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["항의 부호는 `(-1) ** k`에 의해 번갈아 바뀐다.", "항을 하나만 더하면 언제나 π를 정확히 얻는다.", "마지막에 부분합에 4를 곱해 π를 근사한다.", "이 급수는 π/4 = 1 - 1/3 + 1/5 - 1/7 + … 형태와 관련된다.", "`2 * k + 1`은 항상 짝수만 만든다."], "answer": [0, 2, 3], "explain": "분모 2k+1은 1,3,5,…의 홀수를 만든다. 라이프니츠 급수는 수렴이 느리므로 유한 개 항으로는 일반적으로 π의 근삿값만 얻는다."}, {"title": "라이프니츠 급수의 수렴 과정 관찰", "code": "import math\n\ncheckpoints = [10, 100, 1000, 10000, 100000]\ntotal = 0.0\n\nfor k in range(max(checkpoints)):\n    total += (-1) ** k / (2 * k + 1)\n\n    if k + 1 in checkpoints:\n        estimate = 4 * total\n        error = abs(math.pi - estimate)\n        print(k + 1, estimate, error)", "question": "위 코드가 관찰하려는 내용으로 옳은 것을 모두 고르시오.", "choices": ["오차는 반드시 매 단계 정확히 10배씩 감소한다.", "항의 개수에 따라 π 근삿값이 어떻게 변하는지 확인한다.", "`max(checkpoints)`의 값은 10이다.", "`abs(math.pi - estimate)`는 절대오차를 계산한다.", "`checkpoints`에 지정한 여러 항 개수에서 결과를 비교한다."], "answer": [1, 3, 4], "explain": "이 코드는 근삿값 자체뿐 아니라 절대오차와 수렴 속도를 본다. `max(checkpoints)`는 100000이다. 오차 감소는 사용한 급수의 특성에 따라 달라지며 매번 정확히 10배가 아니다."}, {"title": "닐라칸타 급수로 π 근사", "code": "terms = 10000\npi_estimate = 3.0\nsign = 1\n\nfor n in range(2, 2 * terms + 2, 2):\n    term = 4 / (n * (n + 1) * (n + 2))\n    pi_estimate += sign * term\n    sign *= -1\n\nprint(\"근사 π =\", pi_estimate)", "question": "위 닐라칸타 급수 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`pi_estimate`는 3에서 시작한다.", "`range(..., 2)`는 n을 1씩 증가시킨다.", "이 코드는 난수를 이용하여 π를 근사한다.", "`sign *= -1`은 더하기와 빼기를 번갈아 수행하게 한다.", "각 항의 분모는 연속한 세 정수의 곱 형태이다."], "answer": [0, 3, 4], "explain": "닐라칸타 급수는 3 + 4/(2·3·4) - 4/(4·5·6)+… 형태이다. n은 2씩 증가하며 확률적 난수는 사용하지 않는다."}, {"title": "월리스 곱으로 π 근사", "code": "product = 1.0\nn = 10000\n\nfor k in range(1, n + 1):\n    product *= (4 * k * k) / (4 * k * k - 1)\n\npi_estimate = 2 * product\nprint(\"근사 π =\", pi_estimate)", "question": "위 월리스 곱 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["이 방법은 무한합만을 사용하는 방법이다.", "반복문에서 여러 인수를 차례로 곱한다.", "`product *= ...`는 기존 `product`에 새 인수를 곱해 다시 저장한다.", "`product`를 0으로 초기화해도 같은 결과가 나온다.", "마지막에 곱의 결과에 2를 곱해 π를 근사한다."], "answer": [1, 2, 4], "explain": "월리스 곱은 무한곱 표현이다. 곱셈 누적 변수는 1에서 시작해야 하며 0에서 시작하면 계속 0이 된다."}, {"title": "마친 공식으로 π 근사", "code": "import math\n\npi_estimate = 16 * math.atan(1 / 5) - 4 * math.atan(1 / 239)\n\nprint(\"마친 공식:\", pi_estimate)\nprint(\"math.pi  :\", math.pi)", "question": "위 마친 공식 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`math.atan()`은 역탄젠트 함수를 계산한다.", "`math.atan()`은 입력을 반드시 도 단위로 받아야 한다.", "계산한 근삿값을 `math.pi`와 비교할 수 있다.", "식에서 두 항은 모두 더하기 연산만 사용한다.", "π를 역삼각함수 값들의 조합으로 표현한 예이다."], "answer": [0, 2, 4], "explain": "마친 공식은 역탄젠트 값들의 선형결합으로 π를 계산한다. `math.atan()`의 결과는 라디안이며 두 번째 항은 뺄셈이다."}, {"title": "몬테카를로 방법으로 π 추정", "code": "import random\n\nsamples = 100000\ninside = 0\n\nfor _ in range(samples):\n    x = random.random()\n    y = random.random()\n\n    if x * x + y * y <= 1:\n        inside += 1\n\npi_estimate = 4 * inside / samples\n\nprint(\"원 안의 점:\", inside)\nprint(\"π 추정값:\", pi_estimate)", "question": "위 몬테카를로 π 추정 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`random.random()`은 0 이상 1 미만의 실수 난수를 만든다.", "`x*x + y*y <= 1`은 점이 단위원의 1/4 영역 안에 있는지 검사한다.", "`4 * inside / samples`는 면적비를 이용해 π를 추정한다.", "모든 실행에서 정확히 같은 π 추정값이 나온다.", "`inside`는 원 밖에 있는 점의 개수만 센다."], "answer": [0, 1, 2], "explain": "1×1 정사각형 안의 무작위 점 중 1/4원 내부 비율은 약 π/4이다. 난수를 사용하므로 실행할 때마다 값이 조금 달라질 수 있다."}, {"title": "몬테카를로 표본 수와 오차 비교", "code": "import random\nimport math\n\nfor samples in [100, 1000, 10000, 100000]:\n    inside = 0\n\n    for _ in range(samples):\n        x = random.random()\n        y = random.random()\n        if x*x + y*y <= 1:\n            inside += 1\n\n    estimate = 4 * inside / samples\n    error = abs(math.pi - estimate)\n\n    print(f\"{samples:6d}개 -> π≈{estimate:.6f}, 오차={error:.6f}\")", "question": "위 코드의 실험 목적과 결과 해석으로 옳은 것을 모두 고르시오.", "choices": ["서로 다른 표본 수에서 π 추정값을 비교한다.", "표본 수가 증가하면 오차가 반드시 매번 단조롭게 감소한다.", "`error`는 `math.pi`와 추정값의 절대 차이이다.", "난수를 사용하지 않으므로 실행할 때마다 결과가 완전히 동일하다.", "표본 수가 많아지면 일반적으로 추정이 더 안정되는 경향을 관찰할 수 있다."], "answer": [0, 2, 4], "explain": "확률적 추정에서는 표본 수가 많을수록 보통 안정성이 높아지지만, 특정 한 번의 실행에서 오차가 매 단계 반드시 줄어드는 것은 아니다."}, {"title": "수치적분으로 π 계산: 직사각형 방법", "code": "import math\n\nn = 100000\ndx = 1 / n\narea = 0.0\n\nfor i in range(n):\n    x = (i + 0.5) * dx\n    y = 4 / (1 + x * x)\n    area += y * dx\n\nprint(\"수치적분 π =\", area)\nprint(\"오차 =\", abs(math.pi - area))", "question": "위 수치적분 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`dx`는 n이 커질수록 커진다.", "[0,1] 구간을 `n`개의 작은 구간으로 나누어 계산한다.", "`area += y * dx`는 원의 둘레를 직접 더하는 과정이다.", "`x = (i + 0.5) * dx`는 각 작은 구간의 중앙점에 해당한다.", "`4/(1+x²)`를 0부터 1까지 적분하면 π와 관련된 값을 얻는다."], "answer": [1, 3, 4], "explain": "중점 직사각형 방법으로 ∫₀¹4/(1+x²)dx=π를 근사한다. n이 커지면 dx=1/n은 작아지고, `y*dx`는 작은 직사각형의 넓이다."}, {"title": "사다리꼴 공식으로 π 계산", "code": "import math\n\nn = 10000\na, b = 0.0, 1.0\nh = (b - a) / n\n\ndef f(x):\n    return 4 / (1 + x * x)\n\ntotal = (f(a) + f(b)) / 2\n\nfor i in range(1, n):\n    total += f(a + i * h)\n\npi_estimate = total * h\n\nprint(\"π 근사 =\", pi_estimate)\nprint(\"오차 =\", abs(math.pi - pi_estimate))", "question": "위 사다리꼴 수치적분 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`f(x)`는 4/(1+x²)를 반환한다.", "`range(1, n)`에는 0과 n이 모두 포함된다.", "`h`는 적분 구간과 무관하게 항상 1이다.", "양 끝점 함수값은 `(f(a)+f(b))/2` 형태로 절반 가중치를 갖는다.", "마지막에 `total * h`로 사다리꼴 넓이들의 합을 만든다."], "answer": [0, 3, 4], "explain": "사다리꼴 공식은 양 끝점을 절반 가중치로, 내부 점을 한 번씩 더한 뒤 간격 h를 곱한다. `range(1,n)`은 1부터 n-1까지이다."}, {"title": "정다각형으로 π 근사", "code": "import math\n\nfor n in [6, 12, 24, 48, 96, 192]:\n    perimeter = 2 * n * math.sin(math.pi / n)\n    pi_estimate = perimeter / 2\n\n    print(f\"정{n:3d}각형 -> π≈{pi_estimate:.10f}\")", "question": "위 정다각형 근사 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["n이 커질수록 다각형은 삼각형에 가까워진다.", "반지름 1인 원에 내접한 정다각형의 둘레를 이용하는 아이디어이다.", "n이 커질수록 정다각형은 원의 모양에 더 가까워진다.", "`math.sin(math.pi / n)`에서 입력각은 도 단위이다.", "단위원의 둘레가 2π이므로 다각형 둘레의 절반으로 π를 근사한다."], "answer": [1, 2, 4], "explain": "정n각형의 변 개수를 늘리면 원에 가까워진다. `math.sin`은 라디안을 입력받으며, 단위원 둘레 2π를 이용해 둘레/2로 π를 근사한다."}, {"title": "회전하는 점의 좌표 계산", "code": "import math\n\nr = 5\n\nfor degree in range(0, 361, 45):\n    theta = math.radians(degree)\n    x = r * math.cos(theta)\n    y = r * math.sin(theta)\n\n    print(f\"{degree:3d}° -> ({x:6.2f}, {y:6.2f})\")", "question": "위 원운동 좌표 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["원 위의 점을 `x=r cosθ`, `y=r sinθ`로 표현한다.", "`x`와 `y`는 항상 서로 같은 값이다.", "`math.radians(degree)`는 도를 라디안으로 바꾼다.", "45° 간격으로 원 위의 여러 점 좌표를 계산한다.", "`range(0, 361, 45)`는 0° 한 번만 처리한다."], "answer": [0, 2, 3], "explain": "삼각함수의 매개변수 표현으로 반지름 r인 원 위의 좌표를 만든다. 0,45,90,…,360도를 순회하며 x와 y는 각도에 따라 달라진다."}, {"title": "단진동에서 π 사용", "code": "import math\n\namplitude = 2\nfrequency = 0.5\n\nfor t in [0, 0.5, 1.0, 1.5, 2.0]:\n    x = amplitude * math.sin(2 * math.pi * frequency * t)\n    print(f\"t={t:.1f}, x={x:.3f}\")", "question": "위 단진동 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`frequency`가 커져도 진동의 주기는 항상 변하지 않는다.", "`amplitude`는 진동의 최대 크기와 관련된다.", "π는 원의 넓이 계산에서만 사용되고 파동 식에는 나타나지 않는다.", "`2 * math.pi * frequency`는 각주파수와 관련된 표현이다.", "사인함수를 이용해 시간에 따른 주기적 위치 변화를 계산한다."], "answer": [1, 3, 4], "explain": "사인파 x=A sin(2πft)에서 A는 진폭, f는 주파수, 2πf는 각주파수이다. 주파수가 커지면 주기 T=1/f는 작아진다."}, {"title": "정규분포 확률밀도에서 π 확인", "code": "import math\n\nmu = 0\nsigma = 1\nx = 0\n\ndensity = (\n    1 / (sigma * math.sqrt(2 * math.pi))\n    * math.exp(-((x - mu) ** 2) / (2 * sigma ** 2))\n)\n\nprint(\"표준정규분포 x=0의 밀도 =\", density)", "question": "위 정규분포 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`mu = 0`, `sigma = 1`은 표준정규분포의 평균과 표준편차이다.", "`density`는 반드시 0 또는 1 중 하나만 될 수 있다.", "정규분포 공식에는 π가 전혀 등장하지 않는다.", "정규분포 확률밀도함수에는 `sqrt(2π)`가 포함된다.", "`math.exp()`는 자연상수 e를 밑으로 하는 지수함수를 계산한다."], "answer": [0, 3, 4], "explain": "표준정규분포는 μ=0, σ=1이다. 확률밀도함수의 정규화 상수에 √(2π)가 등장하며, `math.exp`는 e의 지수함수를 계산한다."}, {"title": "Buffon의 바늘 실험으로 π 추정", "code": "import random\nimport math\n\ntrials = 100000\ncrossings = 0\nneedle_length = 1.0\nline_gap = 1.0\n\nfor _ in range(trials):\n    distance = random.uniform(0, line_gap / 2)\n    angle = random.uniform(0, math.pi / 2)\n\n    if distance <= (needle_length / 2) * math.sin(angle):\n        crossings += 1\n\npi_estimate = (\n    2 * needle_length * trials\n    / (line_gap * crossings)\n)\n\nprint(\"교차 횟수 =\", crossings)\nprint(\"π 추정값 =\", pi_estimate)", "question": "위 Buffon의 바늘 시뮬레이션에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["난수를 사용하므로 항상 정확히 π가 계산된다.", "바늘의 위치와 각도를 난수로 생성한다.", "`crossings`는 바늘이 평행선과 교차한 횟수를 센다.", "`angle`은 0부터 360 사이의 정수 각도만 생성한다.", "기하확률의 교차 확률을 이용해 π를 추정한다."], "answer": [1, 2, 4], "explain": "Buffon의 바늘은 위치와 방향이 무작위인 바늘의 선 교차 확률에서 π를 얻는 기하확률 실험이다. 난수 실험이므로 추정 오차가 존재한다."}, {"title": "matplotlib로 원 그리기", "code": "import math\nimport matplotlib.pyplot as plt\n\nx_values = []\ny_values = []\n\nfor degree in range(361):\n    theta = math.radians(degree)\n    x_values.append(math.cos(theta))\n    y_values.append(math.sin(theta))\n\nplt.plot(x_values, y_values)\nplt.axis(\"equal\")\nplt.title(\"Unit Circle\")\nplt.xlabel(\"x\")\nplt.ylabel(\"y\")\nplt.grid(True)\nplt.show()", "question": "위 Matplotlib 원 시각화 코드에 대한 설명으로 옳은 것을 모두 고르시오.", "choices": ["`(cosθ, sinθ)` 좌표를 여러 개 계산하여 원을 표현한다.", "`plt.show()`는 그래프를 삭제하는 함수이다.", "`plt.axis(\"equal\")`은 x축과 y축의 축척 비율을 같게 하여 원이 찌그러지지 않게 한다.", "`range(361)`은 0부터 361까지 모두 포함한다.", "`plt.plot(x_values, y_values)`는 계산한 점들을 선으로 연결해 그린다."], "answer": [0, 2, 4], "explain": "단위원의 점은 (cosθ,sinθ)로 표현할 수 있다. `range(361)`은 0~360을 생성하고, `plt.show()`는 그래프를 화면에 표시한다."}];
+let submitted = false;
+let resultRecords = [];
+let startTime = new Date();
+
+function sanitize(s) {
+ return (s || '').trim().replace(/[\\/:*?"<>|]/g,'_').replace(/\s+/g,'');
+}
+function copyCode(btn) {
+ const code=btn.closest('.codebox').querySelector('code').innerText;
+ navigator.clipboard.writeText(code).then(()=>{
+   const old=btn.textContent; btn.textContent='복사 완료';
+   setTimeout(()=>btn.textContent=old,1000);
+ });
+}
+function selectedFor(qNo) {
+ return [...document.querySelectorAll(`input[name="q${qNo}"]:checked`)].map(x=>Number(x.value));
+}
+function updateProgress() {
+ let complete=0;
+ for(let i=1;i<=30;i++) {
+   const n=selectedFor(i).length, nav=document.getElementById('nav'+i);
+   if(n===3){complete++;nav.classList.add('done')} else nav.classList.remove('done');
+ }
+ document.getElementById('progress').style.width=(complete/30*100)+'%';
+ document.getElementById('progressText').textContent=`${complete} / 30`;
+}
+document.querySelectorAll('input[type="checkbox"]').forEach(cb=>{
+ cb.addEventListener('change',e=>{
+   const checked=document.querySelectorAll(`input[name="${e.target.name}"]:checked`);
+   if(checked.length>3){e.target.checked=false;alert('각 문항에서는 정확히 3개만 선택할 수 있습니다.');}
+   updateProgress();
+ });
+});
+function sameSet(a,b) {
+ if(a.length!==b.length)return false;
+ const A=[...a].sort((x,y)=>x-y),B=[...b].sort((x,y)=>x-y);
+ return A.every((v,i)=>v===B[i]);
+}
+function formatTime(d) {
+ const p=n=>String(n).padStart(2,'0');
+ return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+}
+function filenameTime(d) {
+ const p=n=>String(n).padStart(2,'0');
+ return `${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+}
+function gradeQuiz() {
+ if(submitted)return;
+ const sid=document.getElementById('studentId').value.trim();
+ const sname=document.getElementById('studentName').value.trim();
+ if(!sid||!sname){alert('학번과 이름을 모두 입력해 주세요.');return;}
+ const incomplete=[];
+ for(let i=1;i<=30;i++) if(selectedFor(i).length!==3) incomplete.push(i);
+ if(incomplete.length){
+   alert('정확히 3개를 선택하지 않은 문항: '+incomplete.join(', '));
+   document.getElementById('q'+incomplete[0]).scrollIntoView({behavior:'smooth'});
+   return;
+ }
+ submitted=true;
+ const endTime=new Date();
+ let correctCount=0; resultRecords=[];
+ DATA.forEach((item,idx)=>{
+   const qNo=idx+1,selected=selectedFor(qNo),correct=sameSet(selected,item.answer);
+   if(correct)correctCount++;
+   const card=document.getElementById('q'+qNo); card.dataset.correct=correct?'1':'0';
+   card.querySelectorAll('.choice').forEach((label,j)=>{
+     if(item.answer.includes(j))label.classList.add('correct-choice');
+     if(selected.includes(j)&&!item.answer.includes(j))label.classList.add('wrong-choice');
+   });
+   card.querySelectorAll('input').forEach(x=>x.disabled=true);
+   const fb=document.getElementById('fb'+qNo); fb.classList.add('show');
+   fb.querySelector('.result-line').innerHTML=correct
+     ?'<span style="color:var(--ok)">정답입니다.</span>'
+     :'<span style="color:var(--bad)">오답입니다.</span>';
+   const marks=['①','②','③','④','⑤'];
+   const ansTxt=item.answer.map(i=>marks[i]).join(', ');
+   const selTxt=selected.map(i=>marks[i]).join(', ');
+   fb.querySelector('.answer-line').textContent=`선택: ${selTxt} · 정답: ${ansTxt}`;
+   fb.querySelector('.explanation').textContent=item.explain;
+   resultRecords.push({qNo,title:item.title,correct,selectedText:selTxt,answerText:ansTxt,explanation:item.explain});
+ });
+ const score=Math.round(correctCount/30*100);
+ document.getElementById('scoreBig').textContent=score+'점';
+ document.getElementById('summaryText').textContent=`정답 ${correctCount}문항 / 오답 ${30-correctCount}문항 · 시작 ${formatTime(startTime)} · 제출 ${formatTime(endTime)}`;
+ document.getElementById('resultPanel').classList.add('show');
+ document.getElementById('submitBtn').disabled=true;
+ document.getElementById('submitBtn').textContent='제출 완료';
+ document.getElementById('studentId').disabled=true;
+ document.getElementById('studentName').disabled=true;
+ window._endTime=endTime;window._score=score;window._correctCount=correctCount;
+ document.getElementById('resultPanel').scrollIntoView({behavior:'smooth'});
+}
+function downloadTxt() {
+ if(!submitted){alert('먼저 채점해 주세요.');return;}
+ const sid=document.getElementById('studentId').value.trim();
+ const sname=document.getElementById('studentName').value.trim();
+ const endTime=window._endTime||new Date();
+ let lines=[];
+ lines.push('원주율 π 파이썬 예제 30문항 평가 결과');
+ lines.push('='.repeat(58));
+ lines.push(`학번: ${sid}`);
+ lines.push(`이름: ${sname}`);
+ lines.push(`점수: ${window._score}점`);
+ lines.push(`정답 문항 수: ${window._correctCount} / 30`);
+ lines.push(`시작 시각: ${formatTime(startTime)}`);
+ lines.push(`제출 시각: ${formatTime(endTime)}`);
+ lines.push('');
+ resultRecords.forEach(r=>{
+   lines.push(`[문항 ${String(r.qNo).padStart(2,'0')}] ${r.title}`);
+   lines.push(`결과: ${r.correct?'정답':'오답'}`);
+   lines.push(`선택: ${r.selectedText}`);
+   lines.push(`정답: ${r.answerText}`);
+   lines.push(`상세 풀이: ${r.explanation}`);
+   lines.push('-'.repeat(58));
+ });
+ const content='\uFEFF'+lines.join('\r\n');
+ const blob=new Blob([content],{type:'text/plain;charset=utf-8'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;
+ a.download=`${sanitize(sid)}_${sanitize(sname)}_${window._score}_원주율_${filenameTime(endTime)}.txt`;
+ document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+function showWrongOnly(){
+ if(!submitted)return;
+ document.querySelectorAll('.question-card').forEach(card=>card.style.display=card.dataset.correct==='0'?'':'none');
+}
+function showAll(){document.querySelectorAll('.question-card').forEach(card=>card.style.display='')}
+updateProgress();
+</script>
+</body>
+</html>
