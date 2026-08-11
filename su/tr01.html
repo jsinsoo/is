@@ -1,0 +1,2123 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>파이썬 거북이와 재귀함수 프로젝트 30선</title>
+<style>
+:root {
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --text:#172033;
+  --muted:#64748b;
+  --line:#dce4ee;
+  --accent:#315bd6;
+  --code:#111827;
+  --codeText:#edf4ff;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  line-height:1.7;
+}
+header {
+  background:linear-gradient(135deg,#18316f,#4d7af0);
+  color:white;
+  padding:56px 20px;
+}
+.hero {
+  max-width:1180px;
+  margin:auto;
+}
+.hero h1 {
+  margin:0 0 12px;
+  font-size:clamp(30px,5vw,50px);
+}
+.hero p {
+  margin:0;
+  max-width:900px;
+  font-size:17px;
+  opacity:.96;
+}
+.toolbar {
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.toolbar-inner {
+  max-width:1180px;
+  margin:auto;
+  padding:9px 18px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.toolbar button {
+  border:0;
+  border-radius:8px;
+  padding:9px 12px;
+  background:#edf2ff;
+  color:#2448aa;
+  font-weight:700;
+  cursor:pointer;
+}
+.layout {
+  max-width:1180px;
+  margin:25px auto;
+  padding:0 18px;
+  display:grid;
+  grid-template-columns:270px 1fr;
+  gap:24px;
+}
+aside {
+  position:sticky;
+  top:70px;
+  align-self:start;
+  max-height:calc(100vh - 90px);
+  overflow:auto;
+  background:white;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+}
+aside h3 {
+  margin:4px 7px 10px;
+}
+aside a {
+  display:block;
+  padding:6px 8px;
+  color:#334155;
+  text-decoration:none;
+  border-radius:7px;
+  font-size:14px;
+}
+aside a:hover {
+  background:#edf2ff;
+  color:#1d4ed8;
+}
+main { min-width:0; }
+.intro, .project {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:21px;
+  box-shadow:0 8px 25px rgba(38,58,90,.05);
+}
+.project-head {
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+.num {
+  width:52px;
+  height:52px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:#edf2ff;
+  color:#244bc0;
+  font-weight:900;
+  font-size:18px;
+}
+h2 {
+  margin:0 0 5px;
+  font-size:24px;
+}
+.badge {
+  display:inline-block;
+  padding:2px 9px;
+  border-radius:999px;
+  background:#eef8ef;
+  font-size:13px;
+  font-weight:700;
+}
+.desc { font-size:16px; }
+.info-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin:12px 0;
+}
+.info-grid div {
+  padding:12px;
+  background:#f8fafc;
+  border-radius:10px;
+}
+.info-grid strong,
+.info-grid span {
+  display:block;
+}
+.info-grid span {
+  color:var(--muted);
+  font-size:14px;
+}
+.code-wrap {
+  position:relative;
+}
+pre {
+  margin:0;
+  padding:48px 18px 18px;
+  overflow:auto;
+  background:var(--code);
+  color:var(--codeText);
+  border-radius:14px;
+  font-family:Consolas,"Courier New",monospace;
+  line-height:1.55;
+}
+.copy {
+  position:absolute;
+  top:9px;
+  right:9px;
+  border:0;
+  border-radius:7px;
+  padding:7px 10px;
+  font-weight:700;
+  cursor:pointer;
+}
+details {
+  margin-top:13px;
+  padding-top:10px;
+  border-top:1px solid var(--line);
+}
+summary {
+  cursor:pointer;
+  font-weight:800;
+}
+.notice {
+  padding:13px 15px;
+  border-left:5px solid #e7a326;
+  border-radius:8px;
+  background:#fff7df;
+}
+.level-row {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+.level-row span {
+  padding:6px 10px;
+  border-radius:999px;
+  background:#eef3ff;
+  font-weight:700;
+  font-size:14px;
+}
+footer {
+  text-align:center;
+  padding:40px;
+  color:var(--muted);
+}
+@media (max-width:850px) {
+  .layout { grid-template-columns:1fr; }
+  aside {
+    position:static;
+    max-height:280px;
+  }
+  .info-grid { grid-template-columns:1fr; }
+}
+@media print {
+  .toolbar, aside, .copy { display:none!important; }
+  .layout {
+    display:block;
+    max-width:none;
+  }
+  .project {
+    box-shadow:none;
+    break-inside:avoid;
+  }
+  body { background:white; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="hero">
+    <h1>🐢 파이썬 거북이와 재귀함수 프로젝트 30선</h1>
+    <p>
+      Python <code>turtle</code> 그래픽으로 재귀함수의 호출, 종료 조건, 분기, 위치 복원,
+      프랙탈 원리를 눈으로 확인하는 프로젝트 모음입니다.
+    </p>
+    <div class="level-row">
+      <span>기초 10개</span>
+      <span>응용 10개</span>
+      <span>심화 10개</span>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <button onclick="window.scrollTo(0,0)">맨 위</button>
+    <button onclick="window.print()">인쇄 / PDF 저장</button>
+    <button onclick="toggleAll(true)">설명 모두 열기</button>
+    <button onclick="toggleAll(false)">설명 모두 닫기</button>
+  </div>
+</div>
+
+<div class="layout">
+  <aside>
+    <h3>프로젝트 목차</h3>
+    <a href="#p1">01. 재귀 선분 나선</a><a href="#p2">02. 재귀 정삼각형</a><a href="#p3">03. 재귀 정사각형</a><a href="#p4">04. 회전하는 사각형</a><a href="#p5">05. 재귀 원 나선</a><a href="#p6">06. 재귀 오각형</a><a href="#p7">07. 재귀 n각형</a><a href="#p8">08. 재귀 별</a><a href="#p9">09. 재귀 계단</a><a href="#p10">10. 왕복 재귀 선</a><a href="#p11">11. 이진 재귀 나무</a><a href="#p12">12. 삼진 재귀 나무</a><a href="#p13">13. 눈송이 가지</a><a href="#p14">14. 코흐 곡선</a><a href="#p15">15. 코흐 눈송이</a><a href="#p16">16. 시에르핀스키 삼각형</a><a href="#p17">17. 재귀 십자가</a><a href="#p18">18. H-Tree 프랙탈</a><a href="#p19">19. 재귀 사각형 분할</a><a href="#p20">20. 재귀 원 트리</a><a href="#p21">21. 피타고라스 트리</a><a href="#p22">22. 재귀 꽃나무</a><a href="#p23">23. 재귀 해바라기</a><a href="#p24">24. 재귀 번개</a><a href="#p25">25. 재귀 산맥</a><a href="#p26">26. 재귀 파도</a><a href="#p27">27. 재귀 미로 통로</a><a href="#p28">28. 드래곤 곡선</a><a href="#p29">29. 재귀 우주 은하</a><a href="#p30">30. 종합 프랙탈 정원</a>
+  </aside>
+
+  <main>
+    <section class="intro">
+      <h2>학습 방법</h2>
+      <p>
+        각 코드를 먼저 실행한 뒤 <b>종료 조건</b>, <b>자기 자신을 호출하는 부분</b>,
+        <b>매 호출마다 작아지는 값</b>을 찾아보세요. 그다음 각도, 깊이, 길이 비율을
+        바꾸어 자신만의 프랙탈 패턴으로 확장할 수 있습니다.
+      </p>
+      <div class="notice">
+        <b>실행 환경 안내:</b>
+        기본 <code>turtle</code>은 GUI 창을 사용하므로 Python IDLE, VS Code,
+        PyCharm 등 로컬 Python 환경에서 실행하는 것이 가장 편합니다.
+        Google Colab에서는 기본 turtle 창이 직접 열리지 않습니다.
+      </div>
+    </section>
+
+    
+<section class="project" id="p1">
+  <div class="project-head">
+    <span class="num">01</span>
+    <div>
+      <h2>재귀 선분 나선</h2>
+      <span class="badge">기초</span>
+    </div>
+  </div>
+
+  <p class="desc">길이를 조금씩 줄이며 사각 나선을 그립니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>종료 조건과 크기 감소</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def spiral(length):
+    if length &lt; 5:
+        return
+    t.forward(length)
+    t.left(90)
+    spiral(length - 5)
+
+spiral(200)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p2">
+  <div class="project-head">
+    <span class="num">02</span>
+    <div>
+      <h2>재귀 정삼각형</h2>
+      <span class="badge">기초</span>
+    </div>
+  </div>
+
+  <p class="desc">점점 작아지는 정삼각형을 반복해 그립니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>단일 재귀 호출</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def triangle(size):
+    if size &lt; 20:
+        return
+
+    for _ in range(3):
+        t.forward(size)
+        t.left(120)
+
+    triangle(size - 20)
+
+triangle(200)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p3">
+  <div class="project-head">
+    <span class="num">03</span>
+    <div>
+      <h2>재귀 정사각형</h2>
+      <span class="badge">기초</span>
+    </div>
+  </div>
+
+  <p class="desc">점점 작아지는 정사각형을 반복합니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>도형 반복과 재귀</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def square(size):
+    if size &lt; 20:
+        return
+
+    for _ in range(4):
+        t.forward(size)
+        t.left(90)
+
+    square(size - 20)
+
+square(200)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p4">
+  <div class="project-head">
+    <span class="num">04</span>
+    <div>
+      <h2>회전하는 사각형</h2>
+      <span class="badge">기초</span>
+    </div>
+  </div>
+
+  <p class="desc">사각형을 회전하고 축소하면서 소용돌이 무늬를 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>depth를 이용한 종료</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def spin_square(size, depth):
+    if depth == 0:
+        return
+
+    for _ in range(4):
+        t.forward(size)
+        t.left(90)
+
+    t.left(15)
+    spin_square(size * 0.9, depth - 1)
+
+spin_square(180, 20)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p5">
+  <div class="project-head">
+    <span class="num">05</span>
+    <div>
+      <h2>재귀 원 나선</h2>
+      <span class="badge">기초</span>
+    </div>
+  </div>
+
+  <p class="desc">원의 반지름과 방향을 조금씩 바꾸며 나선을 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>실수형 매개변수 변화</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def circle_spiral(radius, depth):
+    if depth == 0:
+        return
+
+    t.circle(radius)
+    t.left(12)
+    circle_spiral(radius * 0.94, depth - 1)
+
+circle_spiral(100, 30)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p6">
+  <div class="project-head">
+    <span class="num">06</span>
+    <div>
+      <h2>재귀 오각형</h2>
+      <span class="badge">기초</span>
+    </div>
+  </div>
+
+  <p class="desc">오각형을 축소하고 회전시키며 무늬를 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>다각형 외각과 재귀</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def pentagon(size, depth):
+    if depth == 0:
+        return
+
+    for _ in range(5):
+        t.forward(size)
+        t.left(72)
+
+    t.left(18)
+    pentagon(size * 0.88, depth - 1)
+
+pentagon(160, 18)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p7">
+  <div class="project-head">
+    <span class="num">07</span>
+    <div>
+      <h2>재귀 n각형</h2>
+      <span class="badge">기초</span>
+    </div>
+  </div>
+
+  <p class="desc">입력한 n에 따라 여러 종류의 다각형 재귀 패턴을 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>입력값과 재귀의 결합</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+n = int(input(&quot;n = &quot;))
+
+t = turtle.Turtle()
+t.speed(0)
+
+def polygon(size, depth):
+    if depth == 0:
+        return
+
+    for _ in range(n):
+        t.forward(size)
+        t.left(360 / n)
+
+    t.left(10)
+    polygon(size * 0.9, depth - 1)
+
+polygon(150, 18)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p8">
+  <div class="project-head">
+    <span class="num">08</span>
+    <div>
+      <h2>재귀 별</h2>
+      <span class="badge">기초</span>
+    </div>
+  </div>
+
+  <p class="desc">별을 회전·축소하며 여러 겹으로 그립니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>별의 회전각 144도</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def star(size, depth):
+    if depth == 0:
+        return
+
+    for _ in range(5):
+        t.forward(size)
+        t.right(144)
+
+    t.left(12)
+    star(size * 0.9, depth - 1)
+
+star(200, 20)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p9">
+  <div class="project-head">
+    <span class="num">09</span>
+    <div>
+      <h2>재귀 계단</h2>
+      <span class="badge">기초</span>
+    </div>
+  </div>
+
+  <p class="desc">한 칸씩 작아지는 계단을 재귀적으로 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>연속 이동의 재귀화</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def stairs(length, depth):
+    if depth == 0:
+        return
+
+    t.forward(length)
+    t.left(90)
+    t.forward(length)
+    t.right(90)
+
+    stairs(length * 0.9, depth - 1)
+
+stairs(60, 12)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p10">
+  <div class="project-head">
+    <span class="num">10</span>
+    <div>
+      <h2>왕복 재귀 선</h2>
+      <span class="badge">기초</span>
+    </div>
+  </div>
+
+  <p class="desc">재귀 호출 전에는 앞으로, 반환되면서 뒤로 이동합니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>재귀 호출 전후 실행 순서</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(3)
+
+def line(n):
+    if n == 0:
+        return
+
+    t.forward(20)
+    line(n - 1)
+    t.backward(20)
+
+line(10)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p11">
+  <div class="project-head">
+    <span class="num">11</span>
+    <div>
+      <h2>이진 재귀 나무</h2>
+      <span class="badge">응용</span>
+    </div>
+  </div>
+
+  <p class="desc">한 가지가 좌우 두 갈래로 계속 분기됩니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>두 번의 재귀 호출과 상태 복원</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+t.left(90)
+t.penup()
+t.goto(0, -250)
+t.pendown()
+
+def tree(length):
+    if length &lt; 10:
+        return
+
+    t.forward(length)
+
+    t.left(30)
+    tree(length * 0.7)
+
+    t.right(60)
+    tree(length * 0.7)
+
+    t.left(30)
+    t.backward(length)
+
+tree(120)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p12">
+  <div class="project-head">
+    <span class="num">12</span>
+    <div>
+      <h2>삼진 재귀 나무</h2>
+      <span class="badge">응용</span>
+    </div>
+  </div>
+
+  <p class="desc">한 가지에서 세 방향으로 작은 가지를 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>다중 분기 재귀</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+t.left(90)
+t.penup()
+t.goto(0, -250)
+t.pendown()
+
+def tree(length):
+    if length &lt; 12:
+        return
+
+    t.forward(length)
+
+    t.left(35)
+    tree(length * 0.62)
+
+    t.right(35)
+    tree(length * 0.62)
+
+    t.right(35)
+    tree(length * 0.62)
+
+    t.left(35)
+    t.backward(length)
+
+tree(120)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p13">
+  <div class="project-head">
+    <span class="num">13</span>
+    <div>
+      <h2>눈송이 가지</h2>
+      <span class="badge">응용</span>
+    </div>
+  </div>
+
+  <p class="desc">재귀 가지를 6방향으로 배치해 눈송이 같은 형태를 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>재귀 도형의 회전 복제</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def branch(length):
+    if length &lt; 8:
+        return
+
+    t.forward(length)
+
+    t.left(30)
+    branch(length * 0.65)
+
+    t.right(60)
+    branch(length * 0.65)
+
+    t.left(30)
+    t.backward(length)
+
+for _ in range(6):
+    branch(90)
+    t.right(60)
+
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p14">
+  <div class="project-head">
+    <span class="num">14</span>
+    <div>
+      <h2>코흐 곡선</h2>
+      <span class="badge">응용</span>
+    </div>
+  </div>
+
+  <p class="desc">하나의 선분을 네 개의 작은 선분으로 바꾸는 프랙탈입니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>분할 정복형 재귀</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def koch(length, depth):
+    if depth == 0:
+        t.forward(length)
+        return
+
+    length /= 3
+
+    koch(length, depth - 1)
+    t.left(60)
+
+    koch(length, depth - 1)
+    t.right(120)
+
+    koch(length, depth - 1)
+    t.left(60)
+
+    koch(length, depth - 1)
+
+koch(500, 4)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p15">
+  <div class="project-head">
+    <span class="num">15</span>
+    <div>
+      <h2>코흐 눈송이</h2>
+      <span class="badge">응용</span>
+    </div>
+  </div>
+
+  <p class="desc">코흐 곡선을 삼각형의 세 변에 적용해 눈송이를 완성합니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>작은 재귀 함수를 큰 도형에 적용</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def koch(length, depth):
+    if depth == 0:
+        t.forward(length)
+        return
+
+    length /= 3
+
+    koch(length, depth - 1)
+    t.left(60)
+    koch(length, depth - 1)
+    t.right(120)
+    koch(length, depth - 1)
+    t.left(60)
+    koch(length, depth - 1)
+
+for _ in range(3):
+    koch(300, 4)
+    t.right(120)
+
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p16">
+  <div class="project-head">
+    <span class="num">16</span>
+    <div>
+      <h2>시에르핀스키 삼각형</h2>
+      <span class="badge">응용</span>
+    </div>
+  </div>
+
+  <p class="desc">큰 삼각형을 세 개의 작은 삼각형 문제로 나눕니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>재귀 위치 이동과 복원</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def triangle(size):
+    for _ in range(3):
+        t.forward(size)
+        t.left(120)
+
+def sierpinski(size, depth):
+    if depth == 0:
+        triangle(size)
+        return
+
+    sierpinski(size / 2, depth - 1)
+
+    t.forward(size / 2)
+    sierpinski(size / 2, depth - 1)
+    t.backward(size / 2)
+
+    t.left(60)
+    t.forward(size / 2)
+    t.right(60)
+
+    sierpinski(size / 2, depth - 1)
+
+    t.left(60)
+    t.backward(size / 2)
+    t.right(60)
+
+sierpinski(400, 4)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p17">
+  <div class="project-head">
+    <span class="num">17</span>
+    <div>
+      <h2>재귀 십자가</h2>
+      <span class="badge">응용</span>
+    </div>
+  </div>
+
+  <p class="desc">한 점에서 네 방향으로 작은 십자가가 반복됩니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>4방향 공간 재귀</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def cross(size, depth):
+    if depth == 0:
+        return
+
+    for _ in range(4):
+        t.forward(size)
+        cross(size * 0.45, depth - 1)
+        t.backward(size)
+        t.right(90)
+
+cross(100, 4)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p18">
+  <div class="project-head">
+    <span class="num">18</span>
+    <div>
+      <h2>H-Tree 프랙탈</h2>
+      <span class="badge">응용</span>
+    </div>
+  </div>
+
+  <p class="desc">H의 네 끝점마다 더 작은 H를 생성합니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>좌표 기반 재귀</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def line(x1, y1, x2, y2):
+    t.penup()
+    t.goto(x1, y1)
+    t.pendown()
+    t.goto(x2, y2)
+
+def htree(x, y, size, depth):
+    if depth == 0:
+        return
+
+    half = size / 2
+
+    line(x - half, y, x + half, y)
+    line(x - half, y - half, x - half, y + half)
+    line(x + half, y - half, x + half, y + half)
+
+    new_size = size / 2
+
+    htree(x - half, y - half, new_size, depth - 1)
+    htree(x - half, y + half, new_size, depth - 1)
+    htree(x + half, y - half, new_size, depth - 1)
+    htree(x + half, y + half, new_size, depth - 1)
+
+htree(0, 0, 300, 4)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p19">
+  <div class="project-head">
+    <span class="num">19</span>
+    <div>
+      <h2>재귀 사각형 분할</h2>
+      <span class="badge">응용</span>
+    </div>
+  </div>
+
+  <p class="desc">정사각형 영역을 네 부분으로 계속 나눕니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>쿼드트리 사고</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def box(x, y, size):
+    t.penup()
+    t.goto(x, y)
+    t.pendown()
+
+    for _ in range(4):
+        t.forward(size)
+        t.left(90)
+
+def divide(x, y, size, depth):
+    if depth == 0:
+        box(x, y, size)
+        return
+
+    s = size / 2
+
+    divide(x, y, s, depth - 1)
+    divide(x + s, y, s, depth - 1)
+    divide(x, y + s, s, depth - 1)
+    divide(x + s, y + s, s, depth - 1)
+
+divide(-200, -200, 400, 3)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p20">
+  <div class="project-head">
+    <span class="num">20</span>
+    <div>
+      <h2>재귀 원 트리</h2>
+      <span class="badge">응용</span>
+    </div>
+  </div>
+
+  <p class="desc">원의 양쪽에 작은 원 구조가 가지처럼 생성됩니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>도형 재귀와 위치 복원</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def circle_tree(radius, depth):
+    if depth == 0:
+        return
+
+    t.circle(radius)
+
+    t.left(45)
+    t.forward(radius)
+    circle_tree(radius * 0.55, depth - 1)
+    t.backward(radius)
+
+    t.right(90)
+    t.forward(radius)
+    circle_tree(radius * 0.55, depth - 1)
+    t.backward(radius)
+
+    t.left(45)
+
+circle_tree(80, 5)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p21">
+  <div class="project-head">
+    <span class="num">21</span>
+    <div>
+      <h2>피타고라스 트리</h2>
+      <span class="badge">심화</span>
+    </div>
+  </div>
+
+  <p class="desc">직각삼각형의 비율을 이용해 대칭적인 프랙탈 트리를 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>기하 비율과 재귀</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+import math
+
+t = turtle.Turtle()
+t.speed(0)
+t.left(90)
+t.penup()
+t.goto(0, -280)
+t.pendown()
+
+def pythagoras(length, depth):
+    if depth == 0:
+        return
+
+    t.forward(length)
+
+    t.left(45)
+    pythagoras(length / math.sqrt(2), depth - 1)
+
+    t.right(90)
+    pythagoras(length / math.sqrt(2), depth - 1)
+
+    t.left(45)
+    t.backward(length)
+
+pythagoras(120, 8)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p22">
+  <div class="project-head">
+    <span class="num">22</span>
+    <div>
+      <h2>재귀 꽃나무</h2>
+      <span class="badge">심화</span>
+    </div>
+  </div>
+
+  <p class="desc">재귀 종료 지점에 점을 찍어 꽃이 핀 나무처럼 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>재귀 종료점 활용</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+t.left(90)
+t.penup()
+t.goto(0, -280)
+t.pendown()
+
+def flower_tree(length, depth):
+    if depth == 0:
+        t.dot(8)
+        return
+
+    t.forward(length)
+
+    t.left(28)
+    flower_tree(length * 0.72, depth - 1)
+
+    t.right(56)
+    flower_tree(length * 0.72, depth - 1)
+
+    t.left(28)
+    t.backward(length)
+
+flower_tree(100, 7)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p23">
+  <div class="project-head">
+    <span class="num">23</span>
+    <div>
+      <h2>재귀 해바라기</h2>
+      <span class="badge">심화</span>
+    </div>
+  </div>
+
+  <p class="desc">재귀 곡선을 여러 방향으로 회전시켜 꽃무늬를 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>곡선과 회전 대칭</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def petal(size, depth):
+    if depth == 0:
+        return
+
+    t.circle(size, 60)
+    petal(size * 0.72, depth - 1)
+    t.circle(-size, 60)
+
+for _ in range(24):
+    petal(70, 5)
+    t.right(15)
+
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p24">
+  <div class="project-head">
+    <span class="num">24</span>
+    <div>
+      <h2>재귀 번개</h2>
+      <span class="badge">심화</span>
+    </div>
+  </div>
+
+  <p class="desc">무작위 각도를 더해 자연스러운 번개 가지를 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>재귀와 난수</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+import random
+
+t = turtle.Turtle()
+t.speed(0)
+t.left(90)
+
+def lightning(length, depth):
+    if depth == 0:
+        t.forward(length)
+        t.backward(length)
+        return
+
+    t.forward(length / 2)
+
+    angle = random.randint(20, 40)
+
+    t.left(angle)
+    lightning(length * 0.65, depth - 1)
+    t.right(angle)
+
+    t.right(angle)
+    lightning(length * 0.65, depth - 1)
+    t.left(angle)
+
+    t.backward(length / 2)
+
+lightning(180, 6)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p25">
+  <div class="project-head">
+    <span class="num">25</span>
+    <div>
+      <h2>재귀 산맥</h2>
+      <span class="badge">심화</span>
+    </div>
+  </div>
+
+  <p class="desc">선분을 반복적으로 꺾어 불규칙한 산 윤곽선을 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>확률적 프랙탈</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+import random
+
+t = turtle.Turtle()
+t.speed(0)
+t.penup()
+t.goto(-350, -150)
+t.pendown()
+
+def mountain(length, depth):
+    if depth == 0:
+        t.forward(length)
+        return
+
+    angle = random.randint(15, 35)
+
+    t.left(angle)
+    mountain(length / 2, depth - 1)
+
+    t.right(angle * 2)
+    mountain(length / 2, depth - 1)
+
+    t.left(angle)
+
+mountain(700, 8)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p26">
+  <div class="project-head">
+    <span class="num">26</span>
+    <div>
+      <h2>재귀 파도</h2>
+      <span class="badge">심화</span>
+    </div>
+  </div>
+
+  <p class="desc">45도 회전 규칙을 사용해 반복되는 파도 모양을 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>재귀 규칙 설계</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def wave(length, depth):
+    if depth == 0:
+        t.forward(length)
+        return
+
+    wave(length / 3, depth - 1)
+
+    t.left(45)
+    wave(length / 3, depth - 1)
+
+    t.right(90)
+    wave(length / 3, depth - 1)
+
+    t.left(45)
+    wave(length / 3, depth - 1)
+
+wave(500, 5)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p27">
+  <div class="project-head">
+    <span class="num">27</span>
+    <div>
+      <h2>재귀 미로 통로</h2>
+      <span class="badge">심화</span>
+    </div>
+  </div>
+
+  <p class="desc">각 단계에서 좌우 방향을 무작위로 선택해 미로 같은 통로를 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>재귀와 확률적 선택</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+import random
+
+t = turtle.Turtle()
+t.speed(0)
+
+def maze(length, depth):
+    if depth == 0:
+        return
+
+    t.forward(length)
+
+    if random.choice([True, False]):
+        t.left(90)
+    else:
+        t.right(90)
+
+    maze(length * 0.92, depth - 1)
+
+maze(40, 70)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p28">
+  <div class="project-head">
+    <span class="num">28</span>
+    <div>
+      <h2>드래곤 곡선</h2>
+      <span class="badge">심화</span>
+    </div>
+  </div>
+
+  <p class="desc">회전 방향을 매개변수로 전달해 드래곤 프랙탈을 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>상태를 매개변수로 전달</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def dragon(length, depth, sign=1):
+    if depth == 0:
+        t.forward(length)
+        return
+
+    t.left(45 * sign)
+
+    dragon(length / 1.414, depth - 1, 1)
+
+    t.right(90 * sign)
+
+    dragon(length / 1.414, depth - 1, -1)
+
+    t.left(45 * sign)
+
+dragon(500, 12)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p29">
+  <div class="project-head">
+    <span class="num">29</span>
+    <div>
+      <h2>재귀 우주 은하</h2>
+      <span class="badge">심화</span>
+    </div>
+  </div>
+
+  <p class="desc">길이와 회전각을 조금씩 변화시키며 나선 은하를 만듭니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>매개변수의 점진적 변화</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def galaxy(length, angle, depth):
+    if depth == 0:
+        return
+
+    t.forward(length)
+    t.left(angle)
+
+    galaxy(length * 0.96, angle + 0.4, depth - 1)
+
+galaxy(8, 20, 220)
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+<section class="project" id="p30">
+  <div class="project-head">
+    <span class="num">30</span>
+    <div>
+      <h2>종합 프랙탈 정원</h2>
+      <span class="badge">심화</span>
+    </div>
+  </div>
+
+  <p class="desc">같은 재귀 식물을 여러 위치에 배치해 하나의 정원을 완성합니다.</p>
+
+  <div class="info-grid">
+    <div>
+      <strong>재귀 핵심</strong>
+      <span>재귀 함수의 재사용과 종합 구성</span>
+    </div>
+    <div>
+      <strong>추천 실행 환경</strong>
+      <span>Python IDLE · VS Code · 로컬 Python</span>
+    </div>
+  </div>
+
+  <div class="code-wrap">
+    <button class="copy" onclick="copyCode(this)">코드 복사</button>
+    <pre><code>import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+
+def plant(length, depth):
+    if depth == 0:
+        t.dot(5)
+        return
+
+    t.forward(length)
+
+    t.left(25)
+    plant(length * 0.72, depth - 1)
+
+    t.right(50)
+    plant(length * 0.72, depth - 1)
+
+    t.left(25)
+    t.backward(length)
+
+for x in [-220, 0, 220]:
+    t.penup()
+    t.goto(x, -260)
+    t.setheading(90)
+    t.pendown()
+
+    plant(85, 7)
+
+turtle.done()
+</code></pre>
+  </div>
+
+  <details>
+    <summary>코드 학습 포인트</summary>
+    <ol>
+      <li><code>if</code>가 재귀를 멈추는 종료 조건인지 확인합니다.</li>
+      <li>재귀 호출 때 <code>length</code>, <code>size</code>, <code>depth</code> 중 무엇이 작아지는지 찾습니다.</li>
+      <li>나무·프랙탈처럼 분기하는 예제는 재귀 호출 후 위치와 방향을 원래대로 복원하는 과정이 중요합니다.</li>
+      <li>깊이, 각도, 축소 비율을 바꾸어 결과가 어떻게 달라지는지 실험해 보세요.</li>
+    </ol>
+  </details>
+</section>
+
+  </main>
+</div>
+
+<footer>
+  Python Turtle × Recursion · 프로젝트 30개 예시 코드
+</footer>
+
+<script>
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector("code").innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    const old = btn.textContent;
+    btn.textContent = "복사 완료";
+    setTimeout(() => btn.textContent = old, 1000);
+  });
+}
+
+function toggleAll(open) {
+  document.querySelectorAll("details").forEach(d => d.open = open);
+}
+</script>
+</body>
+</html>
