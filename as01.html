@@ -510,7 +510,7 @@ function downloadResult(){
  ].join("\r\n");
  const blob=new Blob(["\ufeff"+text],{type:"text/plain;charset=utf-8"});
  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
- a.download=`${id}_${name}_${r.score}점_31차시_${stamp}.txt`; a.click(); URL.revokeObjectURL(a.href);
+ a.download=`${id}_${name}_${r.score}점_1차시_${stamp}.txt`; a.click(); URL.revokeObjectURL(a.href);
 }
 </script>
 </body>
