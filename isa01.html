@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>정보융합탐구과제 성취기준 및 평가요소</title>
+<style>
+  :root{
+    --bg:#f6f8fb;
+    --card:#ffffff;
+    --line:#d9e0e8;
+    --text:#1f2937;
+    --muted:#5b6573;
+    --accent:#2457a6;
+    --accent-soft:#eaf1fb;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.7;
+  }
+  .wrap{
+    max-width:1200px;
+    margin:0 auto;
+    padding:28px 20px 60px;
+  }
+  header{
+    background:linear-gradient(135deg,#173d7a,#2a67b7);
+    color:#fff;
+    border-radius:18px;
+    padding:34px 30px;
+    box-shadow:0 10px 28px rgba(23,61,122,.16);
+    margin-bottom:24px;
+  }
+  h1{margin:0 0 10px;font-size:32px;}
+  header p{margin:6px 0;color:#edf4ff;}
+  .note{
+    background:#fff8e8;
+    border:1px solid #f0d79b;
+    border-left:5px solid #d89b22;
+    padding:14px 16px;
+    border-radius:10px;
+    margin:20px 0 26px;
+  }
+  .summary{
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    margin-bottom:30px;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
+  }
+  .summary th,.summary td{
+    border:1px solid var(--line);
+    padding:12px 14px;
+    text-align:left;
+    vertical-align:top;
+  }
+  .summary th{background:var(--accent-soft);color:#173d7a;}
+  .section{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:24px;
+    margin:26px 0;
+    box-shadow:0 6px 18px rgba(0,0,0,.04);
+  }
+  .section h2{
+    margin:0 0 18px;
+    color:#173d7a;
+    font-size:25px;
+    border-bottom:3px solid #d9e7fb;
+    padding-bottom:10px;
+  }
+  .standard{
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+    margin:18px 0;
+  }
+  .standard-title{
+    background:#f1f5fb;
+    padding:14px 16px;
+    font-weight:700;
+    color:#173d7a;
+  }
+  .standard-body{padding:16px;}
+  .criteria{
+    margin:8px 0 0 20px;
+    padding:0;
+  }
+  .criteria li{margin:6px 0;}
+  .topbar{
+    position:sticky;
+    top:0;
+    z-index:10;
+    display:flex;
+    gap:8px;
+    justify-content:flex-end;
+    padding:10px 0;
+    background:rgba(246,248,251,.92);
+    backdrop-filter:blur(8px);
+  }
+  button{
+    border:0;
+    border-radius:8px;
+    padding:9px 14px;
+    background:#2457a6;
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+  }
+  button.secondary{background:#64748b;}
+  @media (max-width:720px){
+    h1{font-size:26px;}
+    .section{padding:18px;}
+    .summary{font-size:14px;}
+  }
+  @media print{
+    body{background:#fff;}
+    .topbar{display:none;}
+    .wrap{max-width:none;padding:0;}
+    header,.section,.summary{box-shadow:none;}
+    .section{break-inside:avoid-page;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <button onclick="window.print()">인쇄 / PDF 저장</button>
+    <button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">맨 위로</button>
+  </div>
+
+  <header>
+    <h1>2022 개정 교육과정 기반 정보융합탐구과제</h1>
+    <p>4개 영역 · 16개 성취기준 · 성취기준별 평가요소 4가지</p>
+    <p>「정보」, 「인공지능 기초」, 「데이터 과학」, 「소프트웨어와 생활」 이수 후 편성하는 학교 자율 과목 구성안</p>
+  </header>
+
+  <div class="note">
+    <strong>안내:</strong> 아래 성취기준은 국가 교육과정의 공식 「정보융합탐구과제」 성취기준 인용문이 아니라, 2022 개정 교육과정의 정보 교과 방향을 바탕으로 학교 교육과정 운영에 활용할 수 있도록 재구성한 예시안입니다.
+  </div>
+
+  <table class="summary">
+    <thead>
+      <tr><th>영역</th><th>성취기준 범위</th><th>핵심 내용</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Ⅰ. 정보융합 문제 발견과 탐구 설계</td><td>[12정융01-01]~[12정융01-04]</td><td>문제 발견·분석·융합·탐구 설계</td></tr>
+      <tr><td>Ⅱ. 데이터·인공지능 융합 탐구</td><td>[12정융02-01]~[12정융02-04]</td><td>데이터 수집·전처리·분석·AI·윤리</td></tr>
+      <tr><td>Ⅲ. 소프트웨어 융합 문제 해결</td><td>[12정융03-01]~[12정융03-04]</td><td>분해·알고리즘·프로그래밍·테스트</td></tr>
+      <tr><td>Ⅳ. 정보융합 프로젝트와 공유</td><td>[12정융04-01]~[12정융04-04]</td><td>프로젝트·검증·성찰·공유</td></tr>
+    </tbody>
+  </table>
+
+  <section class="section">
+    <h2>Ⅰ. 정보융합 문제 발견과 탐구 설계</h2>
+
+    <div class="standard">
+      <div class="standard-title">[12정융01-01]</div>
+      <div class="standard-body">
+        자신의 진로와 관심 분야에서 정보과학을 활용하여 해결할 수 있는 융합적 문제를 발견하고 탐구 주제를 선정한다.
+        <ol class="criteria">
+          <li>진로·관심 분야와 관련된 문제 탐색</li>
+          <li>정보과학으로 해결 가능한 문제의 발견</li>
+          <li>탐구 가치와 실현 가능성 분석</li>
+          <li>구체적이고 명확한 융합 탐구 주제 선정</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="standard">
+      <div class="standard-title">[12정융01-02]</div>
+      <div class="standard-body">
+        선정한 문제의 원인, 조건, 입력과 출력, 제약 사항 등을 분석하여 해결해야 할 문제를 구조화한다.
+        <ol class="criteria">
+          <li>문제 상황과 원인 분석</li>
+          <li>문제의 입력·출력 요소 파악</li>
+          <li>문제 해결의 조건과 제약 사항 분석</li>
+          <li>문제의 논리적 구조화 및 표현</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="standard">
+      <div class="standard-title">[12정융01-03]</div>
+      <div class="standard-body">
+        문제와 관련된 다양한 학문 분야의 자료를 탐색하고 정보과학의 개념 및 원리와 연결하여 융합적으로 분석한다.
+        <ol class="criteria">
+          <li>다양한 분야의 신뢰성 있는 자료 탐색</li>
+          <li>자료의 적절성과 신뢰성 판단</li>
+          <li>정보과학 개념과 다른 학문 분야의 연계</li>
+          <li>자료를 활용한 융합적 문제 분석</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="standard">
+      <div class="standard-title">[12정융01-04]</div>
+      <div class="standard-body">
+        문제 해결을 위한 탐구 목표를 설정하고 수행 절차, 방법, 역할 및 일정을 포함한 탐구 계획을 설계한다.
+        <ol class="criteria">
+          <li>구체적인 탐구 목표 설정</li>
+          <li>탐구 방법과 수행 절차 설계</li>
+          <li>역할·일정·자원 활용 계획 수립</li>
+          <li>실행 가능성을 고려한 탐구계획서 작성</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Ⅱ. 데이터·인공지능 융합 탐구</h2>
+
+    <div class="standard"><div class="standard-title">[12정융02-01]</div><div class="standard-body">
+      탐구 문제 해결에 필요한 데이터를 선정하고 적절한 방법으로 수집하여 분석 가능한 형태로 구성한다.
+      <ol class="criteria"><li>문제 해결에 필요한 데이터 정의</li><li>적절한 데이터 수집 방법 선정</li><li>데이터 수집 및 체계적인 저장</li><li>분석 가능한 데이터 구조로 구성</li></ol>
+    </div></div>
+
+    <div class="standard"><div class="standard-title">[12정융02-02]</div><div class="standard-body">
+      수집한 데이터의 결측값, 이상값, 중복값 등을 처리하고 탐구 목적에 적합하도록 데이터를 전처리한다.
+      <ol class="criteria"><li>데이터 품질과 특성 분석</li><li>결측값·이상값·중복값 탐색</li><li>적절한 데이터 전처리 방법 적용</li><li>전처리 결과의 적절성 검증</li></ol>
+    </div></div>
+
+    <div class="standard"><div class="standard-title">[12정융02-03]</div><div class="standard-body">
+      데이터를 분석·시각화하고 필요한 경우 인공지능 모델을 적용하여 문제와 관련된 의미 있는 패턴과 결과를 도출한다.
+      <ol class="criteria"><li>탐구 목적에 적합한 분석 방법 선정</li><li>데이터 분석 및 시각화</li><li>적절한 인공지능 모델의 선택·적용</li><li>분석 결과와 패턴의 해석</li></ol>
+    </div></div>
+
+    <div class="standard"><div class="standard-title">[12정융02-04]</div><div class="standard-body">
+      데이터와 인공지능 활용 과정에서 발생할 수 있는 편향, 개인정보, 저작권, 공정성 등의 윤리적 문제를 분석하고 책임 있는 활용 방안을 제안한다.
+      <ol class="criteria"><li>개인정보 및 데이터 보호 문제 분석</li><li>데이터·AI 편향과 공정성 분석</li><li>저작권·출처 및 생성형 AI 활용 윤리 준수</li><li>책임 있는 데이터·인공지능 활용 방안 제안</li></ol>
+    </div></div>
+  </section>
+
+  <section class="section">
+    <h2>Ⅲ. 소프트웨어 융합 문제 해결</h2>
+
+    <div class="standard"><div class="standard-title">[12정융03-01]</div><div class="standard-body">
+      융합 문제를 해결하기 위하여 문제를 작은 단위로 분해하고 추상화하여 컴퓨팅 시스템으로 해결 가능한 형태로 표현한다.
+      <ol class="criteria"><li>복잡한 문제의 부분 문제 분해</li><li>문제의 핵심 요소 추출 및 추상화</li><li>부분 문제 사이의 관계 분석</li><li>컴퓨팅 시스템으로 해결 가능한 문제 구조 설계</li></ol>
+    </div></div>
+
+    <div class="standard"><div class="standard-title">[12정융03-02]</div><div class="standard-body">
+      문제의 특성을 분석하여 적절한 자료구조와 알고리즘을 선택하고 효율적인 문제 해결 절차를 설계한다.
+      <ol class="criteria"><li>문제 특성과 요구 조건 분석</li><li>적절한 자료구조 선택</li><li>문제에 적합한 알고리즘 설계</li><li>알고리즘의 효율성과 타당성 분석</li></ol>
+    </div></div>
+
+    <div class="standard"><div class="standard-title">[12정융03-03]</div><div class="standard-body">
+      프로그래밍 언어, 라이브러리, 오픈소스 및 다양한 디지털 도구를 활용하여 문제 해결 프로그램을 구현한다.
+      <ol class="criteria"><li>문제 해결에 적합한 프로그래밍 도구 선정</li><li>알고리즘을 기반으로 한 프로그램 작성</li><li>라이브러리·오픈소스의 적절한 활용</li><li>기능이 통합된 문제 해결 프로그램 구현</li></ol>
+    </div></div>
+
+    <div class="standard"><div class="standard-title">[12정융03-04]</div><div class="standard-body">
+      구현한 프로그램을 다양한 조건에서 테스트하고 오류를 분석·수정하여 프로그램의 정확성과 효율성을 개선한다.
+      <ol class="criteria"><li>다양한 테스트 사례 설계</li><li>프로그램 실행 결과 검증</li><li>오류의 원인 분석 및 디버깅</li><li>프로그램의 정확성·효율성 개선</li></ol>
+    </div></div>
+  </section>
+
+  <section class="section">
+    <h2>Ⅳ. 정보융합 프로젝트와 공유</h2>
+
+    <div class="standard"><div class="standard-title">[12정융04-01]</div><div class="standard-body">
+      실생활 또는 자신의 진로 분야와 관련된 정보융합 프로젝트를 계획하고 협력적으로 수행하여 문제 해결 산출물을 개발한다.
+      <ol class="criteria"><li>프로젝트 목표와 요구사항 설정</li><li>프로젝트 수행 계획 및 역할 분담</li><li>협력적 프로젝트 수행</li><li>정보융합 산출물 개발</li></ol>
+    </div></div>
+
+    <div class="standard"><div class="standard-title">[12정융04-02]</div><div class="standard-body">
+      프로젝트 수행 과정에서 산출물을 반복적으로 테스트하고 데이터를 근거로 문제점을 분석하여 해결 방안을 개선한다.
+      <ol class="criteria"><li>산출물의 기능 및 성능 테스트</li><li>테스트 결과와 데이터 수집</li><li>문제점과 개선 요소 분석</li><li>분석 결과를 반영한 산출물 개선</li></ol>
+    </div></div>
+
+    <div class="standard"><div class="standard-title">[12정융04-03]</div><div class="standard-body">
+      프로젝트의 문제 해결 과정과 결과를 평가하고 정보기술의 사회적 영향과 윤리적 책임을 고려하여 탐구 결과의 가치를 판단한다.
+      <ol class="criteria"><li>프로젝트 수행 과정의 체계적 평가</li><li>문제 해결 결과와 목표 달성도 평가</li><li>사회적·윤리적 영향 분석</li><li>탐구 결과의 가치와 한계에 대한 성찰</li></ol>
+    </div></div>
+
+    <div class="standard"><div class="standard-title">[12정융04-04]</div><div class="standard-body">
+      정보융합 탐구의 과정과 결과를 보고서, 발표, 시연 등의 다양한 형태로 표현하고 공유하며 피드백을 반영하여 발전시킨다.
+      <ol class="criteria"><li>탐구 과정과 결과의 체계적인 정리</li><li>탐구보고서 및 발표 자료 작성</li><li>프로그램·산출물의 효과적인 발표 및 시연</li><li>피드백을 반영한 결과 수정·보완 및 공유</li></ol>
+    </div></div>
+  </section>
+</div>
+</body>
+</html>
