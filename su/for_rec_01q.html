@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>피타고라스나무 30문항 100점</title>
+<style>
+body{font-family:'Malgun Gothic',sans-serif;background:#f5f7fb;color:#202938;margin:0;line-height:1.6}
+header{background:#243b73;color:#fff;padding:26px 18px} main{max-width:1080px;margin:auto;padding:18px}
+h1{margin:0} .student{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+input[type=text]{width:100%;padding:10px;font-size:16px;border:1px solid #ccd3df;border-radius:8px}
+.code{background:#111827;color:#e5e7eb;padding:18px;border-radius:10px;overflow:auto;white-space:pre;font-family:Consolas,monospace;font-size:14px}
+h2{background:#e9efff;border-left:5px solid #315efb;padding:10px 14px;border-radius:8px;margin-top:32px}
+.q{background:#fff;border:1px solid #d8dee9;border-radius:12px;padding:16px;margin:12px 0}
+.q.ok{border-color:#2d9b67;background:#fbfffd} .q.no{border-color:#d45b52;background:#fffafa}
+.meta{display:flex;justify-content:space-between;gap:10px} .tag{background:#eef3ff;color:#2447bd;padding:2px 8px;border-radius:999px;font-size:13px;font-weight:700}
+.opt{display:block;padding:7px 8px;border-radius:8px} .opt:hover{background:#f3f6fb}
+.exp{display:none;background:#f7f9fc;border-left:4px solid #8b95a7;padding:10px;margin-top:10px;border-radius:6px}
+.result{display:none;background:#fff;border:2px solid #315efb;border-radius:14px;padding:18px;margin:26px 0}
+.score{font-size:40px;font-weight:800;color:#315efb}
+button{padding:11px 16px;border:0;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;margin:8px 6px 30px 0}
+.primary{background:#315efb;color:white} .secondary{background:#e8edf5}
+.notice{background:#fff7df;border:1px solid #edd59c;padding:12px;border-radius:8px}
+@media(max-width:650px){.student{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header><main><h1>3:4:5 피타고라스 나무 평가</h1><div>반복문(BFS형) · 재귀함수(DFS형) · 총 30문항 · 100점</div></main></header>
+<main>
+<div class="student"><div><b>학번</b><input id="sid" type="text"></div><div><b>이름</b><input id="sname" type="text"></div></div>
+<div class="notice"><b>배점:</b> 옳은 것 3개 고르기 10문항×4점=40점, OX 10문항×3점=30점, 옳은 것 1개 고르기 10문항×3점=30점. 다중선택은 정답 3개를 모두 맞혀야 득점합니다.</div>
+
+<h2>코드 A — 반복문을 이용한 3:4:5 피타고라스 나무</h2>
+<pre class="code">import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def square(A, B):
+    x1, y1 = A
+    x2, y2 = B
+    dx = x2 - x1
+    dy = y2 - y1
+
+    C = (x2 - dy, y2 + dx)
+    D = (x1 - dy, y1 + dx)
+
+    t.penup()
+    t.goto(A)
+    t.pendown()
+    t.goto(B)
+    t.goto(C)
+    t.goto(D)
+    t.goto(A)
+
+    return D, C
+
+squares = [((-70, -330), (70, -330))]
+
+for _ in range(9):
+    next_squares = []
+
+    for A, B in squares:
+        L, R = square(A, B)
+
+        dx = R[0] - L[0]
+        dy = R[1] - L[1]
+
+        P = (
+            L[0] + 16/25 * dx - 12/25 * dy,
+            L[1] + 16/25 * dy + 12/25 * dx
+        )
+
+        next_squares.append((L, P))
+        next_squares.append((P, R))
+
+    squares = next_squares
+
+turtle.done()</pre><div id="A"></div>
+
+<h2>코드 B — 재귀함수를 이용한 3:4:5 피타고라스 나무</h2>
+<pre class="code">import turtle
+
+t = turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+screen = turtle.Screen()
+screen.setup(900, 800)
+
+def square(A, B):
+    x1, y1 = A
+    x2, y2 = B
+    dx = x2 - x1
+    dy = y2 - y1
+
+    C = (x2 - dy, y2 + dx)
+    D = (x1 - dy, y1 + dx)
+
+    t.penup()
+    t.goto(A)
+    t.pendown()
+    t.goto(B)
+    t.goto(C)
+    t.goto(D)
+    t.goto(A)
+
+    return D, C
+
+def tree(A, B, depth):
+    if depth == 0:
+        return
+
+    L, R = square(A, B)
+
+    dx = R[0] - L[0]
+    dy = R[1] - L[1]
+
+    P = (
+        L[0] + 16/25 * dx - 12/25 * dy,
+        L[1] + 16/25 * dy + 12/25 * dx
+    )
+
+    tree(L, P, depth - 1)
+    tree(P, R, depth - 1)
+
+tree((-70, -330), (70, -330), 9)
+
+turtle.done()</pre><div id="B"></div>
+
+<div id="result" class="result"><h2>채점 결과</h2><div id="score" class="score"></div><div id="rmeta"></div></div>
+<button class="primary" onclick="grade()">채점하고 TXT 저장</button>
+<button class="secondary" id="again" onclick="saveTxt()" disabled>TXT 다시 저장</button>
+<button class="secondary" onclick="resetAll()">다시 풀기</button>
+
+<script>
+const Q=[["A", "m", 4, "반복문 코드의 자료 흐름에 대한 설명으로 옳은 것을 3개 고르시오.", ["squares에는 현재 단계에서 처리할 정사각형의 밑변 두 점이 저장된다.", "next_squares에는 다음 단계의 두 자식 정사각형이 누적된다.", "squares = next_squares는 다음 깊이로 진행하기 위한 갱신이다.", "next_squares는 프로그램 시작 시 한 번만 만들어져 끝까지 재사용된다.", "square(A, B)는 두 자식 정사각형까지 즉시 그린다."], [0, 1, 2], "squares는 현재 레벨의 작업 목록입니다. 각 부모에서 만든 (L,P), (P,R)을 next_squares에 저장하고 현재 레벨을 모두 처리한 뒤 squares를 교체합니다. next_squares는 바깥 반복마다 새로 만들어집니다."], ["A", "m", 4, "square(A, B) 함수에 대한 설명으로 옳은 것을 3개 고르시오.", ["dx, dy는 A에서 B로 가는 방향 벡터의 성분이다.", "(-dy, dx)는 (dx, dy)를 90° 회전한 벡터이다.", "return D, C는 현재 정사각형의 윗변 양 끝점을 반환한다.", "t.goto(C)는 펜이 내려져 있어도 선을 그리지 않는다.", "square() 안에는 tree() 재귀 호출이 있다."], [0, 1, 2], "dx=x2-x1, dy=y2-y1은 AB 벡터이며 (-dy,dx)는 이를 90° 회전한 벡터입니다. C와 D는 이 벡터로 계산되고 D,C가 윗변 양 끝점으로 반환됩니다."], ["A", "m", 4, "반복문 코드의 단계와 개수에 대한 설명으로 옳은 것을 3개 고르시오.", ["첫 단계에서는 정사각형 1개를 그린다.", "한 단계가 끝날 때마다 다음 단계의 정사각형 수는 2배가 된다.", "9단계 동안 실제로 그리는 정사각형의 총수는 511개이다.", "9단계가 끝난 직후 squares에는 256개만 남는다.", "각 단계의 정사각형 수는 1개씩 증가한다."], [0, 1, 2], "단계별 개수는 1,2,4,...,256이고 총합은 1+2+...+256=2^9-1=511입니다. 마지막 반복 후 다음 단계용 squares에는 512개가 만들어집니다."], ["A", "m", 4, "분기점 P에 대한 설명으로 옳은 것을 3개 고르시오.", ["dx, dy는 부모 정사각형 윗변 L→R의 방향을 나타낸다.", "P는 L과 R을 기준으로 계산한 분기점이다.", "(L,P)와 (P,R)는 다음 단계 두 정사각형의 밑변이 된다.", "P는 항상 화면의 원점 (0,0)이다.", "P를 계산한 뒤 L과 R은 다음 단계 생성에 쓰이지 않는다."], [0, 1, 2], "L,R은 부모 정사각형의 윗변이고 P는 그 벡터와 3:4:5 비율에서 나온 계수로 계산됩니다. 두 구간 (L,P), (P,R)가 두 자식 정사각형의 밑변이 됩니다."], ["A", "m", 4, "반복문 코드의 실행 순서를 BFS와 연결한 설명으로 옳은 것을 3개 고르시오.", ["같은 깊이의 정사각형들을 먼저 모두 처리한다.", "현재 단계에서 만든 자식들을 다음 단계용 리스트에 모은다.", "처리 순서는 너비 우선 탐색(BFS)과 유사하다.", "for문을 사용하면 어떤 경우에도 BFS가 된다.", "한 가지를 최대 깊이까지 먼저 내려간다."], [0, 1, 2], "현재 레벨 전체를 처리한 뒤 다음 레벨로 이동하므로 BFS와 같은 레벨 순서입니다. 다만 for문 자체가 BFS를 의미하는 것은 아닙니다."], ["A", "o", 3, "next_squares는 같은 깊이에서 생성된 다음 단계의 모든 자식 정사각형을 저장한다.", null, "O", "각 부모에서 생성된 두 자식 정보를 next_squares에 계속 추가한 뒤 다음 레벨의 squares로 사용합니다."], ["A", "o", 3, "square(A, B)가 호출될 때마다 그 부모의 두 자식 정사각형까지 즉시 모두 그려진다.", null, "X", "square()는 현재 정사각형 하나만 그리고 윗변 D,C를 반환합니다. 자식은 다음 바깥 반복에서 그려집니다."], ["A", "o", 3, "for _ in range(9)는 전체 트리를 레벨 단위로 9단계 진행시킨다.", null, "O", "바깥 반복 한 번이 현재 레벨 전체를 처리하는 한 단계입니다."], ["A", "o", 3, "squares = next_squares가 없어도 동일한 방식으로 다음 깊이로 진행된다.", null, "X", "현재 작업 목록을 다음 단계 목록으로 교체하지 않으면 레벨 확장이 이루어지지 않습니다."], ["A", "o", 3, "이 코드가 BFS와 유사한 이유는 반복문을 썼기 때문이 아니라 같은 깊이의 항목을 묶어 처리하기 때문이다.", null, "O", "BFS 여부는 문법보다 방문 순서로 판단합니다."], ["A", "s", 3, "첫 번째 바깥 반복이 끝난 직후 squares의 항목 수는 몇 개인가?", ["1개", "2개", "4개", "8개", "9개"], 1, "부모 1개가 (L,P), (P,R) 두 자식 항목을 만들므로 2개입니다."], ["A", "s", 3, "이 반복문 코드의 처리 순서와 가장 가까운 것은 무엇인가?", ["DFS", "BFS", "이진 탐색", "선형 탐색", "무작위 탐색"], 1, "같은 깊이의 모든 항목을 먼저 처리하므로 BFS와 가장 가깝습니다."], ["A", "s", 3, "9단계 동안 square()가 호출되는 총 횟수는?", ["9", "256", "511", "512", "1023"], 2, "1+2+4+...+256=2^9-1=511번입니다."], ["A", "s", 3, "square(A, B)가 반환하는 D, C의 역할은?", ["현재 정사각형의 대각선", "현재 정사각형의 윗변 양 끝점", "현재 정사각형의 중심", "거북이 속도", "반복 횟수"], 1, "D와 C는 AB의 양 끝점에서 90° 회전 벡터를 더해 만든 윗변의 두 점입니다."], ["A", "s", 3, "반복문 버전에서 다음 작업을 기억하는 핵심 자료구조는?", ["문자열", "집합", "squares와 next_squares 리스트", "파일", "난수"], 2, "다음에 그릴 정사각형의 밑변 정보를 리스트에 명시적으로 저장합니다."], ["B", "m", 4, "재귀함수 tree(A, B, depth)에 대한 설명으로 옳은 것을 3개 고르시오.", ["depth == 0은 종료 조건이다.", "현재 정사각형 뒤에 tree(L,P,...)를 먼저 호출한다.", "왼쪽 재귀가 끝난 뒤 tree(P,R,...)를 호출한다.", "depth는 재귀가 진행될수록 1씩 증가한다.", "tree()는 자기 자신을 호출하지 않는다."], [0, 1, 2], "depth가 0이면 반환하고, 그렇지 않으면 현재 정사각형을 그린 뒤 왼쪽 자식과 오른쪽 자식을 depth-1로 차례로 재귀 호출합니다."], ["B", "m", 4, "재귀 코드의 DFS 성격에 대한 설명으로 옳은 것을 3개 고르시오.", ["왼쪽 가지를 가능한 깊이까지 먼저 따라간다.", "깊은 호출이 끝나면 이전 호출로 되돌아온다.", "실행 순서는 깊이 우선 탐색(DFS)과 유사하다.", "같은 깊이의 모든 정사각형을 먼저 그린다.", "재귀함수는 어떤 구조에서도 무조건 DFS이다."], [0, 1, 2], "첫 번째 재귀 호출이 끝나기 전에는 두 번째 호출로 넘어가지 않으므로 한 갈래를 깊게 탐색한 뒤 복귀합니다. 이 코드의 순서가 DFS와 유사한 것입니다."], ["B", "m", 4, "호출 스택에 대한 설명으로 옳은 것을 3개 고르시오.", ["아직 끝나지 않은 tree() 호출의 상태가 저장된다.", "더 깊은 호출이 끝나면 직전 호출로 복귀한다.", "명시적인 next_squares 없이도 복귀 위치를 기억할 수 있다.", "호출 스택은 같은 깊이의 모든 노드를 먼저 처리하는 큐이다.", "depth가 0이어도 계속 새 호출을 만든다."], [0, 1, 2], "재귀 호출의 매개변수와 복귀 위치가 호출 스택에 쌓였다가 종료 조건에서 가장 최근 호출부터 역순으로 복귀합니다."], ["B", "m", 4, "tree((-70,-330),(70,-330),9)의 실행에 대한 설명으로 옳은 것을 3개 고르시오.", ["루트의 depth는 9이다.", "정사각형을 실제로 그리는 레벨은 9개이다.", "그리는 정사각형 총수는 511개이다.", "depth==0 호출에서도 정사각형을 하나 그린다.", "각 정사각형은 9개의 자식을 만든다."], [0, 1, 2], "depth 9부터 1까지 정사각형을 그리고 0에서는 즉시 반환합니다. 이진 분기이므로 총수는 2^9-1=511입니다."], ["B", "m", 4, "반복문 버전과 재귀 버전을 비교한 설명으로 옳은 것을 3개 고르시오.", ["두 코드 모두 같은 square() 계산 구조를 사용한다.", "같은 시작점과 깊이를 쓰면 최종 기하 구조는 같게 만들 수 있다.", "핵심 차이는 정사각형을 방문하는 순서이다.", "반복문 버전만 3:4:5 분기점을 사용한다.", "재귀 버전은 매 단계 정사각형이 1개씩만 늘어난다."], [0, 1, 2], "두 코드의 좌표 생성과 P 계산 규칙은 동일하므로 같은 트리를 만들 수 있습니다. 차이는 반복문이 레벨 순서, 재귀가 가지 우선 순서라는 점입니다."], ["B", "o", 3, "if depth == 0: return은 무한 재귀를 막는 종료 조건이다.", null, "O", "depth가 0이면 더 이상 자식 호출을 만들지 않고 반환합니다."], ["B", "o", 3, "tree(L,P,depth-1)을 호출하자마자 tree(P,R,depth-1)도 동시에 실행된다.", null, "X", "파이썬 일반 함수 호출은 순차적입니다. 첫 번째 호출이 완전히 끝난 뒤 두 번째 호출을 실행합니다."], ["B", "o", 3, "이 재귀 코드의 방문 순서는 한 가지를 깊게 처리하므로 DFS와 유사하다.", null, "O", "첫 번째 자식 서브트리를 끝까지 처리한 뒤 두 번째 자식으로 이동합니다."], ["B", "o", 3, "재귀 코드에서도 다음 작업을 기억하려면 반드시 next_squares 리스트가 필요하다.", null, "X", "재귀 버전은 호출 스택이 함수 상태와 복귀 위치를 관리합니다."], ["B", "o", 3, "depth는 앞으로 남은 재귀 단계를 제어한다.", null, "O", "각 호출에서 depth-1을 넘기고 0에서 종료합니다."], ["B", "s", 3, "무한 재귀를 방지하는 가장 직접적인 코드는?", ["t.speed(0)", "t.hideturtle()", "if depth == 0: return", "screen.setup(900,800)", "turtle.done()"], 2, "depth가 0에서 즉시 반환되므로 재귀가 끝납니다."], ["B", "s", 3, "깊은 재귀가 끝난 뒤 이전 호출 위치로 돌아가게 하는 실행 구조는?", ["호출 스택(call stack)", "파일 시스템", "정렬 알고리즘", "그래픽 버퍼", "난수 생성기"], 0, "호출 스택이 각 함수 호출의 매개변수와 복귀 위치를 보존합니다."], ["B", "s", 3, "깊이 9인 이진 재귀에서 실제로 그리는 정사각형 총수는?", ["9", "18", "255", "511", "512"], 3, "1+2+4+...+256=511개입니다."], ["B", "s", 3, "이 재귀 코드의 실행 순서를 가장 잘 설명한 것은?", ["현재 깊이 전체를 먼저 처리한다.", "왼쪽 서브트리를 깊게 처리한 뒤 오른쪽 서브트리로 이동한다.", "항상 오른쪽만 처리한다.", "무작위로 처리한다.", "좌표 거리순으로 처리한다."], 1, "tree(L,P,...)가 완전히 끝난 뒤 tree(P,R,...)가 실행되므로 왼쪽 우선 DFS 형태입니다."], ["B", "s", 3, "두 버전이 같은 최종 피타고라스 나무를 만들 수 있는 핵심 이유는?", ["같은 거북이 색을 쓰기 때문에", "같은 시작 좌표·정사각형 좌표 계산·분기점 P 계산을 사용하기 때문에", "둘 다 BFS이기 때문에", "둘 다 DFS이기 때문에", "창 크기가 항상 같기 때문에"], 1, "생성되는 좌표와 분기 규칙이 같으면 방문 순서가 달라도 최종 트리의 기하 구조는 같습니다."]]; let txt='',fname='';
+function kind(t){return t==='m'?'옳은 것 3개':t==='o'?'OX':'옳은 것 1개'}
+function render(sec){
+ const root=document.getElementById(sec);
+ Q.forEach((q,ix)=>{if(q[0]!==sec)return;
+   const n=ix+1,t=q[1],pts=q[2],prompt=q[3],opts=q[4];
+   let choices='';
+   if(t==='o') choices=['O','X'].map(v=>`<label class="opt"><input type="radio" name="q${n}" value="${v}"> ${v}</label>`).join('');
+   else choices=opts.map((v,i)=>`<label class="opt"><input type="${t==='m'?'checkbox':'radio'}" name="q${n}" value="${i}"> ${i+1}. ${v}</label>`).join('');
+   root.insertAdjacentHTML('beforeend',`<div class="q" id="card${n}"><div class="meta"><span class="tag">${kind(t)}</span><b>${pts}점</b></div><p><b>${n}. ${prompt}</b></p>${choices}<div class="exp" id="exp${n}"></div></div>`);
+ });
+}
+render('A'); render('B');
+
+function response(n,t){
+ const els=[...document.querySelectorAll(`[name=q${n}]:checked`)];
+ if(t==='m') return els.map(e=>+e.value).sort((a,b)=>a-b);
+ if(!els.length)return null;
+ return t==='s'?+els[0].value:els[0].value;
+}
+function eq(a,b){return Array.isArray(a)&&Array.isArray(b)&&a.length===b.length&&a.every((v,i)=>v===b[i])}
+function showAns(t,a){return t==='m'?a.map(x=>x+1).join(', '):t==='s'?String(a+1):a}
+function showResp(t,r){if(r===null||(Array.isArray(r)&&!r.length))return '미응답'; return t==='m'?r.map(x=>x+1).join(', '):t==='s'?String(r+1):r}
+function safe(s){return (s||'미입력').replace(/[\\/:*?"<>|]/g,'_').replace(/\s+/g,'_')}
+function stamp(d){const p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`}
+function readable(d){return d.toLocaleString('ko-KR')}
+
+function grade(){
+ const sid=document.getElementById('sid').value.trim(),name=document.getElementById('sname').value.trim();
+ if(!sid||!name){alert('학번과 이름을 입력하세요.');return}
+ let score=0,correct=0, lines=[], now=new Date();
+ Q.forEach((q,ix)=>{
+   const n=ix+1,t=q[1],pts=q[2],a=q[5],ex=q[6],r=response(n,t);
+   const ok=t==='m'?eq(r,a):r===a;
+   if(ok){score+=pts;correct++}
+   const c=document.getElementById('card'+n); c.classList.remove('ok','no'); c.classList.add(ok?'ok':'no');
+   const e=document.getElementById('exp'+n); e.style.display='block';
+   e.innerHTML=`<b>${ok?'정답':'오답'}</b> · 내 답: ${showResp(t,r)} · 정답: ${showAns(t,a)}<br><b>상세 해설:</b> ${ex}`;
+   lines.push(`[${n}번] ${ok?'정답':'오답'} (${ok?pts:0}/${pts}점)`);
+   lines.push(`문제: ${q[3]}`);
+   lines.push(`내 답: ${showResp(t,r)}`);
+   lines.push(`정답: ${showAns(t,a)}`);
+   lines.push(`상세 해설: ${ex}`);
+   lines.push('----------------------------------------');
+ });
+ document.getElementById('score').textContent=`${score} / 100`;
+ document.getElementById('rmeta').textContent=`${sid} ${name} · 정답 ${correct}/30 · 응시시각 ${readable(now)}`;
+ document.getElementById('result').style.display='block';
+ txt=[`3:4:5 피타고라스 나무 평가 결과`,`학번: ${sid}`,`이름: ${name}`,`점수: ${score} / 100`,`응시시각: ${readable(now)}`,'========================================',...lines].join('\r\n');
+ fname=`${safe(sid)}_${safe(name)}_${score}_피타고라스나무_${stamp(now)}.txt`;
+ document.getElementById('again').disabled=false; saveTxt();
+ document.getElementById('result').scrollIntoView({behavior:'smooth'});
+}
+function saveTxt(){
+ if(!txt)return; const b=new Blob(['\ufeff'+txt],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');
+ a.href=u;a.download=fname;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);
+}
+function resetAll(){
+ if(!confirm('응답과 채점 결과를 초기화할까요?'))return;
+ document.querySelectorAll('input[type=radio],input[type=checkbox]').forEach(x=>x.checked=false);
+ document.querySelectorAll('.q').forEach(x=>x.classList.remove('ok','no'));
+ document.querySelectorAll('.exp').forEach(x=>{x.style.display='none';x.innerHTML=''});
+ document.getElementById('result').style.display='none';document.getElementById('again').disabled=true;txt='';fname='';
+}
+</script></main></body></html>
