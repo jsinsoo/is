@@ -1,0 +1,1316 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BFS DFS 같은 결과 기하학적 도형 20선</title>
+<style>
+:root{--bg:#f4f7fb;--ink:#182234;--line:#d8e0ec;--nav:#243b75;--code:#101827;--bfs:#087f6d;--dfs:#7446c8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Malgun Gothic',sans-serif;line-height:1.65}
+header{background:linear-gradient(135deg,#172554,#315efb);color:white;padding:34px 18px}.wrap{max-width:1260px;margin:auto}h1{margin:0 0 8px;font-size:clamp(27px,4vw,42px)}
+.intro{background:white;border:1px solid var(--line);padding:17px;border-radius:14px;margin:20px 0}.toc{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0 28px}.toc a{background:white;border:1px solid var(--line);border-radius:9px;padding:9px;text-decoration:none;color:#294481}
+.search{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:16px;margin:4px 0 12px}.ex{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;margin:20px 0;box-shadow:0 2px 10px #1020400b}.head{display:flex;align-items:center;gap:10px}.head h2{margin:0}.n{display:grid;place-items:center;width:43px;height:43px;border-radius:12px;background:#eaf0ff;color:#294aa8;font-weight:800}
+.why{background:#f6f8fc;border-left:4px solid #315efb;border-radius:8px;padding:10px 12px;margin:12px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}article{border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0}.ct{display:flex;gap:9px;align-items:center;padding:10px 12px;background:#f8fafc}.ct button{margin-left:auto;border:0;border-radius:7px;padding:6px 9px;cursor:pointer}.b{color:#fff;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:800}.bfs{background:var(--bfs)}.dfs{background:var(--dfs)}
+pre{margin:0;background:var(--code);color:#e7edf6;padding:15px;overflow:auto;max-height:620px;font-size:13px;line-height:1.48}code{font-family:Consolas,'Courier New',monospace}.hide{display:none}footer{text-align:center;color:#667085;padding:28px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}.toc{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.toc{grid-template-columns:1fr}.ex{padding:14px}}
+</style></head><body><header><div class="wrap"><h1>BFS와 DFS로 같은 결과를 만드는 기하학적 도형 20선</h1><div>Python Turtle · 큐 BFS · 스택 DFS · 최종 결과는 같고 실행 순서는 다르게</div></div></header>
+<main class="wrap"><div class="intro"><b>핵심:</b> BFS는 <b>queue</b>의 FIFO 순서로 같은 깊이를 먼저 처리하고, DFS는 <b>stack</b>의 LIFO 순서로 한 갈래를 먼저 깊게 처리합니다. 아래 예제들은 모두 같은 <code>draw(node)</code>와 <code>children(node)</code> 규칙을 공유하므로 방문 순서만 다르고 최종 도형은 동일합니다.</div>
+<input id="search" class="search" placeholder="예: 피타고라스, 삼각형, 원, H-Tree" oninput="filterEx()"><nav class="toc"><a href="#ex1">01. 이진 가지 나무</a><a href="#ex2">02. 3:4:5 피타고라스 나무</a><a href="#ex3">03. 시에르핀스키 삼각형</a><a href="#ex4">04. 칸토어 집합</a><a href="#ex5">05. H-Tree 프랙탈</a><a href="#ex6">06. 비첵(Vicsek) 프랙탈</a><a href="#ex7">07. 시에르핀스키 카펫</a><a href="#ex8">08. 모서리 원 프랙탈</a><a href="#ex9">09. 십자 프랙탈</a><a href="#ex10">10. 육각 방사형 가지</a><a href="#ex11">11. 삼방향 가지 나무</a><a href="#ex12">12. 다이아몬드 모서리 프랙탈</a><a href="#ex13">13. 원 이진 나무</a><a href="#ex14">14. 정사각형 네 모서리 트리</a><a href="#ex15">15. 오각별 꼭짓점 프랙탈</a><a href="#ex16">16. 육각형 꼭짓점 프랙탈</a><a href="#ex17">17. 삼각형 꼭짓점 프랙탈</a><a href="#ex18">18. 사분면 분할 정사각형</a><a href="#ex19">19. 마름모 가지 나무</a><a href="#ex20">20. 눈송이 가지 프랙탈</a></nav><section class="ex" id="ex1">
+<div class="head"><span class="n">01</span><h2>이진 가지 나무</h2></div>
+<p>좌우 두 가지로 분기하는 기본 프랙탈 트리.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def draw(node):
+    x,y,a,L,d=node
+    r=math.radians(a)
+    x2=x+L*math.cos(r); y2=y+L*math.sin(r)
+    t.penup(); t.goto(x,y); t.pendown(); t.goto(x2,y2)
+
+def children(node):
+    x,y,a,L,d=node
+    if d==0: return []
+    r=math.radians(a)
+    x2=x+L*math.cos(r); y2=y+L*math.sin(r)
+    return [(x2,y2,a+25,L*.72,d-1),(x2,y2,a-25,L*.72,d-1)]
+
+q=deque([(0,-300,90,120,7)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def draw(node):
+    x,y,a,L,d=node
+    r=math.radians(a)
+    x2=x+L*math.cos(r); y2=y+L*math.sin(r)
+    t.penup(); t.goto(x,y); t.pendown(); t.goto(x2,y2)
+
+def children(node):
+    x,y,a,L,d=node
+    if d==0: return []
+    r=math.radians(a)
+    x2=x+L*math.cos(r); y2=y+L*math.sin(r)
+    return [(x2,y2,a+25,L*.72,d-1),(x2,y2,a-25,L*.72,d-1)]
+
+stack=[(0,-300,90,120,7)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex2">
+<div class="head"><span class="n">02</span><h2>3:4:5 피타고라스 나무</h2></div>
+<p>부모 정사각형 위에 3:4:5 비율의 두 자식 정사각형을 생성.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def square(A,B):
+    x1,y1=A; x2,y2=B
+    dx,dy=x2-x1,y2-y1
+    C=(x2-dy,y2+dx); D=(x1-dy,y1+dx)
+    t.penup(); t.goto(A); t.pendown()
+    t.goto(B); t.goto(C); t.goto(D); t.goto(A)
+    return D,C
+
+def draw(node):
+    A,B,d=node
+    square(A,B)
+
+def children(node):
+    A,B,d=node
+    if d==0: return []
+    x1,y1=A; x2,y2=B
+    dx,dy=x2-x1,y2-y1
+    C=(x2-dy,y2+dx); D=(x1-dy,y1+dx)
+    L,R=D,C
+    dx,dy=R[0]-L[0],R[1]-L[1]
+    P=(L[0]+16/25*dx-12/25*dy,
+       L[1]+16/25*dy+12/25*dx)
+    return [(L,P,d-1),(P,R,d-1)]
+
+q=deque([((-70,-330),(70,-330),9)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def square(A,B):
+    x1,y1=A; x2,y2=B
+    dx,dy=x2-x1,y2-y1
+    C=(x2-dy,y2+dx); D=(x1-dy,y1+dx)
+    t.penup(); t.goto(A); t.pendown()
+    t.goto(B); t.goto(C); t.goto(D); t.goto(A)
+    return D,C
+
+def draw(node):
+    A,B,d=node
+    square(A,B)
+
+def children(node):
+    A,B,d=node
+    if d==0: return []
+    x1,y1=A; x2,y2=B
+    dx,dy=x2-x1,y2-y1
+    C=(x2-dy,y2+dx); D=(x1-dy,y1+dx)
+    L,R=D,C
+    dx,dy=R[0]-L[0],R[1]-L[1]
+    P=(L[0]+16/25*dx-12/25*dy,
+       L[1]+16/25*dy+12/25*dx)
+    return [(L,P,d-1),(P,R,d-1)]
+
+stack=[((-70,-330),(70,-330),9)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex3">
+<div class="head"><span class="n">03</span><h2>시에르핀스키 삼각형</h2></div>
+<p>정삼각형을 세 개의 작은 삼각형으로 반복 분할.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def draw(node):
+    x,y,s,d=node
+    h=s*math.sqrt(3)/2
+    A=(x,y); B=(x+s,y); C=(x+s/2,y+h)
+    t.penup(); t.goto(A); t.pendown()
+    t.goto(B); t.goto(C); t.goto(A)
+
+def children(node):
+    x,y,s,d=node
+    if d==0: return []
+    ns=s/2; h=ns*math.sqrt(3)/2
+    return [(x,y,ns,d-1),(x+ns,y,ns,d-1),(x+ns/2,y+h,ns,d-1)]
+
+q=deque([(-300,-250,600,5)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def draw(node):
+    x,y,s,d=node
+    h=s*math.sqrt(3)/2
+    A=(x,y); B=(x+s,y); C=(x+s/2,y+h)
+    t.penup(); t.goto(A); t.pendown()
+    t.goto(B); t.goto(C); t.goto(A)
+
+def children(node):
+    x,y,s,d=node
+    if d==0: return []
+    ns=s/2; h=ns*math.sqrt(3)/2
+    return [(x,y,ns,d-1),(x+ns,y,ns,d-1),(x+ns/2,y+h,ns,d-1)]
+
+stack=[(-300,-250,600,5)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex4">
+<div class="head"><span class="n">04</span><h2>칸토어 집합</h2></div>
+<p>선분의 좌우 1/3 구간만 남기며 단계별로 분할.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,L,d=node
+    t.penup(); t.goto(x,y); t.setheading(0); t.pendown(); t.forward(L)
+
+def children(node):
+    x,y,L,d=node
+    if d==0: return []
+    ny=y-45
+    return [(x,ny,L/3,d-1),(x+2*L/3,ny,L/3,d-1)]
+
+q=deque([(-320,280,640,6)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,L,d=node
+    t.penup(); t.goto(x,y); t.setheading(0); t.pendown(); t.forward(L)
+
+def children(node):
+    x,y,L,d=node
+    if d==0: return []
+    ny=y-45
+    return [(x,ny,L/3,d-1),(x+2*L/3,ny,L/3,d-1)]
+
+stack=[(-320,280,640,6)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex5">
+<div class="head"><span class="n">05</span><h2>H-Tree 프랙탈</h2></div>
+<p>H의 네 끝점에서 더 작은 H를 반복.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def line(a,b):
+    t.penup(); t.goto(a); t.pendown(); t.goto(b)
+
+def draw(node):
+    x,y,s,d=node; h=s/2
+    line((x-h,y),(x+h,y))
+    line((x-h,y-h),(x-h,y+h))
+    line((x+h,y-h),(x+h,y+h))
+
+def children(node):
+    x,y,s,d=node
+    if d==0:return []
+    h=s/2; ns=s/2
+    return [(x-h,y-h,ns,d-1),(x-h,y+h,ns,d-1),
+            (x+h,y-h,ns,d-1),(x+h,y+h,ns,d-1)]
+
+q=deque([(0,0,220,4)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def line(a,b):
+    t.penup(); t.goto(a); t.pendown(); t.goto(b)
+
+def draw(node):
+    x,y,s,d=node; h=s/2
+    line((x-h,y),(x+h,y))
+    line((x-h,y-h),(x-h,y+h))
+    line((x+h,y-h),(x+h,y+h))
+
+def children(node):
+    x,y,s,d=node
+    if d==0:return []
+    h=s/2; ns=s/2
+    return [(x-h,y-h,ns,d-1),(x-h,y+h,ns,d-1),
+            (x+h,y-h,ns,d-1),(x+h,y+h,ns,d-1)]
+
+stack=[(0,0,220,4)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex6">
+<div class="head"><span class="n">06</span><h2>비첵(Vicsek) 프랙탈</h2></div>
+<p>정사각형의 중심과 네 모서리에 작은 정사각형을 배치.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    cx,cy,s,d=node; h=s/2
+    t.penup(); t.goto(cx-h,cy-h); t.setheading(0); t.pendown()
+    for _ in range(4): t.forward(s); t.left(90)
+
+def children(node):
+    cx,cy,s,d=node
+    if d==0:return []
+    ns=s/3; k=s/3
+    return [(cx,cy,ns,d-1),(cx-k,cy-k,ns,d-1),(cx-k,cy+k,ns,d-1),
+            (cx+k,cy-k,ns,d-1),(cx+k,cy+k,ns,d-1)]
+
+q=deque([(0,0,360,3)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    cx,cy,s,d=node; h=s/2
+    t.penup(); t.goto(cx-h,cy-h); t.setheading(0); t.pendown()
+    for _ in range(4): t.forward(s); t.left(90)
+
+def children(node):
+    cx,cy,s,d=node
+    if d==0:return []
+    ns=s/3; k=s/3
+    return [(cx,cy,ns,d-1),(cx-k,cy-k,ns,d-1),(cx-k,cy+k,ns,d-1),
+            (cx+k,cy-k,ns,d-1),(cx+k,cy+k,ns,d-1)]
+
+stack=[(0,0,360,3)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex7">
+<div class="head"><span class="n">07</span><h2>시에르핀스키 카펫</h2></div>
+<p>3×3 분할에서 가운데를 제외한 8개 칸을 반복.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,s,d=node
+    t.penup(); t.goto(x,y); t.setheading(0); t.pendown()
+    for _ in range(4): t.forward(s); t.left(90)
+
+def children(node):
+    x,y,s,d=node
+    if d==0:return []
+    ns=s/3; out=[]
+    for r in range(3):
+        for c in range(3):
+            if (r,c)!=(1,1): out.append((x+c*ns,y+r*ns,ns,d-1))
+    return out
+
+q=deque([(-270,-270,540,3)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,s,d=node
+    t.penup(); t.goto(x,y); t.setheading(0); t.pendown()
+    for _ in range(4): t.forward(s); t.left(90)
+
+def children(node):
+    x,y,s,d=node
+    if d==0:return []
+    ns=s/3; out=[]
+    for r in range(3):
+        for c in range(3):
+            if (r,c)!=(1,1): out.append((x+c*ns,y+r*ns,ns,d-1))
+    return out
+
+stack=[(-270,-270,540,3)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex8">
+<div class="head"><span class="n">08</span><h2>모서리 원 프랙탈</h2></div>
+<p>한 원의 상하좌우에 더 작은 원을 반복 배치.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,r,d=node
+    t.penup(); t.goto(x,y-r); t.setheading(0); t.pendown(); t.circle(r)
+
+def children(node):
+    x,y,r,d=node
+    if d==0:return []
+    nr=r*.45; k=r*.9
+    return [(x+k,y,nr,d-1),(x-k,y,nr,d-1),(x,y+k,nr,d-1),(x,y-k,nr,d-1)]
+
+q=deque([(0,0,150,4)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,r,d=node
+    t.penup(); t.goto(x,y-r); t.setheading(0); t.pendown(); t.circle(r)
+
+def children(node):
+    x,y,r,d=node
+    if d==0:return []
+    nr=r*.45; k=r*.9
+    return [(x+k,y,nr,d-1),(x-k,y,nr,d-1),(x,y+k,nr,d-1),(x,y-k,nr,d-1)]
+
+stack=[(0,0,150,4)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex9">
+<div class="head"><span class="n">09</span><h2>십자 프랙탈</h2></div>
+<p>네 방향 십자의 끝에서 더 작은 십자를 반복.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def line(a,b):
+    t.penup(); t.goto(a); t.pendown(); t.goto(b)
+
+def draw(node):
+    x,y,s,d=node
+    line((x-s,y),(x+s,y)); line((x,y-s),(x,y+s))
+
+def children(node):
+    x,y,s,d=node
+    if d==0:return []
+    ns=s*.45
+    return [(x+s,y,ns,d-1),(x-s,y,ns,d-1),(x,y+s,ns,d-1),(x,y-s,ns,d-1)]
+
+q=deque([(0,0,130,4)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def line(a,b):
+    t.penup(); t.goto(a); t.pendown(); t.goto(b)
+
+def draw(node):
+    x,y,s,d=node
+    line((x-s,y),(x+s,y)); line((x,y-s),(x,y+s))
+
+def children(node):
+    x,y,s,d=node
+    if d==0:return []
+    ns=s*.45
+    return [(x+s,y,ns,d-1),(x-s,y,ns,d-1),(x,y+s,ns,d-1),(x,y-s,ns,d-1)]
+
+stack=[(0,0,130,4)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex10">
+<div class="head"><span class="n">10</span><h2>육각 방사형 가지</h2></div>
+<p>한 점에서 60° 간격 여섯 방향으로 분기.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def draw(node):
+    x,y,L,d=node
+    if d&lt;0:return
+    for a in range(0,360,60):
+        r=math.radians(a); x2=x+L*math.cos(r); y2=y+L*math.sin(r)
+        t.penup(); t.goto(x,y); t.pendown(); t.goto(x2,y2)
+
+def children(node):
+    x,y,L,d=node
+    if d==0:return []
+    out=[]
+    for a in range(0,360,60):
+        r=math.radians(a); out.append((x+L*math.cos(r),y+L*math.sin(r),L*.42,d-1))
+    return out
+
+q=deque([(0,0,90,3)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def draw(node):
+    x,y,L,d=node
+    if d&lt;0:return
+    for a in range(0,360,60):
+        r=math.radians(a); x2=x+L*math.cos(r); y2=y+L*math.sin(r)
+        t.penup(); t.goto(x,y); t.pendown(); t.goto(x2,y2)
+
+def children(node):
+    x,y,L,d=node
+    if d==0:return []
+    out=[]
+    for a in range(0,360,60):
+        r=math.radians(a); out.append((x+L*math.cos(r),y+L*math.sin(r),L*.42,d-1))
+    return out
+
+stack=[(0,0,90,3)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex11">
+<div class="head"><span class="n">11</span><h2>삼방향 가지 나무</h2></div>
+<p>각 끝점에서 -35°, 0°, +35° 세 방향으로 분기.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def endpoint(x,y,a,L):
+    r=math.radians(a); return x+L*math.cos(r),y+L*math.sin(r)
+
+def draw(node):
+    x,y,a,L,d=node
+    x2,y2=endpoint(x,y,a,L)
+    t.penup(); t.goto(x,y); t.pendown(); t.goto(x2,y2)
+
+def children(node):
+    x,y,a,L,d=node
+    if d==0:return []
+    x2,y2=endpoint(x,y,a,L)
+    return [(x2,y2,a-35,L*.55,d-1),(x2,y2,a,L*.55,d-1),(x2,y2,a+35,L*.55,d-1)]
+
+q=deque([(0,-280,90,120,5)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def endpoint(x,y,a,L):
+    r=math.radians(a); return x+L*math.cos(r),y+L*math.sin(r)
+
+def draw(node):
+    x,y,a,L,d=node
+    x2,y2=endpoint(x,y,a,L)
+    t.penup(); t.goto(x,y); t.pendown(); t.goto(x2,y2)
+
+def children(node):
+    x,y,a,L,d=node
+    if d==0:return []
+    x2,y2=endpoint(x,y,a,L)
+    return [(x2,y2,a-35,L*.55,d-1),(x2,y2,a,L*.55,d-1),(x2,y2,a+35,L*.55,d-1)]
+
+stack=[(0,-280,90,120,5)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex12">
+<div class="head"><span class="n">12</span><h2>다이아몬드 모서리 프랙탈</h2></div>
+<p>마름모의 네 꼭짓점에 더 작은 마름모를 반복.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,s,d=node
+    P=[(x,y+s),(x+s,y),(x,y-s),(x-s,y)]
+    t.penup(); t.goto(P[0]); t.pendown()
+    for p in P[1:]+[P[0]]: t.goto(p)
+
+def children(node):
+    x,y,s,d=node
+    if d==0:return []
+    ns=s*.38
+    return [(x,y+s,ns,d-1),(x+s,y,ns,d-1),(x,y-s,ns,d-1),(x-s,y,ns,d-1)]
+
+q=deque([(0,0,150,4)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,s,d=node
+    P=[(x,y+s),(x+s,y),(x,y-s),(x-s,y)]
+    t.penup(); t.goto(P[0]); t.pendown()
+    for p in P[1:]+[P[0]]: t.goto(p)
+
+def children(node):
+    x,y,s,d=node
+    if d==0:return []
+    ns=s*.38
+    return [(x,y+s,ns,d-1),(x+s,y,ns,d-1),(x,y-s,ns,d-1),(x-s,y,ns,d-1)]
+
+stack=[(0,0,150,4)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex13">
+<div class="head"><span class="n">13</span><h2>원 이진 나무</h2></div>
+<p>각 원 위쪽 좌우에 더 작은 원 두 개를 배치.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,r,d=node
+    t.penup(); t.goto(x,y-r); t.setheading(0); t.pendown(); t.circle(r)
+
+def children(node):
+    x,y,r,d=node
+    if d==0:return []
+    nr=r*.62
+    return [(x-r*.8,y+r*1.45,nr,d-1),(x+r*.8,y+r*1.45,nr,d-1)]
+
+q=deque([(0,-250,80,5)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,r,d=node
+    t.penup(); t.goto(x,y-r); t.setheading(0); t.pendown(); t.circle(r)
+
+def children(node):
+    x,y,r,d=node
+    if d==0:return []
+    nr=r*.62
+    return [(x-r*.8,y+r*1.45,nr,d-1),(x+r*.8,y+r*1.45,nr,d-1)]
+
+stack=[(0,-250,80,5)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex14">
+<div class="head"><span class="n">14</span><h2>정사각형 네 모서리 트리</h2></div>
+<p>정사각형 네 모서리에 더 작은 정사각형을 반복 배치.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,s,d=node; h=s/2
+    t.penup(); t.goto(x-h,y-h); t.setheading(0); t.pendown()
+    for _ in range(4): t.forward(s); t.left(90)
+
+def children(node):
+    x,y,s,d=node
+    if d==0:return []
+    ns=s*.42; k=s*.45
+    return [(x-k,y-k,ns,d-1),(x-k,y+k,ns,d-1),(x+k,y-k,ns,d-1),(x+k,y+k,ns,d-1)]
+
+q=deque([(0,0,260,4)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,s,d=node; h=s/2
+    t.penup(); t.goto(x-h,y-h); t.setheading(0); t.pendown()
+    for _ in range(4): t.forward(s); t.left(90)
+
+def children(node):
+    x,y,s,d=node
+    if d==0:return []
+    ns=s*.42; k=s*.45
+    return [(x-k,y-k,ns,d-1),(x-k,y+k,ns,d-1),(x+k,y-k,ns,d-1),(x+k,y+k,ns,d-1)]
+
+stack=[(0,0,260,4)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex15">
+<div class="head"><span class="n">15</span><h2>오각별 꼭짓점 프랙탈</h2></div>
+<p>오각별 다섯 꼭짓점에 더 작은 별을 반복.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def points(x,y,r):
+    return [(x+r*math.cos(math.radians(90+i*72)),y+r*math.sin(math.radians(90+i*72))) for i in range(5)]
+
+def draw(node):
+    x,y,r,d=node; P=points(x,y,r); order=[0,2,4,1,3,0]
+    t.penup(); t.goto(P[0]); t.pendown()
+    for i in order[1:]: t.goto(P[i])
+
+def children(node):
+    x,y,r,d=node
+    if d==0:return []
+    return [(px,py,r*.32,d-1) for px,py in points(x,y,r)]
+
+q=deque([(0,0,150,3)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def points(x,y,r):
+    return [(x+r*math.cos(math.radians(90+i*72)),y+r*math.sin(math.radians(90+i*72))) for i in range(5)]
+
+def draw(node):
+    x,y,r,d=node; P=points(x,y,r); order=[0,2,4,1,3,0]
+    t.penup(); t.goto(P[0]); t.pendown()
+    for i in order[1:]: t.goto(P[i])
+
+def children(node):
+    x,y,r,d=node
+    if d==0:return []
+    return [(px,py,r*.32,d-1) for px,py in points(x,y,r)]
+
+stack=[(0,0,150,3)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex16">
+<div class="head"><span class="n">16</span><h2>육각형 꼭짓점 프랙탈</h2></div>
+<p>정육각형 여섯 꼭짓점에 더 작은 정육각형을 반복.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def hexpts(x,y,r):
+    return [(x+r*math.cos(math.radians(i*60)),y+r*math.sin(math.radians(i*60))) for i in range(6)]
+
+def draw(node):
+    x,y,r,d=node; P=hexpts(x,y,r)
+    t.penup(); t.goto(P[0]); t.pendown()
+    for p in P[1:]+[P[0]]: t.goto(p)
+
+def children(node):
+    x,y,r,d=node
+    if d==0:return []
+    return [(px,py,r*.28,d-1) for px,py in hexpts(x,y,r)]
+
+q=deque([(0,0,150,3)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def hexpts(x,y,r):
+    return [(x+r*math.cos(math.radians(i*60)),y+r*math.sin(math.radians(i*60))) for i in range(6)]
+
+def draw(node):
+    x,y,r,d=node; P=hexpts(x,y,r)
+    t.penup(); t.goto(P[0]); t.pendown()
+    for p in P[1:]+[P[0]]: t.goto(p)
+
+def children(node):
+    x,y,r,d=node
+    if d==0:return []
+    return [(px,py,r*.28,d-1) for px,py in hexpts(x,y,r)]
+
+stack=[(0,0,150,3)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex17">
+<div class="head"><span class="n">17</span><h2>삼각형 꼭짓점 프랙탈</h2></div>
+<p>정삼각형 세 꼭짓점에 작은 정삼각형을 반복.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def tri_pts(x,y,r):
+    return [(x+r*math.cos(math.radians(90+i*120)),y+r*math.sin(math.radians(90+i*120))) for i in range(3)]
+
+def draw(node):
+    x,y,r,d=node; P=tri_pts(x,y,r)
+    t.penup(); t.goto(P[0]); t.pendown(); t.goto(P[1]); t.goto(P[2]); t.goto(P[0])
+
+def children(node):
+    x,y,r,d=node
+    if d==0:return []
+    return [(px,py,r*.45,d-1) for px,py in tri_pts(x,y,r)]
+
+q=deque([(0,0,180,4)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def tri_pts(x,y,r):
+    return [(x+r*math.cos(math.radians(90+i*120)),y+r*math.sin(math.radians(90+i*120))) for i in range(3)]
+
+def draw(node):
+    x,y,r,d=node; P=tri_pts(x,y,r)
+    t.penup(); t.goto(P[0]); t.pendown(); t.goto(P[1]); t.goto(P[2]); t.goto(P[0])
+
+def children(node):
+    x,y,r,d=node
+    if d==0:return []
+    return [(px,py,r*.45,d-1) for px,py in tri_pts(x,y,r)]
+
+stack=[(0,0,180,4)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex18">
+<div class="head"><span class="n">18</span><h2>사분면 분할 정사각형</h2></div>
+<p>정사각형을 네 사분면으로 반복 분할하는 쿼드트리.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,s,d=node
+    t.penup(); t.goto(x,y); t.setheading(0); t.pendown()
+    for _ in range(4): t.forward(s); t.left(90)
+
+def children(node):
+    x,y,s,d=node
+    if d==0:return []
+    ns=s/2
+    return [(x,y,ns,d-1),(x+ns,y,ns,d-1),(x,y+ns,ns,d-1),(x+ns,y+ns,ns,d-1)]
+
+q=deque([(-280,-280,560,4)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+def draw(node):
+    x,y,s,d=node
+    t.penup(); t.goto(x,y); t.setheading(0); t.pendown()
+    for _ in range(4): t.forward(s); t.left(90)
+
+def children(node):
+    x,y,s,d=node
+    if d==0:return []
+    ns=s/2
+    return [(x,y,ns,d-1),(x+ns,y,ns,d-1),(x,y+ns,ns,d-1),(x+ns,y+ns,ns,d-1)]
+
+stack=[(-280,-280,560,4)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex19">
+<div class="head"><span class="n">19</span><h2>마름모 가지 나무</h2></div>
+<p>좌우 ±40°로 분기하는 날카로운 이진 가지 패턴.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def endpoint(x,y,a,L):
+    r=math.radians(a); return x+L*math.cos(r),y+L*math.sin(r)
+
+def draw(node):
+    x,y,a,L,d=node; x2,y2=endpoint(x,y,a,L)
+    t.penup(); t.goto(x,y); t.pendown(); t.goto(x2,y2)
+
+def children(node):
+    x,y,a,L,d=node
+    if d==0:return []
+    x2,y2=endpoint(x,y,a,L)
+    return [(x2,y2,a+40,L*.68,d-1),(x2,y2,a-40,L*.68,d-1)]
+
+q=deque([(0,-300,90,110,7)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def endpoint(x,y,a,L):
+    r=math.radians(a); return x+L*math.cos(r),y+L*math.sin(r)
+
+def draw(node):
+    x,y,a,L,d=node; x2,y2=endpoint(x,y,a,L)
+    t.penup(); t.goto(x,y); t.pendown(); t.goto(x2,y2)
+
+def children(node):
+    x,y,a,L,d=node
+    if d==0:return []
+    x2,y2=endpoint(x,y,a,L)
+    return [(x2,y2,a+40,L*.68,d-1),(x2,y2,a-40,L*.68,d-1)]
+
+stack=[(0,-300,90,110,7)]
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section><section class="ex" id="ex20">
+<div class="head"><span class="n">20</span><h2>눈송이 가지 프랙탈</h2></div>
+<p>6개의 주 가지가 각각 좌우로 다시 분기하는 눈송이형 트리.</p>
+<div class="why"><b>실행 차이:</b> BFS는 같은 깊이의 노드를 먼저 처리하고, DFS는 한 갈래를 깊게 처리합니다. <b>children(node)가 만드는 자식 좌표가 동일하므로 최종 도형은 같습니다.</b></div>
+<div class="grid">
+<article><div class="ct"><span class="b bfs">BFS</span><b>queue / deque</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+from collections import deque
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def endpoint(x,y,a,L):
+    r=math.radians(a); return x+L*math.cos(r),y+L*math.sin(r)
+
+def draw(node):
+    x,y,a,L,d=node; x2,y2=endpoint(x,y,a,L)
+    t.penup(); t.goto(x,y); t.pendown(); t.goto(x2,y2)
+
+def children(node):
+    x,y,a,L,d=node
+    if d==0:return []
+    x2,y2=endpoint(x,y,a,L)
+    return [(x2,y2,a+25,L*.55,d-1),(x2,y2,a-25,L*.55,d-1)]
+
+q=deque([(0,0,a,150,5) for a in range(0,360,60)])
+
+while q:
+    node=q.popleft()
+    draw(node)
+    for child in children(node):
+        q.append(child)
+
+turtle.done()</code></pre></article>
+<article><div class="ct"><span class="b dfs">DFS</span><b>stack / list</b><button onclick="copyCode(this)">복사</button></div><pre><code>import turtle
+
+t=turtle.Turtle()
+t.speed(0)
+t.hideturtle()
+
+import math
+
+def endpoint(x,y,a,L):
+    r=math.radians(a); return x+L*math.cos(r),y+L*math.sin(r)
+
+def draw(node):
+    x,y,a,L,d=node; x2,y2=endpoint(x,y,a,L)
+    t.penup(); t.goto(x,y); t.pendown(); t.goto(x2,y2)
+
+def children(node):
+    x,y,a,L,d=node
+    if d==0:return []
+    x2,y2=endpoint(x,y,a,L)
+    return [(x2,y2,a+25,L*.55,d-1),(x2,y2,a-25,L*.55,d-1)]
+
+stack=list([(0,0,a,150,5) for a in range(0,360,60)])
+
+while stack:
+    node=stack.pop()
+    draw(node)
+    ch=children(node)
+    for child in reversed(ch):
+        stack.append(child)
+
+turtle.done()</code></pre></article>
+</div></section></main>
+<footer>BFS = Breadth-First Search · DFS = Depth-First Search</footer>
+<script>function copyCode(b){const c=b.closest('article').querySelector('code').innerText;navigator.clipboard.writeText(c).then(()=>{let x=b.textContent;b.textContent='복사됨';setTimeout(()=>b.textContent=x,1000)})}function filterEx(){let q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.ex').forEach(e=>e.classList.toggle('hide',q&&!e.innerText.toLowerCase().includes(q)))}</script></body></html>
