@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang='ko'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>정보과학 2차고사 4차시 개념기반 목표지향 수업지도안</title><style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --sky:#eaf4ff; --green:#1f8a70;
+  --mint:#eaf8f3; --orange:#f59e0b; --rose:#cf4568; --purple:#7656a7;
+  --ink:#17212b; --muted:#5c6978; --line:#d8e2ec; --paper:#fff; --bg:#f4f7fb;
+  --ok:#127a50; --bad:#bc2f3e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#132b42,#2f6fb3 62%,#4796dc);color:#fff;padding:42px 20px}
+.header-inner{max-width:1320px;margin:auto}
+.kicker{font-size:.9rem;letter-spacing:.08em;opacity:.88}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.2;margin:.35rem 0 .8rem}
+.subtitle{max-width:980px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1320px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+nav a{text-decoration:none;color:var(--navy);font-weight:800;white-space:nowrap;padding:8px 10px;border-radius:8px;font-size:.89rem}
+nav a:hover{background:var(--sky)}
+main{max-width:1320px;margin:auto;padding:22px 16px 76px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:25px;margin:19px 0;box-shadow:0 7px 22px rgba(23,50,77,.055)}
+h2{color:var(--navy);font-size:1.65rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}
+h3{color:var(--navy);margin:20px 0 10px}
+h4{color:#254d72;margin:16px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:13px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.04rem;margin-bottom:5px}
+.big{font-size:1.9rem;font-weight:900;color:var(--blue)}
+.story{background:linear-gradient(135deg,#fff9ea,#fff);border-left:7px solid var(--orange);padding:20px;border-radius:14px}
+.ending{background:linear-gradient(135deg,#f5efff,#fff);border-left:7px solid var(--purple);padding:20px;border-radius:14px}
+.standard{background:var(--mint);border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+code{font-family:Consolas,"D2Coding",monospace}
+pre{white-space:pre-wrap}
+.codebox{background:#111c27;color:#eaf2f8;border-radius:13px;padding:15px 17px;overflow:auto;font-family:Consolas,"D2Coding",monospace;font-size:.91rem;line-height:1.55;white-space:pre}
+.concept{border:1px solid var(--line);border-radius:16px;margin:18px 0;overflow:hidden}
+.concept-head{background:linear-gradient(90deg,#eaf4ff,#f9fcff);padding:15px 18px;border-bottom:1px solid var(--line)}
+.concept-head b{color:var(--navy);font-size:1.18rem}
+.concept-body{padding:18px}
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:800;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff0f4;color:#a63d5b}.t4{background:#fff6df;color:#8a5b00}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+.question h4{margin-top:0}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer;background:#fff}
+.option:hover{background:#f5f9fd}
+.option input{margin-right:8px;transform:scale(1.1)}
+.feedback{display:none;margin-top:11px;padding:12px;border-radius:9px;background:#f6f8fb}
+.feedback.show{display:block}
+.correct{border-left:5px solid var(--ok)}
+.wrong{border-left:5px solid var(--bad)}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+.primary{background:var(--blue);color:#fff}.secondary{background:#eaf0f6;color:var(--navy)}
+.danger{background:var(--rose);color:#fff}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.quiz-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.scorebox{background:#edf7ff;border:1px solid #b9d8f0;border-radius:12px;padding:12px 15px;font-weight:800;color:var(--navy)}
+.userbox{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input[type=text]{width:100%;padding:11px;border:1px solid #cfdbe6;border-radius:9px;font-size:1rem}
+.progress-wrap{height:12px;background:#e9eef3;border-radius:999px;overflow:hidden}
+.progress{height:100%;background:linear-gradient(90deg,#2f6fb3,#1f8a70);width:0%;transition:.3s}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.small{font-size:.86rem;color:var(--muted)}
+.result-panel{display:none;border:2px solid #9ac9ea;background:#f6fbff;border-radius:15px;padding:18px;margin-top:18px}
+.result-panel.show{display:block}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 7px 24px rgba(0,0,0,.2)}
+footer{max-width:1320px;margin:0 auto 40px;padding:0 18px;color:#5e6c78;font-size:.86rem}
+@media(max-width:650px){.userbox{grid-template-columns:1fr}.quiz-head{align-items:flex-start;flex-direction:column}}
+@media print{nav,.print,.controls button{display:none!important}body{background:white}section{box-shadow:none;break-inside:avoid}.question{break-inside:avoid}}
+</style></head><body>
+<header><div class="header-inner">
+<div class="kicker">2022 개정 고등학교 정보과학 · Ⅲ 알고리즘 · 03 분할정복법</div>
+<h1>4차시 개념기반 목표지향 수업지도안</h1>
+<div class="subtitle">큰 문제를 작은 부분 문제로 분할하고 재귀적으로 해결한 뒤 부분 결과를 결합하는 분할정복의 원리를 이진 탐색과 병합 정렬로 구현·비교한다.</div>
+<div class="badges"><span class="badge">성취기준 [12정과03-04]</span><span class="badge">분할·해결·결합</span><span class="badge">이진 탐색</span><span class="badge">병합 정렬</span><span class="badge">개념별 코드 6개</span><span class="badge">진단 OX 10문항</span><span class="badge">형성평가 10문항</span><span class="badge">자동채점·TXT 저장</span></div>
+</div></header>
+<nav><div class="nav-inner"><a href="#identity">수업 개요</a><a href="#start">학습 시작</a><a href="#goals">목표</a><a href="#concepts">개념·코드</a><a href="#ending">학습 마무리</a><a href="#diagnostic">진단평가</a><a href="#formative">형성평가</a><a href="#submit">제출·저장</a></div></nav>
+<main>
+<section id="identity"><h2>1. 수업 개요와 성취수준</h2>
+<div class="standard"><b>성취기준 [12정과03-04]</b><br>분할정복의 원리를 이해하고 이를 활용하여 문제를 해결하는 프로그램을 작성한다.</div>
+<h3>성취수준</h3><table><tr><th>수준</th><th>성취 특성</th></tr>
+<tr><td>A</td><td>문제를 독립적인 부분 문제로 분할하고 기저 조건·재귀적 해결·결합 과정을 스스로 설계하여 프로그램으로 구현하며, 이진 탐색과 병합 정렬의 분할정복 구조 차이를 논리적으로 비교한다.</td></tr>
+<tr><td>B</td><td>분할·해결·결합의 원리를 설명하고 이진 탐색 또는 병합 정렬 프로그램을 작성하며 재귀 호출에 따른 문제 크기 변화를 추적한다.</td></tr>
+<tr><td>C</td><td>주어진 코드에서 기저 조건, 분할, 재귀 호출, 결합 부분을 찾아 실행 과정을 설명한다.</td></tr>
+<tr><td>D</td><td>안내에 따라 이진 탐색이나 병합 정렬 코드의 일부를 완성하고 탐색 범위 또는 리스트가 작아지는 과정을 확인한다.</td></tr>
+<tr><td>E</td><td>큰 문제를 작은 문제로 나누어 해결할 수 있다는 분할정복의 기본 아이디어를 예시에서 확인한다.</td></tr></table>
+<div class="grid"><div class="card"><strong>핵심 질문 1</strong>큰 문제를 어떤 기준으로 나누면 같은 방식으로 더 작은 문제를 해결할 수 있을까?</div><div class="card"><strong>핵심 질문 2</strong>이진 탐색은 왜 두 절반 중 한쪽만 해결해도 되는가?</div><div class="card"><strong>핵심 질문 3</strong>병합 정렬에서는 왜 분할된 두 결과를 다시 결합해야 하는가?</div></div>
+</section>
+<section id="start"><h2>2. 학습 시작 멘트</h2><div class="story"><h3>한 번에 해결하기 어려운 문제를 어떻게 작게 만들까?</h3>
+<p>수천 장의 카드에서 특정 숫자를 찾거나, 뒤섞인 많은 데이터를 정렬해야 한다고 생각해 봅시다. 처음부터 전체를 한꺼번에 다루면 문제는 복잡해 보입니다. 그러나 문제를 절반으로 나누고, 더 작은 문제를 같은 방식으로 다시 해결할 수 있다면 상황은 달라집니다.</p>
+<p>분할정복은 <b>큰 문제를 작게 만들고, 작은 문제의 답을 이용해 전체 답을 만드는 사고 방법</b>입니다. 오늘은 정렬된 자료에서 탐색 범위를 절반씩 줄이는 이진 탐색과, 리스트를 절반씩 나누었다가 다시 합치는 병합 정렬을 비교합니다.</p>
+<p>중요한 것은 코드를 외우는 것이 아니라 각 코드에서 <b>무엇을 분할하는지, 언제 더 이상 나누지 않는지, 어느 부분 문제를 해결하는지, 결과를 어떻게 결합하는지</b>를 찾는 것입니다.</p></div></section>
+<section id="goals"><h2>3. 학습목표와 학습내용</h2>
+<h3>학습목표</h3><ol><li>분할정복의 분할·해결·결합 구조를 설명할 수 있다.</li><li>재귀적 문제 분해에서 기저 조건의 역할을 설명할 수 있다.</li><li>정렬된 자료에 이진 탐색을 적용하고 탐색 범위의 변화를 추적할 수 있다.</li><li>병합 정렬의 분할 과정과 병합 과정을 코드로 구현할 수 있다.</li><li>이진 탐색과 병합 정렬의 분할정복 구조를 비교할 수 있다.</li></ol>
+<h3>학습내용</h3><table><tr><th>개념 축</th><th>내용</th><th>학습 산출물</th></tr><tr><td>분할정복 원리</td><td>분할, 해결, 결합, 기저 조건</td><td>분할정복 구조도</td></tr><tr><td>이진 탐색</td><td>정렬 조건, 중간값, 범위 축소</td><td>재귀 이진 탐색 코드</td></tr><tr><td>범위 추적</td><td>left, right, mid 변화</td><td>탐색 범위 추적표</td></tr><tr><td>병합 정렬 분할</td><td>절반 분할, 재귀 호출</td><td>분할 트리</td></tr><tr><td>병합</td><td>정렬된 두 리스트 결합</td><td>merge 함수</td></tr><tr><td>구조 비교</td><td>한쪽 해결 vs 두쪽 해결·결합</td><td>알고리즘 비교표</td></tr></table></section>
+<section id="concepts"><h2>4. 개념 및 상세 설명 · 관련 코드 · 코드별 확인 문제</h2><div class="concept"><div class="concept-head"><b>개념 1. 분할정복의 세 단계: 분할 → 해결 → 결합</b></div><div class="concept-body">
+<div class="two"><div><p><b>분할정복(divide and conquer)</b>은 큰 문제를 더 작은 부분 문제로 <b>분할</b>하고, 각 부분 문제를 <b>해결</b>한 뒤, 필요한 경우 부분 결과를 <b>결합</b>하여 전체 문제의 답을 만드는 방법이다.</p>
+<p>부분 문제는 원래 문제와 비슷한 구조를 가지므로 재귀함수와 자연스럽게 연결된다. 더 이상 나눌 필요가 없는 작은 문제는 <b>기저 조건</b>에서 직접 해결한다.</p></div><div><div class="codebox">def divide_sum(a):
+    if len(a) == 1:
+        return a[0]
+
+    mid = len(a) // 2
+    left = divide_sum(a[:mid])
+    right = divide_sum(a[mid:])
+
+    return left + right
+
+print(divide_sum([1, 2, 3, 4]))</div></div></div>
+<div class="question" data-id="c1" data-answer="1,2,3">
+<h4>코드 1 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 리스트를 두 부분으로 나누어 같은 함수를 다시 호출한다.</label><label class="option"><input type="checkbox" value="2">② 길이가 1이면 더 분할하지 않고 직접 값을 반환한다.</label><label class="option"><input type="checkbox" value="3">③ 왼쪽 결과와 오른쪽 결과를 더하는 과정은 결합에 해당한다.</label><label class="option"><input type="checkbox" value="4">④ 분할정복에서는 기저 조건이 필요하지 않다.</label><label class="option"><input type="checkbox" value="5">⑤ 이 코드는 부분 문제를 전혀 만들지 않는다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ③</b><br>리스트를 절반으로 나누어 재귀적으로 해결하고 두 부분의 합을 결합한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 2. 이진 탐색: 탐색 범위를 절반으로 줄이기</b></div><div class="concept-body">
+<div class="two"><div><p><b>이진 탐색(binary search)</b>은 정렬된 자료에서 가운데 값을 확인하고, 목표값이 있을 가능성이 있는 절반만 다시 탐색한다.</p>
+<p>한 번 비교할 때마다 탐색 범위가 약 절반으로 줄어든다는 점이 핵심이다. 따라서 정렬 여부와 <code>left</code>, <code>right</code>, <code>mid</code>의 변화 과정을 정확히 이해해야 한다.</p></div><div><div class="codebox">def binary_search(a, target, left, right):
+    if left &gt; right:
+        return -1
+
+    mid = (left + right) // 2
+
+    if a[mid] == target:
+        return mid
+    if target &lt; a[mid]:
+        return binary_search(a, target, left, mid - 1)
+
+    return binary_search(a, target, mid + 1, right)
+
+a = [2, 5, 8, 12, 16, 23, 38]
+print(binary_search(a, 16, 0, len(a)-1))</div></div></div>
+<div class="question" data-id="c2" data-answer="1,2,3">
+<h4>코드 2 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 이진 탐색을 적용하려면 자료가 정렬되어 있어야 한다.</label><label class="option"><input type="checkbox" value="2">② <code>left &gt; right</code>는 탐색 실패를 나타내는 종료 조건이다.</label><label class="option"><input type="checkbox" value="3">③ target이 a[mid]보다 작으면 왼쪽 절반을 탐색한다.</label><label class="option"><input type="checkbox" value="4">④ 매 호출마다 모든 원소를 처음부터 끝까지 검사한다.</label><label class="option"><input type="checkbox" value="5">⑤ target이 a[mid]보다 작을 때 오른쪽 절반만 탐색한다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ③</b><br>정렬된 자료의 중간값과 비교하여 필요한 절반만 재귀적으로 탐색한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 3. 이진 탐색의 범위 추적</b></div><div class="concept-body">
+<div class="two"><div><p>분할정복 코드를 이해하려면 결과만 보는 것이 아니라 <b>부분 문제의 크기가 어떻게 변하는지</b> 추적해야 한다.</p>
+<p>아래 코드는 매 호출에서 현재 탐색 구간을 출력한다. 길이 8인 자료에서 목표값을 찾는 동안 전체 구간이 절반 크기의 구간으로 계속 줄어드는 모습을 확인할 수 있다.</p></div><div><div class="codebox">def trace_search(a, target, left, right):
+    print(&quot;범위:&quot;, left, &quot;~&quot;, right)
+
+    if left &gt; right:
+        return -1
+
+    mid = (left + right) // 2
+
+    if a[mid] == target:
+        return mid
+    elif target &lt; a[mid]:
+        return trace_search(a, target, left, mid - 1)
+    else:
+        return trace_search(a, target, mid + 1, right)
+
+a = [1, 3, 5, 7, 9, 11, 13, 15]
+print(trace_search(a, 13, 0, 7))</div></div></div>
+<div class="question" data-id="c3" data-answer="1,2,3">
+<h4>코드 3 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 각 재귀 호출에서 현재 탐색 범위를 확인할 수 있다.</label><label class="option"><input type="checkbox" value="2">② 목표값과 중간값 비교 결과에 따라 한쪽 절반만 남긴다.</label><label class="option"><input type="checkbox" value="3">③ 탐색이 진행될수록 일반적으로 후보 구간의 크기가 줄어든다.</label><label class="option"><input type="checkbox" value="4">④ 한 번의 호출 뒤 항상 원소가 정확히 하나만 남는다.</label><label class="option"><input type="checkbox" value="5">⑤ 정렬되지 않은 자료에서도 같은 원리로 항상 올바른 위치를 찾는다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ③</b><br>범위를 출력해 보면 이진 탐색이 매 단계에서 탐색 문제의 크기를 줄이는 과정을 직접 확인할 수 있다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 4. 병합 정렬의 분할: 리스트를 절반씩 나누기</b></div><div class="concept-body">
+<div class="two"><div><p><b>병합 정렬(merge sort)</b>은 리스트를 절반으로 계속 나누어 길이 1의 리스트까지 만든 뒤, 정렬된 작은 리스트들을 다시 합쳐 전체를 정렬한다.</p>
+<p>분할 단계에서는 가운데 위치를 기준으로 왼쪽과 오른쪽 부분 문제를 만들고, 두 부분에 같은 정렬 함수를 재귀적으로 적용한다.</p></div><div><div class="codebox">def merge_sort(a):
+    if len(a) &lt;= 1:
+        return a
+
+    mid = len(a) // 2
+    left = merge_sort(a[:mid])
+    right = merge_sort(a[mid:])
+
+    return merge(left, right)</div></div></div>
+<div class="question" data-id="c4" data-answer="1,2,3">
+<h4>코드 4 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① <code>len(a) &lt;= 1</code>은 기저 조건이다.</label><label class="option"><input type="checkbox" value="2">② <code>a[:mid]</code>와 <code>a[mid:]</code>로 문제를 나눈다.</label><label class="option"><input type="checkbox" value="3">③ 왼쪽과 오른쪽 부분 문제에 같은 정렬 함수를 적용한다.</label><label class="option"><input type="checkbox" value="4">④ 리스트 길이가 1이어도 반드시 계속 두 부분으로 나눈다.</label><label class="option"><input type="checkbox" value="5">⑤ 병합 정렬에서는 재귀적 문제 분해가 나타나지 않는다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ③</b><br>길이가 1 이하이면 이미 정렬된 것으로 보고, 그보다 크면 두 부분으로 나누어 각각 정렬한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 5. 병합 정렬의 결합: 두 정렬 리스트 합치기</b></div><div class="concept-body">
+<div class="two"><div><p>병합 정렬에서 <b>결합</b>은 두 개의 이미 정렬된 리스트를 하나의 정렬된 리스트로 만드는 과정이다.</p>
+<p>두 리스트의 맨 앞 값을 비교하여 더 작은 값을 결과에 넣고, 한쪽 리스트를 모두 사용한 뒤에는 남은 원소를 그대로 이어 붙인다.</p></div><div><div class="codebox">def merge(left, right):
+    result = []
+    i = j = 0
+
+    while i &lt; len(left) and j &lt; len(right):
+        if left[i] &lt;= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    result += left[i:]
+    result += right[j:]
+    return result
+
+print(merge([2, 7, 9], [1, 5, 8]))</div></div></div>
+<div class="question" data-id="c5" data-answer="1,2,3">
+<h4>코드 5 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 두 리스트가 각각 정렬되어 있다는 전제에서 동작한다.</label><label class="option"><input type="checkbox" value="2">② 현재 두 원소 중 작은 값을 result에 넣는다.</label><label class="option"><input type="checkbox" value="3">③ 한쪽 리스트가 끝나면 다른 쪽의 남은 원소를 이어 붙인다.</label><label class="option"><input type="checkbox" value="4">④ 출력은 입력 두 리스트를 단순히 그대로 연결한 [2,7,9,1,5,8]이다.</label><label class="option"><input type="checkbox" value="5">⑤ i와 j는 항상 동시에 1씩 증가한다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ③</b><br>병합은 두 정렬 리스트의 앞 원소를 비교하며 작은 값을 순서대로 결과에 넣는다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 6. 이진 탐색과 병합 정렬의 분할정복 구조 비교</b></div><div class="concept-body">
+<div class="two"><div><p>이진 탐색과 병합 정렬은 모두 문제 크기를 줄이지만 구조는 다르다. 이진 탐색은 비교 결과에 따라 <b>한쪽 부분 문제만</b> 해결한다. 병합 정렬은 <b>두 부분 문제를 모두</b> 해결한 뒤 결과를 병합한다.</p>
+<p>따라서 분할정복을 단순히 “반으로 나누는 알고리즘”으로 기억하기보다, <b>어떻게 분할하고 어떤 부분을 해결하며 결과를 어떻게 결합하는가</b>를 비교해야 한다.</p></div><div><div class="codebox"># 이진 탐색
+# 1. 가운데를 기준으로 분할
+# 2. 필요한 한쪽만 해결
+# 3. 별도의 복잡한 결합은 거의 없음
+
+# 병합 정렬
+# 1. 가운데를 기준으로 두 부분으로 분할
+# 2. 왼쪽과 오른쪽을 모두 재귀적으로 해결
+# 3. 두 정렬 결과를 merge로 결합
+
+data = [8, 3, 6, 2, 7, 1, 5, 4]
+print(merge_sort(data))</div></div></div>
+<div class="question" data-id="c6" data-answer="1,2,3">
+<h4>코드 6 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 두 알고리즘 모두 문제 크기를 줄이는 분할정복 관점으로 설명할 수 있다.</label><label class="option"><input type="checkbox" value="2">② 이진 탐색은 비교 결과에 따라 한쪽 부분 문제만 계속 탐색한다.</label><label class="option"><input type="checkbox" value="3">③ 병합 정렬은 두 부분 문제를 해결한 뒤 병합 과정이 필요하다.</label><label class="option"><input type="checkbox" value="4">④ 두 알고리즘은 분할 이후의 해결 방식과 결합 방식까지 완전히 동일하다.</label><label class="option"><input type="checkbox" value="5">⑤ 병합 정렬은 정렬 결과를 결합하지 않는다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ③</b><br>이진 탐색은 필요한 절반만 해결하고, 병합 정렬은 두 절반을 모두 해결하여 결합한다.</div></div></div></div>
+<div class="notice"><b>목표지향 통합 과제</b><br>정렬된 16개 숫자에서 특정 값을 찾는 <b>선형 탐색</b>과 <b>이진 탐색</b>의 비교 횟수를 기록해 보자. 이어서 8개의 숫자를 병합 정렬할 때 리스트가 어떻게 4→2→1 크기로 분할되고 다시 결합되는지 트리로 표현한다. 마지막으로 두 알고리즘을 <b>분할 대상·해결하는 부분 문제 수·결합 과정</b>의 세 기준으로 비교하자.</div></section>
+<section id="ending"><h2>5. 학습 마무리 멘트</h2><div class="ending"><h3>큰 문제를 해결하는 힘은 문제를 잘게 보는 데서 시작한다</h3><p>분할정복은 단순히 데이터를 반으로 자르는 기술이 아닙니다. 큰 문제 속에서 같은 구조를 가진 작은 문제를 발견하고, 가장 작은 문제까지 내려가 해결한 뒤 전체 답으로 연결하는 사고 방식입니다.</p><p>이진 탐색은 중간값 비교를 이용해 필요 없는 절반을 버리고 한쪽 문제만 해결합니다. 병합 정렬은 두 절반을 모두 해결한 뒤 그 결과를 다시 병합합니다. 같은 분할정복이라도 문제에 따라 해결과 결합 방식이 달라집니다.</p><p>다음 차시에서는 또 다른 질문을 다룹니다. <b>부분 문제들이 서로 독립적이지 않고 같은 계산이 반복된다면, 이미 구한 답을 저장해서 다시 사용할 수 없을까?</b> 이것이 동적계획법과 메모이제이션으로 이어집니다.</p></div></section>
+<section id="diagnostic"><div class="quiz-head"><h2>6. 전체 학습내용 진단평가 OX 10문항</h2><div class="scorebox" id="diagScore">미채점</div></div><div id="diagQuestions"></div><div class="controls"><button class="btn primary" onclick="gradeDiagnostic()">진단평가 채점</button><button class="btn secondary" onclick="resetGroup('diagQuestions')">초기화</button></div></section>
+<section id="formative"><div class="quiz-head"><h2>7. 전체 학습내용 형성평가 10문항</h2><div class="scorebox" id="formScore">미채점</div></div><p class="small">각 문항은 보기 5개 중 옳은 것 3개를 모두 선택해야 정답이다.</p><div id="formQuestions"></div><div class="controls"><button class="btn primary" onclick="gradeFormative()">형성평가 채점</button><button class="btn secondary" onclick="resetGroup('formQuestions')">초기화</button></div></section>
+<section id="submit"><h2>8. 학번·이름 입력 및 결과 저장</h2><div class="userbox"><label><b>학번</b><input type="text" id="studentId" placeholder="예: 1101"></label><label><b>이름</b><input type="text" id="studentName" placeholder="예: 홍길동"></label></div><h3>전체 진행률</h3><div class="progress-wrap"><div class="progress" id="progress"></div></div><p id="progressText" class="small">0%</p><div class="controls"><button class="btn primary" onclick="finalSubmit()">전체 채점 및 TXT 저장</button><button class="btn secondary" onclick="window.print()">인쇄 / PDF</button></div><div class="result-panel" id="resultPanel"></div></section>
+</main><footer><p>2022 개정 고등학교 정보과학 2학기 2차고사 10차시 계획의 4차시 「분할정복법」을 중심으로 구성한 개념기반 목표지향 수업자료이다.</p></footer><button class="print" onclick="window.print()">인쇄 / PDF</button>
+<script>
+const diagData=[{q:'분할정복은 큰 문제를 작은 부분 문제로 나누어 해결하는 전략이다.',a:'O',e:'분할→해결→결합이 대표적인 구조이다.'},
+{q:'분할정복의 모든 문제는 부분 문제를 결합하는 과정이 반드시 복잡해야 한다.',a:'X',e:'이진 탐색처럼 별도의 복잡한 결합이 거의 없는 경우도 있다.'},
+{q:'재귀적 분할정복에서는 더 이상 나누지 않을 기저 조건이 필요하다.',a:'O',e:'기저 조건이 없으면 재귀 호출이 종료되지 않을 수 있다.'},
+{q:'이진 탐색은 정렬된 자료를 대상으로 사용할 수 있다.',a:'O',e:'중간값 비교로 어느 절반에 목표가 있는지 판단하려면 정렬이 필요하다.'},
+{q:'이진 탐색은 한 번 비교할 때마다 항상 전체 자료를 다시 모두 검사한다.',a:'X',e:'비교 결과에 따라 탐색 범위를 한쪽 절반으로 줄인다.'},
+{q:'병합 정렬은 리스트를 더 작은 부분으로 재귀적으로 나눈다.',a:'O',e:'보통 절반씩 나누어 길이 1까지 분할한다.'},
+{q:'길이가 1인 리스트는 이미 정렬된 상태로 볼 수 있다.',a:'O',e:'병합 정렬의 대표적인 기저 조건이다.'},
+{q:'병합 과정에서는 두 정렬 리스트의 앞 원소를 비교할 수 있다.',a:'O',e:'작은 값을 차례로 결과 리스트에 넣는다.'},
+{q:'이진 탐색과 병합 정렬은 모두 두 부분 문제를 반드시 끝까지 해결한다.',a:'X',e:'이진 탐색은 필요한 한쪽만 계속 탐색한다.'},
+{q:'병합 정렬은 분할만 하고 부분 결과를 다시 합치지 않는다.',a:'X',e:'정렬된 부분 리스트를 병합하여 전체 정렬 결과를 만든다.'}];
+const formData=[{q:'분할정복의 기본 구조에 관한 설명으로 옳은 것을 모두 고르시오.',o:['① 큰 문제를 작은 부분 문제로 나눈다.', '② 부분 문제를 해결한다.', '③ 필요한 경우 부분 결과를 결합한다.', '④ 문제를 절대로 나누지 않는다.', '⑤ 재귀와 함께 사용할 수 없다.'],a:[1, 2, 3],e:'분할·해결·결합은 분할정복을 이해하는 핵심 구조이다.'},
+{q:'재귀적 분할정복에서 기저 조건에 관한 설명으로 옳은 것을 모두 고르시오.',o:['① 더 이상 문제를 나누지 않을 조건이다.', '② 재귀 호출을 종료시키는 역할을 한다.', '③ 작은 문제를 직접 해결하는 경우와 연결된다.', '④ 기저 조건이 없어야 더 효율적이다.', '⑤ 모든 입력에서 무조건 첫 줄에서 참이어야 한다.'],a:[1, 2, 3],e:'기저 조건에서 가장 작은 부분 문제를 직접 해결한다.'},
+{q:'이진 탐색에 관한 설명으로 옳은 것을 모두 고르시오.',o:['① 정렬된 자료에 적용한다.', '② 중간 원소와 목표값을 비교한다.', '③ 비교 결과에 따라 한쪽 탐색 범위를 버릴 수 있다.', '④ 항상 왼쪽 절반만 탐색한다.', '⑤ 모든 원소를 순서대로 하나씩 확인해야만 한다.'],a:[1, 2, 3],e:'정렬 상태를 이용하여 목표가 존재할 수 없는 절반을 제외한다.'},
+{q:'다음 코드에 대한 설명으로 옳은 것을 모두 고르시오.<pre>mid=(left+right)//2\nif target&lt;a[mid]:\n    return search(a,target,left,mid-1)</pre>',o:['① mid는 현재 구간의 가운데 인덱스이다.', '② target이 중간값보다 작으면 왼쪽 구간으로 범위를 줄인다.', '③ 다음 재귀 호출의 right는 mid-1이 된다.', '④ 다음 호출은 항상 오른쪽 절반을 탐색한다.', '⑤ 배열이 정렬되어 있는지는 아무 의미가 없다.'],a:[1, 2, 3],e:'목표가 중간값보다 작으면 정렬 성질에 의해 오른쪽 절반을 제외할 수 있다.'},
+{q:'병합 정렬의 분할 단계에 관한 설명으로 옳은 것을 모두 고르시오.',o:['① 리스트를 두 부분으로 나눌 수 있다.', '② 각 부분을 재귀적으로 정렬할 수 있다.', '③ 길이 1 이하를 기저 조건으로 사용할 수 있다.', '④ 처음부터 모든 원소를 한 번에 정렬된 위치로 이동해야 한다.', '⑤ 분할된 오른쪽 부분은 해결하지 않는다.'],a:[1, 2, 3],e:'병합 정렬은 두 부분을 모두 재귀적으로 정렬한다.'},
+{q:'병합 함수에 관한 설명으로 옳은 것을 모두 고르시오.',o:['① 정렬된 두 부분 결과를 결합한다.', '② 두 리스트의 현재 원소를 비교한다.', '③ 한쪽이 끝난 뒤 다른 쪽의 남은 원소를 붙인다.', '④ 항상 큰 값부터 결과에 넣는다.', '⑤ 결합 후에도 결과는 반드시 정렬되지 않는다.'],a:[1, 2, 3],e:'작은 값을 먼저 선택하여 정렬 상태를 유지하며 결합한다.'},
+{q:'이진 탐색과 병합 정렬의 공통점으로 옳은 것을 모두 고르시오.',o:['① 문제 크기를 줄이는 과정을 가진다.', '② 재귀적 문제 해결로 표현할 수 있다.', '③ 분할정복 관점으로 구조를 분석할 수 있다.', '④ 둘 다 정렬 알고리즘이다.', '⑤ 둘 다 항상 두 부분을 모두 끝까지 탐색한다.'],a:[1, 2, 3],e:'두 알고리즘 모두 문제를 더 작은 문제로 줄이는 구조를 갖지만 목적과 해결 방식은 다르다.'},
+{q:'이진 탐색과 병합 정렬의 차이로 옳은 것을 모두 고르시오.',o:['① 이진 탐색은 필요한 한쪽 부분만 계속 탐색한다.', '② 병합 정렬은 두 부분을 모두 정렬한다.', '③ 병합 정렬에는 부분 결과를 합치는 merge 단계가 있다.', '④ 이진 탐색은 항상 두 절반을 모두 재귀 호출한다.', '⑤ 병합 정렬에는 결합 과정이 없다.'],a:[1, 2, 3],e:'분할 이후 어떤 부분 문제를 해결하고 어떻게 결합하는지가 서로 다르다.'},
+{q:'[12정과03-04]와 관련된 학습 활동으로 옳은 것을 모두 고르시오.',o:['① 분할정복의 원리를 설명한다.', '② 분할정복을 활용한 프로그램을 작성한다.', '③ 이진 탐색 또는 병합 정렬의 분할·해결·결합 구조를 분석한다.', '④ 코드 구현 없이 용어 암기만 하면 충분하다.', '⑤ 부분 문제를 만드는 과정은 다루지 않는다.'],a:[1, 2, 3],e:'성취기준은 분할정복 원리 이해와 이를 활용한 프로그램 작성을 요구한다.'},
+{q:'4차시 학습을 종합한 설명으로 옳은 것을 모두 고르시오.',o:['① 큰 문제를 작은 문제로 분해하는 관점이 중요하다.', '② 부분 문제의 크기 변화와 재귀 종료를 추적해야 한다.', '③ 부분 결과를 어떻게 결합하는지 문제별로 살펴야 한다.', '④ 분할정복은 어떤 문제에서나 무조건 가장 빠르다.', '⑤ 정렬되지 않은 자료에도 이진 탐색을 그대로 적용하면 항상 정확하다.'],a:[1, 2, 3],e:'분할정복의 구조와 적용 조건을 함께 이해해야 한다.'}];
+function renderDiagnostic(){document.getElementById('diagQuestions').innerHTML=diagData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4><label class="option"><input type="radio" name="d${i}" value="O"> O</label><label class="option"><input type="radio" name="d${i}" value="X"> X</label><div class="feedback" id="df${i}"></div></div>`).join('');}
+function renderFormative(){document.getElementById('formQuestions').innerHTML=formData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4>${x.o.map((o,j)=>`<label class="option"><input type="checkbox" name="f${i}" value="${j+1}">${o}</label>`).join('')}<div class="feedback" id="ff${i}"></div></div>`).join('');}
+renderDiagnostic();renderFormative();
+document.querySelectorAll('.check-one').forEach(btn=>btn.addEventListener('click',()=>{const q=btn.closest('.question'),ans=q.dataset.answer.split(',').sort().join(','),sel=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort().join(','),fb=q.querySelector('.feedback');if(!fb.dataset.original)fb.dataset.original=fb.innerHTML;fb.className='feedback show '+(sel===ans?'correct':'wrong');fb.innerHTML=(sel===ans?'<b>정답입니다.</b><br>':'<b>다시 확인하세요.</b><br>')+fb.dataset.original;updateProgress();}));
+function gradeDiagnostic(){let s=0;diagData.forEach((x,i)=>{const c=document.querySelector(`input[name=d${i}]:checked`),ok=c&&c.value===x.a;if(ok)s++;const f=document.getElementById(`df${i}`);f.className='feedback show '+(ok?'correct':'wrong');f.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${x.a}<br>${x.e}`;});document.getElementById('diagScore').textContent=`${s}/10`;updateProgress();return s;}
+function gradeFormative(){let s=0;formData.forEach((x,i)=>{const c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b),a=[...x.a].sort((a,b)=>a-b),ok=JSON.stringify(c)===JSON.stringify(a);if(ok)s++;const f=document.getElementById(`ff${i}`);f.className='feedback show '+(ok?'correct':'wrong');f.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${a.map(n=>'①②③④⑤'[n-1]).join(', ')}<br>${x.e}`;});document.getElementById('formScore').textContent=`${s}/10`;updateProgress();return s;}
+function resetGroup(id){document.querySelectorAll(`#${id} input`).forEach(x=>x.checked=false);document.querySelectorAll(`#${id} .feedback`).forEach(x=>{x.className='feedback';x.innerHTML='';});if(id==='diagQuestions')document.getElementById('diagScore').textContent='미채점';if(id==='formQuestions')document.getElementById('formScore').textContent='미채점';updateProgress();}
+function updateProgress(){let d=0;document.querySelectorAll('.concept .question').forEach(q=>{if(q.querySelectorAll('input:checked').length)d++;});for(let i=0;i<10;i++){if(document.querySelector(`input[name=d${i}]:checked`))d++;if(document.querySelectorAll(`input[name=f${i}]:checked`).length)d++;}const p=Math.min(100,Math.round(d/26*100));document.getElementById('progress').style.width=p+'%';document.getElementById('progressText').textContent=`${p}% (${d}/26 항목 응답)`;}
+document.addEventListener('change',updateProgress);
+function finalSubmit(){const sid=document.getElementById('studentId').value.trim(),name=document.getElementById('studentName').value.trim();if(!sid||!name){alert('학번과 이름을 입력하세요.');return;}const d=gradeDiagnostic(),f=gradeFormative();let cs=0,reports=[];document.querySelectorAll('.concept .question').forEach((q,i)=>{const a=q.dataset.answer.split(',').sort(),s=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort(),ok=JSON.stringify(a)===JSON.stringify(s);if(ok)cs++;reports.push(`코드 확인 ${i+1}: ${ok?'정답':'오답'} / 응답 ${s.join(',')||'미응답'} / 정답 ${a.join(',')}`);});const raw=cs+d+f,total=26,score=Math.round(raw/total*100),now=new Date(),stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0');let lines=['정보과학 2차고사 4차시 개념기반 목표지향 학습 결과','주제: 분할정복법 - 이진 탐색과 병합 정렬','성취기준: [12정과03-04]',`학번: ${sid}`,`이름: ${name}`,`점수: ${score}점 (${raw}/${total})`,`응시시각: ${now.toLocaleString('ko-KR')}`,'','[코드별 확인 문제]',...reports,'','[진단평가 OX]'];diagData.forEach((x,i)=>{const c=document.querySelector(`input[name=d${i}]:checked`)?.value||'미응답';lines.push(`${i+1}. ${c===x.a?'정답':'오답'} / 응답 ${c} / 정답 ${x.a} / 풀이: ${x.e}`);});lines.push('','[형성평가]');formData.forEach((x,i)=>{const c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b),a=[...x.a].sort((a,b)=>a-b),ok=JSON.stringify(c)===JSON.stringify(a);lines.push(`${i+1}. ${ok?'정답':'오답'} / 응답 ${c.join(',')||'미응답'} / 정답 ${a.join(',')} / 풀이: ${x.e}`);});const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}),link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download=`${sid}_${name}_${score}점_2차고사4차시_${stamp}.txt`;link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);const p=document.getElementById('resultPanel');p.classList.add('show');p.innerHTML=`<h3>최종 결과</h3><p class="big">${score}점</p><p>코드 확인 ${cs}/6 · 진단평가 ${d}/10 · 형성평가 ${f}/10</p><p><b>${sid} ${name}</b> 학생의 결과 TXT 파일을 저장했습니다.</p>`;}
+</script></body></html>

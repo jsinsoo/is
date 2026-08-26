@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang='ko'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>정보과학 2차고사 5차시 개념기반 목표지향 수업지도안</title><style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --sky:#eaf4ff; --green:#1f8a70;
+  --mint:#eaf8f3; --orange:#f59e0b; --rose:#cf4568; --purple:#7656a7;
+  --ink:#17212b; --muted:#5c6978; --line:#d8e2ec; --paper:#fff; --bg:#f4f7fb;
+  --ok:#127a50; --bad:#bc2f3e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#132b42,#2f6fb3 62%,#4796dc);color:#fff;padding:42px 20px}
+.header-inner{max-width:1320px;margin:auto}
+.kicker{font-size:.9rem;letter-spacing:.08em;opacity:.88}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.2;margin:.35rem 0 .8rem}
+.subtitle{max-width:980px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1320px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+nav a{text-decoration:none;color:var(--navy);font-weight:800;white-space:nowrap;padding:8px 10px;border-radius:8px;font-size:.89rem}
+nav a:hover{background:var(--sky)}
+main{max-width:1320px;margin:auto;padding:22px 16px 76px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:25px;margin:19px 0;box-shadow:0 7px 22px rgba(23,50,77,.055)}
+h2{color:var(--navy);font-size:1.65rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}
+h3{color:var(--navy);margin:20px 0 10px}
+h4{color:#254d72;margin:16px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:13px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.04rem;margin-bottom:5px}
+.big{font-size:1.9rem;font-weight:900;color:var(--blue)}
+.story{background:linear-gradient(135deg,#fff9ea,#fff);border-left:7px solid var(--orange);padding:20px;border-radius:14px}
+.ending{background:linear-gradient(135deg,#f5efff,#fff);border-left:7px solid var(--purple);padding:20px;border-radius:14px}
+.standard{background:var(--mint);border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+code{font-family:Consolas,"D2Coding",monospace}
+pre{white-space:pre-wrap}
+.codebox{background:#111c27;color:#eaf2f8;border-radius:13px;padding:15px 17px;overflow:auto;font-family:Consolas,"D2Coding",monospace;font-size:.91rem;line-height:1.55;white-space:pre}
+.concept{border:1px solid var(--line);border-radius:16px;margin:18px 0;overflow:hidden}
+.concept-head{background:linear-gradient(90deg,#eaf4ff,#f9fcff);padding:15px 18px;border-bottom:1px solid var(--line)}
+.concept-head b{color:var(--navy);font-size:1.18rem}
+.concept-body{padding:18px}
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:800;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff0f4;color:#a63d5b}.t4{background:#fff6df;color:#8a5b00}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+.question h4{margin-top:0}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer;background:#fff}
+.option:hover{background:#f5f9fd}
+.option input{margin-right:8px;transform:scale(1.1)}
+.feedback{display:none;margin-top:11px;padding:12px;border-radius:9px;background:#f6f8fb}
+.feedback.show{display:block}
+.correct{border-left:5px solid var(--ok)}
+.wrong{border-left:5px solid var(--bad)}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+.primary{background:var(--blue);color:#fff}.secondary{background:#eaf0f6;color:var(--navy)}
+.danger{background:var(--rose);color:#fff}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.quiz-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.scorebox{background:#edf7ff;border:1px solid #b9d8f0;border-radius:12px;padding:12px 15px;font-weight:800;color:var(--navy)}
+.userbox{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input[type=text]{width:100%;padding:11px;border:1px solid #cfdbe6;border-radius:9px;font-size:1rem}
+.progress-wrap{height:12px;background:#e9eef3;border-radius:999px;overflow:hidden}
+.progress{height:100%;background:linear-gradient(90deg,#2f6fb3,#1f8a70);width:0%;transition:.3s}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.small{font-size:.86rem;color:var(--muted)}
+.result-panel{display:none;border:2px solid #9ac9ea;background:#f6fbff;border-radius:15px;padding:18px;margin-top:18px}
+.result-panel.show{display:block}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 7px 24px rgba(0,0,0,.2)}
+footer{max-width:1320px;margin:0 auto 40px;padding:0 18px;color:#5e6c78;font-size:.86rem}
+@media(max-width:650px){.userbox{grid-template-columns:1fr}.quiz-head{align-items:flex-start;flex-direction:column}}
+@media print{nav,.print,.controls button{display:none!important}body{background:white}section{box-shadow:none;break-inside:avoid}.question{break-inside:avoid}}
+</style></head><body>
+<header><div class="header-inner"><div class="kicker">2022 개정 고등학교 정보과학 · Ⅲ 알고리즘 · 동적 계획법</div>
+<h1>5차시 개념기반 목표지향 수업지도안</h1>
+<div class="subtitle">중복 부분 문제를 발견하고 부분 문제의 해를 저장·재사용하여 계산을 줄이는 동적 계획법을 피보나치와 계단 오르기로 구현하고, 단순 재귀·메모이제이션·테이블 방식을 비교한다.</div>
+<div class="badges"><span class="badge">성취기준 [12정과03-05]</span><span class="badge">중복 부분 문제</span><span class="badge">메모이제이션</span><span class="badge">테이블 방식</span><span class="badge">개념별 코드 6개</span><span class="badge">진단 OX 10문항</span><span class="badge">형성평가 10문항</span><span class="badge">자동채점·TXT 저장</span></div></div></header>
+<nav><div class="nav-inner"><a href="#identity">수업 개요</a><a href="#start">학습 시작</a><a href="#goals">목표</a><a href="#concepts">개념·코드</a><a href="#ending">학습 마무리</a><a href="#diagnostic">진단평가</a><a href="#formative">형성평가</a><a href="#submit">제출·저장</a></div></nav>
+<main>
+<section id="identity"><h2>1. 수업 개요와 성취수준</h2>
+<div class="standard"><b>성취기준 [12정과03-05]</b><br>부분 문제가 중복으로 적용되지 않는 알고리즘을 설계하고, 기존의 관계기반 알고리즘과 비교·분석한다.</div>
+<h3>성취수준</h3><table><tr><th>수준</th><th>성취 특성</th></tr>
+<tr><td>A</td><td>문제에서 중복 부분 문제와 상태 관계를 스스로 찾아 점화 관계를 설계하고, 메모이제이션 또는 테이블 방식으로 중복 계산을 제거한 프로그램을 구현하며 단순 재귀와 호출 횟수·계산 구조를 비교·분석한다.</td></tr>
+<tr><td>B</td><td>동적 계획법의 원리를 설명하고 부분 문제 결과를 저장·재사용하는 알고리즘을 구현하며 단순 재귀와의 차이를 비교한다.</td></tr>
+<tr><td>C</td><td>주어진 문제에서 반복 계산되는 부분 문제를 찾고 메모이제이션 또는 DP 테이블 코드의 실행 과정을 추적한다.</td></tr>
+<tr><td>D</td><td>안내에 따라 저장 구조와 점화 관계의 일부를 완성하고 이미 계산한 결과가 재사용되는 과정을 확인한다.</td></tr>
+<tr><td>E</td><td>같은 계산을 반복하는 것보다 이미 구한 결과를 저장하여 사용하는 것이 효율적일 수 있음을 예시에서 확인한다.</td></tr></table>
+<div class="grid"><div class="card"><strong>핵심 질문 1</strong>재귀 호출 트리에서 똑같은 부분 문제가 몇 번이나 다시 계산되고 있을까?</div><div class="card"><strong>핵심 질문 2</strong>한 번 계산한 답을 저장하면 프로그램의 계산 과정은 어떻게 달라질까?</div><div class="card"><strong>핵심 질문 3</strong>재귀 메모이제이션과 반복 테이블 방식은 무엇이 같고 무엇이 다를까?</div></div></section>
+
+<section id="start"><h2>2. 학습 시작 멘트</h2><div class="story"><h3>어제 계산한 답을 오늘 또 처음부터 계산해야 할까?</h3>
+<p>복잡한 문제를 작은 문제로 나누는 것은 좋은 전략입니다. 그런데 작은 문제를 자세히 살펴보니 똑같은 문제가 여러 번 등장한다면 어떨까요? 매번 처음부터 다시 계산하는 것은 정확하지만 불필요한 작업이 많아집니다.</p>
+<p>피보나치 수열의 단순 재귀 코드는 매우 자연스럽지만, 호출 트리를 그려 보면 같은 <code>fib(3)</code>, <code>fib(2)</code>가 반복해서 등장합니다. 컴퓨터에게도 우리가 이미 계산한 답을 <b>기억</b>하게 할 수 있습니다.</p>
+<p>오늘은 <b>중복되는 부분 문제를 발견하고 → 결과를 저장하고 → 필요할 때 재사용하는</b> 동적 계획법을 학습합니다. 같은 정답을 구하는 단순 재귀, 메모이제이션, 테이블 방식의 계산 과정을 직접 비교합니다.</p></div></section>
+
+<section id="goals"><h2>3. 학습목표와 학습내용</h2><h3>학습목표</h3>
+<ol><li>재귀 문제에서 중복 부분 문제를 찾아 설명할 수 있다.</li><li>메모이제이션의 저장·재사용 원리를 코드로 구현할 수 있다.</li><li>테이블 방식으로 작은 부분 문제부터 순서대로 값을 계산할 수 있다.</li><li>문제의 상태와 점화 관계를 정의하여 동적 계획법 코드로 표현할 수 있다.</li><li>단순 재귀와 동적 계획법의 호출 횟수와 계산 구조를 비교·분석할 수 있다.</li><li>메모이제이션과 테이블 방식의 공통점과 차이를 설명할 수 있다.</li></ol>
+<h3>학습내용</h3><table><tr><th>개념 축</th><th>내용</th><th>학습 산출물</th></tr><tr><td>중복 부분 문제</td><td>재귀 호출 트리, 반복 계산</td><td>피보나치 호출 추적표</td></tr><tr><td>메모이제이션</td><td>결과 저장, 딕셔너리, 재사용</td><td>메모이제이션 코드</td></tr><tr><td>테이블 방식</td><td>작은 문제부터 순차 계산</td><td>DP 테이블</td></tr><tr><td>상태·점화 관계</td><td>dp[i] 의미, 이전 상태 관계</td><td>계단 오르기 상태 정의</td></tr><tr><td>효율 비교</td><td>호출 횟수, 중복 계산</td><td>재귀/DP 비교표</td></tr><tr><td>구현 방식 비교</td><td>하향식·상향식</td><td>메모이제이션/테이블 비교</td></tr></table></section>
+
+<section id="concepts"><h2>4. 개념 및 상세 설명 · 관련 코드 · 코드별 확인 문제</h2><div class="concept"><div class="concept-head"><b>개념 1. 중복 부분 문제: 같은 계산이 왜 반복될까?</b></div><div class="concept-body">
+<div class="two"><div><p><b>동적 계획법(Dynamic Programming, DP)</b>의 출발점은 큰 문제를 작은 부분 문제로 나누었을 때 <b>같은 부분 문제가 여러 번 다시 등장하는지</b> 찾는 것이다.</p>
+<p>단순 재귀 피보나치에서는 <code>fib(5)</code>를 계산하는 과정에서 <code>fib(3)</code>, <code>fib(2)</code> 같은 값이 여러 경로에서 반복 계산된다. 이미 계산한 값을 다시 계산하지 않는다면 호출 횟수를 크게 줄일 수 있다.</p></div><div><div class="codebox">count = 0
+
+def fib(n):
+    global count
+    count += 1
+
+    if n &lt;= 1:
+        return n
+
+    return fib(n - 1) + fib(n - 2)
+
+print(fib(6))
+print(&quot;호출 횟수:&quot;, count)</div></div></div>
+<div class="question" data-id="c1" data-answer="1,2,3">
+<h4>코드 1 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 같은 n에 대한 fib 호출이 여러 번 나타날 수 있다.</label><label class="option"><input type="checkbox" value="2">② count를 이용해 재귀 함수의 전체 호출 횟수를 관찰할 수 있다.</label><label class="option"><input type="checkbox" value="3">③ n이 0 또는 1이면 더 이상 재귀 호출하지 않는다.</label><label class="option"><input type="checkbox" value="4">④ 모든 n은 정확히 한 번만 계산된다.</label><label class="option"><input type="checkbox" value="5">⑤ 중복 부분 문제는 동적 계획법과 관계가 없다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>단순 재귀 피보나치는 같은 작은 문제를 반복 계산한다. 이 중복을 발견하는 것이 DP 설계의 첫 단계이다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 2. 메모이제이션: 계산한 결과를 저장하고 재사용하기</b></div><div class="concept-body">
+<div class="two"><div><p><b>메모이제이션(memoization)</b>은 재귀 호출의 결과를 저장해 두었다가 같은 입력이 다시 등장하면 저장된 값을 즉시 사용하는 방식이다.</p>
+<p>아래 코드에서는 딕셔너리 <code>memo</code>가 이미 계산한 피보나치 값을 저장한다. <code>n not in memo</code>인 경우에만 실제 계산을 수행하므로 중복 계산을 줄인다.</p></div><div><div class="codebox">memo = {0: 0, 1: 1}
+
+def fib(n):
+    if n not in memo:
+        memo[n] = fib(n - 1) + fib(n - 2)
+
+    return memo[n]
+
+print(fib(10))
+print(memo)</div></div></div>
+<div class="question" data-id="c2" data-answer="1,2,3">
+<h4>코드 2 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① memo는 이미 계산한 부분 문제의 결과를 저장한다.</label><label class="option"><input type="checkbox" value="2">② 같은 n이 다시 필요하면 저장된 값을 재사용할 수 있다.</label><label class="option"><input type="checkbox" value="3">③ fib(10)의 결과는 55이다.</label><label class="option"><input type="checkbox" value="4">④ memo에 값이 있어도 반드시 다시 재귀 계산한다.</label><label class="option"><input type="checkbox" value="5">⑤ 메모이제이션은 결과 저장과 무관하다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>메모이제이션의 핵심은 재귀 구조를 유지하면서 이미 계산한 결과를 저장하고 재사용하는 것이다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 3. 테이블 방식: 작은 문제부터 차례로 계산하기</b></div><div class="concept-body">
+<div class="two"><div><p>동적 계획법은 재귀로만 구현하는 것이 아니다. <b>테이블 방식(tabulation)</b>은 가장 작은 부분 문제부터 시작해 필요한 값을 순서대로 계산하여 리스트나 배열에 저장한다.</p>
+<p>피보나치 수열에서는 <code>dp[i-1]</code>과 <code>dp[i-2]</code>가 이미 계산되어 있으므로 두 값을 이용해 <code>dp[i]</code>를 한 번만 계산한다.</p></div><div><div class="codebox">def fib_dp(n):
+    if n &lt;= 1:
+        return n
+
+    dp = [0] * (n + 1)
+    dp[1] = 1
+
+    for i in range(2, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2]
+
+    return dp[n]
+
+print(fib_dp(10))</div></div></div>
+<div class="question" data-id="c3" data-answer="1,2,3">
+<h4>코드 3 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① dp[i]는 i번째 부분 문제의 결과를 저장한다.</label><label class="option"><input type="checkbox" value="2">② 작은 인덱스의 값을 먼저 계산한 뒤 큰 인덱스의 값을 계산한다.</label><label class="option"><input type="checkbox" value="3">③ fib_dp(10)의 결과는 55이다.</label><label class="option"><input type="checkbox" value="4">④ dp의 이전 값은 다음 값을 계산할 때 사용되지 않는다.</label><label class="option"><input type="checkbox" value="5">⑤ 반복문이 있으므로 동적 계획법이 될 수 없다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>테이블 방식은 작은 부분 문제의 답을 순서대로 저장하고 그 값을 이용해 다음 문제를 해결한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 4. 점화 관계와 상태: 무엇을 저장할 것인가?</b></div><div class="concept-body">
+<div class="two"><div><p>동적 계획법에서는 단순히 리스트를 사용하는 것이 아니라 <b>무엇을 하나의 부분 문제로 정의할지</b>가 중요하다. 이때 부분 문제를 나타내는 정보를 <b>상태(state)</b>라고 볼 수 있다.</p>
+<p>계단을 1칸 또는 2칸씩 오를 수 있을 때 <code>dp[i]</code>를 “i번째 계단까지 올라가는 방법의 수”라고 정의하면, 마지막 이동은 1칸 전 또는 2칸 전에서 오므로 이전 두 상태의 답으로 현재 답을 계산할 수 있다.</p></div><div><div class="codebox">def stairs(n):
+    if n &lt;= 1:
+        return 1
+
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    dp[1] = 1
+
+    for i in range(2, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2]
+
+    return dp[n]
+
+print(stairs(5))</div></div></div>
+<div class="question" data-id="c4" data-answer="1,2,3">
+<h4>코드 4 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① dp[i]는 i번째 계단까지 가는 방법 수라는 상태로 정의할 수 있다.</label><label class="option"><input type="checkbox" value="2">② 현재 상태는 이전 두 상태의 결과를 이용해 계산한다.</label><label class="option"><input type="checkbox" value="3">③ 부분 문제의 의미를 먼저 정의해야 점화 관계를 코드로 옮기기 쉽다.</label><label class="option"><input type="checkbox" value="4">④ dp[i]의 의미는 실행 중 매번 임의로 바뀌어야 한다.</label><label class="option"><input type="checkbox" value="5">⑤ 동적 계획법에서는 부분 문제 사이의 관계가 필요하지 않다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>DP 설계에서는 상태의 의미와 상태 사이의 관계를 명확히 정의하는 것이 중요하다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 5. 단순 재귀와 메모이제이션의 호출 횟수 비교</b></div><div class="concept-body">
+<div class="two"><div><p>같은 정답을 구하는 두 알고리즘이라도 계산 과정은 크게 다를 수 있다. 단순 재귀는 중복 부분 문제를 반복 계산하지만 메모이제이션은 처음 계산한 결과를 저장한다.</p>
+<p>따라서 <b>정답의 동일성</b>뿐 아니라 함수 호출 횟수, 중복 계산 횟수, 실행 시간 등을 비교하면 동적 계획법의 개선 효과를 더 구체적으로 설명할 수 있다.</p></div><div><div class="codebox">plain_count = 0
+memo_count = 0
+memo = {0: 0, 1: 1}
+
+def plain(n):
+    global plain_count
+    plain_count += 1
+    if n &lt;= 1:
+        return n
+    return plain(n-1) + plain(n-2)
+
+def fast(n):
+    global memo_count
+    memo_count += 1
+    if n not in memo:
+        memo[n] = fast(n-1) + fast(n-2)
+    return memo[n]
+
+print(plain(10), plain_count)
+print(fast(10), memo_count)</div></div></div>
+<div class="question" data-id="c5" data-answer="1,2,3">
+<h4>코드 5 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 두 함수는 같은 피보나치 값을 계산할 수 있다.</label><label class="option"><input type="checkbox" value="2">② 호출 횟수를 비교하여 중복 계산 감소 효과를 관찰할 수 있다.</label><label class="option"><input type="checkbox" value="3">③ memo는 fast 함수에서 계산 결과를 재사용하는 데 쓰인다.</label><label class="option"><input type="checkbox" value="4">④ 두 알고리즘의 호출 횟수는 모든 n에서 반드시 완전히 같다.</label><label class="option"><input type="checkbox" value="5">⑤ 결과가 같으면 계산 과정의 효율은 비교할 필요가 없다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>같은 결과를 얻더라도 메모이제이션은 중복 부분 문제를 저장하여 단순 재귀보다 불필요한 계산을 줄일 수 있다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 6. 메모이제이션과 테이블 방식 비교</b></div><div class="concept-body">
+<div class="two"><div><p>메모이제이션과 테이블 방식은 모두 <b>부분 문제의 결과를 저장하여 다시 활용</b>한다는 공통점이 있다. 차이는 계산 순서에 있다.</p>
+<p>메모이제이션은 필요한 큰 문제에서 재귀적으로 내려가며 필요한 상태를 계산하는 <b>하향식(top-down)</b> 접근이고, 테이블 방식은 작은 상태부터 순서대로 계산하는 <b>상향식(bottom-up)</b> 접근이다.</p>
+<p>문제의 상태 구조, 필요한 상태의 범위, 재귀 깊이 등을 고려하여 적절한 구현 방식을 선택할 수 있다.</p></div><div><div class="codebox"># 상향식 피보나치
+def bottom_up(n):
+    if n &lt;= 1:
+        return n
+
+    a, b = 0, 1
+
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+
+    return b
+
+print(bottom_up(10))</div></div></div>
+<div class="question" data-id="c6" data-answer="1,2,3">
+<h4>코드 6 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 메모이제이션과 테이블 방식 모두 중복 계산을 줄이는 데 활용할 수 있다.</label><label class="option"><input type="checkbox" value="2">② 메모이제이션은 재귀 호출 결과를 저장하는 하향식 방식으로 구현할 수 있다.</label><label class="option"><input type="checkbox" value="3">③ 테이블 방식은 작은 문제부터 순서대로 계산하는 상향식 방식이다.</label><label class="option"><input type="checkbox" value="4">④ 두 방식 모두 이미 계산한 결과를 절대로 저장하지 않는다.</label><label class="option"><input type="checkbox" value="5">⑤ 동적 계획법은 반드시 재귀함수만 사용해야 한다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>동적 계획법은 메모이제이션과 반복 기반 테이블 방식으로 구현할 수 있으며 핵심은 부분 해의 저장과 재사용이다.</div></div></div></div>
+<div class="notice"><b>목표지향 통합 과제</b><br>
+<code>fib(5)</code>, <code>fib(10)</code>, <code>fib(20)</code>을 단순 재귀와 메모이제이션으로 각각 실행하고 함수 호출 횟수를 기록하자.
+그다음 같은 피보나치 수열을 테이블 방식으로 구현하여 <b>① 상태의 의미 ② 점화 관계 ③ 저장되는 값 ④ 중복 계산 여부</b>를 비교표로 정리한다.
+마지막으로 계단 오르기 문제에서 <code>dp[i]</code>의 의미를 직접 정의하고 점화 관계를 코드로 구현해 보자.</div></section>
+
+<section id="ending"><h2>5. 학습 마무리 멘트</h2><div class="ending"><h3>좋은 알고리즘은 이미 해결한 문제를 다시 처음부터 풀지 않는다</h3>
+<p>분할정복에서는 큰 문제를 작은 문제로 나누었습니다. 오늘은 그 부분 문제들이 서로 겹칠 때 어떤 일이 일어나는지 살펴보았습니다. 같은 작은 문제가 계속 나타난다면 매번 다시 계산하는 대신 답을 저장하여 재사용할 수 있습니다.</p>
+<p>메모이제이션은 필요한 문제에서 아래로 내려가며 계산 결과를 기억하고, 테이블 방식은 작은 문제부터 차례대로 답을 쌓아 갑니다. 구현 방식은 다르지만 둘 다 <b>부분 문제의 관계를 이용하고 이미 계산한 결과를 재사용한다</b>는 공통점을 가집니다.</p>
+<p>동적 계획법의 핵심은 리스트나 딕셔너리를 사용하는 것이 아닙니다. <b>무엇을 상태로 정의할 것인지, 어떤 부분 문제가 반복되는지, 이전 상태의 답으로 현재 상태의 답을 어떻게 만들 것인지</b>를 설계하는 것입니다.</p></div></section>
+
+<section id="diagnostic"><div class="quiz-head"><h2>6. 전체 학습내용 진단평가 OX 10문항</h2><div class="scorebox" id="diagScore">미채점</div></div><div id="diagQuestions"></div><div class="controls"><button class="btn primary" onclick="gradeDiagnostic()">진단평가 채점</button><button class="btn secondary" onclick="resetGroup('diagQuestions')">초기화</button></div></section>
+<section id="formative"><div class="quiz-head"><h2>7. 전체 학습내용 형성평가 10문항</h2><div class="scorebox" id="formScore">미채점</div></div><p class="small">각 문항은 보기 5개 중 옳은 것 3개를 모두 선택해야 정답이다.</p><div id="formQuestions"></div><div class="controls"><button class="btn primary" onclick="gradeFormative()">형성평가 채점</button><button class="btn secondary" onclick="resetGroup('formQuestions')">초기화</button></div></section>
+<section id="submit"><h2>8. 학번·이름 입력 및 결과 저장</h2><div class="userbox"><label><b>학번</b><input type="text" id="studentId" placeholder="예: 1101"></label><label><b>이름</b><input type="text" id="studentName" placeholder="예: 홍길동"></label></div><h3>전체 진행률</h3><div class="progress-wrap"><div class="progress" id="progress"></div></div><p id="progressText" class="small">0%</p><div class="controls"><button class="btn primary" onclick="finalSubmit()">전체 채점 및 TXT 저장</button><button class="btn secondary" onclick="window.print()">인쇄 / PDF</button></div><div class="result-panel" id="resultPanel"></div></section>
+</main><footer><p>2022 개정 고등학교 정보과학 2학기 2차고사 10차시 계획의 5차시 「동적 계획법」을 중심으로 구성한 개념기반 목표지향 수업자료이다.</p></footer><button class="print" onclick="window.print()">인쇄 / PDF</button>
+
+<script>
+const diagData=[{"q": "동적 계획법은 부분 문제의 해를 저장하여 중복 계산을 줄이는 전략이다.", "a": "O", "e": "동적 계획법의 핵심은 부분 문제 관계와 계산 결과의 저장·재사용이다."}, {"q": "단순 재귀 피보나치에서는 같은 부분 문제가 여러 번 계산될 수 있다.", "a": "O", "e": "fib(n-1), fib(n-2)의 재귀 트리에서 동일한 n이 반복 등장한다."}, {"q": "메모이제이션은 이미 계산한 재귀 호출 결과를 저장하고 재사용할 수 있다.", "a": "O", "e": "딕셔너리나 리스트 등에 결과를 저장할 수 있다."}, {"q": "메모이제이션에서는 저장된 값이 있어도 반드시 처음부터 다시 계산한다.", "a": "X", "e": "저장된 값이 있으면 재계산하지 않고 재사용하는 것이 핵심이다."}, {"q": "테이블 방식은 작은 부분 문제부터 순서대로 값을 계산할 수 있다.", "a": "O", "e": "상향식 동적 계획법의 대표적 특징이다."}, {"q": "동적 계획법은 반드시 재귀함수로만 구현해야 한다.", "a": "X", "e": "반복문을 이용한 테이블 방식으로도 구현할 수 있다."}, {"q": "DP에서 상태를 정의한다는 것은 부분 문제의 결과가 무엇을 의미하는지 정하는 것과 관련 있다.", "a": "O", "e": "예를 들어 dp[i]의 의미를 명확히 정해야 점화식을 설계할 수 있다."}, {"q": "계단 오르기 문제에서 현재 상태가 이전 상태들과 관계를 가질 수 있다.", "a": "O", "e": "이전 계단의 해를 이용해 현재 계단의 해를 계산할 수 있다."}, {"q": "같은 정답이 나오면 단순 재귀와 동적 계획법의 계산량은 항상 같다.", "a": "X", "e": "중복 계산 여부에 따라 호출 횟수와 실행량이 크게 달라질 수 있다."}, {"q": "동적 계획법은 단순히 리스트를 사용하기만 하면 자동으로 완성된다.", "a": "X", "e": "부분 문제, 상태, 점화 관계, 저장·재사용 구조가 핵심이다."}];
+const formData=[{"q": "중복 부분 문제에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 같은 작은 문제가 여러 번 다시 계산되는 현상이다.", "② 단순 재귀 피보나치에서 관찰할 수 있다.", "③ 동적 계획법을 적용할 수 있는지 판단하는 중요한 단서가 된다.", "④ 모든 부분 문제는 반드시 서로 완전히 달라야 한다.", "⑤ 중복 계산은 알고리즘 효율과 관계가 없다."], "a": [1, 2, 3], "e": "반복되는 부분 문제를 발견하고 결과를 저장하는 것이 DP의 핵심 출발점이다."}, {"q": "메모이제이션에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 계산한 결과를 저장한다.", "② 같은 입력이 다시 나타나면 저장값을 사용할 수 있다.", "③ 재귀 구조와 함께 사용할 수 있다.", "④ 저장값이 있어도 항상 다시 계산해야 한다.", "⑤ 부분 해를 저장하면 안 된다."], "a": [1, 2, 3], "e": "메모이제이션은 하향식 재귀 과정에서 계산 결과를 저장·재사용한다."}, {"q": "테이블 방식에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 작은 부분 문제부터 계산할 수 있다.", "② 계산 결과를 리스트나 배열에 저장할 수 있다.", "③ 이전 상태의 결과로 다음 상태를 계산할 수 있다.", "④ 반드시 재귀 호출이 있어야 한다.", "⑤ 이미 계산한 값을 저장해서는 안 된다."], "a": [1, 2, 3], "e": "테이블 방식은 상향식으로 부분 문제의 답을 순차 계산한다."}, {"q": "DP의 상태와 점화 관계에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① dp[i]가 무엇을 뜻하는지 명확히 정의해야 한다.", "② 현재 상태와 이전 상태의 관계를 식이나 코드로 표현할 수 있다.", "③ 부분 문제 사이의 관계를 파악하는 것이 중요하다.", "④ 상태의 의미는 정의할 필요가 없다.", "⑤ 점화 관계는 이전 결과를 절대로 사용하지 않는다."], "a": [1, 2, 3], "e": "상태 정의와 상태 전이 관계가 동적 계획법 설계의 중심이다."}, {"q": "피보나치 단순 재귀와 메모이제이션 비교로 옳은 것을 모두 고르시오.", "o": ["① 두 방식은 같은 피보나치 값을 구할 수 있다.", "② 단순 재귀에는 중복 호출이 나타날 수 있다.", "③ 메모이제이션은 계산 결과 재사용으로 호출량을 줄일 수 있다.", "④ 단순 재귀가 모든 입력에서 항상 더 적게 계산한다.", "⑤ 호출 횟수를 비교하는 것은 의미가 없다."], "a": [1, 2, 3], "e": "정답뿐 아니라 중복 계산과 호출 횟수를 비교하면 개선 효과를 확인할 수 있다."}, {"q": "다음 코드에 대한 설명으로 옳은 것을 모두 고르시오.<pre>memo={0:0,1:1}\ndef fib(n):\n    if n not in memo:\n        memo[n]=fib(n-1)+fib(n-2)\n    return memo[n]</pre>", "o": ["① n이 memo에 없을 때만 새로 계산한다.", "② 계산 결과를 memo[n]에 저장한다.", "③ 같은 n이 다시 필요하면 저장값을 반환할 수 있다.", "④ memo는 호출할 때마다 반드시 비워야 한다.", "⑤ 이 코드는 결과를 저장하지 않는다."], "a": [1, 2, 3], "e": "딕셔너리에 부분 문제 결과를 저장하는 전형적인 메모이제이션 구조이다."}, {"q": "계단 오르기 DP에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① dp[i]를 i번째 계단까지 가는 방법 수로 정의할 수 있다.", "② 1칸·2칸 이동이라면 이전 두 상태가 현재 상태와 관련될 수 있다.", "③ 작은 상태부터 계산하는 테이블 방식을 사용할 수 있다.", "④ 모든 계단의 답은 서로 아무 관계가 없다.", "⑤ 이전 상태를 저장하면 안 된다."], "a": [1, 2, 3], "e": "문제 조건에서 상태와 점화 관계를 찾아 테이블로 계산할 수 있다."}, {"q": "메모이제이션과 테이블 방식의 비교로 옳은 것을 모두 고르시오.", "o": ["① 둘 다 부분 문제 결과를 저장·재사용할 수 있다.", "② 메모이제이션은 하향식 접근으로 구현할 수 있다.", "③ 테이블 방식은 상향식 접근으로 구현할 수 있다.", "④ 둘은 결과 저장과 아무 관계가 없다.", "⑤ 동적 계획법에서는 둘 중 어느 방식도 사용할 수 없다."], "a": [1, 2, 3], "e": "두 구현 방식은 계산 순서가 다르지만 중복 계산을 줄이기 위해 부분 해를 재사용한다."}, {"q": "[12정과03-05] 관점의 학습 활동으로 옳은 것을 모두 고르시오.", "o": ["① 중복 부분 문제를 찾아 계산 결과를 저장한다.", "② 단순 재귀와 동적 계획법의 실행 횟수를 비교한다.", "③ 기존 관계 기반 알고리즘과 코드 구조·효율을 비교한다.", "④ 같은 계산을 의도적으로 더 많이 반복하는 것이 목표이다.", "⑤ 비교·분석 없이 결과값만 외우면 충분하다."], "a": [1, 2, 3], "e": "성취기준은 중복 적용을 줄이는 알고리즘을 설계하고 기존 방식과 비교·분석하는 데 초점이 있다."}, {"q": "5차시 학습을 종합한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 반복 계산되는 부분 문제를 찾는다.", "② 상태와 점화 관계를 정의한다.", "③ 부분 문제의 결과를 저장하여 다시 사용한다.", "④ DP는 어떤 문제에서나 무조건 사용할 수 있다.", "⑤ 리스트를 한 번 사용하면 자동으로 DP가 된다."], "a": [1, 2, 3], "e": "동적 계획법은 중복 부분 문제, 상태 관계, 부분 해 저장과 재사용을 함께 이해해야 한다."}];
+function renderDiagnostic(){document.getElementById('diagQuestions').innerHTML=diagData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4><label class="option"><input type="radio" name="d${i}" value="O"> O</label><label class="option"><input type="radio" name="d${i}" value="X"> X</label><div class="feedback" id="df${i}"></div></div>`).join('');}
+function renderFormative(){document.getElementById('formQuestions').innerHTML=formData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4>${x.o.map((o,j)=>`<label class="option"><input type="checkbox" name="f${i}" value="${j+1}">${o}</label>`).join('')}<div class="feedback" id="ff${i}"></div></div>`).join('');}
+renderDiagnostic();renderFormative();
+document.querySelectorAll('.check-one').forEach(btn=>btn.addEventListener('click',()=>{const q=btn.closest('.question'),a=q.dataset.answer.split(',').sort().join(','),s=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort().join(','),f=q.querySelector('.feedback');if(!f.dataset.original)f.dataset.original=f.innerHTML;f.className='feedback show '+(s===a?'correct':'wrong');f.innerHTML=(s===a?'<b>정답입니다.</b><br>':'<b>다시 확인하세요.</b><br>')+f.dataset.original;updateProgress();}));
+function gradeDiagnostic(){let s=0;diagData.forEach((x,i)=>{const c=document.querySelector(`input[name=d${i}]:checked`),ok=c&&c.value===x.a;if(ok)s++;const f=document.getElementById(`df${i}`);f.className='feedback show '+(ok?'correct':'wrong');f.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${x.a}<br>${x.e}`;});document.getElementById('diagScore').textContent=`${s}/10`;updateProgress();return s;}
+function gradeFormative(){let s=0;formData.forEach((x,i)=>{const c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b),a=[...x.a].sort((a,b)=>a-b),ok=JSON.stringify(c)===JSON.stringify(a);if(ok)s++;const f=document.getElementById(`ff${i}`);f.className='feedback show '+(ok?'correct':'wrong');f.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${a.map(n=>'①②③④⑤'[n-1]).join(', ')}<br>${x.e}`;});document.getElementById('formScore').textContent=`${s}/10`;updateProgress();return s;}
+function resetGroup(id){document.querySelectorAll(`#${id} input`).forEach(x=>x.checked=false);document.querySelectorAll(`#${id} .feedback`).forEach(x=>{x.className='feedback';x.innerHTML='';});if(id==='diagQuestions')document.getElementById('diagScore').textContent='미채점';if(id==='formQuestions')document.getElementById('formScore').textContent='미채점';updateProgress();}
+function updateProgress(){let d=0;document.querySelectorAll('.concept .question').forEach(q=>{if(q.querySelectorAll('input:checked').length)d++;});for(let i=0;i<10;i++){if(document.querySelector(`input[name=d${i}]:checked`))d++;if(document.querySelectorAll(`input[name=f${i}]:checked`).length)d++;}const p=Math.min(100,Math.round(d/26*100));document.getElementById('progress').style.width=p+'%';document.getElementById('progressText').textContent=`${p}% (${d}/26 항목 응답)`;}
+document.addEventListener('change',updateProgress);
+function finalSubmit(){const sid=document.getElementById('studentId').value.trim(),name=document.getElementById('studentName').value.trim();if(!sid||!name){alert('학번과 이름을 입력하세요.');return;}const d=gradeDiagnostic(),f=gradeFormative();let cs=0,reports=[];document.querySelectorAll('.concept .question').forEach((q,i)=>{const a=q.dataset.answer.split(',').sort(),s=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort(),ok=JSON.stringify(a)===JSON.stringify(s);if(ok)cs++;const ex=(q.querySelector('.feedback').dataset.original||q.querySelector('.feedback').textContent||'').replace(/\s+/g,' ').trim();reports.push(`코드 확인 ${i+1}: ${ok?'정답':'오답'} / 응답 ${s.join(',')||'미응답'} / 정답 ${a.join(',')} / 해설: ${ex}`);});const raw=cs+d+f,total=26,score=Math.round(raw/total*100),now=new Date(),stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0');let lines=['정보과학 2차고사 5차시 개념기반 목표지향 학습 결과','주제: 동적 계획법 - 중복 부분 문제·메모이제이션·테이블 방식','성취기준: [12정과03-05]',`학번: ${sid}`,`이름: ${name}`,`점수: ${score}점 (${raw}/${total})`,`응시시각: ${now.toLocaleString('ko-KR')}`,'','[코드별 확인 문제]',...reports,'','[진단평가 OX]'];diagData.forEach((x,i)=>{const c=document.querySelector(`input[name=d${i}]:checked`)?.value||'미응답';lines.push(`${i+1}. ${c===x.a?'정답':'오답'} / 응답 ${c} / 정답 ${x.a} / 풀이: ${x.e}`);});lines.push('','[형성평가]');formData.forEach((x,i)=>{const c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b),a=[...x.a].sort((a,b)=>a-b),ok=JSON.stringify(c)===JSON.stringify(a);lines.push(`${i+1}. ${ok?'정답':'오답'} / 응답 ${c.join(',')||'미응답'} / 정답 ${a.join(',')} / 풀이: ${x.e}`);});const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}),link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download=`${sid}_${name}_${score}점_2차고사5차시_${stamp}.txt`;link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);const p=document.getElementById('resultPanel');p.classList.add('show');p.innerHTML=`<h3>최종 결과</h3><p class="big">${score}점</p><p>코드 확인 ${cs}/6 · 진단평가 ${d}/10 · 형성평가 ${f}/10</p><p><b>${sid} ${name}</b> 학생의 결과 TXT 파일을 저장했습니다.</p>`;}
+</script></body></html>

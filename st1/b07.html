@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang='ko'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>정보과학 2차고사 7차시 개념기반 목표지향 수업지도안</title><style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --sky:#eaf4ff; --green:#1f8a70;
+  --mint:#eaf8f3; --orange:#f59e0b; --rose:#cf4568; --purple:#7656a7;
+  --ink:#17212b; --muted:#5c6978; --line:#d8e2ec; --paper:#fff; --bg:#f4f7fb;
+  --ok:#127a50; --bad:#bc2f3e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#132b42,#2f6fb3 62%,#4796dc);color:#fff;padding:42px 20px}
+.header-inner{max-width:1320px;margin:auto}
+.kicker{font-size:.9rem;letter-spacing:.08em;opacity:.88}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.2;margin:.35rem 0 .8rem}
+.subtitle{max-width:980px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1320px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+nav a{text-decoration:none;color:var(--navy);font-weight:800;white-space:nowrap;padding:8px 10px;border-radius:8px;font-size:.89rem}
+nav a:hover{background:var(--sky)}
+main{max-width:1320px;margin:auto;padding:22px 16px 76px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:25px;margin:19px 0;box-shadow:0 7px 22px rgba(23,50,77,.055)}
+h2{color:var(--navy);font-size:1.65rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}
+h3{color:var(--navy);margin:20px 0 10px}
+h4{color:#254d72;margin:16px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:13px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.04rem;margin-bottom:5px}
+.big{font-size:1.9rem;font-weight:900;color:var(--blue)}
+.story{background:linear-gradient(135deg,#fff9ea,#fff);border-left:7px solid var(--orange);padding:20px;border-radius:14px}
+.ending{background:linear-gradient(135deg,#f5efff,#fff);border-left:7px solid var(--purple);padding:20px;border-radius:14px}
+.standard{background:var(--mint);border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+code{font-family:Consolas,"D2Coding",monospace}
+pre{white-space:pre-wrap}
+.codebox{background:#111c27;color:#eaf2f8;border-radius:13px;padding:15px 17px;overflow:auto;font-family:Consolas,"D2Coding",monospace;font-size:.91rem;line-height:1.55;white-space:pre}
+.concept{border:1px solid var(--line);border-radius:16px;margin:18px 0;overflow:hidden}
+.concept-head{background:linear-gradient(90deg,#eaf4ff,#f9fcff);padding:15px 18px;border-bottom:1px solid var(--line)}
+.concept-head b{color:var(--navy);font-size:1.18rem}
+.concept-body{padding:18px}
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:800;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff0f4;color:#a63d5b}.t4{background:#fff6df;color:#8a5b00}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+.question h4{margin-top:0}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer;background:#fff}
+.option:hover{background:#f5f9fd}
+.option input{margin-right:8px;transform:scale(1.1)}
+.feedback{display:none;margin-top:11px;padding:12px;border-radius:9px;background:#f6f8fb}
+.feedback.show{display:block}
+.correct{border-left:5px solid var(--ok)}
+.wrong{border-left:5px solid var(--bad)}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+.primary{background:var(--blue);color:#fff}.secondary{background:#eaf0f6;color:var(--navy)}
+.danger{background:var(--rose);color:#fff}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.quiz-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.scorebox{background:#edf7ff;border:1px solid #b9d8f0;border-radius:12px;padding:12px 15px;font-weight:800;color:var(--navy)}
+.userbox{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input[type=text]{width:100%;padding:11px;border:1px solid #cfdbe6;border-radius:9px;font-size:1rem}
+.progress-wrap{height:12px;background:#e9eef3;border-radius:999px;overflow:hidden}
+.progress{height:100%;background:linear-gradient(90deg,#2f6fb3,#1f8a70);width:0%;transition:.3s}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.small{font-size:.86rem;color:var(--muted)}
+.result-panel{display:none;border:2px solid #9ac9ea;background:#f6fbff;border-radius:15px;padding:18px;margin-top:18px}
+.result-panel.show{display:block}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 7px 24px rgba(0,0,0,.2)}
+footer{max-width:1320px;margin:0 auto 40px;padding:0 18px;color:#5e6c78;font-size:.86rem}
+@media(max-width:650px){.userbox{grid-template-columns:1fr}.quiz-head{align-items:flex-start;flex-direction:column}}
+@media print{nav,.print,.controls button{display:none!important}body{background:white}section{box-shadow:none;break-inside:avoid}.question{break-inside:avoid}}
+</style></head><body>
+<header><div class="header-inner"><div class="kicker">2022 개정 고등학교 정보과학 · Ⅳ 정보과학 프로젝트 · 01~02</div>
+<h1>7차시 개념기반 목표지향 수업지도안</h1>
+<div class="subtitle">과학·수학·환경·학교생활에서 정보과학으로 해결할 수 있는 실생활 문제를 발견하고, 사용자·입력·출력·제한 조건을 분석하여 기능·알고리즘·역할·일정·테스트 기준이 포함된 프로젝트 계획서를 설계한다.</div>
+<div class="badges"><span class="badge">성취기준 [12정과04-01]</span><span class="badge">성취기준 [12정과04-02]</span><span class="badge">문제 발견·요구 분석</span><span class="badge">프로젝트 설계</span><span class="badge">개념별 코드 6개</span><span class="badge">진단 OX 10문항</span><span class="badge">형성평가 10문항</span><span class="badge">자동채점·TXT 저장</span></div></div></header>
+<nav><div class="nav-inner"><a href="#identity">수업 개요</a><a href="#start">학습 시작</a><a href="#goals">목표</a><a href="#concepts">개념·코드</a><a href="#ending">학습 마무리</a><a href="#diagnostic">진단평가</a><a href="#formative">형성평가</a><a href="#submit">제출·저장</a></div></nav>
+<main>
+<section id="identity"><h2>1. 수업 개요와 성취수준</h2>
+<div class="standard"><b>성취기준 [12정과04-01]</b><br>다양한 학문 분야에서 컴퓨터과학의 기본 개념과 원리를 바탕으로 해결할 수 있는 실생활의 문제를 발견한다.</div>
+<div class="standard" style="margin-top:10px"><b>성취기준 [12정과04-02]</b><br>발견한 문제를 분석하고 문제를 해결하기 위한 프로젝트 수행 과정을 설계한다.</div>
+<h3>성취수준</h3><table><tr><th>수준</th><th>성취 특성</th></tr>
+<tr><td>A</td><td>실생활에서 정보과학으로 해결할 가치가 있는 문제를 구체적으로 발견하고 사용자·입력·출력·제한 조건을 체계적으로 분석하며, 기능 분해·자료 구조·알고리즘 후보·역할·일정·테스트 기준을 포함한 실행 가능한 프로젝트 계획서를 설계한다.</td></tr>
+<tr><td>B</td><td>실생활 문제를 정보과학적으로 정의하고 주요 요구사항을 분석하여 핵심 기능·알고리즘·일정·역할이 포함된 프로젝트 계획서를 작성한다.</td></tr>
+<tr><td>C</td><td>주어진 문제 상황에서 사용자·입력·출력을 구분하고 간단한 기능 목록과 프로젝트 수행 절차를 작성한다.</td></tr>
+<tr><td>D</td><td>안내에 따라 실생활 문제를 한 가지 선정하고 사용자·입력·출력 중 일부를 작성한다.</td></tr>
+<tr><td>E</td><td>실생활 문제와 정보과학적 해결 사례를 확인하고 프로젝트 계획서의 기본 항목을 구별한다.</td></tr></table>
+<div class="grid"><div class="card"><strong>핵심 질문 1</strong>우리 주변의 불편함 중 어떤 문제를 정보과학으로 해결할 가치가 있을까?</div><div class="card"><strong>핵심 질문 2</strong>사용자·입력·출력·제한 조건을 명확히 하면 프로젝트가 어떻게 달라질까?</div><div class="card"><strong>핵심 질문 3</strong>좋은 프로젝트 계획서는 구현 전에 무엇을 결정해 두어야 할까?</div></div></section>
+
+<section id="start"><h2>2. 학습 시작 멘트</h2><div class="story"><h3>좋은 프로젝트는 좋은 코드보다 먼저 좋은 문제에서 시작한다</h3>
+<p>프로그램을 잘 만드는 것과 좋은 프로젝트를 만드는 것은 조금 다릅니다. 아무리 정교한 코드라도 실제로 해결할 문제가 분명하지 않다면 프로젝트의 가치는 낮아질 수 있습니다.</p>
+<p>학교생활만 살펴보아도 급식 대기시간, 분실물 관리, 실험 데이터 정리, 교실 에너지 사용, 동아리 일정 조정처럼 정보과학으로 개선할 수 있는 문제들이 있습니다. 중요한 것은 “앱을 만들자”가 아니라 <b>누가 어떤 상황에서 어떤 불편을 겪고 있으며, 어떤 데이터와 기능으로 개선할 수 있는가</b>를 먼저 찾는 것입니다.</p>
+<p>오늘은 Ⅳ단원의 첫 차시입니다. 코드를 작성하기 전에 문제를 발견하고 요구를 분석한 뒤, 실제로 실행 가능한 프로젝트 계획서까지 설계해 봅니다.</p></div></section>
+
+<section id="goals"><h2>3. 학습목표와 학습내용</h2><h3>학습목표</h3>
+<ol><li>실생활에서 정보과학으로 해결할 수 있는 문제를 발견할 수 있다.</li><li>프로젝트의 사용자·입력·출력·제한 조건을 정의할 수 있다.</li><li>해결 목표를 구체적이고 평가 가능한 형태로 작성할 수 있다.</li><li>프로젝트를 기능 단위로 분해하고 기능 간 관계를 설명할 수 있다.</li><li>문제에 적합한 자료 구조와 알고리즘 후보를 선정하고 근거를 설명할 수 있다.</li><li>역할·일정·산출물·테스트 기준이 포함된 프로젝트 계획서를 작성할 수 있다.</li></ol>
+<h3>학습내용</h3><table><tr><th>개념 축</th><th>내용</th><th>학습 산출물</th></tr><tr><td>문제 발견</td><td>실생활 관찰, 사용자 불편, 해결 가치</td><td>문제 후보 목록</td></tr><tr><td>요구 분석</td><td>사용자, 입력, 출력, 제한 조건</td><td>문제 정의서</td></tr><tr><td>목표 설정</td><td>측정 가능한 해결 목표</td><td>성공 기준</td></tr><tr><td>기능 분해</td><td>입력·처리·저장·분석·출력</td><td>기능 구조도</td></tr><tr><td>알고리즘 설계</td><td>자료 구조·알고리즘 후보 선정</td><td>선택 근거표</td></tr><tr><td>수행 계획</td><td>역할, 일정, 산출물, 테스트</td><td>프로젝트 계획서</td></tr></table></section>
+
+<section id="concepts"><h2>4. 개념 및 상세 설명 · 관련 코드 · 코드별 확인 문제</h2><div class="concept"><div class="concept-head"><b>개념 1. 실생활 문제 발견: '불편함'을 정보과학 문제로 바꾸기</b></div><div class="concept-body">
+<div class="two"><div><p>정보과학 프로젝트의 출발점은 <b>실생활에서 해결할 가치가 있는 문제를 발견</b>하는 것이다. 단순한 아이디어가 아니라 실제 사용자, 상황, 데이터, 제약 조건이 있는 문제를 구체적으로 관찰해야 한다.</p>
+<p>예를 들어 “급식 줄이 길다”라는 관찰을 “시간대별 대기 인원 데이터를 이용해 평균 대기시간을 줄일 수 있는 안내 시스템을 만들 수 있을까?”처럼 바꾸면 정보과학적으로 다룰 수 있는 문제에 가까워진다.</p></div><div><div class="codebox">problems = [
+    &quot;교실 전력 낭비&quot;,
+    &quot;급식 대기 시간&quot;,
+    &quot;분실물 찾기&quot;,
+    &quot;실험 데이터 정리&quot;
+]
+
+for p in problems:
+    print(&quot;관찰 대상:&quot;, p)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 1 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 실생활의 불편함이나 비효율을 문제 후보로 삼을 수 있다.</label><label class="option"><input type="checkbox" value="2">② 문제 발견 단계에서는 사용자가 겪는 상황을 구체적으로 관찰하는 것이 중요하다.</label><label class="option"><input type="checkbox" value="3">③ 정보과학으로 해결 가능한 형태로 문제를 재구성할 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 프로젝트 주제는 데이터나 사용자와 전혀 관련 없어야 한다.</label><label class="option"><input type="checkbox" value="5">⑤ 문제는 처음부터 해결 방법이 완성되어 있어야만 선정할 수 있다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>좋은 프로젝트 문제는 실제 상황에서 출발하고 정보과학의 개념·데이터·알고리즘으로 해결 가능하도록 구체화한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 2. 사용자·입력·출력·제한 조건 정의</b></div><div class="concept-body">
+<div class="two"><div><p>문제를 발견했다면 다음 단계는 <b>누구를 위한 문제인지, 어떤 입력을 받아 어떤 결과를 제공할지, 어떤 제한 조건이 있는지</b>를 명확히 하는 것이다.</p>
+<p>사용자, 입력, 출력, 제한 조건을 정의하면 프로젝트의 범위가 선명해지고 구현 과정에서 불필요한 기능을 줄일 수 있다. 이것은 요구 분석의 가장 기본적인 구조이다.</p></div><div><div class="codebox">project = {
+    &quot;user&quot;: &quot;학생&quot;,
+    &quot;input&quot;: &quot;시간대별 대기 인원&quot;,
+    &quot;output&quot;: &quot;예상 대기 시간&quot;,
+    &quot;constraint&quot;: &quot;개인정보를 수집하지 않음&quot;
+}
+
+for key, value in project.items():
+    print(key, &quot;:&quot;, value)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 2 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① user는 프로젝트의 주요 사용자를 나타낸다.</label><label class="option"><input type="checkbox" value="2">② input은 프로그램이 처리할 데이터나 정보가 될 수 있다.</label><label class="option"><input type="checkbox" value="3">③ constraint는 프로젝트가 지켜야 할 제한 조건을 뜻한다.</label><label class="option"><input type="checkbox" value="4">④ output은 프로젝트와 무관한 임의의 값을 적는 항목이다.</label><label class="option"><input type="checkbox" value="5">⑤ 요구 분석에서는 사용자를 고려할 필요가 없다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>사용자·입력·출력·제한 조건은 문제를 구현 가능한 수준으로 구체화하는 핵심 항목이다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 3. 해결 목표를 측정 가능하게 만들기</b></div><div class="concept-body">
+<div class="two"><div><p>“더 편리하게 만든다”처럼 모호한 목표보다 <b>무엇을 얼마나 개선할 것인지</b>를 구체적으로 정의하면 프로젝트의 성공 여부를 평가하기 쉽다.</p>
+<p>예를 들어 “분실물 찾기를 쉽게 한다” 대신 “분실물 등록 정보를 검색하여 10초 이내에 후보 목록을 보여 준다”처럼 기능과 성능 기준을 함께 정의할 수 있다.</p></div><div><div class="codebox">goal = {
+    &quot;function&quot;: &quot;분실물 검색&quot;,
+    &quot;criterion&quot;: &quot;검색 결과 10초 이내 표시&quot;,
+    &quot;accuracy&quot;: &quot;등록 정보와 일치하는 후보 제공&quot;
+}
+
+for k, v in goal.items():
+    print(k, &quot;:&quot;, v)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 3 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 해결 목표는 구체적이고 평가 가능하게 작성하는 것이 좋다.</label><label class="option"><input type="checkbox" value="2">② 기능뿐 아니라 성공 여부를 판단할 기준도 정할 수 있다.</label><label class="option"><input type="checkbox" value="3">③ 목표가 명확하면 테스트 기준을 설계하기 쉬워진다.</label><label class="option"><input type="checkbox" value="4">④ 목표는 추상적일수록 평가하기 쉽다.</label><label class="option"><input type="checkbox" value="5">⑤ 프로젝트의 성공 기준은 구현이 끝난 뒤 처음 정해야 한다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>측정 가능한 목표는 설계·구현·테스트 단계 전체를 연결하는 기준이 된다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 4. 기능 분해: 큰 프로젝트를 작은 기능으로 나누기</b></div><div class="concept-body">
+<div class="two"><div><p>프로젝트 전체를 한 번에 구현하기보다 <b>입력, 처리, 저장, 분석, 출력</b> 등 작은 기능으로 나누면 개발과 협업이 쉬워진다.</p>
+<p>기능 분해를 통해 각 기능의 입력과 출력이 분명해지고, 팀원별 역할 분담과 모듈 통합도 체계적으로 할 수 있다. 함수와 모듈 설계는 기능 분해를 코드로 표현하는 대표적인 방법이다.</p></div><div><div class="codebox">def load_data():
+    pass
+
+def analyze_data(data):
+    pass
+
+def make_result(data):
+    pass
+
+def show_result(result):
+    pass
+
+# 입력 → 분석 → 결과 생성 → 출력</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 4 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 프로젝트를 여러 기능 단위로 나누는 예이다.</label><label class="option"><input type="checkbox" value="2">② 각 함수의 역할을 분명히 하면 협업에 도움이 된다.</label><label class="option"><input type="checkbox" value="3">③ 기능 사이의 입력·출력 관계를 정리할 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 모든 기능을 하나의 매우 긴 함수에 넣는 것이 기능 분해의 목적이다.</label><label class="option"><input type="checkbox" value="5">⑤ 함수 이름은 각 기능의 역할과 관계없어야 한다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>기능 분해는 복잡한 프로젝트를 관리 가능한 작은 단위로 나누고 역할과 인터페이스를 분명하게 한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 5. 자료 구조와 알고리즘 후보 선정</b></div><div class="concept-body">
+<div class="two"><div><p>문제에 필요한 기능을 정의한 뒤에는 <b>어떤 자료 구조와 알고리즘이 적절한지 후보를 선정</b>한다. 이때 이전 단원에서 학습한 스택·큐·그래프·탐색·탐욕·분할정복·동적계획법 등을 문제 특성과 연결할 수 있다.</p>
+<p>예를 들어 대기열 처리는 큐, 연결 관계 탐색은 그래프와 BFS/DFS, 정렬된 데이터 검색은 이진 탐색이 후보가 될 수 있다. 중요한 것은 단순히 배운 알고리즘을 사용하는 것이 아니라 <b>왜 그 방법이 문제 구조에 적합한지 근거를 제시</b>하는 것이다.</p></div><div><div class="codebox">needs = {
+    &quot;대기 순서 관리&quot;: &quot;queue&quot;,
+    &quot;연결 관계 탐색&quot;: &quot;graph + BFS&quot;,
+    &quot;정렬 데이터 검색&quot;: &quot;binary search&quot;
+}
+
+for problem, method in needs.items():
+    print(problem, &quot;→&quot;, method)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 5 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 문제 기능에 맞는 자료 구조와 알고리즘을 선택할 수 있다.</label><label class="option"><input type="checkbox" value="2">② 선택한 방법이 적절한 이유를 설명하는 것이 중요하다.</label><label class="option"><input type="checkbox" value="3">③ 이전 단원에서 배운 개념을 프로젝트 문제 해결에 연결할 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 모든 프로젝트에는 반드시 같은 알고리즘을 사용해야 한다.</label><label class="option"><input type="checkbox" value="5">⑤ 자료 구조 선택은 문제의 데이터 특성과 무관하다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>프로젝트 설계에서는 문제 구조에 맞는 자료 구조·알고리즘 후보를 선정하고 선택 근거를 설명해야 한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 6. 프로젝트 계획서: 역할·일정·산출물·테스트 기준</b></div><div class="concept-body">
+<div class="two"><div><p>프로젝트 계획서는 단순한 주제 설명서가 아니라 <b>문제 정의, 해결 목표, 입력·출력, 핵심 기능, 자료 구조·알고리즘, 테스트 기준, 역할, 일정, 산출물</b>을 연결하는 실행 문서이다.</p>
+<p>좋은 계획서는 프로젝트가 진행될수록 수정될 수 있지만, 최소한 누가 무엇을 언제까지 만들고 어떤 기준으로 결과를 확인할지 알 수 있어야 한다.</p></div><div><div class="codebox">plan = {
+    &quot;problem&quot;: &quot;급식 대기시간 예측&quot;,
+    &quot;output&quot;: &quot;예상 대기시간&quot;,
+    &quot;algorithm&quot;: &quot;평균·조건 분류&quot;,
+    &quot;test&quot;: &quot;예측값과 실제값 비교&quot;,
+    &quot;owner&quot;: &quot;데이터팀&quot;,
+    &quot;deadline&quot;: &quot;9월 30일&quot;
+}
+
+for item in plan:
+    print(item, &quot;:&quot;, plan[item])</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 6 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 계획서에는 문제 상황과 해결 목표를 포함할 수 있다.</label><label class="option"><input type="checkbox" value="2">② 역할과 일정은 협업 프로젝트의 실행 가능성을 높인다.</label><label class="option"><input type="checkbox" value="3">③ 테스트 기준을 미리 정하면 결과 검증에 도움이 된다.</label><label class="option"><input type="checkbox" value="4">④ 계획서는 구현이 끝난 뒤에만 작성해야 한다.</label><label class="option"><input type="checkbox" value="5">⑤ 산출물과 일정은 프로젝트 설계와 관계없다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>프로젝트 계획서는 문제 정의에서 구현·검증·협업까지 이어지는 전체 수행 과정을 구체화한다.</div></div></div></div>
+<div class="notice"><b>목표지향 통합 과제 · 프로젝트 계획서 작성</b><br>
+과학·수학·환경·학교생활 중 한 영역에서 문제를 하나 선정하여 다음 8개 항목을 작성하자.
+<b>① 문제 상황 ② 해결 목표 ③ 입력 데이터 ④ 출력 결과 ⑤ 핵심 기능 ⑥ 사용할 자료 구조·알고리즘 ⑦ 테스트 기준 ⑧ 역할과 일정</b>.
+작성 후 짝과 계획서를 교환하여 “문제 정의가 구체적인가?”, “입력과 출력이 연결되는가?”, “알고리즘 선택 근거가 있는가?”, “테스트 가능한가?”의 네 기준으로 상호 점검한다.</div></section>
+
+<section id="ending"><h2>5. 학습 마무리 멘트</h2><div class="ending"><h3>프로젝트의 절반은 구현 전에 결정된다</h3>
+<p>오늘은 한 줄의 완성 코드보다 더 중요한 일을 했습니다. 해결할 문제를 정하고, 사용자를 생각하고, 입력과 출력을 정의하고, 기능과 알고리즘을 선택하고, 역할과 일정까지 계획했습니다.</p>
+<p>좋은 설계는 개발 과정에서 생기는 시행착오를 줄입니다. 무엇을 만들지 명확하면 어떤 라이브러리를 사용할지, 어떤 함수를 맡을지, 어떤 테스트가 필요한지도 자연스럽게 연결됩니다.</p>
+<p>다음 차시에서는 오늘 만든 계획서를 실제 코드로 옮깁니다. <b>오픈소스와 라이브러리를 올바르게 활용하고, 기능을 모듈로 나누어 협업 구현하는 방법</b>을 학습합니다. 오늘 작성한 계획서는 다음 차시 구현의 출발점이 됩니다.</p></div></section>
+
+<section id="diagnostic"><div class="quiz-head"><h2>6. 전체 학습내용 진단평가 OX 10문항</h2><div class="scorebox" id="diagScore">미채점</div></div><div id="diagQuestions"></div><div class="controls"><button class="btn primary" onclick="gradeDiagnostic()">진단평가 채점</button><button class="btn secondary" onclick="resetGroup('diagQuestions')">초기화</button></div></section>
+<section id="formative"><div class="quiz-head"><h2>7. 전체 학습내용 형성평가 10문항</h2><div class="scorebox" id="formScore">미채점</div></div><p class="small">각 문항은 보기 5개 중 옳은 것 3개를 모두 선택해야 정답이다.</p><div id="formQuestions"></div><div class="controls"><button class="btn primary" onclick="gradeFormative()">형성평가 채점</button><button class="btn secondary" onclick="resetGroup('formQuestions')">초기화</button></div></section>
+<section id="submit"><h2>8. 학번·이름 입력 및 결과 저장</h2><div class="userbox"><label><b>학번</b><input type="text" id="studentId" placeholder="예: 1101"></label><label><b>이름</b><input type="text" id="studentName" placeholder="예: 홍길동"></label></div><h3>전체 진행률</h3><div class="progress-wrap"><div class="progress" id="progress"></div></div><p id="progressText" class="small">0%</p><div class="controls"><button class="btn primary" onclick="finalSubmit()">전체 채점 및 TXT 저장</button><button class="btn secondary" onclick="window.print()">인쇄 / PDF</button></div><div class="result-panel" id="resultPanel"></div></section>
+</main><footer><p>2022 개정 고등학교 정보과학 2학기 2차고사 10차시 계획의 7차시 「실생활 문제 발견과 프로젝트 설계」를 중심으로 구성한 개념기반 목표지향 수업자료이다.</p></footer><button class="print" onclick="window.print()">인쇄 / PDF</button>
+
+<script>
+const diagData=[{"q": "정보과학 프로젝트는 실생활에서 해결할 가치가 있는 문제를 발견하는 것에서 시작할 수 있다.", "a": "O", "e": "실제 문제 상황을 관찰하고 정보과학적으로 해결 가능한 형태로 정의한다."}, {"q": "문제 발견 단계에서는 사용자가 누구인지 고려할 필요가 없다.", "a": "X", "e": "사용자와 상황을 구체화해야 실제 요구를 파악할 수 있다."}, {"q": "프로젝트의 입력과 출력은 요구 분석 단계에서 정의할 수 있다.", "a": "O", "e": "입력·처리·출력 구조는 프로젝트 범위를 구체화한다."}, {"q": "제한 조건은 프로젝트에서 반드시 무시해야 하는 요소이다.", "a": "X", "e": "시간, 개인정보, 장비, 데이터 등 제한 조건을 고려해야 한다."}, {"q": "해결 목표는 가능한 한 측정 가능하게 작성하는 것이 좋다.", "a": "O", "e": "성공 여부를 평가하기 쉬워진다."}, {"q": "기능 분해는 큰 프로젝트를 작은 기능 단위로 나누는 과정이다.", "a": "O", "e": "구현과 협업을 체계화하는 데 도움이 된다."}, {"q": "프로젝트의 모든 기능은 반드시 하나의 함수로 작성해야 한다.", "a": "X", "e": "기능별로 함수나 모듈을 나눌 수 있다."}, {"q": "자료 구조와 알고리즘은 문제 특성에 따라 후보를 선택할 수 있다.", "a": "O", "e": "대기열·탐색·연결 관계 등 문제 구조에 맞게 선택한다."}, {"q": "프로젝트 계획서에는 역할·일정·테스트 기준을 포함할 수 있다.", "a": "O", "e": "실행 계획과 검증 기준을 명확히 한다."}, {"q": "프로젝트 계획은 한 번 작성하면 어떤 상황에서도 수정할 수 없다.", "a": "X", "e": "수행 과정에서 필요에 따라 계획을 조정할 수 있다."}],formData=[{"q": "실생활 문제 발견에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 실제 불편함이나 비효율에서 출발할 수 있다.", "② 사용자가 겪는 상황을 구체적으로 관찰할 수 있다.", "③ 정보과학으로 해결 가능한 형태로 문제를 재구성할 수 있다.", "④ 문제는 반드시 이미 해결된 것이어야 한다.", "⑤ 사용자와 상황은 프로젝트와 무관하다."], "a": [1, 2, 3], "e": "실생활 문제를 정보과학 문제로 바꾸려면 사용자·상황·데이터·목표를 구체화해야 한다."}, {"q": "요구 분석의 핵심 요소로 옳은 것을 모두 고르시오.", "o": ["① 사용자", "② 입력 데이터", "③ 출력 결과와 제한 조건", "④ 프로젝트와 무관한 임의의 기능", "⑤ 사용자가 원하지 않는 기능을 무조건 추가하기"], "a": [1, 2, 3], "e": "사용자·입력·출력·제한 조건은 프로젝트 요구를 구체화하는 핵심이다."}, {"q": "좋은 해결 목표에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 구체적으로 작성한다.", "② 성공 여부를 판단할 기준을 포함할 수 있다.", "③ 테스트 가능한 형태로 정리할 수 있다.", "④ 가능한 한 모호하게 적는다.", "⑤ 구현 후에만 처음 정의한다."], "a": [1, 2, 3], "e": "명확한 목표는 설계와 테스트의 기준이 된다."}, {"q": "기능 분해에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 큰 기능을 작은 기능으로 나눈다.", "② 함수나 모듈 단위로 표현할 수 있다.", "③ 팀원별 역할 분담과 연결할 수 있다.", "④ 기능 간 입력·출력 관계는 고려하지 않는다.", "⑤ 모든 코드를 한 줄로 만드는 것이 목적이다."], "a": [1, 2, 3], "e": "기능 분해는 복잡한 프로젝트를 관리하고 협업하기 쉽게 만든다."}, {"q": "자료 구조·알고리즘 후보 선정에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 문제의 데이터 특성을 고려한다.", "② 필요한 기능과 알고리즘 특성을 연결한다.", "③ 선택 근거를 설명할 수 있어야 한다.", "④ 배운 알고리즘 중 아무거나 고르면 된다.", "⑤ 모든 문제에 큐만 사용해야 한다."], "a": [1, 2, 3], "e": "문제 구조와 기능에 맞는 방법을 선택하고 근거를 제시해야 한다."}, {"q": "다음 계획 항목에 대한 설명으로 옳은 것을 모두 고르시오.<pre>problem\ninput\noutput\nfunction\nalgorithm\ntest</pre>", "o": ["① 문제 상황을 명확히 할 수 있다.", "② 입력과 출력 관계를 정리할 수 있다.", "③ 구현 방법과 검증 기준을 연결할 수 있다.", "④ 이 항목들은 프로젝트 설계와 무관하다.", "⑤ 테스트는 프로젝트가 실패했을 때만 작성한다."], "a": [1, 2, 3], "e": "계획서의 주요 항목은 문제 정의부터 검증까지 연결한다."}, {"q": "협업 프로젝트의 역할·일정에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 담당 업무를 분명히 할 수 있다.", "② 마감 시점을 정할 수 있다.", "③ 팀 전체 진행 상황을 점검하는 데 도움이 된다.", "④ 역할은 모든 팀원이 같은 일을 하도록 만들기 위한 것이다.", "⑤ 일정은 산출물과 관계가 없다."], "a": [1, 2, 3], "e": "역할과 일정은 협업 프로젝트의 책임과 진행을 명확히 한다."}, {"q": "[12정과04-01]과 관련된 활동으로 옳은 것을 모두 고르시오.", "o": ["① 다양한 학문·생활 분야에서 문제를 관찰한다.", "② 컴퓨터과학으로 해결 가능한 문제를 발견한다.", "③ 문제의 가치와 해결 가능성을 검토한다.", "④ 구현 코드만 먼저 작성한다.", "⑤ 실생활 문제는 다루지 않는다."], "a": [1, 2, 3], "e": "04-01은 정보과학으로 해결할 수 있는 실생활 문제 발견에 초점을 둔다."}, {"q": "[12정과04-02]와 관련된 활동으로 옳은 것을 모두 고르시오.", "o": ["① 발견한 문제를 분석한다.", "② 프로젝트 수행 과정을 설계한다.", "③ 요구·기능·일정·테스트 기준을 계획한다.", "④ 문제 분석 없이 구현부터 시작하는 것만을 요구한다.", "⑤ 수행 과정은 설계할 필요가 없다."], "a": [1, 2, 3], "e": "04-02는 문제 분석과 프로젝트 수행 과정 설계를 다룬다."}, {"q": "7차시 학습을 종합한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 문제 상황을 발견한다.", "② 사용자·입력·출력·제한 조건을 정의한다.", "③ 기능·알고리즘·역할·일정·테스트 기준을 계획한다.", "④ 프로젝트 설계 없이 바로 최종 발표를 한다.", "⑤ 산출물은 계획서와 관계없다."], "a": [1, 2, 3], "e": "7차시는 문제 발견에서 구체적인 프로젝트 계획서 작성까지 연결하는 차시이다."}];
+function renderDiagnostic(){document.getElementById('diagQuestions').innerHTML=diagData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4><label class="option"><input type="radio" name="d${i}" value="O"> O</label><label class="option"><input type="radio" name="d${i}" value="X"> X</label><div class="feedback" id="df${i}"></div></div>`).join('');}
+function renderFormative(){document.getElementById('formQuestions').innerHTML=formData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4>${x.o.map((o,j)=>`<label class="option"><input type="checkbox" name="f${i}" value="${j+1}">${o}</label>`).join('')}<div class="feedback" id="ff${i}"></div></div>`).join('');}
+renderDiagnostic();renderFormative();
+document.querySelectorAll('.check-one').forEach(b=>b.addEventListener('click',()=>{let q=b.closest('.question'),a=q.dataset.answer.split(',').sort().join(','),s=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort().join(','),f=q.querySelector('.feedback');if(!f.dataset.original)f.dataset.original=f.innerHTML;f.className='feedback show '+(s===a?'correct':'wrong');f.innerHTML=(s===a?'<b>정답입니다.</b><br>':'<b>다시 확인하세요.</b><br>')+f.dataset.original;updateProgress();}));
+function gradeDiagnostic(){let s=0;diagData.forEach((x,i)=>{let c=document.querySelector(`input[name=d${i}]:checked`),ok=c&&c.value===x.a;if(ok)s++;let f=document.getElementById(`df${i}`);f.className='feedback show '+(ok?'correct':'wrong');f.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${x.a}<br>${x.e}`;});document.getElementById('diagScore').textContent=`${s}/10`;updateProgress();return s;}
+function gradeFormative(){let s=0;formData.forEach((x,i)=>{let c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b),a=[...x.a].sort((a,b)=>a-b),ok=JSON.stringify(c)===JSON.stringify(a);if(ok)s++;let f=document.getElementById(`ff${i}`);f.className='feedback show '+(ok?'correct':'wrong');f.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${a.map(n=>'①②③④⑤'[n-1]).join(', ')}<br>${x.e}`;});document.getElementById('formScore').textContent=`${s}/10`;updateProgress();return s;}
+function resetGroup(id){document.querySelectorAll(`#${id} input`).forEach(x=>x.checked=false);document.querySelectorAll(`#${id} .feedback`).forEach(x=>{x.className='feedback';x.innerHTML='';});if(id==='diagQuestions')document.getElementById('diagScore').textContent='미채점';if(id==='formQuestions')document.getElementById('formScore').textContent='미채점';updateProgress();}
+function updateProgress(){let d=0;document.querySelectorAll('.concept .question').forEach(q=>{if(q.querySelectorAll('input:checked').length)d++;});for(let i=0;i<10;i++){if(document.querySelector(`input[name=d${i}]:checked`))d++;if(document.querySelectorAll(`input[name=f${i}]:checked`).length)d++;}let p=Math.min(100,Math.round(d/26*100));document.getElementById('progress').style.width=p+'%';document.getElementById('progressText').textContent=`${p}% (${d}/26 항목 응답)`;}
+document.addEventListener('change',updateProgress);
+function finalSubmit(){let sid=document.getElementById('studentId').value.trim(),name=document.getElementById('studentName').value.trim();if(!sid||!name){alert('학번과 이름을 입력하세요.');return;}let d=gradeDiagnostic(),f=gradeFormative(),cs=0,reports=[];document.querySelectorAll('.concept .question').forEach((q,i)=>{let a=q.dataset.answer.split(',').sort(),s=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort(),ok=JSON.stringify(a)===JSON.stringify(s);if(ok)cs++;reports.push(`코드 확인 ${i+1}: ${ok?'정답':'오답'} / 응답 ${s.join(',')||'미응답'} / 정답 ${a.join(',')}`);});let raw=cs+d+f,total=26,score=Math.round(raw/total*100),now=new Date(),stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0');let lines=['정보과학 2차고사 7차시 개념기반 목표지향 학습 결과','주제: 실생활 문제 발견과 프로젝트 설계','성취기준: [12정과04-01], [12정과04-02]',`학번: ${sid}`,`이름: ${name}`,`점수: ${score}점 (${raw}/${total})`,`응시시각: ${now.toLocaleString('ko-KR')}`,'','[코드별 확인 문제]',...reports,'','[진단평가 OX]'];diagData.forEach((x,i)=>{let c=document.querySelector(`input[name=d${i}]:checked`)?.value||'미응답';lines.push(`${i+1}. ${c===x.a?'정답':'오답'} / 응답 ${c} / 정답 ${x.a} / 풀이: ${x.e}`);});lines.push('','[형성평가]');formData.forEach((x,i)=>{let c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b),a=[...x.a].sort((a,b)=>a-b),ok=JSON.stringify(c)===JSON.stringify(a);lines.push(`${i+1}. ${ok?'정답':'오답'} / 응답 ${c.join(',')||'미응답'} / 정답 ${a.join(',')} / 풀이: ${x.e}`);});let blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}),link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download=`${sid}_${name}_${score}점_2차고사7차시_${stamp}.txt`;link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);let p=document.getElementById('resultPanel');p.classList.add('show');p.innerHTML=`<h3>최종 결과</h3><p class="big">${score}점</p><p>코드 확인 ${cs}/6 · 진단평가 ${d}/10 · 형성평가 ${f}/10</p><p><b>${sid} ${name}</b> 학생의 결과 TXT 파일을 저장했습니다.</p>`;}
+</script></body></html>

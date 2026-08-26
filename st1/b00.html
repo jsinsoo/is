@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2022 개정 고등학교 정보과학 2학기 2차고사 10차시 연간 계획서</title>
+<style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --sky:#eaf4ff; --green:#1f8a70;
+  --mint:#eaf8f3; --orange:#f59e0b; --rose:#d94f70; --line:#d8e2ec;
+  --ink:#1d2733; --muted:#5c6b7a; --paper:#ffffff; --bg:#f4f7fb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.65}
+header{background:linear-gradient(135deg,#17324d,#2f6fb3);color:white;padding:46px 24px 38px}
+.header-inner{max-width:1280px;margin:auto}
+.kicker{font-size:.92rem;letter-spacing:.08em;opacity:.9}
+h1{font-size:clamp(2rem,4vw,3.3rem);line-height:1.22;margin:.35rem 0 .7rem}
+.subtitle{max-width:940px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+.badge{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:7px 12px;font-size:.88rem}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1280px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 14px}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);padding:8px 11px;border-radius:8px;font-weight:700;font-size:.9rem}
+nav a:hover{background:var(--sky)}
+main{max-width:1280px;margin:0 auto;padding:26px 18px 70px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:20px 0;box-shadow:0 6px 20px rgba(23,50,77,.05)}
+h2{color:var(--navy);font-size:1.65rem;margin:0 0 18px;border-left:7px solid var(--blue);padding-left:12px}
+h3{color:var(--navy);margin:22px 0 10px}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:15px 17px;border-radius:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:14px;padding:17px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.06rem;margin-bottom:5px}
+.metric{font-size:2rem;font-weight:800;color:var(--blue)}
+table{width:100%;border-collapse:collapse;margin:13px 0;font-size:.93rem}
+th,td{border:1px solid var(--line);padding:10px 11px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+.session{border:1px solid var(--line);border-radius:16px;margin:18px 0;overflow:hidden}
+.session-head{display:flex;justify-content:space-between;gap:12px;align-items:center;background:linear-gradient(90deg,#eaf4ff,#f8fbff);padding:15px 18px;border-bottom:1px solid var(--line)}
+.session-title{font-size:1.18rem;font-weight:800;color:var(--navy)}
+.session-meta{color:var(--muted);font-size:.88rem}
+.session-body{padding:17px 18px}
+.cols{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
+@media(max-width:850px){.cols{grid-template-columns:1fr}.session-head{align-items:flex-start;flex-direction:column}}
+ul{margin:7px 0;padding-left:21px}
+li{margin:3px 0}
+.code-list{background:#101a25;color:#eaf2f8;border-radius:12px;padding:14px 16px;font-family:Consolas,monospace;font-size:.88rem;white-space:pre-wrap;overflow-x:auto}
+.tag{display:inline-block;padding:3px 8px;border-radius:999px;font-size:.78rem;font-weight:700;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff1f4;color:#a63d5b}.t4{background:#fff7e5;color:#9a6500}
+.standard{border-left:5px solid var(--green);background:var(--mint);padding:12px 14px;border-radius:9px;margin:8px 0}
+.check{font-weight:700;color:var(--green)}
+.compact td,.compact th{padding:8px;font-size:.88rem}
+details{border:1px solid var(--line);border-radius:12px;margin:10px 0;background:#fff}
+summary{cursor:pointer;font-weight:800;color:var(--navy);padding:13px 15px}
+details>div{padding:0 15px 15px}
+footer{max-width:1280px;margin:0 auto 40px;padding:0 18px;color:#607080;font-size:.86rem}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:800;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+@media print{body{background:white}.print,nav{display:none}section{box-shadow:none;break-inside:avoid}.session{break-inside:avoid}header{padding:28px 18px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="kicker">2022 개정 교육과정 · 고등학교 정보과학 · 2학기 2차고사 이전</div>
+    <h1>Ⅲ 알고리즘 · Ⅳ 정보과학 프로젝트 · Ⅴ 종합·성찰<br>10차시 압축형 연간 계획서</h1>
+    <div class="subtitle">
+      2차고사 범위의 핵심 개념과 필수 코드를 10차시에 압축하여 학습하고,
+      알고리즘 설계에서 프로젝트 구현·검증·평가까지 자연스럽게 연결하도록 구성한 수업 계획이다.
+    </div>
+    <div class="badges">
+      <span class="badge">Ⅲ단원 6차시</span>
+      <span class="badge">Ⅳ단원 3차시</span>
+      <span class="badge">Ⅴ 종합·성찰 1차시</span>
+      <span class="badge">[12정과03-01~06] 전부 반영</span>
+      <span class="badge">[12정과04-01~05] 연계 반영</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#overview">운영 개요</a>
+    <a href="#standards">성취기준</a>
+    <a href="#map">10차시 배당</a>
+    <a href="#sessions">차시별 계획</a>
+    <a href="#coverage">전 개념·코드 점검표</a>
+    <a href="#assessment">평가 계획</a>
+    <a href="#review">마무리 운영</a>
+  </div>
+</nav>
+
+<main>
+<section id="overview">
+<h2>1. 운영 개요</h2>
+<div class="grid">
+  <div class="card"><strong>교과 학습</strong><div class="metric">10차시</div>Ⅲ 알고리즘 + Ⅳ 정보과학 프로젝트 + Ⅴ 종합·성찰</div>
+  <div class="card"><strong>알고리즘</strong><div class="metric">6차시</div>탐색·분할정복·동적계획·복잡도</div>
+  <div class="card"><strong>프로젝트</strong><div class="metric">3차시</div>문제 발견·설계·구현·검증</div>
+  <div class="card"><strong>종합·성찰</strong><div class="metric">1차시</div>전 범위 개념망·프로젝트 평가</div>
+</div>
+<div class="notice" style="margin-top:16px">
+  <strong>압축 운영 원칙:</strong> 1차고사 계획서와 동일하게 ‘핵심 개념 → 코드 실행·추적 → 변형 문제 → 형성평가’의 공통 구조로 운영한다.
+  단, Ⅳ단원은 실제 프로젝트 흐름을 살리기 위해 문제 발견 → 설계·구현 → 테스트·평가의 연속 과정으로 구성한다.
+  <br><br><strong>Ⅴ단원 처리:</strong> 업로드된 2022 개정 정보과학 자료에는 별도의 제5 교육과정 영역이나 [12정과05-…] 성취기준이 제시되어 있지 않으므로,
+  본 계획서의 Ⅴ는 학교 운영상 ‘2차고사 종합·프로젝트 완성 및 성찰’ 단원으로 편성하였다.
+</div>
+
+<h3>단원별 시간 배당</h3>
+<table>
+<tr><th>단원</th><th>학습 범위</th><th>차시</th><th>배당 근거</th></tr>
+<tr><td>Ⅲ. 알고리즘</td><td>상태 공간, 백트래킹·가지치기, 탐욕법, 분할정복, 동적계획법, 복잡도</td><td>1~6차시</td><td>탐색 2차시 + 문제 분해·최적화 3차시 + 성능 분석 1차시</td></tr>
+<tr><td>Ⅳ. 정보과학 프로젝트</td><td>문제 발견, 요구 분석, 오픈소스 활용, 협업 구현, 테스트·디버깅, 기능적·윤리적 평가</td><td>7~9차시</td><td>기획 1차시 + 구현 1차시 + 검증·평가 1차시</td></tr>
+<tr><td>Ⅴ. 종합·성찰</td><td>Ⅲ·Ⅳ 통합 정리, 프로젝트 완성, 2차고사 대비</td><td>10차시</td><td>개념·코드·서술형·프로젝트 성찰 통합</td></tr>
+</table>
+</section>
+
+<section id="standards">
+<h2>2. 2022 고등학교 정보과학 성취기준 반영</h2>
+<div class="standard"><b>[12정과03-01]</b> 문제를 상태 공간으로 표현하고 탐색을 기반으로 해결하는 알고리즘을 설계한다.</div>
+<div class="standard"><b>[12정과03-02]</b> 문제의 상태 공간 일부를 배제하는 알고리즘을 설계하고 기존 탐색 기반 알고리즘과 비교·분석한다.</div>
+<div class="standard"><b>[12정과03-03]</b> 문제를 부분 문제로 분해하고 부분 문제 사이의 관계를 파악하여 해결 전략을 설계한다.</div>
+<div class="standard"><b>[12정과03-04]</b> 분할정복의 원리를 이해하고 이를 활용하여 문제를 해결하는 프로그램을 작성한다.</div>
+<div class="standard"><b>[12정과03-05]</b> 동적계획법의 원리를 이해하고 중복 부분 문제를 활용하여 효율적인 프로그램을 작성한다.</div>
+<div class="standard"><b>[12정과03-06]</b> 알고리즘의 시간 복잡도를 분석하고 여러 해결 방법의 효율성을 비교한다.</div>
+<div class="standard"><b>[12정과04-01]</b> 다양한 학문 분야에서 컴퓨터과학의 기본 개념과 원리를 바탕으로 해결할 수 있는 실생활의 문제를 발견한다.</div>
+<div class="standard"><b>[12정과04-02]</b> 발견한 문제를 분석하고 문제를 해결하기 위한 프로젝트 수행 과정을 설계한다.</div>
+<div class="standard"><b>[12정과04-03]</b> 다양한 오픈 소스 및 라이브러리를 활용하여 협력적으로 문제를 해결하기 위한 프로그램을 작성한다.</div>
+<div class="standard"><b>[12정과04-04]</b> 완성도 높은 프로그램을 구현하기 위하여 테스트와 디버깅 과정을 통해 검증한다.</div>
+<div class="standard"><b>[12정과04-05]</b> 프로젝트 산출물을 기능적·윤리적 관점에서 평가하고 개선한다.</div>
+
+<h3>성취기준-차시 연계표</h3>
+<table class="compact">
+<tr><th>성취기준</th><th>주 학습 차시</th><th>보강·재확인 차시</th><th>최종 확인 방법</th></tr>
+<tr><td>[12정과03-01]</td><td>1</td><td>2, 10</td><td>상태 공간 표현과 완전 탐색 설계</td></tr>
+<tr><td>[12정과03-02]</td><td>2</td><td>6, 10</td><td>가지치기 조건과 탐색 횟수 비교</td></tr>
+<tr><td>[12정과03-03]</td><td>3</td><td>4, 5</td><td>부분 문제 정의와 관계 표현</td></tr>
+<tr><td>[12정과03-04]</td><td>4</td><td>6, 10</td><td>분할·해결·결합 코드 구현</td></tr>
+<tr><td>[12정과03-05]</td><td>5</td><td>6, 10</td><td>상태 정의·점화식·DP 테이블 작성</td></tr>
+<tr><td>[12정과03-06]</td><td>6</td><td>10</td><td>빅오 분석과 실행 시간 비교</td></tr>
+<tr><td>[12정과04-01~02]</td><td>7</td><td>10</td><td>문제 정의서·프로젝트 계획서</td></tr>
+<tr><td>[12정과04-03]</td><td>8</td><td>9</td><td>라이브러리 활용 기능 시제품</td></tr>
+<tr><td>[12정과04-04~05]</td><td>9</td><td>10</td><td>테스트 보고서·윤리 점검·개선본</td></tr>
+</table>
+</section>
+
+<section id="map">
+<h2>3. 10차시 전체 배당표</h2>
+<table>
+<tr><th>차시</th><th>대단원·중단원</th><th>핵심 개념</th><th>필수 코드·산출물</th><th>성취기준</th></tr>
+<tr><td>1</td><td>Ⅲ-01 탐색 알고리즘</td><td>상태 공간, 완전 탐색, 후보 생성, 목표 상태</td><td>순열·조합 또는 완전 탐색 코드</td><td>03-01</td></tr>
+<tr><td>2</td><td>Ⅲ-01 백트래킹·가지치기</td><td>선택, 재귀, 되돌리기, 유망성 검사, 탐색 배제</td><td>N-Queen 또는 부분집합 백트래킹</td><td>03-02</td></tr>
+<tr><td>3</td><td>Ⅲ-02 탐욕법·문제 분해</td><td>지역 최적 선택, 반례, 부분 문제 관계</td><td>동전 교환·회의실 배정 비교 실험</td><td>03-02,03</td></tr>
+<tr><td>4</td><td>Ⅲ-03 분할정복법</td><td>분할, 해결, 결합, 재귀적 문제 분해</td><td>병합 정렬 또는 이진 탐색</td><td>03-04</td></tr>
+<tr><td>5</td><td>Ⅲ-04 동적계획법</td><td>중복 부분 문제, 최적 부분 구조, 메모이제이션·테이블</td><td>피보나치 DP + 배낭/계단 오르기</td><td>03-05</td></tr>
+<tr><td>6</td><td>Ⅲ 통합</td><td>시간 복잡도, 빅오, 실행 시간, 알고리즘 선택</td><td>O(1)~O(n²) 비교 + time 측정</td><td>03-01~06</td></tr>
+<tr><td>7</td><td>Ⅳ-01 문제 발견·설계</td><td>실생활 문제, 사용자, 입력·출력, 제한 조건, 기능 분해</td><td>주제 제안서 + 프로젝트 계획서</td><td>04-01,02</td></tr>
+<tr><td>8</td><td>Ⅳ-02 구현·협업</td><td>오픈소스·라이브러리, 모듈화, 인터페이스, 코드 통합</td><td>핵심 기능 시제품 + 개발 일지</td><td>04-03</td></tr>
+<tr><td>9</td><td>Ⅳ-03 테스트·평가</td><td>정상·경계·예외 테스트, 디버깅, 개인정보·편향·저작권</td><td>테스트 보고서 + 개선본</td><td>04-04,05</td></tr>
+<tr><td>10</td><td>Ⅴ 종합·성찰</td><td>Ⅲ·Ⅳ 전 범위 개념망, 코드 추적, 알고리즘 선택, 프로젝트 성찰</td><td>전 범위 핵심 코드 + 최종 성찰지</td><td>03-01~06, 04-01~05</td></tr>
+</table>
+</section>
+
+<section id="sessions">
+<h2>4. 차시별 상세 교수·학습 계획</h2>
+
+<div class="session"><div class="session-head"><div class="session-title">1차시 · 상태 공간과 완전 탐색</div><div class="session-meta">Ⅲ-01 탐색의 기초</div></div><div class="session-body"><div class="cols"><div><h3>개념</h3><ul><li>문제를 상태·연산·목표 상태로 표현</li><li>가능한 모든 후보를 확인하는 완전 탐색</li><li>재귀·반복을 이용한 후보 생성</li><li>정답 조건과 종료 조건 구분</li></ul><h3>수업 활동</h3><ul><li>작은 입력에서 상태 공간 직접 그리기</li><li>순열·조합·부분집합 중 한 문제를 완전 탐색으로 구현</li></ul></div><div><h3>필수 코드</h3><div class="code-list">def binary(s, n):
+    if len(s) == n:
+        print(s)
+        return
+    binary(s + "0", n)
+    binary(s + "1", n)
+
+binary("", 3)</div><p><span class="tag t1">상태 공간</span><span class="tag t2">완전 탐색</span><span class="tag t4">후보 생성</span></p><b>형성평가:</b> 상태 수 계산 + 종료 조건 찾기</div></div></div></div>
+
+<div class="session"><div class="session-head"><div class="session-title">2차시 · 백트래킹과 가지치기</div><div class="session-meta">Ⅲ-01 탐색 개선</div></div><div class="session-body"><div class="cols"><div><h3>개념</h3><ul><li>선택 → 재귀 호출 → 되돌리기</li><li>유망하지 않은 상태의 조기 배제</li><li>완전 탐색과 탐색 노드 수 비교</li><li>N-Queen·부분합 문제의 가지치기 조건</li></ul></div><div><div class="code-list">def subset_sum(nums, target, i=0, total=0):
+    if total == target:
+        return True
+    if i == len(nums) or total > target:
+        return False
+    return (subset_sum(nums, target, i+1, total+nums[i])
+            or subset_sum(nums, target, i+1, total))</div><b>형성평가:</b> 어떤 조건이 탐색 공간을 줄이는지 설명</div></div></div></div>
+
+<div class="session"><div class="session-head"><div class="session-title">3차시 · 탐욕법과 문제 분해</div><div class="session-meta">Ⅲ-02 선택 전략</div></div><div class="session-body"><div class="cols"><div><h3>개념</h3><ul><li>현재 단계에서 가장 좋아 보이는 선택</li><li>지역 최적과 전체 최적의 차이</li><li>탐욕법이 항상 정답을 보장하지 않는 이유</li><li>큰 문제를 부분 문제로 나누고 관계 발견</li></ul><h3>활동</h3><ul><li>동전 교환의 성공 사례와 반례 비교</li><li>회의실 배정에서 종료 시간이 빠른 순 선택 실험</li></ul></div><div><div class="code-list">def coin_greedy(amount, coins):
+    result = []
+    for coin in sorted(coins, reverse=True):
+        while amount >= coin:
+            amount -= coin
+            result.append(coin)
+    return result, amount</div><b>형성평가:</b> 탐욕 선택이 실패하는 동전 체계 만들기</div></div></div></div>
+
+<div class="session"><div class="session-head"><div class="session-title">4차시 · 분할정복법</div><div class="session-meta">Ⅲ-03 분할·해결·결합</div></div><div class="session-body"><div class="cols"><div><h3>개념</h3><ul><li>문제를 더 작은 독립 부분 문제로 분할</li><li>부분 문제를 재귀적으로 해결</li><li>부분 결과를 결합하여 전체 결과 생성</li><li>이진 탐색·병합 정렬의 구조 비교</li></ul></div><div><div class="code-list">def binary_search(a, target, left, right):
+    if left > right:
+        return -1
+    mid = (left + right) // 2
+    if a[mid] == target:
+        return mid
+    if target < a[mid]:
+        return binary_search(a, target, left, mid - 1)
+    return binary_search(a, target, mid + 1, right)</div><b>형성평가:</b> 입력 크기가 절반으로 줄어드는 과정 추적</div></div></div></div>
+
+<div class="session"><div class="session-head"><div class="session-title">5차시 · 동적계획법과 메모이제이션</div><div class="session-meta">Ⅲ-04 중복 부분 문제</div></div><div class="session-body"><div class="cols"><div><h3>개념</h3><ul><li>중복 부분 문제와 최적 부분 구조</li><li>탑다운 메모이제이션과 바텀업 테이블</li><li>재귀 피보나치의 중복 계산 제거</li><li>상태 정의와 점화식 설계</li></ul></div><div><div class="code-list">def fib_dp(n):
+    if n <= 1:
+        return n
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    for i in range(2, n + 1):
+        dp[i] = dp[i-1] + dp[i-2]
+    return dp[n]</div><b>형성평가:</b> 재귀 호출 트리와 DP 테이블 비교</div></div></div></div>
+
+<div class="session"><div class="session-head"><div class="session-title">6차시 · 알고리즘 복잡도와 Ⅲ단원 통합</div><div class="session-meta">Ⅲ 전체 정리</div></div><div class="session-body"><div class="cols"><div><h3>개념</h3><ul><li>입력 크기 n과 연산 횟수의 관계</li><li>O(1), O(log n), O(n), O(n log n), O(n²)</li><li>이론적 시간 복잡도와 실제 실행 시간</li><li>문제 특성에 맞는 탐색·탐욕·분할정복·DP 선택</li></ul></div><div><div class="code-list">import time
+
+def linear_sum(n):
+    s = 0
+    for i in range(n):
+        s += i
+    return s
+
+start = time.perf_counter()
+linear_sum(100000)
+print(time.perf_counter() - start)</div><b>형성평가:</b> 코드별 빅오 판단 + 알고리즘 선택 근거 서술</div></div></div></div>
+
+<div class="session"><div class="session-head"><div class="session-title">7차시 · 실생활 문제 발견과 프로젝트 설계</div><div class="session-meta">Ⅳ-01~02</div></div><div class="session-body"><div class="cols"><div><h3>개념·활동</h3><ul><li>과학·수학·환경·학교생활 문제 관찰</li><li>사용자·입력·출력·제한 조건 정의</li><li>기능 분해와 알고리즘 후보 선정</li><li>역할·일정·산출물 정의</li></ul></div><div><h3>필수 산출물</h3><div class="code-list">[프로젝트 계획서]
+1. 문제 상황
+2. 해결 목표
+3. 입력 데이터
+4. 출력 결과
+5. 핵심 기능
+6. 사용할 자료 구조/알고리즘
+7. 테스트 기준
+8. 역할과 일정</div><b>형성평가:</b> 문제 정의가 구체적인지 상호 점검</div></div></div></div>
+
+<div class="session"><div class="session-head"><div class="session-title">8차시 · 오픈소스·라이브러리 활용과 협업 구현</div><div class="session-meta">Ⅳ-03</div></div><div class="session-body"><div class="cols"><div><h3>개념·활동</h3><ul><li>표준 라이브러리와 외부 라이브러리 역할</li><li>라이선스·출처 표시·사용 조건 확인</li><li>기능을 함수·모듈 단위로 분리</li><li>역할별 코드 작성 후 인터페이스 통합</li></ul></div><div><div class="code-list">def load_data():
+    pass
+
+def process_data(data):
+    pass
+
+def show_result(result):
+    pass
+
+# 팀별 모듈을 같은 입출력 규칙으로 연결</div><b>형성평가:</b> 모듈별 입력·출력 명세 작성</div></div></div></div>
+
+<div class="session"><div class="session-head"><div class="session-title">9차시 · 테스트·디버깅과 기능적·윤리적 평가</div><div class="session-meta">Ⅳ-04~05</div></div><div class="session-body"><div class="cols"><div><h3>개념</h3><ul><li>정상 입력·경계값·예외 입력 테스트</li><li>오류 재현 → 원인 분석 → 수정 → 재검증</li><li>정확성·효율성·사용성 평가</li><li>개인정보·편향·저작권·라이선스 점검</li></ul></div><div><div class="code-list">tests = [
+    ("normal", 10),
+    ("boundary", 0),
+    ("exception", -1)
+]
+
+for name, value in tests:
+    print(name, value)</div><b>형성평가:</b> 테스트 사례 5개와 예상 결과 작성</div></div></div></div>
+
+<div class="session"><div class="session-head"><div class="session-title">10차시 · Ⅴ 종합·성찰 및 2차고사 전 범위 정리</div><div class="session-meta">Ⅲ·Ⅳ 통합</div></div><div class="session-body"><div class="cols"><div><h3>종합 활동</h3><ul><li>완전 탐색 → 가지치기 → 탐욕 → 분할정복 → DP 개념망 작성</li><li>각 알고리즘의 적용 조건·장단점 비교</li><li>프로젝트 문제 정의 → 설계 → 구현 → 테스트 → 개선 흐름 정리</li><li>코드 추적·빅오·서술형 문제 통합 풀이</li><li>개인 프로젝트의 개선점과 정보윤리 성찰 작성</li></ul></div><div><h3>최종 점검</h3><div class="code-list">[2차고사 자기 점검]
+□ 상태 공간을 설명할 수 있다.
+□ 가지치기 조건을 설계할 수 있다.
+□ 탐욕법의 반례를 찾을 수 있다.
+□ 분할정복 구조를 코드에서 찾을 수 있다.
+□ DP 상태와 점화식을 정의할 수 있다.
+□ 빅오로 효율성을 비교할 수 있다.
+□ 프로젝트 테스트·윤리 평가를 설명할 수 있다.</div><b>형성평가:</b> 전 범위 핵심 문항 + 프로젝트 성찰지</div></div></div></div>
+</section>
+
+<section id="coverage">
+<h2>5. 2차고사 전 개념·필수 코드 누락 방지 점검표</h2>
+<details open><summary>Ⅲ. 알고리즘</summary><div><table class="compact">
+<tr><th>교과 항목</th><th>개념 요소</th><th>코드·산출물 요소</th><th>차시</th></tr>
+<tr><td>상태 공간·완전 탐색</td><td>상태, 연산, 목표, 후보</td><td>순열·조합·부분집합 생성</td><td>1</td></tr>
+<tr><td>백트래킹</td><td>선택, 재귀, 되돌리기</td><td>N-Queen/부분합</td><td>2</td></tr>
+<tr><td>가지치기</td><td>유망성 검사, 상태 배제</td><td>탐색 노드 수 비교</td><td>2</td></tr>
+<tr><td>탐욕법</td><td>지역 최적, 전체 최적, 반례</td><td>동전·회의실 배정</td><td>3</td></tr>
+<tr><td>문제 분해</td><td>부분 문제, 관계 표현</td><td>관계도·점화식 초안</td><td>3~5</td></tr>
+<tr><td>분할정복</td><td>분할·해결·결합</td><td>이진 탐색·병합 정렬</td><td>4</td></tr>
+<tr><td>동적계획법</td><td>중복 부분 문제, 최적 부분 구조</td><td>메모이제이션·DP 테이블</td><td>5</td></tr>
+<tr><td>시간 복잡도</td><td>빅오, 입력 크기, 연산 횟수</td><td>복잡도 비교·시간 측정</td><td>6</td></tr>
+</table></div></details>
+<details open><summary>Ⅳ. 정보과학 프로젝트</summary><div><table class="compact">
+<tr><th>교과 항목</th><th>개념 요소</th><th>산출물</th><th>차시</th></tr>
+<tr><td>문제 발견</td><td>실생활 문제, 해결 가능성</td><td>주제 제안서</td><td>7</td></tr>
+<tr><td>요구 분석·설계</td><td>사용자, 입력, 출력, 제한, 기능 분해</td><td>프로젝트 계획서</td><td>7</td></tr>
+<tr><td>오픈소스·라이브러리</td><td>라이선스, 출처, 활용 목적</td><td>활용 목록</td><td>8</td></tr>
+<tr><td>협업 구현</td><td>모듈화, 인터페이스, 코드 통합</td><td>기능 시제품·개발 일지</td><td>8</td></tr>
+<tr><td>테스트·디버깅</td><td>정상·경계·예외, 오류 수정</td><td>테스트 보고서</td><td>9</td></tr>
+<tr><td>기능·윤리 평가</td><td>정확성, 효율성, 개인정보, 편향, 저작권</td><td>평가표·개선본</td><td>9</td></tr>
+</table></div></details>
+<details open><summary>Ⅴ. 종합·성찰(학교 운영 단원)</summary><div><table class="compact">
+<tr><th>점검 영역</th><th>핵심 요소</th><th>확인 방법</th><th>차시</th></tr>
+<tr><td>알고리즘 통합</td><td>탐색·탐욕·분할정복·DP·복잡도 연결</td><td>개념망·서술형</td><td>10</td></tr>
+<tr><td>프로젝트 통합</td><td>문제 발견부터 개선까지 전체 흐름</td><td>최종 산출물·성찰지</td><td>10</td></tr>
+<tr><td>2차고사 대비</td><td>개념, 코드 추적, 알고리즘 선택 근거</td><td>통합 형성평가</td><td>10</td></tr>
+</table></div></details>
+</section>
+
+<section id="assessment">
+<h2>6. 평가 계획</h2>
+<div class="grid">
+<div class="card"><strong>형성평가</strong><div class="metric">매 차시</div>개념 확인, 코드 추적, 알고리즘 선택 근거, 짧은 구현 문제</div>
+<div class="card"><strong>학습 산출물</strong><div class="metric">과정 중심</div>상태 공간 도식, 탐색 비교표, DP 테이블, 프로젝트 계획서, 테스트 보고서</div>
+<div class="card"><strong>2차고사</strong><div class="metric">Ⅲ·Ⅳ 중심</div>핵심 개념·코드 해석·복잡도·프로젝트 과정과 윤리적 평가</div>
+<div class="card"><strong>수행 연계</strong><div class="metric">통합</div>알고리즘 설계와 프로젝트 문제 해결 과정을 실제 코드와 설명으로 확인</div>
+</div>
+<h3>권장 문항 구성</h3>
+<table>
+<tr><th>평가 요소</th><th>권장 비중</th><th>예시</th></tr>
+<tr><td>핵심 개념 이해</td><td>25%</td><td>탐색·탐욕·분할정복·DP 원리 비교</td></tr>
+<tr><td>코드 실행·추적</td><td>30%</td><td>백트래킹 호출, DP 테이블, 재귀 분할 코드</td></tr>
+<tr><td>알고리즘 분석·선택</td><td>25%</td><td>빅오 분석, 반례, 적용 조건 설명</td></tr>
+<tr><td>프로젝트·윤리</td><td>20%</td><td>테스트 사례 설계, 개인정보·편향·저작권 판단</td></tr>
+</table>
+</section>
+
+<section id="review">
+<h2>7. 마무리 운영안</h2>
+<div class="grid">
+<div class="card"><strong>개념 정리</strong><ul><li>Ⅲ·Ⅳ 전체 개념 지도 작성</li><li>성취기준별 핵심 문제 1개씩 해결</li><li>알고리즘 선택 기준 비교표 완성</li><li>오답 유형별 보충: 종료·가지치기·상태 정의·복잡도</li></ul></div>
+<div class="card"><strong>프로젝트 성찰</strong><ul><li>문제 정의의 적절성 재검토</li><li>알고리즘 선택 근거 설명</li><li>테스트와 디버깅 기록 확인</li><li>개인정보·편향·저작권 점검</li><li>다음 버전 개선 아이디어 작성</li></ul></div>
+</div>
+</section>
+</main>
+<footer>
+<p><b>자료 구성 근거:</b> 업로드한 2022 개정 고등학교 정보과학 34차시 연간수업계획서의 Ⅲ 알고리즘(12정과03-01~06), Ⅳ 정보과학 프로젝트(12정과04-01~05) 내용과 2학기 1차고사 10차시 계획서의 화면 구성·압축 운영 방식을 바탕으로 재구성함. 별도의 12정과05 성취기준은 업로드 자료에서 확인되지 않아 Ⅴ는 학교 운영상 종합·성찰 단원으로 표기함.</p>
+</footer>
+<button class="print" onclick="window.print()">인쇄 / PDF</button>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html><html lang='ko'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>정보과학 2차고사 2차시 개념기반 목표지향 수업지도안</title><style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --sky:#eaf4ff; --green:#1f8a70;
+  --mint:#eaf8f3; --orange:#f59e0b; --rose:#cf4568; --purple:#7656a7;
+  --ink:#17212b; --muted:#5c6978; --line:#d8e2ec; --paper:#fff; --bg:#f4f7fb;
+  --ok:#127a50; --bad:#bc2f3e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#132b42,#2f6fb3 62%,#4796dc);color:#fff;padding:42px 20px}
+.header-inner{max-width:1320px;margin:auto}
+.kicker{font-size:.9rem;letter-spacing:.08em;opacity:.88}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.2;margin:.35rem 0 .8rem}
+.subtitle{max-width:980px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1320px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+nav a{text-decoration:none;color:var(--navy);font-weight:800;white-space:nowrap;padding:8px 10px;border-radius:8px;font-size:.89rem}
+nav a:hover{background:var(--sky)}
+main{max-width:1320px;margin:auto;padding:22px 16px 76px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:25px;margin:19px 0;box-shadow:0 7px 22px rgba(23,50,77,.055)}
+h2{color:var(--navy);font-size:1.65rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}
+h3{color:var(--navy);margin:20px 0 10px}
+h4{color:#254d72;margin:16px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:13px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.04rem;margin-bottom:5px}
+.big{font-size:1.9rem;font-weight:900;color:var(--blue)}
+.story{background:linear-gradient(135deg,#fff9ea,#fff);border-left:7px solid var(--orange);padding:20px;border-radius:14px}
+.ending{background:linear-gradient(135deg,#f5efff,#fff);border-left:7px solid var(--purple);padding:20px;border-radius:14px}
+.standard{background:var(--mint);border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+code{font-family:Consolas,"D2Coding",monospace}
+pre{white-space:pre-wrap}
+.codebox{background:#111c27;color:#eaf2f8;border-radius:13px;padding:15px 17px;overflow:auto;font-family:Consolas,"D2Coding",monospace;font-size:.91rem;line-height:1.55;white-space:pre}
+.concept{border:1px solid var(--line);border-radius:16px;margin:18px 0;overflow:hidden}
+.concept-head{background:linear-gradient(90deg,#eaf4ff,#f9fcff);padding:15px 18px;border-bottom:1px solid var(--line)}
+.concept-head b{color:var(--navy);font-size:1.18rem}
+.concept-body{padding:18px}
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:800;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff0f4;color:#a63d5b}.t4{background:#fff6df;color:#8a5b00}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+.question h4{margin-top:0}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer;background:#fff}
+.option:hover{background:#f5f9fd}
+.option input{margin-right:8px;transform:scale(1.1)}
+.feedback{display:none;margin-top:11px;padding:12px;border-radius:9px;background:#f6f8fb}
+.feedback.show{display:block}
+.correct{border-left:5px solid var(--ok)}
+.wrong{border-left:5px solid var(--bad)}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+.primary{background:var(--blue);color:#fff}.secondary{background:#eaf0f6;color:var(--navy)}
+.danger{background:var(--rose);color:#fff}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.quiz-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.scorebox{background:#edf7ff;border:1px solid #b9d8f0;border-radius:12px;padding:12px 15px;font-weight:800;color:var(--navy)}
+.userbox{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input[type=text]{width:100%;padding:11px;border:1px solid #cfdbe6;border-radius:9px;font-size:1rem}
+.progress-wrap{height:12px;background:#e9eef3;border-radius:999px;overflow:hidden}
+.progress{height:100%;background:linear-gradient(90deg,#2f6fb3,#1f8a70);width:0%;transition:.3s}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.small{font-size:.86rem;color:var(--muted)}
+.result-panel{display:none;border:2px solid #9ac9ea;background:#f6fbff;border-radius:15px;padding:18px;margin-top:18px}
+.result-panel.show{display:block}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 7px 24px rgba(0,0,0,.2)}
+footer{max-width:1320px;margin:0 auto 40px;padding:0 18px;color:#5e6c78;font-size:.86rem}
+@media(max-width:650px){.userbox{grid-template-columns:1fr}.quiz-head{align-items:flex-start;flex-direction:column}}
+@media print{nav,.print,.controls button{display:none!important}body{background:white}section{box-shadow:none;break-inside:avoid}.question{break-inside:avoid}}
+</style></head>
+<body>
+<header><div class="header-inner">
+<div class="kicker">2022 개정 고등학교 정보과학 · Ⅲ 알고리즘 · 01 백트래킹·가지치기</div>
+<h1>2차시 개념기반 목표지향 수업지도안</h1>
+<div class="subtitle">완전 탐색을 기준으로 선택·재귀·되돌리기와 유망성 검사를 적용하여 불필요한 상태를 배제하고, 탐색 효율을 비교·분석한다.</div>
+<div class="badges">
+<span class="badge">성취기준 [12정과03-02]</span><span class="badge">백트래킹·가지치기</span>
+<span class="badge">개념별 코드 6개</span><span class="badge">코드별 5지선다 6문항</span>
+<span class="badge">진단 OX 10문항</span><span class="badge">형성평가 10문항</span><span class="badge">자동채점·TXT 저장</span>
+</div></div></header>
+
+<nav><div class="nav-inner">
+<a href="#identity">수업 개요</a><a href="#start">학습 시작</a><a href="#goals">목표</a>
+<a href="#concepts">개념·코드</a><a href="#ending">학습 마무리</a>
+<a href="#diagnostic">진단평가</a><a href="#formative">형성평가</a><a href="#submit">제출·저장</a>
+</div></nav>
+
+<main>
+<section id="identity"><h2>1. 수업 개요와 성취수준</h2>
+<div class="standard"><b>성취기준 [12정과03-02]</b><br>문제의 상태 공간 일부를 배제하는 알고리즘을 설계하고 기존 탐색 기반 알고리즘과 비교·분석한다.</div>
+<h3>성취수준</h3>
+<table><tr><th>수준</th><th>성취 특성</th></tr>
+<tr><td>A</td><td>상태 공간에서 유망하지 않은 상태를 판별하는 조건을 논리적으로 설계하고 백트래킹 프로그램을 구현하며, 완전 탐색과 방문 상태 수·실행 과정·효율성을 비교하여 개선 효과와 조건의 타당성을 설명한다.</td></tr>
+<tr><td>B</td><td>선택·재귀·되돌리기의 백트래킹 구조를 설명하고 가지치기 조건을 적용한 프로그램을 작성하며 완전 탐색과의 차이를 비교한다.</td></tr>
+<tr><td>C</td><td>주어진 백트래킹 코드에서 선택, 재귀 호출, 상태 복원, 가지치기 조건을 찾아 실행 과정을 추적한다.</td></tr>
+<tr><td>D</td><td>안내에 따라 백트래킹 코드의 일부를 완성하고 유망하지 않은 상태가 탐색에서 제외됨을 확인한다.</td></tr>
+<tr><td>E</td><td>완전 탐색과 가지치기된 탐색의 실행 결과를 관찰하고 탐색 상태 수가 달라질 수 있음을 확인한다.</td></tr></table>
+<div class="grid">
+<div class="card"><strong>핵심 질문 1</strong>모든 후보를 끝까지 조사하지 않고도 정답을 놓치지 않으려면 어떤 상태를 배제할 수 있는가?</div>
+<div class="card"><strong>핵심 질문 2</strong>재귀 호출 후 왜 이전 선택을 되돌려야 하는가?</div>
+<div class="card"><strong>핵심 질문 3</strong>가지치기가 실제로 탐색을 개선했음을 어떤 자료로 설명할 수 있는가?</div>
+</div></section>
+
+<section id="start"><h2>2. 학습 시작 멘트</h2>
+<div class="story"><h3>미로에서 막다른 길을 만난 탐사 로봇</h3>
+<p>탐사 로봇이 미로의 모든 길을 끝까지 확인한다면 언젠가는 출구를 찾을 수 있습니다. 하지만 이미 벽으로 막힌 길, 같은 장소로 되돌아가는 길, 목표와 연결될 수 없는 길까지 계속 조사한다면 많은 시간이 낭비됩니다.</p>
+<p>사람은 막다른 길을 만나면 출발점까지 처음부터 돌아가지 않습니다. <b>가장 최근의 갈림길로 되돌아가 아직 시도하지 않은 다른 길을 선택합니다.</b> 그리고 어떤 길이 분명히 실패할 것이라고 판단되면 그 길 아래는 더 살펴보지 않습니다.</p>
+<p>프로그래밍에서는 이러한 사고를 <b>백트래킹</b>과 <b>가지치기</b>로 표현합니다. 오늘은 1차시의 완전 탐색을 기준으로, 정답 가능성이 없는 상태를 어떻게 판별하고 얼마나 많은 탐색을 줄일 수 있는지 코드로 확인합니다.</p>
+</div></section>
+
+<section id="goals"><h2>3. 학습목표와 학습내용</h2>
+<h3>학습목표</h3><ol>
+<li>백트래킹의 선택 → 재귀 호출 → 되돌리기 구조를 설명할 수 있다.</li>
+<li>상태를 변경한 뒤 재귀 호출 후 원래 상태로 복원하는 이유를 설명할 수 있다.</li>
+<li>문제 조건을 이용하여 유망하지 않은 상태를 판별하는 가지치기 조건을 설계할 수 있다.</li>
+<li>부분합 또는 N-Queen 문제를 백트래킹으로 구현할 수 있다.</li>
+<li>완전 탐색과 가지치기 탐색의 방문 상태 수를 비교하여 개선 효과를 분석할 수 있다.</li>
+</ol>
+<h3>학습내용</h3><table>
+<tr><th>개념 축</th><th>내용</th><th>학습 산출물</th></tr>
+<tr><td>백트래킹 구조</td><td>선택, 재귀 호출, 되돌리기</td><td>순열 백트래킹 코드</td></tr>
+<tr><td>상태 복원</td><td>append/pop, 선택/비선택</td><td>부분집합 생성 코드</td></tr>
+<tr><td>가지치기</td><td>유망성 검사, 조기 종료, 안전한 배제 조건</td><td>부분합 가지치기</td></tr>
+<tr><td>부분합 탐색</td><td>목표 조건, 종료 조건, 방문 상태 측정</td><td>탐색 횟수 기록</td></tr>
+<tr><td>N-Queen</td><td>열·대각선 충돌 검사</td><td>4-Queen 코드</td></tr>
+<tr><td>비교 분석</td><td>정확성, 방문 노드, 실행 시간</td><td>완전 탐색/가지치기 비교표</td></tr>
+</table></section>
+
+<section id="concepts"><h2>4. 개념 및 상세 설명 · 관련 코드 · 코드별 확인 문제</h2>
+
+<div class="concept">
+<div class="concept-head"><b>개념 1. 백트래킹: 선택하고, 탐색하고, 되돌아오기</b></div>
+<div class="concept-body"><div class="two">
+<div><p><b>백트래킹(backtracking)</b>은 상태 공간을 탐색하다가 현재 선택으로 더 이상 적절한 해를 만들 수 없다고 판단되면 이전 상태로 돌아가 다른 선택을 시도하는 방법이다.</p>
+<p>핵심 흐름은 <b>선택 → 재귀 호출 → 되돌리기</b>이다. 완전 탐색이 모든 후보를 끝까지 만든 뒤 검사한다면, 백트래킹은 탐색 과정에서 조건을 확인하며 불필요한 경로를 줄일 수 있다.</p>
+<span class="tag t1">선택</span><span class="tag t2">재귀</span><span class="tag t3">되돌리기</span><span class="tag t4">상태 공간</span></div>
+<div><div class="codebox">path = []
+
+def choose(n):
+    if len(path) == n:
+        print(path)
+        return
+
+    for x in range(1, n + 1):
+        if x not in path:
+            path.append(x)   # 선택
+            choose(n)        # 탐색
+            path.pop()       # 되돌리기
+
+choose(3)</div></div>
+</div>
+<div class="question" data-id="c1" data-answer="1,2,3">
+<h4>코드 1 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① <code>path.append(x)</code>는 현재 선택을 상태에 반영한다.</label><label class="option"><input type="checkbox" value="2">② <code>choose(n)</code>은 더 깊은 상태를 탐색한다.</label><label class="option"><input type="checkbox" value="3">③ <code>path.pop()</code>은 직전 선택을 되돌린다.</label><label class="option"><input type="checkbox" value="4">④ 한 번 선택한 원소는 모든 후보에서 영구적으로 삭제된다.</label><label class="option"><input type="checkbox" value="5">⑤ 이 코드에서는 재귀 호출을 사용하지 않는다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ③</b><br>append로 선택하고 재귀적으로 다음 상태를 탐색한 뒤 pop으로 이전 상태를 복원한다.</div>
+</div></div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 2. 되돌리기가 필요한 이유: 상태 복원</b></div>
+<div class="concept-body"><div class="two">
+<div><p>재귀 호출에서 돌아온 뒤에는 다음 선택을 시험해야 한다. 이때 이전 선택의 흔적이 남아 있으면 서로 다른 후보가 섞이므로 <b>상태 복원</b>이 필요하다.</p>
+<p>리스트를 직접 변경하는 방식에서는 <code>append()</code>로 추가한 뒤 반드시 대응되는 <code>pop()</code>으로 되돌리는 패턴을 자주 사용한다.</p></div>
+<div><div class="codebox">nums = [1, 2, 3]
+chosen = []
+
+def make(i):
+    if i == len(nums):
+        print(chosen)
+        return
+
+    chosen.append(nums[i])
+    make(i + 1)
+    chosen.pop()
+
+    make(i + 1)
+
+make(0)</div></div>
+</div>
+<div class="question" data-id="c2" data-answer="1,2,3">
+<h4>코드 2 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 첫 번째 재귀 호출은 현재 원소를 선택한 경우이다.</label><label class="option"><input type="checkbox" value="2">② <code>chosen.pop()</code>은 선택 전 상태로 복원하기 위한 명령이다.</label><label class="option"><input type="checkbox" value="3">③ 두 번째 <code>make(i + 1)</code>은 현재 원소를 선택하지 않은 경우이다.</label><label class="option"><input type="checkbox" value="4">④ <code>pop()</code>을 제거해도 항상 같은 부분집합이 정확히 출력된다.</label><label class="option"><input type="checkbox" value="5">⑤ 원소가 3개이면 부분집합은 3개만 출력된다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ③</b><br>선택한 경우를 탐색한 뒤 pop으로 상태를 복원해야 비선택 경우를 올바르게 탐색할 수 있다.</div>
+</div></div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 3. 가지치기: 유망하지 않은 상태를 조기에 배제하기</b></div>
+<div class="concept-body"><div class="two">
+<div><p><b>가지치기(pruning)</b>는 현재 상태가 목표 해로 이어질 가능성이 없다고 판단될 때 그 아래 상태를 더 이상 탐색하지 않는 것이다.</p>
+<p>어떤 상태를 배제해도 정답을 놓치지 않는다는 근거가 중요하다. 예를 들어 모든 수가 양수인 부분합 문제에서 현재 합이 목표값보다 이미 크다면 이후 양수를 더해도 목표값으로 돌아갈 수 없으므로 탐색을 중단할 수 있다.</p></div>
+<div><div class="codebox">nums = [2, 3, 5, 7]
+target = 10
+
+def search(i, total):
+    if total == target:
+        print(&quot;찾음:&quot;, total)
+        return
+
+    if i == len(nums) or total &gt; target:
+        return              # 가지치기
+
+    search(i + 1, total + nums[i])
+    search(i + 1, total)
+
+search(0, 0)</div></div>
+</div>
+<div class="question" data-id="c3" data-answer="1,2,3">
+<h4>코드 3 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① <code>total &gt; target</code>이면 현재 경로를 더 탐색하지 않는다.</label><label class="option"><input type="checkbox" value="2">② 모든 nums가 양수라는 조건은 이 가지치기의 타당성과 관련 있다.</label><label class="option"><input type="checkbox" value="3">③ <code>i == len(nums)</code>은 더 선택할 원소가 없음을 뜻한다.</label><label class="option"><input type="checkbox" value="4">④ 가지치기는 정답이 될 수 있는 경로도 무조건 절반 제거해야 한다.</label><label class="option"><input type="checkbox" value="5">⑤ <code>return</code> 뒤에도 같은 호출의 두 재귀문이 항상 실행된다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ③</b><br>양수만 더하는 상황에서는 목표 합을 초과한 경로가 다시 목표값이 될 수 없으므로 안전하게 배제할 수 있다.</div>
+</div></div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 4. 부분합 문제: 완전 탐색에서 백트래킹으로</b></div>
+<div class="concept-body"><div class="two">
+<div><p>부분합 문제에서는 각 원소를 <b>선택/비선택</b>하는 두 갈래 상태 공간을 만든다. 완전 탐색은 모든 2ⁿ개 부분집합을 끝까지 만들 수 있지만, 백트래킹은 중간 상태에서 목표 가능성을 검사해 일부 경로를 일찍 종료할 수 있다.</p>
+<p>따라서 같은 정답을 찾더라도 <b>방문한 상태 수</b>가 달라질 수 있다. 이것이 기존 탐색 기반 알고리즘과 가지치기 알고리즘을 비교하는 핵심이다.</p></div>
+<div><div class="codebox">nums = [1, 4, 6, 9]
+target = 10
+count = 0
+
+def subset(i, total):
+    global count
+    count += 1
+
+    if total == target:
+        return True
+    if i == len(nums) or total &gt; target:
+        return False
+
+    return (subset(i + 1, total + nums[i])
+            or subset(i + 1, total))
+
+print(subset(0, 0))
+print(&quot;방문 상태:&quot;, count)</div></div>
+</div>
+<div class="question" data-id="c4" data-answer="1,2,3">
+<h4>코드 4 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① <code>count</code>는 호출된 탐색 상태 수를 관찰하는 데 사용할 수 있다.</label><label class="option"><input type="checkbox" value="2">② <code>or</code>의 앞 호출이 True이면 뒤 호출은 실행되지 않을 수 있다.</label><label class="option"><input type="checkbox" value="3">③ 완전 탐색 코드와 방문 상태 수를 비교하여 가지치기 효과를 분석할 수 있다.</label><label class="option"><input type="checkbox" value="4">④ <code>total &gt; target</code>이면 반드시 정답을 찾은 것이다.</label><label class="option"><input type="checkbox" value="5">⑤ target과 관계없이 모든 상태를 반드시 방문한다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ③</b><br>방문 횟수를 세면 완전 탐색과 개선된 탐색의 실제 탐색량을 비교할 수 있다.</div>
+</div></div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 5. N-Queen: 충돌 상태를 즉시 배제하기</b></div>
+<div class="concept-body"><div class="two">
+<div><p>N-Queen 문제는 같은 행, 열, 대각선에서 서로 공격하지 않도록 N개의 퀸을 배치하는 문제이다. 한 행에 퀸 하나씩 놓는다면 다음 퀸의 열을 선택할 때 이미 놓인 퀸과 <b>같은 열 또는 같은 대각선</b>인지 검사할 수 있다.</p>
+<p>충돌이 발생한 순간 그 아래 배치는 모두 정답이 될 수 없으므로 즉시 가지치기한다.</p></div>
+<div><div class="codebox">N = 4
+board = []
+
+def safe(row, col):
+    for r, c in enumerate(board):
+        if c == col:
+            return False
+        if abs(row - r) == abs(col - c):
+            return False
+    return True
+
+def queen(row):
+    if row == N:
+        print(board)
+        return
+
+    for col in range(N):
+        if safe(row, col):
+            board.append(col)
+            queen(row + 1)
+            board.pop()
+
+queen(0)</div></div>
+</div>
+<div class="question" data-id="c5" data-answer="1,2,3">
+<h4>코드 5 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① <code>board</code>에는 각 행에서 선택한 퀸의 열 번호가 저장된다.</label><label class="option"><input type="checkbox" value="2">② <code>c == col</code>은 같은 열 충돌을 검사한다.</label><label class="option"><input type="checkbox" value="3">③ 행 차이의 절댓값과 열 차이의 절댓값이 같으면 같은 대각선이다.</label><label class="option"><input type="checkbox" value="4">④ <code>safe()</code>가 False여도 그 위치에 퀸을 놓고 계속 탐색한다.</label><label class="option"><input type="checkbox" value="5">⑤ <code>board.pop()</code>은 새로운 퀸을 하나 더 추가한다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ③</b><br>safe가 충돌 여부를 검사하고, 안전한 상태만 다음 행으로 확장한다. 재귀 후 pop으로 직전 배치를 되돌린다.</div>
+</div></div></div>
+
+<div class="concept">
+<div class="concept-head"><b>개념 6. 완전 탐색과 가지치기 비교·분석</b></div>
+<div class="concept-body"><div class="two">
+<div><p>가지치기의 목적은 단순히 코드를 짧게 만드는 것이 아니라 <b>정답 가능성이 없는 상태를 방문하지 않아 탐색량을 줄이는 것</b>이다.</p>
+<p>비교할 때는 같은 입력과 같은 정답 조건을 사용하고, 함수 호출 횟수·방문 노드 수·실행 시간 등을 측정한다. 단, 잘못된 가지치기 조건은 실제 정답을 제거할 수 있으므로 효율성보다 먼저 <b>정확성</b>을 검증해야 한다.</p></div>
+<div><div class="codebox">def full(i, total):
+    global full_count
+    full_count += 1
+    if i == len(nums):
+        return total == target
+    return (full(i+1, total+nums[i])
+            or full(i+1, total))
+
+def pruned(i, total):
+    global prune_count
+    prune_count += 1
+    if total == target:
+        return True
+    if i == len(nums) or total &gt; target:
+        return False
+    return (pruned(i+1, total+nums[i])
+            or pruned(i+1, total))</div></div>
+</div>
+<div class="question" data-id="c6" data-answer="1,2,3">
+<h4>코드 6 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4>
+<label class="option"><input type="checkbox" value="1">① 두 알고리즘의 방문 상태 수를 비교할 수 있다.</label><label class="option"><input type="checkbox" value="2">② 가지치기 조건은 정답을 제거하지 않는지 검증해야 한다.</label><label class="option"><input type="checkbox" value="3">③ 같은 문제에서 방문 상태가 줄면 탐색 개선의 근거가 될 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 가지치기를 추가하면 어떤 입력에서도 방문 상태 수가 반드시 1이 된다.</label><label class="option"><input type="checkbox" value="5">⑤ 실행 시간이 짧으면 정답의 정확성은 확인할 필요가 없다.</label>
+<button class="btn primary check-one">정답 확인</button>
+<div class="feedback"><b>정답: ①, ②, ③</b><br>정확성을 유지하면서 방문 상태 수나 실행 시간을 줄였는지를 비교해야 가지치기의 효과를 설명할 수 있다.</div>
+</div></div></div>
+<div class="notice"><b>목표지향 통합 과제</b><br>
+1차시에서 작성한 부분집합 완전 탐색 프로그램에 <b>방문 상태 수</b>를 세는 변수를 추가한 뒤,
+양수 부분합 문제에 안전한 가지치기 조건을 설계하여 적용하자. 두 프로그램이 같은 정답을 찾는지 확인하고,
+방문 상태 수가 얼마나 달라지는지 표로 비교한 뒤 “왜 이 가지치기가 정답을 제거하지 않는가?”를 한 문장으로 설명해 보자.</div>
+</section>
+
+<section id="ending"><h2>5. 학습 마무리 멘트</h2>
+<div class="ending"><h3>좋은 탐색은 모든 길을 걷는 것이 아니라, 걸을 필요가 없는 길을 설명할 수 있는 탐색이다</h3>
+<p>완전 탐색은 가능한 모든 길을 조사하기 때문에 확실한 출발점이 됩니다. 하지만 실제 문제의 상태 공간은 매우 커질 수 있습니다. 이때 중요한 능력은 단순히 더 빠르게 반복하는 것이 아니라 <b>어떤 경로가 더 이상 정답이 될 수 없는지 논리적으로 판단하는 것</b>입니다.</p>
+<p>백트래킹은 선택을 시도하고 실패하면 이전 상태로 돌아갑니다. 가지치기는 실패가 분명해진 순간 그 아래의 수많은 상태를 만들지 않습니다. 이 두 생각은 복잡한 문제를 다룰 때 계산량을 줄이는 강력한 도구가 됩니다.</p>
+<p>그러나 가지를 많이 자르는 것 자체가 목표는 아닙니다. 잘못 자르면 정답도 사라집니다. 따라서 좋은 알고리즘은 <b>정확성을 지키면서 불필요한 탐색을 줄이고, 그 개선을 비교 자료로 설명할 수 있어야 합니다.</b></p>
+</div></section>
+
+<section id="diagnostic"><div class="quiz-head"><h2>6. 전체 학습내용 진단평가 OX 10문항</h2><div class="scorebox" id="diagScore">미채점</div></div>
+<div id="diagQuestions"></div><div class="controls"><button class="btn primary" onclick="gradeDiagnostic()">진단평가 채점</button><button class="btn secondary" onclick="resetGroup('diagQuestions')">초기화</button></div></section>
+
+<section id="formative"><div class="quiz-head"><h2>7. 전체 학습내용 형성평가 10문항</h2><div class="scorebox" id="formScore">미채점</div></div>
+<p class="small">각 문항은 보기 5개 중 옳은 것 3개를 모두 선택해야 정답이다.</p><div id="formQuestions"></div>
+<div class="controls"><button class="btn primary" onclick="gradeFormative()">형성평가 채점</button><button class="btn secondary" onclick="resetGroup('formQuestions')">초기화</button></div></section>
+
+<section id="submit"><h2>8. 학번·이름 입력 및 결과 저장</h2>
+<div class="userbox"><label><b>학번</b><input type="text" id="studentId" placeholder="예: 1101"></label><label><b>이름</b><input type="text" id="studentName" placeholder="예: 홍길동"></label></div>
+<h3>전체 진행률</h3><div class="progress-wrap"><div class="progress" id="progress"></div></div><p id="progressText" class="small">0%</p>
+<div class="controls"><button class="btn primary" onclick="finalSubmit()">전체 채점 및 TXT 저장</button><button class="btn secondary" onclick="window.print()">인쇄 / PDF</button></div>
+<div class="result-panel" id="resultPanel"></div></section>
+</main>
+
+<footer><p>2022 개정 고등학교 정보과학 2학기 2차고사 10차시 계획의 2차시 「백트래킹과 가지치기」를 중심으로 구성한 개념기반 목표지향 수업자료이다.</p></footer>
+<button class="print" onclick="window.print()">인쇄 / PDF</button>
+
+<script>
+const diagData=[{q:'백트래킹은 선택한 상태를 탐색한 뒤 이전 상태로 되돌아가 다른 선택을 시도할 수 있다.',a:'O',e:'백트래킹의 기본 흐름은 선택→탐색→되돌리기이다.'},
+{q:'가지치기는 정답 가능성이 없는 상태를 조기에 배제하여 탐색량을 줄일 수 있다.',a:'O',e:'유망하지 않은 상태 아래의 탐색을 중단한다.'},
+{q:'백트래킹에서는 한 번 선택한 값은 프로그램이 끝날 때까지 절대 취소하지 않는다.',a:'X',e:'다른 후보를 탐색하기 위해 선택을 되돌리는 과정이 필요하다.'},
+{q:'리스트에 append로 선택을 기록했다면 pop을 이용해 상태를 복원하는 패턴을 사용할 수 있다.',a:'O',e:'append와 pop은 선택과 되돌리기를 표현하는 대표적인 패턴이다.'},
+{q:'모든 가지치기 조건은 정답을 일부 제거해도 상관없다.',a:'X',e:'정답을 제거하지 않는 안전한 조건이어야 한다.'},
+{q:'모든 수가 양수인 부분합 문제에서 현재 합이 목표보다 크다면 그 경로를 중단할 수 있다.',a:'O',e:'이후 양수를 더하면 합이 더 커지므로 목표값으로 돌아갈 수 없다.'},
+{q:'N-Queen에서 같은 열에 이미 퀸이 있으면 그 위치는 유망한 상태이다.',a:'X',e:'같은 열의 퀸은 서로 공격하므로 배제해야 한다.'},
+{q:'N-Queen에서 |행 차이|와 |열 차이|가 같으면 두 퀸은 같은 대각선에 있다.',a:'O',e:'대각선 충돌을 판정하는 대표 조건이다.'},
+{q:'완전 탐색과 가지치기를 비교할 때 방문 상태 수를 측정할 수 있다.',a:'O',e:'탐색 노드 수는 탐색 공간 감소 효과를 보여 주는 지표가 된다.'},
+{q:'가지치기를 사용하면 정확성 검증 없이도 항상 올바른 답을 얻는다.',a:'X',e:'잘못된 가지치기는 정답 경로를 제거할 수 있으므로 정확성 검증이 필요하다.'}];
+const formData=[{q:'백트래킹의 기본 구조에 관한 설명으로 옳은 것을 모두 고르시오.',o:['① 현재 선택을 상태에 반영할 수 있다.', '② 재귀 호출로 다음 상태를 탐색할 수 있다.', '③ 탐색 후 상태를 이전 모습으로 복원할 수 있다.', '④ 선택은 한 번 하면 절대 취소할 수 없다.', '⑤ 백트래킹은 반복이나 재귀와 무관하다.'],a:[1, 2, 3],e:'선택→탐색→되돌리기가 핵심 구조이다.'},
+{q:'다음 코드에서 <code>path.append(x); f(); path.pop()</code>에 대한 설명으로 옳은 것을 모두 고르시오.',o:['① append는 선택을 기록한다.', '② f()는 선택 이후의 상태를 탐색할 수 있다.', '③ pop은 직전 선택을 되돌린다.', '④ pop은 리스트의 첫 원소를 항상 삭제한다.', '⑤ 세 명령은 상태 변화와 관계가 없다.'],a:[1, 2, 3],e:'append와 pop의 대응을 통해 재귀 전후의 상태를 관리한다.'},
+{q:'가지치기에 관한 설명으로 옳은 것을 모두 고르시오.',o:['① 유망하지 않은 상태를 조기에 배제한다.', '② 탐색해야 할 상태 수를 줄일 수 있다.', '③ 조건이 안전한지 검증해야 한다.', '④ 정답 후보를 많이 지울수록 좋은 가지치기이다.', '⑤ 항상 모든 상태를 끝까지 방문한다.'],a:[1, 2, 3],e:'효율성뿐 아니라 정답 보존이 중요하다.'},
+{q:'양수 부분합 문제에서 <code>if total &gt; target: return</code>에 관한 설명으로 옳은 것을 모두 고르시오.',o:['① 목표값을 이미 초과한 경로를 중단한다.', '② 이후 더하는 수가 양수라는 조건과 관련 있다.', '③ 가지치기의 예이다.', '④ 음수가 자유롭게 포함되어도 언제나 안전하다.', '⑤ total이 target보다 크면 정답을 찾았다는 뜻이다.'],a:[1, 2, 3],e:'양수만 남아 있다면 초과한 합을 다시 낮출 수 없으므로 안전하게 중단할 수 있다.'},
+{q:'N-Queen의 유망성 검사로 옳은 것을 모두 고르시오.',o:['① 같은 열인지 검사할 수 있다.', '② 같은 대각선인지 검사할 수 있다.', '③ 충돌이 없는 위치만 다음 상태로 확장할 수 있다.', '④ 같은 행에 여러 퀸을 반드시 배치한다.', '⑤ 충돌한 상태도 끝까지 탐색해야 한다.'],a:[1, 2, 3],e:'한 행에 하나씩 놓으며 열·대각선 충돌을 검사한다.'},
+{q:'N-Queen 코드의 <code>board.append(col)</code>과 <code>board.pop()</code>에 관한 설명으로 옳은 것을 모두 고르시오.',o:['① append는 현재 행의 열 선택을 기록한다.', '② 재귀 후 pop은 선택 전 상태로 복원한다.', '③ 두 명령 사이에서 다음 행을 탐색할 수 있다.', '④ pop은 퀸을 영구히 하나 더 추가한다.', '⑤ append 이후에는 다른 열을 시험할 수 없다.'],a:[1, 2, 3],e:'상태 복원을 통해 같은 행의 다른 열 선택을 차례로 시험할 수 있다.'},
+{q:'완전 탐색과 가지치기 비교에 관한 설명으로 옳은 것을 모두 고르시오.',o:['① 같은 문제와 입력으로 비교하는 것이 좋다.', '② 방문 노드 수를 비교 지표로 사용할 수 있다.', '③ 실행 시간을 함께 측정할 수 있다.', '④ 정답이 달라도 방문 수만 작으면 개선된 알고리즘이다.', '⑤ 가지치기는 탐색량 비교가 불가능하다.'],a:[1, 2, 3],e:'동일 조건에서 정확성을 유지한 채 탐색량이 감소했는지 비교한다.'},
+{q:'다음 조건의 역할로 옳은 것을 모두 고르시오. <pre>if i == len(nums) or total &gt; target:\n    return False</pre>',o:['① 더 선택할 원소가 없는 상태를 종료할 수 있다.', '② 목표 합을 초과한 상태를 배제할 수 있다.', '③ 일부 상태 공간을 탐색하지 않게 할 수 있다.', '④ 반드시 True를 반환한다.', '⑤ 모든 재귀 호출을 무조건 실행하게 한다.'],a:[1, 2, 3],e:'종료 및 가지치기 조건으로 불필요한 하위 탐색을 막는다.'},
+{q:'백트래킹에서 상태 복원이 필요한 이유로 옳은 것을 모두 고르시오.',o:['① 서로 다른 후보의 선택이 섞이지 않게 한다.', '② 이전 상태에서 다른 선택을 시험할 수 있게 한다.', '③ 재귀 호출 전후의 상태 일관성을 유지한다.', '④ 모든 후보를 같은 상태로 만들기 위해서이다.', '⑤ 복원은 오직 출력 모양을 바꾸기 위한 것이다.'],a:[1, 2, 3],e:'상태 복원은 탐색 트리의 형제 경로를 독립적으로 탐색하게 한다.'},
+{q:'[12정과03-02] 관점에서 백트래킹·가지치기 학습에 대한 설명으로 옳은 것을 모두 고르시오.',o:['① 상태 공간 일부를 배제하는 조건을 설계한다.', '② 기존 탐색 기반 알고리즘과 비교할 수 있다.', '③ 탐색 횟수나 효율성을 분석할 수 있다.', '④ 무조건 모든 상태를 방문하는 것만 목표로 한다.', '⑤ 가지치기 조건의 타당성은 설명할 필요가 없다.'],a:[1, 2, 3],e:'상태 공간 배제의 근거와 기존 탐색 대비 효과를 함께 분석하는 것이 핵심이다.'}];
+
+function renderDiagnostic(){
+ const c=document.getElementById('diagQuestions');
+ c.innerHTML=diagData.map((x,i)=>`<div class="question" data-diag="${i}"><h4>${i+1}. ${x.q}</h4>
+ <label class="option"><input type="radio" name="d${i}" value="O"> O</label>
+ <label class="option"><input type="radio" name="d${i}" value="X"> X</label><div class="feedback" id="df${i}"></div></div>`).join('');
+}
+function renderFormative(){
+ const c=document.getElementById('formQuestions');
+ c.innerHTML=formData.map((x,i)=>`<div class="question" data-form="${i}"><h4>${i+1}. ${x.q}</h4>
+ ${x.o.map((o,j)=>`<label class="option"><input type="checkbox" name="f${i}" value="${j+1}">${o}</label>`).join('')}
+ <div class="feedback" id="ff${i}"></div></div>`).join('');
+}
+renderDiagnostic(); renderFormative();
+
+document.querySelectorAll('.check-one').forEach(btn=>{
+ btn.addEventListener('click',()=>{
+   const q=btn.closest('.question'), ans=q.dataset.answer.split(',').sort().join(',');
+   const selected=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort().join(',');
+   const fb=q.querySelector('.feedback');
+   if(!fb.dataset.original) fb.dataset.original=fb.innerHTML;
+   fb.className='feedback show '+(selected===ans?'correct':'wrong');
+   fb.innerHTML=(selected===ans?'<b>정답입니다.</b><br>':'<b>다시 확인하세요.</b><br>')+fb.dataset.original;
+   updateProgress();
+ });
+});
+
+function gradeDiagnostic(){
+ let score=0;
+ diagData.forEach((x,i)=>{
+   const chosen=document.querySelector(`input[name=d${i}]:checked`), ok=chosen&&chosen.value===x.a;
+   if(ok) score++;
+   const fb=document.getElementById(`df${i}`);
+   fb.className='feedback show '+(ok?'correct':'wrong'); fb.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${x.a}<br>${x.e}`;
+ });
+ document.getElementById('diagScore').textContent=`${score}/10`; updateProgress(); return score;
+}
+function gradeFormative(){
+ let score=0;
+ formData.forEach((x,i)=>{
+   const chosen=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b);
+   const ans=[...x.a].sort((a,b)=>a-b), ok=JSON.stringify(chosen)===JSON.stringify(ans);
+   if(ok) score++;
+   const fb=document.getElementById(`ff${i}`);
+   fb.className='feedback show '+(ok?'correct':'wrong');
+   fb.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${ans.map(n=>'①②③④⑤'[n-1]).join(', ')}<br>${x.e}`;
+ });
+ document.getElementById('formScore').textContent=`${score}/10`; updateProgress(); return score;
+}
+function resetGroup(id){
+ document.querySelectorAll(`#${id} input`).forEach(x=>x.checked=false);
+ document.querySelectorAll(`#${id} .feedback`).forEach(x=>{x.className='feedback';x.innerHTML='';});
+ if(id==='diagQuestions') document.getElementById('diagScore').textContent='미채점';
+ if(id==='formQuestions') document.getElementById('formScore').textContent='미채점';
+ updateProgress();
+}
+function updateProgress(){
+ let done=0;
+ document.querySelectorAll('.concept .question').forEach(q=>{if(q.querySelectorAll('input:checked').length)done++;});
+ for(let i=0;i<10;i++){if(document.querySelector(`input[name=d${i}]:checked`))done++; if(document.querySelectorAll(`input[name=f${i}]:checked`).length)done++;}
+ const pct=Math.min(100,Math.round(done/26*100)); document.getElementById('progress').style.width=pct+'%'; document.getElementById('progressText').textContent=`${pct}% (${done}/26 항목 응답)`;
+}
+document.addEventListener('change',updateProgress);
+
+function finalSubmit(){
+ const sid=document.getElementById('studentId').value.trim(), name=document.getElementById('studentName').value.trim();
+ if(!sid||!name){alert('학번과 이름을 입력하세요.');return;}
+ const d=gradeDiagnostic(), f=gradeFormative(); let codeScore=0, codeReports=[];
+ document.querySelectorAll('.concept .question').forEach((q,i)=>{
+   const ans=q.dataset.answer.split(',').sort(), sel=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort();
+   const ok=JSON.stringify(ans)===JSON.stringify(sel); if(ok)codeScore++;
+   const ex=(q.querySelector('.feedback').dataset.original||q.querySelector('.feedback').textContent).replace(/\s+/g,' ').trim();
+   codeReports.push(`코드 확인 ${i+1}: ${ok?'정답':'오답'} / 응답 ${sel.join(',')||'미응답'} / 정답 ${ans.join(',')} / 해설: ${ex}`);
+ });
+ const raw=codeScore+d+f,total=26,score=Math.round(raw/total*100),now=new Date();
+ const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0');
+ let lines=['정보과학 2차고사 2차시 개념기반 목표지향 학습 결과','주제: 백트래킹과 가지치기','성취기준: [12정과03-02]',`학번: ${sid}`,`이름: ${name}`,`점수: ${score}점 (${raw}/${total})`,`응시시각: ${now.toLocaleString('ko-KR')}`,'','[코드별 확인 문제]',...codeReports,'','[진단평가 OX]'];
+ diagData.forEach((x,i)=>{const c=document.querySelector(`input[name=d${i}]:checked`)?.value||'미응답';lines.push(`${i+1}. ${c===x.a?'정답':'오답'} / 응답 ${c} / 정답 ${x.a} / 풀이: ${x.e}`);});
+ lines.push('','[형성평가]');
+ formData.forEach((x,i)=>{const c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b),a=[...x.a].sort((a,b)=>a-b),ok=JSON.stringify(c)===JSON.stringify(a);lines.push(`${i+1}. ${ok?'정답':'오답'} / 응답 ${c.join(',')||'미응답'} / 정답 ${a.join(',')} / 풀이: ${x.e}`);});
+ const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${sid}_${name}_${score}점_2차고사2차시_${stamp}.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+ const panel=document.getElementById('resultPanel');panel.classList.add('show');panel.innerHTML=`<h3>최종 결과</h3><p class="big">${score}점</p><p>코드 확인 ${codeScore}/6 · 진단평가 ${d}/10 · 형성평가 ${f}/10</p><p><b>${sid} ${name}</b> 학생의 결과 TXT 파일을 저장했습니다.</p>`;
+}
+</script>
+</body>
+</html>

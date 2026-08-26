@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang='ko'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>정보과학 2차고사 6차시 개념기반 목표지향 수업지도안</title><style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --sky:#eaf4ff; --green:#1f8a70;
+  --mint:#eaf8f3; --orange:#f59e0b; --rose:#cf4568; --purple:#7656a7;
+  --ink:#17212b; --muted:#5c6978; --line:#d8e2ec; --paper:#fff; --bg:#f4f7fb;
+  --ok:#127a50; --bad:#bc2f3e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#132b42,#2f6fb3 62%,#4796dc);color:#fff;padding:42px 20px}
+.header-inner{max-width:1320px;margin:auto}
+.kicker{font-size:.9rem;letter-spacing:.08em;opacity:.88}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.2;margin:.35rem 0 .8rem}
+.subtitle{max-width:980px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1320px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+nav a{text-decoration:none;color:var(--navy);font-weight:800;white-space:nowrap;padding:8px 10px;border-radius:8px;font-size:.89rem}
+nav a:hover{background:var(--sky)}
+main{max-width:1320px;margin:auto;padding:22px 16px 76px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:25px;margin:19px 0;box-shadow:0 7px 22px rgba(23,50,77,.055)}
+h2{color:var(--navy);font-size:1.65rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}
+h3{color:var(--navy);margin:20px 0 10px}
+h4{color:#254d72;margin:16px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:13px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.04rem;margin-bottom:5px}
+.big{font-size:1.9rem;font-weight:900;color:var(--blue)}
+.story{background:linear-gradient(135deg,#fff9ea,#fff);border-left:7px solid var(--orange);padding:20px;border-radius:14px}
+.ending{background:linear-gradient(135deg,#f5efff,#fff);border-left:7px solid var(--purple);padding:20px;border-radius:14px}
+.standard{background:var(--mint);border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+code{font-family:Consolas,"D2Coding",monospace}
+pre{white-space:pre-wrap}
+.codebox{background:#111c27;color:#eaf2f8;border-radius:13px;padding:15px 17px;overflow:auto;font-family:Consolas,"D2Coding",monospace;font-size:.91rem;line-height:1.55;white-space:pre}
+.concept{border:1px solid var(--line);border-radius:16px;margin:18px 0;overflow:hidden}
+.concept-head{background:linear-gradient(90deg,#eaf4ff,#f9fcff);padding:15px 18px;border-bottom:1px solid var(--line)}
+.concept-head b{color:var(--navy);font-size:1.18rem}
+.concept-body{padding:18px}
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:800;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff0f4;color:#a63d5b}.t4{background:#fff6df;color:#8a5b00}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+.question h4{margin-top:0}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer;background:#fff}
+.option:hover{background:#f5f9fd}
+.option input{margin-right:8px;transform:scale(1.1)}
+.feedback{display:none;margin-top:11px;padding:12px;border-radius:9px;background:#f6f8fb}
+.feedback.show{display:block}
+.correct{border-left:5px solid var(--ok)}
+.wrong{border-left:5px solid var(--bad)}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+.primary{background:var(--blue);color:#fff}.secondary{background:#eaf0f6;color:var(--navy)}
+.danger{background:var(--rose);color:#fff}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.quiz-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.scorebox{background:#edf7ff;border:1px solid #b9d8f0;border-radius:12px;padding:12px 15px;font-weight:800;color:var(--navy)}
+.userbox{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input[type=text]{width:100%;padding:11px;border:1px solid #cfdbe6;border-radius:9px;font-size:1rem}
+.progress-wrap{height:12px;background:#e9eef3;border-radius:999px;overflow:hidden}
+.progress{height:100%;background:linear-gradient(90deg,#2f6fb3,#1f8a70);width:0%;transition:.3s}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.small{font-size:.86rem;color:var(--muted)}
+.result-panel{display:none;border:2px solid #9ac9ea;background:#f6fbff;border-radius:15px;padding:18px;margin-top:18px}
+.result-panel.show{display:block}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 7px 24px rgba(0,0,0,.2)}
+footer{max-width:1320px;margin:0 auto 40px;padding:0 18px;color:#5e6c78;font-size:.86rem}
+@media(max-width:650px){.userbox{grid-template-columns:1fr}.quiz-head{align-items:flex-start;flex-direction:column}}
+@media print{nav,.print,.controls button{display:none!important}body{background:white}section{box-shadow:none;break-inside:avoid}.question{break-inside:avoid}}
+</style></head><body>
+<header><div class="header-inner"><div class="kicker">2022 개정 고등학교 정보과학 · Ⅲ 알고리즘 · 6차시 통합</div>
+<h1>6차시 개념기반 목표지향 수업지도안</h1>
+<div class="subtitle">입력 크기와 연산 횟수의 관계를 바탕으로 O(1), O(log n), O(n), O(n log n), O(n²)을 비교하고 실제 실행 시간을 측정하여 문제에 적합한 알고리즘을 선택한다.</div>
+<div class="badges"><span class="badge">핵심 성취기준 [12정과03-06]</span><span class="badge">[12정과03-01~06] 통합</span><span class="badge">시간 복잡도·빅오</span><span class="badge">실행 시간 측정</span><span class="badge">개념별 코드 6개</span><span class="badge">진단 OX 10문항</span><span class="badge">형성평가 10문항</span><span class="badge">자동채점·TXT 저장</span></div></div></header>
+<nav><div class="nav-inner"><a href="#identity">수업 개요</a><a href="#start">학습 시작</a><a href="#goals">목표</a><a href="#concepts">개념·코드</a><a href="#ending">학습 마무리</a><a href="#diagnostic">진단평가</a><a href="#formative">형성평가</a><a href="#submit">제출·저장</a></div></nav>
+<main>
+<section id="identity"><h2>1. 수업 개요와 성취수준</h2>
+<div class="standard"><b>핵심 성취기준 [12정과03-06]</b><br>알고리즘의 시간 복잡도를 분석하고 여러 해결 방법의 효율성을 비교한다.</div>
+<div class="standard" style="margin-top:10px"><b>Ⅲ단원 통합</b><br>[12정과03-01~06]에서 학습한 상태 공간·탐색 배제·부분 문제·분할정복·동적계획법을 알고리즘 선택과 성능 분석의 관점에서 다시 연결한다.</div>
+<h3>성취수준</h3><table><tr><th>수준</th><th>성취 특성</th></tr>
+<tr><td>A</td><td>코드의 핵심 연산을 찾아 입력 크기와 연산 횟수의 관계를 분석하고 빅오로 표현하며, 동일 문제의 여러 알고리즘을 이론 복잡도·실제 실행 시간·적용 조건의 관점에서 비교하여 합리적인 선택 근거를 설명한다.</td></tr>
+<tr><td>B</td><td>O(1), O(log n), O(n), O(n²)의 차이를 설명하고 반복 구조와 탐색 방식으로 시간 복잡도를 판단하며 실행 시간을 측정하여 알고리즘을 비교한다.</td></tr>
+<tr><td>C</td><td>주어진 코드의 반복 횟수를 추적하고 대표적인 시간 복잡도를 구별하며 간단한 실행 시간 측정 코드를 사용할 수 있다.</td></tr>
+<tr><td>D</td><td>안내에 따라 단일 반복문과 중첩 반복문의 연산 횟수를 세고 O(n), O(n²)을 구별한다.</td></tr>
+<tr><td>E</td><td>입력 크기가 커질수록 알고리즘에 따라 필요한 계산량이 다르게 증가할 수 있음을 예시에서 확인한다.</td></tr></table>
+<div class="grid"><div class="card"><strong>핵심 질문 1</strong>같은 정답을 만드는 두 프로그램 중 어느 쪽이 큰 입력에서 더 효율적일까?</div><div class="card"><strong>핵심 질문 2</strong>빅오로 예측한 성능과 실제 측정 시간은 왜 완전히 같지 않을 수 있을까?</div><div class="card"><strong>핵심 질문 3</strong>완전 탐색·백트래킹·탐욕·분할정복·DP 중 어떤 전략을 선택해야 할까?</div></div></section>
+<section id="start"><h2>2. 학습 시작 멘트</h2><div class="story"><h3>1초 차이가 아니라, 입력이 커질 때의 변화를 보자</h3>
+<p>학생 10명의 자료를 처리할 때는 어떤 프로그램을 사용해도 금방 끝날 수 있습니다. 하지만 학생이 1만 명, 데이터가 100만 개가 된다면 상황은 달라집니다. 작은 입력에서 비슷해 보이던 두 알고리즘이 큰 입력에서는 전혀 다른 속도를 보일 수 있습니다.</p>
+<p>그래서 알고리즘의 성능을 판단할 때는 한 번의 실행 시간만 보지 않습니다. <b>입력 크기 n이 커질 때 핵심 연산 횟수가 어떤 속도로 증가하는가</b>를 분석합니다. 이를 간단하게 표현하는 도구가 빅오 표기법입니다.</p>
+<p>오늘은 Ⅲ단원의 마지막 차시입니다. 앞에서 배운 탐색, 백트래킹, 탐욕법, 분할정복, 동적계획법을 다시 꺼내어 <b>정확성·적용 조건·시간 복잡도·실제 실행 시간</b>이라는 기준으로 비교해 봅니다.</p></div></section>
+<section id="goals"><h2>3. 학습목표와 학습내용</h2><h3>학습목표</h3><ol><li>입력 크기 n과 핵심 연산 횟수의 관계를 설명할 수 있다.</li><li>O(1), O(log n), O(n), O(n log n), O(n²)의 증가 특성을 비교할 수 있다.</li><li>반복문과 탐색 구조를 분석하여 코드의 대표적인 시간 복잡도를 판단할 수 있다.</li><li><code>time.perf_counter()</code>를 사용하여 실제 실행 시간을 측정할 수 있다.</li><li>이론적 시간 복잡도와 실제 실행 시간의 차이를 설명할 수 있다.</li><li>Ⅲ단원의 여러 알고리즘을 문제 조건과 효율성에 따라 비교·선택할 수 있다.</li></ol>
+<h3>학습내용</h3><table><tr><th>개념 축</th><th>내용</th><th>학습 산출물</th></tr><tr><td>성능 분석</td><td>입력 크기 n, 핵심 연산 횟수</td><td>연산 횟수 표</td></tr><tr><td>빅오</td><td>O(1), O(log n), O(n), O(n log n), O(n²)</td><td>복잡도 비교표</td></tr><tr><td>탐색 비교</td><td>선형 탐색과 이진 탐색</td><td>O(n)/O(log n) 비교</td></tr><tr><td>중첩 반복</td><td>n×n 연산과 O(n²)</td><td>코드 추적표</td></tr><tr><td>실행 시간</td><td>time.perf_counter(), 반복 측정</td><td>성능 실험 결과</td></tr><tr><td>Ⅲ단원 통합</td><td>알고리즘 적용 조건과 선택</td><td>알고리즘 선택 근거</td></tr></table></section>
+<section id="concepts"><h2>4. 개념 및 상세 설명 · 관련 코드 · 코드별 확인 문제</h2><div class="concept"><div class="concept-head"><b>개념 1. 알고리즘 성능과 입력 크기 n</b></div><div class="concept-body">
+<div class="two"><div><p>같은 문제를 해결하는 프로그램이라도 입력의 크기가 커질수록 필요한 계산량은 서로 다르게 증가한다. 알고리즘의 성능을 비교할 때는 단순히 한 번의 실행 시간이 아니라 <b>입력 크기 n이 증가할 때 핵심 연산 횟수가 어떻게 증가하는가</b>를 살펴본다.</p>
+<p>예를 들어 리스트의 첫 원소를 한 번 확인하는 코드는 입력 크기와 관계없이 거의 일정한 연산을 하지만, 모든 원소를 한 번씩 확인하는 코드는 n에 비례하여 연산 횟수가 증가한다.</p></div><div><div class="codebox">def first_value(data):
+    return data[0]
+
+def total(data):
+    s = 0
+    for x in data:
+        s += x
+    return s
+
+data = list(range(100))
+print(first_value(data))
+print(total(data))</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 1 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① first_value의 핵심 연산 횟수는 입력 크기에 거의 영향을 받지 않는다.</label><label class="option"><input type="checkbox" value="2">② total은 원소 수가 증가하면 반복 횟수도 증가한다.</label><label class="option"><input type="checkbox" value="3">③ 알고리즘 분석에서는 입력 크기와 연산 횟수의 관계를 살펴볼 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 두 함수의 시간 복잡도는 반드시 완전히 같다.</label><label class="option"><input type="checkbox" value="5">⑤ 실행 시간이 한 번 짧게 나오면 모든 입력에서 더 좋은 알고리즘임이 증명된다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>입력 크기 n에 따라 핵심 연산이 어떻게 증가하는지 관찰하는 것이 시간 복잡도 분석의 출발점이다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 2. 빅오 표기법: 증가하는 정도를 표현하기</b></div><div class="concept-body">
+<div class="two"><div><p><b>빅오(Big-O) 표기법</b>은 입력 크기가 커질 때 알고리즘의 연산량이 증가하는 정도를 간단히 표현한다. 대표적으로 <b>O(1), O(log n), O(n), O(n log n), O(n²)</b>을 비교할 수 있다.</p>
+<p>빅오에서는 입력이 매우 커질 때의 증가 경향에 초점을 두므로 상수배나 낮은 차수 항은 보통 생략한다. 예를 들어 <code>3n + 5</code>처럼 증가하는 연산량은 O(n)으로 표현한다.</p></div><div><div class="codebox">def constant_work(n):
+    return n * 2
+
+def linear_work(n):
+    count = 0
+    for i in range(n):
+        count += 1
+    return count
+
+print(constant_work(1000))
+print(linear_work(1000))</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 2 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① constant_work는 입력 크기와 관계없이 핵심 계산이 일정한 횟수이므로 O(1)로 볼 수 있다.</label><label class="option"><input type="checkbox" value="2">② linear_work의 반복 횟수는 n에 비례하므로 O(n)으로 볼 수 있다.</label><label class="option"><input type="checkbox" value="3">③ 빅오는 입력이 커질 때 연산량 증가 경향을 표현하는 데 사용한다.</label><label class="option"><input type="checkbox" value="4">④ O(n)은 언제나 O(1)보다 실제 시간이 정확히 n배라는 뜻이다.</label><label class="option"><input type="checkbox" value="5">⑤ 빅오에서는 프로그램이 출력하는 값의 크기만 분석한다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>빅오는 실제 초 단위 시간을 직접 나타내는 값이 아니라 입력 증가에 따른 연산량의 성장 정도를 나타낸다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 3. O(log n): 이진 탐색의 범위 감소</b></div><div class="concept-body">
+<div class="two"><div><p>정렬된 자료에서 이진 탐색은 한 번 비교할 때마다 탐색 범위를 대략 절반으로 줄인다. n개의 후보가 n/2, n/4, n/8처럼 줄어들기 때문에 반복 횟수는 n에 비례하지 않고 <b>O(log n)</b> 수준으로 증가한다.</p>
+<p>이는 모든 원소를 처음부터 차례로 확인하는 O(n) 선형 탐색과 중요한 차이를 만든다.</p></div><div><div class="codebox">def binary_search(a, target):
+    left, right = 0, len(a) - 1
+
+    while left &lt;= right:
+        mid = (left + right) // 2
+
+        if a[mid] == target:
+            return mid
+        elif target &lt; a[mid]:
+            right = mid - 1
+        else:
+            left = mid + 1
+
+    return -1</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 3 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 매 반복에서 탐색 후보 범위를 대략 절반으로 줄일 수 있다.</label><label class="option"><input type="checkbox" value="2">② 정렬된 자료를 전제로 목표값과 중간값을 비교한다.</label><label class="option"><input type="checkbox" value="3">③ 이진 탐색의 대표적인 시간 복잡도는 O(log n)이다.</label><label class="option"><input type="checkbox" value="4">④ 매 반복에서 모든 원소를 반드시 한 번씩 검사한다.</label><label class="option"><input type="checkbox" value="5">⑤ 정렬 여부와 관계없이 항상 올바르게 이진 탐색할 수 있다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>이진 탐색은 정렬된 자료의 구조를 이용해 후보 범위를 반복적으로 절반씩 줄인다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 4. O(n²): 중첩 반복문의 증가</b></div><div class="concept-body">
+<div class="two"><div><p>반복문 하나가 n번 실행되고 그 안의 반복문도 대략 n번 실행된다면 핵심 연산은 약 n×n번 수행된다. 이런 형태의 대표적인 시간 복잡도는 <b>O(n²)</b>이다.</p>
+<p>n이 10배가 될 때 연산량은 대략 100배 수준으로 증가할 수 있으므로 큰 입력에서는 O(n) 알고리즘과 성능 차이가 매우 커질 수 있다.</p></div><div><div class="codebox">def count_pairs(data):
+    count = 0
+
+    for i in range(len(data)):
+        for j in range(len(data)):
+            count += 1
+
+    return count
+
+print(count_pairs([1, 2, 3, 4]))</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 4 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 길이가 n이면 내부의 count 증가 연산은 n²번 수행된다.</label><label class="option"><input type="checkbox" value="2">② 대표적인 시간 복잡도는 O(n²)이다.</label><label class="option"><input type="checkbox" value="3">③ n이 커질수록 O(n) 코드보다 연산량 증가가 더 가파를 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 중첩 반복문은 언제나 O(1)이다.</label><label class="option"><input type="checkbox" value="5">⑤ 길이 4일 때 count는 4이다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>두 반복문이 각각 n번 실행되므로 핵심 연산 횟수는 n²에 비례한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 5. 실제 실행 시간 측정: time.perf_counter()</b></div><div class="concept-body">
+<div class="two"><div><p>이론적 시간 복잡도와 함께 실제 프로그램의 실행 시간을 측정하면 알고리즘의 성능을 실험적으로 비교할 수 있다. 파이썬의 <code>time.perf_counter()</code>를 이용하면 실행 전후의 시각 차이를 측정할 수 있다.</p>
+<p>다만 실제 시간은 컴퓨터 성능, 운영체제 상태, 입력 데이터, 다른 프로그램의 실행 등에 영향을 받는다. 따라서 한 번의 측정값만으로 일반적인 복잡도를 결정해서는 안 된다.</p></div><div><div class="codebox">import time
+
+def linear_sum(n):
+    s = 0
+    for i in range(n):
+        s += i
+    return s
+
+start = time.perf_counter()
+linear_sum(100000)
+end = time.perf_counter()
+
+print(&quot;실행 시간:&quot;, end - start)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 5 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 실행 전과 후의 perf_counter 값 차이로 시간을 측정할 수 있다.</label><label class="option"><input type="checkbox" value="2">② 실제 실행 시간은 실행 환경의 영향을 받을 수 있다.</label><label class="option"><input type="checkbox" value="3">③ 이론적 복잡도와 실제 측정 결과를 함께 해석하는 것이 좋다.</label><label class="option"><input type="checkbox" value="4">④ 한 번 측정한 시간이 곧 알고리즘의 빅오 표기법이다.</label><label class="option"><input type="checkbox" value="5">⑤ 입력 크기를 바꾸어도 실행 시간 비교는 아무 의미가 없다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>실행 시간 측정은 성능 실험에 유용하지만 빅오와 동일한 개념은 아니며 환경과 입력의 영향을 고려해야 한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 6. 알고리즘 선택: 정확성·복잡도·적용 조건을 함께 보기</b></div><div class="concept-body">
+<div class="two"><div><p>좋은 알고리즘을 선택할 때는 시간 복잡도 하나만 보는 것이 아니라 <b>정확성, 입력 조건, 자료의 크기, 구현 비용, 메모리 사용, 실제 실행 시간</b> 등을 함께 고려해야 한다.</p>
+<p>이번 Ⅲ단원에서 학습한 완전 탐색, 백트래킹, 탐욕법, 분할정복, 동적계획법은 서로 다른 문제 구조에 적합하다. 따라서 문제의 상태 공간과 부분 문제 관계를 먼저 분석하고, 적용 조건과 성능을 근거로 알고리즘을 선택해야 한다.</p></div><div><div class="codebox">def linear_search(a, target):
+    for i in range(len(a)):
+        if a[i] == target:
+            return i
+    return -1
+
+# 정렬된 자료라면 이진 탐색도 후보가 될 수 있다.
+data = [2, 5, 8, 12, 16, 23, 38]
+
+print(linear_search(data, 23))
+print(binary_search(data, 23))</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 6 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 같은 문제를 여러 알고리즘으로 해결한 뒤 효율성을 비교할 수 있다.</label><label class="option"><input type="checkbox" value="2">② 자료가 정렬되어 있다면 선형 탐색과 이진 탐색을 비교할 수 있다.</label><label class="option"><input type="checkbox" value="3">③ 알고리즘 선택에는 문제 조건과 시간 복잡도를 함께 고려할 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 시간 복잡도가 좋아 보이면 정확성은 확인하지 않아도 된다.</label><label class="option"><input type="checkbox" value="5">⑤ 모든 문제에는 항상 하나의 알고리즘만 사용할 수 있다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>알고리즘 선택은 정확한 결과를 전제로 문제 조건과 이론·실제 성능을 함께 비교하여 판단한다.</div></div></div></div>
+<div class="notice"><b>목표지향 통합 과제</b><br>입력 크기를 <code>1,000 → 10,000 → 100,000</code>으로 바꾸어 O(1), O(n), 가능한 범위의 O(n²) 예제 실행 시간을 측정하고 표로 기록하자. 이어서 같은 값을 찾는 <b>선형 탐색과 이진 탐색</b>을 비교하여 이론적 시간 복잡도와 실제 측정값을 함께 해석한다. 마지막으로 완전 탐색·백트래킹·탐욕법·분할정복·동적계획법 중 하나를 선택해야 하는 새로운 문제 상황을 만들고, <b>정확성·적용 조건·시간 복잡도</b>를 근거로 선택 이유를 서술하자.</div></section>
+<section id="ending"><h2>5. 학습 마무리 멘트</h2><div class="ending"><h3>좋은 알고리즘은 정답뿐 아니라 선택의 근거를 설명할 수 있다</h3><p>Ⅲ단원에서 우리는 같은 문제를 바라보는 여러 방법을 배웠습니다. 모든 상태를 확인할 수도 있고, 가능성이 없는 상태를 버릴 수도 있으며, 현재의 좋은 선택을 이어 갈 수도 있습니다. 문제를 절반으로 나누거나 이미 계산한 답을 저장해 다시 사용할 수도 있습니다.</p><p>오늘 배운 시간 복잡도는 이러한 방법들을 비교하는 하나의 공통 언어입니다. O(1), O(log n), O(n), O(n log n), O(n²)은 단순한 기호가 아니라 <b>입력이 커질 때 계산량이 어떻게 성장하는지</b>를 설명합니다.</p><p>그러나 가장 작은 빅오만 찾는 것이 알고리즘 설계의 전부는 아닙니다. 먼저 정확해야 하고, 문제의 조건에 적용 가능해야 하며, 시간과 공간, 구현의 복잡성도 함께 고려해야 합니다. 좋은 알고리즘 선택은 결국 <b>왜 이 방법이 이 문제에 적합한지 근거를 제시하는 일</b>입니다.</p></div></section>
+<section id="diagnostic"><div class="quiz-head"><h2>6. 전체 학습내용 진단평가 OX 10문항</h2><div class="scorebox" id="diagScore">미채점</div></div><div id="diagQuestions"></div><div class="controls"><button class="btn primary" onclick="gradeDiagnostic()">진단평가 채점</button><button class="btn secondary" onclick="resetGroup('diagQuestions')">초기화</button></div></section>
+<section id="formative"><div class="quiz-head"><h2>7. 전체 학습내용 형성평가 10문항</h2><div class="scorebox" id="formScore">미채점</div></div><p class="small">각 문항은 보기 5개 중 옳은 것 3개를 모두 선택해야 정답이다.</p><div id="formQuestions"></div><div class="controls"><button class="btn primary" onclick="gradeFormative()">형성평가 채점</button><button class="btn secondary" onclick="resetGroup('formQuestions')">초기화</button></div></section>
+<section id="submit"><h2>8. 학번·이름 입력 및 결과 저장</h2><div class="userbox"><label><b>학번</b><input type="text" id="studentId" placeholder="예: 1101"></label><label><b>이름</b><input type="text" id="studentName" placeholder="예: 홍길동"></label></div><h3>전체 진행률</h3><div class="progress-wrap"><div class="progress" id="progress"></div></div><p id="progressText" class="small">0%</p><div class="controls"><button class="btn primary" onclick="finalSubmit()">전체 채점 및 TXT 저장</button><button class="btn secondary" onclick="window.print()">인쇄 / PDF</button></div><div class="result-panel" id="resultPanel"></div></section>
+</main><footer><p>2022 개정 고등학교 정보과학 2학기 2차고사 10차시 계획의 6차시 「알고리즘 복잡도와 Ⅲ단원 통합」을 중심으로 구성한 개념기반 목표지향 수업자료이다.</p></footer><button class="print" onclick="window.print()">인쇄 / PDF</button>
+<script>
+const diagData=[{"q": "시간 복잡도는 입력 크기와 연산량 증가의 관계를 분석하는 데 사용한다.", "a": "O", "e": "입력 n이 커질 때 필요한 계산량이 어떻게 증가하는지 분석한다."}, {"q": "O(1)은 입력 크기가 커지면 반드시 실행 시간이 0초가 된다는 뜻이다.", "a": "X", "e": "O(1)은 핵심 연산량의 증가 정도가 입력 크기에 거의 의존하지 않는다는 뜻이다."}, {"q": "이진 탐색의 대표적인 시간 복잡도는 O(log n)이다.", "a": "O", "e": "정렬된 자료에서 탐색 범위를 절반씩 줄인다."}, {"q": "리스트의 모든 원소를 한 번씩 확인하는 알고리즘은 대표적으로 O(n)이다.", "a": "O", "e": "입력 원소 수에 비례하여 반복 횟수가 증가한다."}, {"q": "두 개의 n회 반복문이 중첩되면 대표적으로 O(n²)이 될 수 있다.", "a": "O", "e": "핵심 연산이 약 n×n회 수행된다."}, {"q": "O(n²)은 입력 n이 커질수록 O(n)보다 항상 더 천천히 증가한다.", "a": "X", "e": "n²은 n보다 더 빠르게 증가한다."}, {"q": "time.perf_counter()를 이용해 실제 실행 시간을 측정할 수 있다.", "a": "O", "e": "실행 전후 값을 빼서 경과 시간을 구할 수 있다."}, {"q": "실제 실행 시간은 컴퓨터 환경이나 입력 데이터의 영향을 받을 수 있다.", "a": "O", "e": "이론 복잡도와 실제 시간은 구분해서 해석해야 한다."}, {"q": "한 번 실행 시간이 짧으면 그 알고리즘은 모든 입력에서 반드시 최적이다.", "a": "X", "e": "입력 크기, 조건, 환경과 이론적 성장률을 함께 고려해야 한다."}, {"q": "알고리즘을 선택할 때 정확성이나 적용 조건은 무시하고 빅오만 보면 된다.", "a": "X", "e": "정확성, 적용 조건, 시간·공간 효율 등을 종합적으로 고려해야 한다."}],formData=[{"q": "시간 복잡도에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 입력 크기 n과 연산 횟수의 관계를 살펴본다.", "② 알고리즘의 효율성을 비교하는 근거가 될 수 있다.", "③ 입력이 커질 때 계산량 증가 경향을 분석할 수 있다.", "④ 프로그램의 출력값만으로 결정한다.", "⑤ 실제 실행 시간과 언제나 완전히 같은 개념이다."], "a": [1, 2, 3], "e": "시간 복잡도는 입력 증가에 따른 계산량의 성장 정도를 분석한다."}, {"q": "빅오 표기법에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① O(1), O(log n), O(n), O(n²)처럼 표현할 수 있다.", "② 큰 입력에서 연산량의 증가 경향을 비교하는 데 유용하다.", "③ 상수배나 낮은 차수 항을 단순화하여 표현할 수 있다.", "④ 정확한 실행 초를 직접 나타낸다.", "⑤ O(n)은 언제나 정확히 n초라는 뜻이다."], "a": [1, 2, 3], "e": "빅오는 실제 초가 아니라 연산량의 성장 정도를 나타낸다."}, {"q": "다음 중 O(1), O(log n), O(n)의 특징으로 옳은 것을 모두 고르시오.", "o": ["① O(1)은 입력 증가와 무관하게 핵심 연산 횟수가 거의 일정한 형태이다.", "② O(log n)은 이진 탐색처럼 문제 크기를 반복적으로 크게 줄이는 구조에서 나타날 수 있다.", "③ O(n)은 모든 원소를 한 번씩 처리하는 반복에서 나타날 수 있다.", "④ O(log n)은 항상 n개의 모든 원소를 검사한다.", "⑤ O(1)은 입력이 커지면 연산 횟수가 n²이 된다."], "a": [1, 2, 3], "e": "각 복잡도는 입력 증가에 따른 대표적인 연산량 성장 형태를 나타낸다."}, {"q": "O(n²) 코드에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① n회 반복문 안에 다시 n회 반복문이 있으면 나타날 수 있다.", "② 입력이 커질수록 O(n)보다 증가량이 크게 커질 수 있다.", "③ 모든 원소 쌍을 비교하는 단순한 코드에서 나타날 수 있다.", "④ n이 10배가 되면 핵심 연산량은 항상 10배 이하가 된다.", "⑤ 중첩 반복문은 무조건 O(1)이다."], "a": [1, 2, 3], "e": "대표적인 이중 반복 구조에서는 핵심 연산이 n²에 비례한다."}, {"q": "실행 시간 측정에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① time.perf_counter()를 사용할 수 있다.", "② 여러 입력 크기로 반복 측정하면 증가 경향을 관찰할 수 있다.", "③ 실행 환경이 측정값에 영향을 줄 수 있다.", "④ 한 번의 측정만으로 빅오를 확정할 수 있다.", "⑤ 측정 시간은 컴퓨터와 무관하게 항상 동일하다."], "a": [1, 2, 3], "e": "실제 시간은 실험값이며 이론 복잡도와 함께 해석해야 한다."}, {"q": "선형 탐색과 이진 탐색 비교로 옳은 것을 모두 고르시오.", "o": ["① 선형 탐색은 대표적으로 O(n)이다.", "② 이진 탐색은 정렬된 자료에서 대표적으로 O(log n)이다.", "③ 정렬 여부는 두 알고리즘을 선택할 때 고려할 조건이다.", "④ 이진 탐색은 정렬되지 않은 자료에서도 언제나 그대로 사용할 수 있다.", "⑤ 두 알고리즘은 항상 모든 원소를 같은 횟수만큼 검사한다."], "a": [1, 2, 3], "e": "문제 조건과 입력 구조를 고려해 알고리즘을 선택해야 한다."}, {"q": "Ⅲ단원 알고리즘 통합 관점에서 옳은 것을 모두 고르시오.", "o": ["① 백트래킹은 불필요한 상태 공간을 배제할 수 있다.", "② 분할정복은 문제를 작은 부분으로 나누어 해결할 수 있다.", "③ 동적계획법은 중복 부분 문제의 결과를 저장·재사용할 수 있다.", "④ 탐욕법은 모든 문제에서 항상 최적해를 보장한다.", "⑤ 모든 알고리즘의 시간 복잡도는 동일하다."], "a": [1, 2, 3], "e": "각 알고리즘은 서로 다른 문제 구조와 해결 전략을 가진다."}, {"q": "알고리즘 선택 기준으로 옳은 것을 모두 고르시오.", "o": ["① 결과의 정확성을 확인한다.", "② 입력 조건과 문제 구조를 고려한다.", "③ 시간 복잡도와 실제 실행 성능을 비교할 수 있다.", "④ 가장 짧은 코드만 무조건 선택한다.", "⑤ 빅오가 같으면 모든 조건에서 완전히 같은 알고리즘이다."], "a": [1, 2, 3], "e": "정확성, 조건, 복잡도, 실제 성능 등을 종합하여 선택한다."}, {"q": "[12정과03-06]과 관련된 활동으로 옳은 것을 모두 고르시오.", "o": ["① 코드의 시간 복잡도를 분석한다.", "② 여러 해결 방법의 효율성을 비교한다.", "③ 실제 실행 시간을 측정하고 이론 복잡도와 함께 해석한다.", "④ 실행 결과만 보고 복잡도 분석은 하지 않는다.", "⑤ 입력 크기의 변화는 고려하지 않는다."], "a": [1, 2, 3], "e": "성취기준은 시간 복잡도 분석과 여러 해결 방법의 효율성 비교에 초점을 둔다."}, {"q": "6차시 Ⅲ단원 통합 학습에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 상태 공간·탐색·분할·DP 등 앞선 알고리즘을 성능 관점에서 다시 비교한다.", "② 문제에 적합한 알고리즘 선택 근거를 설명한다.", "③ O(1)부터 O(n²)까지 대표 복잡도를 코드와 연결한다.", "④ 실제 시간이 짧으면 정확하지 않은 알고리즘도 선택한다.", "⑤ 모든 문제에 동일한 알고리즘을 적용한다."], "a": [1, 2, 3], "e": "6차시는 Ⅲ단원의 여러 알고리즘을 시간 복잡도와 적용 조건의 관점에서 통합한다."}];
+function renderDiagnostic(){document.getElementById('diagQuestions').innerHTML=diagData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4><label class="option"><input type="radio" name="d${i}" value="O"> O</label><label class="option"><input type="radio" name="d${i}" value="X"> X</label><div class="feedback" id="df${i}"></div></div>`).join('');}
+function renderFormative(){document.getElementById('formQuestions').innerHTML=formData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4>${x.o.map((o,j)=>`<label class="option"><input type="checkbox" name="f${i}" value="${j+1}">${o}</label>`).join('')}<div class="feedback" id="ff${i}"></div></div>`).join('');}
+renderDiagnostic();renderFormative();
+document.querySelectorAll('.check-one').forEach(b=>b.addEventListener('click',()=>{let q=b.closest('.question'),a=q.dataset.answer.split(',').sort().join(','),s=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort().join(','),f=q.querySelector('.feedback');if(!f.dataset.original)f.dataset.original=f.innerHTML;f.className='feedback show '+(s===a?'correct':'wrong');f.innerHTML=(s===a?'<b>정답입니다.</b><br>':'<b>다시 확인하세요.</b><br>')+f.dataset.original;updateProgress();}));
+function gradeDiagnostic(){let s=0;diagData.forEach((x,i)=>{let c=document.querySelector(`input[name=d${i}]:checked`),ok=c&&c.value===x.a;if(ok)s++;let f=document.getElementById(`df${i}`);f.className='feedback show '+(ok?'correct':'wrong');f.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${x.a}<br>${x.e}`;});document.getElementById('diagScore').textContent=`${s}/10`;updateProgress();return s;}
+function gradeFormative(){let s=0;formData.forEach((x,i)=>{let c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b),a=[...x.a].sort((a,b)=>a-b),ok=JSON.stringify(c)===JSON.stringify(a);if(ok)s++;let f=document.getElementById(`ff${i}`);f.className='feedback show '+(ok?'correct':'wrong');f.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${a.map(n=>'①②③④⑤'[n-1]).join(', ')}<br>${x.e}`;});document.getElementById('formScore').textContent=`${s}/10`;updateProgress();return s;}
+function resetGroup(id){document.querySelectorAll(`#${id} input`).forEach(x=>x.checked=false);document.querySelectorAll(`#${id} .feedback`).forEach(x=>{x.className='feedback';x.innerHTML='';});if(id==='diagQuestions')document.getElementById('diagScore').textContent='미채점';if(id==='formQuestions')document.getElementById('formScore').textContent='미채점';updateProgress();}
+function updateProgress(){let d=0;document.querySelectorAll('.concept .question').forEach(q=>{if(q.querySelectorAll('input:checked').length)d++;});for(let i=0;i<10;i++){if(document.querySelector(`input[name=d${i}]:checked`))d++;if(document.querySelectorAll(`input[name=f${i}]:checked`).length)d++;}let p=Math.min(100,Math.round(d/26*100));document.getElementById('progress').style.width=p+'%';document.getElementById('progressText').textContent=`${p}% (${d}/26 항목 응답)`;}
+document.addEventListener('change',updateProgress);
+function finalSubmit(){let sid=document.getElementById('studentId').value.trim(),name=document.getElementById('studentName').value.trim();if(!sid||!name){alert('학번과 이름을 입력하세요.');return;}let d=gradeDiagnostic(),f=gradeFormative(),cs=0,reports=[];document.querySelectorAll('.concept .question').forEach((q,i)=>{let a=q.dataset.answer.split(',').sort(),s=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort(),ok=JSON.stringify(a)===JSON.stringify(s);if(ok)cs++;reports.push(`코드 확인 ${i+1}: ${ok?'정답':'오답'} / 응답 ${s.join(',')||'미응답'} / 정답 ${a.join(',')}`);});let raw=cs+d+f,total=26,score=Math.round(raw/total*100),now=new Date(),stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0');let lines=['정보과학 2차고사 6차시 개념기반 목표지향 학습 결과','주제: 알고리즘 복잡도와 Ⅲ단원 통합','핵심 성취기준: [12정과03-06] / 통합: [12정과03-01~06]',`학번: ${sid}`,`이름: ${name}`,`점수: ${score}점 (${raw}/${total})`,`응시시각: ${now.toLocaleString('ko-KR')}`,'','[코드별 확인 문제]',...reports,'','[진단평가 OX]'];diagData.forEach((x,i)=>{let c=document.querySelector(`input[name=d${i}]:checked`)?.value||'미응답';lines.push(`${i+1}. ${c===x.a?'정답':'오답'} / 응답 ${c} / 정답 ${x.a} / 풀이: ${x.e}`);});lines.push('','[형성평가]');formData.forEach((x,i)=>{let c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b),a=[...x.a].sort((a,b)=>a-b),ok=JSON.stringify(c)===JSON.stringify(a);lines.push(`${i+1}. ${ok?'정답':'오답'} / 응답 ${c.join(',')||'미응답'} / 정답 ${a.join(',')} / 풀이: ${x.e}`);});let blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}),link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download=`${sid}_${name}_${score}점_2차고사6차시_${stamp}.txt`;link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);let p=document.getElementById('resultPanel');p.classList.add('show');p.innerHTML=`<h3>최종 결과</h3><p class="big">${score}점</p><p>코드 확인 ${cs}/6 · 진단평가 ${d}/10 · 형성평가 ${f}/10</p><p><b>${sid} ${name}</b> 학생의 결과 TXT 파일을 저장했습니다.</p>`;}
+</script></body></html>

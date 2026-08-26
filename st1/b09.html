@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>정보과학 2차고사 9차시 개념기반 목표지향 수업지도안</title><style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --sky:#eaf4ff; --green:#1f8a70;
+  --mint:#eaf8f3; --orange:#f59e0b; --rose:#cf4568; --purple:#7656a7;
+  --ink:#17212b; --muted:#5c6978; --line:#d8e2ec; --paper:#fff; --bg:#f4f7fb;
+  --ok:#127a50; --bad:#bc2f3e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#132b42,#2f6fb3 62%,#4796dc);color:#fff;padding:42px 20px}
+.header-inner{max-width:1320px;margin:auto}
+.kicker{font-size:.9rem;letter-spacing:.08em;opacity:.88}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.2;margin:.35rem 0 .8rem}
+.subtitle{max-width:980px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1320px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+nav a{text-decoration:none;color:var(--navy);font-weight:800;white-space:nowrap;padding:8px 10px;border-radius:8px;font-size:.89rem}
+nav a:hover{background:var(--sky)}
+main{max-width:1320px;margin:auto;padding:22px 16px 76px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:25px;margin:19px 0;box-shadow:0 7px 22px rgba(23,50,77,.055)}
+h2{color:var(--navy);font-size:1.65rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}
+h3{color:var(--navy);margin:20px 0 10px}
+h4{color:#254d72;margin:16px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:13px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.04rem;margin-bottom:5px}
+.big{font-size:1.9rem;font-weight:900;color:var(--blue)}
+.story{background:linear-gradient(135deg,#fff9ea,#fff);border-left:7px solid var(--orange);padding:20px;border-radius:14px}
+.ending{background:linear-gradient(135deg,#f5efff,#fff);border-left:7px solid var(--purple);padding:20px;border-radius:14px}
+.standard{background:var(--mint);border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+code{font-family:Consolas,"D2Coding",monospace}
+pre{white-space:pre-wrap}
+.codebox{background:#111c27;color:#eaf2f8;border-radius:13px;padding:15px 17px;overflow:auto;font-family:Consolas,"D2Coding",monospace;font-size:.91rem;line-height:1.55;white-space:pre}
+.concept{border:1px solid var(--line);border-radius:16px;margin:18px 0;overflow:hidden}
+.concept-head{background:linear-gradient(90deg,#eaf4ff,#f9fcff);padding:15px 18px;border-bottom:1px solid var(--line)}
+.concept-head b{color:var(--navy);font-size:1.18rem}
+.concept-body{padding:18px}
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:800;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff0f4;color:#a63d5b}.t4{background:#fff6df;color:#8a5b00}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+.question h4{margin-top:0}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer;background:#fff}
+.option:hover{background:#f5f9fd}
+.option input{margin-right:8px;transform:scale(1.1)}
+.feedback{display:none;margin-top:11px;padding:12px;border-radius:9px;background:#f6f8fb}
+.feedback.show{display:block}
+.correct{border-left:5px solid var(--ok)}
+.wrong{border-left:5px solid var(--bad)}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+.primary{background:var(--blue);color:#fff}.secondary{background:#eaf0f6;color:var(--navy)}
+.danger{background:var(--rose);color:#fff}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.quiz-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.scorebox{background:#edf7ff;border:1px solid #b9d8f0;border-radius:12px;padding:12px 15px;font-weight:800;color:var(--navy)}
+.userbox{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input[type=text]{width:100%;padding:11px;border:1px solid #cfdbe6;border-radius:9px;font-size:1rem}
+.progress-wrap{height:12px;background:#e9eef3;border-radius:999px;overflow:hidden}
+.progress{height:100%;background:linear-gradient(90deg,#2f6fb3,#1f8a70);width:0%;transition:.3s}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.small{font-size:.86rem;color:var(--muted)}
+.result-panel{display:none;border:2px solid #9ac9ea;background:#f6fbff;border-radius:15px;padding:18px;margin-top:18px}
+.result-panel.show{display:block}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 7px 24px rgba(0,0,0,.2)}
+footer{max-width:1320px;margin:0 auto 40px;padding:0 18px;color:#5e6c78;font-size:.86rem}
+@media(max-width:650px){.userbox{grid-template-columns:1fr}.quiz-head{align-items:flex-start;flex-direction:column}}
+@media print{nav,.print,.controls button{display:none!important}body{background:white}section{box-shadow:none;break-inside:avoid}.question{break-inside:avoid}}
+</style></head><body>
+<header><div class="header-inner"><div class="kicker">2022 개정 고등학교 정보과학 · Ⅳ 정보과학 프로젝트 · 04~05</div><h1>9차시 개념기반 목표지향 수업지도안</h1>
+<div class="subtitle">8차시에서 구현한 핵심 기능 시제품에 정상·경계·예외 입력을 적용하여 테스트하고, 오류를 재현·분석·수정·재검증하며, 정확성·효율성·사용성과 개인정보·편향·저작권·라이선스 관점에서 산출물을 평가하여 개선본을 완성한다.</div>
+<div class="badges"><span class="badge">성취기준 [12정과04-04]</span><span class="badge">성취기준 [12정과04-05]</span><span class="badge">테스트·디버깅</span><span class="badge">기능적·윤리적 평가</span><span class="badge">개념별 코드 6개</span><span class="badge">진단 OX 10문항</span><span class="badge">형성평가 10문항</span><span class="badge">자동채점·TXT 저장</span></div></div></header>
+<nav><div class="nav-inner"><a href="#identity">수업 개요</a><a href="#start">학습 시작</a><a href="#goals">목표</a><a href="#concepts">개념·코드</a><a href="#ending">학습 마무리</a><a href="#diagnostic">진단평가</a><a href="#formative">형성평가</a><a href="#submit">제출·저장</a></div></nav>
+<main>
+<section id="identity"><h2>1. 수업 개요와 성취수준</h2>
+<div class="standard"><b>성취기준 [12정과04-04]</b><br>완성도 높은 프로그램을 구현하기 위하여 테스트와 디버깅 과정을 통해 검증한다.</div>
+<div class="standard" style="margin-top:10px"><b>성취기준 [12정과04-05]</b><br>프로젝트 산출물을 기능적·윤리적 관점에서 평가하고 개선한다.</div>
+<h3>성취수준</h3><table><tr><th>수준</th><th>성취 특성</th></tr>
+<tr><td>A</td><td>프로젝트 요구사항을 바탕으로 정상·경계·예외 입력을 포함한 체계적인 테스트 사례를 설계하고, 오류를 재현·분석·수정·재검증하여 근거를 기록하며, 정확성·효율성·사용성과 개인정보·편향·저작권·라이선스를 종합적으로 평가하여 구체적인 개선본을 완성한다.</td></tr>
+<tr><td>B</td><td>다양한 테스트 사례를 적용하여 오류를 찾아 수정하고, 기능적·윤리적 평가 기준에 따라 주요 문제점을 분석하여 개선한다.</td></tr>
+<tr><td>C</td><td>정상·경계·예외 입력 중 주요 사례를 적용하여 프로그램을 점검하고, 제시된 평가 기준에 따라 일부 기능과 윤리 요소를 개선한다.</td></tr>
+<tr><td>D</td><td>안내에 따라 주어진 테스트를 실행하고 오류가 발생한 부분을 수정하며 기본 평가 항목을 확인한다.</td></tr>
+<tr><td>E</td><td>테스트·디버깅의 의미와 정확성·개인정보·저작권 등 기본 평가 요소를 예시에서 구별한다.</td></tr></table>
+<div class="grid"><div class="card"><strong>핵심 질문 1</strong>프로그램이 한 번 정상 실행되었다는 사실만으로 정확하다고 판단할 수 있을까?</div><div class="card"><strong>핵심 질문 2</strong>오류를 발견했을 때 어떤 순서로 원인을 찾고 수정해야 같은 오류를 줄일 수 있을까?</div><div class="card"><strong>핵심 질문 3</strong>기능적으로 정확한 프로그램이라도 개인정보·편향·저작권 측면에서 개선이 필요한 경우는 언제일까?</div></div></section>
+
+<section id="start"><h2>2. 학습 시작 멘트</h2><div class="story"><h3>“실행된다”에서 “믿고 사용할 수 있다”로</h3>
+<p>8차시에서 우리는 여러 기능을 연결하여 핵심 기능 시제품을 만들었습니다. 프로그램이 화면에 결과를 출력했다면 구현의 중요한 단계는 통과한 것입니다. 하지만 한 번 실행되었다는 사실만으로 프로그램이 완성되었다고 말할 수는 없습니다.</p>
+<p>입력이 0일 때는 어떻게 될까요? 허용 범위의 가장 끝값에서는요? 사용자가 문자를 입력하거나 빈 데이터를 전달하면 어떻게 될까요? 결과가 정확하더라도 지나치게 느리거나, 오류 메시지가 이해하기 어렵거나, 불필요한 개인정보가 노출된다면 좋은 프로그램이라고 할 수 있을까요?</p>
+<p>오늘은 시제품을 의도적으로 흔들어 봅니다. <b>정상·경계·예외 입력으로 테스트하고, 오류를 재현하여 원인을 찾고, 수정 후 다시 검증</b>합니다. 그리고 기능뿐 아니라 <b>개인정보·편향·저작권·라이선스</b>까지 살펴 “작동하는 프로그램”을 “검증되고 개선된 프로그램”으로 발전시킵니다.</p></div></section>
+
+<section id="goals"><h2>3. 학습목표와 학습내용</h2><h3>학습목표</h3><ol>
+<li>정상 입력·경계값·예외 입력의 의미를 구분하고 테스트 사례를 설계할 수 있다.</li>
+<li>테스트의 입력·예상 결과·실제 결과·통과 여부를 체계적으로 기록할 수 있다.</li>
+<li>오류를 재현하고 원인을 분석하여 수정한 뒤 동일·관련 테스트로 재검증할 수 있다.</li>
+<li>프로젝트 산출물을 정확성·효율성·사용성의 기능적 관점에서 평가할 수 있다.</li>
+<li>개인정보·편향·저작권·라이선스의 윤리적 관점에서 산출물을 점검할 수 있다.</li>
+<li>테스트와 평가 결과를 근거로 개선 우선순위를 정하고 개선본을 완성할 수 있다.</li></ol>
+<h3>학습내용</h3><table><tr><th>개념 축</th><th>내용</th><th>학습 산출물</th></tr>
+<tr><td>테스트 설계</td><td>정상 입력, 경계값, 예외 입력, 예상 결과</td><td>테스트 사례 5개 이상</td></tr>
+<tr><td>테스트 기록</td><td>입력, 예상 결과, 실제 결과, 통과 여부</td><td>테스트 결과표</td></tr>
+<tr><td>디버깅</td><td>오류 재현 → 원인 분석 → 수정 → 재검증</td><td>오류 수정 기록</td></tr>
+<tr><td>기능적 평가</td><td>정확성, 효율성, 사용성</td><td>기능 평가표</td></tr>
+<tr><td>윤리적 평가</td><td>개인정보, 편향, 저작권, 라이선스</td><td>윤리 점검표</td></tr>
+<tr><td>개선</td><td>평가 근거, 우선순위, 수정, 재검증</td><td>테스트 보고서·개선본</td></tr></table></section>
+
+<section id="concepts"><h2>4. 개념 및 상세 설명 · 관련 코드 · 코드별 확인 문제</h2><div class="concept"><div class="concept-head"><b>개념 1. 테스트 사례 설계: 정상 입력·경계값·예외 입력을 구분하기</b></div><div class="concept-body">
+<div class="two"><div><p>프로그램이 한 번 실행되었다고 해서 올바른 프로그램이라고 판단할 수는 없다. <b>테스트(test)</b>는 미리 준비한 입력을 프로그램에 넣고 실제 결과가 예상 결과와 일치하는지 확인하는 과정이다.</p>
+<p><b>정상 입력</b>은 일반적으로 기대하는 범위의 값, <b>경계값</b>은 조건이 바뀌는 최소·최대 또는 바로 주변의 값, <b>예외 입력</b>은 잘못된 자료형이나 허용 범위를 벗어난 값처럼 프로그램이 특별히 처리해야 하는 입력이다.</p>
+<p>좋은 테스트는 “잘 되는 예”만 확인하지 않는다. 실패하기 쉬운 경계와 예외를 의도적으로 포함해야 숨겨진 오류를 발견할 가능성이 높아진다.</p>
+<span class="tag t1">정상 입력</span><span class="tag t2">경계값</span><span class="tag t3">예외 입력</span><span class="tag t4">예상 결과</span></div><div><div class="codebox">def classify_score(score):
+    if score &lt; 0 or score &gt; 100:
+        return &quot;입력 오류&quot;
+    if score &gt;= 60:
+        return &quot;통과&quot;
+    return &quot;보충&quot;
+
+tests = [
+    (&quot;normal&quot;, 80),
+    (&quot;boundary&quot;, 60),
+    (&quot;boundary&quot;, 59),
+    (&quot;exception&quot;, -1)
+]
+
+for kind, value in tests:
+    print(kind, value, classify_score(value))</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 1 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 80은 일반적인 정상 입력의 예가 될 수 있다.</label><label class="option"><input type="checkbox" value="2">② 60과 59를 함께 확인하면 조건이 바뀌는 경계를 점검할 수 있다.</label><label class="option"><input type="checkbox" value="3">③ -1은 허용 범위를 벗어난 예외 입력으로 볼 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 테스트에서는 성공하는 입력만 사용해야 한다.</label><label class="option"><input type="checkbox" value="5">⑤ 경계값은 프로그램 조건과 관계없이 임의로 정한다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>정상·경계·예외 입력을 함께 설계하면 일반 상황뿐 아니라 조건 전환 지점과 잘못된 입력 처리까지 확인할 수 있다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 2. 테스트 명세: 입력·예상 결과·실제 결과를 기록하기</b></div><div class="concept-body">
+<div class="two"><div><p>테스트를 체계적으로 수행하려면 입력값만 나열하는 것보다 <b>테스트 목적, 입력, 예상 결과, 실제 결과, 통과 여부</b>를 함께 기록하는 것이 좋다.</p>
+<p>예상 결과는 프로그램을 실행하기 전에 정해야 한다. 실행 후 나온 값을 보고 예상 결과를 바꾸면 프로그램의 정확성을 객관적으로 판단하기 어렵다.</p>
+<p>테스트 결과를 표나 리스트로 남기면 어떤 입력에서 실패했는지 다시 확인할 수 있고, 수정 후 같은 사례를 다시 실행하는 <b>재검증</b>에도 활용할 수 있다.</p>
+<span class="tag t1">테스트 명세</span><span class="tag t2">예상 결과</span><span class="tag t3">실제 결과</span><span class="tag t4">통과 여부</span></div><div><div class="codebox">def double(x):
+    return x * 2
+
+test_cases = [
+    {&quot;input&quot;: 3, &quot;expected&quot;: 6},
+    {&quot;input&quot;: 0, &quot;expected&quot;: 0},
+    {&quot;input&quot;: -2, &quot;expected&quot;: -4}
+]
+
+for case in test_cases:
+    actual = double(case[&quot;input&quot;])
+    passed = actual == case[&quot;expected&quot;]
+
+    print(case[&quot;input&quot;],
+          case[&quot;expected&quot;],
+          actual,
+          passed)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 2 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① expected는 실행 전에 정한 예상 결과를 나타낸다.</label><label class="option"><input type="checkbox" value="2">② actual은 프로그램을 실행하여 얻은 실제 결과이다.</label><label class="option"><input type="checkbox" value="3">③ 예상 결과와 실제 결과를 비교하여 통과 여부를 판단할 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 테스트 결과는 실패한 경우 기록하지 않는 것이 좋다.</label><label class="option"><input type="checkbox" value="5">⑤ 예상 결과는 실제 결과를 본 뒤 항상 동일하게 수정해야 한다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>테스트 명세는 예상 결과와 실제 결과를 분리하여 기록하고 비교함으로써 프로그램의 정확성을 객관적으로 확인하게 한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 3. 디버깅 절차: 오류 재현 → 원인 분석 → 수정 → 재검증</b></div><div class="concept-body">
+<div class="two"><div><p><b>디버깅(debugging)</b>은 단순히 오류가 난 줄을 고치는 작업이 아니다. 먼저 같은 입력으로 오류를 다시 발생시키는 <b>재현</b>이 필요하고, 변수 값·조건식·함수 호출·자료형 등을 추적하여 원인을 찾아야 한다.</p>
+<p>원인을 찾은 뒤에는 필요한 부분만 수정하고, 오류가 발생했던 테스트를 다시 실행하여 해결되었는지 확인한다. 또한 수정으로 인해 다른 기능이 새롭게 잘못되지 않았는지도 살펴본다.</p>
+<p>따라서 좋은 디버깅 기록은 <b>증상 → 재현 입력 → 원인 → 수정 내용 → 재검증 결과</b>의 흐름을 포함한다.</p>
+<span class="tag t1">오류 재현</span><span class="tag t2">원인 분석</span><span class="tag t3">수정</span><span class="tag t4">재검증</span></div><div><div class="codebox">def average(values):
+    if len(values) == 0:
+        return None
+    return sum(values) / len(values)
+
+tests = [
+    [10, 20, 30],
+    [],
+    [5]
+]
+
+for data in tests:
+    result = average(data)
+    print(&quot;입력:&quot;, data,
+          &quot;결과:&quot;, result)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 3 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 빈 리스트는 0으로 나누는 오류 가능성을 확인하는 테스트가 될 수 있다.</label><label class="option"><input type="checkbox" value="2">② 오류 원인을 확인한 뒤 빈 리스트를 별도로 처리하도록 수정할 수 있다.</label><label class="option"><input type="checkbox" value="3">③ 수정 후 같은 테스트를 다시 실행하여 재검증할 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 디버깅에서는 오류를 재현하지 않고 무작위로 코드를 수정하는 것이 좋다.</label><label class="option"><input type="checkbox" value="5">⑤ 한 오류를 수정하면 다른 테스트는 다시 확인할 필요가 없다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>디버깅은 오류를 재현하고 원인을 근거 있게 분석한 뒤 최소한으로 수정하고 동일·관련 테스트로 다시 검증하는 과정이다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 4. 기능적 평가: 정확성·효율성·사용성을 함께 살펴보기</b></div><div class="concept-body">
+<div class="two"><div><p>프로젝트 산출물은 단순히 “실행되는가?”만으로 평가하기 어렵다. <b>정확성</b>은 요구한 결과를 올바르게 만드는지, <b>효율성</b>은 시간과 메모리 등 자원을 지나치게 낭비하지 않는지, <b>사용성</b>은 사용자가 입력·출력과 오류 메시지를 쉽게 이해할 수 있는지를 살펴보는 관점이다.</p>
+<p>예를 들어 결과는 정확하지만 데이터가 조금만 커져도 지나치게 느려진다면 효율성 개선이 필요하다. 오류가 발생했을 때 사용자가 무엇을 잘못했는지 알 수 없다면 사용성 측면의 개선이 필요하다.</p>
+<p>기능적 평가는 하나의 기준만 보는 것이 아니라 프로젝트 목표와 사용자 요구를 기준으로 여러 관점을 함께 검토한다.</p>
+<span class="tag t1">정확성</span><span class="tag t2">효율성</span><span class="tag t3">사용성</span><span class="tag t4">요구사항</span></div><div><div class="codebox">def evaluate(actual, expected,
+             elapsed, message):
+    accuracy = actual == expected
+    efficiency = elapsed &lt; 1.0
+    usability = len(message) &gt; 0
+
+    return {
+        &quot;accuracy&quot;: accuracy,
+        &quot;efficiency&quot;: efficiency,
+        &quot;usability&quot;: usability
+    }
+
+result = evaluate(
+    20, 20, 0.15,
+    &quot;처리가 완료되었습니다.&quot;
+)
+
+print(result)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 4 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① actual과 expected 비교는 정확성 점검과 관련 있다.</label><label class="option"><input type="checkbox" value="2">② elapsed를 기준과 비교하는 것은 효율성 평가의 한 예가 될 수 있다.</label><label class="option"><input type="checkbox" value="3">③ 사용자에게 의미 있는 메시지를 제공하는지는 사용성과 관련될 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 프로그램 결과만 정확하면 효율성과 사용성은 항상 평가할 필요가 없다.</label><label class="option"><input type="checkbox" value="5">⑤ 기능적 평가는 프로젝트 요구사항과 관계없이 실시해야 한다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>기능적 평가는 정확성뿐 아니라 효율성과 사용성 등 프로젝트가 실제 목적에 맞게 작동하는지를 여러 관점에서 확인한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 5. 윤리적 평가: 개인정보·편향을 점검하기</b></div><div class="concept-body">
+<div class="two"><div><p>정보과학 프로젝트는 기능적으로 잘 작동하더라도 사용자의 권리나 사회적 영향을 고려하지 않으면 좋은 산출물이라고 보기 어렵다. <b>개인정보</b>는 목적에 필요한 최소한만 수집하고, 불필요한 식별 정보가 저장·출력되지 않는지 확인해야 한다.</p>
+<p><b>편향(bias)</b>은 특정 집단이나 조건의 데이터가 지나치게 많거나 적어 결과가 한쪽으로 치우치는 문제와 관련될 수 있다. 따라서 데이터 구성과 결과가 특정 사용자에게 지속적으로 불리하게 작동하지 않는지 점검한다.</p>
+<p>윤리적 평가는 프로그램 개발이 끝난 뒤 형식적으로 추가하는 절차가 아니라, 문제 정의·데이터 수집·구현·테스트·개선 전 과정에서 반복해서 확인해야 하는 기준이다.</p>
+<span class="tag t1">개인정보 최소화</span><span class="tag t2">편향</span><span class="tag t3">공정성</span><span class="tag t4">사용자 권리</span></div><div><div class="codebox">records = [
+    {&quot;name&quot;: &quot;학생A&quot;,
+     &quot;score&quot;: 90},
+    {&quot;name&quot;: &quot;학생B&quot;,
+     &quot;score&quot;: 80}
+]
+
+safe_records = []
+
+for r in records:
+    safe_records.append({
+        &quot;score&quot;: r[&quot;score&quot;]
+    })
+
+print(safe_records)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 5 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 프로젝트 목적에 필요하지 않은 이름을 제거하는 것은 개인정보 최소화의 예가 될 수 있다.</label><label class="option"><input type="checkbox" value="2">② 데이터 구성에 따라 결과가 특정 조건에 치우치는지 점검할 수 있다.</label><label class="option"><input type="checkbox" value="3">③ 윤리적 평가는 기능 구현 과정과 함께 반복적으로 수행할 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 개인정보는 많이 수집할수록 항상 프로젝트 품질이 높아진다.</label><label class="option"><input type="checkbox" value="5">⑤ 편향은 데이터와 결과의 공정성과 전혀 관계가 없다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>윤리적 평가는 필요한 정보만 다루고 데이터와 결과의 편향 가능성을 점검하여 사용자의 권리와 공정성을 고려하는 과정이다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>개념 6. 저작권·라이선스 점검과 개선본 만들기</b></div><div class="concept-body">
+<div class="two"><div><p>8차시에서 활용한 오픈소스와 라이브러리는 9차시 평가에서도 다시 확인해야 한다. 사용한 코드·이미지·데이터·라이브러리의 <b>출처와 라이선스</b>가 기록되어 있는지, 수정·배포 조건을 지켰는지 점검한다.</p>
+<p>평가에서 발견한 문제는 단순히 표시하는 데서 끝나지 않는다. 우선순위를 정하여 수정하고, 다시 테스트하여 실제로 개선되었는지 확인해야 한다. 이 과정을 통해 <b>초기 시제품 → 테스트 보고서 → 평가표 → 개선본</b>이 연결된다.</p>
+<p>최종적으로는 “무엇을 바꾸었는가?”뿐 아니라 <b>왜 바꾸었고, 어떤 근거로 개선되었다고 판단했는가</b>를 설명할 수 있어야 한다.</p>
+<span class="tag t1">저작권</span><span class="tag t2">라이선스</span><span class="tag t3">개선 우선순위</span><span class="tag t4">재검증</span></div><div><div class="codebox">review = {
+    &quot;accuracy&quot;: &quot;통과&quot;,
+    &quot;privacy&quot;: &quot;개선 필요&quot;,
+    &quot;license&quot;: &quot;출처 확인&quot;,
+    &quot;action&quot;: &quot;개인정보 제거&quot;,
+    &quot;retest&quot;: &quot;통과&quot;
+}
+
+for item, result in review.items():
+    print(item, &quot;:&quot;, result)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>코드 6 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 사용한 외부 자료의 출처와 라이선스를 다시 점검할 수 있다.</label><label class="option"><input type="checkbox" value="2">② 평가에서 발견한 문제는 개선 항목으로 연결할 수 있다.</label><label class="option"><input type="checkbox" value="3">③ 수정 후 재검증하여 개선 여부를 확인할 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 라이선스 점검은 프로그램 프로젝트와 전혀 관계가 없다.</label><label class="option"><input type="checkbox" value="5">⑤ 개선본은 테스트 결과와 평가 근거 없이 임의로 수정하는 것이 좋다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>프로젝트 평가는 문제를 발견하는 데서 끝나지 않고 수정과 재검증을 거쳐 근거가 있는 개선본으로 연결되어야 한다.</div></div></div></div>
+<div class="notice"><b>목표지향 통합 과제 · 시제품 검증 및 개선 보고서</b><br>
+8차시에서 만든 핵심 기능 시제품을 대상으로 <b>① 정상 입력 2개 이상 ② 경계값 2개 이상 ③ 예외 입력 1개 이상</b>을 포함하여 최소 5개의 테스트 사례를 설계한다.
+각 사례에 <b>테스트 목적·입력·예상 결과·실제 결과·통과 여부</b>를 기록하고, 실패 사례가 있으면 <b>오류 재현 → 원인 분석 → 수정 → 재검증</b> 과정을 작성한다.
+마지막으로 <b>정확성·효율성·사용성·개인정보·편향·저작권·라이선스</b>를 점검하여 개선 항목의 우선순위를 정하고 개선본을 완성한다.</div></section>
+
+<section id="ending"><h2>5. 학습 마무리 멘트</h2><div class="ending"><h3>좋은 프로그램은 오류가 없는 프로그램이 아니라, 검증하고 개선할 수 있는 프로그램이다</h3>
+<p>오늘 우리는 프로그램을 단순히 실행해 보는 것과 체계적으로 테스트하는 것이 다르다는 점을 확인했습니다. 정상 입력만으로는 발견하기 어려운 문제를 경계값과 예외 입력을 통해 찾았고, 오류를 재현하고 원인을 분석하여 수정한 뒤 다시 검증했습니다.</p>
+<p>또한 프로그램의 품질은 정답을 출력하는 것만으로 결정되지 않습니다. 같은 결과를 더 효율적으로 만들 수 있는지, 사용자가 쉽게 이해할 수 있는지, 개인정보를 불필요하게 다루지는 않는지, 데이터와 결과가 편향되지는 않는지, 외부 자료의 저작권과 라이선스를 지키고 있는지도 함께 살펴야 합니다.</p>
+<p>오늘 작성한 <b>테스트 보고서·기능 및 윤리 평가표·개선본</b>은 프로젝트가 어떤 근거로 좋아졌는지를 보여 주는 기록입니다. 다음 10차시에서는 문제 발견부터 설계·구현·테스트·개선까지의 프로젝트 전체 흐름과 Ⅲ단원 알고리즘을 연결하여 2차고사 전 범위를 종합적으로 정리합니다.</p></div></section>
+
+<section id="diagnostic"><div class="quiz-head"><h2>6. 전체 학습내용 진단평가 OX 10문항</h2><div class="scorebox" id="diagScore">미채점</div></div><div id="diagQuestions"></div><div class="controls"><button class="btn primary" onclick="gradeDiagnostic()">진단평가 채점</button><button class="btn secondary" onclick="resetGroup('diagQuestions')">초기화</button></div></section>
+<section id="formative"><div class="quiz-head"><h2>7. 전체 학습내용 형성평가 10문항</h2><div class="scorebox" id="formScore">미채점</div></div><p class="small">각 문항은 보기 5개 중 옳은 것 3개를 모두 선택해야 정답이다.</p><div id="formQuestions"></div><div class="controls"><button class="btn primary" onclick="gradeFormative()">형성평가 채점</button><button class="btn secondary" onclick="resetGroup('formQuestions')">초기화</button></div></section>
+<section id="submit"><h2>8. 학번·이름 입력 및 결과 저장</h2><div class="userbox"><label><b>학번</b><input type="text" id="studentId" placeholder="예: 1101"></label><label><b>이름</b><input type="text" id="studentName" placeholder="예: 홍길동"></label></div><h3>전체 진행률</h3><div class="progress-wrap"><div class="progress" id="progress"></div></div><p id="progressText" class="small">0%</p><div class="controls"><button class="btn primary" onclick="finalSubmit()">전체 채점 및 TXT 저장</button><button class="btn secondary" onclick="window.print()">인쇄 / PDF</button></div><div class="result-panel" id="resultPanel"></div></section>
+</main><footer><p>2022 개정 고등학교 정보과학 2학기 2차고사 10차시 계획의 9차시 「테스트·디버깅과 기능적·윤리적 평가」를 중심으로 구성한 개념기반 목표지향 수업자료이다.</p></footer><button class="print" onclick="window.print()">인쇄 / PDF</button>
+
+<script>
+const diagData=[{"q": "테스트는 입력에 대한 실제 결과가 예상 결과와 일치하는지 확인하는 과정이다.", "a": "O", "e": "테스트 사례의 입력·예상 결과·실제 결과를 비교하여 프로그램의 동작을 검증한다."}, {"q": "경계값 테스트는 조건이 바뀌는 지점과 그 주변을 확인하는 데 도움이 된다.", "a": "O", "e": "최솟값·최댓값·조건 전환 지점과 바로 주변에서 오류가 자주 발생할 수 있다."}, {"q": "예외 입력은 프로그램이 정상적으로 처리할 수 있는 일반적인 값만을 의미한다.", "a": "X", "e": "예외 입력은 허용 범위를 벗어난 값이나 잘못된 자료형 등 특별한 처리가 필요한 입력을 포함한다."}, {"q": "예상 결과는 프로그램 실행 결과를 확인한 뒤 그 값과 같게 정하는 것이 가장 객관적이다.", "a": "X", "e": "예상 결과는 실행 전에 요구사항과 설계를 근거로 정해야 객관적인 비교가 가능하다."}, {"q": "디버깅에서는 오류를 재현하고 원인을 분석한 뒤 수정하고 재검증하는 과정이 중요하다.", "a": "O", "e": "오류 재현→원인 분석→수정→재검증은 체계적인 디버깅의 핵심 흐름이다."}, {"q": "기능적 평가에서는 정확성뿐 아니라 효율성과 사용성도 고려할 수 있다.", "a": "O", "e": "프로젝트가 목적에 맞게 작동하는지 여러 기능적 기준으로 평가한다."}, {"q": "개인정보는 프로젝트 목적과 관계없이 가능한 한 많이 수집하는 것이 좋다.", "a": "X", "e": "목적에 필요한 최소한의 정보만 수집·사용하는 원칙이 중요하다."}, {"q": "데이터 편향은 특정 조건이나 집단에 결과가 지속적으로 치우치는 문제와 관련될 수 있다.", "a": "O", "e": "데이터 구성과 결과를 살펴 편향 가능성을 점검해야 한다."}, {"q": "외부 코드·이미지·데이터를 사용했다면 출처와 라이선스를 점검할 수 있다.", "a": "O", "e": "저작권과 라이선스 조건은 윤리적 평가의 중요한 요소이다."}, {"q": "프로젝트 평가는 문제점을 찾는 것으로 끝나며 수정 후 다시 테스트할 필요는 없다.", "a": "X", "e": "평가 결과를 개선에 반영하고 재검증하여 실제로 문제가 해결되었는지 확인해야 한다."}],formData=[{"q": "테스트 사례 설계에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 정상 입력을 포함할 수 있다.", "② 조건 전환 지점의 경계값을 포함할 수 있다.", "③ 잘못된 값이나 허용 범위를 벗어난 예외 입력을 포함할 수 있다.", "④ 성공하는 입력만 사용해야 한다.", "⑤ 예상 결과는 작성하지 않는 것이 좋다."], "a": [1, 2, 3], "e": "정상·경계·예외 입력을 균형 있게 포함하면 다양한 상황에서 프로그램을 검증할 수 있다."}, {"q": "테스트 명세에 포함하기 적절한 것을 모두 고르시오.", "o": ["① 테스트 입력", "② 예상 결과", "③ 실제 결과와 통과 여부", "④ 프로그램과 무관한 개인 정보", "⑤ 실행 후 임의로 바꾼 예상값만 기록"], "a": [1, 2, 3], "e": "테스트 명세는 입력, 예상 결과, 실제 결과와 판정 근거를 기록한다."}, {"q": "디버깅 절차로 옳은 것을 모두 고르시오.", "o": ["① 오류를 같은 조건에서 재현한다.", "② 변수·조건·자료형 등을 추적하여 원인을 분석한다.", "③ 수정 후 동일·관련 테스트로 재검증한다.", "④ 원인 분석 없이 여러 코드를 무작위로 바꾼다.", "⑤ 수정 후 다른 기능은 확인하지 않는다."], "a": [1, 2, 3], "e": "체계적인 디버깅은 재현·분석·수정·재검증의 흐름을 따른다."}, {"q": "기능적 평가의 관점으로 옳은 것을 모두 고르시오.", "o": ["① 요구한 결과를 올바르게 만드는 정확성", "② 시간·메모리 등의 효율성", "③ 사용자가 쉽게 이해하고 사용할 수 있는 사용성", "④ 출처를 숨기는 정도", "⑤ 개인정보를 많이 수집하는 정도"], "a": [1, 2, 3], "e": "정확성·효율성·사용성은 프로젝트의 기능적 품질을 살펴보는 주요 관점이다."}, {"q": "개인정보를 고려한 프로젝트 개선으로 옳은 것을 모두 고르시오.", "o": ["① 목적에 불필요한 식별 정보를 제거한다.", "② 필요한 정보만 수집하도록 항목을 줄인다.", "③ 출력 화면에 불필요한 개인정보가 노출되지 않는지 확인한다.", "④ 가능한 모든 개인정보를 저장한다.", "⑤ 목적과 관계없는 정보를 추가 수집한다."], "a": [1, 2, 3], "e": "개인정보는 목적에 필요한 범위로 최소화하고 불필요한 노출을 방지해야 한다."}, {"q": "편향 점검에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 데이터가 특정 조건에 지나치게 치우쳤는지 살펴본다.", "② 결과가 특정 사용자에게 지속적으로 불리한지 확인할 수 있다.", "③ 데이터 구성과 결과를 함께 검토할 수 있다.", "④ 편향은 데이터와 무관하다.", "⑤ 결과가 실행되기만 하면 공정성은 확인할 필요가 없다."], "a": [1, 2, 3], "e": "편향 평가는 데이터 구성과 결과의 공정성을 함께 살펴보는 과정이다."}, {"q": "저작권·라이선스 점검으로 옳은 것을 모두 고르시오.", "o": ["① 사용한 외부 코드의 출처를 확인한다.", "② 라이브러리의 라이선스 조건을 확인한다.", "③ 이미지·데이터의 이용 조건도 점검할 수 있다.", "④ 인터넷에서 찾은 자료는 모두 자유롭게 사용할 수 있다.", "⑤ 출처 기록은 프로젝트와 무관하다."], "a": [1, 2, 3], "e": "코드뿐 아니라 이미지·데이터·라이브러리 등 외부 자료의 이용 조건을 확인해야 한다."}, {"q": "평가 결과를 개선본으로 연결하는 방법으로 옳은 것을 모두 고르시오.", "o": ["① 발견된 문제의 중요도와 영향을 고려해 우선순위를 정한다.", "② 수정한 내용을 기록한다.", "③ 수정 후 테스트를 다시 수행하여 개선 여부를 확인한다.", "④ 평가표와 관계없이 모든 코드를 무작위로 바꾼다.", "⑤ 재검증 없이 개선되었다고 판단한다."], "a": [1, 2, 3], "e": "평가 근거에 따라 수정하고 재검증해야 개선 효과를 설명할 수 있다."}, {"q": "[12정과04-04]~[12정과04-05]와 관련된 활동으로 옳은 것을 모두 고르시오.", "o": ["① 테스트와 디버깅으로 프로그램을 검증한다.", "② 프로젝트 산출물을 기능적·윤리적 관점에서 평가한다.", "③ 평가 결과를 바탕으로 프로그램을 개선한다.", "④ 문제 발견만 하고 프로그램 검증은 하지 않는다.", "⑤ 라이브러리를 불러오는 활동만 수행한다."], "a": [1, 2, 3], "e": "9차시는 테스트·디버깅을 통한 검증과 기능적·윤리적 평가·개선을 통합한다."}, {"q": "9차시 학습을 종합한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 정상·경계·예외 입력으로 테스트 사례를 설계한다.", "② 오류를 재현·분석·수정·재검증하고 결과를 기록한다.", "③ 정확성·효율성·사용성·개인정보·편향·저작권 등을 평가하여 개선본을 만든다.", "④ 실행만 되면 테스트 보고서와 윤리 점검은 필요 없다.", "⑤ 평가에서 문제를 발견해도 개선하지 않는다."], "a": [1, 2, 3], "e": "9차시는 시제품을 검증하고 기능적·윤리적으로 평가하여 테스트 보고서·평가표·개선본으로 완성하는 차시이다."}];
+function renderDiagnostic(){document.getElementById('diagQuestions').innerHTML=diagData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4><label class="option"><input type="radio" name="d${i}" value="O"> O</label><label class="option"><input type="radio" name="d${i}" value="X"> X</label><div class="feedback" id="df${i}"></div></div>`).join('');}
+function renderFormative(){document.getElementById('formQuestions').innerHTML=formData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4>${x.o.map((o,j)=>`<label class="option"><input type="checkbox" name="f${i}" value="${j+1}">${o}</label>`).join('')}<div class="feedback" id="ff${i}"></div></div>`).join('');}
+renderDiagnostic();renderFormative();
+document.querySelectorAll('.check-one').forEach(b=>b.addEventListener('click',()=>{let q=b.closest('.question'),a=q.dataset.answer.split(',').sort().join(','),s=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort().join(','),f=q.querySelector('.feedback');if(!f.dataset.original)f.dataset.original=f.innerHTML;f.className='feedback show '+(s===a?'correct':'wrong');f.innerHTML=(s===a?'<b>정답입니다.</b><br>':'<b>다시 확인하세요.</b><br>')+f.dataset.original;updateProgress();}));
+function gradeDiagnostic(){let s=0;diagData.forEach((x,i)=>{let c=document.querySelector(`input[name=d${i}]:checked`),ok=c&&c.value===x.a;if(ok)s++;let f=document.getElementById(`df${i}`);f.className='feedback show '+(ok?'correct':'wrong');f.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${x.a}<br>${x.e}`;});document.getElementById('diagScore').textContent=`${s}/10`;updateProgress();return s;}
+function gradeFormative(){let s=0;formData.forEach((x,i)=>{let c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b),a=[...x.a].sort((a,b)=>a-b),ok=JSON.stringify(c)===JSON.stringify(a);if(ok)s++;let f=document.getElementById(`ff${i}`);f.className='feedback show '+(ok?'correct':'wrong');f.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${a.map(n=>'①②③④⑤'[n-1]).join(', ')}<br>${x.e}`;});document.getElementById('formScore').textContent=`${s}/10`;updateProgress();return s;}
+function resetGroup(id){document.querySelectorAll(`#${id} input`).forEach(x=>x.checked=false);document.querySelectorAll(`#${id} .feedback`).forEach(x=>{x.className='feedback';x.innerHTML='';});if(id==='diagQuestions')document.getElementById('diagScore').textContent='미채점';if(id==='formQuestions')document.getElementById('formScore').textContent='미채점';updateProgress();}
+function updateProgress(){let d=0;document.querySelectorAll('.concept .question').forEach(q=>{if(q.querySelectorAll('input:checked').length)d++;});for(let i=0;i<10;i++){if(document.querySelector(`input[name=d${i}]:checked`))d++;if(document.querySelectorAll(`input[name=f${i}]:checked`).length)d++;}let p=Math.min(100,Math.round(d/26*100));document.getElementById('progress').style.width=p+'%';document.getElementById('progressText').textContent=`${p}% (${d}/26 항목 응답)`;}
+document.addEventListener('change',updateProgress);
+function finalSubmit(){let sid=document.getElementById('studentId').value.trim(),name=document.getElementById('studentName').value.trim();if(!sid||!name){alert('학번과 이름을 입력하세요.');return;}let d=gradeDiagnostic(),f=gradeFormative(),cs=0,reports=[];document.querySelectorAll('.concept .question').forEach((q,i)=>{let a=q.dataset.answer.split(',').sort(),s=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort(),ok=JSON.stringify(a)===JSON.stringify(s);if(ok)cs++;reports.push(`코드 확인 ${i+1}: ${ok?'정답':'오답'} / 응답 ${s.join(',')||'미응답'} / 정답 ${a.join(',')}`);});let raw=cs+d+f,total=26,score=Math.round(raw/total*100),now=new Date(),stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0');let lines=['정보과학 2차고사 9차시 개념기반 목표지향 학습 결과','주제: 테스트·디버깅과 기능적·윤리적 평가','성취기준: [12정과04-04], [12정과04-05]',`학번: ${sid}`,`이름: ${name}`,`점수: ${score}점 (${raw}/${total})`,`응시시각: ${now.toLocaleString('ko-KR')}`,'','[코드별 확인 문제]',...reports,'','[진단평가 OX]'];diagData.forEach((x,i)=>{let c=document.querySelector(`input[name=d${i}]:checked`)?.value||'미응답';lines.push(`${i+1}. ${c===x.a?'정답':'오답'} / 응답 ${c} / 정답 ${x.a} / 풀이: ${x.e}`);});lines.push('','[형성평가]');formData.forEach((x,i)=>{let c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b),a=[...x.a].sort((a,b)=>a-b),ok=JSON.stringify(c)===JSON.stringify(a);lines.push(`${i+1}. ${ok?'정답':'오답'} / 응답 ${c.join(',')||'미응답'} / 정답 ${a.join(',')} / 풀이: ${x.e}`);});let blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}),link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download=`${sid}_${name}_${score}점_2차고사9차시_${stamp}.txt`;link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);let p=document.getElementById('resultPanel');p.classList.add('show');p.innerHTML=`<h3>최종 결과</h3><p class="big">${score}점</p><p>코드 확인 ${cs}/6 · 진단평가 ${d}/10 · 형성평가 ${f}/10</p><p><b>${sid} ${name}</b> 학생의 결과 TXT 파일을 저장했습니다.</p>`;}
+</script></body></html>
