@@ -1,0 +1,301 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>2022 개정 고등학교 정보과학 2학기 2차고사 전체범위 정리학습</title><style>
+:root{
+  --navy:#17324d; --blue:#2f6fb3; --sky:#eaf4ff; --green:#1f8a70;
+  --mint:#eaf8f3; --orange:#f59e0b; --rose:#cf4568; --purple:#7656a7;
+  --ink:#17212b; --muted:#5c6978; --line:#d8e2ec; --paper:#fff; --bg:#f4f7fb;
+  --ok:#127a50; --bad:#bc2f3e;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.7}
+header{background:linear-gradient(135deg,#132b42,#2f6fb3 62%,#4796dc);color:#fff;padding:42px 20px}
+.header-inner{max-width:1320px;margin:auto}
+.kicker{font-size:.9rem;letter-spacing:.08em;opacity:.88}
+h1{font-size:clamp(2rem,4vw,3.35rem);line-height:1.2;margin:.35rem 0 .8rem}
+.subtitle{max-width:980px;font-size:1.08rem;opacity:.95}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.badge{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px rgba(23,50,77,.08)}
+.nav-inner{max-width:1320px;margin:auto;display:flex;gap:7px;overflow-x:auto;padding:9px 12px}
+nav a{text-decoration:none;color:var(--navy);font-weight:800;white-space:nowrap;padding:8px 10px;border-radius:8px;font-size:.89rem}
+nav a:hover{background:var(--sky)}
+main{max-width:1320px;margin:auto;padding:22px 16px 76px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:25px;margin:19px 0;box-shadow:0 7px 22px rgba(23,50,77,.055)}
+h2{color:var(--navy);font-size:1.65rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}
+h3{color:var(--navy);margin:20px 0 10px}
+h4{color:#254d72;margin:16px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:13px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.card strong{display:block;color:var(--navy);font-size:1.04rem;margin-bottom:5px}
+.big{font-size:1.9rem;font-weight:900;color:var(--blue)}
+.story{background:linear-gradient(135deg,#fff9ea,#fff);border-left:7px solid var(--orange);padding:20px;border-radius:14px}
+.ending{background:linear-gradient(135deg,#f5efff,#fff);border-left:7px solid var(--purple);padding:20px;border-radius:14px}
+.standard{background:var(--mint);border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:10px;vertical-align:top}
+th{background:#edf4fb;color:var(--navy);text-align:center}
+tr:nth-child(even) td{background:#fbfdff}
+code{font-family:Consolas,"D2Coding",monospace}
+pre{white-space:pre-wrap}
+.codebox{background:#111c27;color:#eaf2f8;border-radius:13px;padding:15px 17px;overflow:auto;font-family:Consolas,"D2Coding",monospace;font-size:.91rem;line-height:1.55;white-space:pre}
+.concept{border:1px solid var(--line);border-radius:16px;margin:18px 0;overflow:hidden}
+.concept-head{background:linear-gradient(90deg,#eaf4ff,#f9fcff);padding:15px 18px;border-bottom:1px solid var(--line)}
+.concept-head b{color:var(--navy);font-size:1.18rem}
+.concept-body{padding:18px}
+.two{display:grid;grid-template-columns:1.05fr .95fr;gap:16px}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+.tag{display:inline-block;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:800;margin:2px}
+.t1{background:#eaf4ff;color:#245b91}.t2{background:#eaf8f3;color:#146b58}.t3{background:#fff0f4;color:#a63d5b}.t4{background:#fff6df;color:#8a5b00}
+.question{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fff}
+.question h4{margin-top:0}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer;background:#fff}
+.option:hover{background:#f5f9fd}
+.option input{margin-right:8px;transform:scale(1.1)}
+.feedback{display:none;margin-top:11px;padding:12px;border-radius:9px;background:#f6f8fb}
+.feedback.show{display:block}
+.correct{border-left:5px solid var(--ok)}
+.wrong{border-left:5px solid var(--bad)}
+.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+.primary{background:var(--blue);color:#fff}.secondary{background:#eaf0f6;color:var(--navy)}
+.danger{background:var(--rose);color:#fff}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.quiz-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.scorebox{background:#edf7ff;border:1px solid #b9d8f0;border-radius:12px;padding:12px 15px;font-weight:800;color:var(--navy)}
+.userbox{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input[type=text]{width:100%;padding:11px;border:1px solid #cfdbe6;border-radius:9px;font-size:1rem}
+.progress-wrap{height:12px;background:#e9eef3;border-radius:999px;overflow:hidden}
+.progress{height:100%;background:linear-gradient(90deg,#2f6fb3,#1f8a70);width:0%;transition:.3s}
+.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.small{font-size:.86rem;color:var(--muted)}
+.result-panel{display:none;border:2px solid #9ac9ea;background:#f6fbff;border-radius:15px;padding:18px;margin-top:18px}
+.result-panel.show{display:block}
+.print{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--navy);color:white;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 7px 24px rgba(0,0,0,.2)}
+footer{max-width:1320px;margin:0 auto 40px;padding:0 18px;color:#5e6c78;font-size:.86rem}
+@media(max-width:650px){.userbox{grid-template-columns:1fr}.quiz-head{align-items:flex-start;flex-direction:column}}
+@media print{nav,.print,.controls button{display:none!important}body{background:white}section{box-shadow:none;break-inside:avoid}.question{break-inside:avoid}}
+</style><style>
+.review-map{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.review-card{border:1px solid var(--line);border-radius:14px;padding:15px;background:linear-gradient(180deg,#fff,#fbfdff)}
+.review-card b{display:block;color:var(--navy);margin-bottom:5px}.section-label{display:inline-block;background:var(--navy);color:#fff;border-radius:999px;padding:4px 9px;font-size:.76rem;font-weight:800;margin-bottom:6px}
+.misconception{background:#fff4f1;border-left:6px solid var(--rose);padding:14px 16px;border-radius:10px;margin:10px 0}
+.exam-tip{background:#f5efff;border-left:6px solid var(--purple);padding:14px 16px;border-radius:10px;margin:12px 0}
+.compare td:first-child{font-weight:800;color:var(--navy)}
+</style></head><body>
+<header><div class="header-inner"><div class="kicker">2022 개정 고등학교 정보과학 · 2학기 2차고사 최종 정리</div>
+<h1>Ⅲ 알고리즘 · Ⅳ 정보과학 프로젝트 · Ⅴ 종합·성찰<br>2차고사 전체범위 정리학습</h1>
+<div class="subtitle">10차시의 핵심 개념과 필수 코드를 다시 연결하고, 알고리즘 선택·코드 추적·시간 복잡도·프로젝트 설계·협업 구현·테스트·정보윤리까지 시험 직전 한 번에 점검하도록 구성한 최종 복습 자료이다.</div>
+<div class="badges"><span class="badge">10차시 전체 복습</span><span class="badge">복습 코드 10개</span><span class="badge">코드 확인 10문항</span><span class="badge">OX 20문항</span><span class="badge">통합 형성평가 20문항</span><span class="badge">오개념 점검 8개</span><span class="badge">자동채점·TXT 저장</span></div></div></header>
+<nav><div class="nav-inner"><a href="#overview">전체 개념망</a><a href="#standards">성취기준</a><a href="#compare">알고리즘 비교</a><a href="#project">프로젝트 흐름</a><a href="#review">10차시 복습</a><a href="#mistakes">오개념</a><a href="#diagnostic">OX 20</a><a href="#formative">통합평가 20</a><a href="#submit">결과 저장</a></div></nav>
+<main>
+<section id="overview"><h2>1. 2차고사 전체범위 한눈에 보기</h2>
+<div class="review-map">
+<div class="review-card"><span class="section-label">Ⅲ 알고리즘</span><b>상태 공간·완전 탐색</b>상태 → 연산 → 목표 상태 → 모든 후보 확인</div>
+<div class="review-card"><span class="section-label">Ⅲ 알고리즘</span><b>백트래킹·가지치기</b>선택 → 탐색 → 되돌리기 → 유망하지 않은 상태 배제</div>
+<div class="review-card"><span class="section-label">Ⅲ 알고리즘</span><b>탐욕법</b>지역 최적 → 전체 최적 → 반례 검증</div>
+<div class="review-card"><span class="section-label">Ⅲ 알고리즘</span><b>분할정복</b>분할 → 해결 → 결합 → 이진 탐색·병합 정렬</div>
+<div class="review-card"><span class="section-label">Ⅲ 알고리즘</span><b>동적계획법</b>중복 부분 문제 → 상태 → 점화식 → 저장·재사용</div>
+<div class="review-card"><span class="section-label">Ⅲ 알고리즘</span><b>복잡도</b>O(1) → O(log n) → O(n) → O(n log n) → O(n²)</div>
+<div class="review-card"><span class="section-label">Ⅳ 프로젝트</span><b>기획</b>문제 발견 → 요구 분석 → 기능·알고리즘·테스트 설계</div>
+<div class="review-card"><span class="section-label">Ⅳ 프로젝트</span><b>구현</b>오픈소스 → 라이브러리 → 모듈화 → 인터페이스 → 통합</div>
+<div class="review-card"><span class="section-label">Ⅳ 프로젝트</span><b>검증·평가</b>정상·경계·예외 → 디버깅 → 기능·윤리 평가 → 개선</div>
+<div class="review-card"><span class="section-label">Ⅴ 종합·성찰</span><b>최종 연결</b>문제 구조 → 알고리즘 선택 → 구현 → 분석 → 검증 → 개선</div>
+</div>
+<div class="exam-tip"><b>시험 직전 핵심 원칙</b><br>알고리즘 이름만 외우지 말고 <b>문제 구조·코드 패턴·적용 조건·시간 복잡도·다른 전략과의 차이</b>를 함께 설명한다. 프로젝트는 <b>문제 정의 → 설계 → 구현 → 테스트 → 기능·윤리 평가 → 개선</b>의 연결을 기억한다.</div></section>
+
+<section id="standards"><h2>2. 성취기준별 최종 점검</h2>
+<table><tr><th>성취기준</th><th>최종 점검</th></tr>
+<tr><td>[12정과03-01]</td><td>상태·연산·목표 상태를 정의하고 탐색 문제를 표현한다.</td></tr>
+<tr><td>[12정과03-02]</td><td>안전한 가지치기 조건과 기존 탐색 대비 효과를 설명한다.</td></tr>
+<tr><td>[12정과03-03]</td><td>부분 문제로 분해하고 부분 문제 사이 관계를 파악한다.</td></tr>
+<tr><td>[12정과03-04]</td><td>분할·해결·결합 구조를 코드에서 찾고 구현한다.</td></tr>
+<tr><td>[12정과03-05]</td><td>DP의 상태·점화식·저장 구조를 설명한다.</td></tr>
+<tr><td>[12정과03-06]</td><td>코드의 시간 복잡도를 분석하고 효율성을 비교한다.</td></tr>
+<tr><td>[12정과04-01]</td><td>정보과학으로 해결 가능한 실생활 문제를 발견한다.</td></tr>
+<tr><td>[12정과04-02]</td><td>사용자·입력·출력·제한·기능·일정·테스트를 설계한다.</td></tr>
+<tr><td>[12정과04-03]</td><td>라이브러리·오픈소스·모듈화·인터페이스를 활용해 협업 구현한다.</td></tr>
+<tr><td>[12정과04-04]</td><td>정상·경계·예외 테스트와 디버깅으로 검증한다.</td></tr>
+<tr><td>[12정과04-05]</td><td>정확성·효율성·사용성·개인정보·편향·저작권을 평가하고 개선한다.</td></tr>
+</table></section>
+
+<section id="compare"><h2>3. 알고리즘 전략·복잡도 비교</h2>
+<table class="compare"><tr><th>전략</th><th>핵심 생각</th><th>코드 신호</th><th>주의점</th></tr>
+<tr><td>완전 탐색</td><td>모든 후보 확인</td><td>중첩 반복·모든 분기 재귀</td><td>후보 수 증가</td></tr>
+<tr><td>백트래킹</td><td>선택 후 되돌리기</td><td>append→재귀→pop</td><td>상태 복원</td></tr>
+<tr><td>가지치기</td><td>불필요한 상태 배제</td><td>조건→return/continue</td><td>정답 보존 조건</td></tr>
+<tr><td>탐욕법</td><td>현재 최선 선택</td><td>정렬 후 한 방향 선택</td><td>최적성·반례</td></tr>
+<tr><td>분할정복</td><td>분할→해결→결합</td><td>mid·재귀·merge</td><td>부분 문제 관계</td></tr>
+<tr><td>DP</td><td>중복 결과 저장·재사용</td><td>memo·dp[]·점화식</td><td>상태 정의</td></tr></table>
+<table><tr><th>복잡도</th><th>대표 예</th><th>증가 특징</th></tr><tr><td>O(1)</td><td>고정 횟수 접근</td><td>거의 일정</td></tr><tr><td>O(log n)</td><td>이진 탐색</td><td>범위를 절반 수준으로 감소</td></tr><tr><td>O(n)</td><td>선형 탐색</td><td>n에 비례</td></tr><tr><td>O(n log n)</td><td>병합 정렬</td><td>분할 단계×병합 처리</td></tr><tr><td>O(n²)</td><td>이중 반복</td><td>n의 제곱에 비례</td></tr></table></section>
+
+<section id="project"><h2>4. 정보과학 프로젝트 전체 흐름</h2><div class="review-map">
+<div class="review-card"><b>① 문제 발견</b>실생활 불편·비효율 → 해결 가능성</div><div class="review-card"><b>② 요구 분석</b>사용자·입력·출력·제한 조건</div><div class="review-card"><b>③ 설계</b>기능 분해·알고리즘·역할·일정·테스트</div><div class="review-card"><b>④ 구현</b>라이브러리·오픈소스·모듈화·인터페이스</div><div class="review-card"><b>⑤ 검증</b>정상·경계·예외 → 디버깅</div><div class="review-card"><b>⑥ 평가·개선</b>기능·윤리 평가 → 수정 → 재검증</div></div></section>
+
+<section id="review"><h2>5. 10차시 핵심 개념·코드 정리</h2><div class="concept"><div class="concept-head"><b>1차시 · 상태 공간과 완전 탐색</b></div><div class="concept-body">
+<div class="standard"><b>성취기준</b> [12정과03-01]</div><div class="two"><div><p><b>상태 공간</b>은 문제 해결 과정의 가능한 상태와 상태 전이를 구조화한 것이다. 상태·연산·초기 상태·목표 상태를 먼저 정의하면 탐색 문제를 명확하게 표현할 수 있다.</p>
+<p><b>완전 탐색</b>은 가능한 후보를 빠짐없이 확인하는 기준 전략이다. 정답을 놓치지 않는 장점이 있지만 후보 수가 2ⁿ, n!처럼 증가하면 실행량이 매우 커질 수 있다.</p>
+<p>시험에서는 종료 조건·목표 조건의 차이, 중첩 반복 또는 재귀가 만드는 후보 수를 분석하는 문제가 중요하다.</p></div><div><div class="codebox">def binary(s, n):
+    if len(s) == n:
+        print(s)
+        return
+    binary(s + &quot;0&quot;, n)
+    binary(s + &quot;1&quot;, n)
+
+binary(&quot;&quot;, 3)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>복습 코드 1 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 각 단계에서 0과 1 두 선택이 생긴다.</label><label class="option"><input type="checkbox" value="2">② len(s)==n은 후보 완성의 종료 조건이다.</label><label class="option"><input type="checkbox" value="3">③ n=3이면 2³=8개 후보가 생성된다.</label><label class="option"><input type="checkbox" value="4">④ 후보는 n개만 생성된다.</label><label class="option"><input type="checkbox" value="5">⑤ 재귀는 상태 공간과 무관하다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>각 자리마다 0/1을 선택하므로 깊이 n에서 2ⁿ개의 완성 후보가 만들어진다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>2차시 · 백트래킹과 가지치기</b></div><div class="concept-body">
+<div class="standard"><b>성취기준</b> [12정과03-02]</div><div class="two"><div><p><b>백트래킹</b>은 선택을 진행하다가 적절한 해로 이어지기 어렵다고 판단되면 이전 상태로 돌아가 다른 선택을 시도한다. 대표 패턴은 <b>선택 → 재귀 → 되돌리기</b>이다.</p>
+<p><b>가지치기</b>는 정답이 될 수 없는 상태 아래의 탐색을 생략하는 것이다. 정답을 유지하면서 방문 상태 수를 줄이는 것이 핵심이며, 잘못된 가지치기는 실제 정답도 제거할 수 있다.</p>
+<p>완전 탐색과 비교할 때는 정답의 동일성, 방문 상태 수, 실행 횟수 등을 함께 본다.</p></div><div><div class="codebox">path = []
+
+def perm(n):
+    if len(path) == n:
+        print(path)
+        return
+    for x in range(1, n + 1):
+        if x not in path:
+            path.append(x)
+            perm(n)
+            path.pop()
+
+perm(3)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>복습 코드 2 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① append는 현재 선택을 기록한다.</label><label class="option"><input type="checkbox" value="2">② 재귀 뒤 pop은 직전 선택을 되돌린다.</label><label class="option"><input type="checkbox" value="3">③ x not in path는 중복 선택을 막는다.</label><label class="option"><input type="checkbox" value="4">④ pop은 새로운 값을 추가한다.</label><label class="option"><input type="checkbox" value="5">⑤ 백트래킹은 상태 복원과 무관하다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>append와 pop의 대응으로 한 경로를 탐색한 뒤 이전 상태를 복원한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>3차시 · 탐욕법과 반례</b></div><div class="concept-body">
+<div class="standard"><b>성취기준</b> [12정과03-02], [12정과03-03]</div><div class="two"><div><p><b>탐욕법</b>은 매 단계에서 현재 기준으로 가장 좋아 보이는 선택을 하고 그 선택을 되돌리지 않는다. 현재의 최선은 <b>지역 최적</b>, 문제 전체의 최선은 <b>전체 최적</b>이다.</p>
+<p>탐욕법은 항상 전체 최적을 보장하지 않으므로 선택 기준을 검토하고 작은 입력에서 <b>반례</b>를 찾아 적용 조건을 확인해야 한다.</p>
+<p>동전 [1,3,4]로 6을 만들 때 큰 동전부터 고르면 4+1+1의 3개지만, 3+3은 2개이므로 탐욕 규칙이 실패한다.</p></div><div><div class="codebox">coins = [4, 3, 1]
+amount = 6
+result = []
+
+for coin in coins:
+    while amount &gt;= coin:
+        amount -= coin
+        result.append(coin)
+
+print(result)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>복습 코드 3 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 결과는 [4,1,1]이다.</label><label class="option"><input type="checkbox" value="2">② 동전 3개를 사용한다.</label><label class="option"><input type="checkbox" value="3">③ [3,3]이 더 적으므로 반례가 된다.</label><label class="option"><input type="checkbox" value="4">④ 탐욕법은 항상 최적이다.</label><label class="option"><input type="checkbox" value="5">⑤ 반례는 적용 조건과 무관하다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>탐욕법은 빠를 수 있지만 최적성 보장을 확인해야 하며 반례는 그 한계를 보여 준다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>4차시 · 분할정복: 이진 탐색과 병합 정렬</b></div><div class="concept-body">
+<div class="standard"><b>성취기준</b> [12정과03-04]</div><div class="two"><div><p><b>분할정복</b>은 큰 문제를 작은 부분 문제로 <b>분할</b>하고, 각각 <b>해결</b>한 뒤 필요한 경우 <b>결합</b>한다.</p>
+<p><b>이진 탐색</b>은 정렬된 자료에서 중간값을 기준으로 필요한 절반만 다시 탐색하며 대표 복잡도는 O(log n)이다. <b>병합 정렬</b>은 두 절반을 모두 정렬한 뒤 merge로 결합하며 대표 복잡도는 O(n log n)이다.</p>
+<p>같은 분할정복이라도 해결하는 부분 문제 수와 결합 과정이 다르다는 점을 비교해야 한다.</p></div><div><div class="codebox">def binary_search(a, target, left, right):
+    if left &gt; right:
+        return -1
+    mid = (left + right) // 2
+    if a[mid] == target:
+        return mid
+    if target &lt; a[mid]:
+        return binary_search(a, target, left, mid - 1)
+    return binary_search(a, target, mid + 1, right)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>복습 코드 4 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 정렬된 자료가 필요하다.</label><label class="option"><input type="checkbox" value="2">② 비교 결과에 따라 한쪽 절반을 탐색한다.</label><label class="option"><input type="checkbox" value="3">③ 대표 복잡도는 O(log n)이다.</label><label class="option"><input type="checkbox" value="4">④ 항상 모든 원소를 확인한다.</label><label class="option"><input type="checkbox" value="5">⑤ 정렬 여부는 무관하다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>이진 탐색은 정렬 정보를 이용해 탐색 범위를 반복적으로 절반 수준으로 줄인다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>5차시 · 동적계획법</b></div><div class="concept-body">
+<div class="standard"><b>성취기준</b> [12정과03-05]</div><div class="two"><div><p><b>동적계획법(DP)</b>은 같은 부분 문제가 반복되는 구조에서 이미 계산한 결과를 저장하고 재사용하여 중복 계산을 줄인다.</p>
+<p><b>메모이제이션</b>은 재귀 기반의 하향식 접근, <b>테이블 방식</b>은 작은 상태부터 값을 채우는 상향식 접근이다.</p>
+<p>핵심은 배열 사용 자체가 아니라 <b>상태의 의미</b>와 <b>점화 관계</b>를 정의하는 것이다.</p></div><div><div class="codebox">def fib_dp(n):
+    if n &lt;= 1:
+        return n
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    for i in range(2, n + 1):
+        dp[i] = dp[i-1] + dp[i-2]
+    return dp[n]</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>복습 코드 5 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① dp[i]는 부분 문제의 결과를 저장한다.</label><label class="option"><input type="checkbox" value="2">② 이전 상태를 이용해 현재 상태를 계산한다.</label><label class="option"><input type="checkbox" value="3">③ 중복 계산을 줄일 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 결과 저장은 DP와 무관하다.</label><label class="option"><input type="checkbox" value="5">⑤ 상태·점화식은 필요 없다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>DP는 중복 부분 문제를 저장·재사용하며 상태와 점화 관계를 명확히 정의해야 한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>6차시 · 시간 복잡도</b></div><div class="concept-body">
+<div class="standard"><b>성취기준</b> [12정과03-06]</div><div class="two"><div><p><b>시간 복잡도</b>는 입력 크기 n이 커질 때 핵심 연산량이 어떻게 증가하는지 나타낸다. O(1), O(log n), O(n), O(n log n), O(n²)을 대표적으로 비교한다.</p>
+<p>빅오는 정확한 초 단위 시간이 아니라 증가 경향이다. 실제 실행 시간은 환경의 영향을 받으므로 이론 복잡도와 함께 해석한다.</p>
+<p>반복문의 중첩, 범위 절반 감소, 재귀 호출 횟수 등을 코드에서 읽는 연습이 중요하다.</p></div><div><div class="codebox">def count_pairs(n):
+    count = 0
+    for i in range(n):
+        for j in range(n):
+            count += 1
+    return count</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>복습 코드 6 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 핵심 연산은 n²번이다.</label><label class="option"><input type="checkbox" value="2">② 대표 복잡도는 O(n²)이다.</label><label class="option"><input type="checkbox" value="3">③ n이 10배면 약 100배 연산이 가능하다.</label><label class="option"><input type="checkbox" value="4">④ O(n²)은 항상 일정하다.</label><label class="option"><input type="checkbox" value="5">⑤ 빅오는 반드시 초 단위 시간이다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>두 반복문이 각각 n번 실행되므로 연산량이 n²에 비례한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>7차시 · 문제 발견과 프로젝트 설계</b></div><div class="concept-body">
+<div class="standard"><b>성취기준</b> [12정과04-01], [12정과04-02]</div><div class="two"><div><p>프로젝트는 <b>실생활에서 해결할 가치가 있는 문제를 발견</b>하는 것에서 시작한다. 사용자와 상황을 구체적으로 관찰한 뒤 정보과학으로 해결 가능한 형태로 문제를 재구성한다.</p>
+<p>요구 분석에서는 <b>사용자·입력·출력·제한 조건</b>을 정의하고 해결 목표를 측정 가능한 형태로 작성한다. 이어서 기능 분해, 자료 구조·알고리즘 후보, 역할·일정·테스트 기준을 계획한다.</p></div><div><div class="codebox">plan = {
+    &quot;user&quot;: &quot;학생&quot;,
+    &quot;input&quot;: &quot;시간대별 대기 인원&quot;,
+    &quot;output&quot;: &quot;예상 대기시간&quot;,
+    &quot;constraint&quot;: &quot;개인정보 최소화&quot;,
+    &quot;test&quot;: &quot;예측값과 실제값 비교&quot;
+}
+print(plan)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>복습 코드 7 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 사용자·입력·출력을 정의할 수 있다.</label><label class="option"><input type="checkbox" value="2">② 제한 조건과 테스트 기준을 계획할 수 있다.</label><label class="option"><input type="checkbox" value="3">③ 문제 정의는 구현 방향의 기준이다.</label><label class="option"><input type="checkbox" value="4">④ 문제 분석 없이 코드부터 작성하는 것이 원칙이다.</label><label class="option"><input type="checkbox" value="5">⑤ 제한 조건은 설계와 무관하다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>요구 분석과 프로젝트 계획서는 문제·사용자·데이터·기능·테스트 기준을 구현 전에 연결한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>8차시 · 오픈소스·라이브러리와 협업 구현</b></div><div class="concept-body">
+<div class="standard"><b>성취기준</b> [12정과04-03]</div><div class="two"><div><p>오픈소스와 라이브러리는 이미 구현된 기능을 재사용하게 해 준다. 사용할 때는 공식 출처, 라이선스, 활용 목적과 수정 여부를 확인한다.</p>
+<p>협업 구현에서는 기능을 함수·모듈로 나누고 <b>인터페이스</b>를 설계한다. 함수 이름, 매개변수, 반환값과 자료형이 모듈 간 연결 규칙이 된다.</p>
+<p>코드 통합 시에는 함수 이름 충돌, 자료형 불일치, 실행 순서와 데이터 흐름을 점검한다.</p></div><div><div class="codebox">def load_data():
+    return [10, 20, 30]
+def analyze(data):
+    return sum(data) / len(data)
+def show(result):
+    return f&quot;평균={result}&quot;
+
+data = load_data()
+print(show(analyze(data)))</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>복습 코드 8 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 함수 반환값이 다음 함수 입력으로 연결된다.</label><label class="option"><input type="checkbox" value="2">② 매개변수·반환값은 인터페이스 요소이다.</label><label class="option"><input type="checkbox" value="3">③ 모듈화는 협업과 테스트에 도움 된다.</label><label class="option"><input type="checkbox" value="4">④ 각 팀원이 임의 자료형을 써야 한다.</label><label class="option"><input type="checkbox" value="5">⑤ 라이선스는 확인하지 않는다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>모듈화와 인터페이스는 역할별 코드를 안정적으로 연결하게 하며 오픈소스는 사용 조건을 지켜야 한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>9차시 · 테스트·디버깅·기능·윤리 평가</b></div><div class="concept-body">
+<div class="standard"><b>성취기준</b> [12정과04-04], [12정과04-05]</div><div class="two"><div><p>테스트에서는 <b>정상 입력·경계값·예외 입력</b>을 포함하고 입력·예상 결과·실제 결과·통과 여부를 기록한다.</p>
+<p>디버깅은 <b>오류 재현 → 원인 분석 → 수정 → 재검증</b>의 흐름으로 수행한다.</p>
+<p>산출물은 정확성·효율성·사용성의 기능적 관점과 개인정보·편향·저작권·라이선스의 윤리적 관점에서 평가하고 개선본으로 연결한다.</p></div><div><div class="codebox">def classify(score):
+    if score &lt; 0 or score &gt; 100:
+        return &quot;입력 오류&quot;
+    if score &gt;= 60:
+        return &quot;통과&quot;
+    return &quot;보충&quot;
+
+for x in [80, 60, 59, -1, 101]:
+    print(x, classify(x))</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>복습 코드 9 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 60과 59는 경계값 점검에 활용할 수 있다.</label><label class="option"><input type="checkbox" value="2">② -1과 101은 예외 입력이다.</label><label class="option"><input type="checkbox" value="3">③ 수정 후 같은 테스트를 다시 할 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 성공 입력만 테스트해야 한다.</label><label class="option"><input type="checkbox" value="5">⑤ 재검증은 필요 없다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>정상·경계·예외 입력을 통해 오류를 찾고 수정 뒤 재검증까지 수행해야 한다.</div></div></div></div>
+<div class="concept"><div class="concept-head"><b>10차시 · Ⅲ·Ⅳ 통합 및 종합·성찰</b></div><div class="concept-body">
+<div class="standard"><b>성취기준</b> Ⅲ [12정과03-01~06] + Ⅳ [12정과04-01~05]</div><div class="two"><div><p>최종 정리에서는 개별 용어를 따로 외우지 않고 <b>문제 구조 → 알고리즘 선택 → 코드 구현 → 효율 분석 → 프로젝트 적용 → 테스트 → 평가 → 개선</b>의 흐름으로 연결한다.</p>
+<p>알고리즘에서는 상태 공간·가지치기·탐욕 반례·분할정복 구조·DP 상태와 점화식·빅오를 설명할 수 있어야 하고, 프로젝트에서는 문제 정의·설계·협업 구현·테스트·윤리 평가·개선을 연결해야 한다.</p>
+<p>Ⅴ 종합·성찰은 별도 [12정과05-…]가 아니라 본 계획에서 Ⅲ·Ⅳ를 통합하는 학교 운영 정리 단원이다.</p></div><div><div class="codebox">review = {
+    &quot;algorithm&quot;: &quot;선택 근거&quot;,
+    &quot;complexity&quot;: &quot;빅오&quot;,
+    &quot;project&quot;: &quot;설계→구현&quot;,
+    &quot;test&quot;: &quot;정상·경계·예외&quot;,
+    &quot;ethics&quot;: &quot;개인정보·저작권&quot;,
+    &quot;improvement&quot;: &quot;재검증&quot;
+}
+print(review)</div></div></div>
+<div class="question" data-answer="1,2,3"><h4>복습 코드 10 확인 문제: 옳은 것을 모두 고르시오. (3개)</h4><label class="option"><input type="checkbox" value="1">① 알고리즘 선택에는 근거가 필요하다.</label><label class="option"><input type="checkbox" value="2">② 테스트·윤리 평가는 개선 근거가 된다.</label><label class="option"><input type="checkbox" value="3">③ Ⅲ·Ⅳ를 하나의 문제 해결 흐름으로 연결할 수 있다.</label><label class="option"><input type="checkbox" value="4">④ 반드시 [12정과05-…]가 존재한다.</label><label class="option"><input type="checkbox" value="5">⑤ 결과만 보면 되고 과정은 필요 없다.</label>
+<button class="btn primary check-one">정답 확인</button><div class="feedback"><b>정답: ①, ②, ③</b><br>전체 범위는 알고리즘과 프로젝트를 근거 중심의 문제 해결 과정으로 연결하는 것이 핵심이다.</div></div></div></div></section>
+
+<section id="mistakes"><h2>6. 시험에서 자주 틀리는 오개념 8개</h2>
+<div class="misconception"><b>1. 완전 탐색은 무조건 나쁘다?</b><br>작은 입력에서는 단순하고 확실하며 다른 전략의 정확성 비교 기준이 된다.</div>
+<div class="misconception"><b>2. 가지치기는 많이 자를수록 좋다?</b><br>정답 경로를 제거하지 않는 논리적 근거가 먼저다.</div>
+<div class="misconception"><b>3. 탐욕법은 항상 최적?</b><br>반례와 최적성 보장 조건을 확인해야 한다.</div>
+<div class="misconception"><b>4. 분할정복과 DP는 둘 다 재귀라서 같다?</b><br>DP는 중복 부분 문제와 결과 저장·재사용이 핵심이다.</div>
+<div class="misconception"><b>5. 빅오는 실제 실행 시간?</b><br>입력 증가에 따른 연산량 성장 경향이다.</div>
+<div class="misconception"><b>6. 오픈소스는 마음대로 사용 가능?</b><br>출처와 라이선스 조건을 확인한다.</div>
+<div class="misconception"><b>7. 한 번 실행되면 테스트 완료?</b><br>정상·경계·예외와 수정 후 재검증까지 필요하다.</div>
+<div class="misconception"><b>8. 윤리 평가는 개인정보만?</b><br>편향·공정성·저작권·라이선스도 포함한다.</div></section>
+
+<section id="diagnostic"><div class="quiz-head"><h2>7. 전 범위 진단평가 OX 20문항</h2><div class="scorebox" id="diagScore">미채점</div></div><div id="diagQuestions"></div><div class="controls"><button class="btn primary" onclick="gradeDiagnostic()">진단평가 채점</button><button class="btn secondary" onclick="resetGroup('diagQuestions')">초기화</button></div></section>
+
+<section id="formative"><div class="quiz-head"><h2>8. 2차고사 통합 형성평가 20문항</h2><div class="scorebox" id="formScore">미채점</div></div><p class="small">보기 5개 중 옳은 것 3개를 모두 선택해야 정답이다.</p><div id="formQuestions"></div><div class="controls"><button class="btn primary" onclick="gradeFormative()">형성평가 채점</button><button class="btn secondary" onclick="resetGroup('formQuestions')">초기화</button></div></section>
+
+<section id="submit"><h2>9. 학번·이름 입력 및 최종 결과 저장</h2><div class="userbox"><label><b>학번</b><input type="text" id="studentId" placeholder="예: 1101"></label><label><b>이름</b><input type="text" id="studentName" placeholder="예: 홍길동"></label></div><h3>전체 진행률</h3><div class="progress-wrap"><div class="progress" id="progress"></div></div><p id="progressText" class="small">0%</p><div class="controls"><button class="btn primary" onclick="finalSubmit()">전체 채점 및 TXT 저장</button><button class="btn secondary" onclick="window.print()">인쇄 / PDF</button></div><div class="result-panel" id="resultPanel"></div></section>
+</main><footer><p>「2022 개정 고등학교 정보과학 2학기 2차고사 10차시 연간 계획」의 Ⅲ 알고리즘 1~6차시, Ⅳ 정보과학 프로젝트 7~9차시, Ⅴ 종합·성찰 10차시를 통합한 최종 정리학습 자료이다.</p></footer><button class="print" onclick="window.print()">인쇄 / PDF</button>
+
+<script>
+const diagData=[{"q": "상태 공간은 가능한 상태와 상태 전이를 구조화한 것이다.", "a": "O", "e": "옳은 설명이다."}, {"q": "완전 탐색은 유망하지 않은 상태를 자동으로 제거한다.", "a": "X", "e": "잘못된 설명이다. 관련 핵심 개념을 다시 확인한다."}, {"q": "백트래킹에서는 선택 후 이전 상태로 되돌아갈 수 있다.", "a": "O", "e": "옳은 설명이다."}, {"q": "가지치기는 정답 경로를 제거해도 탐색 수만 줄면 좋다.", "a": "X", "e": "잘못된 설명이다. 관련 핵심 개념을 다시 확인한다."}, {"q": "탐욕법은 현재 단계에서 가장 좋아 보이는 선택을 한다.", "a": "O", "e": "옳은 설명이다."}, {"q": "탐욕법은 모든 문제에서 항상 최적해를 보장한다.", "a": "X", "e": "잘못된 설명이다. 관련 핵심 개념을 다시 확인한다."}, {"q": "이진 탐색은 정렬된 자료에서 대표적으로 O(log n)이다.", "a": "O", "e": "옳은 설명이다."}, {"q": "병합 정렬은 부분 결과를 병합하는 과정이 있다.", "a": "O", "e": "옳은 설명이다."}, {"q": "DP는 이미 계산한 결과를 저장해 재사용할 수 있다.", "a": "O", "e": "옳은 설명이다."}, {"q": "O(n²)은 입력 크기와 무관하게 연산량이 일정하다.", "a": "X", "e": "잘못된 설명이다. 관련 핵심 개념을 다시 확인한다."}, {"q": "요구 분석에서 사용자·입력·출력·제한 조건을 정의할 수 있다.", "a": "O", "e": "옳은 설명이다."}, {"q": "프로젝트 목표는 모호할수록 테스트하기 쉽다.", "a": "X", "e": "잘못된 설명이다. 관련 핵심 개념을 다시 확인한다."}, {"q": "오픈소스는 라이선스와 출처를 확인할 필요가 없다.", "a": "X", "e": "잘못된 설명이다. 관련 핵심 개념을 다시 확인한다."}, {"q": "모듈화는 기능을 함수·모듈 단위로 분리하는 과정이다.", "a": "O", "e": "옳은 설명이다."}, {"q": "인터페이스에는 매개변수와 반환값이 포함될 수 있다.", "a": "O", "e": "옳은 설명이다."}, {"q": "경계값 테스트는 조건이 바뀌는 지점 점검에 유용하다.", "a": "O", "e": "옳은 설명이다."}, {"q": "디버깅은 원인 분석 없이 무작위 수정하는 것이 기본이다.", "a": "X", "e": "잘못된 설명이다. 관련 핵심 개념을 다시 확인한다."}, {"q": "기능적 평가에는 정확성·효율성·사용성이 포함될 수 있다.", "a": "O", "e": "옳은 설명이다."}, {"q": "개인정보·편향·저작권은 윤리 평가와 관련 있다.", "a": "O", "e": "옳은 설명이다."}, {"q": "Ⅴ 종합·성찰은 본 계획에서 Ⅲ·Ⅳ를 통합하는 운영 단원이다.", "a": "O", "e": "옳은 설명이다."}],formData=[{"q": "상태 공간과 완전 탐색에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 상태는 문제 해결의 한 순간을 표현할 수 있다.", "② 연산은 상태를 변화시킬 수 있다.", "③ 완전 탐색은 가능한 후보를 빠짐없이 확인한다.", "④ 완전 탐색은 항상 O(1)이다.", "⑤ 초기 상태와 목표 상태는 반드시 같다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "백트래킹과 가지치기에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 선택 후 이전 상태로 돌아갈 수 있다.", "② 유망하지 않은 상태를 조기에 배제할 수 있다.", "③ 가지치기 조건의 타당성이 중요하다.", "④ 모든 분기를 끝까지 방문해야 한다.", "⑤ 상태 복원은 필요 없다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "탐욕법에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 현재 단계의 최선 선택을 한다.", "② 전체 최적 보장 여부를 검토한다.", "③ 반례를 통해 적용 조건을 확인할 수 있다.", "④ 모든 문제에서 최적이다.", "⑤ 지역 최적과 전체 최적은 항상 같다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "분할정복에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 큰 문제를 작은 문제로 나눈다.", "② 부분 문제를 해결한다.", "③ 필요하면 결과를 결합한다.", "④ 기저 조건은 필요 없다.", "⑤ 이진 탐색은 두 절반을 모두 탐색한다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "동적계획법에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 중복 부분 문제를 찾는다.", "② 계산 결과를 저장·재사용한다.", "③ 상태와 점화 관계를 정의한다.", "④ 결과 저장은 무관하다.", "⑤ 반드시 재귀로만 구현한다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "시간 복잡도에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 이진 탐색은 O(log n)이 될 수 있다.", "② 단일 n회 반복은 O(n)이 될 수 있다.", "③ n×n 반복은 O(n²)이 될 수 있다.", "④ 빅오는 정확한 초 단위 시간이다.", "⑤ 입력 크기는 무관하다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "문제 발견에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 실생활 불편에서 출발할 수 있다.", "② 사용자 상황을 관찰할 수 있다.", "③ 정보과학 해결 문제로 재구성할 수 있다.", "④ 코드 완성 후 문제를 정한다.", "⑤ 문제 가치는 필요 없다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "요구 분석·설계에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 사용자·입력·출력을 정의한다.", "② 제한 조건을 확인한다.", "③ 기능·알고리즘·테스트 기준을 계획한다.", "④ 역할·일정은 무관하다.", "⑤ 테스트는 구현 후 처음 정한다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "오픈소스·라이브러리에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 기능을 재사용할 수 있다.", "② 출처와 라이선스를 확인한다.", "③ 활용 목적을 기록할 수 있다.", "④ 공개 코드는 저작권이 없다.", "⑤ 라이선스는 불필요하다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "모듈화·인터페이스에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 기능별 함수를 분리한다.", "② 매개변수·반환값을 규칙으로 정한다.", "③ 자료형 일치는 통합에 중요하다.", "④ 인터페이스는 필요 없다.", "⑤ 팀원마다 임의 형식만 쓴다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "코드 통합에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 함수 이름 충돌을 확인한다.", "② 데이터 흐름과 실행 순서를 점검한다.", "③ 통합 후 실행해 확인한다.", "④ 반환값은 무시한다.", "⑤ 자료형 불일치는 무관하다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "테스트 설계에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 정상 입력을 포함한다.", "② 경계값을 포함한다.", "③ 예외 입력을 포함할 수 있다.", "④ 성공 입력만 쓴다.", "⑤ 예상 결과는 필요 없다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "디버깅에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 오류를 재현한다.", "② 원인을 분석한다.", "③ 수정 후 재검증한다.", "④ 무작위로 여러 줄을 바꾼다.", "⑤ 관련 테스트는 필요 없다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "기능적 평가에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 정확성을 평가한다.", "② 효율성을 평가한다.", "③ 사용성을 평가한다.", "④ 개인정보와 완전히 같은 개념이다.", "⑤ 실행되면 모두 통과한다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "윤리적 평가에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 개인정보 최소화를 확인한다.", "② 편향 가능성을 점검한다.", "③ 저작권·라이선스를 확인한다.", "④ 개인정보는 많을수록 좋다.", "⑤ 인터넷 자료는 모두 자유롭다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "완전 탐색 vs 백트래킹에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 완전 탐색은 기준 전략이 될 수 있다.", "② 백트래킹은 일부 상태를 일찍 제외할 수 있다.", "③ 방문 상태 수를 비교할 수 있다.", "④ 정답 경로를 제거해야 한다.", "⑤ 정확성 비교는 필요 없다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "분할정복 vs DP에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 둘 다 부분 문제 관점을 쓸 수 있다.", "② DP는 중복 결과 저장이 핵심이다.", "③ 분할정복은 결합 과정이 나타날 수 있다.", "④ 항상 완전히 같다.", "⑤ DP에 상태 정의는 필요 없다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "알고리즘 선택에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 정확성을 확인한다.", "② 문제 구조·적용 조건을 본다.", "③ 복잡도와 입력 크기를 고려한다.", "④ 가장 짧은 코드만 고른다.", "⑤ 하나가 모든 문제에 최적이다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "프로젝트 전체 흐름에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 문제 발견→설계로 연결한다.", "② 구현→테스트·디버깅으로 연결한다.", "③ 평가→개선으로 연결한다.", "④ 테스트는 생략한다.", "⑤ 평가 결과는 개선과 무관하다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}, {"q": "최종 자기 점검에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 알고리즘 적용 조건과 코드를 설명한다.", "② 빅오로 효율성을 비교한다.", "③ 설계·구현·테스트·윤리·개선을 연결한다.", "④ 이름만 암기하면 충분하다.", "⑤ 결과만 보고 과정은 보지 않는다."], "a": [1, 2, 3], "e": "①·②·③이 핵심 개념을 올바르게 설명한다."}];
+function renderDiagnostic(){document.getElementById('diagQuestions').innerHTML=diagData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4><label class="option"><input type="radio" name="d${i}" value="O"> O</label><label class="option"><input type="radio" name="d${i}" value="X"> X</label><div class="feedback" id="df${i}"></div></div>`).join('');}
+function renderFormative(){document.getElementById('formQuestions').innerHTML=formData.map((x,i)=>`<div class="question"><h4>${i+1}. ${x.q}</h4>${x.o.map((o,j)=>`<label class="option"><input type="checkbox" name="f${i}" value="${j+1}">${o}</label>`).join('')}<div class="feedback" id="ff${i}"></div></div>`).join('');}
+renderDiagnostic();renderFormative();
+document.querySelectorAll('.check-one').forEach(b=>b.addEventListener('click',()=>{let q=b.closest('.question'),a=q.dataset.answer,s=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort().join(','),f=q.querySelector('.feedback');if(!f.dataset.original)f.dataset.original=f.innerHTML;f.className='feedback show '+(s===a?'correct':'wrong');f.innerHTML=(s===a?'<b>정답입니다.</b><br>':'<b>다시 확인하세요.</b><br>')+f.dataset.original;updateProgress();}));
+function gradeDiagnostic(){let s=0;diagData.forEach((x,i)=>{let c=document.querySelector(`input[name=d${i}]:checked`),ok=c&&c.value===x.a;if(ok)s++;let f=document.getElementById(`df${i}`);f.className='feedback show '+(ok?'correct':'wrong');f.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ${x.a}<br>${x.e}`;});diagScore.textContent=s+'/20';updateProgress();return s;}
+function gradeFormative(){let s=0;formData.forEach((x,i)=>{let c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b),a=x.a,ok=JSON.stringify(c)===JSON.stringify(a);if(ok)s++;let f=document.getElementById(`ff${i}`);f.className='feedback show '+(ok?'correct':'wrong');f.innerHTML=`<b>${ok?'정답':'오답'}</b> · 정답: ①, ②, ③<br>${x.e}`;});formScore.textContent=s+'/20';updateProgress();return s;}
+function resetGroup(id){document.querySelectorAll(`#${id} input`).forEach(x=>x.checked=false);document.querySelectorAll(`#${id} .feedback`).forEach(x=>{x.className='feedback';x.innerHTML='';});if(id==='diagQuestions')diagScore.textContent='미채점';if(id==='formQuestions')formScore.textContent='미채점';updateProgress();}
+function updateProgress(){let d=0;document.querySelectorAll('.concept .question').forEach(q=>{if(q.querySelectorAll('input:checked').length)d++;});for(let i=0;i<20;i++){if(document.querySelector(`input[name=d${i}]:checked`))d++;if(document.querySelectorAll(`input[name=f${i}]:checked`).length)d++;}let p=Math.min(100,Math.round(d/50*100));progress.style.width=p+'%';progressText.textContent=`${p}% (${d}/50 항목 응답)`;}
+document.addEventListener('change',updateProgress);
+function finalSubmit(){let sid=studentId.value.trim(),name=studentName.value.trim();if(!sid||!name){alert('학번과 이름을 입력하세요.');return;}let d=gradeDiagnostic(),f=gradeFormative(),cs=0,reports=[];document.querySelectorAll('.concept .question').forEach((q,i)=>{let s=[...q.querySelectorAll('input:checked')].map(x=>x.value).sort().join(','),ok=s==='1,2,3';if(ok)cs++;reports.push(`복습 코드 ${i+1}: ${ok?'정답':'오답'} / 응답 ${s||'미응답'} / 정답 1,2,3`);});let raw=cs+d+f,total=50,score=Math.round(raw/total*100),now=new Date(),stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0');let lines=['2022 개정 고등학교 정보과학 2학기 2차고사 전체범위 정리학습 결과','범위: Ⅲ 알고리즘 + Ⅳ 정보과학 프로젝트 + Ⅴ 종합·성찰',`학번: ${sid}`,`이름: ${name}`,`점수: ${score}점 (${raw}/${total})`,`응시시각: ${now.toLocaleString('ko-KR')}`,'','[복습 코드 확인]',...reports,'','[진단평가 OX]'];diagData.forEach((x,i)=>{let c=document.querySelector(`input[name=d${i}]:checked`)?.value||'미응답';lines.push(`${i+1}. ${c===x.a?'정답':'오답'} / 응답 ${c} / 정답 ${x.a} / 풀이: ${x.e}`);});lines.push('','[통합 형성평가]');formData.forEach((x,i)=>{let c=[...document.querySelectorAll(`input[name=f${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b),ok=JSON.stringify(c)===JSON.stringify(x.a);lines.push(`${i+1}. ${ok?'정답':'오답'} / 응답 ${c.join(',')||'미응답'} / 정답 1,2,3 / 풀이: ${x.e}`);});let blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}),link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download=`${sid}_${name}_${score}점_정보과학2차고사전체범위_${stamp}.txt`;link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000);resultPanel.classList.add('show');resultPanel.innerHTML=`<h3>최종 결과</h3><p class="big">${score}점</p><p>복습 코드 ${cs}/10 · 진단평가 ${d}/20 · 통합 형성평가 ${f}/20</p><p><b>${sid} ${name}</b> 학생의 전체범위 결과 TXT 파일을 저장했습니다.</p>`;}
+</script></body></html>
