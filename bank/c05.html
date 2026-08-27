@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>정보과학 3·4단원 성취기준 성취도평가</title>
+<style>
+:root{--navy:#17324d;--blue:#2f6fb3;--green:#1f8a70;--orange:#f59e0b;--red:#bd3046;--ink:#17212b;--muted:#5d6976;--line:#d8e2ec;--bg:#f4f7fb;--ok:#127a50;--bad:#bc2f3e}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);line-height:1.68}
+header{background:linear-gradient(135deg,#132b42,#2f6fb3 58%,#1f8a70);color:#fff;padding:44px 20px}.wrap{max-width:1420px;margin:auto}h1{font-size:clamp(2rem,4vw,3.45rem);margin:.35rem 0 .8rem;line-height:1.2}.subtitle{max-width:1160px;font-size:1.07rem;opacity:.96}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}.badge{border:1px solid #ffffff55;background:#ffffff18;border-radius:999px;padding:6px 11px;font-size:.86rem}
+nav{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px #17324d14}nav .wrap{display:flex;gap:7px;overflow-x:auto;padding:9px 12px}nav a{text-decoration:none;color:var(--navy);font-weight:900;white-space:nowrap;padding:8px 10px;border-radius:8px;font-size:.88rem}nav a:hover{background:#eaf4ff}
+main{max-width:1420px;margin:auto;padding:22px 16px 80px}section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:25px;margin:19px 0;box-shadow:0 7px 22px #17324d0e}h2{color:var(--navy);font-size:1.68rem;border-left:7px solid var(--blue);padding-left:12px;margin:0 0 18px}h3{color:var(--navy)}
+table{width:100%;border-collapse:collapse;font-size:.91rem}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:#edf4fb;color:var(--navy)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:13px}.card{border:1px solid var(--line);border-radius:14px;padding:15px;background:#fff}
+.info{background:#eaf8f3;border-left:6px solid var(--green);padding:14px 16px;border-radius:10px}.notice{background:#fff8e8;border-left:6px solid var(--orange);padding:14px 16px;border-radius:10px}
+.question{border:1px solid var(--line);border-radius:15px;padding:17px;margin:15px 0;background:#fff}.question.hard{border:2px solid #e19aaa;background:linear-gradient(135deg,#fff8fa,#fff)}.qhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.std{display:inline-block;background:#eaf4ff;color:#245b91;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:900}.hardtag{display:inline-block;background:#bd3046;color:#fff;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:900;margin-left:5px}.domain{display:inline-block;background:#f1edff;color:#6651a5;border-radius:999px;padding:3px 8px;font-size:.76rem;font-weight:900;margin-left:5px}.points{white-space:nowrap;color:#8a5b00;font-weight:900}
+.option{display:block;border:1px solid #d9e3ec;border-radius:9px;padding:9px 11px;margin:7px 0;cursor:pointer}.option:hover{background:#f5f9fd}.option input{margin-right:8px;transform:scale(1.1)}
+.codebox{background:#101b26;color:#eaf2f8;border-radius:13px;padding:15px 17px;overflow:auto;white-space:pre;font-family:Consolas,"D2Coding",monospace;font-size:.91rem;line-height:1.55;margin:12px 0}.short-answer{width:100%;padding:11px;border:1px solid #cbd8e3;border-radius:9px;font-size:1rem}.feedback{display:none;margin-top:11px;padding:12px;border-radius:9px;background:#f6f8fb}.feedback.show{display:block}.correct{border-left:5px solid var(--ok)}.wrong{border-left:5px solid var(--bad)}
+.usergrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}input[type=text]{width:100%;padding:11px;border:1px solid #ccd9e4;border-radius:9px;font-size:1rem}.controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}button{border:0;border-radius:10px;padding:10px 14px;font-weight:900;cursor:pointer}.primary{background:var(--blue);color:#fff}.secondary{background:#eaf0f6;color:var(--navy)}
+.progress-wrap{height:12px;background:#e9eef3;border-radius:999px;overflow:hidden}.progress{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--green));transition:.25s}.scores{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.score{text-align:center;border:1px solid var(--line);border-radius:13px;padding:13px;background:#fbfdff}.score strong{display:block;color:var(--blue);font-size:1.45rem}.result{display:none;border:2px solid #9ac9ea;background:#f5fbff;border-radius:15px;padding:18px;margin-top:15px}.result.show{display:block}.big{font-size:2rem;font-weight:900;color:var(--blue)}.small{font-size:.86rem;color:var(--muted)}.print{position:fixed;right:18px;bottom:18px;background:var(--navy);color:#fff;box-shadow:0 7px 22px #0003}
+@media(max-width:800px){.usergrid,.scores{grid-template-columns:1fr}.qhead{display:block}}@media print{nav,.controls,.print{display:none!important}body{background:#fff}section{box-shadow:none}.question{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div>2022 개정 교육과정 · 고등학교 정보과학 · Ⅲ 알고리즘 + Ⅳ 정보과학 프로젝트</div>
+<h1>성취기준 성취도평가</h1>
+<div class="subtitle">3·4단원의 성취기준을 개념 이해, 코드 분석, 실행 결과 추적으로 평가하고, b05.html과 동일한 최고난도 비율과 문항 구조를 적용한 100점 만점 성취도평가입니다.</div>
+<div class="badges">
+<span class="badge">총 30문항</span>
+<span class="badge">100점 만점</span>
+<span class="badge">코드 20개 8~15줄</span>
+<span class="badge">최고난도 8문항 · 26.7%</span>
+<span class="badge">영역별 최고난도 2문항</span>
+<span class="badge">정답 위치 균등</span>
+<span class="badge">정오답·상세 풀이</span>
+<span class="badge">TXT 저장</span>
+</div>
+</div></header>
+
+<nav><div class="wrap">
+<a href="#standards">성취기준</a><a href="#coverage">개념 반영표</a><a href="#user">응시자</a>
+<a href="#concept">개념형</a><a href="#code">코드 선택형</a><a href="#short">코드 단답형</a><a href="#submit">채점·저장</a>
+</div></nav>
+
+<main>
+<section id="standards"><h2>1. 평가 대상 성취기준</h2>
+<div class="info">3단원과 4단원의 11개 성취기준을 각 문항에 연결하였습니다.</div>
+<table><tr><th>성취기준</th><th>내용</th></tr><tr><td><b>[12정과03-01]</b></td><td>문제를 상태 공간으로 표현하고 탐색을 기반으로 해결하는 알고리즘을 설계한다.</td></tr><tr><td><b>[12정과03-02]</b></td><td>문제의 상태 공간 일부를 배제하는 알고리즘을 설계하고 기존 탐색 기반 알고리즘과 비교·분석한다.</td></tr><tr><td><b>[12정과03-03]</b></td><td>문제를 부분 문제로 분해하고 부분 문제 사이의 관계를 파악하여 해결 전략을 설계한다.</td></tr><tr><td><b>[12정과03-04]</b></td><td>분할정복의 원리를 이해하고 이를 활용하여 문제를 해결하는 프로그램을 작성한다.</td></tr><tr><td><b>[12정과03-05]</b></td><td>동적계획법의 원리를 이해하고 중복 부분 문제를 활용하여 효율적인 프로그램을 작성한다.</td></tr><tr><td><b>[12정과03-06]</b></td><td>알고리즘의 시간 복잡도를 분석하고 여러 해결 방법의 효율성을 비교한다.</td></tr><tr><td><b>[12정과04-01]</b></td><td>다양한 학문 분야에서 컴퓨터과학의 기본 개념과 원리를 바탕으로 해결할 수 있는 실생활의 문제를 발견한다.</td></tr><tr><td><b>[12정과04-02]</b></td><td>발견한 문제를 분석하고 문제를 해결하기 위한 프로젝트 수행 과정을 설계한다.</td></tr><tr><td><b>[12정과04-03]</b></td><td>다양한 오픈 소스 및 라이브러리를 활용하여 협력적으로 문제를 해결하기 위한 프로그램을 작성한다.</td></tr><tr><td><b>[12정과04-04]</b></td><td>완성도 높은 프로그램을 구현하기 위하여 테스트와 디버깅 과정을 통해 검증한다.</td></tr><tr><td><b>[12정과04-05]</b></td><td>프로젝트 산출물을 기능적·윤리적 관점에서 평가하고 개선한다.</td></tr></table></section>
+
+<section id="coverage"><h2>2. 학습내용 반영 및 최고난도 배치</h2>
+<table><tr><th>핵심 영역</th><th>반영 개념</th><th>최고난도 문항 수</th></tr>
+<tr><td>탐색·가지치기</td><td>상태 공간, 완전 탐색, 백트래킹, 가지치기, 탐색량 비교</td><td>2문항</td></tr>
+<tr><td>부분문제·분할정복</td><td>부분 문제, 탐욕적 선택과 반례, 이진 탐색, 병합 정렬</td><td>2문항</td></tr>
+<tr><td>DP·복잡도</td><td>중복 부분 문제, 메모이제이션, 상태·점화식, 시간 복잡도</td><td>2문항</td></tr>
+<tr><td>프로젝트</td><td>문제 발견, 요구 분석, 오픈소스·라이브러리, 모듈화, 인터페이스, 테스트·윤리 평가</td><td>2문항</td></tr>
+</table>
+<div class="notice" style="margin-top:14px">
+<b>b05.html 최고난도 비율 반영</b><br>
+개념형 10문항 중 4문항, 코드 선택형 10문항 중 4문항, 코드 단답형 10문항 중 0문항을 최고난도로 배치하여
+<b>총 8/30문항 = 약 26.7%</b>로 구성했습니다. 최고난도 문항은 붉은 테두리와 태그로 표시됩니다.
+</div>
+</section>
+
+<section id="user"><h2>3. 응시자 정보와 배점</h2>
+<div class="usergrid">
+<label><b>학번</b><input type="text" id="studentId" placeholder="예: 1101"></label>
+<label><b>이름</b><input type="text" id="studentName" placeholder="예: 홍길동"></label>
+</div>
+<div class="grid" style="margin-top:15px">
+<div class="card"><b>Ⅰ. 학습 개념</b><br>10문항 × 3점 = 30점</div>
+<div class="card"><b>Ⅱ. 코드 선택형</b><br>10문항 × 4점 = 40점</div>
+<div class="card"><b>Ⅲ. 코드 단답형</b><br>10문항 × 3점 = 30점</div>
+<div class="card"><b>총점</b><br>30문항, 100점</div>
+</div>
+<div class="notice" style="margin-top:14px">
+5지선다형은 옳은 것 3개를 모두 선택해야 정답입니다.
+선택형 20문항은 가능한 10가지 정답 조합을 각각 정확히 2회씩 사용하여 ①~⑤ 정답 위치가 한쪽에 몰리지 않도록 균형 배치했습니다.
+</div>
+</section>
+
+<section id="concept"><h2>4. 학습 개념 내용 평가 · 10문항 · 30점</h2><div id="conceptQuestions"></div></section>
+<section id="code"><h2>5. 코드 제시형 선택 평가 · 10문항 · 40점</h2>
+<div class="notice">각 코드는 8줄 이상 15줄 이하이며, 알고리즘 구조와 프로젝트 구현 맥락을 다양하게 평가합니다.</div>
+<div id="codeQuestions"></div></section>
+<section id="short"><h2>6. 코드 제시형 단답 평가 · 10문항 · 30점</h2>
+<div class="notice">각 코드는 8줄 이상 15줄 이하이며, 출력 추적·상태 변화·함수 반환·탐색 결과를 평가합니다.</div>
+<div id="shortQuestions"></div></section>
+
+<section id="submit"><h2>7. 전체 채점 및 결과 저장</h2>
+<div class="progress-wrap"><div class="progress" id="progress"></div></div>
+<p id="progressText" class="small">응답 진행률 0%</p>
+<div class="controls">
+<button class="primary" onclick="gradeAll()">전체 채점 및 TXT 저장</button>
+<button class="secondary" onclick="resetAll()">전체 초기화</button>
+<button class="secondary" onclick="window.print()">인쇄 / PDF</button>
+</div>
+<div class="scores">
+<div class="score"><strong id="conceptScore">0/30</strong>개념 평가</div>
+<div class="score"><strong id="codeScore">0/40</strong>코드 선택형</div>
+<div class="score"><strong id="shortScore">0/30</strong>코드 단답형</div>
+<div class="score"><strong id="totalScore">0/100</strong>총점</div>
+</div>
+<div class="result" id="result"></div>
+</section>
+</main>
+
+<button class="print" onclick="window.print()">인쇄 / PDF</button>
+
+<script>
+const STANDARDS={"12정과03-01": "문제를 상태 공간으로 표현하고 탐색을 기반으로 해결하는 알고리즘을 설계한다.", "12정과03-02": "문제의 상태 공간 일부를 배제하는 알고리즘을 설계하고 기존 탐색 기반 알고리즘과 비교·분석한다.", "12정과03-03": "문제를 부분 문제로 분해하고 부분 문제 사이의 관계를 파악하여 해결 전략을 설계한다.", "12정과03-04": "분할정복의 원리를 이해하고 이를 활용하여 문제를 해결하는 프로그램을 작성한다.", "12정과03-05": "동적계획법의 원리를 이해하고 중복 부분 문제를 활용하여 효율적인 프로그램을 작성한다.", "12정과03-06": "알고리즘의 시간 복잡도를 분석하고 여러 해결 방법의 효율성을 비교한다.", "12정과04-01": "다양한 학문 분야에서 컴퓨터과학의 기본 개념과 원리를 바탕으로 해결할 수 있는 실생활의 문제를 발견한다.", "12정과04-02": "발견한 문제를 분석하고 문제를 해결하기 위한 프로젝트 수행 과정을 설계한다.", "12정과04-03": "다양한 오픈 소스 및 라이브러리를 활용하여 협력적으로 문제를 해결하기 위한 프로그램을 작성한다.", "12정과04-04": "완성도 높은 프로그램을 구현하기 위하여 테스트와 디버깅 과정을 통해 검증한다.", "12정과04-05": "프로젝트 산출물을 기능적·윤리적 관점에서 평가하고 개선한다."};
+const CONCEPT=[{"std": "12정과03-01", "hard": false, "q": "상태 공간과 완전 탐색에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 상태는 문제 해결 과정의 한 순간을 표현할 수 있다.", "② 상태 전이는 한 상태에서 다른 상태로 이동하는 규칙이다.", "③ 완전 탐색은 가능한 후보를 빠짐없이 확인한다.", "④ 목표 상태는 탐색 문제와 무관하다.", "⑤ 상태 공간은 탐색 알고리즘과 관계가 없다."], "a": [1, 2, 3], "e": "상태 공간은 상태와 전이를 구조화한 것이며, 완전 탐색은 가능한 후보를 모두 확인하는 기준 전략이다.", "domain": "탐색·가지치기"}, {"std": "12정과03-02", "hard": true, "q": "가지치기의 정확성과 탐색 효율에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 가지치기는 유망하지 않은 분기를 조기에 제외할 수 있다.", "② 가지치기 조건은 실제 정답 경로를 제거하지 않도록 설계해야 한다.", "③ 가지치기 횟수가 많기만 하면 언제나 좋은 알고리즘이다.", "④ 완전 탐색과 결과가 같은지 확인하는 것이 중요하다.", "⑤ 가지치기는 탐색량 감소와 관계없다."], "a": [1, 2, 4], "e": "가지치기는 정답을 보존하면서 탐색량을 줄여야 한다. 따라서 정확성과 효율성을 함께 비교해야 한다.", "domain": "탐색·가지치기"}, {"std": "12정과03-03", "hard": false, "q": "부분 문제와 문제 분해에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 큰 문제를 더 작은 문제로 나눌 수 있다.", "② 부분 문제 사이의 관계를 파악할 수 있다.", "③ 부분 문제는 반드시 서로 완전히 독립적이어야 한다.", "④ 문제 분해는 알고리즘 설계와 무관하다.", "⑤ 현재 선택 이후 남은 문제를 새로운 부분 문제로 볼 수 있다."], "a": [1, 2, 5], "e": "부분 문제의 정의와 관계를 파악하면 탐욕법·분할정복·동적계획법 등 다양한 설계로 연결할 수 있다.", "domain": "부분문제·분할정복"}, {"std": "12정과03-04", "hard": true, "q": "분할정복의 구조와 적용에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 큰 문제를 작은 문제로 분할한다.", "② 모든 분할정복은 부분 문제 결과를 저장해야 한다.", "③ 부분 문제를 해결한다.", "④ 필요한 경우 부분 결과를 결합한다.", "⑤ 분할정복에서는 기저 조건이 필요 없다."], "a": [1, 3, 4], "e": "분할정복은 분할→해결→결합의 구조이며, 재귀 구현에서는 기저 조건이 필요하다.", "domain": "부분문제·분할정복"}, {"std": "12정과03-05", "hard": true, "q": "동적계획법 설계에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 중복 부분 문제의 존재를 확인할 수 있다.", "② 계산 결과를 저장하면 안 된다.", "③ 상태와 점화 관계를 정의할 수 있다.", "④ 메모이제이션과 테이블 방식은 서로 완전히 무관하다.", "⑤ 이미 계산한 값을 저장하여 재사용할 수 있다."], "a": [1, 3, 5], "e": "동적계획법은 상태·점화식·중복 부분 문제·저장과 재사용이 핵심이다.", "domain": "DP·복잡도"}, {"std": "12정과03-06", "hard": false, "q": "시간 복잡도에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① O(log n)은 이진 탐색에서 나타날 수 있다.", "② 빅오는 항상 초 단위 실행 시간을 뜻한다.", "③ 입력 크기는 복잡도와 관계가 없다.", "④ O(n²)은 이중 반복에서 나타날 수 있다.", "⑤ 빅오는 입력 증가에 따른 연산량 증가 경향을 나타낸다."], "a": [1, 4, 5], "e": "빅오는 실제 초 단위 시간이 아니라 입력 크기에 따른 연산량의 증가 경향이다.", "domain": "DP·복잡도"}, {"std": "12정과04-01", "hard": false, "q": "실생활 문제 발견에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 구현 코드가 완성된 뒤에만 문제를 정한다.", "② 실생활의 불편이나 비효율에서 문제를 발견할 수 있다.", "③ 사용자가 겪는 상황을 관찰할 수 있다.", "④ 정보과학으로 해결 가능한 형태로 문제를 재구성할 수 있다.", "⑤ 문제의 해결 가치는 고려할 필요가 없다."], "a": [2, 3, 4], "e": "프로젝트는 실제 문제에서 출발하여 사용자와 상황을 관찰하고 정보과학적으로 해결 가능한 형태로 구체화한다.", "domain": "문제발견·설계"}, {"std": "12정과04-02", "hard": false, "q": "프로젝트 요구 분석과 설계에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 프로젝트 계획은 문제 분석과 무관하다.", "② 사용자·입력·출력을 정의할 수 있다.", "③ 제한 조건과 핵심 기능을 구체화할 수 있다.", "④ 테스트 기준은 구현 후에만 정할 수 있다.", "⑤ 역할·일정·테스트 기준을 계획할 수 있다."], "a": [2, 3, 5], "e": "요구 분석은 사용자·입력·출력·제한 조건을 구체화하고 프로젝트 수행 과정을 설계하는 단계이다.", "domain": "문제발견·설계"}, {"std": "12정과04-03", "hard": true, "q": "오픈소스 활용과 협업 구현에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 공개된 코드는 모두 저작권이 없다.", "② 오픈소스의 라이선스와 출처를 확인할 수 있다.", "③ 기능을 모듈로 나누면 협업에 도움이 된다.", "④ 매개변수와 반환값 자료형은 인터페이스 일부가 될 수 있다.", "⑤ 팀원별 코드는 입출력 규칙 없이 연결해야 한다."], "a": [2, 4, 5], "e": "협업 구현에서는 오픈소스 사용 조건을 지키고 기능 분리와 인터페이스를 통해 팀별 코드를 안정적으로 통합해야 한다.", "domain": "협업 구현"}, {"std": "12정과04-05", "hard": false, "q": "프로젝트 산출물의 기능적·윤리적 평가에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 기능이 정확하면 개인정보는 볼 필요가 없다.", "② 저작권은 프로젝트와 무관하다.", "③ 정확성·효율성·사용성을 평가할 수 있다.", "④ 개인정보·편향을 점검할 수 있다.", "⑤ 저작권·라이선스를 확인하고 개선에 반영할 수 있다."], "a": [3, 4, 5], "e": "프로젝트는 기능적 품질과 개인정보·편향·저작권·라이선스 같은 윤리적 요소를 함께 평가한다.", "domain": "검증·평가"}];
+const CODE=[{"std": "12정과03-01", "hard": false, "code": "def binary(s, n):\n    if len(s) == n:\n        print(s)\n        return\n    binary(s + \"0\", n)\n    binary(s + \"1\", n)\n\nsize = 3\nbinary(\"\", size)", "q": "위 코드에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 각 단계에서 0과 1 두 가지 선택이 생긴다.", "② n=3이면 8개의 문자열이 출력된다.", "③ len(s)==n은 종료 조건이다.", "④ 문자열은 3개만 출력된다.", "⑤ 재귀 호출은 상태 공간과 무관하다."], "a": [1, 2, 3], "e": "각 자리에서 2개의 선택이 있으므로 2³=8개의 후보가 생성된다.", "domain": "탐색·가지치기"}, {"std": "12정과03-02", "hard": true, "code": "calls = 0\npath = []\ndef search(nums, start, limit):\n    global calls\n    calls += 1\n    if sum(path) > limit: return\n    for i in range(start, len(nums)):\n        path.append(nums[i])\n        search(nums, i + 1, limit)\n        path.pop()\nsearch([2,4,6], 0, 6)", "q": "위 코드의 가지치기와 호출에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① sum(path)>limit는 가지치기 조건이다.", "② path.pop()은 직전 선택을 되돌린다.", "③ limit를 넘으면 더 깊이 탐색한다.", "④ calls를 이용해 호출 횟수를 셀 수 있다.", "⑤ pop()은 새로운 원소를 추가한다."], "a": [1, 2, 4], "e": "제한을 넘은 상태는 중단되고 append/pop으로 상태를 복원하며 calls로 탐색량을 측정한다.", "domain": "탐색·가지치기"}, {"std": "12정과03-03", "hard": false, "code": "meetings = [(1,4),(3,5),(5,7),(8,11)]\nend_time = 4\nremaining = []\nfor start, end in meetings:\n    if start >= end_time:\n        remaining.append((start, end))\nprint(remaining)\nprint(len(remaining))", "q": "위 코드와 부분 문제에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① end_time 이후 가능한 회의만 남긴다.", "② 남은 회의를 더 작은 부분 문제로 볼 수 있다.", "③ 모든 회의를 조건 없이 반환한다.", "④ 출력 길이는 4이다.", "⑤ remaining에는 (5,7), (8,11)이 포함된다."], "a": [1, 2, 5], "e": "현재 선택 이후 가능한 회의만 남기면 같은 유형의 더 작은 부분 문제로 볼 수 있다.", "domain": "부분문제·분할정복"}, {"std": "12정과03-04", "hard": true, "code": "def merge(left, right):\n    result = []\n    while left and right:\n        if left[0] <= right[0]:\n            result.append(left.pop(0))\n        else:\n            result.append(right.pop(0))\n    result += left\n    result += right\n    return result\nprint(merge([2,7], [3,5]))", "q": "위 병합 과정에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 두 정렬 리스트를 결합한다.", "② left와 right를 합치지 않고 그대로 반환한다.", "③ 작은 값부터 result에 넣는다.", "④ 출력은 [2,3,5,7]이다.", "⑤ 분할정복의 결합 단계와 관계없다."], "a": [1, 3, 4], "e": "병합 정렬의 결합 단계는 작은 값을 차례로 선택하여 정렬된 하나의 리스트를 만든다.", "domain": "부분문제·분할정복"}, {"std": "12정과03-05", "hard": true, "code": "memo = {0:0, 1:1}\ndef fib(n):\n    if n not in memo:\n        left = fib(n - 1)\n        right = fib(n - 2)\n        memo[n] = left + right\n    return memo[n]\nvalue = fib(8)\nkeys = sorted(memo.keys())\nprint(value, keys)", "q": "위 메모이제이션 코드에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 계산한 피보나치 값은 memo에 저장된다.", "② memo에 값이 있어도 반드시 다시 계산한다.", "③ 중복 부분 문제의 결과를 재사용할 수 있다.", "④ 출력 value는 13이다.", "⑤ 출력 value는 21이다."], "a": [1, 3, 5], "e": "fib(8)=21이며 계산된 상태는 memo에 저장되어 재사용된다.", "domain": "DP·복잡도"}, {"std": "12정과03-06", "hard": false, "code": "def pairs(n):\n    count = 0\n    for i in range(n):\n        for j in range(n):\n            count += 1\n    return count\nn = 5\nresult = pairs(n)\nprint(result)\nprint(n * n)", "q": "위 코드의 시간 복잡도에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 반환값은 25이다.", "② 대표 복잡도는 O(n)이다.", "③ 입력과 연산 횟수는 무관하다.", "④ 핵심 연산은 n²번 수행된다.", "⑤ 대표 복잡도는 O(n²)이다."], "a": [1, 4, 5], "e": "두 반복문이 각각 n번 수행되므로 핵심 연산량은 n²에 비례한다.", "domain": "DP·복잡도"}, {"std": "12정과04-01", "hard": false, "code": "issues = [\n    \"급식 대기시간\",\n    \"교실 전력 낭비\",\n    \"분실물 검색\"\n]\nfor issue in issues:\n    print(\"문제 후보:\", issue)\ncount = len(issues)\nprint(\"후보 수:\", count)", "q": "위 코드와 문제 발견에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 코드가 완성되어야 문제를 발견할 수 있다.", "② 실생활 문제 후보를 목록으로 정리할 수 있다.", "③ 서로 다른 문제 상황을 비교할 수 있다.", "④ 후보 수는 3이다.", "⑤ 사용자나 해결 가능성은 검토할 필요가 없다."], "a": [2, 3, 4], "e": "실생활 문제 후보를 정리한 뒤 사용자·해결 가치·정보과학적 해결 가능성을 비교할 수 있다.", "domain": "문제발견·설계"}, {"std": "12정과04-02", "hard": false, "code": "plan = {\n    \"user\": \"학생\",\n    \"input\": \"대기 인원\",\n    \"output\": \"예상 시간\",\n    \"constraint\": \"개인정보 미수집\",\n    \"test\": \"실제값과 비교\"\n}\nprint(plan[\"user\"])\nprint(plan[\"test\"])", "q": "위 프로젝트 설계 코드에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① output은 프로젝트와 무관하다.", "② user는 주요 사용자를 나타낸다.", "③ input은 처리할 데이터와 관련된다.", "④ constraint는 고려할 필요가 없다.", "⑤ test는 검증 기준과 관련된다."], "a": [2, 3, 5], "e": "사용자·입력·출력·제한 조건·테스트 기준은 프로젝트 설계의 핵심 요소이다.", "domain": "문제발견·설계"}, {"std": "12정과04-03", "hard": true, "code": "def load_data():\n    return [10, 20, 30]\ndef analyze(data):\n    return sum(data) / len(data)\ndef show(result):\n    return f\"평균={result}\"\ndata = load_data()\nresult = analyze(data)\nprint(show(result))", "q": "위 모듈화·인터페이스 코드에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 모든 기능을 한 함수에 합쳤다.", "② load_data의 반환값이 analyze로 전달된다.", "③ 함수별 역할이 나뉘어 있다.", "④ 매개변수와 반환값은 인터페이스로 볼 수 있다.", "⑤ 자료형 일치는 통합과 무관하다."], "a": [2, 4, 5], "e": "입력·분석·출력 기능을 분리하고 반환값과 매개변수 규칙으로 모듈을 연결한다.", "domain": "협업 구현"}, {"std": "12정과04-04", "hard": false, "code": "def classify(score):\n    if score < 0 or score > 100:\n        return \"입력 오류\"\n    if score >= 60:\n        return \"통과\"\n    return \"보충\"\ntests = [80, 60, 59, -1, 101]\nfor value in tests:\n    print(value, classify(value))", "q": "위 테스트 코드에 관한 설명으로 옳은 것을 모두 고르시오.", "o": ["① 80만 테스트하면 충분하다.", "② -1은 정상 입력이다.", "③ 60과 59는 경계값 점검에 활용할 수 있다.", "④ -1과 101은 예외 입력이다.", "⑤ 정상·경계·예외 입력을 함께 확인한다."], "a": [3, 4, 5], "e": "정상값·경계값·예외값을 함께 사용하여 프로그램을 검증한다.", "domain": "검증·평가"}];
+const SHORT=[{"std": "12정과03-01", "hard": false, "code": "def count_binary(s, n):\n    if len(s) == n:\n        return 1\n    left = count_binary(s + \"0\", n)\n    right = count_binary(s + \"1\", n)\n    return left + right\nn = 4\nanswer = count_binary(\"\", n)\nprint(answer)", "q": "출력값을 쓰시오.", "answers": ["16", "16.0"], "e": "각 자리마다 두 선택이 있으므로 2⁴=16개의 상태가 생성된다.", "domain": "탐색·가지치기"}, {"std": "12정과03-02", "hard": false, "code": "calls = 0\ndef search(n):\n    global calls\n    calls += 1\n    if n <= 0:\n        return\n    search(n - 1)\nsearch(5)\nprint(calls)\nprint(\"완료\")", "q": "첫 번째 출력값을 쓰시오.", "answers": ["6", "6.0"], "e": "search(5),4,3,2,1,0까지 총 6회 호출된다.", "domain": "탐색·가지치기"}, {"std": "12정과03-03", "hard": false, "code": "meetings = [(1,4),(3,5),(5,7),(8,11)]\nend_time = 4\nremaining = []\nfor start, end in meetings:\n    if start >= end_time:\n        remaining.append((start, end))\ncount = len(remaining)\nprint(count)", "q": "출력값을 쓰시오.", "answers": ["2", "2.0"], "e": "(5,7), (8,11) 두 회의가 남는다.", "domain": "부분문제·분할정복"}, {"std": "12정과03-04", "hard": false, "code": "def merge(left, right):\n    result = []\n    while left and right:\n        if left[0] <= right[0]:\n            result.append(left.pop(0))\n        else:\n            result.append(right.pop(0))\n    result += left + right\n    return result\nanswer = merge([1,6], [2,5])\nprint(answer)", "q": "출력 리스트를 대괄호까지 쓰시오.", "answers": ["[1,2,5,6]", "[1, 2, 5, 6]"], "e": "작은 값을 차례로 선택하면 [1,2,5,6]이다.", "domain": "부분문제·분할정복"}, {"std": "12정과03-05", "hard": false, "code": "dp = [0, 1]\nfor i in range(2, 8):\n    value = dp[i-1] + dp[i-2]\n    dp.append(value)\nlast = dp[7]\nsize = len(dp)\nprint(last)\nprint(size)", "q": "첫 번째 출력값을 쓰시오.", "answers": ["13", "13.0"], "e": "피보나치 수열에서 dp[7]=13이다.", "domain": "DP·복잡도"}, {"std": "12정과03-06", "hard": false, "code": "def linear(n):\n    count = 0\n    for i in range(n):\n        count += 1\n    return count\nn = 100\nresult = linear(n)\nprint(result)\nprint(\"완료\")", "q": "이 함수의 대표 시간 복잡도를 빅오로 쓰시오.", "answers": ["O(n)", "o(n)", "On", "on"], "e": "입력 크기 n만큼 반복하므로 O(n)이다.", "domain": "DP·복잡도"}, {"std": "12정과04-01", "hard": false, "code": "problems = [\n    \"급식 대기시간\",\n    \"교실 전력 낭비\",\n    \"분실물 검색\"\n]\ntarget = problems[1]\ncount = len(problems)\nprint(target)\nprint(count)", "q": "첫 번째 출력 문자열을 쓰시오.", "answers": ["교실전력낭비", "교실 전력 낭비"], "e": "problems[1]은 두 번째 항목이다.", "domain": "문제발견·설계"}, {"std": "12정과04-02", "hard": false, "code": "plan = {\n    \"user\": \"학생\",\n    \"input\": \"대기 인원\",\n    \"output\": \"예상 시간\",\n    \"constraint\": \"개인정보 미수집\"\n}\nitem = plan[\"constraint\"]\nprint(item)\nprint(len(plan))", "q": "첫 번째 출력 문자열을 쓰시오.", "answers": ["개인정보미수집", "개인정보 미수집"], "e": "constraint의 값은 '개인정보 미수집'이다.", "domain": "문제발견·설계"}, {"std": "12정과04-03", "hard": false, "code": "def get_data():\n    values = [3, 6, 9]\n    return values\ndef maximum(data):\n    result = max(data)\n    return result\ndata = get_data()\nanswer = maximum(data)\nprint(answer)", "q": "출력값을 쓰시오.", "answers": ["9", "9.0"], "e": "[3,6,9]의 최댓값은 9이다.", "domain": "협업 구현"}, {"std": "12정과04-05", "hard": false, "code": "record = {\n    \"name\": \"학생A\",\n    \"score\": 90\n}\nsafe = {\n    \"score\": record[\"score\"]\n}\nkeys = list(safe.keys())\nprint(keys[0])", "q": "출력되는 키 이름을 쓰시오.", "answers": ["score"], "e": "개인 식별 정보 name을 제외하고 score만 남겼다.", "domain": "검증·평가"}];
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function sy(a){return a.map(n=>'①②③④⑤'[n-1]).join(', ')}
+function norm(v){return v.trim().toLowerCase().replace(/\s+/g,'').replace(/[()]/g,'')}
+
+function renderMCQ(id,data,prefix,pts){
+ document.getElementById(id).innerHTML=data.map((x,i)=>`<div class="question ${x.hard?'hard':''}">
+ <div class="qhead"><div>
+ <span class="std">[${x.std}]</span><span class="domain">${x.domain}</span>${x.hard?'<span class="hardtag">최고난도</span>':''}
+ <h3>${i+1}. ${x.q}</h3></div><div class="points">${pts}점</div></div>
+ ${x.code?`<div class="codebox">${esc(x.code)}</div>`:''}
+ ${x.o.map((o,j)=>`<label class="option"><input type="checkbox" name="${prefix}${i}" value="${j+1}"> ${o}</label>`).join('')}
+ <div class="feedback" id="${prefix}fb${i}"></div></div>`).join('')
+}
+
+function renderShort(){
+ document.getElementById('shortQuestions').innerHTML=SHORT.map((x,i)=>`<div class="question">
+ <div class="qhead"><div><span class="std">[${x.std}]</span><span class="domain">${x.domain}</span>
+ <h3>${i+1}. ${x.q}</h3></div><div class="points">3점</div></div>
+ <div class="codebox">${esc(x.code)}</div>
+ <input class="short-answer" id="s${i}" type="text" placeholder="답을 입력하세요.">
+ <div class="feedback" id="sfb${i}"></div></div>`).join('')
+}
+
+renderMCQ('conceptQuestions',CONCEPT,'c',3);
+renderMCQ('codeQuestions',CODE,'k',4);
+renderShort();
+
+function gradeMCQ(data,prefix,pts){
+ let score=0,reports=[];
+ data.forEach((x,i)=>{
+  const r=[...document.querySelectorAll(`input[name=${prefix}${i}]:checked`)].map(v=>+v.value).sort((a,b)=>a-b);
+  const a=[...x.a].sort((a,b)=>a-b);
+  const ok=JSON.stringify(r)===JSON.stringify(a);
+  if(ok) score+=pts;
+
+  const f=document.getElementById(`${prefix}fb${i}`);
+  f.className='feedback show '+(ok?'correct':'wrong');
+  f.innerHTML=`<b>${ok?'정답':'오답'}</b> · ${x.hard?'최고난도 · ':''}${x.domain} · 성취기준 [${x.std}]
+  <br><b>정답:</b> ${sy(a)}<br><b>상세 풀이:</b> ${x.e}`;
+
+  reports.push(`${i+1}. ${ok?'정답':'오답'} / ${x.hard?'최고난도 / ':''}영역 ${x.domain} / 성취기준 [${x.std}] ${STANDARDS[x.std]} / 응답 ${r.length?sy(r):'미응답'} / 정답 ${sy(a)} / 상세 풀이: ${x.e}`);
+ });
+ return {score,reports}
+}
+
+function gradeShort(){
+ let score=0,reports=[];
+ SHORT.forEach((x,i)=>{
+  const response=document.getElementById(`s${i}`).value;
+  const ok=response.trim()!=='' && x.answers.map(norm).includes(norm(response));
+  if(ok) score+=3;
+
+  const f=document.getElementById(`sfb${i}`);
+  f.className='feedback show '+(ok?'correct':'wrong');
+  f.innerHTML=`<b>${ok?'정답':'오답'}</b> · ${x.domain} · 성취기준 [${x.std}]
+  <br><b>정답 예시:</b> ${x.answers[0]}<br><b>상세 풀이:</b> ${x.e}`;
+
+  reports.push(`${i+1}. ${ok?'정답':'오답'} / 영역 ${x.domain} / 성취기준 [${x.std}] ${STANDARDS[x.std]} / 응답 ${response.trim()||'미응답'} / 정답 예시 ${x.answers[0]} / 상세 풀이: ${x.e}`);
+ });
+ return {score,reports}
+}
+
+function achievement(total){
+ if(total>=90)return 'A';
+ if(total>=80)return 'B';
+ if(total>=70)return 'C';
+ if(total>=60)return 'D';
+ return 'E';
+}
+
+function gradeAll(){
+ const sid=document.getElementById('studentId').value.trim();
+ const name=document.getElementById('studentName').value.trim();
+ if(!sid||!name){alert('학번과 이름을 입력하세요.');return}
+
+ const c=gradeMCQ(CONCEPT,'c',3);
+ const k=gradeMCQ(CODE,'k',4);
+ const s=gradeShort();
+ const total=c.score+k.score+s.score;
+ const level=achievement(total);
+
+ conceptScore.textContent=c.score+'/30';
+ codeScore.textContent=k.score+'/40';
+ shortScore.textContent=s.score+'/30';
+ totalScore.textContent=total+'/100';
+
+ const now=new Date();
+ const stamp=now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'
+ +String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0');
+
+ const lines=[
+ '정보과학 3·4단원 성취기준 성취도평가 결과',
+ `학번: ${sid}`,`이름: ${name}`,`총점: ${total}점 / 100점`,`성취도: ${level}`,
+ `학습 개념: ${c.score}/30`,`코드 선택형: ${k.score}/40`,`코드 단답형: ${s.score}/30`,
+ `응시시각: ${now.toLocaleString('ko-KR')}`,
+ '','[Ⅰ. 학습 개념 평가]',...c.reports,
+ '','[Ⅱ. 코드 선택형 평가]',...k.reports,
+ '','[Ⅲ. 코드 단답형 평가]',...s.reports
+ ];
+
+ const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});
+ const link=document.createElement('a');
+ link.href=URL.createObjectURL(blob);
+ link.download=`${sid}_${name}_${total}점_3·4단원성취도평가_${stamp}.txt`;
+ link.click();
+ setTimeout(()=>URL.revokeObjectURL(link.href),1000);
+
+ const r=document.getElementById('result');
+ r.classList.add('show');
+ r.innerHTML=`<h3>최종 결과</h3><div class="big">${total}점 · 성취도 ${level}</div>
+ <p>개념 ${c.score}/30 · 코드 선택 ${k.score}/40 · 단답 ${s.score}/30</p>
+ <p>문항별 정오답·성취기준·영역·상세 풀이가 포함된 TXT 파일을 저장했습니다.</p>`;
+}
+
+function progress(){
+ let n=0;
+ for(let i=0;i<10;i++) if(document.querySelector(`input[name=c${i}]:checked`)) n++;
+ for(let i=0;i<10;i++) if(document.querySelector(`input[name=k${i}]:checked`)) n++;
+ for(let i=0;i<10;i++) if(document.getElementById(`s${i}`).value.trim()) n++;
+ const pct=Math.round(n/30*100);
+ document.getElementById('progress').style.width=pct+'%';
+ document.getElementById('progressText').textContent=`응답 진행률 ${pct}% (${n}/30)`;
+}
+document.addEventListener('change',progress);
+document.addEventListener('input',progress);
+
+function resetAll(){
+ document.querySelectorAll('input[type=checkbox]').forEach(x=>x.checked=false);
+ document.querySelectorAll('.short-answer').forEach(x=>x.value='');
+ document.querySelectorAll('.feedback').forEach(x=>{x.className='feedback';x.innerHTML=''});
+ conceptScore.textContent='0/30';
+ codeScore.textContent='0/40';
+ shortScore.textContent='0/30';
+ totalScore.textContent='0/100';
+ result.className='result';
+ result.innerHTML='';
+ progress();
+}
+</script>
+</body></html>
